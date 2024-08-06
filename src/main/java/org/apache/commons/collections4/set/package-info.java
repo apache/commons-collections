@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations of the {@link java.util.Set Set},
+ * Implements the {@link java.util.Set Set},
  * {@link java.util.SortedSet SortedSet} and
  * {@link java.util.NavigableSet NavigableSet} interfaces.
  * <p>

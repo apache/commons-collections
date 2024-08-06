@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -58,12 +60,12 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Override
-    public boolean supportsRemove() {
+    public boolean supportsEmptyIterator() {
         return true;
     }
 
     @Override
-    public boolean supportsEmptyIterator() {
+    public boolean supportsRemove() {
         return true;
     }
 
@@ -85,17 +87,6 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testSingletonIteratorRemove() {
-        final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
-        assertTrue(iter.hasNext());
-        assertEquals("xyzzy", iter.next());
-        iter.remove();
-        iter.reset();
-        assertFalse(iter.hasNext());
-    }
-
-    @Test
     public void testReset() {
         final ResettableIterator<E> it = makeObject();
 
@@ -113,6 +104,17 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
         it.reset();
 
         assertTrue(it.hasNext());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSingletonIteratorRemove() {
+        final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
+        assertTrue(iter.hasNext());
+        assertEquals("xyzzy", iter.next());
+        iter.remove();
+        iter.reset();
+        assertFalse(iter.hasNext());
     }
 
 }

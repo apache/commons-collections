@@ -26,19 +26,13 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation acts as an if statement calling one or other closure
  * based on a predicate.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class IfClosure<E> implements Closure<E>, Serializable {
+public class IfClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
-
-    /** The test */
-    private final Predicate<? super E> iPredicate;
-    /** The closure to use if true */
-    private final Closure<? super E> iTrueClosure;
-    /** The closure to use if false */
-    private final Closure<? super E> iFalseClosure;
 
     /**
      * Factory method that performs validation.
@@ -56,7 +50,6 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure, NOPClosure.<E>nopClosure());
     }
-
     /**
      * Factory method that performs validation.
      *
@@ -74,6 +67,14 @@ public class IfClosure<E> implements Closure<E>, Serializable {
                 Objects.requireNonNull(trueClosure, "trueClosure"),
                 Objects.requireNonNull(falseClosure, "falseClosure"));
     }
+    /** The test */
+    private final Predicate<? super T> iPredicate;
+
+    /** The closure to use if true */
+    private final Closure<? super T> iTrueClosure;
+
+    /** The closure to use if false */
+    private final Closure<? super T> iFalseClosure;
 
     /**
      * Constructor that performs no validation.
@@ -86,7 +87,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param trueClosure  closure used if true, not null
      * @since 3.2
      */
-    public IfClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
+    public IfClosure(final Predicate<? super T> predicate, final Closure<? super T> trueClosure) {
         this(predicate, trueClosure, NOPClosure.nopClosure());
     }
 
@@ -98,8 +99,8 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param trueClosure  closure used if true, not null
      * @param falseClosure  closure used if false, not null
      */
-    public IfClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure,
-                     final Closure<? super E> falseClosure) {
+    public IfClosure(final Predicate<? super T> predicate, final Closure<? super T> trueClosure,
+                     final Closure<? super T> falseClosure) {
         iPredicate = predicate;
         iTrueClosure = trueClosure;
         iFalseClosure = falseClosure;
@@ -111,12 +112,22 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
-        if (iPredicate.evaluate(input)) {
-            iTrueClosure.execute(input);
+    public void execute(final T input) {
+        if (iPredicate.test(input)) {
+            iTrueClosure.accept(input);
         } else {
-            iFalseClosure.execute(input);
+            iFalseClosure.accept(input);
         }
+    }
+
+    /**
+     * Gets the closure called when false.
+     *
+     * @return the closure
+     * @since 3.1
+     */
+    public Closure<? super T> getFalseClosure() {
+        return iFalseClosure;
     }
 
     /**
@@ -125,7 +136,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @return the predicate
      * @since 3.1
      */
-    public Predicate<? super E> getPredicate() {
+    public Predicate<? super T> getPredicate() {
         return iPredicate;
     }
 
@@ -135,18 +146,8 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @return the closure
      * @since 3.1
      */
-    public Closure<? super E> getTrueClosure() {
+    public Closure<? super T> getTrueClosure() {
         return iTrueClosure;
-    }
-
-    /**
-     * Gets the closure called when false.
-     *
-     * @return the closure
-     * @since 3.1
-     */
-    public Closure<? super E> getFalseClosure() {
-        return iFalseClosure;
     }
 
 }

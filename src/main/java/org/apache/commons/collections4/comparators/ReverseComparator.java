@@ -75,24 +75,12 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a suitable hash code
-     * @since 3.0
-     */
-    @Override
-    public int hashCode() {
-        return "ReverseComparator".hashCode() ^ comparator.hashCode();
-    }
-
-    /**
-     * Returns {@code true} iff <i>that</i> Object is
+     * Returns {@code true} iff <em>that</em> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
-     * iff {@code <i>object</i>.{@link Object#getClass() getClass()}}
+     * iff {@code <em>object</em>.{@link Object#getClass() getClass()}}
      * equals {@code this.getClass()}, and the underlying
      * comparators are equal.
      * Subclasses may want to override this behavior to remain consistent
@@ -115,6 +103,18 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
             return comparator.equals(thatrc.comparator);
         }
         return false;
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a suitable hash code
+     * @since 3.0
+     */
+    @Override
+    public int hashCode() {
+        return "ReverseComparator".hashCode() ^ comparator.hashCode();
     }
 
 }

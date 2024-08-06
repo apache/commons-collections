@@ -27,7 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MultiSetUtils.
- * @since 4.2
  */
 public class MultiSetUtilsTest {
 
@@ -55,31 +54,6 @@ public class MultiSetUtilsTest {
     }
 
     /**
-     * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
-     */
-    @Test
-    public void testUnmodifiableMultiSet() {
-        final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
-        assertEquals(multiSet, unmodifiable);
-
-        assertThrows(UnsupportedOperationException.class, () -> unmodifiable.add("a"),
-                "Empty multi set must be read-only");
-
-        assertThrows(NullPointerException.class, () -> MultiSetUtils.unmodifiableMultiSet(null),
-                "Expecting NPE");
-    }
-
-    /**
-     * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
-     */
-    @Test
-    public void testSynchronizedMultiSet() {
-        final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
-        assertEquals(multiSet, synced);
-        synced.add("a"); // ensure adding works
-    }
-
-    /**
      * Tests {@link MultiSetUtils#predicatedMultiSet(org.apache.commons.collections4.MultiSet, org.apache.commons.collections4.Predicate)}.
      */
     @Test
@@ -97,6 +71,31 @@ public class MultiSetUtilsTest {
 
         assertThrows(IllegalArgumentException.class, () -> MultiSetUtils.predicatedMultiSet(multiSet, object -> object.equals("a")),
                 "Predicate is violated for all elements not being 'a'");
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
+     */
+    @Test
+    public void testSynchronizedMultiSet() {
+        final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
+        assertEquals(multiSet, synced);
+        synced.add("a"); // ensure adding works
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
+     */
+    @Test
+    public void testUnmodifiableMultiSet() {
+        final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
+        assertEquals(multiSet, unmodifiable);
+
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiable.add("a"),
+                "Empty multi set must be read-only");
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.unmodifiableMultiSet(null),
+                "Expecting NPE");
     }
 
 }

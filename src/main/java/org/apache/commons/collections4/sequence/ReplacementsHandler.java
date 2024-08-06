@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * This interface is devoted to handle synchronized replacement sequences.
  *
+ * @param <T> the type of elements in the lists.
  * @see ReplacementsFinder
  * @since 4.0
  */
@@ -28,7 +29,7 @@ import java.util.List;
 public interface ReplacementsHandler<T> {
 
     /**
-     * Handle two synchronized sequences.
+     * Handles two synchronized sequences.
      * <p>
      * This method is called by a {@link ReplacementsFinder ReplacementsFinder}
      * instance when it has synchronized two sub-sequences of object arrays
@@ -36,9 +37,11 @@ public interface ReplacementsHandler<T> {
      * sequences are synchronized, the objects before the two sub-sequences are
      * equals (if they exist). This property also holds for the objects after
      * the two sub-sequences.
+     * </p>
      * <p>
      * The replacement is defined as replacing the {@code from}
      * sub-sequence into the {@code to} sub-sequence.
+     * </p>
      *
      * @param skipped  number of tokens skipped since the last call (i.e. number of
      *   tokens that were in both sequences), this number should be strictly positive

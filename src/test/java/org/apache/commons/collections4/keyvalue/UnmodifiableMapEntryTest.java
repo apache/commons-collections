@@ -28,8 +28,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test the UnmodifiableMapEntry class.
- *
- * @since 3.0
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
@@ -53,9 +51,23 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         return new UnmodifiableMapEntry<>(key, value);
     }
 
+    @Test
+    @Override
+    @SuppressWarnings("unchecked")
+    public void testAccessorsAndMutators() {
+        Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
+
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // check that null doesn't do anything funny
+        entry = makeMapEntry(null, null);
+        assertSame(null, entry.getKey());
+        assertSame(null, entry.getValue());
+    }
+
     /**
      * Subclasses should override this method.
-     *
      */
     @Test
     @Override
@@ -78,21 +90,6 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(value, entry2.getValue());
 
         assertTrue(entry instanceof Unmodifiable);
-    }
-
-    @Test
-    @Override
-    @SuppressWarnings("unchecked")
-    public void testAccessorsAndMutators() {
-        Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
-
-        assertSame(key, entry.getKey());
-        assertSame(value, entry.getValue());
-
-        // check that null doesn't do anything funny
-        entry = makeMapEntry(null, null);
-        assertSame(null, entry.getKey());
-        assertSame(null, entry.getValue());
     }
 
     @Test

@@ -31,12 +31,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.
  * <p>
- * To use, simply extend this class, and implement
- * the {@link #makeObject()} method.
+ * To use, simply extend this class, and implement the {@link #makeObject()} method.
  * <p>
- * If your {@link LinkedList} fails one of these tests by design,
- * you may still use this base set of cases.  Simply override the
- * test case (method) your {@link List} fails.
+ * If your {@link LinkedList} fails one of these tests by design, you may still use this base set of cases. Simply override the test case (method) your
+ * {@link List} fails.
  */
 public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
 
@@ -44,13 +42,10 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         super(testName);
     }
 
-    @Override
-    public abstract LinkedList<T> makeObject();
-
     /**
-     *  Returns the {@link #collection} field cast to a {@link LinkedList}.
+     * Returns the {@link #collection} field cast to a {@link LinkedList}.
      *
-     *  @return the collection field as a List
+     * @return the collection field as a List
      */
     @Override
     public LinkedList<T> getCollection() {
@@ -58,16 +53,35 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Returns the {@link #confirmed} field cast to a {@link LinkedList}.
+     * Returns the {@link #confirmed} field cast to a {@link LinkedList}.
      *
-     *  @return the confirmed field as a List
+     * @return the confirmed field as a List
      */
     protected LinkedList<T> getConfirmedLinkedList() {
         return (LinkedList<T>) getConfirmed();
     }
 
     /**
-     *  Tests {@link LinkedList#addFirst(Object)}.
+     * Returns an empty {@link LinkedList}.
+     */
+    @Override
+    public Collection<T> makeConfirmedCollection() {
+        return new LinkedList<>();
+    }
+
+    /**
+     * Returns a full {@link LinkedList}.
+     */
+    @Override
+    public Collection<T> makeConfirmedFullCollection() {
+        return new LinkedList<>(Arrays.asList(getFullElements()));
+    }
+
+    @Override
+    public abstract LinkedList<T> makeObject();
+
+    /**
+     * Tests {@link LinkedList#addFirst(Object)}.
      */
     @Test
     @SuppressWarnings("unchecked")
@@ -89,7 +103,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#addLast(Object)}.
+     * Tests {@link LinkedList#addLast(Object)}.
      */
     @Test
     @SuppressWarnings("unchecked")
@@ -111,43 +125,39 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
     }
 
     /**
-     *  Tests {@link LinkedList#getFirst()}.
+     * Tests {@link LinkedList#getFirst()}.
      */
     @Test
     public void testLinkedListGetFirst() {
         resetEmpty();
-        assertThrows(NoSuchElementException.class, () -> getCollection().getFirst(),
-                "getFirst() should throw a NoSuchElementException for an empty list.");
+        assertThrows(NoSuchElementException.class, () -> getCollection().getFirst(), "getFirst() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
         final Object first = getCollection().getFirst();
         final Object confirmedFirst = getConfirmedLinkedList().getFirst();
-        assertEquals(confirmedFirst, first,
-                "Result returned by getFirst() was wrong.");
+        assertEquals(confirmedFirst, first, "Result returned by getFirst() was wrong.");
         verify();
     }
 
     /**
-     *  Tests {@link LinkedList#getLast()}.
+     * Tests {@link LinkedList#getLast()}.
      */
     @Test
     public void testLinkedListGetLast() {
         resetEmpty();
-        assertThrows(NoSuchElementException.class, () -> getCollection().getLast(),
-                "getLast() should throw a NoSuchElementException for an empty list.");
+        assertThrows(NoSuchElementException.class, () -> getCollection().getLast(), "getLast() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
         final Object last = getCollection().getLast();
         final Object confirmedLast = getConfirmedLinkedList().getLast();
-        assertEquals(confirmedLast, last,
-                "Result returned by getLast() was wrong.");
+        assertEquals(confirmedLast, last, "Result returned by getLast() was wrong.");
         verify();
     }
 
     /**
-     *  Tests {@link LinkedList#removeFirst()}.
+     * Tests {@link LinkedList#removeFirst()}.
      */
     @Test
     public void testLinkedListRemoveFirst() {
@@ -163,13 +173,12 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         resetFull();
         final Object first = getCollection().removeFirst();
         final Object confirmedFirst = getConfirmedLinkedList().removeFirst();
-        assertEquals(confirmedFirst, first,
-                "Result returned by removeFirst() was wrong.");
+        assertEquals(confirmedFirst, first, "Result returned by removeFirst() was wrong.");
         verify();
     }
 
     /**
-     *  Tests {@link LinkedList#removeLast()}.
+     * Tests {@link LinkedList#removeLast()}.
      */
     @Test
     public void testLinkedListRemoveLast() {
@@ -178,32 +187,14 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
         }
 
         resetEmpty();
-        assertThrows(NoSuchElementException.class, () -> getCollection().removeLast(),
-                "removeLast() should throw a NoSuchElementException for an empty list.");
+        assertThrows(NoSuchElementException.class, () -> getCollection().removeLast(), "removeLast() should throw a NoSuchElementException for an empty list.");
         verify();
 
         resetFull();
         final Object last = getCollection().removeLast();
         final Object confirmedLast = getConfirmedLinkedList().removeLast();
-        assertEquals(confirmedLast, last,
-                "Result returned by removeLast() was wrong.");
+        assertEquals(confirmedLast, last, "Result returned by removeLast() was wrong.");
         verify();
-    }
-
-    /**
-     *  Returns an empty {@link LinkedList}.
-     */
-    @Override
-    public Collection<T> makeConfirmedCollection() {
-        return new LinkedList<>();
-    }
-
-    /**
-     *  Returns a full {@link LinkedList}.
-     */
-    @Override
-    public Collection<T> makeConfirmedFullCollection() {
-        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
 }

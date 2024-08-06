@@ -33,11 +33,34 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableOrderedMapIterator.
+ *
+ * @param <K> the type of the keys in the maps tested.
+ * @param <V> the type of the values in the maps tested.
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
     public UnmodifiableOrderedMapIteratorTest() {
         super(UnmodifiableOrderedMapIteratorTest.class.getSimpleName());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Map<K, V> getConfirmedMap() {
+        final Map<K, V> testMap = new TreeMap<>();
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
+        return testMap;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public OrderedMap<K, V> getMap() {
+        final OrderedMap<K, V> testMap = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
+        return testMap;
     }
 
     @Override
@@ -52,26 +75,6 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public OrderedMap<K, V> getMap() {
-        final OrderedMap<K, V> testMap = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
-        testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V) "b");
-        testMap.put((K) "C", (V) "c");
-        return testMap;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Map<K, V> getConfirmedMap() {
-        final Map<K, V> testMap = new TreeMap<>();
-        testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V) "b");
-        testMap.put((K) "C", (V) "c");
-        return testMap;
-    }
-
-    @Override
     public boolean supportsRemove() {
         return false;
     }
@@ -79,11 +82,6 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     @Override
     public boolean supportsSetValue() {
         return false;
-    }
-
-    @Test
-    public void testOrderedMapIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
     @Test
@@ -95,6 +93,11 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         assertNotSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null));
+    }
+
+    @Test
+    public void testOrderedMapIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

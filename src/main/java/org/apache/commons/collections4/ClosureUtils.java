@@ -61,37 +61,6 @@ import org.apache.commons.collections4.functors.WhileClosure;
 public class ClosureUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private ClosureUtils() {}
-
-    /**
-     * Gets a Closure that always throws an exception.
-     * This could be useful during testing as a placeholder.
-     *
-     * @see org.apache.commons.collections4.functors.ExceptionClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @return the closure
-     */
-    public static <E> Closure<E> exceptionClosure() {
-        return ExceptionClosure.<E>exceptionClosure();
-    }
-
-    /**
-     * Gets a Closure that will do nothing.
-     * This could be useful during testing as a placeholder.
-     *
-     * @see org.apache.commons.collections4.functors.NOPClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @return the closure
-     */
-    public static <E> Closure<E> nopClosure() {
-        return NOPClosure.<E>nopClosure();
-    }
-
-    /**
      * Creates a Closure that calls a Transformer each time it is called.
      * The transformer will be called using the closure's input object.
      * The transformer's result will be ignored.
@@ -104,6 +73,70 @@ public class ClosureUtils {
      */
     public static <E> Closure<E> asClosure(final Transformer<? super E, ?> transformer) {
         return TransformerClosure.transformerClosure(transformer);
+    }
+
+    /**
+     * Create a new Closure that calls each closure in turn, passing the
+     * result into the next closure.
+     *
+     * @see org.apache.commons.collections4.functors.ChainedClosure
+     *
+     * @param <E>  the type that the closure acts on
+     * @param closures  an array of closures to chain
+     * @return the {@code chained} closure
+     * @throws NullPointerException if the closures array is null
+     * @throws NullPointerException if any closure in the array is null
+     */
+    public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
+        return ChainedClosure.chainedClosure(closures);
+    }
+
+    /**
+     * Create a new Closure that calls each closure in turn, passing the
+     * result into the next closure. The ordering is that of the iterator()
+     * method on the collection.
+     *
+     * @see org.apache.commons.collections4.functors.ChainedClosure
+     *
+     * @param <E>  the type that the closure acts on
+     * @param closures  a collection of closures to chain
+     * @return the {@code chained} closure
+     * @throws NullPointerException if the closures collection is null
+     * @throws NullPointerException if any closure in the collection is null
+     * @throws IllegalArgumentException if the closures collection is empty
+     */
+    public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
+        return ChainedClosure.chainedClosure(closures);
+    }
+
+    /**
+     * Creates a Closure that will call the closure once and then repeatedly
+     * until the predicate returns false.
+     *
+     * @see org.apache.commons.collections4.functors.WhileClosure
+     *
+     * @param <E>  the type that the closure acts on
+     * @param closure  the closure to call repeatedly, not null
+     * @param predicate  the predicate to use as an end of loop test, not null
+     * @return the {@code do-while} closure
+     * @throws NullPointerException if either argument is null
+     */
+    public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure,
+                                                final Predicate<? super E> predicate) {
+        return WhileClosure.<E>whileClosure(predicate, closure, true);
+    }
+
+    /**
+     * Gets a Closure that always throws an exception.
+     * This could be useful during testing as a placeholder.
+     *
+     * @see org.apache.commons.collections4.functors.ExceptionClosure
+     *
+     * @param <E>  the type that the closure acts on
+     * @return the closure
+     */
+    public static <E> Closure<E> exceptionClosure() {
+        return ExceptionClosure.<E>exceptionClosure();
     }
 
     /**
@@ -123,36 +156,40 @@ public class ClosureUtils {
     }
 
     /**
-     * Creates a Closure that will call the closure repeatedly until the
-     * predicate returns false.
+     * Create a new Closure that calls another closure based on the
+     * result of the specified predicate.
      *
-     * @see org.apache.commons.collections4.functors.WhileClosure
+     * @see org.apache.commons.collections4.functors.IfClosure
      *
      * @param <E>  the type that the closure acts on
-     * @param predicate  the predicate to use as an end of loop test, not null
-     * @param closure  the closure to call repeatedly, not null
-     * @return the {@code while} closure
-     * @throws NullPointerException if either argument is null
+     * @param predicate  the validating predicate
+     * @param trueClosure  the closure called if the predicate is true
+     * @return the {@code if} closure
+     * @throws NullPointerException if the predicate or closure is null
+     * @since 3.2
      */
-    public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure) {
-        return WhileClosure.<E>whileClosure(predicate, closure, false);
+    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
+                                           final Closure<? super E> trueClosure) {
+        return IfClosure.<E>ifClosure(predicate, trueClosure);
     }
 
     /**
-     * Creates a Closure that will call the closure once and then repeatedly
-     * until the predicate returns false.
+     * Create a new Closure that calls one of two closures depending
+     * on the specified predicate.
      *
-     * @see org.apache.commons.collections4.functors.WhileClosure
+     * @see org.apache.commons.collections4.functors.IfClosure
      *
      * @param <E>  the type that the closure acts on
-     * @param closure  the closure to call repeatedly, not null
-     * @param predicate  the predicate to use as an end of loop test, not null
-     * @return the {@code do-while} closure
-     * @throws NullPointerException if either argument is null
+     * @param predicate  the predicate to switch on
+     * @param trueClosure  the closure called if the predicate is true
+     * @param falseClosure  the closure called if the predicate is false
+     * @return the {@code switch} closure
+     * @throws NullPointerException if the predicate or either closure is null
      */
-    public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure,
-                                                final Predicate<? super E> predicate) {
-        return WhileClosure.<E>whileClosure(predicate, closure, true);
+    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
+                                           final Closure<? super E> trueClosure,
+                                           final Closure<? super E> falseClosure) {
+        return IfClosure.<E>ifClosure(predicate, trueClosure, falseClosure);
     }
 
     /**
@@ -194,74 +231,41 @@ public class ClosureUtils {
     }
 
     /**
-     * Create a new Closure that calls each closure in turn, passing the
-     * result into the next closure.
+     * Gets a Closure that will do nothing.
+     * This could be useful during testing as a placeholder.
      *
-     * @see org.apache.commons.collections4.functors.ChainedClosure
+     * @see org.apache.commons.collections4.functors.NOPClosure
      *
      * @param <E>  the type that the closure acts on
-     * @param closures  an array of closures to chain
-     * @return the {@code chained} closure
-     * @throws NullPointerException if the closures array is null
-     * @throws NullPointerException if any closure in the array is null
+     * @return the closure
      */
-    public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
-        return ChainedClosure.chainedClosure(closures);
+    public static <E> Closure<E> nopClosure() {
+        return NOPClosure.<E>nopClosure();
     }
 
     /**
-     * Create a new Closure that calls each closure in turn, passing the
-     * result into the next closure. The ordering is that of the iterator()
-     * method on the collection.
+     * Create a new Closure that calls one of the closures depending
+     * on the predicates.
+     * <p>
+     * The Map consists of Predicate keys and Closure values. A closure
+     * is called if its matching predicate returns true. Each predicate is evaluated
+     * until one returns true. If no predicates evaluate to true, the default
+     * closure is called. The default closure is set in the map with a
+     * null key. The ordering is that of the iterator() method on the entryset
+     * collection of the map.
      *
-     * @see org.apache.commons.collections4.functors.ChainedClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @param closures  a collection of closures to chain
-     * @return the {@code chained} closure
-     * @throws NullPointerException if the closures collection is null
-     * @throws NullPointerException if any closure in the collection is null
-     * @throws IllegalArgumentException if the closures collection is empty
-     */
-    public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
-        return ChainedClosure.chainedClosure(closures);
-    }
-
-    /**
-     * Create a new Closure that calls another closure based on the
-     * result of the specified predicate.
-     *
-     * @see org.apache.commons.collections4.functors.IfClosure
+     * @see org.apache.commons.collections4.functors.SwitchClosure
      *
      * @param <E>  the type that the closure acts on
-     * @param predicate  the validating predicate
-     * @param trueClosure  the closure called if the predicate is true
-     * @return the {@code if} closure
-     * @throws NullPointerException if the predicate or closure is null
-     * @since 3.2
-     */
-    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
-                                           final Closure<? super E> trueClosure) {
-        return IfClosure.<E>ifClosure(predicate, trueClosure);
-    }
-
-    /**
-     * Create a new Closure that calls one of two closures depending
-     * on the specified predicate.
-     *
-     * @see org.apache.commons.collections4.functors.IfClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @param predicate  the predicate to switch on
-     * @param trueClosure  the closure called if the predicate is true
-     * @param falseClosure  the closure called if the predicate is false
+     * @param predicatesAndClosures  a map of predicates to closures
      * @return the {@code switch} closure
-     * @throws NullPointerException if the predicate or either closure is null
+     * @throws NullPointerException if the map is null
+     * @throws NullPointerException if any closure in the map is null
+     * @throws IllegalArgumentException if the map is empty
+     * @throws ClassCastException  if the map elements are of the wrong type
      */
-    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
-                                           final Closure<? super E> trueClosure,
-                                           final Closure<? super E> falseClosure) {
-        return IfClosure.<E>ifClosure(predicate, trueClosure, falseClosure);
+    public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
+        return SwitchClosure.switchClosure(predicatesAndClosures);
     }
 
     /**
@@ -314,31 +318,6 @@ public class ClosureUtils {
     }
 
     /**
-     * Create a new Closure that calls one of the closures depending
-     * on the predicates.
-     * <p>
-     * The Map consists of Predicate keys and Closure values. A closure
-     * is called if its matching predicate returns true. Each predicate is evaluated
-     * until one returns true. If no predicates evaluate to true, the default
-     * closure is called. The default closure is set in the map with a
-     * null key. The ordering is that of the iterator() method on the entryset
-     * collection of the map.
-     *
-     * @see org.apache.commons.collections4.functors.SwitchClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @param predicatesAndClosures  a map of predicates to closures
-     * @return the {@code switch} closure
-     * @throws NullPointerException if the map is null
-     * @throws NullPointerException if any closure in the map is null
-     * @throws IllegalArgumentException if the map is empty
-     * @throws ClassCastException  if the map elements are of the wrong type
-     */
-    public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
-        return SwitchClosure.switchClosure(predicatesAndClosures);
-    }
-
-    /**
      * Create a new Closure that uses the input object as a key to find the
      * closure to call.
      * <p>
@@ -370,6 +349,29 @@ public class ClosureUtils {
             i++;
         }
         return ClosureUtils.<E>switchClosure(preds, trs, def);
+    }
+
+    /**
+     * Creates a Closure that will call the closure repeatedly until the
+     * predicate returns false.
+     *
+     * @see org.apache.commons.collections4.functors.WhileClosure
+     *
+     * @param <E>  the type that the closure acts on
+     * @param predicate  the predicate to use as an end of loop test, not null
+     * @param closure  the closure to call repeatedly, not null
+     * @return the {@code while} closure
+     * @throws NullPointerException if either argument is null
+     */
+    public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure) {
+        return WhileClosure.<E>whileClosure(predicate, closure, false);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private ClosureUtils() {
+        // empty
     }
 
 }

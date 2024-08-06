@@ -30,7 +30,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @param <E> the type of elements returned by this iterator.
  * @since 2.1.1 and 3.1
  */
-public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements ResettableIterator<E> {
+public class EmptyIterator<E> extends AbstractEmptyIterator<E> {
 
     /**
      * Singleton instance of the iterator.
@@ -47,16 +47,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
     public static final Iterator INSTANCE = RESETTABLE_INSTANCE;
 
     /**
-     * Get a typed resettable empty iterator instance.
-     * @param <E> the element type
-     * @return ResettableIterator&lt;E&gt;
-     */
-    public static <E> ResettableIterator<E> resettableEmptyIterator() {
-        return RESETTABLE_INSTANCE;
-    }
-
-    /**
-     * Get a typed empty iterator instance.
+     * Gets a typed empty iterator instance.
      * @param <E> the element type
      * @return Iterator&lt;E&gt;
      */
@@ -65,7 +56,16 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
     }
 
     /**
-     * Constructor.
+     * Gets a typed resettable empty iterator instance.
+     * @param <E> the element type
+     * @return ResettableIterator&lt;E&gt;
+     */
+    public static <E> ResettableIterator<E> resettableEmptyIterator() {
+        return RESETTABLE_INSTANCE;
+    }
+
+    /**
+     * Constructs a new instance.
      */
     protected EmptyIterator() {
     }

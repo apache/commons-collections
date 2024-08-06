@@ -75,7 +75,7 @@ public class SingletonIterator<E>
     }
 
     /**
-     * Get the next object from the iterator.
+     * Gets the next object from the iterator.
      * <p>
      * This returns the single object if it hasn't been returned yet.
      *

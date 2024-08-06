@@ -20,7 +20,9 @@ import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * An {@link KeyAnalyzer} for {@link String}s.
- *
+ * <p>
+ * This class is stateless.
+ * </p>
  * @since 4.0
  */
 public class StringKeyAnalyzer extends KeyAnalyzer<String> {
@@ -41,14 +43,14 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         return MSB >>> bit;
     }
 
-    @Override
-    public int bitsPerElement() {
-        return LENGTH;
-    }
-
-    @Override
-    public int lengthInBits(final String key) {
-        return key != null ? key.length() * LENGTH : 0;
+    /**
+     * Constructs a new instance.
+     *
+     * @deprecated Use {@link #INSTANCE}.
+     */
+    @Deprecated
+    public StringKeyAnalyzer() {
+        // empty
     }
 
     @Override
@@ -102,11 +104,16 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
         // All bits are 0
         if (allNull) {
-            return KeyAnalyzer.NULL_BIT_KEY;
+            return NULL_BIT_KEY;
         }
 
         // Both keys are equal
-        return KeyAnalyzer.EQUAL_BIT_KEY;
+        return EQUAL_BIT_KEY;
+    }
+
+    @Override
+    public int bitsPerElement() {
+        return LENGTH;
     }
 
     @Override
@@ -131,5 +138,10 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
         final String s1 = prefix.substring(offsetInBits / LENGTH, lengthInBits / LENGTH);
         return key.startsWith(s1);
+    }
+
+    @Override
+    public int lengthInBits(final String key) {
+        return key != null ? key.length() * LENGTH : 0;
     }
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * A collection of methods and statics that represent standard hashers in testing.
  */
@@ -31,32 +33,17 @@ public class TestingHashers {
     public static final Hasher FROM11 = new IncrementingHasher(11, 1);
 
     /**
-     * Do not instantiate.
-     */
-    private TestingHashers() {}
-
-    /**
      * Merge several Hashers together into a single Bloom filter.
      * @param <T> The type of bloom filter.
      * @param filter The Bloom filter to populate
      * @param hashers The hashers to merge
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T mergeHashers(T filter, Hasher...hashers) {
-        for (Hasher h : hashers) {
+    public static <T extends BloomFilter> T mergeHashers(final T filter, final Hasher... hashers) {
+        for (final Hasher h : hashers) {
             filter.merge(h);
         }
         return filter;
-    }
-
-    /**
-     * Merge {@code from1} and {@code from11} into a single Bloom filter.
-     * @param <T> The type of bloom filter.
-     * @param filter The Bloom filter to populate
-     * @return {@code filter} for chaining
-     */
-    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(T filter) {
-        return mergeHashers(filter, FROM1, FROM11);
     }
 
     /**
@@ -65,8 +52,18 @@ public class TestingHashers {
      * @param filter the Bloom filter to populate
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T populateEntireFilter(T filter) {
+    public static <T extends BloomFilter> T populateEntireFilter(final T filter) {
         return populateRange(filter, 0, filter.getShape().getNumberOfBits() - 1);
+    }
+
+    /**
+     * Merge {@code from1} and {@code from11} into a single Bloom filter.
+     * @param <T> The type of bloom filter.
+     * @param filter The Bloom filter to populate
+     * @return {@code filter} for chaining
+     */
+    public static <T extends BloomFilter> T populateFromHashersFrom1AndFrom11(final T filter) {
+        return mergeHashers(filter, FROM1, FROM11);
     }
 
     /**
@@ -77,8 +74,8 @@ public class TestingHashers {
      * @param end the last bit to enable.
      * @return {@code filter} for chaining
      */
-    public static <T extends BloomFilter> T populateRange(T filter, int start, int end) {
-        filter.merge((IndexProducer) p -> {
+    public static <T extends BloomFilter> T populateRange(final T filter, final int start, final int end) {
+        filter.merge((IndexExtractor) p -> {
             for (int i = start; i <= end; i++) {
                 if (!p.test(i)) {
                     return false;
@@ -88,4 +85,19 @@ public class TestingHashers {
         });
         return filter;
     }
+
+    /**
+     * Creates an EnhancedDoubleHasher hasher from 2 random longs.
+     */
+    public static Hasher randomHasher() {
+        return new EnhancedDoubleHasher(ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong());
+    }
+
+    /**
+     * Do not instantiate.
+     */
+    private TestingHashers() {
+        // empty
+    }
+
 }

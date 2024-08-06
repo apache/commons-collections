@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ArrayIterator with primitive type arrays.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
@@ -36,16 +38,6 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     public ArrayIterator2Test() {
         super(ArrayIterator2Test.class.getSimpleName());
-    }
-
-    @Override
-    public ArrayIterator<E> makeEmptyIterator() {
-        return new ArrayIterator<>(new int[0]);
-    }
-
-    @Override
-    public ArrayIterator<E> makeObject() {
-        return new ArrayIterator<>(testArray);
     }
 
     public ArrayIterator<E> makeArrayIterator(final Object array) {
@@ -61,27 +53,18 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Override
-    public boolean supportsRemove() {
-        return false;
+    public ArrayIterator<E> makeEmptyIterator() {
+        return new ArrayIterator<>(new int[0]);
     }
 
-    @Test
-    public void testIterator() {
-        final Iterator<E> iter = makeObject();
-        for (final int element : testArray) {
-            final Integer testValue = Integer.valueOf(element);
-            final Number iterValue = (Number) iter.next();
+    @Override
+    public ArrayIterator<E> makeObject() {
+        return new ArrayIterator<>(testArray);
+    }
 
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-        }
-
-        assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+    @Override
+    public boolean supportsRemove() {
+        return false;
     }
 
     @Test
@@ -126,6 +109,25 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             // MODIFIED: an iterator over a zero-length section of array
             //  should be perfectly legal behavior
             fail("new ArrayIterator(Object,1,1) should NOT throw an IllegalArgumentException");
+        }
+    }
+
+    @Test
+    public void testIterator() {
+        final Iterator<E> iter = makeObject();
+        for (final int element : testArray) {
+            final Integer testValue = Integer.valueOf(element);
+            final Number iterValue = (Number) iter.next();
+
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+        }
+
+        assertFalse(iter.hasNext(), "Iterator should now be empty");
+
+        try {
+            iter.next();
+        } catch (final Exception e) {
+            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
     }
 

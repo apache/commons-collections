@@ -28,8 +28,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableTrie} implementation.
- *
- * @since 4.0
  */
 public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
@@ -38,17 +36,25 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Override
-    public Trie<String, V> makeObject() {
-        return UnmodifiableTrie.unmodifiableTrie(new PatriciaTrie<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
     @Override
-    public boolean isPutChangeSupported() {
-        return false;
+    public String[] ignoredTests() {
+        return null;
     }
 
     @Override
     public boolean isPutAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isPutChangeSupported() {
         return false;
     }
 
@@ -64,10 +70,9 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public Trie<String, V> makeObject() {
+        return UnmodifiableTrie.unmodifiableTrie(new PatriciaTrie<>());
     }
 
     @Test
@@ -78,17 +83,10 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertThrows(NullPointerException.class, () -> UnmodifiableTrie.unmodifiableTrie(null));
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    @Override
-    public String[] ignoredTests() {
-        return null;
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

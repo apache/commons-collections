@@ -30,8 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link UnmodifiableSet} implementation.
- *
- * @since 3.0
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
@@ -40,14 +38,13 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Override
-    public Set<E> makeObject() {
-        return UnmodifiableSet.unmodifiableSet(new HashSet<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
-    public Set<E> makeFullCollection() {
-        final HashSet<E> set = new HashSet<>(Arrays.asList(getFullElements()));
-        return UnmodifiableSet.unmodifiableSet(set);
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
     @Override
@@ -60,10 +57,15 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         return false;
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    @Override
+    public Set<E> makeFullCollection() {
+        final HashSet<E> set = new HashSet<>(Arrays.asList(getFullElements()));
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public Set<E> makeObject() {
+        return UnmodifiableSet.unmodifiableSet(new HashSet<>());
     }
 
     @Test
@@ -74,14 +76,10 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
         assertThrows(NullPointerException.class, () -> UnmodifiableSet.unmodifiableSet(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

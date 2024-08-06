@@ -14,10 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains the interfaces and utilities shared across all the subpackages of this component.
+ * Interfaces and utilities shared across all packages.
  * <p>
  * The following collection implementations are provided in the package:
+ * </p>
  * <ul>
  *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}
  * </ul>

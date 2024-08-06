@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -61,20 +62,6 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testGetFirst() {
-        assertEquals(a, ListUtils.getFirst(fullList));
-        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
-        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
-    }
-
-    @Test
-    public void testGetLast() {
-        assertEquals(e, ListUtils.getLast(fullList));
-        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
-        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
-    }
-
-    @Test
     public void testDefaultIfNull() {
         assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
 
@@ -94,32 +81,58 @@ public class ListUtilsTest {
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> a = new ArrayList<>( data );
-        final List<String> b = new ArrayList<>( data );
+        final List<String> list1 = new ArrayList<>( data );
+        final List<String> list2 = new ArrayList<>( data );
 
-        assertEquals(a, b);
-        assertTrue(ListUtils.isEqualList(a, b));
-        a.clear();
-        assertFalse(ListUtils.isEqualList(a, b));
-        assertFalse(ListUtils.isEqualList(a, null));
-        assertFalse(ListUtils.isEqualList(null, b));
+        assertEquals(list1, list2);
+        assertTrue(ListUtils.isEqualList(list1, list2));
+        list1.clear();
+        assertFalse(ListUtils.isEqualList(list1, list2));
+        assertFalse(ListUtils.isEqualList(list1, null));
+        assertFalse(ListUtils.isEqualList(null, list2));
         assertTrue(ListUtils.isEqualList(null, null));
+
+        list2.clear();
+        list1.add("a");
+        list2.add("b");
+        assertFalse(ListUtils.isEqualList(list1, list2));
+
+        list1.add("b");
+        list2.add("a");
+        assertFalse(ListUtils.isEqualList(list1, list2));
+    }
+
+    @Test
+    public void testGetFirst() {
+        assertEquals(a, ListUtils.getFirst(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
+    }
+
+    @Test
+    public void testGetLast() {
+        assertEquals(e, ListUtils.getLast(fullList));
+        assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
+        assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
     }
 
     @Test
     public void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> a = new ArrayList<>(data);
-        final List<String> b = new ArrayList<>(data);
+        final List<String> list1 = new ArrayList<>(data);
+        final List<String> list2 = new ArrayList<>(data);
 
-        assertEquals(a.hashCode(), b.hashCode());
-        assertEquals(a.hashCode(), ListUtils.hashCodeForList(a));
-        assertEquals(b.hashCode(), ListUtils.hashCodeForList(b));
-        assertEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
-        a.clear();
-        assertNotEquals(ListUtils.hashCodeForList(a), ListUtils.hashCodeForList(b));
+        assertEquals(list1.hashCode(), list2.hashCode());
+        assertEquals(list1.hashCode(), ListUtils.hashCodeForList(list1));
+        assertEquals(list2.hashCode(), ListUtils.hashCodeForList(list2));
+        assertEquals(ListUtils.hashCodeForList(list1), ListUtils.hashCodeForList(list2));
+        list1.clear();
+        assertNotEquals(ListUtils.hashCodeForList(list1), ListUtils.hashCodeForList(list2));
         assertEquals(0, ListUtils.hashCodeForList(null));
+
+        list1.add(null);
+        assertEquals(31, ListUtils.hashCodeForList(list1));
     }
 
     /**
@@ -294,7 +307,7 @@ public class ListUtilsTest {
                         "failed to check for null argument")
         );
 
-        String lcs = ListUtils.longestCommonSubsequence("", "");
+        String lcs = ListUtils.longestCommonSubsequence(StringUtils.EMPTY, StringUtils.EMPTY);
         assertEquals(0, lcs.length());
 
         final String banana = "BANANA";
@@ -328,6 +341,12 @@ public class ListUtilsTest {
         assertEquals(3, partition.size());
         assertEquals(1, partition.get(2).size());
         assertAll(
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> partition.get(-1),
+                        "Index -1 must not be negative"),
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> partition.get(3),
+                        "Index " + 3 + " must be less than size " + partition.size())
+        );
+        assertAll(
                 () -> assertThrows(NullPointerException.class, () -> ListUtils.partition(null, 3),
                         "failed to check for null argument"),
                 () -> assertThrows(IllegalArgumentException.class, () -> ListUtils.partition(strings, 0),
@@ -344,7 +363,7 @@ public class ListUtilsTest {
 
     @Test
     public void testPredicatedList() {
-        final Predicate<Object> predicate = o -> o instanceof String;
+        final Predicate<Object> predicate = String.class::isInstance;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
         assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
         assertAll(
@@ -480,4 +499,59 @@ public class ListUtilsTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void testSum() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(b);
+        final List<String> expected1 = new ArrayList<>();
+        expected1.add(a);
+        expected1.add(b);
+        final List<String> result1 = ListUtils.sum(list1, list2);
+        assertEquals(2, result1.size());
+        assertEquals(expected1, result1);
+    }
+
+    @Test
+    public void testUnion() {
+        final List<String> list1 = new ArrayList<>();
+        list1.add(a);
+        final List<String> list2 = new ArrayList<>();
+        list2.add(b);
+        final List<String> result1 = ListUtils.union(list1, list2);
+        final List<String> expected1 = new ArrayList<>();
+        expected1.add(a);
+        expected1.add(b);
+        assertEquals(2, result1.size());
+        assertEquals(expected1, result1);
+
+        final List<String> list3 = new ArrayList<>();
+        list3.add(a);
+        final List<String> result2 = ListUtils.union(list1, list3);
+        final List<String> expected2 = new ArrayList<>();
+        expected2.add(a);
+        expected2.add(a);
+        assertEquals(2, result1.size());
+        assertEquals(expected2, result2);
+
+        list1.add(null);
+        final List<String> result3 = ListUtils.union(list1, list2);
+        final List<String> expected3 = new ArrayList<>();
+        expected3.add(a);
+        expected3.add(null);
+        expected3.add(b);
+        assertEquals(3, result3.size());
+        assertEquals(expected3, result3);
+
+        list2.add(null);
+        final List<String> result4 = ListUtils.union(list1, list2);
+        final List<String> expected4 = new ArrayList<>();
+        expected4.add(a);
+        expected4.add(null);
+        expected4.add(b);
+        expected4.add(null);
+        assertEquals(4, result4.size());
+        assertEquals(expected4, result4);
+    }
 }

@@ -152,7 +152,7 @@ public class MapUtils {
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map. Each map entry will be printed with key, value
-     * and value classname. When the value is a Map, recursive behavior occurs.
+     * and value class name. When the value is a Map, recursive behavior occurs.
      * </p>
      * <p>
      * This method is NOT thread-safe in any special way. You must manually synchronize on either this class or the
@@ -216,6 +216,7 @@ public class MapUtils {
      * equals 'true' ignoring case then {@code true} is returned, otherwise {@code false}. If the value is a
      * {@code Number} an integer zero value returns {@code false} and non-zero returns {@code true}.
      * Otherwise, {@code null} is returned.
+     * </p>
      *
      * @param <K> the key type
      * @param map the map to use
@@ -266,7 +267,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a boolean, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the boolean conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Boolean getBoolean(final Map<? super K, ?> map, final K key,
             final Function<K, Boolean> defaultFunction) {
@@ -326,7 +327,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a Boolean, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> boolean getBooleanValue(final Map<? super K, ?> map, final K key,
             final Function<K, Boolean> defaultFunction) {
@@ -380,7 +381,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Byte getByte(final Map<? super K, ?> map, final K key, final Function<K, Byte> defaultFunction) {
         return applyDefaultFunction(map, key, MapUtils::getByte, defaultFunction);
@@ -430,7 +431,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a byte, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> byte getByteValue(final Map<? super K, ?> map, final K key,
             final Function<K, Byte> defaultFunction) {
@@ -484,7 +485,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Double getDouble(final Map<? super K, ?> map, final K key,
             final Function<K, Double> defaultFunction) {
@@ -535,7 +536,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a double, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> double getDoubleValue(final Map<? super K, ?> map, final K key,
             final Function<K, Double> defaultFunction) {
@@ -589,7 +590,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Float getFloat(final Map<? super K, ?> map, final K key,
             final Function<K, Float> defaultFunction) {
@@ -640,7 +641,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a float, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> float getFloatValue(final Map<? super K, ?> map, final K key,
             final Function<K, Float> defaultFunction) {
@@ -679,7 +680,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Integer getInteger(final Map<? super K, ?> map, final K key,
             final Function<K, Integer> defaultFunction) {
@@ -729,7 +730,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as an int, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> int getIntValue(final Map<? super K, ?> map, final K key,
             final Function<K, Integer> defaultFunction) {
@@ -784,7 +785,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Long getLong(final Map<? super K, ?> map, final K key, final Function<K, Long> defaultFunction) {
         return applyDefaultFunction(map, key, MapUtils::getLong, defaultFunction);
@@ -833,7 +834,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a long, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> long getLongValue(final Map<? super K, ?> map, final K key,
             final Function<K, Long> defaultFunction) {
@@ -887,7 +888,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the map conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key,
             final Function<K, Map<?, ?>> defaultFunction) {
@@ -952,7 +953,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Number getNumber(final Map<? super K, ?> map, final K key,
             final Function<K, Number> defaultFunction) {
@@ -1042,7 +1043,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> Short getShort(final Map<? super K, ?> map, final K key,
             final Function<K, Short> defaultFunction) {
@@ -1092,7 +1093,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a short, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> short getShortValue(final Map<? super K, ?> map, final K key,
             final Function<K, Short> defaultFunction) {
@@ -1146,7 +1147,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a string, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the string conversion fails
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <K> String getString(final Map<? super K, ?> map, final K key,
             final Function<K, String> defaultFunction) {
@@ -1216,11 +1217,11 @@ public class MapUtils {
      * @since 3.2
      */
     public static boolean isNotEmpty(final Map<?, ?> map) {
-        return !MapUtils.isEmpty(map);
+        return !isEmpty(map);
     }
 
     /**
-     * Get the specified {@link Map} as an {@link IterableMap}.
+     * Gets the specified {@link Map} as an {@link IterableMap}.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1237,7 +1238,7 @@ public class MapUtils {
     }
 
     /**
-     * Get the specified {@link SortedMap} as an {@link IterableSortedMap}.
+     * Gets the specified {@link SortedMap} as an {@link IterableSortedMap}.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -1272,7 +1273,6 @@ public class MapUtils {
      * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
      * Object obj = lazyMap.get("test");
      * </pre>
-     *
      * <p>
      * After the above code is executed, {@code obj} will contain a new {@code Date} instance. Furthermore,
      * that {@code Date} instance is the value for the {@code "test"} key in the map.
@@ -1497,7 +1497,7 @@ public class MapUtils {
     public static <K, V, E> void populateMap(final Map<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
         for (final E temp : elements) {
-            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+            map.put(keyTransformer.apply(temp), valueTransformer.apply(temp));
         }
     }
 
@@ -1532,7 +1532,7 @@ public class MapUtils {
     public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Iterable<? extends E> elements,
             final Transformer<E, K> keyTransformer, final Transformer<E, V> valueTransformer) {
         for (final E temp : elements) {
-            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+            map.put(keyTransformer.apply(temp), valueTransformer.apply(temp));
         }
     }
 
@@ -1623,25 +1623,20 @@ public class MapUtils {
      * <p>
      * For example, to create a color map:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(),
      *         new String[][] { { "RED", "#FF0000" }, { "GREEN", "#00FF00" }, { "BLUE", "#0000FF" } });
      * </pre>
-     *
      * <p>
      * or:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(),
      *         new String[] { "RED", "#FF0000", "GREEN", "#00FF00", "BLUE", "#0000FF" });
      * </pre>
-     *
      * <p>
      * or:
      * </p>
-     *
      * <pre>
      * Map colorMap = MapUtils.putAll(new HashMap(), new Map.Entry[] { new DefaultMapEntry("RED", "#FF0000"),
      *         new DefaultMapEntry("GREEN", "#00FF00"), new DefaultMapEntry("BLUE", "#0000FF") });
@@ -1734,10 +1729,9 @@ public class MapUtils {
      * <p>
      * You must manually synchronize on the returned buffer's iterator to avoid non-deterministic behavior:
      * </p>
-     *
      * <pre>
      * Map m = MapUtils.synchronizedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
@@ -1745,7 +1739,6 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     *
      * <p>
      * This method uses the implementation in {@link java.util.Collections Collections}.
      * </p>
@@ -1764,10 +1757,9 @@ public class MapUtils {
      * <p>
      * You must manually synchronize on the returned buffer's iterator to avoid non-deterministic behavior:
      * </p>
-     *
      * <pre>
      * Map m = MapUtils.synchronizedSortedMap(myMap);
-     * Set s = m.keySet(); // outside synchronized block
+     * Sets s = m.keySet(); // outside synchronized block
      * synchronized (m) { // synchronized on MAP!
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
@@ -1775,7 +1767,6 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     *
      * <p>
      * This method uses the implementation in {@link java.util.Collections Collections}.
      * </p>

@@ -43,17 +43,17 @@ import java.util.List;
  * interface to process the sub-sequences.
  * </p>
  *
+ * @param <T> the type of the input to the visit operations.
  * @see ReplacementsHandler
  * @see EditScript
  * @see SequencesComparator
- *
  * @since 4.0
  */
 public class ReplacementsFinder<T> implements CommandVisitor<T> {
 
     private final List<T> pendingInsertions;
     private final List<T> pendingDeletions;
-    private int     skipped;
+    private int skipped;
 
     /** Handler to call when synchronized sequences are found. */
     private final ReplacementsHandler<T> handler;
@@ -65,9 +65,19 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      */
     public ReplacementsFinder(final ReplacementsHandler<T> handler) {
         pendingInsertions = new ArrayList<>();
-        pendingDeletions  = new ArrayList<>();
-        skipped           = 0;
-        this.handler      = handler;
+        pendingDeletions = new ArrayList<>();
+        skipped = 0;
+        this.handler = handler;
+    }
+
+    /**
+     * Add an object to the pending deletions set.
+     *
+     * @param object  object to delete
+     */
+    @Override
+    public void visitDeleteCommand(final T object) {
+        pendingDeletions.add(object);
     }
 
     /**
@@ -98,16 +108,6 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
             pendingInsertions.clear();
             skipped = 1;
         }
-    }
-
-    /**
-     * Add an object to the pending deletions set.
-     *
-     * @param object  object to delete
-     */
-    @Override
-    public void visitDeleteCommand(final T object) {
-        pendingDeletions.add(object);
     }
 
 }

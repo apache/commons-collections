@@ -33,8 +33,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
- *
- * @since 4.0
  */
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest {
@@ -44,6 +42,16 @@ public class SplitMapUtilsTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
+    private void attemptGetOperation(final Runnable r) {
+        assertThrows(UnsupportedOperationException.class, () -> r.run(),
+                "Put exposed as writable Map must not allow Get operations");
+    }
+
+    private void attemptPutOperation(final Runnable r) {
+        assertThrows(UnsupportedOperationException.class, () -> r.run(),
+                "Get exposed as writable Map must not allow Put operations");
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         backingMap = new HashMap<>();
@@ -52,6 +60,18 @@ public class SplitMapUtilsTest {
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));
         }
+    }
+
+    @Test
+    public void testAlreadyReadableMap() {
+        final HashedMap<String, Integer> hashedMap = new HashedMap<>();
+        assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
+    }
+
+    @Test
+    public void testAlreadyWritableMap() {
+        final HashedMap<String, String> hashedMap = new HashedMap<>();
+        assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
     }
 
     @Test
@@ -105,12 +125,6 @@ public class SplitMapUtilsTest {
     }
 
     @Test
-    public void testAlreadyReadableMap() {
-        final HashedMap<String, Integer> hashedMap = new HashedMap<>();
-        assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
-    }
-
-    @Test
     @SuppressWarnings("unchecked")
     public void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
@@ -147,22 +161,6 @@ public class SplitMapUtilsTest {
         map.clear();
         assertTrue(backingMap.isEmpty());
         assertSame(map, SplitMapUtils.writableMap((Put<String, String>) map));
-    }
-
-    @Test
-    public void testAlreadyWritableMap() {
-        final HashedMap<String, String> hashedMap = new HashedMap<>();
-        assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
-    }
-
-    private void attemptGetOperation(final Runnable r) {
-        assertThrows(UnsupportedOperationException.class, () -> r.run(),
-                "Put exposed as writable Map must not allow Get operations");
-    }
-
-    private void attemptPutOperation(final Runnable r) {
-        assertThrows(UnsupportedOperationException.class, () -> r.run(),
-                "Get exposed as writable Map must not allow Put operations");
     }
 
 }

@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -41,15 +43,6 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
     public UnmodifiableIteratorTest() {
         super(UnmodifiableIteratorTest.class.getSimpleName());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    protected void setUp() throws Exception {
-        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
     @Override
@@ -62,14 +55,15 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         return UnmodifiableIterator.unmodifiableIterator(testList.iterator());
     }
 
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    protected void setUp() throws Exception {
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
+    }
+
     @Override
     public boolean supportsRemove() {
         return false;
-    }
-
-    @Test
-    public void testIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
     @Test
@@ -81,6 +75,11 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
+    }
+
+    @Test
+    public void testIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

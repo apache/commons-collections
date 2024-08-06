@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
@@ -55,12 +57,12 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Override
-    public boolean supportsRemove() {
+    public boolean supportsEmptyIterator() {
         return false;
     }
 
     @Override
-    public boolean supportsEmptyIterator() {
+    public boolean supportsRemove() {
         return false;
     }
 

@@ -24,6 +24,7 @@ import org.apache.commons.collections4.FunctorException;
 /**
  * Factory implementation that always throws an exception.
  *
+ * @param <T> the type of results supplied by this supplier.
  * @since 3.0
  */
 public final class ExceptionFactory<T> implements Factory<T>, Serializable {
@@ -63,6 +64,11 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
         throw new FunctorException("ExceptionFactory invoked");
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

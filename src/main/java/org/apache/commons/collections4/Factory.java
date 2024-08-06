@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.function.Supplier;
+
 /**
  * Defines a functor interface implemented by classes that create objects.
  * <p>
@@ -28,12 +30,12 @@ package org.apache.commons.collections4;
  * a copy of a prototype or a new instance.
  * </p>
  *
- * @param <T> the type that the factory creates
- *
+ * @param <T> the type of results supplied by this supplier.
  * @since 2.1
+ * @deprecated Use {@link Supplier}.
  */
-@FunctionalInterface
-public interface Factory<T> {
+@Deprecated
+public interface Factory<T> extends Supplier<T> {
 
     /**
      * Create a new object.
@@ -42,5 +44,10 @@ public interface Factory<T> {
      * @throws FunctorException (runtime) if the factory cannot create an object
      */
     T create();
+
+    @Override
+    default T get() {
+        return create();
+    }
 
 }

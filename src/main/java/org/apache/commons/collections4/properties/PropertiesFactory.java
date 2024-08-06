@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -43,7 +42,7 @@ import java.util.function.Function;
  */
 public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
 
-    private static class EmptyProperties extends Properties {
+    private static final class EmptyProperties extends Properties {
 
         private static final long serialVersionUID = 1L;
 
@@ -275,30 +274,6 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
         }
 
         @Override
-        public void store(final OutputStream out, final String comments) throws IOException {
-            // Implement as super
-            super.store(out, comments);
-        }
-
-        @Override
-        public void store(final Writer writer, final String comments) throws IOException {
-            // Implement as super
-            super.store(writer, comments);
-        }
-
-        @Override
-        public void storeToXML(final OutputStream os, final String comment) throws IOException {
-            // Implement as super
-            super.storeToXML(os, comment);
-        }
-
-        @Override
-        public void storeToXML(final OutputStream os, final String comment, final String encoding) throws IOException {
-            // Implement as super
-            super.storeToXML(os, comment, encoding);
-        }
-
-        @Override
         public Set<String> stringPropertyNames() {
             return Collections.emptySet();
         }
@@ -319,7 +294,7 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
     /**
      * The empty map (immutable). This map is serializable.
      *
-     * @since 4.5
+     * @since 4.5.0
      */
     public static final Properties EMPTY_PROPERTIES = new EmptyProperties();
 

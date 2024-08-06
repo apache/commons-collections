@@ -25,12 +25,7 @@ import org.junit.jupiter.api.Test;
  * Tests the {@link EnhancedDoubleHasher}.
  */
 public class EnhancedDoubleHasherTest extends AbstractHasherTest {
-    int[] expected = {1, 0, 71, 71, 1, 6, 15, 29, 49, 4, 39, 11, 65, 58, 63, 9, 41};
-
-    @Override
-    protected Hasher createHasher() {
-        return new EnhancedDoubleHasher(1, 1);
-    }
+    int[] expected = {1, 0, 0, 2, 7, 16, 30, 50, 5, 40, 12, 66, 59, 64, 10, 42, 17};
 
     @Override
     protected Hasher createEmptyHasher() {
@@ -38,14 +33,19 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Override
-    protected int[] getExpectedIndices() {
-        return expected;
+    protected Hasher createHasher() {
+        return new EnhancedDoubleHasher(1, 1);
     }
 
     @Override
     protected int getAsIndexArrayBehaviour() {
         // Allows duplicates and may be unordered
         return 0;
+    }
+
+    @Override
+    protected int[] getExpectedIndices() {
+        return expected;
     }
 
     @Override

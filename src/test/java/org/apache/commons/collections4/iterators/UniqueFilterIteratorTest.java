@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UniqueFilterIterator class.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -36,10 +38,22 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List<E> list1 = null;
+    protected List<E> list1;
 
     public UniqueFilterIteratorTest() {
         super(UniqueFilterIteratorTest.class.getSimpleName());
+    }
+
+    @Override
+    public UniqueFilterIterator<E> makeEmptyIterator() {
+        final ArrayList<E> list = new ArrayList<>();
+        return new UniqueFilterIterator<>(list.iterator());
+    }
+
+    @Override
+    public UniqueFilterIterator<E> makeObject() {
+        final Iterator<E> i = list1.iterator();
+        return new UniqueFilterIterator<>(i);
     }
 
     @BeforeEach
@@ -56,18 +70,6 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
         list1.add((E) "Five");
         list1.add((E) "Six");
         list1.add((E) "Five");
-    }
-
-    @Override
-    public UniqueFilterIterator<E> makeEmptyIterator() {
-        final ArrayList<E> list = new ArrayList<>();
-        return new UniqueFilterIterator<>(list.iterator());
-    }
-
-    @Override
-    public UniqueFilterIterator<E> makeObject() {
-        final Iterator<E> i = list1.iterator();
-        return new UniqueFilterIterator<>(i);
     }
 
     @Test

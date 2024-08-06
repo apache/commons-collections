@@ -32,26 +32,50 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PredicatedCollection.Builder class.
- *
- * @since 4.1
  */
 public class PredicatedCollectionBuilderTest {
 
+    private static final class OddPredicate implements Predicate<Integer> {
+        @Override
+        public boolean evaluate(final Integer value) {
+            return value % 2 == 1;
+        }
+    }
+
+    private void checkPredicatedCollection1(final Collection<String> collection) {
+        assertEquals(1, collection.size());
+
+        collection.add("test2");
+        assertEquals(2, collection.size());
+
+        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate!");
+
+    }
+
+    private void checkPredicatedCollection2(final Collection<Integer> collection) {
+        assertEquals(2, collection.size());
+        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate!");
+        assertEquals(2, collection.size());
+
+        collection.add(5);
+        assertEquals(3, collection.size());
+    }
+
     /**
-     * Verify that passing the Predicate means ending up in the buffer.
+     * Verify that only items that pass the Predicate end up in the buffer.
      */
     @Test
-    public void addPass() {
+    public void testAddAllPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
-        builder.add("test");
-        assertEquals(builder.createPredicatedList().size(), 1);
+        builder.addAll(Arrays.asList("test1", null, "test2"));
+        assertEquals(builder.createPredicatedList().size(), 2);
     }
 
     /**
      * Verify that failing the Predicate means NOT ending up in the buffer.
      */
     @Test
-    public void addFail() {
+    public void testAddFail() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
         assertTrue(builder.createPredicatedList().isEmpty());
@@ -60,17 +84,17 @@ public class PredicatedCollectionBuilderTest {
     }
 
     /**
-     * Verify that only items that pass the Predicate end up in the buffer.
+     * Verify that passing the Predicate means ending up in the buffer.
      */
     @Test
-    public void addAllPass() {
+    public void testAddPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
-        builder.addAll(Arrays.asList("test1", null, "test2"));
-        assertEquals(builder.createPredicatedList().size(), 2);
+        builder.add("test");
+        assertEquals(builder.createPredicatedList().size(), 1);
     }
 
     @Test
-    public void createPredicatedCollectionWithNotNullPredicate() {
+    public void testCreatePredicatedCollectionWithNotNullPredicate() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test1");
         builder.add((String) null);
@@ -88,18 +112,8 @@ public class PredicatedCollectionBuilderTest {
         checkPredicatedCollection1(predicatedQueue);
     }
 
-    private void checkPredicatedCollection1(final Collection<String> collection) {
-        assertEquals(1, collection.size());
-
-        collection.add("test2");
-        assertEquals(2, collection.size());
-
-        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate!");
-
-    }
-
     @Test
-    public void createPredicatedCollectionWithPredicate() {
+    public void testCreatePredicatedCollectionWithPredicate() {
         final OddPredicate p = new OddPredicate();
         final PredicatedCollection.Builder<Integer> builder = PredicatedCollection.builder(p);
 
@@ -118,21 +132,5 @@ public class PredicatedCollectionBuilderTest {
 
         final Queue<Integer> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection2(predicatedQueue);
-    }
-
-    private void checkPredicatedCollection2(final Collection<Integer> collection) {
-        assertEquals(2, collection.size());
-        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate!");
-        assertEquals(2, collection.size());
-
-        collection.add(5);
-        assertEquals(3, collection.size());
-    }
-
-    private static class OddPredicate implements Predicate<Integer> {
-        @Override
-        public boolean evaluate(final Integer value) {
-            return value % 2 == 1;
-        }
     }
 }

@@ -14,18 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations of the {@link org.apache.commons.collections4.Bag Bag} and
+ * Implements the {@link org.apache.commons.collections4.Bag Bag} and
  * {@link org.apache.commons.collections4.SortedBag SortedBag} interfaces.
  * A bag stores an object and a count of the number of occurrences of the object.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
  *   <li>HashBag - implementation that uses a HashMap to store the data
  *   <li>TreeBag - implementation that uses a TreeMap to store the data
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
  *   <li>Synchronized - synchronizes method access for multithreaded environments
  *   <li>Unmodifiable - ensures the bag cannot be altered

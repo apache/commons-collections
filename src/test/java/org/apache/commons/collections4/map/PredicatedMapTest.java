@@ -33,14 +33,12 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link PredicatedMap} implementation.
- *
- * @since 3.0
  */
 public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> truePredicate = TruePredicate.<Object>truePredicate();
 
-    protected static final Predicate<Object> testPredicate = o -> o instanceof String;
+    protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
     public PredicatedMapTest() {
         super(PredicatedMapTest.class.getSimpleName());
@@ -49,6 +47,11 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
         final Predicate<? super V> valuePredicate) {
         return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -104,11 +107,6 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         iterator = map.entrySet().iterator();
         entry = iterator.next();
         entry.setValue((V) "x");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

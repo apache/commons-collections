@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
  * implementation.
- *
- * @since 3.0
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -44,9 +42,56 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public IterableMap<K, V> makeObject() {
         return TransformedMap.transformingMap(new HashMap<>(), TransformerUtils.<K>nopTransformer(),
                 TransformerUtils.<V>nopTransformer());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFactory_Decorate() {
+        final Map<K, V> base = new HashMap<>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        final Map<K, V> trans = TransformedMap
+                .transformingMap(
+                        base,
+                        null,
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals("1", trans.get("A"));
+        assertEquals("2", trans.get("B"));
+        assertEquals("3", trans.get("C"));
+        trans.put((K) "D", (V) "4");
+        assertEquals(Integer.valueOf(4), trans.get("D"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFactory_decorateTransform() {
+        final Map<K, V> base = new HashMap<>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        final Map<K, V> trans = TransformedMap
+                .transformedMap(
+                        base,
+                        (Transformer<? super K, ? extends K>) TransformedCollectionTest.TO_LOWER_CASE_TRANSFORMER,
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals(Integer.valueOf(1), trans.get("a"));
+        assertEquals(Integer.valueOf(2), trans.get("b"));
+        assertEquals(Integer.valueOf(3), trans.get("c"));
+        trans.put((K) "D", (V) "4");
+        assertEquals(Integer.valueOf(4), trans.get("d"));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -97,53 +142,6 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         entry.setValue((V) "88");
         assertEquals(Integer.valueOf(88), entry.getValue());
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
-        final Map<K, V> base = new HashMap<>();
-        base.put((K) "A", (V) "1");
-        base.put((K) "B", (V) "2");
-        base.put((K) "C", (V) "3");
-
-        final Map<K, V> trans = TransformedMap
-                .transformingMap(
-                        base,
-                        null,
-                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(3, trans.size());
-        assertEquals("1", trans.get("A"));
-        assertEquals("2", trans.get("B"));
-        assertEquals("3", trans.get("C"));
-        trans.put((K) "D", (V) "4");
-        assertEquals(Integer.valueOf(4), trans.get("D"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
-        final Map<K, V> base = new HashMap<>();
-        base.put((K) "A", (V) "1");
-        base.put((K) "B", (V) "2");
-        base.put((K) "C", (V) "3");
-
-        final Map<K, V> trans = TransformedMap
-                .transformedMap(
-                        base,
-                        (Transformer<? super K, ? extends K>) TransformedCollectionTest.TO_LOWER_CASE_TRANSFORMER,
-                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(3, trans.size());
-        assertEquals(Integer.valueOf(1), trans.get("a"));
-        assertEquals(Integer.valueOf(2), trans.get("b"));
-        assertEquals(Integer.valueOf(3), trans.get("c"));
-        trans.put((K) "D", (V) "4");
-        assertEquals(Integer.valueOf(4), trans.get("d"));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

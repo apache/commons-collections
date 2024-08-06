@@ -34,6 +34,11 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public SortedBag<T> makeObject() {
         return new TreeBag<>();
     }
@@ -77,11 +82,6 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         assertEquals("C", bag.toArray()[2], "Should get elements in correct order");
         assertEquals("A", ((SortedBag<T>) bag).first(), "Should get first key");
         assertEquals("D", ((SortedBag<T>) bag).last(), "Should get last key");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

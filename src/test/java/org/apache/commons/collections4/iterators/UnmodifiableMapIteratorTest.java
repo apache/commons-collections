@@ -32,31 +32,14 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableMapIterator.
+ *
+ * @param <K> the type of the keys in the maps tested.
+ * @param <V> the type of the values in the maps tested.
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
     public UnmodifiableMapIteratorTest() {
         super(UnmodifiableMapIteratorTest.class.getSimpleName());
-    }
-
-    @Override
-    public MapIterator<K, V> makeEmptyIterator() {
-        return UnmodifiableMapIterator.unmodifiableMapIterator(new DualHashBidiMap<K, V>().mapIterator());
-    }
-
-    @Override
-    public MapIterator<K, V> makeObject() {
-        return UnmodifiableMapIterator.unmodifiableMapIterator(getMap().mapIterator());
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public IterableMap<K, V> getMap() {
-        final IterableMap<K, V> testMap = new DualHashBidiMap<>();
-        testMap.put((K) "A", (V) "a");
-        testMap.put((K) "B", (V) "b");
-        testMap.put((K) "C", (V) "c");
-        return testMap;
     }
 
     @Override
@@ -70,6 +53,26 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public IterableMap<K, V> getMap() {
+        final IterableMap<K, V> testMap = new DualHashBidiMap<>();
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
+        return testMap;
+    }
+
+    @Override
+    public MapIterator<K, V> makeEmptyIterator() {
+        return UnmodifiableMapIterator.unmodifiableMapIterator(new DualHashBidiMap<K, V>().mapIterator());
+    }
+
+    @Override
+    public MapIterator<K, V> makeObject() {
+        return UnmodifiableMapIterator.unmodifiableMapIterator(getMap().mapIterator());
+    }
+
+    @Override
     public boolean supportsRemove() {
         return false;
     }
@@ -77,11 +80,6 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     @Override
     public boolean supportsSetValue() {
         return false;
-    }
-
-    @Test
-    public void testMapIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
     @Test
@@ -93,6 +91,11 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         assertNotSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableMapIterator.unmodifiableMapIterator(null));
+    }
+
+    @Test
+    public void testMapIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

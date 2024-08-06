@@ -41,8 +41,6 @@ import org.junit.jupiter.api.Test;
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractCollectionTest} for more details.
- *
- * @since 3.0
  */
 public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 
@@ -56,23 +54,23 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Provides additional verifications for sets.
+     * Gets the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
      */
     @Override
-    public void verify() {
-        super.verify();
-
-        assertEquals(getConfirmed(), getCollection(), "Sets should be equal");
-        assertEquals(getConfirmed().hashCode(), getCollection().hashCode(),
-                     "Sets should have equal hashCodes");
-        final Collection<E> set = makeConfirmedCollection();
-        for (final E element : getCollection()) {
-            assertTrue(set.add(element), "Set.iterator should only return unique elements");
-        }
+    public Set<E> getCollection() {
+        return (Set<E>) super.getCollection();
     }
 
     /**
-     * Set equals method is defined.
+     * Gets the {@link AbstractCollectionTest#confirmed} fixture, but cast as a Set.
+     */
+    @Override
+    public Set<E> getConfirmed() {
+        return (Set<E>) super.getConfirmed();
+    }
+
+    /**
+     * Sets equals method is defined.
      */
     @Override
     public boolean isEqualsCheckable() {
@@ -102,14 +100,6 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Makes an empty set.  The returned set should have no elements.
-     *
-     * @return an empty set
-     */
-    @Override
-    public abstract Set<E> makeObject();
-
-    /**
      * Makes a full set by first creating an empty set and then adding
      * all the elements returned by {@link #getFullElements()}.
      *
@@ -125,20 +115,12 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Return the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
+     * Makes an empty set.  The returned set should have no elements.
+     *
+     * @return an empty set
      */
     @Override
-    public Set<E> getCollection() {
-        return (Set<E>) super.getCollection();
-    }
-
-    /**
-     * Return the {@link AbstractCollectionTest#confirmed} fixture, but cast as a Set.
-     */
-    @Override
-    public Set<E> getConfirmed() {
-        return (Set<E>) super.getConfirmed();
-    }
+    public abstract Set<E> makeObject();
 
     /**
      * Tests {@link Set#equals(Object)}.
@@ -175,6 +157,22 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         resetFull();
         assertEquals(getCollection().hashCode(), getConfirmed().hashCode(),
                 "Equal sets have equal hashCodes");
+    }
+
+    /**
+     * Provides additional verifications for sets.
+     */
+    @Override
+    public void verify() {
+        super.verify();
+
+        assertEquals(getConfirmed(), getCollection(), "Sets should be equal");
+        assertEquals(getConfirmed().hashCode(), getCollection().hashCode(),
+                     "Sets should have equal hashCodes");
+        final Collection<E> set = makeConfirmedCollection();
+        for (final E element : getCollection()) {
+            assertTrue(set.add(element), "Set.iterator should only return unique elements");
+        }
     }
 
 }

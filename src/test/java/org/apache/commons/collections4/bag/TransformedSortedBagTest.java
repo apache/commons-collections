@@ -27,13 +27,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link TransformedSortedBag}
  * implementation.
- *
- * @since 3.0
  */
 public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     public TransformedSortedBagTest() {
         super(TransformedSortedBagTest.class.getSimpleName());
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -72,11 +75,6 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         }
 
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

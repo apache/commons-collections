@@ -53,35 +53,18 @@ import java.util.Collection;
 public interface MultiMap<K, V> extends IterableMap<K, Object> {
 
     /**
-     * Removes a specific value from map.
+     * Checks whether the map contains the value specified.
      * <p>
-     * The item is removed from the collection mapped to the specified key.
-     * Other values attached to that key are unaffected.
-     * <p>
-     * If the last value for a key is removed, implementations typically
-     * return {@code null} from a subsequent {@code get(Object)}, however
-     * they may choose to return an empty collection.
-     *
-     * @param key  the key to remove from
-     * @param item  the item to remove
-     * @return {@code true} if the mapping was removed, {@code false} otherwise
-     * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws ClassCastException if the key or value is of an invalid type
-     * @throws NullPointerException if the key or value is null and null is invalid
-     * @since 4.0 (signature in previous releases: V remove(K, V))
-     */
-    boolean removeMapping(K key, V item);
-
-    /**
-     * Gets the number of keys in this map.
-     * <p>
-     * Implementations typically return only the count of keys in the map
+     * Implementations typically check all collections against all keys for the value.
      * This cannot be mandated due to backwards compatibility of this interface.
      *
-     * @return the number of key-collection mappings in this map
+     * @param value  the value to search for
+     * @return true if the map contains the value
+     * @throws ClassCastException if the value is of an invalid type
+     * @throws NullPointerException if the value is null and null value are invalid
      */
     @Override
-    int size();
+    boolean containsValue(Object value);
 
     /**
      * Gets the collection of values associated with the specified key.
@@ -104,20 +87,6 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      */
     @Override
     Object get(Object key); // Cannot use get(K key) as that does not properly implement Map#get
-
-    /**
-     * Checks whether the map contains the value specified.
-     * <p>
-     * Implementations typically check all collections against all keys for the value.
-     * This cannot be mandated due to backwards compatibility of this interface.
-     *
-     * @param value  the value to search for
-     * @return true if the map contains the value
-     * @throws ClassCastException if the value is of an invalid type
-     * @throws NullPointerException if the value is null and null value are invalid
-     */
-    @Override
-    boolean containsValue(Object value);
 
     /**
      * Adds the value to the collection associated with the specified key.
@@ -153,6 +122,37 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      */
     @Override
     Object remove(Object key); // Cannot use remove(K key) as that does not properly implement Map#remove
+
+    /**
+     * Removes a specific value from map.
+     * <p>
+     * The item is removed from the collection mapped to the specified key.
+     * Other values attached to that key are unaffected.
+     * <p>
+     * If the last value for a key is removed, implementations typically
+     * return {@code null} from a subsequent {@code get(Object)}, however
+     * they may choose to return an empty collection.
+     *
+     * @param key  the key to remove from
+     * @param item  the item to remove
+     * @return {@code true} if the mapping was removed, {@code false} otherwise
+     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @throws ClassCastException if the key or value is of an invalid type
+     * @throws NullPointerException if the key or value is null and null is invalid
+     * @since 4.0 (signature in previous releases: V remove(K, V))
+     */
+    boolean removeMapping(K key, V item);
+
+    /**
+     * Gets the number of keys in this map.
+     * <p>
+     * Implementations typically return only the count of keys in the map
+     * This cannot be mandated due to backwards compatibility of this interface.
+     *
+     * @return the number of key-collection mappings in this map
+     */
+    @Override
+    int size();
 
     /**
      * Gets a collection containing all the values in the map.

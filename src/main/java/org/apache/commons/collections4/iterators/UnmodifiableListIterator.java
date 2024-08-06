@@ -32,8 +32,19 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmodifiable {
 
-    /** The iterator being decorated */
-    private final ListIterator<? extends E> iterator;
+    /**
+     * Decorates the specified iterator such that it cannot be modified.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @return a new unmodifiable list iterator
+     * @throws NullPointerException if the iterator is null
+     * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
+     */
+    @Deprecated
+    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
+        return unmodifiableListIterator(iterator);
+    }
 
     /**
      * Decorates the specified iterator such that it cannot be modified.
@@ -53,22 +64,11 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         return new UnmodifiableListIterator<>(iterator);
     }
 
-    /**
-     * Decorates the specified iterator such that it cannot be modified.
-     *
-     * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @return a new unmodifiable list iterator
-     * @throws NullPointerException if the iterator is null
-     * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
-     */
-    @Deprecated
-    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
-        return unmodifiableListIterator(iterator);
-    }
+    /** The iterator being decorated */
+    private final ListIterator<? extends E> iterator;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */
@@ -77,8 +77,18 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     }
 
     @Override
+    public void add(final E obj) {
+        throw new UnsupportedOperationException("add() is not supported");
+    }
+
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return iterator.hasPrevious();
     }
 
     @Override
@@ -89,11 +99,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     @Override
     public int nextIndex() {
         return iterator.nextIndex();
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return iterator.hasPrevious();
     }
 
     @Override
@@ -114,11 +119,6 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     @Override
     public void set(final E obj) {
         throw new UnsupportedOperationException("set() is not supported");
-    }
-
-    @Override
-    public void add(final E obj) {
-        throw new UnsupportedOperationException("add() is not supported");
     }
 
 }

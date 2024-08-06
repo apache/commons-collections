@@ -21,7 +21,7 @@ import java.util.Map;
 import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 
 /**
- * Implementation of a PATRICIA Trie (Practical Algorithm to Retrieve Information
+ * Implements a PATRICIA Trie (Practical Algorithm to Retrieve Information
  * Coded in Alphanumeric).
  * <p>
  * A PATRICIA {@link org.apache.commons.collections4.Trie} is a compressed
@@ -66,12 +66,20 @@ public class PatriciaTrie<V> extends AbstractPatriciaTrie<String, V> {
 
     private static final long serialVersionUID = 4446367780901817838L;
 
+    /**
+     * Constructs a new instance.
+     */
     public PatriciaTrie() {
-        super(new StringKeyAnalyzer());
+        super(StringKeyAnalyzer.INSTANCE);
     }
 
-    public PatriciaTrie(final Map<? extends String, ? extends V> m) {
-        super(new StringKeyAnalyzer(), m);
+    /**
+     * Constructs a new instance.
+     *
+     * @param map mappings to be stored in this map.
+     */
+    public PatriciaTrie(final Map<? extends String, ? extends V> map) {
+        super(StringKeyAnalyzer.INSTANCE, map);
     }
 
 }

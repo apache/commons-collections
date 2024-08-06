@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.iterators;
 
 import org.apache.commons.collections4.OrderedMapIterator;
-import org.apache.commons.collections4.ResettableIterator;
 
 /**
  * Provides an implementation of an empty ordered map iterator.
@@ -27,7 +26,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @since 3.1
  */
 public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V>
-        implements OrderedMapIterator<K, V>, ResettableIterator<K> {
+        implements OrderedMapIterator<K, V> {
 
     /**
      * Singleton instance of the iterator.
@@ -37,7 +36,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
     public static final OrderedMapIterator INSTANCE = new EmptyOrderedMapIterator<>();
 
     /**
-     * Get a typed instance of the iterator.
+     * Gets a typed instance of the iterator.
      * @param <K> the key type
      * @param <V> the value type
      * @return {@link OrderedMapIterator}&lt;K, V&gt;
@@ -47,7 +46,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyOrderedMapIterator() {
     }

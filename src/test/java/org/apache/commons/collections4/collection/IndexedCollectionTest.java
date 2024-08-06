@@ -32,11 +32,18 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link IndexedCollection} implementation.
- *
- * @since 4.0
  */
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {
+
+    private static final class IntegerTransformer implements Transformer<String, Integer>, Serializable {
+        private static final long serialVersionUID = 809439581555072949L;
+
+        @Override
+        public Integer transform(final String input) {
+            return Integer.valueOf(input);
+        }
+    }
 
     public IndexedCollectionTest() {
         super(IndexedCollectionTest.class.getSimpleName());
@@ -50,25 +57,6 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         return IndexedCollection.uniqueIndexedCollection(collection, new IntegerTransformer());
     }
 
-    private static final class IntegerTransformer implements Transformer<String, Integer>, Serializable {
-        private static final long serialVersionUID = 809439581555072949L;
-
-        @Override
-        public Integer transform(final String input) {
-            return Integer.valueOf(input);
-        }
-    }
-
-    @Override
-    public Collection<String> makeObject() {
-        return decorateCollection(new ArrayList<>());
-    }
-
-    @Override
-    public Collection<String> makeConfirmedCollection() {
-        return new ArrayList<>();
-    }
-
     @Override
     public String[] getFullElements() {
         return new String[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -80,13 +68,23 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Override
-    public Collection<String> makeFullCollection() {
-        return decorateCollection(new ArrayList<>(Arrays.asList(getFullElements())));
+    public Collection<String> makeConfirmedCollection() {
+        return new ArrayList<>();
     }
 
     @Override
     public Collection<String> makeConfirmedFullCollection() {
         return new ArrayList<>(Arrays.asList(getFullElements()));
+    }
+
+    @Override
+    public Collection<String> makeFullCollection() {
+        return decorateCollection(new ArrayList<>(Arrays.asList(getFullElements())));
+    }
+
+    @Override
+    public Collection<String> makeObject() {
+        return decorateCollection(new ArrayList<>());
     }
 
     public Collection<String> makeTestCollection() {
@@ -122,15 +120,6 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testEnsureDuplicateObjectsCauseException() throws Exception {
-        final Collection<String> coll = makeUniqueTestCollection();
-
-        coll.add("1");
-
-        assertThrows(IllegalArgumentException.class, () -> coll.add("1"));
-    }
-
-    @Test
     public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
         final Collection<String> original = makeFullCollection();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
@@ -138,6 +127,15 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("1", indexed.get(1));
         assertEquals("2", indexed.get(2));
         assertEquals("3", indexed.get(3));
+    }
+
+    @Test
+    public void testEnsureDuplicateObjectsCauseException() throws Exception {
+        final Collection<String> coll = makeUniqueTestCollection();
+
+        coll.add("1");
+
+        assertThrows(IllegalArgumentException.class, () -> coll.add("1"));
     }
 
     @Test

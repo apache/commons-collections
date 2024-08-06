@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains classes to extend or customize the behavior of
+ * Extends and customizes the behavior of
  * {@link java.util.Properties Properties}.
  * <p>
  * The following classes are provided in the package:

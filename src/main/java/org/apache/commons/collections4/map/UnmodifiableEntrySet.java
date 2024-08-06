@@ -42,6 +42,41 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
 public final class UnmodifiableEntrySet<K, V>
         extends AbstractSetDecorator<Map.Entry<K, V>> implements Unmodifiable {
 
+    /**
+     * Implements a map entry that is unmodifiable.
+     */
+    private final class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
+
+        protected UnmodifiableEntry(final Map.Entry<K, V> entry) {
+            super(entry);
+        }
+
+        @Override
+        public V setValue(final V obj) {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    /**
+     * Implements an entry set iterator.
+     */
+    private final class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
+
+        protected UnmodifiableEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public Map.Entry<K, V> next() {
+            return new UnmodifiableEntry(getIterator().next());
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = 1678353579659253473L;
 
@@ -88,7 +123,17 @@ public final class UnmodifiableEntrySet<K, V>
     }
 
     @Override
+    public Iterator<Map.Entry<K, V>> iterator() {
+        return new UnmodifiableEntrySetIterator(decorated().iterator());
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -101,18 +146,8 @@ public final class UnmodifiableEntrySet<K, V>
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Iterator<Map.Entry<K, V>> iterator() {
-        return new UnmodifiableEntrySetIterator(decorated().iterator());
     }
 
     @Override
@@ -150,41 +185,6 @@ public final class UnmodifiableEntrySet<K, V>
             array[result.length] = null;
         }
         return array;
-    }
-
-    /**
-     * Implementation of an entry set iterator.
-     */
-    private class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
-
-        protected UnmodifiableEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
-            super(iterator);
-        }
-
-        @Override
-        public Map.Entry<K, V> next() {
-            return new UnmodifiableEntry(getIterator().next());
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    /**
-     * Implementation of a map entry that is unmodifiable.
-     */
-    private class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
-
-        protected UnmodifiableEntry(final Map.Entry<K, V> entry) {
-            super(entry);
-        }
-
-        @Override
-        public V setValue(final V obj) {
-            throw new UnsupportedOperationException();
-        }
     }
 
 }

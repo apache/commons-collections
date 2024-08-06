@@ -42,8 +42,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     /** Serialization version */
     private static final long serialVersionUID = -7156426030315945159L;
 
-    private final Trie<K, V> delegate;
-
     /**
      * Factory method to create an unmodifiable trie.
      *
@@ -62,6 +60,8 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return new UnmodifiableTrie<>(trie);
     }
 
+    private final Trie<K, V> delegate;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -74,25 +74,14 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = tmpTrie;
     }
 
-
-    @Override
-    public Set<Entry<K, V>> entrySet() {
-        return Collections.unmodifiableSet(delegate.entrySet());
-    }
-
-    @Override
-    public Set<K> keySet() {
-        return Collections.unmodifiableSet(delegate.keySet());
-    }
-
-    @Override
-    public Collection<V> values() {
-        return Collections.unmodifiableCollection(delegate.values());
-    }
-
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Comparator<? super K> comparator() {
+        return delegate.comparator();
     }
 
     @Override
@@ -106,13 +95,69 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     @Override
+    public Set<Entry<K, V>> entrySet() {
+        return Collections.unmodifiableSet(delegate.entrySet());
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return delegate.equals(obj);
+    }
+
+    @Override
+    public K firstKey() {
+        return delegate.firstKey();
+    }
+
+    @Override
     public V get(final Object key) {
         return delegate.get(key);
     }
 
     @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public SortedMap<K, V> headMap(final K toKey) {
+        return Collections.unmodifiableSortedMap(delegate.headMap(toKey));
+    }
+
+    @Override
     public boolean isEmpty() {
         return delegate.isEmpty();
+    }
+
+    @Override
+    public Set<K> keySet() {
+        return Collections.unmodifiableSet(delegate.keySet());
+    }
+
+    @Override
+    public K lastKey() {
+        return delegate.lastKey();
+    }
+
+    @Override
+    public OrderedMapIterator<K, V> mapIterator() {
+        final OrderedMapIterator<K, V> it = delegate.mapIterator();
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
+    }
+
+    @Override
+    public K nextKey(final K key) {
+        return delegate.nextKey(key);
+    }
+
+    @Override
+    public SortedMap<K, V> prefixMap(final K key) {
+        return Collections.unmodifiableSortedMap(delegate.prefixMap(key));
+    }
+
+    @Override
+    public K previousKey(final K key) {
+        return delegate.previousKey(key);
     }
 
     @Override
@@ -136,21 +181,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     @Override
-    public K firstKey() {
-        return delegate.firstKey();
-    }
-
-    @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        return Collections.unmodifiableSortedMap(delegate.headMap(toKey));
-    }
-
-    @Override
-    public K lastKey() {
-        return delegate.lastKey();
-    }
-
-    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return Collections.unmodifiableSortedMap(delegate.subMap(fromKey, toKey));
     }
@@ -161,44 +191,13 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     @Override
-    public SortedMap<K, V> prefixMap(final K key) {
-        return Collections.unmodifiableSortedMap(delegate.prefixMap(key));
-    }
-
-    @Override
-    public Comparator<? super K> comparator() {
-        return delegate.comparator();
-    }
-
-    @Override
-    public OrderedMapIterator<K, V> mapIterator() {
-        final OrderedMapIterator<K, V> it = delegate.mapIterator();
-        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
-    }
-
-    @Override
-    public K nextKey(final K key) {
-        return delegate.nextKey(key);
-    }
-
-    @Override
-    public K previousKey(final K key) {
-        return delegate.previousKey(key);
-    }
-
-    @Override
-    public int hashCode() {
-        return delegate.hashCode();
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return delegate.equals(obj);
-    }
-
-    @Override
     public String toString() {
         return delegate.toString();
+    }
+
+    @Override
+    public Collection<V> values() {
+        return Collections.unmodifiableCollection(delegate.values());
     }
 
 }

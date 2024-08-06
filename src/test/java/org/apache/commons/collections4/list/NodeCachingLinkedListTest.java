@@ -22,45 +22,9 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
+ * Test class for NodeCachingLinkedList, a performance optimized LinkedList.
  */
 public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
-
-    public NodeCachingLinkedListTest() {
-        super(NodeCachingLinkedListTest.class.getSimpleName());
-    }
-
-    @Override
-    public NodeCachingLinkedList<E> makeObject() {
-        return new NodeCachingLinkedList<>();
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testShrinkCache() {
-        if (!isRemoveSupported() || !isAddSupported()) {
-            return;
-        }
-        resetEmpty();
-        final NodeCachingLinkedList<E> list = getCollection();
-
-        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
-        list.removeAllNodes(); // Will dump all 4 elements into cache
-        list.setMaximumCacheSize(2); // shrink cache
-        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
-        checkNodes();
-        list.removeNode(list.getNode(0, false)); // no room in cache
-        list.removeNode(list.getNode(0, false));
-        list.removeNode(list.getNode(0, false));
-        checkNodes();
-        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
-        checkNodes();
-    }
 
     public static void compareSpeed() {
         final NodeCachingLinkedList<Object> ncll = new NodeCachingLinkedList<>();
@@ -130,6 +94,28 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     }
 
+    public NodeCachingLinkedListTest() {
+        super(NodeCachingLinkedListTest.class.getSimpleName());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NodeCachingLinkedList<E> getCollection() {
+        return (NodeCachingLinkedList<E>) super.getCollection();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public NodeCachingLinkedList<E> makeObject() {
+        return new NodeCachingLinkedList<>();
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(),
@@ -139,11 +125,25 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 //            "src/test/resources/data/test/NodeCachingLinkedList.fullCollection.version4.obj");
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public NodeCachingLinkedList<E> getCollection() {
-        return (NodeCachingLinkedList<E>) super.getCollection();
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testShrinkCache() {
+        if (!isRemoveSupported() || !isAddSupported()) {
+            return;
+        }
+        resetEmpty();
+        final NodeCachingLinkedList<E> list = getCollection();
+
+        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
+        list.removeAllNodes(); // Will dump all 4 elements into cache
+        list.setMaximumCacheSize(2); // shrink cache
+        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
+        checkNodes();
+        list.removeNode(list.getNode(0, false)); // no room in cache
+        list.removeNode(list.getNode(0, false));
+        list.removeNode(list.getNode(0, false));
+        checkNodes();
+        list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
+        checkNodes();
     }
 }

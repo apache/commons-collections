@@ -22,13 +22,13 @@ import junit.framework.TestSuite;
 /**
  * A {@link TestCase} that can define both simple and bulk test methods.
  * <p>
- * A <I>simple test method</I> is the type of test traditionally
+ * A <em>simple test method</em> is the type of test traditionally
  * supplied by {@link TestCase}.  To define a simple test, create a public
  * no-argument method whose name starts with "test".  You can specify
  * the name of simple test in the constructor of {@code BulkTest};
  * a subsequent call to {@link TestCase#run} will run that simple test.
  * <p>
- * A <I>bulk test method</I>, on the other hand, returns a new instance
+ * A <em>bulk test method</em>, on the other hand, returns a new instance
  * of {@code BulkTest}, which can itself define new simple and bulk
  * test methods.  By using the {@link #makeSuite} method, you can
  * automatically create a hierarchical suite of tests and child bulk tests.
@@ -88,7 +88,7 @@ import junit.framework.TestSuite;
  *  simple test methods and no bulk test methods; {@code HashMapTest}
  *  defines one simple test method and two bulk test methods.  When
  *  {@code makeSuite(HashMapTest.class).run} is executed,
- *  <I>five</I> simple test methods will be run, in this order:<P>
+ *  <em>five</em> simple test methods will be run, in this order:<P>
  *
  *  <Ol>
  *  <Li>HashMapTest.testClear()
@@ -123,7 +123,7 @@ import junit.framework.TestSuite;
  *  want to override specific simple tests within a bulk test, use the
  *  {@link #ignoredTests} method.<P>
  *
- *  Note that if you want to use the bulk test methods, you <I>must</I>
+ *  Note that if you want to use the bulk test methods, you <em>must</em>
  *  define your {@code suite()} method to use {@link #makeSuite}.
  *  The ordinary {@link TestSuite} constructor doesn't know how to
  *  interpret bulk test methods.
@@ -150,7 +150,7 @@ public class BulkTest implements Cloneable {
      *  test should be ignored.  It's also displayed in the text runner
      *  to ease debugging.
      */
-    String verboseName;
+    private String verboseName;
 
     /**
      *  the name of the simple test method
@@ -169,15 +169,6 @@ public class BulkTest implements Cloneable {
     }
 
     /**
-     *  Returns the name of the simple test method of this {@code BulkTest}.
-     *
-     *  @return the name of the simple test method of this {@code BulkTest}
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      *  Creates a clone of this {@code BulkTest}.<P>
      *
      *  @return  a clone of this {@code BulkTest}
@@ -189,6 +180,22 @@ public class BulkTest implements Cloneable {
         } catch (final CloneNotSupportedException e) {
             throw new Error(); // should never happen
         }
+    }
+
+    /**
+     *  Returns the name of the simple test method of this {@code BulkTest}.
+     *
+     *  @return the name of the simple test method of this {@code BulkTest}
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public String getVerboseName() {
+        return verboseName;
     }
 
     /**
@@ -226,6 +233,20 @@ public class BulkTest implements Cloneable {
      */
     public String[] ignoredTests() {
         return null;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
+     */
+    public void setVerboseName(final String verboseName) {
+        this.verboseName = verboseName;
     }
 
     /**

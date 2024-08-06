@@ -44,6 +44,17 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
+     * Add always throws {@link UnsupportedOperationException}.
+     *
+     * @param obj  the object to add
+     * @throws UnsupportedOperationException always
+     */
+    @Override
+    public void add(final E obj) {
+        throw new UnsupportedOperationException("add() is not supported by this iterator");
+    }
+
+    /**
      * Is another object available from the iterator?
      * <p>
      * This returns true if the single object hasn't been returned yet.
@@ -68,30 +79,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Returns the index of the element that would be returned by a subsequent
-     * call to {@code next}.
-     *
-     * @return 0 or 1 depending on current state.
-     */
-    @Override
-    public int nextIndex() {
-        return beforeFirst ? 0 : 1;
-    }
-
-    /**
-     * Returns the index of the element that would be returned by a subsequent
-     * call to {@code previous}. A return value of -1 indicates that the iterator is currently at
-     * the start.
-     *
-     * @return 0 or -1 depending on current state.
-     */
-    @Override
-    public int previousIndex() {
-        return beforeFirst ? -1 : 0;
-    }
-
-    /**
-     * Get the next object from the iterator.
+     * Gets the next object from the iterator.
      * <p>
      * This returns the single object if it hasn't been returned yet.
      *
@@ -110,7 +98,18 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Get the previous object from the iterator.
+     * Returns the index of the element that would be returned by a subsequent
+     * call to {@code next}.
+     *
+     * @return 0 or 1 depending on current state.
+     */
+    @Override
+    public int nextIndex() {
+        return beforeFirst ? 0 : 1;
+    }
+
+    /**
+     * Gets the previous object from the iterator.
      * <p>
      * This returns the single object if it has been returned.
      *
@@ -125,6 +124,18 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
         }
         beforeFirst = true;
         return object;
+    }
+
+    /**
+     * Returns the index of the element that would be returned by a subsequent
+     * call to {@code previous}. A return value of -1 indicates that the iterator is currently at
+     * the start.
+     *
+     * @return 0 or -1 depending on current state.
+     */
+    @Override
+    public int previousIndex() {
+        return beforeFirst ? -1 : 0;
     }
 
     /**
@@ -144,18 +155,16 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Add always throws {@link UnsupportedOperationException}.
-     *
-     * @param obj  the object to add
-     * @throws UnsupportedOperationException always
+     * Reset the iterator back to the start.
      */
     @Override
-    public void add(final E obj) {
-        throw new UnsupportedOperationException("add() is not supported by this iterator");
+    public void reset() {
+        beforeFirst = true;
+        nextCalled = false;
     }
 
     /**
-     * Set sets the value of the singleton.
+     * Sets sets the value of the singleton.
      *
      * @param obj  the object to set
      * @throws IllegalStateException if {@code next} has not been called
@@ -167,15 +176,6 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
             throw new IllegalStateException();
         }
         this.object = obj;
-    }
-
-    /**
-     * Reset the iterator back to the start.
-     */
-    @Override
-    public void reset() {
-        beforeFirst = true;
-        nextCalled = false;
     }
 
 }

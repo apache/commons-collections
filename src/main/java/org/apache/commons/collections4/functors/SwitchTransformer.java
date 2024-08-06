@@ -27,48 +27,14 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation calls the transformer whose predicate returns true,
  * like a switch statement.
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable {
+public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6404460890903469332L;
-
-    /** The tests to consider */
-    private final Predicate<? super I>[] iPredicates;
-    /** The matching transformers to call */
-    private final Transformer<? super I, ? extends O>[] iTransformers;
-    /** The default transformer to call if no tests match */
-    private final Transformer<? super I, ? extends O> iDefault;
-
-    /**
-     * Factory method that performs validation and copies the parameter arrays.
-     *
-     * @param <I>  the input type
-     * @param <O>  the output type
-     * @param predicates  array of predicates, cloned, no nulls
-     * @param transformers  matching array of transformers, cloned, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means return null
-     * @return the {@code chained} transformer
-     * @throws NullPointerException if either array is null
-     * @throws NullPointerException if any element in the arrays is null
-     * @throws IllegalArgumentException if the arrays have different sizes
-     */
-    @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
-            final Transformer<? super I, ? extends O>[] transformers,
-            final Transformer<? super I, ? extends O> defaultTransformer) {
-        FunctorUtils.validate(predicates);
-        FunctorUtils.validate(transformers);
-        if (predicates.length != transformers.length) {
-            throw new IllegalArgumentException("The predicate and transformer arrays must be the same size");
-        }
-        if (predicates.length == 0) {
-            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
-                                                                     defaultTransformer);
-        }
-        return new SwitchTransformer<>(predicates, transformers, defaultTransformer);
-    }
 
     /**
      * Create a new Transformer that calls one of the transformers depending
@@ -115,6 +81,42 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
         }
         return new SwitchTransformer<>(false, preds, transformers, defaultTransformer);
     }
+    /**
+     * Factory method that performs validation and copies the parameter arrays.
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
+     * @param predicates  array of predicates, cloned, no nulls
+     * @param transformers  matching array of transformers, cloned, no nulls
+     * @param defaultTransformer  the transformer to use if no match, null means return null
+     * @return the {@code chained} transformer
+     * @throws NullPointerException if either array is null
+     * @throws NullPointerException if any element in the arrays is null
+     * @throws IllegalArgumentException if the arrays have different sizes
+     */
+    @SuppressWarnings("unchecked")
+    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
+            final Transformer<? super I, ? extends O>[] transformers,
+            final Transformer<? super I, ? extends O> defaultTransformer) {
+        FunctorUtils.validate(predicates);
+        FunctorUtils.validate(transformers);
+        if (predicates.length != transformers.length) {
+            throw new IllegalArgumentException("The predicate and transformer arrays must be the same size");
+        }
+        if (predicates.length == 0) {
+            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
+                                                                     defaultTransformer);
+        }
+        return new SwitchTransformer<>(predicates, transformers, defaultTransformer);
+    }
+    /** The tests to consider */
+    private final Predicate<? super T>[] iPredicates;
+
+    /** The matching transformers to call */
+    private final Transformer<? super T, ? extends R>[] iTransformers;
+
+    /** The default transformer to call if no tests match */
+    private final Transformer<? super T, ? extends R> iDefault;
 
     /**
      * Hidden constructor for the use by the static factory methods.
@@ -124,13 +126,13 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param transformers  matching array of transformers, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
      */
-    private SwitchTransformer(final boolean clone, final Predicate<? super I>[] predicates,
-                             final Transformer<? super I, ? extends O>[] transformers,
-                             final Transformer<? super I, ? extends O> defaultTransformer) {
+    private SwitchTransformer(final boolean clone, final Predicate<? super T>[] predicates,
+                             final Transformer<? super T, ? extends R>[] transformers,
+                             final Transformer<? super T, ? extends R> defaultTransformer) {
         iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
         iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
         iDefault = defaultTransformer == null ?
-                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer;
+                ConstantTransformer.<T, R>nullTransformer() : defaultTransformer;
     }
 
     /**
@@ -141,10 +143,40 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
      */
-    public SwitchTransformer(final Predicate<? super I>[] predicates,
-            final Transformer<? super I, ? extends O>[] transformers,
-            final Transformer<? super I, ? extends O> defaultTransformer) {
+    public SwitchTransformer(final Predicate<? super T>[] predicates,
+            final Transformer<? super T, ? extends R>[] transformers,
+            final Transformer<? super T, ? extends R> defaultTransformer) {
         this(true, predicates, transformers, defaultTransformer);
+    }
+
+    /**
+     * Gets the default transformer.
+     *
+     * @return the default transformer
+     * @since 3.1
+     */
+    public Transformer<? super T, ? extends R> getDefaultTransformer() {
+        return iDefault;
+    }
+
+    /**
+     * Gets the predicates.
+     *
+     * @return a copy of the predicates
+     * @since 3.1
+     */
+    public Predicate<? super T>[] getPredicates() {
+        return FunctorUtils.copy(iPredicates);
+    }
+
+    /**
+     * Gets the transformers.
+     *
+     * @return a copy of the transformers
+     * @since 3.1
+     */
+    public Transformer<? super T, ? extends R>[] getTransformers() {
+        return FunctorUtils.copy(iTransformers);
     }
 
     /**
@@ -155,43 +187,13 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @return the transformed result
      */
     @Override
-    public O transform(final I input) {
+    public R transform(final T input) {
         for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(input)) {
-                return iTransformers[i].transform(input);
+            if (iPredicates[i].test(input)) {
+                return iTransformers[i].apply(input);
             }
         }
-        return iDefault.transform(input);
-    }
-
-    /**
-     * Gets the predicates.
-     *
-     * @return a copy of the predicates
-     * @since 3.1
-     */
-    public Predicate<? super I>[] getPredicates() {
-        return FunctorUtils.<I>copy(iPredicates);
-    }
-
-    /**
-     * Gets the transformers.
-     *
-     * @return a copy of the transformers
-     * @since 3.1
-     */
-    public Transformer<? super I, ? extends O>[] getTransformers() {
-        return FunctorUtils.<I, O>copy(iTransformers);
-    }
-
-    /**
-     * Gets the default transformer.
-     *
-     * @return the default transformer
-     * @since 3.1
-     */
-    public Transformer<? super I, ? extends O> getDefaultTransformer() {
-        return iDefault;
+        return iDefault.apply(input);
     }
 
 }

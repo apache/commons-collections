@@ -52,6 +52,17 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     }
 
     /**
+     * Gets the currently active entry.
+     * @return Map.Entry&lt;K, V&gt;
+     */
+    protected synchronized Map.Entry<K, V> current() {
+        if (entry == null) {
+            throw new IllegalStateException();
+        }
+        return entry;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -65,14 +76,6 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     @Override
     public V getValue() {
         return current().getValue();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public V setValue(final V value) {
-        return current().setValue(value);
     }
 
     /**
@@ -96,6 +99,15 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
      * {@inheritDoc}
      */
     @Override
+    public void remove() {
+        iterator.remove();
+        entry = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public synchronized void reset() {
         iterator = entrySet.iterator();
     }
@@ -104,19 +116,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
      * {@inheritDoc}
      */
     @Override
-    public void remove() {
-        iterator.remove();
-        entry = null;
-    }
-
-    /**
-     * Get the currently active entry.
-     * @return Map.Entry&lt;K, V&gt;
-     */
-    protected synchronized Map.Entry<K, V> current() {
-        if (entry == null) {
-            throw new IllegalStateException();
-        }
-        return entry;
+    public V setValue(final V value) {
+        return current().setValue(value);
     }
 }

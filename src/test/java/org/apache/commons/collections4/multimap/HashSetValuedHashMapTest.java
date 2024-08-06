@@ -32,9 +32,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test HashSetValuedHashMap
- *
- * @since 4.1
+ * Tests {@link HashSetValuedHashMap}.
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
@@ -43,13 +41,8 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Override
-    public SetValuedMap<K, V> makeObject() {
-        return new HashSetValuedHashMap<>();
-    }
-
-    @Override
-    public MultiValuedMap<K, V> makeConfirmedMap() {
-        return new HashSetValuedHashMap<>();
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     @Override
@@ -58,8 +51,67 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
+    public MultiValuedMap<K, V> makeConfirmedMap() {
+        return new HashSetValuedHashMap<>();
+    }
+
+    @Override
+    public SetValuedMap<K, V> makeObject() {
+        return new HashSetValuedHashMap<>();
+    }
+
+    @Test
+    public void testHashSetValuedHashMap_2() {
+        final Map<K, V> map = new HashMap<>();
+        final SetValuedMap<K, V> map1;
+        final SetValuedMap<K, V> map2;
+
+        map.put((K) "A", (V) "W");
+        map.put((K) "B", (V) "X");
+        map.put((K) "C", (V) "F");
+        map1 = new HashSetValuedHashMap<>(map);
+        assertEquals(1, map1.get((K) "A").size());
+
+        map.remove("A");
+        map.remove("B");
+        map.remove("C");
+        map2 = new HashSetValuedHashMap<>(map);
+        assertEquals("{}", map2.toString());
+    }
+
+    @Test
+    public void testHashSetValueHashMap() {
+        final SetValuedMap<K, V> setMap = new HashSetValuedHashMap<>(4);
+        assertEquals(0, setMap.get((K) "whatever").size());
+
+        final Set<V> set = setMap.get((K) "A");
+        set.add((V) "W");
+        set.add((V) "X");
+        set.add((V) "F");
+        assertEquals(3, setMap.get((K) "A").size());
+    }
+
+    @Test
+    public void testHashSetValueHashMap_1() {
+        final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
+        final SetValuedMap<K, V> map1;
+        final SetValuedMap<K, V> map2 = makeObject();
+        final SetValuedMap<K, V> map3;
+
+        map.put((K) "A", (V) "W");
+        map.put((K) "A", (V) "X");
+        map.put((K) "A", (V) "F");
+        map1 = new HashSetValuedHashMap<>(map);
+        assertEquals(3, map1.get((K) "A").size());
+        map2.put((K) "A", (V) "X");
+        map2.put((K) "A", (V) "F");
+        map2.put((K) "A", (V) "W");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map.remove("A");
+        map3 = new HashSetValuedHashMap<>(map);
+        assertEquals("{}", map3.toString());
     }
 
     @Test
@@ -74,6 +126,28 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertFalse(set.add((V) "a1"));
         assertEquals(2, setMap.size());
         assertTrue(setMap.containsKey("A"));
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void testSetValuedMapEqualsHashCodeContract() {
+        final SetValuedMap map1 = makeObject();
+        final SetValuedMap map2 = makeObject();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a2");
+        map2.put("a", "a1");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a2");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a3");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
     @Test
@@ -115,82 +189,6 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         }
         assertEquals(0, setMap.size());
         assertFalse(setMap.containsKey("A"));
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
-    public void testSetValuedMapEqualsHashCodeContract() {
-        final SetValuedMap map1 = makeObject();
-        final SetValuedMap map2 = makeObject();
-
-        map1.put("a", "a1");
-        map1.put("a", "a2");
-        map2.put("a", "a2");
-        map2.put("a", "a1");
-        assertEquals(map1, map2);
-        assertEquals(map1.hashCode(), map2.hashCode());
-
-        map2.put("a", "a2");
-        assertEquals(map1, map2);
-        assertEquals(map1.hashCode(), map2.hashCode());
-
-        map2.put("a", "a3");
-        assertNotSame(map1, map2);
-        assertNotSame(map1.hashCode(), map2.hashCode());
-    }
-
-    @Test
-    public void testHashSetValueHashMap() {
-        final SetValuedMap<K, V> setMap = new HashSetValuedHashMap<>(4);
-        assertEquals(0, setMap.get((K) "whatever").size());
-
-        final Set<V> set = setMap.get((K) "A");
-        set.add((V) "W");
-        set.add((V) "X");
-        set.add((V) "F");
-        assertEquals(3, setMap.get((K) "A").size());
-    }
-
-    @Test
-    public void testHashSetValueHashMap_1() {
-        final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
-        final SetValuedMap<K, V> map1;
-        final SetValuedMap<K, V> map2 = makeObject();
-        final SetValuedMap<K, V> map3;
-
-        map.put((K) "A", (V) "W");
-        map.put((K) "A", (V) "X");
-        map.put((K) "A", (V) "F");
-        map1 = new HashSetValuedHashMap<>(map);
-        assertEquals(3, map1.get((K) "A").size());
-        map2.put((K) "A", (V) "X");
-        map2.put((K) "A", (V) "F");
-        map2.put((K) "A", (V) "W");
-        assertEquals(map1, map2);
-        assertEquals(map1.hashCode(), map2.hashCode());
-
-        map.remove("A");
-        map3 = new HashSetValuedHashMap<>(map);
-        assertEquals("{}", map3.toString());
-    }
-
-    @Test
-    public void testHashSetValuedHashMap_2(){
-        final Map<K, V> map = new HashMap<>();
-        final SetValuedMap<K, V> map1;
-        final SetValuedMap<K, V> map2;
-
-        map.put((K) "A", (V) "W");
-        map.put((K) "B", (V) "X");
-        map.put((K) "C", (V) "F");
-        map1 = new HashSetValuedHashMap<>(map);
-        assertEquals(1, map1.get((K) "A").size());
-
-        map.remove("A");
-        map.remove("B");
-        map.remove("C");
-        map2 = new HashSetValuedHashMap<>(map);
-        assertEquals("{}", map2.toString());
     }
 
 //    public void testCreate() throws Exception {

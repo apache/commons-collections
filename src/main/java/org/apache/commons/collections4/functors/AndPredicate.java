@@ -24,17 +24,13 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if both the predicates return true.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class AndPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class AndPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 4189014213763186912L;
-
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate1;
-    /** The array of predicates to call */
-    private final Predicate<? super T> iPredicate2;
 
     /**
      * Factory to create the predicate.
@@ -50,6 +46,11 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
         return new AndPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
                 Objects.requireNonNull(predicate2, "predicate2"));
     }
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate1;
+
+    /** The array of predicates to call */
+    private final Predicate<? super T> iPredicate2;
 
     /**
      * Constructor that performs no validation.
@@ -64,17 +65,6 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
     }
 
     /**
-     * Evaluates the predicate returning true if both predicates return true.
-     *
-     * @param object  the input object
-     * @return true if both decorated predicates return true
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
-    }
-
-    /**
      * Gets the two predicates being decorated as an array.
      *
      * @return the predicates
@@ -84,6 +74,17 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate1, iPredicate2};
+    }
+
+    /**
+     * Evaluates the predicate returning true if both predicates return true.
+     *
+     * @param object  the input object
+     * @return true if both decorated predicates return true
+     */
+    @Override
+    public boolean test(final T object) {
+        return iPredicate1.test(object) && iPredicate2.test(object);
     }
 
 }

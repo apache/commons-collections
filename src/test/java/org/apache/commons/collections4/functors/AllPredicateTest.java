@@ -28,8 +28,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
- *
- * @since 3.0
  */
 @SuppressWarnings("boxing")
 public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
@@ -45,7 +43,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * {@inheritDoc}
      */
     @Override
-    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer>... predicates) {
+    protected final Predicate<Integer> getPredicateInstance(final Collection<Predicate<Integer>> predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -53,60 +51,15 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * {@inheritDoc}
      */
     @Override
-    protected final Predicate<Integer> getPredicateInstance(final Collection<Predicate<Integer>> predicates) {
+    protected final Predicate<Integer> getPredicateInstance(final Predicate<? super Integer>... predicates) {
         return AllPredicate.allPredicate(predicates);
-    }
-
-    /**
-     * Verifies that providing an empty predicate array evaluates to true.
-     */
-    @SuppressWarnings({"unchecked"})
-    @Test
-    public void emptyArrayToGetInstance() {
-        assertTrue(getPredicateInstance(new Predicate[] {}).evaluate(null), "empty array not true");
-    }
-
-    /**
-     * Verifies that providing an empty predicate collection evaluates to true.
-     */
-    @Test
-    public void emptyCollectionToGetInstance() {
-        final Predicate<Integer> allPredicate = getPredicateInstance(
-                Collections.<Predicate<Integer>>emptyList());
-        assertTrue(allPredicate.evaluate(getTestValue()), "empty collection not true");
-    }
-
-    /**
-     * Tests whether a single true predicate evaluates to true.
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public void oneTruePredicate() {
-        // use the constructor directly, as getInstance() returns the original predicate when passed
-        // an array of size one.
-        final Predicate<Integer> predicate = createMockPredicate(true);
-
-        assertTrue(allPredicate(predicate).evaluate(getTestValue()), "single true predicate evaluated to false");
-    }
-
-    /**
-     * Tests whether a single false predicate evaluates to true.
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public void oneFalsePredicate() {
-        // use the constructor directly, as getInstance() returns the original predicate when passed
-        // an array of size one.
-        final Predicate<Integer> predicate = createMockPredicate(false);
-        assertFalse(allPredicate(predicate).evaluate(getTestValue()),
-                "single false predicate evaluated to true");
     }
 
     /**
      * Tests whether multiple true predicates evaluates to true.
      */
     @Test
-    public void allTrue() {
+    public void testAllTrue() {
         assertTrue(getPredicateInstance(true, true).evaluate(getTestValue()),
                 "multiple true predicates evaluated to false");
         assertTrue(getPredicateInstance(true, true, true).evaluate(getTestValue()),
@@ -114,11 +67,53 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
     }
 
     /**
+     * Verifies that providing an empty predicate array evaluates to true.
+     */
+    @SuppressWarnings({"unchecked"})
+    @Test
+    public void testEmptyArrayToGetInstance() {
+        assertTrue(getPredicateInstance(new Predicate[] {}).evaluate(null), "empty array not true");
+    }
+
+    /**
+     * Verifies that providing an empty predicate collection evaluates to true.
+     */
+    @Test
+    public void testEmptyCollectionToGetInstance() {
+        final Predicate<Integer> allPredicate = getPredicateInstance(Collections.<Predicate<Integer>>emptyList());
+        assertTrue(allPredicate.evaluate(getTestValue()), "empty collection not true");
+    }
+
+    /**
+     * Tests whether a single false predicate evaluates to true.
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testOneFalsePredicate() {
+        // use the constructor directly, as getInstance() returns the original predicate when passed
+        // an array of size one.
+        final Predicate<Integer> predicate = createMockPredicate(false);
+        assertFalse(allPredicate(predicate).test(getTestValue()), "single false predicate evaluated to true");
+    }
+
+    /**
+     * Tests whether a single true predicate evaluates to true.
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testOneTruePredicate() {
+        // use the constructor directly, as getInstance() returns the original predicate when passed
+        // an array of size one.
+        final Predicate<Integer> predicate = createMockPredicate(true);
+        assertTrue(allPredicate(predicate).test(getTestValue()), "single true predicate evaluated to false");
+    }
+
+    /**
      * Tests whether combining some true and one false evaluates to false.  Also verifies that only the first
      * false predicate is actually evaluated
      */
     @Test
-    public void trueAndFalseCombined() {
+    public void testTrueAndFalseCombined() {
         assertFalse(getPredicateInstance(false, null).evaluate(getTestValue()),
                 "false predicate evaluated to true");
         assertFalse(getPredicateInstance(false, null, null).evaluate(getTestValue()),

@@ -31,29 +31,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link CompositeMap} implementation.
- *
- * @since 3.0
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    /** used as a flag in MapMutator tests */
-    private boolean pass = false;
+    /** Used as a flag in MapMutator tests */
+    private boolean pass;
 
     public CompositeMapTest() {
         super(CompositeMapTest.class.getSimpleName());
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        this.pass = false;
-    }
-
-    @Override
-    public CompositeMap<K, V> makeObject() {
-        final CompositeMap<K, V> map = new CompositeMap<>();
-        map.addComposited(new HashMap<>());
-        map.setMutator( new EmptyMapMutator<>() );
-        return map;
     }
 
     @SuppressWarnings("unchecked")
@@ -72,11 +57,22 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return map;
     }
 
-    @Test
-    public void testGet() {
-        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
-        assertEquals("one", map.get("1"));
-        assertEquals("four", map.get("4"));
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public CompositeMap<K, V> makeObject() {
+        final CompositeMap<K, V> map = new CompositeMap<>();
+        map.addComposited(new HashMap<>());
+        map.setMutator( new EmptyMapMutator<>() );
+        return map;
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        this.pass = false;
     }
 
     @Test
@@ -90,6 +86,73 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(map.containsKey("5"));
 
         assertThrows(IllegalArgumentException.class, () -> map.addComposited(three));
+    }
+
+    @Test
+    public void testGet() {
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        assertEquals("one", map.get("1"));
+        assertEquals("four", map.get("4"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testPut() {
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
+            new CompositeMap.MapMutator<K, V>() {
+                private static final long serialVersionUID = 1L;
+                @Override
+                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
+                    final V value) {
+                    pass = true;
+                    return (V) "foo";
+                }
+
+                @Override
+                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    throw new UnsupportedOperationException();
+                }
+            });
+
+        map.put((K) "willy", (V) "wonka");
+        assertTrue(pass);
+    }
+
+    @Test
+    public void testPutAll() {
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
+            new CompositeMap.MapMutator<K, V>() {
+                private static final long serialVersionUID = 1L;
+                @Override
+                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
+                    final V value) {
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
+                    pass = true;
+                }
+
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    throw new UnsupportedOperationException();
+                }
+            });
+
+        map.putAll(null);
+        assertTrue(pass);
     }
 
     @Test
@@ -112,21 +175,6 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveFromUnderlying() {
-        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
-        final HashMap<K, V> three = new HashMap<>();
-        three.put((K) "5", (V) "five");
-        map.addComposited(null);
-        map.addComposited(three);
-        assertTrue(map.containsKey("5"));
-
-        //Now remove "5"
-        three.remove("5");
-        assertFalse(map.containsKey("5"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     public void testRemoveFromComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
@@ -141,20 +189,27 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveFromUnderlying() {
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        final HashMap<K, V> three = new HashMap<>();
+        three.put((K) "5", (V) "five");
+        map.addComposited(null);
+        map.addComposited(three);
+        assertTrue(map.containsKey("5"));
+
+        //Now remove "5"
+        three.remove("5");
+        assertFalse(map.containsKey("5"));
+    }
+
+    @Test
     public void testResolveCollision() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void resolveCollision(final CompositeMap<K, V> composite,
-                    final Map<K, V> existing,
-                    final Map<K, V> added,
-                    final Collection<K> intersect) {
-                    pass = true;
-                }
-
-                @Override
                 public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
                     final V value) {
                     throw new UnsupportedOperationException();
@@ -163,76 +218,19 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
                 @Override
                 public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
                     throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public void resolveCollision(final CompositeMap<K, V> composite,
+                    final Map<K, V> existing,
+                    final Map<K, V> added,
+                    final Collection<K> intersect) {
+                    pass = true;
                 }
             });
 
         map.addComposited(buildOne());
         assertTrue(pass);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testPut() {
-        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
-            new CompositeMap.MapMutator<K, V>() {
-                private static final long serialVersionUID = 1L;
-                @Override
-                public void resolveCollision(final CompositeMap<K, V> composite,
-                    final Map<K, V> existing,
-                    final Map<K, V> added,
-                    final Collection<K> intersect) {
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
-                    final V value) {
-                    pass = true;
-                    return (V) "foo";
-                }
-
-                @Override
-                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
-                    throw new UnsupportedOperationException();
-                }
-            });
-
-        map.put((K) "willy", (V) "wonka");
-        assertTrue(pass);
-    }
-
-    @Test
-    public void testPutAll() {
-        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
-            new CompositeMap.MapMutator<K, V>() {
-                private static final long serialVersionUID = 1L;
-                @Override
-                public void resolveCollision(final CompositeMap<K, V> composite,
-                    final Map<K, V> existing,
-                    final Map<K, V> added,
-                    final Collection<K> intersect) {
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key,
-                    final V value) {
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
-                    pass = true;
-                }
-            });
-
-        map.putAll(null);
-        assertTrue(pass);
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

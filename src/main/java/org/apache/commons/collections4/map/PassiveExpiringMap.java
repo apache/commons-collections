@@ -79,7 +79,7 @@ public class PassiveExpiringMap<K, V>
         /** Serialization version */
         private static final long serialVersionUID = 1L;
 
-        /** the constant time-to-live value measured in milliseconds. */
+        /** The constant time-to-live value measured in milliseconds. */
         private final long timeToLiveMillis;
 
         /**
@@ -91,7 +91,7 @@ public class PassiveExpiringMap<K, V>
         }
 
         /**
-         * Construct a policy with the given time-to-live constant measured in
+         * Constructs a policy with the given time-to-live constant measured in
          * milliseconds. A negative time-to-live value indicates entries never
          * expire. A zero time-to-live value indicates entries expire (nearly)
          * immediately.
@@ -106,7 +106,7 @@ public class PassiveExpiringMap<K, V>
         }
 
         /**
-         * Construct a policy with the given time-to-live constant measured in
+         * Constructs a policy with the given time-to-live constant measured in
          * the given time unit of measure.
          *
          * @param timeToLive the constant amount of time an entry is available
@@ -195,10 +195,10 @@ public class PassiveExpiringMap<K, V>
         return TimeUnit.MILLISECONDS.convert(timeToLive, timeUnit);
     }
 
-    /** map used to manage expiration times for the actual map entries. */
+    /** Map used to manage expiration times for the actual map entries. */
     private final Map<Object, Long> expirationMap = new HashMap<>();
 
-    /** the policy used to determine time-to-live values for map entries. */
+    /** The policy used to determine time-to-live values for map entries. */
     private final ExpirationPolicy<K, V> expiringPolicy;
 
     /**
@@ -210,7 +210,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given expiration policy to determine
+     * Constructs a map decorator using the given expiration policy to determine
      * expiration times.
      *
      * @param expiringPolicy the policy used to determine expiration times of
@@ -222,7 +222,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map and uses the given
+     * Constructs a map decorator that decorates the given map and uses the given
      * expiration policy to determine expiration times. If there are any
      * elements already in the map being decorated, they will NEVER expire
      * unless they are replaced.
@@ -239,7 +239,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map using the given
+     * Constructs a map decorator that decorates the given map using the given
      * time-to-live value measured in milliseconds to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
      *
@@ -254,7 +254,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given time-to-live value measured in
+     * Constructs a map decorator using the given time-to-live value measured in
      * milliseconds to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy. If there
      * are any elements already in the map being decorated, they will NEVER
@@ -273,7 +273,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator using the given time-to-live value measured in
+     * Constructs a map decorator using the given time-to-live value measured in
      * the given time units of measure to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
      *
@@ -289,7 +289,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Construct a map decorator that decorates the given map using the given
+     * Constructs a map decorator that decorates the given map using the given
      * time-to-live value measured in the given time units of measure to create
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy. This policy
      * is used to determine expiration times. If there are any elements already
@@ -444,6 +444,21 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
+     * Deserializes the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked")
+    // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in)
+        throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
+    }
+
+    /**
      * Normal {@link Map#remove(Object)} behavior with the addition of removing
      * any expiration entry as well.
      * {@inheritDoc}
@@ -497,33 +512,6 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked")
-    // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in)
-        throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out)
-        throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
      * All expired entries are removed from the map prior to returning the value collection.
      * {@inheritDoc}
      */
@@ -531,5 +519,17 @@ public class PassiveExpiringMap<K, V>
     public Collection<V> values() {
         removeAllExpired(now());
         return super.values();
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out)
+        throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 }

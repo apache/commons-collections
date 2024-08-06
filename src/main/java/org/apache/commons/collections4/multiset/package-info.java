@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link org.apache.commons.collections4.MultiSet MultiSet} interface.
  * A multiset stores an object and a count of the number of occurrences of the object.
  * <p>

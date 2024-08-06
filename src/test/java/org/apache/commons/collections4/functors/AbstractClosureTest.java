@@ -23,14 +23,14 @@ import org.junit.jupiter.api.Test;
 
 public abstract class AbstractClosureTest {
 
-    @Test
-    public void closureSanityTests() throws Exception {
-        final Closure<?> closure = generateClosure();
-        assertNotNull(closure);
-    }
-
     /**
      * @return a closure for general sanity tests.
      */
     protected abstract <T> Closure<T> generateClosure();
+
+    @Test
+    public void testClosureSanityTests() throws Exception {
+        final Closure<?> closure = generateClosure();
+        assertNotNull(closure);
+    }
 }

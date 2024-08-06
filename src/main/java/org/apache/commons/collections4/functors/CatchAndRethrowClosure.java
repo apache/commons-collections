@@ -43,9 +43,10 @@ import org.apache.commons.collections4.FunctorException;
  * }
  * </pre>
  *
+ * @param <T> the type of the input to the operation.
  * @since 4.0
  */
-public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
+public abstract class CatchAndRethrowClosure<T> implements Closure<T> {
 
     /**
      * Execute this closure on the specified input object.
@@ -55,7 +56,7 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
      *             checked exception.
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         try {
             executeAndThrow(input);
         } catch (final RuntimeException ex) {
@@ -72,5 +73,5 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
      * @throws Throwable if the closure execution resulted in a checked
      *             exception.
      */
-    protected abstract void executeAndThrow(E input) throws Throwable;
+    protected abstract void executeAndThrow(T input) throws Throwable;
 }

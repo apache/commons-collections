@@ -71,6 +71,24 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
+     * Gets the iterator this iterator is using.
+     *
+     * @return the iterator
+     */
+    public Iterator<? extends E> getIterator() {
+        return iterator;
+    }
+
+    /**
+     * Gets the predicate this iterator is using.
+     *
+     * @return the predicate
+     */
+    public Predicate<? super E> getPredicate() {
+        return predicate;
+    }
+
+    /**
      * Returns true if the underlying iterator contains an object that
      * matches the predicate.
      *
@@ -119,15 +137,6 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Gets the iterator this iterator is using.
-     *
-     * @return the iterator
-     */
-    public Iterator<? extends E> getIterator() {
-        return iterator;
-    }
-
-    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
@@ -140,12 +149,19 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Gets the predicate this iterator is using.
-     *
-     * @return the predicate
+     * Sets nextObject to the next object. If there are no more
+     * objects, then return false. Otherwise, return true.
      */
-    public Predicate<? super E> getPredicate() {
-        return predicate;
+    private boolean setNextObject() {
+        while (iterator.hasNext()) {
+            final E object = iterator.next();
+            if (predicate.test(object)) {
+                nextObject = object;
+                nextObjectSet = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -157,22 +173,6 @@ public class FilterIterator<E> implements Iterator<E> {
         this.predicate = predicate;
         nextObject = null;
         nextObjectSet = false;
-    }
-
-    /**
-     * Set nextObject to the next object. If there are no more
-     * objects, then return false. Otherwise, return true.
-     */
-    private boolean setNextObject() {
-        while (iterator.hasNext()) {
-            final E object = iterator.next();
-            if (predicate.evaluate(object)) {
-                nextObject = object;
-                nextObjectSet = true;
-                return true;
-            }
-        }
-        return false;
     }
 
 }

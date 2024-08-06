@@ -44,6 +44,12 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
         this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public K getKey() {
+        return iterator.getKey();
+    }
+
     /**
      * Gets the iterator being decorated.
      *
@@ -53,6 +59,11 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
         return iterator;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public V getValue() {
+        return iterator.getValue();
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -70,18 +81,6 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     @Override
     public void remove() {
         iterator.remove();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public K getKey() {
-        return iterator.getKey();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public V getValue() {
-        return iterator.getValue();
     }
 
     /** {@inheritDoc} */

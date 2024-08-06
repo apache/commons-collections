@@ -38,10 +38,33 @@ public class QueueUtils {
     public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
 
     /**
-     * Don't allow instances.
+     * Gets an empty {@code Queue}.
+     *
+     * @param <E> the type of the elements in the queue
+     * @return an empty {@link Queue}
      */
-    private QueueUtils() {}
+    @SuppressWarnings("unchecked") // OK, empty queue is compatible with any type
+    public static <E> Queue<E> emptyQueue() {
+        return EMPTY_QUEUE;
+    }
 
+    /**
+     * Returns a predicated (validating) queue backed by the given queue.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the queue.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original queue after invoking this method,
+     * as it is a backdoor for adding invalid objects.
+     *
+     * @param <E> the type of the elements in the queue
+     * @param queue  the queue to predicate, must not be null
+     * @param predicate  the predicate used to evaluate new elements, must not be null
+     * @return a predicated queue
+     * @throws NullPointerException if the queue or predicate is null
+     */
+    public static <E> Queue<E> predicatedQueue(final Queue<E> queue, final Predicate<? super E> predicate) {
+        return PredicatedQueue.predicatedQueue(queue, predicate);
+    }
 
     /**
      * Returns a synchronized (thread-safe) queue backed by the given queue.
@@ -75,36 +98,6 @@ public class QueueUtils {
     }
 
     /**
-     * Returns an unmodifiable queue backed by the given queue.
-     *
-     * @param <E> the type of the elements in the queue
-     * @param queue  the queue to make unmodifiable, must not be null
-     * @return an unmodifiable queue backed by that queue
-     * @throws NullPointerException if the queue is null
-     */
-    public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {
-        return UnmodifiableQueue.unmodifiableQueue(queue);
-    }
-
-    /**
-     * Returns a predicated (validating) queue backed by the given queue.
-     * <p>
-     * Only objects that pass the test in the given predicate can be added to the queue.
-     * Trying to add an invalid object results in an IllegalArgumentException.
-     * It is important not to use the original queue after invoking this method,
-     * as it is a backdoor for adding invalid objects.
-     *
-     * @param <E> the type of the elements in the queue
-     * @param queue  the queue to predicate, must not be null
-     * @param predicate  the predicate used to evaluate new elements, must not be null
-     * @return a predicated queue
-     * @throws NullPointerException if the queue or predicate is null
-     */
-    public static <E> Queue<E> predicatedQueue(final Queue<E> queue, final Predicate<? super E> predicate) {
-        return PredicatedQueue.predicatedQueue(queue, predicate);
-    }
-
-    /**
      * Returns a transformed queue backed by the given queue.
      * <p>
      * Each object is passed through the transformer as it is added to the
@@ -120,19 +113,26 @@ public class QueueUtils {
      * @return a transformed queue backed by the given queue
      * @throws NullPointerException if the queue or transformer is null
      */
-    public static <E> Queue<E> transformingQueue(final Queue<E> queue,
-                                                 final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Queue<E> transformingQueue(final Queue<E> queue, final Transformer<? super E, ? extends E> transformer) {
         return TransformedQueue.transformingQueue(queue, transformer);
     }
 
     /**
-     * Get an empty {@code Queue}.
+     * Returns an unmodifiable queue backed by the given queue.
      *
      * @param <E> the type of the elements in the queue
-     * @return an empty {@link Queue}
+     * @param queue  the queue to make unmodifiable, must not be null
+     * @return an unmodifiable queue backed by that queue
+     * @throws NullPointerException if the queue is null
      */
-    @SuppressWarnings("unchecked") // OK, empty queue is compatible with any type
-    public static <E> Queue<E> emptyQueue() {
-        return EMPTY_QUEUE;
+    public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {
+        return UnmodifiableQueue.unmodifiableQueue(queue);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private QueueUtils() {
+        // empty
     }
 }

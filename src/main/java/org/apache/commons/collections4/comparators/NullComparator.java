@@ -56,6 +56,22 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     }
 
     /**
+     *  Construct an instance that sorts {@code null} higher or lower than
+     *  any non-{@code null} object it is compared with.  When comparing
+     *  two non-{@code null} objects, the {@link ComparableComparator} is
+     *  used.
+     *
+     *  @param nullsAreHigh a {@code true} value indicates that
+     *  {@code null} should be compared as higher than a
+     *  non-{@code null} object.  A {@code false} value indicates
+     *  that {@code null} should be compared as lower than a
+     *  non-{@code null} object.
+     **/
+    public NullComparator(final boolean nullsAreHigh) {
+        this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
+    }
+
+    /**
      *  Construct an instance that sorts {@code null} higher than any
      *  non-{@code null} object it is compared with.  When comparing two
      *  non-{@code null} objects, the specified {@link Comparator} is
@@ -70,22 +86,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator) {
         this(nonNullComparator, true);
-    }
-
-    /**
-     *  Construct an instance that sorts {@code null} higher or lower than
-     *  any non-{@code null} object it is compared with.  When comparing
-     *  two non-{@code null} objects, the {@link ComparableComparator} is
-     *  used.
-     *
-     *  @param nullsAreHigh a {@code true} value indicates that
-     *  {@code null} should be compared as higher than a
-     *  non-{@code null} object.  A {@code false} value indicates
-     *  that {@code null} should be compared as lower than a
-     *  non-{@code null} object.
-     **/
-    public NullComparator(final boolean nullsAreHigh) {
-        this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }
 
     /**
@@ -143,17 +143,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     *  Implement a hash code for this comparator that is consistent with
-     *  {@link #equals(Object)}.
-     *
-     *  @return a hash code for this comparator.
-     **/
-    @Override
-    public int hashCode() {
-        return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
-    }
-
-    /**
      *  Determines whether the specified object represents a comparator that is
      *  equal to this comparator.
      *
@@ -180,5 +169,16 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
 
         return this.nullsAreHigh == other.nullsAreHigh &&
                 this.nonNullComparator.equals(other.nonNullComparator);
+    }
+
+    /**
+     *  Implement a hash code for this comparator that is consistent with
+     *  {@link #equals(Object)}.
+     *
+     *  @return a hash code for this comparator.
+     **/
+    @Override
+    public int hashCode() {
+        return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
     }
 }

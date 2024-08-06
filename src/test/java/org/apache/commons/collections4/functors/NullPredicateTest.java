@@ -23,20 +23,20 @@ import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
 public class NullPredicateTest extends AbstractPredicateTest {
-    @Test
-    public void testNullPredicate() {
-        assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
-        assertPredicateTrue(nullPredicate(), null);
+    @Override
+    protected Predicate<?> generatePredicate() {
+        return nullPredicate();
     }
 
     @Test
-    public void ensurePredicateCanBeTypedWithoutWarning() throws Exception {
+    public void testEnsurePredicateCanBeTypedWithoutWarning() throws Exception {
         final Predicate<String> predicate = NullPredicate.nullPredicate();
         assertPredicateFalse(predicate, cString);
     }
 
-    @Override
-    protected Predicate<?> generatePredicate() {
-        return nullPredicate();
+    @Test
+    public void testNullPredicate() {
+        assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
+        assertPredicateTrue(nullPredicate(), null);
     }
 }

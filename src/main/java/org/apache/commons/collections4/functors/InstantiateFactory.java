@@ -32,18 +32,10 @@ import org.apache.commons.collections4.FunctorException;
  * for more details.
  * </p>
  *
+ * @param <T> the type of results supplied by this supplier.
  * @since 3.0
  */
 public class InstantiateFactory<T> implements Factory<T> {
-
-    /** The class to create */
-    private final Class<T> iClassToInstantiate;
-    /** The constructor parameter types */
-    private final Class<?>[] iParamTypes;
-    /** The constructor arguments */
-    private final Object[] iArgs;
-    /** The constructor */
-    private transient Constructor<T> iConstructor;
 
     /**
      * Factory method that performs validation.
@@ -71,6 +63,15 @@ public class InstantiateFactory<T> implements Factory<T> {
         }
         return new InstantiateFactory<>(classToInstantiate, paramTypes, args);
     }
+    /** The class to create */
+    private final Class<T> iClassToInstantiate;
+    /** The constructor parameter types */
+    private final Class<?>[] iParamTypes;
+    /** The constructor arguments */
+    private final Object[] iArgs;
+
+    /** The constructor */
+    private transient Constructor<T> iConstructor;
 
     /**
      * Constructor that performs no validation.
@@ -101,17 +102,6 @@ public class InstantiateFactory<T> implements Factory<T> {
     }
 
     /**
-     * Find the Constructor for the class specified.
-     */
-    private void findConstructor() {
-        try {
-            iConstructor = iClassToInstantiate.getConstructor(iParamTypes);
-        } catch (final NoSuchMethodException ex) {
-            throw new IllegalArgumentException("InstantiateFactory: The constructor must exist and be public ");
-        }
-    }
-
-    /**
      * Creates an object using the stored constructor.
      *
      * @return the new object
@@ -131,6 +121,17 @@ public class InstantiateFactory<T> implements Factory<T> {
             throw new FunctorException("InstantiateFactory: Constructor must be public", ex);
         } catch (final InvocationTargetException ex) {
             throw new FunctorException("InstantiateFactory: Constructor threw an exception", ex);
+        }
+    }
+
+    /**
+     * Find the Constructor for the class specified.
+     */
+    private void findConstructor() {
+        try {
+            iConstructor = iClassToInstantiate.getConstructor(iParamTypes);
+        } catch (final NoSuchMethodException ex) {
+            throw new IllegalArgumentException("InstantiateFactory: The constructor must exist and be public ");
         }
     }
 

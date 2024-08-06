@@ -32,8 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableQueue} implementation.
- *
- * @since 4.0
  */
 public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
@@ -42,14 +40,28 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Override
-    public Queue<E> makeObject() {
-        return UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
+    public Queue<E> getCollection() {
+        return super.getCollection();
     }
 
     @Override
-    public Queue<E> makeFullCollection() {
-        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
-        return UnmodifiableQueue.unmodifiableQueue(queue);
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -63,36 +75,14 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Override
-    public Queue<E> getCollection() {
-        return super.getCollection();
+    public Queue<E> makeFullCollection() {
+        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
+        return UnmodifiableQueue.unmodifiableQueue(queue);
     }
 
     @Override
-    public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    @Test
-    @Override
-    public void testQueueRemove() {
-        resetEmpty();
-        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove());
-    }
-
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    public Queue<E> makeObject() {
+        return UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
     }
 
     @Test
@@ -116,10 +106,17 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
 
-
+    @Test
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public void testQueueRemove() {
+        resetEmpty();
+        assertThrows(UnsupportedOperationException.class, () -> getCollection().remove());
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

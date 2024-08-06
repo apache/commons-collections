@@ -47,7 +47,7 @@ import java.io.Serializable;
  * It differs in that keys and values in this class are compared using {@code equals()}.
  * </p>
  * <p>
- * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
+ * This {@link java.util.Map Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>
@@ -174,18 +174,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     }
 
     /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -194,6 +183,17 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
     }
 
 }

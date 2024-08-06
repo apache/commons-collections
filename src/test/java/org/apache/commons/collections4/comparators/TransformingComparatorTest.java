@@ -45,12 +45,6 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     //
 
     @Override
-    public Comparator<Integer> makeObject() {
-        final Comparator<String> decorated = new ComparableComparator<>();
-        return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
-    }
-
-    @Override
     @SuppressWarnings("boxing") // OK in test code
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<>();
@@ -60,6 +54,17 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         list.add(4);
         list.add(5);
         return list;
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public Comparator<Integer> makeObject() {
+        final Comparator<String> decorated = new ComparableComparator<>();
+        return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
     }
 
     @Test
@@ -75,11 +80,6 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         // Checks the contract: equals-hashCode on comp1 and comp2
         assertTrue(comp2.equals(comp1) ? comp2.hashCode() == comp1.hashCode() : true,
                 "Contract failed: equals-hashCode");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

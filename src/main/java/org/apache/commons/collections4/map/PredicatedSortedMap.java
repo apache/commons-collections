@@ -91,6 +91,16 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
         super(map, keyPredicate, valuePredicate);
     }
 
+    @Override
+    public Comparator<? super K> comparator() {
+        return getSortedMap().comparator();
+    }
+
+    @Override
+    public K firstKey() {
+        return getSortedMap().firstKey();
+    }
+
     /**
      * Gets the map being decorated.
      *
@@ -101,8 +111,9 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     }
 
     @Override
-    public K firstKey() {
-        return getSortedMap().firstKey();
+    public SortedMap<K, V> headMap(final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
+        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
     @Override
@@ -111,19 +122,8 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     }
 
     @Override
-    public Comparator<? super K> comparator() {
-        return getSortedMap().comparator();
-    }
-
-    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
-        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
-    }
-
-    @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
         return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 

@@ -32,51 +32,22 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         super(testName);
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveFirst() {
-        resetEmpty();
+    protected void checkNodes() {
         final AbstractLinkedList<E> list = getCollection();
-        if (!isRemoveSupported()) {
-            try {
-                list.removeFirst();
-            } catch (final UnsupportedOperationException ex) {}
+        for (int i = 0; i < list.size; i++) {
+            assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
+            if (i < list.size - 1) {
+                assertEquals(list.getNode(i + 1, false).previous, list.getNode(i, false));
+            }
         }
-
-        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
-        assertEquals("value1", list.removeFirst());
-        checkNodes();
-        list.addLast((E) "value3");
-        checkNodes();
-        assertEquals("value2", list.removeFirst());
-        assertEquals("value3", list.removeFirst());
-        checkNodes();
-        list.addLast((E) "value4");
-        checkNodes();
-        assertEquals("value4", list.removeFirst());
-        checkNodes();
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveLast() {
-        resetEmpty();
-        final AbstractLinkedList<E> list = getCollection();
-        if (!isRemoveSupported()) {
-            try {
-                list.removeLast();
-            } catch (final UnsupportedOperationException ex) {}
-        }
-
-        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
-        assertEquals("value2", list.removeLast());
-        list.addFirst((E) "value3");
-        checkNodes();
-        assertEquals("value1", list.removeLast());
-        assertEquals("value3", list.removeLast());
-        list.addFirst((E) "value4");
-        checkNodes();
-        assertEquals("value4", list.removeFirst());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AbstractLinkedList<E> getCollection() {
+        return (AbstractLinkedList<E>) super.getCollection();
     }
 
     @Test
@@ -87,7 +58,8 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         if (!isAddSupported()) {
             try {
                 list.addFirst(null);
-            } catch (final UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {
+            }
         }
 
         list.addFirst((E) "value1");
@@ -115,6 +87,74 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
+    public void testGetNode() {
+        resetEmpty();
+        final AbstractLinkedList<E> list = getCollection();
+        // get marker
+        assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(0, false), "Expecting IndexOutOfBoundsException.");
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
+        checkNodes();
+        list.addFirst((E) "value0");
+        checkNodes();
+        list.removeNode(list.getNode(1, false));
+        checkNodes();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(2, false), "Expecting IndexOutOfBoundsException.");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(-1, false), "Expecting IndexOutOfBoundsException.");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(3, true), "Expecting IndexOutOfBoundsException.");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveFirst() {
+        resetEmpty();
+        final AbstractLinkedList<E> list = getCollection();
+        if (!isRemoveSupported()) {
+            try {
+                list.removeFirst();
+            } catch (final UnsupportedOperationException ex) {
+            }
+        }
+
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
+        assertEquals("value1", list.removeFirst());
+        checkNodes();
+        list.addLast((E) "value3");
+        checkNodes();
+        assertEquals("value2", list.removeFirst());
+        assertEquals("value3", list.removeFirst());
+        checkNodes();
+        list.addLast((E) "value4");
+        checkNodes();
+        assertEquals("value4", list.removeFirst());
+        checkNodes();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveLast() {
+        resetEmpty();
+        final AbstractLinkedList<E> list = getCollection();
+        if (!isRemoveSupported()) {
+            try {
+                list.removeLast();
+            } catch (final UnsupportedOperationException ex) {
+            }
+        }
+
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
+        assertEquals("value2", list.removeLast());
+        list.addFirst((E) "value3");
+        checkNodes();
+        assertEquals("value1", list.removeLast());
+        assertEquals("value3", list.removeLast());
+        list.addFirst((E) "value4");
+        checkNodes();
+        assertEquals("value4", list.removeFirst());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     public void testRemoveNode() {
         resetEmpty();
         if (!isAddSupported() || !isRemoveSupported()) {
@@ -138,48 +178,6 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         assertEquals("value0", list.getFirst());
         assertEquals("value0", list.getLast());
         checkNodes();
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testGetNode() {
-        resetEmpty();
-        final AbstractLinkedList<E> list = getCollection();
-        // get marker
-        assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
-        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(0, false),
-                "Expecting IndexOutOfBoundsException.");
-        list.addAll( Arrays.asList((E[]) new String[]{"value1", "value2"}));
-        checkNodes();
-        list.addFirst((E) "value0");
-        checkNodes();
-        list.removeNode(list.getNode(1, false));
-        checkNodes();
-        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(2, false),
-                "Expecting IndexOutOfBoundsException.");
-        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(-1, false),
-                "Expecting IndexOutOfBoundsException.");
-        assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(3, true),
-                "Expecting IndexOutOfBoundsException.");
-    }
-
-    protected void checkNodes() {
-        final AbstractLinkedList<E> list = getCollection();
-        for (int i = 0; i < list.size; i++) {
-            assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
-            if (i < list.size - 1) {
-                assertEquals(list.getNode(i + 1, false).previous,
-                    list.getNode(i, false));
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AbstractLinkedList<E> getCollection() {
-        return (AbstractLinkedList<E>) super.getCollection();
     }
 
 }

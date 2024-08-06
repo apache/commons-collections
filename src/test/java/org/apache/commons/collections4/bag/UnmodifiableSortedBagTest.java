@@ -30,8 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableSortedBag} implementation.
- *
- * @since 4.0
  */
 public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 
@@ -40,8 +38,28 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
     }
 
     @Override
-    public SortedBag<E> makeObject() {
-        return UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<>());
+    public SortedBag<E> getCollection() {
+        return super.getCollection();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -52,29 +70,8 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
     }
 
     @Override
-    public SortedBag<E> getCollection() {
-        return super.getCollection();
-    }
-
-    @Override
-    public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    public SortedBag<E> makeObject() {
+        return UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<>());
     }
 
     @Test
@@ -85,9 +82,10 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
         assertThrows(NullPointerException.class, () -> UnmodifiableSortedBag.unmodifiableSortedBag(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

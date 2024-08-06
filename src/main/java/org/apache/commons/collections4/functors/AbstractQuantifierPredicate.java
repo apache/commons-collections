@@ -23,9 +23,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Abstract base class for quantification predicates, e.g. All, Any, None.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 4.0
  */
-public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorator<T>, Serializable {
+public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3094696765038308799L;
@@ -50,7 +51,7 @@ public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorat
      */
     @Override
     public Predicate<? super T>[] getPredicates() {
-        return FunctorUtils.<T>copy(iPredicates);
+        return FunctorUtils.copy(iPredicates);
     }
 
 }

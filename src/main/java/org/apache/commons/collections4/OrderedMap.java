@@ -28,17 +28,6 @@ package org.apache.commons.collections4;
 public interface OrderedMap<K, V> extends IterableMap<K, V> {
 
     /**
-     * Obtains an {@code OrderedMapIterator} over the map.
-     * <p>
-     * An ordered map iterator is an efficient way of iterating over maps
-     * in both directions.
-     *
-     * @return a map iterator
-     */
-    @Override
-    OrderedMapIterator<K, V> mapIterator();
-
-    /**
      * Gets the first key currently in this map.
      *
      * @return the first key currently in this map
@@ -53,6 +42,17 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      * @throws java.util.NoSuchElementException if this map is empty
      */
     K lastKey();
+
+    /**
+     * Obtains an {@code OrderedMapIterator} over the map.
+     * <p>
+     * An ordered map iterator is an efficient way of iterating over maps
+     * in both directions.
+     *
+     * @return a map iterator
+     */
+    @Override
+    OrderedMapIterator<K, V> mapIterator();
 
     /**
      * Gets the next key after the one specified.

@@ -38,7 +38,7 @@ import org.apache.commons.collections4.SortedBag;
  * A {@link org.apache.commons.collections4.Bag Bag} stores each object in the collection
  * together with a count of occurrences. Extra methods on the interface allow multiple
  * copies of an object to be added or removed at once. It is important to read the interface
- * javadoc carefully as several methods violate the {@link Collection} interface specification.
+ * Javadoc carefully as several methods violate the {@link Collection} interface specification.
  * </p>
  *
  * @param <E> the type of elements in this bag
@@ -57,16 +57,6 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     /**
-     * Constructs an empty bag that maintains order on its unique representative
-     * members according to the given {@link Comparator}.
-     *
-     * @param comparator the comparator to use
-     */
-    public TreeBag(final Comparator<? super E> comparator) {
-        super(new TreeMap<>(comparator));
-    }
-
-    /**
      * Constructs a {@link TreeBag} containing all the members of the
      * specified collection.
      *
@@ -75,6 +65,16 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     public TreeBag(final Collection<? extends E> coll) {
         this();
         addAll(coll);
+    }
+
+    /**
+     * Constructs an empty bag that maintains order on its unique representative
+     * members according to the given {@link Comparator}.
+     *
+     * @param comparator the comparator to use
+     */
+    public TreeBag(final Comparator<? super E> comparator) {
+        super(new TreeMap<>(comparator));
     }
 
     /**
@@ -95,6 +95,10 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         return super.add(object);
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return getMap().comparator();
+    }
 
     @Override
     public E first() {
@@ -102,34 +106,17 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     @Override
-    public E last() {
-        return getMap().lastKey();
-    }
-
-    @Override
-    public Comparator<? super E> comparator() {
-        return getMap().comparator();
-    }
-
-    @Override
     protected SortedMap<E, AbstractMapBag.MutableInteger> getMap() {
         return (SortedMap<E, AbstractMapBag.MutableInteger>) super.getMap();
     }
 
-    /**
-     * Write the bag out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(comparator());
-        super.doWriteObject(out);
+    @Override
+    public E last() {
+        return getMap().lastKey();
     }
 
     /**
-     * Read the bag in using a custom routine.
+     * Deserializes the bag in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -140,6 +127,18 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
         @SuppressWarnings("unchecked")  // This will fail at runtime if the stream is incorrect
         final Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
         super.doReadObject(new TreeMap<>(comp), in);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(comparator());
+        super.doWriteObject(out);
     }
 
 }

@@ -38,13 +38,13 @@ import java.util.Objects;
  * </p>
  * <p>
  * Calling a method that adds new Comparators or changes the ascend/descend sort
- * <i>after compare(Object, Object) has been called</i> will result in an
- * UnsupportedOperationException. However, <i>take care</i> to not alter the
+ * <em>after compare(Object, Object) has been called</em> will result in an
+ * UnsupportedOperationException. However, <em>take care</em> to not alter the
  * underlying List of Comparators or the BitSet that defines the sort order.
  * </p>
  * <p>
  * Instances of ComparatorChain are not synchronized. The class is not
- * thread-safe at construction time, but it <i>is</i> thread-safe to perform
+ * thread-safe at construction time, but it <em>is</em> thread-safe to perform
  * multiple comparisons after all the setup operations are complete.
  * </p>
  *
@@ -64,7 +64,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     private boolean isLocked;
 
     /**
-     * Construct a ComparatorChain with no Comparators.
+     * Constructs a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
      * the compare(Object,Object) method, or an
      * UnsupportedOperationException is thrown
@@ -74,7 +74,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain with a single Comparator,
+     * Constructs a ComparatorChain with a single Comparator,
      * sorting in the forward order
      *
      * @param comparator First comparator in the Comparator chain
@@ -84,7 +84,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a Comparator chain with a single Comparator,
+     * Constructs a Comparator chain with a single Comparator,
      * sorting in the given order
      *
      * @param comparator First Comparator in the ComparatorChain
@@ -100,7 +100,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain from the Comparators in the
+     * Constructs a ComparatorChain from the Comparators in the
      * List.  All Comparators will default to the forward
      * sort order.
      *
@@ -112,13 +112,13 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Construct a ComparatorChain from the Comparators in the
+     * Constructs a ComparatorChain from the Comparators in the
      * given List.  The sort order of each column will be
      * drawn from the given BitSet.  When determining the sort
-     * order for Comparator at index <i>i</i> in the List,
-     * the ComparatorChain will call BitSet.get(<i>i</i>).
-     * If that method returns <i>false</i>, the forward
-     * sort order is used; a return value of <i>true</i>
+     * order for Comparator at index <em>i</em> in the List,
+     * the ComparatorChain will call BitSet.get(<em>i</em>).
+     * If that method returns <em>false</em>, the forward
+     * sort order is used; a return value of <em>true</em>
      * indicates reverse sort order.
      *
      * @param list   List of Comparators.  NOTE: This constructor does not perform a
@@ -155,6 +155,131 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         if (reverse) {
             orderingBits.set(comparatorChain.size() - 1);
         }
+    }
+
+    /**
+     * Throws an exception if the {@link ComparatorChain} is empty.
+     *
+     * @throws UnsupportedOperationException if the {@link ComparatorChain} is empty
+     */
+    private void checkChainIntegrity() {
+        if (comparatorChain.isEmpty()) {
+            throw new UnsupportedOperationException("ComparatorChains must contain at least one Comparator");
+        }
+    }
+
+    /**
+     * Throws an exception if the {@link ComparatorChain} is locked.
+     *
+     * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
+     */
+    private void checkLocked() {
+        if (isLocked) {
+            throw new UnsupportedOperationException(
+                    "Comparator ordering cannot be changed after the first comparison is performed");
+        }
+    }
+
+    /**
+     * Perform comparisons on the Objects as per
+     * Comparator.compare(o1,o2).
+     *
+     * @param o1  the first object to compare
+     * @param o2  the second object to compare
+     * @return -1, 0, or 1
+     * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
+     */
+    @Override
+    public int compare(final E o1, final E o2) throws UnsupportedOperationException {
+        if (!isLocked) {
+            checkChainIntegrity();
+            isLocked = true;
+        }
+
+        // iterate over all comparators in the chain
+        final Iterator<Comparator<E>> comparators = comparatorChain.iterator();
+        for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
+
+            final Comparator<? super E> comparator = comparators.next();
+            int retval = comparator.compare(o1, o2);
+            if (retval != 0) {
+                // invert the order if it is a reverse sort
+                if (orderingBits.get(comparatorIndex)) {
+                    if (retval > 0) {
+                        retval = -1;
+                    } else {
+                        retval = 1;
+                    }
+                }
+                return retval;
+            }
+        }
+
+        // if comparators are exhausted, return 0
+        return 0;
+    }
+
+    /**
+     * Returns {@code true} iff <em>that</em> Object is
+     * a {@link Comparator} whose ordering is known to be
+     * equivalent to mine.
+     * <p>
+     * This implementation returns {@code true}
+     * iff {@code <em>object</em>.{@link Object#getClass() getClass()}}
+     * equals {@code this.getClass()}, and the underlying
+     * comparators and order bits are equal.
+     * Subclasses may want to override this behavior to remain consistent
+     * with the {@link Comparator#equals(Object)} contract.
+     *
+     * @param object  the object to compare with
+     * @return true if equal
+     * @since 3.0
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (null == object) {
+            return false;
+        }
+        if (object.getClass().equals(this.getClass())) {
+            final ComparatorChain<?> chain = (ComparatorChain<?>) object;
+            return Objects.equals(orderingBits, chain.orderingBits) &&
+                   Objects.equals(comparatorChain, chain.comparatorChain);
+        }
+        return false;
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a suitable hash code
+     * @since 3.0
+     */
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        if (null != comparatorChain) {
+            hash ^= comparatorChain.hashCode();
+        }
+        if (null != orderingBits) {
+            hash ^= orderingBits.hashCode();
+        }
+        return hash;
+    }
+
+    /**
+     * Determine if modifications can still be made to the
+     * ComparatorChain.  ComparatorChains cannot be modified
+     * once they have performed a comparison.
+     *
+     * @return true = ComparatorChain cannot be modified; false =
+     *         ComparatorChain can still be modified.
+     */
+    public boolean isLocked() {
+        return isLocked;
     }
 
     /**
@@ -218,131 +343,6 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      */
     public int size() {
         return comparatorChain.size();
-    }
-
-    /**
-     * Determine if modifications can still be made to the
-     * ComparatorChain.  ComparatorChains cannot be modified
-     * once they have performed a comparison.
-     *
-     * @return true = ComparatorChain cannot be modified; false =
-     *         ComparatorChain can still be modified.
-     */
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    /**
-     * Throws an exception if the {@link ComparatorChain} is locked.
-     *
-     * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
-     */
-    private void checkLocked() {
-        if (isLocked) {
-            throw new UnsupportedOperationException(
-                    "Comparator ordering cannot be changed after the first comparison is performed");
-        }
-    }
-
-    /**
-     * Throws an exception if the {@link ComparatorChain} is empty.
-     *
-     * @throws UnsupportedOperationException if the {@link ComparatorChain} is empty
-     */
-    private void checkChainIntegrity() {
-        if (comparatorChain.isEmpty()) {
-            throw new UnsupportedOperationException("ComparatorChains must contain at least one Comparator");
-        }
-    }
-
-    /**
-     * Perform comparisons on the Objects as per
-     * Comparator.compare(o1,o2).
-     *
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
-     * @return -1, 0, or 1
-     * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
-     */
-    @Override
-    public int compare(final E o1, final E o2) throws UnsupportedOperationException {
-        if (!isLocked) {
-            checkChainIntegrity();
-            isLocked = true;
-        }
-
-        // iterate over all comparators in the chain
-        final Iterator<Comparator<E>> comparators = comparatorChain.iterator();
-        for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
-
-            final Comparator<? super E> comparator = comparators.next();
-            int retval = comparator.compare(o1, o2);
-            if (retval != 0) {
-                // invert the order if it is a reverse sort
-                if (orderingBits.get(comparatorIndex)) {
-                    if (retval > 0) {
-                        retval = -1;
-                    } else {
-                        retval = 1;
-                    }
-                }
-                return retval;
-            }
-        }
-
-        // if comparators are exhausted, return 0
-        return 0;
-    }
-
-    /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a suitable hash code
-     * @since 3.0
-     */
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        if (null != comparatorChain) {
-            hash ^= comparatorChain.hashCode();
-        }
-        if (null != orderingBits) {
-            hash ^= orderingBits.hashCode();
-        }
-        return hash;
-    }
-
-    /**
-     * Returns {@code true} iff <i>that</i> Object is
-     * a {@link Comparator} whose ordering is known to be
-     * equivalent to mine.
-     * <p>
-     * This implementation returns {@code true}
-     * iff {@code <i>object</i>.{@link Object#getClass() getClass()}}
-     * equals {@code this.getClass()}, and the underlying
-     * comparators and order bits are equal.
-     * Subclasses may want to override this behavior to remain consistent
-     * with the {@link Comparator#equals(Object)} contract.
-     *
-     * @param object  the object to compare with
-     * @return true if equal
-     * @since 3.0
-     */
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (null == object) {
-            return false;
-        }
-        if (object.getClass().equals(this.getClass())) {
-            final ComparatorChain<?> chain = (ComparatorChain<?>) object;
-            return Objects.equals(orderingBits, chain.orderingBits) &&
-                   Objects.equals(comparatorChain, chain.comparatorChain);
-        }
-        return false;
     }
 
 }

@@ -36,23 +36,6 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         super(UnmodifiableOrderedBidiMapTest.class.getSimpleName());
     }
 
-    @Override
-    public OrderedBidiMap<K, V> makeObject() {
-        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<>());
-    }
-
-    @Override
-    public OrderedBidiMap<K, V> makeFullMap() {
-        final OrderedBidiMap<K, V> bidi = new TreeBidiMap<>();
-        addSampleMappings(bidi);
-        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
-    }
-
-    @Override
-    public Map<K, V> makeConfirmedMap() {
-        return new TreeMap<>();
-    }
-
     /**
      * Override to prevent infinite recursion of tests.
      */
@@ -86,10 +69,21 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return false;
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public Map<K, V> makeConfirmedMap() {
+        return new TreeMap<>();
+    }
+
+    @Override
+    public OrderedBidiMap<K, V> makeFullMap() {
+        final OrderedBidiMap<K, V> bidi = new TreeBidiMap<>();
+        addSampleMappings(bidi);
+        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
+    }
+
+    @Override
+    public OrderedBidiMap<K, V> makeObject() {
+        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<>());
     }
 
     @Test
@@ -98,6 +92,12 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         assertSame(map, UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(map));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(null));
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 }

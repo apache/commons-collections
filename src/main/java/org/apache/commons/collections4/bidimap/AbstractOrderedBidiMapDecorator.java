@@ -62,18 +62,23 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
     }
 
     @Override
-    public OrderedMapIterator<K, V> mapIterator() {
-        return decorated().mapIterator();
-    }
-
-    @Override
     public K firstKey() {
         return decorated().firstKey();
     }
 
     @Override
+    public OrderedBidiMap<V, K> inverseBidiMap() {
+        return decorated().inverseBidiMap();
+    }
+
+    @Override
     public K lastKey() {
         return decorated().lastKey();
+    }
+
+    @Override
+    public OrderedMapIterator<K, V> mapIterator() {
+        return decorated().mapIterator();
     }
 
     @Override
@@ -84,11 +89,6 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
     @Override
     public K previousKey(final K key) {
         return decorated().previousKey(key);
-    }
-
-    @Override
-    public OrderedBidiMap<V, K> inverseBidiMap() {
-        return decorated().inverseBidiMap();
     }
 
 }

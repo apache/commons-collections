@@ -25,15 +25,13 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that throws an exception if the input is null.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3243449850504576071L;
-
-    /** The predicate to decorate */
-    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory to create the null exception predicate.
@@ -47,6 +45,9 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
         return new NullIsExceptionPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
 
+    /** The predicate to decorate */
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Constructor that performs no validation.
      * Use {@code nullIsExceptionPredicate} if you want that.
@@ -55,22 +56,6 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      */
     public NullIsExceptionPredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
-    }
-
-    /**
-     * Evaluates the predicate returning the result of the decorated predicate
-     * once a null check is performed.
-     *
-     * @param object  the input object
-     * @return true if decorated predicate returns true
-     * @throws FunctorException if input is null
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        if (object == null) {
-            throw new FunctorException("Input Object must not be null");
-        }
-        return iPredicate.evaluate(object);
     }
 
     /**
@@ -83,6 +68,22 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] { iPredicate };
+    }
+
+    /**
+     * Evaluates the predicate returning the result of the decorated predicate
+     * once a null check is performed.
+     *
+     * @param object  the input object
+     * @return true if decorated predicate returns true
+     * @throws FunctorException if input is null
+     */
+    @Override
+    public boolean test(final T object) {
+        if (object == null) {
+            throw new FunctorException("Input Object must not be null");
+        }
+        return iPredicate.test(object);
     }
 
 }

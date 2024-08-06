@@ -27,8 +27,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit test.
- *
- * @since 3.1
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
@@ -49,6 +47,16 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
             set.add((E) Integer.toString(i));
         }
         return set;
+    }
+
+    @Test
+    @Override
+    public void testCanonicalEmptyCollectionExists() {
+    }
+
+    @Test
+    @Override
+    public void testCanonicalFullCollectionExists() {
     }
 
     @Test
@@ -83,16 +91,6 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
         for (int i = 0; i < 10; i += 2) {
             assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
         }
-    }
-
-    @Test
-    @Override
-    public void testCanonicalEmptyCollectionExists() {
-    }
-
-    @Test
-    @Override
-    public void testCanonicalFullCollectionExists() {
     }
 
 }

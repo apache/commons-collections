@@ -54,6 +54,7 @@ import java.util.List;
  * can be used together by decorating twice.
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @see LazyList
  * @since 3.2
  */

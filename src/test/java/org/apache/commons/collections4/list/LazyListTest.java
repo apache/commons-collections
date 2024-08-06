@@ -45,18 +45,6 @@ public class LazyListTest extends AbstractObjectTest {
 
     @Test
     @Override
-    public void testSimpleSerialization() {
-        // Factory and Transformer are not serializable
-    }
-
-    @Test
-    @Override
-    public void testSerializeDeserializeThenCompare() {
-        // Factory and Transformer are not serializable
-    }
-
-    @Test
-    @Override
     public void testCanonicalEmptyCollectionExists() {
         // Factory and Transformer are not serializable
     }
@@ -65,6 +53,27 @@ public class LazyListTest extends AbstractObjectTest {
     @Override
     public void testCanonicalFullCollectionExists() {
         // Factory and Transformer are not serializable
+    }
+
+    @Test
+    public void testCreateNullGapsWithFactory() {
+        final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
+        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
+
+        final LocalDateTime fourthElement = list.get(3);
+        assertFalse(list.isEmpty());
+        assertNotNull(fourthElement);
+    }
+
+    @Test
+    public void testCreateNullGapsWithTransformer() {
+        final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
+        final Transformer<Integer, LocalDateTime> dateFactory = input -> LocalDateTime.now().withHour(hours.get(input));
+        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
+
+        final LocalDateTime fourthElement = list.get(3);
+        assertFalse(list.isEmpty());
+        assertNotNull(fourthElement);
     }
 
     @Test
@@ -92,27 +101,6 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testCreateNullGapsWithFactory() {
-        final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
-        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
-
-        final LocalDateTime fourthElement = list.get(3);
-        assertFalse(list.isEmpty());
-        assertNotNull(fourthElement);
-    }
-
-    @Test
-    public void testCreateNullGapsWithTransformer() {
-        final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
-        final Transformer<Integer, LocalDateTime> dateFactory = input -> LocalDateTime.now().withHour(hours.get(input));
-        final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
-
-        final LocalDateTime fourthElement = list.get(3);
-        assertFalse(list.isEmpty());
-        assertNotNull(fourthElement);
-    }
-
-    @Test
     public void testGetWithNull() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
@@ -124,6 +112,36 @@ public class LazyListTest extends AbstractObjectTest {
         list.add(3, null);
         fourthElement = list.get(3);
         assertNotNull(fourthElement);
+    }
+
+    @Test
+    @Override
+    public void testSerializeDeserializeThenCompare() {
+        // Factory and Transformer are not serializable
+    }
+
+    @Test
+    @Override
+    public void testSimpleSerialization() {
+        // Factory and Transformer are not serializable
+    }
+
+    private void testSubList(final List<LocalDateTime> list) {
+        List<LocalDateTime> subList = list.subList(1, 3);
+        assertFalse(subList.isEmpty());
+        assertNotNull(subList);
+        assertEquals(2, subList.size());
+
+        subList = list.subList(0, 1);
+        assertFalse(subList.isEmpty());
+        assertEquals(1, subList.size());
+
+        subList = list.subList(1, 1);
+        assertTrue(subList.isEmpty());
+
+        subList = list.subList(0, list.size());
+        assertFalse(subList.isEmpty());
+        assertEquals(list.size(), subList.size());
     }
 
     @Test
@@ -145,24 +163,6 @@ public class LazyListTest extends AbstractObjectTest {
         assertFalse(list.isEmpty());
         assertNotNull(fourthElement);
         testSubList(list);
-    }
-
-    private void testSubList(final List<LocalDateTime> list) {
-        List<LocalDateTime> subList = list.subList(1, 3);
-        assertFalse(subList.isEmpty());
-        assertNotNull(subList);
-        assertEquals(2, subList.size());
-
-        subList = list.subList(0, 1);
-        assertFalse(subList.isEmpty());
-        assertEquals(1, subList.size());
-
-        subList = list.subList(1, 1);
-        assertTrue(subList.isEmpty());
-
-        subList = list.subList(0, list.size());
-        assertFalse(subList.isEmpty());
-        assertEquals(list.size(), subList.size());
     }
 
 }

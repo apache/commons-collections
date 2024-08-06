@@ -31,16 +31,17 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link PredicatedCollection} implementation.
- *
- * @since 3.0
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate =
+        String.class::isInstance;
 
     public PredicatedCollectionTest() {
         super(PredicatedCollectionTest.class.getSimpleName());
     }
-
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Collection<E> decorateCollection(
                 final Collection<E> collection, final Predicate<E> predicate) {
@@ -48,13 +49,8 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public Collection<E> makeObject() {
-        return decorateCollection(new ArrayList<>(), truePredicate);
-    }
-
-    @Override
-    public Collection<E> makeConfirmedCollection() {
-        return new ArrayList<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -64,9 +60,8 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public Collection<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return decorateCollection(list, truePredicate);
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<>();
     }
 
     @Override
@@ -74,8 +69,16 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
-    protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+    @Override
+    public Collection<E> makeFullCollection() {
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return decorateCollection(list, truePredicate);
+    }
+
+    @Override
+    public Collection<E> makeObject() {
+        return decorateCollection(new ArrayList<>(), truePredicate);
+    }
 
     public Collection<E> makeTestCollection() {
         return decorateCollection(new ArrayList<>(), testPredicate);
@@ -108,11 +111,6 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(c.contains("two"), "Collection shouldn't contain illegal element");
         assertFalse(c.contains(3), "Collection shouldn't contain illegal element");
         assertFalse(c.contains("four"), "Collection shouldn't contain illegal element");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

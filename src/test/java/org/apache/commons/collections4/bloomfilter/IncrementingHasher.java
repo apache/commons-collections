@@ -52,12 +52,26 @@ public final class IncrementingHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
             @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
+            public int[] asIndexArray() {
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
+
+                // This method needs to return duplicate indices
+
+                processIndices(i -> {
+                    result[idx[0]++] = i;
+                    return true;
+                });
+                return result;
+            }
+
+            @Override
+            public boolean processIndices(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
 
@@ -66,8 +80,8 @@ public final class IncrementingHasher implements Hasher {
                 // This avoids any modulus operation inside the while loop. It uses a long index
                 // to avoid overflow.
 
-                long index = BitMap.mod(initial, bits);
-                final int inc = BitMap.mod(increment, bits);
+                long index = BitMaps.mod(initial, bits);
+                final int inc = BitMaps.mod(increment, bits);
 
                 for (int functionalCount = 0; functionalCount < shape.getNumberOfHashFunctions(); functionalCount++) {
                     if (!consumer.test((int) index)) {
@@ -77,20 +91,6 @@ public final class IncrementingHasher implements Hasher {
                     index = index >= bits ? index - bits : index;
                 }
                 return true;
-            }
-
-            @Override
-            public int[] asIndexArray() {
-                final int[] result = new int[shape.getNumberOfHashFunctions()];
-                final int[] idx = new int[1];
-
-                // This method needs to return duplicate indices
-
-                forEachIndex(i -> {
-                    result[idx[0]++] = i;
-                    return true;
-                });
-                return result;
             }
         };
     }

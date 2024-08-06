@@ -46,13 +46,43 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     private boolean canRemove;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param map  the map to iterate over
      */
     public EntrySetMapIterator(final Map<K, V> map) {
         this.map = map;
         this.iterator = map.entrySet().iterator();
+    }
+
+    /**
+     * Gets the current key, which is the key returned by the last call
+     * to {@code next()}.
+     *
+     * @return the current key
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     */
+    @Override
+    public K getKey() {
+        if (last == null) {
+            throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+        }
+        return last.getKey();
+    }
+
+    /**
+     * Gets the current value, which is the value associated with the last key
+     * returned by {@code next()}.
+     *
+     * @return the current value
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     */
+    @Override
+    public V getValue() {
+        if (last == null) {
+            throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+        }
+        return last.getValue();
     }
 
     /**
@@ -99,33 +129,13 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     }
 
     /**
-     * Gets the current key, which is the key returned by the last call
-     * to {@code next()}.
-     *
-     * @return the current key
-     * @throws IllegalStateException if {@code next()} has not yet been called
+     * Resets the state of the iterator.
      */
     @Override
-    public K getKey() {
-        if (last == null) {
-            throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
-        }
-        return last.getKey();
-    }
-
-    /**
-     * Gets the current value, which is the value associated with the last key
-     * returned by {@code next()}.
-     *
-     * @return the current value
-     * @throws IllegalStateException if {@code next()} has not yet been called
-     */
-    @Override
-    public V getValue() {
-        if (last == null) {
-            throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
-        }
-        return last.getValue();
+    public void reset() {
+        iterator = map.entrySet().iterator();
+        last = null;
+        canRemove = false;
     }
 
     /**
@@ -144,16 +154,6 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
             throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
         }
         return last.setValue(value);
-    }
-
-    /**
-     * Resets the state of the iterator.
-     */
-    @Override
-    public void reset() {
-        iterator = map.entrySet().iterator();
-        last = null;
-        canRemove = false;
     }
 
     /**

@@ -31,23 +31,133 @@ import java.util.TreeMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
- * implementation.
- *
- * @since 3.0
+ * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap} implementation.
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
+
+    public class TestKeyListView extends AbstractListTest<K> {
+
+        TestKeyListView() {
+            super("TestKeyListView");
+        }
+
+        @Override
+        public K[] getFullElements() {
+            return getSampleKeys();
+        }
+
+        @Override
+        public boolean isAddSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isNullSupported() {
+            return isAllowNullKey();
+        }
+
+        @Override
+        public boolean isRemoveSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isSetSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+
+        @Override
+        public List<K> makeFullCollection() {
+            return ListOrderedMapTest.this.makeFullMap().keyList();
+        }
+
+        @Override
+        public List<K> makeObject() {
+            return ListOrderedMapTest.this.makeObject().keyList();
+        }
+
+    }
+
+    public class TestValueListView extends AbstractListTest<V> {
+
+        TestValueListView() {
+            super("TestValueListView");
+        }
+
+        @Override
+        public V[] getFullElements() {
+            return getSampleValues();
+        }
+
+        @Override
+        public boolean isAddSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isNullSupported() {
+            return isAllowNullKey();
+        }
+
+        @Override
+        public boolean isRemoveSupported() {
+            return true;
+        }
+
+        @Override
+        public boolean isSetSupported() {
+            return true;
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+
+        @Override
+        public List<V> makeFullCollection() {
+            return ListOrderedMapTest.this.makeFullMap().valueList();
+        }
+
+        @Override
+        public List<V> makeObject() {
+            return ListOrderedMapTest.this.makeObject().valueList();
+        }
+
+    }
 
     public ListOrderedMapTest() {
         super(ListOrderedMapTest.class.getSimpleName());
     }
 
+    public BulkTest bulkTestKeyListView() {
+        return new TestKeyListView();
+    }
+
+    public BulkTest bulkTestValueListView() {
+        return new TestValueListView();
+    }
+
     @Override
-    public ListOrderedMap<K, V> makeObject() {
-        return ListOrderedMap.listOrderedMap(new HashMap<>());
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ListOrderedMap<K, V> getMap() {
+        return (ListOrderedMap<K, V>) super.getMap();
     }
 
     /**
@@ -58,25 +168,64 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
+    @Override
+    public ListOrderedMap<K, V> makeObject() {
+        return ListOrderedMap.listOrderedMap(new HashMap<>());
+    }
+
+    @Test
+    public void testCOLLECTIONS_474_nonNullValues() {
+        final Object key1 = new Object();
+        final Object key2 = new Object();
+        final HashMap<Object, Object> hmap = new HashMap<>();
+        hmap.put(key1, "1");
+        hmap.put(key2, "2");
+        assertEquals(2, hmap.size(), "Should have two elements");
+        final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
+        listMap.put(key1, "3");
+        listMap.put(key2, "4");
+        assertEquals(2, listMap.size(), "Should have two elements");
+        listMap.putAll(2, hmap);
+    }
+
+    @Test
+    public void testCOLLECTIONS_474_nullValues() {
+        final Object key1 = new Object();
+        final Object key2 = new Object();
+        final HashMap<Object, Object> hmap = new HashMap<>();
+        hmap.put(key1, null);
+        hmap.put(key2, null);
+        assertEquals(2, hmap.size(), "Should have two elements");
+        final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
+        listMap.put(key1, null);
+        listMap.put(key2, null);
+        assertEquals(2, listMap.size(), "Should have two elements");
+        listMap.putAll(2, hmap);
+    }
+
     @Test
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.get(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -90,19 +239,23 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.getValue(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -130,68 +283,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValueByIndex() {
-        resetEmpty();
-        ListOrderedMap<K, V> lom = getMap();
-        try {
-            lom.setValue(0, (V) "");
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.setValue(-1, (V) "");
-        } catch (final IndexOutOfBoundsException ex) {}
-
-        resetFull();
-        lom = getMap();
-        try {
-            lom.setValue(-1, (V) "");
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.setValue(lom.size(), (V) "");
-        } catch (final IndexOutOfBoundsException ex) {}
-
-        for (int i = 0; i < lom.size(); i++) {
-            final V value = lom.getValue(i);
-            final Object input = Integer.valueOf(i);
-            assertEquals(value, lom.setValue(i, (V) input));
-            assertEquals(input, lom.getValue(i));
-        }
-    }
-
-    @Test
-    public void testRemoveByIndex() {
-        resetEmpty();
-        ListOrderedMap<K, V> lom = getMap();
-        try {
-            lom.remove(0);
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
-
-        resetFull();
-        lom = getMap();
-        try {
-            lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
-        try {
-            lom.remove(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
-
-        final List<K> list = new ArrayList<>();
-        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
-            list.add(it.next());
-        }
-        for (int i = 0; i < list.size(); i++) {
-            final Object key = list.get(i);
-            final Object value = lom.get(key);
-            assertEquals(value, lom.remove(i));
-            list.remove(i);
-            assertFalse(lom.containsKey(key));
-        }
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     public void testPut_intObjectObject() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
@@ -201,8 +292,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                 () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(1, (K) "testInsert1", (V) "testInsert1v"),
                         "should not be able to insert at pos 1 in empty Map"),
                 () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(-1, (K) "testInsert-1", (V) "testInsert-1v"),
-                        "should not be able to insert at pos -1 in empty Map")
-        );
+                        "should not be able to insert at pos -1 in empty Map"));
 
         // put where key doesn't exist
         lom.put(0, (K) "testInsert1", (V) "testInsert1v");
@@ -361,26 +451,82 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
+    public void testRemoveByIndex() {
+        resetEmpty();
+        ListOrderedMap<K, V> lom = getMap();
+        try {
+            lom.remove(0);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+        try {
+            lom.remove(-1);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+
+        resetFull();
+        lom = getMap();
+        try {
+            lom.remove(-1);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+        try {
+            lom.remove(lom.size());
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+
+        final List<K> list = new ArrayList<>();
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
+            list.add(it.next());
+        }
+        for (int i = 0; i < list.size(); i++) {
+            final Object key = list.get(i);
+            final Object value = lom.get(key);
+            assertEquals(value, lom.remove(i));
+            list.remove(i);
+            assertFalse(lom.containsKey(key));
+        }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSetValueByIndex() {
+        resetEmpty();
+        ListOrderedMap<K, V> lom = getMap();
+        try {
+            lom.setValue(0, (V) StringUtils.EMPTY);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+        try {
+            lom.setValue(-1, (V) StringUtils.EMPTY);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+
+        resetFull();
+        lom = getMap();
+        try {
+            lom.setValue(-1, (V) StringUtils.EMPTY);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+        try {
+            lom.setValue(lom.size(), (V) StringUtils.EMPTY);
+        } catch (final IndexOutOfBoundsException ex) {
+        }
+
+        for (int i = 0; i < lom.size(); i++) {
+            final V value = lom.getValue(i);
+            final Object input = Integer.valueOf(i);
+            assertEquals(value, lom.setValue(i, (V) input));
+            assertEquals(input, lom.getValue(i));
+        }
+    }
+
+    @Test
     public void testValueList_getByIndex() {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
         for (int i = 0; i < lom.size(); i++) {
             final V expected = lom.getValue(i);
             assertEquals(expected, lom.valueList().get(i));
-        }
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testValueList_setByIndex() {
-        resetFull();
-        final ListOrderedMap<K, V> lom = getMap();
-        for (int i = 0; i < lom.size(); i++) {
-            final Object input = Integer.valueOf(i);
-            final V expected = lom.getValue(i);
-            assertEquals(expected, lom.valueList().set(i, (V) input));
-            assertEquals(input, lom.getValue(i));
-            assertEquals(input, lom.valueList().get(i));
         }
     }
 
@@ -394,145 +540,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-    @Test
-    public void testCOLLECTIONS_474_nullValues () {
-        final Object key1 = new Object();
-        final Object key2 = new Object();
-        final HashMap<Object, Object> hmap = new HashMap<>();
-        hmap.put(key1, null);
-        hmap.put(key2, null);
-        assertEquals(2, hmap.size(), "Should have two elements");
-        final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
-        listMap.put(key1, null);
-        listMap.put(key2, null);
-        assertEquals(2, listMap.size(), "Should have two elements");
-        listMap.putAll(2, hmap);
-    }
-
-    @Test
-    public void testCOLLECTIONS_474_nonNullValues () {
-        final Object key1 = new Object();
-        final Object key2 = new Object();
-        final HashMap<Object, Object> hmap = new HashMap<>();
-        hmap.put(key1, "1");
-        hmap.put(key2, "2");
-        assertEquals(2, hmap.size(), "Should have two elements");
-        final ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
-        listMap.put(key1, "3");
-        listMap.put(key2, "4");
-        assertEquals(2, listMap.size(), "Should have two elements");
-        listMap.putAll(2, hmap);
-    }
-
-    public BulkTest bulkTestKeyListView() {
-        return new TestKeyListView();
-    }
-
-    public BulkTest bulkTestValueListView() {
-        return new TestValueListView();
-    }
-
-    public class TestKeyListView extends AbstractListTest<K> {
-
-        TestKeyListView() {
-            super("TestKeyListView");
-        }
-
-        @Override
-        public List<K> makeObject() {
-            return ListOrderedMapTest.this.makeObject().keyList();
-        }
-
-        @Override
-        public List<K> makeFullCollection() {
-            return ListOrderedMapTest.this.makeFullMap().keyList();
-        }
-
-        @Override
-        public K[] getFullElements() {
-            return ListOrderedMapTest.this.getSampleKeys();
-        }
-
-        @Override
-        public boolean isAddSupported() {
-            return false;
-        }
-
-        @Override
-        public boolean isRemoveSupported() {
-            return false;
-        }
-
-        @Override
-        public boolean isSetSupported() {
-            return false;
-        }
-
-        @Override
-        public boolean isNullSupported() {
-            return ListOrderedMapTest.this.isAllowNullKey();
-        }
-
-        @Override
-        public boolean isTestSerialization() {
-            return false;
-        }
-
-    }
-
-    public class TestValueListView extends AbstractListTest<V> {
-
-        TestValueListView() {
-            super("TestValueListView");
-        }
-
-        @Override
-        public List<V> makeObject() {
-            return ListOrderedMapTest.this.makeObject().valueList();
-        }
-
-        @Override
-        public List<V> makeFullCollection() {
-            return ListOrderedMapTest.this.makeFullMap().valueList();
-        }
-
-        @Override
-        public V[] getFullElements() {
-            return ListOrderedMapTest.this.getSampleValues();
-        }
-
-        @Override
-        public boolean isAddSupported() {
-            return false;
-        }
-
-        @Override
-        public boolean isRemoveSupported() {
-            return true;
-        }
-
-        @Override
-        public boolean isSetSupported() {
-            return true;
-        }
-
-        @Override
-        public boolean isNullSupported() {
-            return ListOrderedMapTest.this.isAllowNullKey();
-        }
-
-        @Override
-        public boolean isTestSerialization() {
-            return false;
-        }
-
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
@@ -544,12 +551,18 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 //            "src/test/resources/data/test/ListOrderedMap.fullCollection.version4.obj");
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ListOrderedMap<K, V> getMap() {
-        return (ListOrderedMap<K, V>) super.getMap();
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testValueList_setByIndex() {
+        resetFull();
+        final ListOrderedMap<K, V> lom = getMap();
+        for (int i = 0; i < lom.size(); i++) {
+            final Object input = Integer.valueOf(i);
+            final V expected = lom.getValue(i);
+            assertEquals(expected, lom.valueList().set(i, (V) input));
+            assertEquals(input, lom.getValue(i));
+            assertEquals(input, lom.valueList().get(i));
+        }
     }
 
 }

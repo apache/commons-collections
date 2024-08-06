@@ -57,19 +57,36 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         super(bag);
     }
 
-    /**
-     * Write the collection out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
+    @Override
+    public boolean add(final E object) {
+        return add(object, 1);
+    }
+
+    @Override
+    public boolean add(final E object, final int count) {
+        decorated().add(object, count);
+        return true;
+    }
+
+    // Collection interface
+
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        boolean changed = false;
+        for (final E current : coll) {
+            final boolean added = add(current, 1);
+            changed = changed || added;
+        }
+        return changed;
+    }
+
+    @Override
+    public boolean containsAll(final Collection<?> coll) {
+        return coll.stream().allMatch(this::contains);
     }
 
     /**
-     * Read the collection in using a custom routine.
+     * Deserializes the collection in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -80,28 +97,6 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         setCollection((Collection<E>) in.readObject());
-    }
-
-    // Collection interface
-
-    @Override
-    public boolean containsAll(final Collection<?> coll) {
-        return coll.stream().allMatch(this::contains);
-    }
-
-    @Override
-    public boolean add(final E object) {
-        return add(object, 1);
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        boolean changed = false;
-        for (final E current : coll) {
-            final boolean added = add(current, 1);
-            changed = changed || added;
-        }
-        return changed;
     }
 
     @Override
@@ -140,12 +135,15 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
         return decorated().retainAll(null);
     }
 
-    // Bag interface
-
-    @Override
-    public boolean add(final E object, final int count) {
-        decorated().add(object, count);
-        return true;
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

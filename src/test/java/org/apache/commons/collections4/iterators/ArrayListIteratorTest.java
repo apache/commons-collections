@@ -28,10 +28,16 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test the ArrayListIterator class.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 
     public ArrayListIteratorTest() {
+    }
+
+    public ArrayListIterator<E> makeArrayListIterator(final Object array) {
+        return new ArrayListIterator<>(array);
     }
 
     @Override
@@ -42,10 +48,6 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     @Override
     public ArrayListIterator<E> makeObject() {
         return new ArrayListIterator<>(testArray);
-    }
-
-    public ArrayListIterator<E> makeArrayListIterator(final Object array) {
-        return new ArrayListIterator<>(array);
     }
 
     @Override

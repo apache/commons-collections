@@ -81,6 +81,12 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
         super(bag, predicate);
     }
 
+    @Override
+    public boolean add(final E object, final int count) {
+        validate(object);
+        return decorated().add(object, count);
+    }
+
     /**
      * Gets the decorated bag.
      *
@@ -97,15 +103,13 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     }
 
     @Override
-    public int hashCode() {
-        return decorated().hashCode();
+    public int getCount(final Object object) {
+        return decorated().getCount(object);
     }
 
-
     @Override
-    public boolean add(final E object, final int count) {
-        validate(object);
-        return decorated().add(object, count);
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     @Override
@@ -116,11 +120,6 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     @Override
     public Set<E> uniqueSet() {
         return decorated().uniqueSet();
-    }
-
-    @Override
-    public int getCount(final Object object) {
-        return decorated().getCount(object);
     }
 
 }

@@ -41,21 +41,21 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         };
     }
 
+    private static <T> Closure<T> generateNoExceptionClosure() {
+        return new CatchAndRethrowClosure<T>() {
+
+            @Override
+            protected void executeAndThrow(final T input) {
+            }
+        };
+    }
+
     private static <T> Closure<T> generateNullPointerExceptionClosure() {
         return new CatchAndRethrowClosure<T>() {
 
             @Override
             protected void executeAndThrow(final T input) {
                 throw new NullPointerException();
-            }
-        };
-    }
-
-    private static <T> Closure<T> generateNoExceptionClosure() {
-        return new CatchAndRethrowClosure<T>() {
-
-            @Override
-            protected void executeAndThrow(final T input) {
             }
         };
     }

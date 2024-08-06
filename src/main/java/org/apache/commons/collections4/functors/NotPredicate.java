@@ -24,15 +24,13 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns the opposite of the decorated predicate.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NotPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class NotPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2654603322338049674L;
-
-    /** The predicate to decorate */
-    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory to create the not predicate.
@@ -46,6 +44,9 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
         return new NotPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
 
+    /** The predicate to decorate */
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Constructor that performs no validation.
      * Use {@code notPredicate} if you want that.
@@ -54,17 +55,6 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
      */
     public NotPredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
-    }
-
-    /**
-     * Evaluates the predicate returning the opposite to the stored predicate.
-     *
-     * @param object  the input object
-     * @return true if predicate returns false
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        return !iPredicate.evaluate(object);
     }
 
     /**
@@ -77,6 +67,17 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate};
+    }
+
+    /**
+     * Evaluates the predicate returning the opposite to the stored predicate.
+     *
+     * @param object  the input object
+     * @return true if predicate returns false
+     */
+    @Override
+    public boolean test(final T object) {
+        return !iPredicate.test(object);
     }
 
 }

@@ -23,9 +23,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that always returns false.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class FalsePredicate<T> implements Predicate<T>, Serializable {
+public final class FalsePredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
@@ -35,7 +36,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
     public static final Predicate INSTANCE = new FalsePredicate<>();
 
     /**
-     * Get a typed instance.
+     * Gets a typed instance.
      *
      * @param <T> the type that the predicate queries
      * @return the singleton instance
@@ -52,18 +53,23 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning false always.
      *
      * @param object  the input object
      * @return false always
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         return false;
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

@@ -40,26 +40,8 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     }
 
     @Override
-    public Collection<E> makeObject() {
-        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<>());
-        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
-    }
-
-    @Override
-    public BoundedCollection<E> makeFullCollection() {
-        final E[] allElements = getFullElements();
-        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<>(Arrays.asList(allElements)));
-        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
-    }
-
-    @Override
-    public Collection<E> makeConfirmedCollection() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public Collection<E> makeConfirmedFullCollection() {
-        return new ArrayList<>(Arrays.asList(getFullElements()));
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -73,19 +55,31 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     }
 
     @Override
-    protected boolean skipSerializedCanonicalTests() {
-        return true;
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<>();
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public Collection<E> makeConfirmedFullCollection() {
+        return new ArrayList<>(Arrays.asList(getFullElements()));
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    @Override
+    public BoundedCollection<E> makeFullCollection() {
+        final E[] allElements = getFullElements();
+        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<>(Arrays.asList(allElements)));
+        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
+    }
+
+    @Override
+    public Collection<E> makeObject() {
+        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<>());
+        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
+    }
+
+    @Override
+    protected boolean skipSerializedCanonicalTests() {
+        return true;
     }
 
     @Test
@@ -94,6 +88,12 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableBoundedCollection.unmodifiableBoundedCollection(null));
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 }

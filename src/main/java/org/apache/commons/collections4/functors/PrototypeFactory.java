@@ -43,59 +43,9 @@ import org.apache.commons.collections4.FunctorException;
 public class PrototypeFactory {
 
     /**
-     * Factory method that performs validation.
-     * <p>
-     * Creates a Factory that will return a clone of the same prototype object
-     * each time the factory is used. The prototype will be cloned using one of these
-     * techniques (in order):
-     * </p>
-     *
-     * <ul>
-     * <li>public clone method</li>
-     * <li>public copy constructor</li>
-     * <li>serialization clone</li>
-     * </ul>
-     *
-     * @param <T>  the type the factory creates
-     * @param prototype  the object to clone each time in the factory
-     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
-     * the {@code prototype} is {@code null}
-     * @throws IllegalArgumentException if the prototype cannot be cloned
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Factory<T> prototypeFactory(final T prototype) {
-        if (prototype == null) {
-            return ConstantFactory.<T>constantFactory(null);
-        }
-        try {
-            final Method method = prototype.getClass().getMethod("clone", (Class[]) null);
-            return new PrototypeCloneFactory<>(prototype, method);
-
-        } catch (final NoSuchMethodException ex) {
-            try {
-                prototype.getClass().getConstructor(prototype.getClass());
-                return new InstantiateFactory<>(
-                    (Class<T>) prototype.getClass(),
-                    new Class<?>[] { prototype.getClass() },
-                    new Object[] { prototype });
-            } catch (final NoSuchMethodException ex2) {
-                if (prototype instanceof Serializable) {
-                    return (Factory<T>) new PrototypeSerializationFactory<>((Serializable) prototype);
-                }
-            }
-        }
-        throw new IllegalArgumentException("The prototype must be cloneable via a public clone method");
-    }
-
-    /**
-     * Restricted constructor.
-     */
-    private PrototypeFactory() {
-    }
-
-    // PrototypeCloneFactory
-    /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
+     *
+     * @param <T> the type of results supplied by this supplier.
      */
     static class PrototypeCloneFactory<T> implements Factory<T> {
 
@@ -110,17 +60,6 @@ public class PrototypeFactory {
         private PrototypeCloneFactory(final T prototype, final Method method) {
             iPrototype = prototype;
             iCloneMethod = method;
-        }
-
-        /**
-         * Find the Clone method for the class specified.
-         */
-        private void findCloneMethod() {
-            try {
-                iCloneMethod = iPrototype.getClass().getMethod("clone", (Class[]) null);
-            } catch (final NoSuchMethodException ex) {
-                throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
-            }
         }
 
         /**
@@ -144,11 +83,23 @@ public class PrototypeFactory {
                 throw new FunctorException("PrototypeCloneFactory: Clone method threw an exception", ex);
             }
         }
+
+        /**
+         * Find the Clone method for the class specified.
+         */
+        private void findCloneMethod() {
+            try {
+                iCloneMethod = iPrototype.getClass().getMethod("clone", (Class[]) null);
+            } catch (final NoSuchMethodException ex) {
+                throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
+            }
+        }
     }
 
-    // PrototypeSerializationFactory
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
+     *
+     * @param <T> the type of results supplied by this supplier.
      */
     static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T> {
 
@@ -197,6 +148,57 @@ public class PrototypeFactory {
                 }
             }
         }
+    }
+
+    /**
+     * Factory method that performs validation.
+     * <p>
+     * Creates a Factory that will return a clone of the same prototype object
+     * each time the factory is used. The prototype will be cloned using one of these
+     * techniques (in order):
+     * </p>
+     *
+     * <ul>
+     * <li>public clone method</li>
+     * <li>public copy constructor</li>
+     * <li>serialization clone</li>
+     * </ul>
+     *
+     * @param <T>  the type the factory creates
+     * @param prototype  the object to clone each time in the factory
+     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * the {@code prototype} is {@code null}
+     * @throws IllegalArgumentException if the prototype cannot be cloned
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Factory<T> prototypeFactory(final T prototype) {
+        if (prototype == null) {
+            return ConstantFactory.<T>constantFactory(null);
+        }
+        try {
+            final Method method = prototype.getClass().getMethod("clone", (Class[]) null);
+            return new PrototypeCloneFactory<>(prototype, method);
+
+        } catch (final NoSuchMethodException ex) {
+            try {
+                prototype.getClass().getConstructor(prototype.getClass());
+                return new InstantiateFactory<>(
+                    (Class<T>) prototype.getClass(),
+                    new Class<?>[] { prototype.getClass() },
+                    new Object[] { prototype });
+            } catch (final NoSuchMethodException ex2) {
+                if (prototype instanceof Serializable) {
+                    return (Factory<T>) new PrototypeSerializationFactory<>((Serializable) prototype);
+                }
+            }
+        }
+        throw new IllegalArgumentException("The prototype must be cloneable via a public clone method");
+    }
+
+    /**
+     * Restricted constructor.
+     */
+    private PrototypeFactory() {
     }
 
 }

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations for the {@link java.util.Queue Queue} interface.
+ * Implements the {@link java.util.Queue Queue} interface.
  * <p>
  * The following implementations are provided in the package:
  * <ul>

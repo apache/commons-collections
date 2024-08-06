@@ -80,20 +80,53 @@ public final class UnmodifiableSortedMap<K, V>
         super((SortedMap<K, V>) map);
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Comparator<? super K> comparator() {
+        return decorated().comparator();
+    }
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        return UnmodifiableEntrySet.unmodifiableEntrySet(super.entrySet());
+    }
+
+    @Override
+    public K firstKey() {
+        return decorated().firstKey();
+    }
+
+    @Override
+    public SortedMap<K, V> headMap(final K toKey) {
+        return new UnmodifiableSortedMap<>(decorated().headMap(toKey));
+    }
+
+    @Override
+    public Set<K> keySet() {
+        return UnmodifiableSet.unmodifiableSet(super.keySet());
+    }
+
+    @Override
+    public K lastKey() {
+        return decorated().lastKey();
+    }
+
+    @Override
+    public V put(final K key, final V value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
+        throw new UnsupportedOperationException();
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -107,53 +140,8 @@ public final class UnmodifiableSortedMap<K, V>
     }
 
     @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public V put(final K key, final V value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        return UnmodifiableEntrySet.unmodifiableEntrySet(super.entrySet());
-    }
-
-    @Override
-    public Set<K> keySet() {
-        return UnmodifiableSet.unmodifiableSet(super.keySet());
-    }
-
-    @Override
-    public Collection<V> values() {
-        return UnmodifiableCollection.unmodifiableCollection(super.values());
-    }
-
-    @Override
-    public K firstKey() {
-        return decorated().firstKey();
-    }
-
-    @Override
-    public K lastKey() {
-        return decorated().lastKey();
-    }
-
-    @Override
-    public Comparator<? super K> comparator() {
-        return decorated().comparator();
     }
 
     @Override
@@ -162,13 +150,25 @@ public final class UnmodifiableSortedMap<K, V>
     }
 
     @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        return new UnmodifiableSortedMap<>(decorated().headMap(toKey));
+    public SortedMap<K, V> tailMap(final K fromKey) {
+        return new UnmodifiableSortedMap<>(decorated().tailMap(fromKey));
     }
 
     @Override
-    public SortedMap<K, V> tailMap(final K fromKey) {
-        return new UnmodifiableSortedMap<>(decorated().tailMap(fromKey));
+    public Collection<V> values() {
+        return UnmodifiableCollection.unmodifiableCollection(super.values());
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

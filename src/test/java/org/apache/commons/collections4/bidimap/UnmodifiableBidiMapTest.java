@@ -38,20 +38,8 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     }
 
     @Override
-    public BidiMap<K, V> makeObject() {
-        return UnmodifiableBidiMap.unmodifiableBidiMap(new DualHashBidiMap<>());
-    }
-
-    @Override
-    public BidiMap<K, V> makeFullMap() {
-        final BidiMap<K, V> bidi = new DualHashBidiMap<>();
-        addSampleMappings(bidi);
-        return UnmodifiableBidiMap.unmodifiableBidiMap(bidi);
-    }
-
-    @Override
-    public Map<K, V> makeConfirmedMap() {
-        return new HashMap<>();
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
     }
 
     /**
@@ -78,14 +66,20 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     }
 
     @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
+    public Map<K, V> makeConfirmedMap() {
+        return new HashMap<>();
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public BidiMap<K, V> makeFullMap() {
+        final BidiMap<K, V> bidi = new DualHashBidiMap<>();
+        addSampleMappings(bidi);
+        return UnmodifiableBidiMap.unmodifiableBidiMap(bidi);
+    }
+
+    @Override
+    public BidiMap<K, V> makeObject() {
+        return UnmodifiableBidiMap.unmodifiableBidiMap(new DualHashBidiMap<>());
     }
 
     @Test
@@ -94,6 +88,12 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         assertSame(map, UnmodifiableBidiMap.unmodifiableBidiMap(map));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableBidiMap.unmodifiableBidiMap(null));
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 }

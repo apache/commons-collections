@@ -30,8 +30,6 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * Base class for tests of predicates which delegate to other predicates when evaluating an object.  This class
  * provides methods to create and verify mock predicates to which to delegate.
- *
- * @since 3.0
  */
 public abstract class AbstractMockPredicateTest<T> {
     /**
@@ -54,21 +52,30 @@ public abstract class AbstractMockPredicateTest<T> {
     }
 
     /**
+     * Creates a single mock predicate.
+     *
+     * @param returnValue the return value for the mock predicate, or null if the mock is not expected to be called.
+     *
+     * @return a single mock predicate.
+     */
+    @SuppressWarnings({"boxing"})
+    protected final Predicate<T> createMockPredicate(final Boolean returnValue) {
+        final Predicate<T> mockPredicate = EasyMock.createMock(Predicate.class);
+        if (returnValue != null) {
+            EasyMock.expect(mockPredicate.test(testValue)).andReturn(returnValue);
+        }
+        replay(mockPredicate);
+        mockPredicatesToVerify.add(mockPredicate);
+
+        return mockPredicate;
+    }
+
+    /**
      * Creates the list of predicates to verify.
      */
     @BeforeEach
     public final void createVerifyList() {
         mockPredicatesToVerify = new ArrayList<>();
-    }
-
-    /**
-     * Verifies all the mock predicates created for the test.
-     */
-    @AfterEach
-    public final void verifyPredicates() {
-        for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
-            verify(predicate);
-        }
     }
 
     /**
@@ -81,21 +88,12 @@ public abstract class AbstractMockPredicateTest<T> {
     }
 
     /**
-     * Creates a single mock predicate.
-     *
-     * @param returnValue the return value for the mock predicate, or null if the mock is not expected to be called.
-     *
-     * @return a single mock predicate.
+     * Verifies all the mock predicates created for the test.
      */
-    @SuppressWarnings({"boxing"})
-    protected final Predicate<T> createMockPredicate(final Boolean returnValue) {
-        final Predicate<T> mockPredicate = EasyMock.createMock(Predicate.class);
-        if (returnValue != null) {
-            EasyMock.expect(mockPredicate.evaluate(testValue)).andReturn(returnValue);
+    @AfterEach
+    public final void verifyPredicates() {
+        for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
+            verify(predicate);
         }
-        replay(mockPredicate);
-        mockPredicatesToVerify.add(mockPredicate);
-
-        return mockPredicate;
     }
 }

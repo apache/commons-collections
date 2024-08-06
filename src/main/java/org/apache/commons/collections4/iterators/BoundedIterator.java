@@ -49,7 +49,6 @@ public class BoundedIterator<E> implements Iterator<E> {
     /** The position of the current element */
     private long pos;
 
-
     /**
      * Decorates the specified iterator to return at most the given number of elements,
      * skipping all elements until the iterator reaches the position at {@code offset}.
@@ -79,15 +78,15 @@ public class BoundedIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Advances the underlying iterator to the beginning of the bounded range.
+     * Checks whether the iterator is still within its bounded range.
+     * @return {@code true} if the iterator is within its bounds, {@code false} otherwise
      */
-    private void init() {
-        while (pos < offset && iterator.hasNext()) {
-            iterator.next();
-            pos++;
+    private boolean checkBounds() {
+        if (pos - offset + 1 > max) {
+            return false;
         }
+        return true;
     }
-
 
     @Override
     public boolean hasNext() {
@@ -98,14 +97,13 @@ public class BoundedIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Checks whether the iterator is still within its bounded range.
-     * @return {@code true} if the iterator is within its bounds, {@code false} otherwise
+     * Advances the underlying iterator to the beginning of the bounded range.
      */
-    private boolean checkBounds() {
-        if (pos - offset + 1 > max) {
-            return false;
+    private void init() {
+        while (pos < offset && iterator.hasNext()) {
+            iterator.next();
+            pos++;
         }
-        return true;
     }
 
     @Override

@@ -30,8 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBag} implementation.
- *
- * @since 4.0
  */
 public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
@@ -40,8 +38,33 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
     }
 
     @Override
-    public Bag<E> makeObject() {
-        return UnmodifiableBag.unmodifiableBag(new HashBag<>());
+    public Bag<E> getCollection() {
+        return super.getCollection();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -52,34 +75,8 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
     }
 
     @Override
-    public Bag<E> getCollection() {
-        return super.getCollection();
-    }
-
-    @Override
-    public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
-    }
-
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    public Bag<E> makeObject() {
+        return UnmodifiableBag.unmodifiableBag(new HashBag<>());
     }
 
     @Test
@@ -90,9 +87,10 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
         assertThrows(NullPointerException.class, () -> UnmodifiableBag.unmodifiableBag(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

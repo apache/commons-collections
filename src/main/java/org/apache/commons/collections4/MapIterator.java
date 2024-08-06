@@ -50,23 +50,6 @@ import java.util.Iterator;
 public interface MapIterator<K, V> extends Iterator<K> {
 
     /**
-     * Checks to see if there are more entries still to be iterated.
-     *
-     * @return {@code true} if the iterator has more elements
-     */
-    @Override
-    boolean hasNext();
-
-    /**
-     * Gets the next <em>key</em> from the {@code Map}.
-     *
-     * @return the next key in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
-     */
-    @Override
-    K next();
-
-    /**
      * Gets the current key, which is the key returned by the last call
      * to {@code next()}.
      *
@@ -83,6 +66,23 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * @throws IllegalStateException if {@code next()} has not yet been called
      */
     V getValue();
+
+    /**
+     * Checks to see if there are more entries still to be iterated.
+     *
+     * @return {@code true} if the iterator has more elements
+     */
+    @Override
+    boolean hasNext();
+
+    /**
+     * Gets the next <em>key</em> from the {@code Map}.
+     *
+     * @return the next key in the iteration
+     * @throws java.util.NoSuchElementException if the iteration is finished
+     */
+    @Override
+    K next();
 
     /**
      * Removes the last returned key from the underlying {@code Map} (optional operation).

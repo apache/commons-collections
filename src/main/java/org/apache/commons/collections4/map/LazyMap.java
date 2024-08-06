@@ -72,9 +72,6 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     /** Serialization version */
     private static final long serialVersionUID = 7990956402564206740L;
 
-    /** The factory to use to construct elements */
-    protected final Transformer<? super K, ? extends V> factory;
-
     /**
      * Factory method to create a lazily instantiated map.
      *
@@ -105,6 +102,9 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         return new LazyMap<>(map, factory);
     }
 
+    /** The factory to use to construct elements */
+    protected final Transformer<? super K, ? extends V> factory;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -129,20 +129,21 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         this.factory = Objects.requireNonNull(factory, "factory");
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    @Override
+    public V get(final Object key) {
+        // create value for key if key is not currently in the map
+        if (!map.containsKey(key)) {
+            @SuppressWarnings("unchecked")
+            final K castKey = (K) key;
+            final V value = factory.apply(castKey);
+            map.put(castKey, value);
+            return value;
+        }
+        return map.get(key);
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -155,17 +156,16 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
         map = (Map<K, V>) in.readObject();
     }
 
-    @Override
-    public V get(final Object key) {
-        // create value for key if key is not currently in the map
-        if (!map.containsKey(key)) {
-            @SuppressWarnings("unchecked")
-            final K castKey = (K) key;
-            final V value = factory.transform(castKey);
-            map.put(castKey, value);
-            return value;
-        }
-        return map.get(key);
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
     // no need to wrap keySet, entrySet or values as they are views of

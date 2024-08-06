@@ -118,9 +118,17 @@ package org.apache.commons.collections4.sequence;
  * }
  * </pre>
  *
+ * @param <T> the type of the input to the visit operations.
  * @since 4.0
  */
 public interface CommandVisitor<T> {
+
+    /**
+     * Method called when a delete command is encountered.
+     *
+     * @param object object to delete (this object comes from the first sequence)
+     */
+    void visitDeleteCommand(T object);
 
     /**
      * Method called when an insert command is encountered.
@@ -135,12 +143,5 @@ public interface CommandVisitor<T> {
      * @param object object to keep (this object comes from the first sequence)
      */
     void visitKeepCommand(T object);
-
-    /**
-     * Method called when a delete command is encountered.
-     *
-     * @param object object to delete (this object comes from the first sequence)
-     */
-    void visitDeleteCommand(T object);
 
 }

@@ -34,20 +34,21 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractNavigableSetTest} for exercising the
  * {@link PredicatedNavigableSet} implementation.
- *
- * @since 4.1
  */
 public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate =
+        o -> o instanceof String && ((String) o).startsWith("A");
 
     public PredicatedNavigableSetTest() {
         super(PredicatedNavigableSetTest.class.getSimpleName());
     }
 
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
-
     @Override
-    public NavigableSet<E> makeObject() {
-        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<>(), truePredicate);
+    public String getCompatibilityVersion() {
+        return "4.1";
     }
 
     @Override
@@ -56,11 +57,20 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         return PredicatedNavigableSet.predicatedNavigableSet(set, truePredicate);
     }
 
-    protected Predicate<E> testPredicate =
-        o -> o instanceof String && ((String) o).startsWith("A");
+    @Override
+    public NavigableSet<E> makeObject() {
+        return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<>(), truePredicate);
+    }
 
     protected PredicatedNavigableSet<E> makeTestSet() {
         return PredicatedNavigableSet.predicatedNavigableSet(new TreeSet<>(), testPredicate);
+    }
+
+    @Test
+    public void testComparator() {
+        final NavigableSet<E> set = makeTestSet();
+        final Comparator<? super E> c = set.comparator();
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
@@ -94,18 +104,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         assertFalse(set.contains("Atwo"), "Set shouldn't contain illegal element");
         assertFalse(set.contains("Bthree"), "Set shouldn't contain illegal element");
         assertFalse(set.contains("Afour"), "Set shouldn't contain illegal element");
-    }
-
-    @Test
-    public void testComparator() {
-        final NavigableSet<E> set = makeTestSet();
-        final Comparator<? super E> c = set.comparator();
-        assertNull(c, "natural order, so comparator should be null");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.1";
     }
 
 //    public void testCreate() throws Exception {

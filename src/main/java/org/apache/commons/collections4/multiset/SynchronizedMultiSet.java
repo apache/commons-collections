@@ -34,6 +34,23 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {
 
+    /**
+     * Synchronized Set for the MultiSet class.
+     */
+    static class SynchronizedSet<T> extends SynchronizedCollection<T> implements Set<T> {
+        /** Serialization version */
+        private static final long serialVersionUID = 20150629L;
+
+        /**
+         * Constructs a new instance.
+         * @param set  the set to decorate
+         * @param lock  the lock to use, shared with the multiset
+         */
+        SynchronizedSet(final Set<T> set, final Object lock) {
+            super(set, lock);
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = 20150629L;
 
@@ -70,6 +87,13 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         super(multiset, lock);
     }
 
+    @Override
+    public int add(final E object, final int count) {
+        synchronized (lock) {
+            return decorated().add(object, count);
+        }
+    }
+
     /**
      * Gets the multiset being decorated.
      *
@@ -78,6 +102,14 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     @Override
     protected MultiSet<E> decorated() {
         return (MultiSet<E>) super.decorated();
+    }
+
+    @Override
+    public Set<Entry<E>> entrySet() {
+        synchronized (lock) {
+            final Set<MultiSet.Entry<E>> set = decorated().entrySet();
+            return new SynchronizedSet<>(set, lock);
+        }
     }
 
     @Override
@@ -91,17 +123,16 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     }
 
     @Override
-    public int hashCode() {
+    public int getCount(final Object object) {
         synchronized (lock) {
-            return decorated().hashCode();
+            return decorated().getCount(object);
         }
     }
 
-
     @Override
-    public int add(final E object, final int count) {
+    public int hashCode() {
         synchronized (lock) {
-            return decorated().add(object, count);
+            return decorated().hashCode();
         }
     }
 
@@ -109,13 +140,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     public int remove(final Object object, final int count) {
         synchronized (lock) {
             return decorated().remove(object, count);
-        }
-    }
-
-    @Override
-    public int getCount(final Object object) {
-        synchronized (lock) {
-            return decorated().getCount(object);
         }
     }
 
@@ -131,31 +155,6 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
         synchronized (lock) {
             final Set<E> set = decorated().uniqueSet();
             return new SynchronizedSet<>(set, lock);
-        }
-    }
-
-    @Override
-    public Set<Entry<E>> entrySet() {
-        synchronized (lock) {
-            final Set<MultiSet.Entry<E>> set = decorated().entrySet();
-            return new SynchronizedSet<>(set, lock);
-        }
-    }
-
-    /**
-     * Synchronized Set for the MultiSet class.
-     */
-    static class SynchronizedSet<T> extends SynchronizedCollection<T> implements Set<T> {
-        /** Serialization version */
-        private static final long serialVersionUID = 20150629L;
-
-        /**
-         * Constructor.
-         * @param set  the set to decorate
-         * @param lock  the lock to use, shared with the multiset
-         */
-        SynchronizedSet(final Set<T> set, final Object lock) {
-            super(set, lock);
         }
     }
 

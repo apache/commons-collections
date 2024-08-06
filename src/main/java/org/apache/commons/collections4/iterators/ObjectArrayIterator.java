@@ -68,7 +68,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Construct an ObjectArrayIterator that will iterate over a range of values
+     * Constructs an ObjectArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
@@ -95,6 +95,33 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
         this.startIndex = start;
         this.endIndex = end;
         this.index = start;
+    }
+
+    /**
+     * Gets the array that this iterator is iterating over.
+     *
+     * @return the array this iterator iterates over
+     */
+    public E[] getArray() {
+        return this.array;
+    }
+
+    /**
+     * Gets the end index to loop to.
+     *
+     * @return the end index
+     */
+    public int getEndIndex() {
+        return this.endIndex;
+    }
+
+    /**
+     * Gets the start index to loop from.
+     *
+     * @return the start index
+     */
+    public int getStartIndex() {
+        return this.startIndex;
     }
 
     /**
@@ -130,33 +157,6 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() method is not supported for an ObjectArrayIterator");
-    }
-
-    /**
-     * Gets the array that this iterator is iterating over.
-     *
-     * @return the array this iterator iterates over
-     */
-    public E[] getArray() {
-        return this.array;
-    }
-
-    /**
-     * Gets the start index to loop from.
-     *
-     * @return the start index
-     */
-    public int getStartIndex() {
-        return this.startIndex;
-    }
-
-    /**
-     * Gets the end index to loop to.
-     *
-     * @return the end index
-     */
-    public int getEndIndex() {
-        return this.endIndex;
     }
 
     /**

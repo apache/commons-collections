@@ -36,8 +36,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link DefaultedMap} implementation.
- *
- * @since 3.2
  */
 public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -49,8 +47,30 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public IterableMap<K, V> makeObject() {
         return DefaultedMap.defaultedMap(new HashMap<K, V>(), nullFactory);
+    }
+
+    @Test
+    public void testFactoryMethods() {
+        final HashMap<K, V> base = new HashMap<>();
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Factory<V>) null),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer),
+                        "Expecting NullPointerException"),
+                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Transformer<K, V>) null),
+                        "Expecting NullPointerException")
+        );
     }
 
     @Test
@@ -136,28 +156,6 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
-    }
-
-    @Test
-    public void testFactoryMethods() {
-        final HashMap<K, V> base = new HashMap<>();
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Factory<V>) null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Transformer<K, V>) null),
-                        "Expecting NullPointerException")
-        );
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

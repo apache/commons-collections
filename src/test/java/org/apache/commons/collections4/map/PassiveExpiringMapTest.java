@@ -35,12 +35,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
- * @since 4.0
  */
 public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
-    private static class TestExpirationPolicy
+    private static final class TestExpirationPolicy
         implements ExpirationPolicy<Integer, String> {
 
         private static final long serialVersionUID = 1L;
@@ -77,6 +75,11 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return "4";
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
+    }
+
     private Map<Integer, String> makeDecoratedTestMap() {
         final Map<Integer, String> m = new HashMap<>();
         m.put(Integer.valueOf(1), "one");
@@ -91,11 +94,6 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     @Override
     public Map<K, V> makeObject() {
         return new PassiveExpiringMap<>();
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
     }
 
     private Map<Integer, String> makeTestMap() {
@@ -265,7 +263,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         assertNotNull(map.get("a"));
 
-        try{
+        try {
             Thread.sleep(2 * timeout);
         } catch (final InterruptedException e) {
             fail();

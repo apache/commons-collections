@@ -33,16 +33,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
- *
- * @since 3.0
  */
 public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
-    class SetUniqueList307 extends SetUniqueList<E> {
+    final class SetUniqueList307 extends SetUniqueList<E> {
         /**
          * Generated serial version ID.
          */
@@ -69,7 +68,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public E[] getFullNonNullElements() {
         // override to avoid duplicate "One"
         return (E[]) new Object[] {
-            "",
+            StringUtils.EMPTY,
             "One",
             Integer.valueOf(2),
             "Three",
@@ -251,6 +250,34 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertEquals(3, decoratedList.size());
         decoratedList.add(decoratedList);
         assertEquals(4, decoratedList.size());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testCreateSetBasedOnList() {
+        final List<String> list = new ArrayList<>();
+        list.add("One");
+        list.add("Two");
+        @SuppressWarnings("rawtypes") final SetUniqueList setUniqueList = (SetUniqueList) makeObject();
+
+        // Standard case with HashSet
+        final Set<String> setBasedOnList = setUniqueList.createSetBasedOnList(new HashSet<>(), list);
+        assertEquals(list.size(), setBasedOnList.size());
+        list.forEach(item -> assertTrue(setBasedOnList.contains(item)));
+
+        // Use different Set than HashSet
+        final Set<String> setBasedOnList1 = setUniqueList.createSetBasedOnList(new TreeSet<>(), list);
+        assertEquals(list.size(), setBasedOnList1.size());
+        list.forEach(item -> assertTrue(setBasedOnList1.contains(item)));
+
+        // throws internally NoSuchMethodException --> results in HashSet
+        final Set<String> setBasedOnList2 = setUniqueList.createSetBasedOnList(UnmodifiableSet.unmodifiableSet(new HashSet<>()), list);
+        assertEquals(list.size(), setBasedOnList2.size());
+        list.forEach(item -> assertTrue(setBasedOnList2.contains(item)));
+
+        // provide null values as Parameter
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
+        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
     }
 
     @Test
@@ -479,7 +506,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(lset.contains(obj1));
         assertTrue(lset.contains(obj2));
     }
-
     @Test
     @SuppressWarnings("unchecked")
     public void testSetDownwardsInList() {
@@ -509,6 +535,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(s.contains(b));
         assertFalse(s.contains(a));
     }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testSetInBiggerList() {
@@ -641,34 +668,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
             getCollection().remove(size);
         }
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testCreateSetBasedOnList() {
-        final List<String> list = new ArrayList<>();
-        list.add("One");
-        list.add("Two");
-        @SuppressWarnings("rawtypes") final SetUniqueList setUniqueList = (SetUniqueList) makeObject();
-
-        // Standard case with HashSet
-        final Set<String> setBasedOnList = setUniqueList.createSetBasedOnList(new HashSet<>(), list);
-        assertEquals(list.size(), setBasedOnList.size());
-        list.forEach(item -> assertTrue(setBasedOnList.contains(item)));
-
-        // Use different Set than HashSet
-        final Set<String> setBasedOnList1 = setUniqueList.createSetBasedOnList(new TreeSet<>(), list);
-        assertEquals(list.size(), setBasedOnList1.size());
-        list.forEach(item -> assertTrue(setBasedOnList1.contains(item)));
-
-        // throws internally NoSuchMethodException --> results in HashSet
-        final Set<String> setBasedOnList2 = setUniqueList.createSetBasedOnList(UnmodifiableSet.unmodifiableSet(new HashSet<>()), list);
-        assertEquals(list.size(), setBasedOnList2.size());
-        list.forEach(item -> assertTrue(setBasedOnList2.contains(item)));
-
-        // provide null values as Parameter
-        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
-        assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
     }
 
 }

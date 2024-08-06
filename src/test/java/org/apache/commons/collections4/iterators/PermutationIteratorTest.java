@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for PermutationIterator.
- *
- * @since 4.0
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 
@@ -45,23 +43,6 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     public PermutationIteratorTest() {
         super(PermutationIteratorTest.class.getSimpleName());
-    }
-
-    @BeforeEach
-    public void setUp() {
-        testList = new ArrayList<>();
-        testList.addAll(Arrays.asList(testArray));
-    }
-
-
-    @Override
-    public boolean supportsRemove() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsEmptyIterator() {
-        return false;
     }
 
     @Override
@@ -74,23 +55,45 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         return new PermutationIterator<>(testList);
     }
 
+    @BeforeEach
+    public void setUp() {
+        testList = new ArrayList<>();
+        testList.addAll(Arrays.asList(testArray));
+    }
+
+    @Override
+    public boolean supportsEmptyIterator() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsRemove() {
+        return false;
+    }
+
     @Test
-    @SuppressWarnings("boxing") // OK in test code
-    public void testPermutationResultSize() {
-        int factorial = 1;
-        for (int i = 0; i < 8; i++, factorial*=i) {
-            final List<Integer> list = new ArrayList<>();
-            for (int j = 0; j < i; j++) {
-                list.add(j);
-            }
-            final Iterator<List<Integer>> it = new PermutationIterator<>(list);
-            int count = 0;
-            while (it.hasNext()) {
-                it.next();
-                count++;
-            }
-            assertEquals(factorial, count);
+    public void testEmptyCollection() {
+        final PermutationIterator<Character> it = makeEmptyIterator();
+        // there is one permutation for an empty set: 0! = 1
+        assertTrue(it.hasNext());
+
+        final List<Character> nextPermutation = it.next();
+        assertEquals(0, nextPermutation.size());
+
+        assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void testPermutationException() {
+        final List<List<Character>> resultsList = new ArrayList<>();
+
+        final PermutationIterator<Character> it = makeObject();
+        while (it.hasNext()) {
+            final List<Character> permutation = it.next();
+            resultsList.add(permutation);
         }
+        //asking for another permutation should throw an exception
+        assertThrows(NoSuchElementException.class, () -> it.next());
     }
 
     /**
@@ -144,6 +147,25 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         assertTrue(results.contains(perm6));
     }
 
+    @Test
+    @SuppressWarnings("boxing") // OK in test code
+    public void testPermutationResultSize() {
+        int factorial = 1;
+        for (int i = 0; i < 8; i++, factorial *= i) {
+            final List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < i; j++) {
+                list.add(j);
+            }
+            final Iterator<List<Integer>> it = new PermutationIterator<>(list);
+            int count = 0;
+            while (it.hasNext()) {
+                it.next();
+                count++;
+            }
+            assertEquals(factorial, count);
+        }
+    }
+
     /**
      * test checking that all the permutations are returned only once.
      */
@@ -164,37 +186,12 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testPermutationException() {
-        final List<List<Character>> resultsList = new ArrayList<>();
-
-        final PermutationIterator<Character> it = makeObject();
-        while (it.hasNext()) {
-            final List<Character> permutation = it.next();
-            resultsList.add(permutation);
-        }
-        //asking for another permutation should throw an exception
-        assertThrows(NoSuchElementException.class, () -> it.next());
-    }
-
-    @Test
     public void testPermutatorHasMore() {
         final PermutationIterator<Character> it = makeObject();
         for (int i = 0; i < 6; i++) {
             assertTrue(it.hasNext());
             it.next();
         }
-        assertFalse(it.hasNext());
-    }
-
-    @Test
-    public void testEmptyCollection() {
-        final PermutationIterator<Character> it = makeEmptyIterator();
-        // there is one permutation for an empty set: 0! = 1
-        assertTrue(it.hasNext());
-
-        final List<Character> nextPermutation = it.next();
-        assertEquals(0, nextPermutation.size());
-
         assertFalse(it.hasNext());
     }
 

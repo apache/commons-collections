@@ -26,7 +26,7 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 
 /**
- * Implementation of {@link BidiMap} that uses two {@link HashMap} instances.
+ * Implements {@link BidiMap} with two {@link HashMap} instances.
  * <p>
  * Two {@link HashMap} instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries.
@@ -92,12 +92,13 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         return new DualHashBidiMap<>(normalMap, reverseMap, inverseBidiMap);
     }
 
-    // Serialization
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(normalMap);
-    }
-
+    /**
+     * Deserializes an instance from an ObjectInputStream.
+     *
+     * @param in The source ObjectInputStream.
+     * @throws IOException            Any of the usual Input/Output related exceptions.
+     * @throws ClassNotFoundException A class of a serialized object cannot be found.
+     */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new HashMap<>();
@@ -105,6 +106,17 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
         final Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(normalMap);
     }
 
 }

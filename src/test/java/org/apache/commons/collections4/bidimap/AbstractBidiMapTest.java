@@ -43,304 +43,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public AbstractBidiMapTest(final String testName) {
-        super(testName);
-    }
-
-    public AbstractBidiMapTest() {
-        super("Inverse");
-    }
-
-    /**
-     * Override to create a full {@code BidiMap} other than the default.
-     *
-     * @return a full {@code BidiMap} implementation.
-     */
-    @Override
-    public BidiMap<K, V> makeFullMap() {
-        return (BidiMap<K, V>) super.makeFullMap();
-    }
-
-    /**
-     * Override to return the empty BidiMap.
-     */
-    @Override
-    public abstract BidiMap<K, V> makeObject();
-
-    /**
-     * Override to indicate to AbstractTestMap this is a BidiMap.
-     */
-    @Override
-    public boolean isAllowDuplicateValues() {
-        return false;
-    }
-
-    /**
-     * Override as DualHashBidiMap didn't exist until version 3.
-     */
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    // BidiPut
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testBidiPut() {
-        if (!isPutAddSupported() || !isPutChangeSupported()) {
-            return;
-        }
-
-        final BidiMap<K, V> map = makeObject();
-        final BidiMap<V, K> inverse = map.inverseBidiMap();
-        assertEquals(0, map.size());
-        assertEquals(map.size(), inverse.size());
-
-        map.put((K) "A", (V) "B");
-        assertEquals(1, map.size());
-        assertEquals(map.size(), inverse.size());
-        assertEquals("B", map.get("A"));
-        assertEquals("A", inverse.get("B"));
-
-        map.put((K) "A", (V) "C");
-        assertEquals(1, map.size());
-        assertEquals(map.size(), inverse.size());
-        assertEquals("C", map.get("A"));
-        assertEquals("A", inverse.get("C"));
-
-        map.put((K) "B", (V) "C");
-        assertEquals(1, map.size());
-        assertEquals(map.size(), inverse.size());
-        assertEquals("C", map.get("B"));
-        assertEquals("B", inverse.get("C"));
-
-        map.put((K) "E", (V) "F");
-        assertEquals(2, map.size());
-        assertEquals(map.size(), inverse.size());
-        assertEquals("F", map.get("E"));
-        assertEquals("E", inverse.get("F"));
-    }
-
-    /**
-     * Verifies that {@link #map} is still equal to {@link #confirmed}.
-     * <p>
-     * This implementation checks the inverse map as well.
-     */
-    @Override
-    public void verify() {
-        verifyInverse();
-        super.verify();
-    }
-
-    public void verifyInverse() {
-        assertEquals(map.size(), ((BidiMap<K, V>) map).inverseBidiMap().size());
-        final Map<K, V> map1 = new HashMap<>(map);
-        final Map<V, K> map2 = new HashMap<>(((BidiMap<K, V>) map).inverseBidiMap());
-        final Set<K> keys1 = map1.keySet();
-        final Set<V> keys2 = map2.keySet();
-        final Collection<V> values1 = map1.values();
-        final Collection<K> values2 = map2.values();
-        assertTrue(keys1.containsAll(values2));
-        assertTrue(values2.containsAll(keys1));
-        assertTrue(values1.containsAll(keys2));
-        assertTrue(keys2.containsAll(values1));
-    }
-
-    // testGetKey
-    @Test
-    public void testBidiGetKey() {
-        doTestGetKey(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
-    }
-
-    @Test
-    public void testBidiGetKeyInverse() {
-        doTestGetKey(
-            makeFullMap().inverseBidiMap(),
-            getSampleValues()[0],
-            getSampleKeys()[0]);
-    }
-
-    private void doTestGetKey(final BidiMap<?, ?> map, final Object key, final Object value) {
-        assertEquals(value, map.get(key), "Value not found for key.");
-        assertEquals(key, map.getKey(value), "Key not found for value.");
-    }
-
-    // testInverse
-    @Test
-    public void testBidiInverse() {
-        final BidiMap<K, V> map = makeFullMap();
-        final BidiMap<V, K> inverseMap = map.inverseBidiMap();
-
-        assertSame(
-                map,
-                inverseMap.inverseBidiMap(),
-                "Inverse of inverse is not equal to original.");
-
-        assertEquals(
-                getSampleKeys()[0],
-                inverseMap.get(getSampleValues()[0]),
-                "Value not found for key.");
-
-        assertEquals(
-                getSampleValues()[0],
-                inverseMap.getKey(getSampleKeys()[0]),
-                "Key not found for value.");
-    }
-
-    @Test
-    public void testBidiModifyEntrySet() {
-        if (!isSetValueSupported()) {
-            return;
-        }
-
-        modifyEntrySet(makeFullMap());
-        modifyEntrySet(makeFullMap().inverseBidiMap());
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> void modifyEntrySet(final BidiMap<?, T> map) {
-        // Gets first entry
-        final Map.Entry<?, T> entry = map.entrySet().iterator().next();
-
-        // Gets key and value
-        final Object key = entry.getKey();
-        final Object oldValue = entry.getValue();
-
-        // Sets new value
-        final Object newValue = "newValue";
-        entry.setValue((T) newValue);
-
-        assertEquals(
-            newValue,
-            map.get(key),
-                "Modifying entrySet did not affect underlying Map.");
-
-        assertNull(
-            map.getKey(oldValue),
-                "Modifying entrySet did not affect inverse Map.");
-    }
-
-    @Test
-    public void testBidiClear() {
-        if (!isRemoveSupported()) {
-            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().clear());
-            return;
-        }
-
-        BidiMap<?, ?> map = makeFullMap();
-        map.clear();
-        assertTrue(map.isEmpty(), "Map was not cleared.");
-        assertTrue(map.inverseBidiMap().isEmpty(), "Inverse map was not cleared.");
-
-        // Tests clear on inverse
-        map = makeFullMap().inverseBidiMap();
-        map.clear();
-        assertTrue(map.isEmpty(), "Map was not cleared.");
-        assertTrue(map.inverseBidiMap().isEmpty(), "Inverse map was not cleared.");
-    }
-
-    @Test
-    public void testBidiRemove() {
-        if (!isRemoveSupported()) {
-            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().remove(getSampleKeys()[0]));
-
-            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().removeValue(getSampleValues()[0]));
-
-            return;
-        }
-
-        remove(makeFullMap(), getSampleKeys()[0]);
-        remove(makeFullMap().inverseBidiMap(), getSampleValues()[0]);
-
-        removeValue(makeFullMap(), getSampleValues()[0]);
-        removeValue(makeFullMap().inverseBidiMap(), getSampleKeys()[0]);
-
-        assertNull(makeFullMap().removeValue("NotPresent"));
-    }
-
-    private void remove(final BidiMap<?, ?> map, final Object key) {
-        final Object value = map.remove(key);
-        assertFalse(map.containsKey(key), "Key was not removed.");
-        assertNull(map.getKey(value), "Value was not removed.");
-    }
-
-    private void removeValue(final BidiMap<?, ?> map, final Object value) {
-        final Object key = map.removeValue(value);
-        assertFalse(map.containsKey(key), "Key was not removed.");
-        assertNull(map.getKey(value), "Value was not removed.");
-    }
-
-    @Test
-    public void testBidiKeySetValuesOrder() {
-        // Skip if collection is unordered
-        Assumptions.assumeFalse((getIterationBehaviour() & AbstractCollectionTest.UNORDERED) != 0);
-        resetFull();
-        final Iterator<K> keys = map.keySet().iterator();
-        final Iterator<V> values = map.values().iterator();
-        while (keys.hasNext() && values.hasNext()) {
-            final K key = keys.next();
-            final V value = values.next();
-            assertSame(map.get(key), value);
-        }
-        assertFalse(keys.hasNext());
-        assertFalse(values.hasNext());
-    }
-
-    @Test
-    public void testBidiRemoveByKeySet() {
-        if (!isRemoveSupported()) {
-            return;
-        }
-
-        removeByKeySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
-        removeByKeySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
-    }
-
-    private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
-        map.remove(key);
-
-        assertFalse(map.containsKey(key), "Key was not removed.");
-        assertFalse(map.containsValue(value), "Value was not removed.");
-
-        assertFalse(map.inverseBidiMap().containsValue(key), "Key was not removed from inverse map.");
-        assertFalse(map.inverseBidiMap().containsKey(value), "Value was not removed from inverse map.");
-    }
-
-    @Test
-    public void testBidiRemoveByEntrySet() {
-        if (!isRemoveSupported()) {
-            return;
-        }
-
-        removeByEntrySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
-        removeByEntrySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
-    }
-
-    private void removeByEntrySet(final BidiMap<?, ?> map, final Object key, final Object value) {
-        final Map<Object, Object> temp = new HashMap<>();
-        temp.put(key, value);
-        map.entrySet().remove(temp.entrySet().iterator().next());
-
-        assertFalse(map.containsKey(key), "Key was not removed.");
-        assertFalse(map.containsValue(value), "Value was not removed.");
-
-        assertFalse(map.inverseBidiMap().containsValue(key), "Key was not removed from inverse map.");
-        assertFalse(map.inverseBidiMap().containsKey(value), "Value was not removed from inverse map.");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BidiMap<K, V> getMap() {
-        return (BidiMap<K, V>) super.getMap();
-    }
-
-    @Override
-    public BulkTest bulkTestMapEntrySet() {
-        return new TestBidiMapEntrySet();
-    }
-
     public class TestBidiMapEntrySet extends TestMapEntrySet {
 
         public TestBidiMapEntrySet() {
@@ -406,8 +108,57 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    public BulkTest bulkTestInverseMap() {
-        return new TestInverseBidiMap(this);
+    public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
+
+        public TestBidiMapIterator() {
+            super("TestBidiMapIterator");
+        }
+
+        @Override
+        public V[] addSetValues() {
+            return getNewSampleValues();
+        }
+
+        @Override
+        public Map<K, V> getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return getConfirmed();
+        }
+
+        @Override
+        public BidiMap<K, V> getMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractBidiMapTest.this.getMap();
+        }
+
+        @Override
+        public MapIterator<K, V> makeEmptyIterator() {
+            resetEmpty();
+            return AbstractBidiMapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public MapIterator<K, V> makeObject() {
+            resetFull();
+            return AbstractBidiMapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return isRemoveSupported();
+        }
+
+        @Override
+        public boolean supportsSetValue() {
+            return isSetValueSupported();
+        }
+
+        @Override
+        public void verify() {
+            super.verify();
+            AbstractBidiMapTest.this.verify();
+        }
+
     }
 
     public class TestInverseBidiMap extends AbstractBidiMapTest<V, K> {
@@ -419,13 +170,13 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         }
 
         @Override
-        public BidiMap<V, K> makeObject() {
-            return main.makeObject().inverseBidiMap();
+        public String getCompatibilityVersion() {
+            return main.getCompatibilityVersion();
         }
 
         @Override
-        public BidiMap<V, K> makeFullMap() {
-            return main.makeFullMap().inverseBidiMap();
+        protected int getIterationBehaviour() {
+            return main.getIterationBehaviour();
         }
 
         @Override
@@ -436,11 +187,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         @Override
         public K[] getSampleValues() {
             return main.getSampleKeys();
-        }
-
-        @Override
-        public String getCompatibilityVersion() {
-            return main.getCompatibilityVersion();
         }
 
         @Override
@@ -464,76 +210,218 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         }
 
         @Override
-        public boolean isSetValueSupported() {
-            return main.isSetValueSupported();
-        }
-
-        @Override
         public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
 
         @Override
-        protected int getIterationBehaviour() {
-            return main.getIterationBehaviour();
+        public boolean isSetValueSupported() {
+            return main.isSetValueSupported();
         }
+
+        @Override
+        public BidiMap<V, K> makeFullMap() {
+            return main.makeFullMap().inverseBidiMap();
+        }
+
+        @Override
+        public BidiMap<V, K> makeObject() {
+            return main.makeObject().inverseBidiMap();
+        }
+    }
+
+    public AbstractBidiMapTest() {
+        super("Inverse");
+    }
+
+    public AbstractBidiMapTest(final String testName) {
+        super(testName);
     }
 
     public BulkTest bulkTestBidiMapIterator() {
         return new TestBidiMapIterator();
     }
 
-    public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
+    public BulkTest bulkTestInverseMap() {
+        return new TestInverseBidiMap(this);
+    }
 
-        public TestBidiMapIterator() {
-            super("TestBidiMapIterator");
+    @Override
+    public BulkTest bulkTestMapEntrySet() {
+        return new TestBidiMapEntrySet();
+    }
+
+    private void doTestGetKey(final BidiMap<?, ?> map, final Object key, final Object value) {
+        assertEquals(value, map.get(key), "Value not found for key.");
+        assertEquals(key, map.getKey(value), "Key not found for value.");
+    }
+
+    /**
+     * Override as DualHashBidiMap didn't exist until version 3.
+     */
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BidiMap<K, V> getMap() {
+        return (BidiMap<K, V>) super.getMap();
+    }
+
+    /**
+     * Override to indicate to AbstractTestMap this is a BidiMap.
+     */
+    @Override
+    public boolean isAllowDuplicateValues() {
+        return false;
+    }
+
+    /**
+     * Override to create a full {@code BidiMap} other than the default.
+     *
+     * @return a full {@code BidiMap} implementation.
+     */
+    @Override
+    public BidiMap<K, V> makeFullMap() {
+        return (BidiMap<K, V>) super.makeFullMap();
+    }
+
+    /**
+     * Override to return the empty BidiMap.
+     */
+    @Override
+    public abstract BidiMap<K, V> makeObject();
+
+    @SuppressWarnings("unchecked")
+    private <T> void modifyEntrySet(final BidiMap<?, T> map) {
+        // Gets first entry
+        final Map.Entry<?, T> entry = map.entrySet().iterator().next();
+
+        // Gets key and value
+        final Object key = entry.getKey();
+        final Object oldValue = entry.getValue();
+
+        // Sets new value
+        final Object newValue = "newValue";
+        entry.setValue((T) newValue);
+
+        assertEquals(
+            newValue,
+            map.get(key),
+                "Modifying entrySet did not affect underlying Map.");
+
+        assertNull(
+            map.getKey(oldValue),
+                "Modifying entrySet did not affect inverse Map.");
+    }
+
+    private void remove(final BidiMap<?, ?> map, final Object key) {
+        final Object value = map.remove(key);
+        assertFalse(map.containsKey(key), "Key was not removed.");
+        assertNull(map.getKey(value), "Value was not removed.");
+    }
+
+    private void removeByEntrySet(final BidiMap<?, ?> map, final Object key, final Object value) {
+        final Map<Object, Object> temp = new HashMap<>();
+        temp.put(key, value);
+        map.entrySet().remove(temp.entrySet().iterator().next());
+
+        assertFalse(map.containsKey(key), "Key was not removed.");
+        assertFalse(map.containsValue(value), "Value was not removed.");
+
+        assertFalse(map.inverseBidiMap().containsValue(key), "Key was not removed from inverse map.");
+        assertFalse(map.inverseBidiMap().containsKey(value), "Value was not removed from inverse map.");
+    }
+
+    private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
+        map.remove(key);
+
+        assertFalse(map.containsKey(key), "Key was not removed.");
+        assertFalse(map.containsValue(value), "Value was not removed.");
+
+        assertFalse(map.inverseBidiMap().containsValue(key), "Key was not removed from inverse map.");
+        assertFalse(map.inverseBidiMap().containsKey(value), "Value was not removed from inverse map.");
+    }
+
+    private void removeValue(final BidiMap<?, ?> map, final Object value) {
+        final Object key = map.removeValue(value);
+        assertFalse(map.containsKey(key), "Key was not removed.");
+        assertNull(map.getKey(value), "Value was not removed.");
+    }
+
+    @Test
+    public void testBidiClear() {
+        if (!isRemoveSupported()) {
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().clear());
+            return;
         }
 
-        @Override
-        public V[] addSetValues() {
-            return AbstractBidiMapTest.this.getNewSampleValues();
-        }
+        BidiMap<?, ?> map = makeFullMap();
+        map.clear();
+        assertTrue(map.isEmpty(), "Map was not cleared.");
+        assertTrue(map.inverseBidiMap().isEmpty(), "Inverse map was not cleared.");
 
-        @Override
-        public boolean supportsRemove() {
-            return AbstractBidiMapTest.this.isRemoveSupported();
-        }
+        // Tests clear on inverse
+        map = makeFullMap().inverseBidiMap();
+        map.clear();
+        assertTrue(map.isEmpty(), "Map was not cleared.");
+        assertTrue(map.inverseBidiMap().isEmpty(), "Inverse map was not cleared.");
+    }
 
-        @Override
-        public boolean supportsSetValue() {
-            return AbstractBidiMapTest.this.isSetValueSupported();
-        }
+    // testGetKey
+    @Test
+    public void testBidiGetKey() {
+        doTestGetKey(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
+    }
 
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return AbstractBidiMapTest.this.getMap().mapIterator();
-        }
+    @Test
+    public void testBidiGetKeyInverse() {
+        doTestGetKey(
+            makeFullMap().inverseBidiMap(),
+            getSampleValues()[0],
+            getSampleKeys()[0]);
+    }
 
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return AbstractBidiMapTest.this.getMap().mapIterator();
-        }
+    // testInverse
+    @Test
+    public void testBidiInverse() {
+        final BidiMap<K, V> map = makeFullMap();
+        final BidiMap<V, K> inverseMap = map.inverseBidiMap();
 
-        @Override
-        public BidiMap<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractBidiMapTest.this.getMap();
-        }
+        assertSame(
+                map,
+                inverseMap.inverseBidiMap(),
+                "Inverse of inverse is not equal to original.");
 
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractBidiMapTest.this.getConfirmed();
-        }
+        assertEquals(
+                getSampleKeys()[0],
+                inverseMap.get(getSampleValues()[0]),
+                "Value not found for key.");
 
-        @Override
-        public void verify() {
-            super.verify();
-            AbstractBidiMapTest.this.verify();
-        }
+        assertEquals(
+                getSampleValues()[0],
+                inverseMap.getKey(getSampleKeys()[0]),
+                "Key not found for value.");
+    }
 
+    @Test
+    public void testBidiKeySetValuesOrder() {
+        // Skip if collection is unordered
+        Assumptions.assumeFalse((getIterationBehaviour() & AbstractCollectionTest.UNORDERED) != 0);
+        resetFull();
+        final Iterator<K> keys = map.keySet().iterator();
+        final Iterator<V> values = map.values().iterator();
+        while (keys.hasNext() && values.hasNext()) {
+            final K key = keys.next();
+            final V value = values.next();
+            assertSame(map.get(key), value);
+        }
+        assertFalse(keys.hasNext());
+        assertFalse(values.hasNext());
     }
 
     @Test
@@ -599,6 +487,118 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 //        if (isRemoveSupported()) {
 //            it.remove();
 //        }
+    }
+
+    @Test
+    public void testBidiModifyEntrySet() {
+        if (!isSetValueSupported()) {
+            return;
+        }
+
+        modifyEntrySet(makeFullMap());
+        modifyEntrySet(makeFullMap().inverseBidiMap());
+    }
+
+    // BidiPut
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testBidiPut() {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
+            return;
+        }
+
+        final BidiMap<K, V> map = makeObject();
+        final BidiMap<V, K> inverse = map.inverseBidiMap();
+        assertEquals(0, map.size());
+        assertEquals(map.size(), inverse.size());
+
+        map.put((K) "A", (V) "B");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("B", map.get("A"));
+        assertEquals("A", inverse.get("B"));
+
+        map.put((K) "A", (V) "C");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("C", map.get("A"));
+        assertEquals("A", inverse.get("C"));
+
+        map.put((K) "B", (V) "C");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("C", map.get("B"));
+        assertEquals("B", inverse.get("C"));
+
+        map.put((K) "E", (V) "F");
+        assertEquals(2, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("F", map.get("E"));
+        assertEquals("E", inverse.get("F"));
+    }
+
+    @Test
+    public void testBidiRemove() {
+        if (!isRemoveSupported()) {
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().remove(getSampleKeys()[0]));
+
+            assertThrows(UnsupportedOperationException.class, () -> makeFullMap().removeValue(getSampleValues()[0]));
+
+            return;
+        }
+
+        remove(makeFullMap(), getSampleKeys()[0]);
+        remove(makeFullMap().inverseBidiMap(), getSampleValues()[0]);
+
+        removeValue(makeFullMap(), getSampleValues()[0]);
+        removeValue(makeFullMap().inverseBidiMap(), getSampleKeys()[0]);
+
+        assertNull(makeFullMap().removeValue("NotPresent"));
+    }
+
+    @Test
+    public void testBidiRemoveByEntrySet() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        removeByEntrySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
+        removeByEntrySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
+    }
+
+    @Test
+    public void testBidiRemoveByKeySet() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        removeByKeySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
+        removeByKeySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
+    }
+
+    /**
+     * Verifies that {@link #map} is still equal to {@link #confirmed}.
+     * <p>
+     * This implementation checks the inverse map as well.
+     */
+    @Override
+    public void verify() {
+        verifyInverse();
+        super.verify();
+    }
+
+    public void verifyInverse() {
+        assertEquals(map.size(), ((BidiMap<K, V>) map).inverseBidiMap().size());
+        final Map<K, V> map1 = new HashMap<>(map);
+        final Map<V, K> map2 = new HashMap<>(((BidiMap<K, V>) map).inverseBidiMap());
+        final Set<K> keys1 = map1.keySet();
+        final Set<V> keys2 = map2.keySet();
+        final Collection<V> values1 = map1.values();
+        final Collection<K> values2 = map2.values();
+        assertTrue(keys1.containsAll(values2));
+        assertTrue(values2.containsAll(keys1));
+        assertTrue(values1.containsAll(keys2));
+        assertTrue(keys2.containsAll(values1));
     }
 
 }

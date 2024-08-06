@@ -71,28 +71,105 @@ import org.apache.commons.collections4.iterators.TransformIterator;
 @Deprecated
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {
 
-    /** Serialization version */
-    private static final long serialVersionUID = -2214159910087182007L;
+    /**
+     * Inner class that provides a simple reflection factory.
+     *
+     * @param <T> the type of results supplied by this supplier.
+     */
+    private static final class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
 
-    /** The factory for creating value collections. */
-    private final Factory<? extends Collection<V>> collectionFactory;
-    /** The cached values. */
-    private transient Collection<V> valuesView;
+        /** Serialization version */
+        private static final long serialVersionUID = 2986114157496788874L;
+
+        private final Class<T> clazz;
+
+        ReflectionFactory(final Class<T> clazz) {
+            this.clazz = clazz;
+        }
+
+        @Override
+        public T create() {
+            try {
+                return clazz.getDeclaredConstructor().newInstance();
+            } catch (final Exception ex) {
+                throw new FunctorException("Cannot instantiate class: " + clazz, ex);
+            }
+        }
+
+        /**
+         * Deserializes an instance from an ObjectInputStream.
+         *
+         * @param in The source ObjectInputStream.
+         * @throws IOException            Any of the usual Input/Output related exceptions.
+         * @throws ClassNotFoundException A class of a serialized object cannot be found.
+         */
+        private void readObject(final ObjectInputStream is) throws IOException, ClassNotFoundException {
+            is.defaultReadObject();
+            // ensure that the de-serialized class is a Collection, COLLECTIONS-580
+            if (clazz != null && !Collection.class.isAssignableFrom(clazz)) {
+                throw new UnsupportedOperationException();
+            }
+        }
+    }
 
     /**
-     * Creates a map which wraps the given map and
-     * maps keys to ArrayLists.
-     *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param map  the map to wrap
-     * @return a new multi-value map
-     * @since 4.0
+     * Inner class that provides the values view.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
-        return MultiValueMap.<K, V, ArrayList>multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
+    private final class Values extends AbstractCollection<V> {
+        @Override
+        public void clear() {
+            MultiValueMap.this.clear();
+        }
+
+        @Override
+        public Iterator<V> iterator() {
+            final IteratorChain<V> chain = new IteratorChain<>();
+            for (final K k : keySet()) {
+                chain.addIterator(new ValuesIterator(k));
+            }
+            return chain;
+        }
+
+        @Override
+        public int size() {
+            return totalSize();
+        }
     }
+    /**
+     * Inner class that provides the values iterator.
+     */
+    private final class ValuesIterator implements Iterator<V> {
+        private final Object key;
+        private final Collection<V> values;
+        private final Iterator<V> iterator;
+
+        ValuesIterator(final Object key) {
+            this.key = key;
+            this.values = getCollection(key);
+            this.iterator = values.iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public V next() {
+            return iterator.next();
+        }
+
+        @Override
+        public void remove() {
+            iterator.remove();
+            if (values.isEmpty()) {
+                MultiValueMap.this.remove(key);
+            }
+        }
+    }
+
+    /** Serialization version */
+    private static final long serialVersionUID = -2214159910087182007L;
 
     /**
      * Creates a map which decorates the given {@code map} and
@@ -129,6 +206,27 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
+     * Creates a map which wraps the given map and
+     * maps keys to ArrayLists.
+     *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param map  the map to wrap
+     * @return a new multi-value map
+     * @since 4.0
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
+        return MultiValueMap.<K, V, ArrayList>multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
+    }
+
+    /** The factory for creating value collections. */
+    private final Factory<? extends Collection<V>> collectionFactory;
+
+    /** The cached values. */
+    private transient Collection<V> valuesView;
+
+    /**
      * Creates a MultiValueMap based on a {@code HashMap} and
      * storing the multiple values in an {@code ArrayList}.
      */
@@ -156,32 +254,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 4.0
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @since 4.0
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, Object>) in.readObject(); // (1)
-    }
-
-    /**
      * Clear the map.
      */
     @Override
@@ -195,35 +267,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
 //            coll.clear();
 //        }
         decorated().clear();
-    }
-
-    /**
-     * Removes a specific value from map.
-     * <p>
-     * The item is removed from the collection mapped to the specified key.
-     * Other values attached to that key are unaffected.
-     * <p>
-     * If the last value for a key is removed, {@code null} will be returned
-     * from a subsequent {@code get(key)}.
-     *
-     * @param key  the key to remove from
-     * @param value the value to remove
-     * @return {@code true} if the mapping was removed, {@code false} otherwise
-     */
-    @Override
-    public boolean removeMapping(final Object key, final Object value) {
-        final Collection<V> valuesForKey = getCollection(key);
-        if (valuesForKey == null) {
-            return false;
-        }
-        final boolean removed = valuesForKey.remove(value);
-        if (!removed) {
-            return false;
-        }
-        if (valuesForKey.isEmpty()) {
-            remove(key);
-        }
-        return true;
     }
 
     /**
@@ -249,57 +292,32 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
-     * Adds the value to the collection associated with the specified key.
-     * <p>
-     * Unlike a normal {@code Map} the previous value is not replaced.
-     * Instead, the new value is added to the collection stored against the key.
+     * Checks whether the collection at the specified key contains the value.
      *
-     * @param key  the key to store against
-     * @param value  the value to add to the collection at the key
-     * @return the value added if the map changed and null if the map did not change
+     * @param key  the key to search for
+     * @param value  the value to search for
+     * @return true if the map contains the value
      */
-    @Override
-    @SuppressWarnings("unchecked")
-    public Object put(final K key, final Object value) {
-        boolean result = false;
-        Collection<V> coll = getCollection(key);
+    public boolean containsValue(final Object key, final Object value) {
+        final Collection<V> coll = getCollection(key);
         if (coll == null) {
-            coll = createCollection(1);  // might produce a non-empty collection
-            coll.add((V) value);
-            if (!coll.isEmpty()) {
-                // only add if non-zero size to maintain class state
-                decorated().put(key, coll);
-                result = true;  // map definitely changed
-            }
-        } else {
-            result = coll.add((V) value);
+            return false;
         }
-        return result ? value : null;
+        return coll.contains(value);
     }
 
     /**
-     * Override superclass to ensure that MultiMap instances are
-     * correctly handled.
+     * Creates a new instance of the map value Collection container
+     * using the factory.
      * <p>
-     * If you call this method with a normal map, each entry is
-     * added using {@code put(Object,Object)}.
-     * If you call this method with a multi map, each entry is
-     * added using {@code putAll(Object,Collection)}.
+     * This method can be overridden to perform your own processing
+     * instead of using the factory.
      *
-     * @param map  the map to copy (either a normal or multi map)
+     * @param size  the collection size that is about to be added
+     * @return the new collection
      */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void putAll(final Map<? extends K, ?> map) {
-        if (map instanceof MultiMap) {
-            for (final Map.Entry<? extends K, Object> entry : ((MultiMap<? extends K, V>) map).entrySet()) {
-                putAll(entry.getKey(), (Collection<V>) entry.getValue());
-            }
-        } else {
-            for (final Map.Entry<? extends K, ?> entry : map.entrySet()) {
-                put(entry.getKey(), entry.getValue());
-            }
-        }
+    protected Collection<V> createCollection(final int size) {
+        return collectionFactory.get();
     }
 
     /**
@@ -317,35 +335,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
-     * Gets a collection containing all the values in the map.
-     * <p>
-     * This returns a collection containing the combination of values from all keys.
-     *
-     * @return a collection view of the values contained in this map
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public Collection<Object> values() {
-        final Collection<V> vs = valuesView;
-        return (Collection<Object>) (vs != null ? vs : (valuesView = new Values()));
-    }
-
-    /**
-     * Checks whether the collection at the specified key contains the value.
-     *
-     * @param key  the key to search for
-     * @param value  the value to search for
-     * @return true if the map contains the value
-     */
-    public boolean containsValue(final Object key, final Object value) {
-        final Collection<V> coll = getCollection(key);
-        if (coll == null) {
-            return false;
-        }
-        return coll.contains(value);
-    }
-
-    /**
      * Gets the collection mapped to the specified key.
      * This method is a convenience method to typecast the result of {@code get(key)}.
      *
@@ -355,61 +344,6 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     @SuppressWarnings("unchecked")
     public Collection<V> getCollection(final Object key) {
         return (Collection<V>) decorated().get(key);
-    }
-
-    /**
-     * Gets the size of the collection mapped to the specified key.
-     *
-     * @param key  the key to get size for
-     * @return the size of the collection at the key, zero if key not in map
-     */
-    public int size(final Object key) {
-        final Collection<V> coll = getCollection(key);
-        if (coll == null) {
-            return 0;
-        }
-        return coll.size();
-    }
-
-    /**
-     * Adds a collection of values to the collection associated with
-     * the specified key.
-     *
-     * @param key  the key to store against
-     * @param values  the values to add to the collection at the key, null ignored
-     * @return true if this map changed
-     */
-    public boolean putAll(final K key, final Collection<V> values) {
-        if (values == null || values.isEmpty()) {
-            return false;
-        }
-        boolean result = false;
-        Collection<V> coll = getCollection(key);
-        if (coll == null) {
-            coll = createCollection(values.size());  // might produce a non-empty collection
-            coll.addAll(values);
-            if (!coll.isEmpty()) {
-                // only add if non-zero size to maintain class state
-                decorated().put(key, coll);
-                result = true;  // map definitely changed
-            }
-        } else {
-            result = coll.addAll(values);
-        }
-        return result;
-    }
-
-    /**
-     * Gets an iterator for the collection mapped to the specified key.
-     *
-     * @param key  the key to get an iterator for
-     * @return the iterator of the collection at the key, empty iterator if key not in map
-     */
-    public Iterator<V> iterator(final Object key) {
-        if (!containsKey(key)) {
-            return EmptyIterator.<V>emptyIterator();
-        }
-        return new ValuesIterator(key);
     }
 
     /**
@@ -455,6 +389,158 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
+     * Gets an iterator for the collection mapped to the specified key.
+     *
+     * @param key  the key to get an iterator for
+     * @return the iterator of the collection at the key, empty iterator if key not in map
+     */
+    public Iterator<V> iterator(final Object key) {
+        if (!containsKey(key)) {
+            return EmptyIterator.<V>emptyIterator();
+        }
+        return new ValuesIterator(key);
+    }
+
+    /**
+     * Adds the value to the collection associated with the specified key.
+     * <p>
+     * Unlike a normal {@code Map} the previous value is not replaced.
+     * Instead, the new value is added to the collection stored against the key.
+     *
+     * @param key  the key to store against
+     * @param value  the value to add to the collection at the key
+     * @return the value added if the map changed and null if the map did not change
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Object put(final K key, final Object value) {
+        boolean result = false;
+        Collection<V> coll = getCollection(key);
+        if (coll == null) {
+            coll = createCollection(1);  // might produce a non-empty collection
+            coll.add((V) value);
+            if (!coll.isEmpty()) {
+                // only add if non-zero size to maintain class state
+                decorated().put(key, coll);
+                result = true;  // map definitely changed
+            }
+        } else {
+            result = coll.add((V) value);
+        }
+        return result ? value : null;
+    }
+
+    /**
+     * Adds a collection of values to the collection associated with
+     * the specified key.
+     *
+     * @param key  the key to store against
+     * @param values  the values to add to the collection at the key, null ignored
+     * @return true if this map changed
+     */
+    public boolean putAll(final K key, final Collection<V> values) {
+        if (values == null || values.isEmpty()) {
+            return false;
+        }
+        boolean result = false;
+        Collection<V> coll = getCollection(key);
+        if (coll == null) {
+            coll = createCollection(values.size());  // might produce a non-empty collection
+            coll.addAll(values);
+            if (!coll.isEmpty()) {
+                // only add if non-zero size to maintain class state
+                decorated().put(key, coll);
+                result = true;  // map definitely changed
+            }
+        } else {
+            result = coll.addAll(values);
+        }
+        return result;
+    }
+
+    /**
+     * Override superclass to ensure that MultiMap instances are
+     * correctly handled.
+     * <p>
+     * If you call this method with a normal map, each entry is
+     * added using {@code put(Object,Object)}.
+     * If you call this method with a multi map, each entry is
+     * added using {@code putAll(Object,Collection)}.
+     *
+     * @param map  the map to copy (either a normal or multi map)
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void putAll(final Map<? extends K, ?> map) {
+        if (map instanceof MultiMap) {
+            for (final Map.Entry<? extends K, Object> entry : ((MultiMap<? extends K, V>) map).entrySet()) {
+                putAll(entry.getKey(), (Collection<V>) entry.getValue());
+            }
+        } else {
+            for (final Map.Entry<? extends K, ?> entry : map.entrySet()) {
+                put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+    /**
+     * Deserializes the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @since 4.0
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, Object>) in.readObject(); // (1)
+    }
+
+    /**
+     * Removes a specific value from map.
+     * <p>
+     * The item is removed from the collection mapped to the specified key.
+     * Other values attached to that key are unaffected.
+     * <p>
+     * If the last value for a key is removed, {@code null} will be returned
+     * from a subsequent {@code get(key)}.
+     *
+     * @param key  the key to remove from
+     * @param value the value to remove
+     * @return {@code true} if the mapping was removed, {@code false} otherwise
+     */
+    @Override
+    public boolean removeMapping(final Object key, final Object value) {
+        final Collection<V> valuesForKey = getCollection(key);
+        if (valuesForKey == null) {
+            return false;
+        }
+        final boolean removed = valuesForKey.remove(value);
+        if (!removed) {
+            return false;
+        }
+        if (valuesForKey.isEmpty()) {
+            remove(key);
+        }
+        return true;
+    }
+
+    /**
+     * Gets the size of the collection mapped to the specified key.
+     *
+     * @param key  the key to get size for
+     * @return the size of the collection at the key, zero if key not in map
+     */
+    public int size(final Object key) {
+        final Collection<V> coll = getCollection(key);
+        if (coll == null) {
+            return 0;
+        }
+        return coll.size();
+    }
+
+    /**
      * Gets the total size of the map by counting all the values.
      *
      * @return the total size of the map counting all values
@@ -468,106 +554,29 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
-     * Creates a new instance of the map value Collection container
-     * using the factory.
+     * Gets a collection containing all the values in the map.
      * <p>
-     * This method can be overridden to perform your own processing
-     * instead of using the factory.
+     * This returns a collection containing the combination of values from all keys.
      *
-     * @param size  the collection size that is about to be added
-     * @return the new collection
+     * @return a collection view of the values contained in this map
      */
-    protected Collection<V> createCollection(final int size) {
-        return collectionFactory.create();
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<Object> values() {
+        final Collection<V> vs = valuesView;
+        return (Collection<Object>) (vs != null ? vs : (valuesView = new Values()));
     }
 
     /**
-     * Inner class that provides the values view.
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     * @since 4.0
      */
-    private class Values extends AbstractCollection<V> {
-        @Override
-        public Iterator<V> iterator() {
-            final IteratorChain<V> chain = new IteratorChain<>();
-            for (final K k : keySet()) {
-                chain.addIterator(new ValuesIterator(k));
-            }
-            return chain;
-        }
-
-        @Override
-        public int size() {
-            return totalSize();
-        }
-
-        @Override
-        public void clear() {
-            MultiValueMap.this.clear();
-        }
-    }
-
-    /**
-     * Inner class that provides the values iterator.
-     */
-    private class ValuesIterator implements Iterator<V> {
-        private final Object key;
-        private final Collection<V> values;
-        private final Iterator<V> iterator;
-
-        ValuesIterator(final Object key) {
-            this.key = key;
-            this.values = getCollection(key);
-            this.iterator = values.iterator();
-        }
-
-        @Override
-        public void remove() {
-            iterator.remove();
-            if (values.isEmpty()) {
-                MultiValueMap.this.remove(key);
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        @Override
-        public V next() {
-            return iterator.next();
-        }
-    }
-
-    /**
-     * Inner class that provides a simple reflection factory.
-     */
-    private static class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
-
-        /** Serialization version */
-        private static final long serialVersionUID = 2986114157496788874L;
-
-        private final Class<T> clazz;
-
-        ReflectionFactory(final Class<T> clazz) {
-            this.clazz = clazz;
-        }
-
-        @Override
-        public T create() {
-            try {
-                return clazz.getDeclaredConstructor().newInstance();
-            } catch (final Exception ex) {
-                throw new FunctorException("Cannot instantiate class: " + clazz, ex);
-            }
-        }
-
-        private void readObject(final ObjectInputStream is) throws IOException, ClassNotFoundException {
-            is.defaultReadObject();
-            // ensure that the de-serialized class is a Collection, COLLECTIONS-580
-            if (clazz != null && !Collection.class.isAssignableFrom(clazz)) {
-                throw new UnsupportedOperationException();
-            }
-        }
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

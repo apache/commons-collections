@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
- *
- * @since 3.0
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
@@ -112,6 +110,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
 
+            private static final long serialVersionUID = 1L;
+
             @Override
             public boolean add(final CompositeCollection<E> composite, final List<Collection<E>> collections, final E obj) {
                 for (final Collection<E> coll : collections) {
@@ -151,6 +151,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public boolean add(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final E obj) {
@@ -200,6 +202,8 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public boolean add(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final E obj) {
@@ -232,30 +236,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testClear() {
-        setUpTest();
-        one.add((E) "1");
-        two.add((E) "2");
-        c.addComposited(one, two);
-        c.clear();
-        assertTrue(one.isEmpty());
-        assertTrue(two.isEmpty());
-        assertTrue(c.isEmpty());
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testContainsAll() {
-        setUpTest();
-        one.add((E) "1");
-        two.add((E) "1");
-        c.addComposited(one);
-        assertTrue(c.containsAll(two));
-        assertFalse(c.containsAll(null));
-    }
-
-    @Test
     public void testAddNullList() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
@@ -277,6 +257,30 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
         assertEquals(0, cc.size());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testClear() {
+        setUpTest();
+        one.add((E) "1");
+        two.add((E) "2");
+        c.addComposited(one, two);
+        c.clear();
+        assertTrue(one.isEmpty());
+        assertTrue(two.isEmpty());
+        assertTrue(c.isEmpty());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testContainsAll() {
+        setUpTest();
+        one.add((E) "1");
+        two.add((E) "1");
+        c.addComposited(one);
+        assertTrue(c.containsAll(two));
+        assertFalse(c.containsAll(null));
     }
 
     @Test
@@ -357,8 +361,20 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(two.contains("1"));
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveComposited() {
+        setUpMutatorTest();
+        one.add((E) "1");
+        two.add((E) "2");
+        two.add((E) "1");
+        c.addComposited(one, two);
+        c.removeComposited(one);
+        assertTrue(c.contains("1"));
+        assertEquals(2, c.size());
+    }
+
     /**
-     * @since 4.4
      */
     @Test
     @SuppressWarnings("unchecked")
@@ -378,19 +394,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(c.contains("1"));
         assertFalse(one.contains("1"));
         assertFalse(two.contains("1"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveComposited() {
-        setUpMutatorTest();
-        one.add((E) "1");
-        two.add((E) "2");
-        two.add((E) "1");
-        c.addComposited(one, two);
-        c.removeComposited(one);
-        assertTrue(c.contains("1"));
-        assertEquals(2, c.size());
     }
 
     @Test

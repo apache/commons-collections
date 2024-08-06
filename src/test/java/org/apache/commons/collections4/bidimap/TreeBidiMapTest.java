@@ -30,13 +30,8 @@ public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> e
     }
 
     @Override
-    public BidiMap<K, V> makeObject() {
-        return new TreeBidiMap<>();
-    }
-
-    @Override
-    public TreeMap<K, V> makeConfirmedMap() {
-        return new TreeMap<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     /**
@@ -63,8 +58,13 @@ public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> e
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public TreeMap<K, V> makeConfirmedMap() {
+        return new TreeMap<>();
+    }
+
+    @Override
+    public BidiMap<K, V> makeObject() {
+        return new TreeBidiMap<>();
     }
 
 //    public void testCreate() throws Exception {

@@ -35,7 +35,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     private static final long serialVersionUID = 1229469966212206107L;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param set  the list to decorate, must not be null
      * @throws NullPointerException if set is null
@@ -45,18 +45,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     }
 
     /**
-     * Write the set out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
-    }
-
-    /**
-     * Read the set in using a custom routine.
+     * Deserializes the set in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -66,6 +55,17 @@ public abstract class AbstractSerializableSetDecorator<E>
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         setCollection((Collection<E>) in.readObject());
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

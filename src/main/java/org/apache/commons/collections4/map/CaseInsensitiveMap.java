@@ -121,6 +121,16 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    @Override
+    public CaseInsensitiveMap<K, V> clone() {
+        return (CaseInsensitiveMap<K, V>) super.clone();
+    }
+
+    /**
      * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to
      * lower case.
      * <p>
@@ -138,32 +148,11 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
             }
             return new String(chars);
         }
-        return AbstractHashedMap.NULL;
+        return NULL;
     }
 
     /**
-     * Clones the map without cloning the keys or values.
-     *
-     * @return a shallow clone
-     */
-    @Override
-    public CaseInsensitiveMap<K, V> clone() {
-        return (CaseInsensitiveMap<K, V>) super.clone();
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        doWriteObject(out);
-    }
-
-    /**
-     * Read the map in using a custom routine.
+     * Deserializes the map in using a custom routine.
      *
      * @param in the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -172,6 +161,17 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
     }
 
 }

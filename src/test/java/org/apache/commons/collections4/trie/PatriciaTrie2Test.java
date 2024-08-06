@@ -21,8 +21,6 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
 
 /**
  * JUnit test of the OrderedMap interface of a PatriciaTrie.
- *
- * @since 4.0
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 
@@ -31,8 +29,8 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
     }
 
     @Override
-    public OrderedMap<String, V> makeObject() {
-        return new PatriciaTrie<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -40,10 +38,9 @@ public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
         return false;
     }
 
-
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public OrderedMap<String, V> makeObject() {
+        return new PatriciaTrie<>();
     }
 
 }

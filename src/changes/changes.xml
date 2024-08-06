@@ -22,7 +22,61 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
+  <release version="4.5.0-M3" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+    <!-- FIX -->
+    <action issue="COLLECTIONS-857" type="fix" dev="ggregory" due-to="Claude Warren">Complete bloom filter documentation #507.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Package private AbstractEmptyIterator implements ResettableIterator so subclasses don't.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate AbstractEmptyIterator.add(E) without replacement.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Add missing Javadocs.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">PatriciaTrie constructor reuse the stateless singleton StringKeyAnalyzer.INSTANCE.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate StringKeyAnalyzer.StringKeyAnalyzer() in favor of StringKeyAnalyzer.INSTANCE.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Closure...) is now FunctorUtils.validate(Consumer...).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Predicate...) is now FunctorUtils.validate(java.util.function.Predicate...).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...).</action>
+    <action type="fix" dev="ggregory" due-to="Dávid Szigecsán. Gary Gregory">Increase test coverage for ListUtils #517.</action>
+    <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
+    <!-- ADD -->
+    <!-- UPDATE -->
+    <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
+    <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
+    <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.15.0 #516.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 72.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.hamcrest:hamcrest from 2.2 to 3.0 #522.</action>
+  </release>
+  <release version="4.5.0-M2" date="2024-06-15" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
+     <!-- ADD -->
+     <action issue="COLLECTIONS-852" type="add" dev="ggregory" due-to="Claude Warren, Alex Herbert">Add layered Bloom filter clean method #476.</action>
+     <action issue="COLLECTIONS-842" type="add" dev="aherbert" due-to="Julian Reschke">Deprecate Lists incompatible with Java 21, add new variant of AbstractLinkedList #485.</action>
+     <!-- FIX -->
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Closure in favor of java.util.function.Consumer.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Factory in favor of java.util.function.Supplier.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Predicate in favor of java.util.function.Predicate.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Deprecate Transformer in favor of java.util.function.Function.</action>
+     <action type="fix" issue="COLLECTIONS-853" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Change LayerManager to use List and added generics to LayerdedBloomFilter #481.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UselessOverridingMethod in PropertiesFactory.EmptyProperties.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractHashedMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in AbstractLinkedMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CaseInsensitiveMap.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in CollectionUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in DefaultEquator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in IndexUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in LinkIterator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in MapUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in PredicateUtils.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in ReferenceMapIterator.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in StringKeyAnalyzer.</action>
+     <action type="fix" dev="ggregory" due-to="PMD, Gary Gregory">Fix PMD UnnecessaryFullyQualifiedName in TransformerUtils.</action>
+     <action type="fix" issue="COLLECTIONS-854" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Renaming bloomfilter components and methods as per ticket #492.</action>
+     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Java 22 builds through Easymock upgrade #502.</action>
+     <action type="fix" issue="COLLECTIONS-855" dev="aherbert" due-to="Claude Warren, Alex Herbert, Gary Gregory">Fixed hashing calculation as per report #501.</action> 
+     <!-- UPDATE -->
+     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-parent from 67 to 71 #473, #503.</action>
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump tests commons-io:commons-io from 2.16.0 to 2.16.1 #475.</action>
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump optional commons-codec:commons-codec from 1.16.1 to 1.17.0.</action>
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump com.google.guava:guava-testlib from 33.1.0-jre to 33.2.1-jre #487, #500.</action> 
+     <action type="update" dev="ggregory" due-to="Dependabot">Bump org.easymock:easymock from 5.2.0 to 5.3.0 #502.</action>
+  </release>
+  <release version="4.5.0-M1" date="2024-03-31" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter` for review.">
     <!-- FIX -->
     <action issue="COLLECTIONS-780" dev="kinow" type="fix" due-to="Arturo Bernal">
       Use assertThrows V2.
@@ -203,7 +257,19 @@
     <action dev="ggregory" type="fix" due-to="Martin Wiesner, Bruno P. Kinoshita, Gary Gregory">
       Fix punctuation and minor Javadoc issues #409.
     </action>
+    <action dev="ggregory" type="fix" due-to="Gary Gregory">
+      Deprecate IterableUtils 0-argument constructor.
+    </action>
+    <action issue="COLLECTIONS-850" dev="ggregory" type="fix" due-to="Gary Gregory, Anirudh Madhavan">
+      Tests in org.apache.commons.collections4.multimap should not depend on map iteration order, see also #429.
+    </action>
+    <action issue="COLLECTIONS-850" dev="ggregory" type="fix" due-to="Gary Gregory, Saurabh Rahate">
+      Reimplement FixedOrderComparator#equals() and hashCode(), see also #392.
+    </action>
     <!-- ADD -->
+    <action issue="COLLECTIONS-843" dev="ggregory" type="add" due-to="Claude Warren, Alex Herbert, Gary Gregory">
+      Implement Layered Bloom filter #402.
+    </action>
     <action issue="COLLECTIONS-748" dev="ggregory" type="add" due-to="Gary Gregory">
       Let org.apache.commons.collections4.properties.[Sorted]PropertiesFactory accept XML input.
     </action>
@@ -279,24 +345,28 @@
     <action dev="ggregory" type="add" due-to="Vadim, Claude Warren, Gary Gregory, Alex Herbert">
       Make AbstractPatriciaTrie public #407.
     </action>
+    <action dev="ggregory" type="add" due-to="Ajay Kumar Jha, Bruno P. Kinoshita, Claude Warren">
+      Add test cases for indexOf and contains method of ArrayUtils class #215.
+    </action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add Maven property project.build.outputTimestamp for build reproducibility.</action>
     <!-- UPDATE -->
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
       Bump org.easymock:easymock from 4.0.2 to 5.2.0 #352, #355, #375, #414.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/cache from 2 to 3.0.10 #214 #225 #239 #266 #294, #342, #345.
+      Bump actions/cache.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump actions/setup-java from 1.4.0 to 3.5.1 #174 #177 #186 #224 #298.
+      Bump actions/setup-java.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
-      Bump actions/checkout from 1 to 3.1.0 #166, #173, #183, #193, #262, #264, #285, #346.
+      Bump actions/checkout.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot">
-      Bump codecov/codecov-action from 2 to 3 #297.
+      Bump codecov/codecov-action.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-      Bump Apache commons-parent from 48 to 62, #339.
+      Bump Apache commons-parent from 48 to 67.
     </action>
     <action dev="ggregory" type="update" due-to="Gary Gregory">
       Bump Jacoco from 0.8.4 to 0.8.8.
@@ -308,7 +378,7 @@
       Bump maven-checkstyle-plugin 3.1.0 to 3.2.1 #379.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump checkstyle 8.29 9.3 #179, #184, #192, #199, #204, #212, #218, #222, #234, #240, #243, #245, #246, #248, #257, #263, #270, #271, #277.
+      Bump checkstyle from 8.29 to 9.3.
     </action>
     <action issue="COLLECTIONS-754" type="update" dev="ggregory" due-to="John Patrick">
       Bump to JUnit v5.6.2 #136.
@@ -323,13 +393,13 @@
       Remove deprecated sudo setting. #161.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump tests from commons-io:commons-io 2.6 to 2.13.0 #180.
+      Bump tests from commons-io:commons-io 2.6 to 2.16.0 #180, #469.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">
       Bump maven-pmd-plugin from 3.12.0 to 3.19.0 #167, #196, #253, #311, #334.
     </action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">
-      Bump optional commons-codec:commons-codec from 1.14 to 1.16.0.
+      Bump optional commons-codec:commons-codec from 1.14 to 1.16.1.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
       Bump commons.junit.version from 5.6.2 to 5.8.2 #181 #213 #236 #252 #254 #268.
@@ -347,7 +417,7 @@
       Add and use CollectionUtils.INDEX_NOT_FOUND constant.
     </action>
     <action type="update" dev="kinow" due-to="Dependabot, Gary Gregory">
-      Bump commons-lang3 from 3.11 to 3.13.0.
+      Bump commons-lang3 from 3.11 to 3.14.0.
     </action>
     <action issue="COLLECTIONS-785" type="update" dev="kinow" due-to="Arturo Bernal">
       Add new variables to oac.collections4.CollectionUtils and use them in the code base.
@@ -368,7 +438,7 @@
       Bump pmd from 6.46.0 to 6.52.0 #318, #327, #333, #347.
     </action>
     <action type="update" dev="ggregory" due-to="Dependabot">
-      Bump guava-testlib from 31.1-jre to 32.1.2-jre #394, #395, #404, #405, #411.
+      Bump guava-testlib from 31.1-jre to 33.1.0-jre #394, #395, #404, #405, #411, #423, #438, #462.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">

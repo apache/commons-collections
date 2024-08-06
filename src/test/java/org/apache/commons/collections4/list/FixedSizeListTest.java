@@ -30,8 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
  * implementation.
- *
- * @since 3.0
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
@@ -40,14 +38,16 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
-    public List<E> makeObject() {
-        return FixedSizeList.fixedSizeList(new ArrayList<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
-    @Override
-    public List<E> makeFullCollection() {
-        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return FixedSizeList.fixedSizeList(list);
+    private FixedSizeList<String> initFixedSizeList() {
+        final List<String> decoratedList = new ArrayList<>();
+        decoratedList.add("item 1");
+        decoratedList.add("item 2");
+        //
+        return FixedSizeList.fixedSizeList(decoratedList);
     }
 
     @Override
@@ -61,8 +61,9 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public List<E> makeFullCollection() {
+        final List<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return FixedSizeList.fixedSizeList(list);
     }
 
 //    public void testCreate() throws Exception {
@@ -72,29 +73,9 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.fullCollection.version4.obj");
 //    }
 
-    @Test
-    public void testListAllowsMutationOfUnderlyingCollection() {
-
-        final List<String> decoratedList = new ArrayList<>();
-        decoratedList.add("item 1");
-        decoratedList.add("item 2");
-        //
-        final FixedSizeList<String> fixedSizeList = FixedSizeList.fixedSizeList(decoratedList);
-        final int sizeBefore = fixedSizeList.size();
-        //
-        final boolean changed = decoratedList.add("New Value");
-        assertTrue(changed);
-        //
-        assertEquals(sizeBefore + 1, fixedSizeList.size(),
-                "Modifying an the underlying list is allowed");
-    }
-
-    private FixedSizeList<String> initFixedSizeList() {
-        final List<String> decoratedList = new ArrayList<>();
-        decoratedList.add("item 1");
-        decoratedList.add("item 2");
-        //
-        return FixedSizeList.fixedSizeList(decoratedList);
+    @Override
+    public List<E> makeObject() {
+        return FixedSizeList.fixedSizeList(new ArrayList<>());
     }
 
     @Test
@@ -116,6 +97,37 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
+    public void testIsFull() {
+        final FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        assertTrue(fixedSizeList.isFull());
+    }
+
+    @Test
+    public void testListAllowsMutationOfUnderlyingCollection() {
+
+        final List<String> decoratedList = new ArrayList<>();
+        decoratedList.add("item 1");
+        decoratedList.add("item 2");
+        //
+        final FixedSizeList<String> fixedSizeList = FixedSizeList.fixedSizeList(decoratedList);
+        final int sizeBefore = fixedSizeList.size();
+        //
+        final boolean changed = decoratedList.add("New Value");
+        assertTrue(changed);
+        //
+        assertEquals(sizeBefore + 1, fixedSizeList.size(),
+                "Modifying an the underlying list is allowed");
+    }
+
+    @Test
+    public void testMaxSize() {
+        final FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        assertEquals(2, fixedSizeList.maxSize());
+    }
+
+    @Test
     public void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
@@ -129,20 +141,6 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
         assertNotNull(subFixedSizeList);
         assertEquals(0, subFixedSizeList.size());
-    }
-
-    @Test
-    public void testIsFull() {
-        final FixedSizeList<String> fixedSizeList = initFixedSizeList();
-
-        assertTrue(fixedSizeList.isFull());
-    }
-
-    @Test
-    public void testMaxSize() {
-        final FixedSizeList<String> fixedSizeList = initFixedSizeList();
-
-        assertEquals(2, fixedSizeList.maxSize());
     }
 
 }

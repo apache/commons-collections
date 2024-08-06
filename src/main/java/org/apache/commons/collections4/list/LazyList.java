@@ -61,6 +61,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @see GrowthList
  * @since 3.0
  */
@@ -68,12 +69,6 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -3677737457567429713L;
-
-    /** The factory to use to lazily instantiate the objects */
-    private final Factory<? extends E> factory;
-
-    /** The transformer to use to lazily instantiate the objects */
-    private final Transformer<Integer, ? extends E> transformer;
 
     /**
      * Factory method to create a lazily instantiating list.
@@ -103,6 +98,12 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         return new LazyList<>(list, transformer);
     }
 
+    /** The factory to use to lazily instantiate the objects */
+    private final Factory<? extends E> factory;
+
+    /** The transformer to use to lazily instantiate the objects */
+    private final Transformer<Integer, ? extends E> transformer;
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -127,6 +128,16 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         super(list);
         this.factory = null;
         this.transformer = Objects.requireNonNull(transformer);
+    }
+
+    private E element(final int index) {
+        if (factory != null) {
+            return factory.get();
+        }
+        if (transformer != null) {
+            return transformer.apply(index);
+        }
+        throw new IllegalStateException("Factory and Transformer are both null!");
     }
 
     /**
@@ -173,16 +184,6 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         }
         if (transformer != null) {
             return new LazyList<>(sub, transformer);
-        }
-        throw new IllegalStateException("Factory and Transformer are both null!");
-    }
-
-    private E element(final int index) {
-        if (factory != null) {
-            return factory.create();
-        }
-        if (transformer != null) {
-            return transformer.transform(index);
         }
         throw new IllegalStateException("Factory and Transformer are both null!");
     }

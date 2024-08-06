@@ -67,9 +67,6 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  */
 public class FluentIterable<E> implements Iterable<E> {
 
-    /** A reference to the wrapped iterable. */
-    private final Iterable<E> iterable;
-
     /**
      * Creates a new empty FluentIterable.
      *
@@ -78,6 +75,27 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public static <T> FluentIterable<T> empty() {
         return IterableUtils.EMPTY_ITERABLE;
+    }
+
+    /**
+     * Constructs a new FluentIterable from the provided iterable. If the
+     * iterable is already an instance of FluentIterable, the instance
+     * will be returned instead.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the
+     * corresponding input iterator supports it.
+     *
+     * @param <T>  the element type
+     * @param iterable  the iterable to wrap into a FluentIterable, may not be null
+     * @return a new FluentIterable wrapping the provided iterable
+     * @throws NullPointerException if iterable is null
+     */
+    public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
+        IterableUtils.checkNotNull(iterable);
+        if (iterable instanceof FluentIterable<?>) {
+            return (FluentIterable<T>) iterable;
+        }
+        return new FluentIterable<>(iterable);
     }
 
     /**
@@ -106,26 +124,8 @@ public class FluentIterable<E> implements Iterable<E> {
         return of(Arrays.asList(elements));
     }
 
-    /**
-     * Construct a new FluentIterable from the provided iterable. If the
-     * iterable is already an instance of FluentIterable, the instance
-     * will be returned instead.
-     * <p>
-     * The returned iterable's iterator supports {@code remove()} when the
-     * corresponding input iterator supports it.
-     *
-     * @param <T>  the element type
-     * @param iterable  the iterable to wrap into a FluentIterable, may not be null
-     * @return a new FluentIterable wrapping the provided iterable
-     * @throws NullPointerException if iterable is null
-     */
-    public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
-        IterableUtils.checkNotNull(iterable);
-        if (iterable instanceof FluentIterable<?>) {
-            return (FluentIterable<T>) iterable;
-        }
-        return new FluentIterable<>(iterable);
-    }
+    /** A reference to the wrapped iterable. */
+    private final Iterable<E> iterable;
 
     /**
      * Don't allow instances.
@@ -140,6 +140,35 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     private FluentIterable(final Iterable<E> iterable) {
         this.iterable = iterable;
+    }
+
+    /**
+     * Checks if all elements contained in this iterable are matching the
+     * provided predicate.
+     * <p>
+     * A {@code null} or empty iterable returns true.
+     *
+     * @param predicate  the predicate to use, may not be null
+     * @return true if all elements contained in this iterable match the predicate,
+     *   false otherwise
+     * @throws NullPointerException if predicate is null
+     */
+    public boolean allMatch(final Predicate<? super E> predicate) {
+        return IterableUtils.matchesAll(iterable, predicate);
+    }
+
+    /**
+     * Checks if this iterable contains any element matching the provided predicate.
+     * <p>
+     * A {@code null} or empty iterable returns false.
+     *
+     * @param predicate  the predicate to use, may not be null
+     * @return true if at least one element contained in this iterable matches the predicate,
+     *   false otherwise
+     * @throws NullPointerException if predicate is null
+     */
+    public boolean anyMatch(final Predicate<? super E> predicate) {
+        return IterableUtils.matchesAny(iterable, predicate);
     }
 
     /**
@@ -165,6 +194,16 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public FluentIterable<E> append(final Iterable<? extends E> other) {
         return of(IterableUtils.chainedIterable(iterable, other));
+    }
+
+    /**
+     * Returns an Enumeration that will enumerate all elements contained
+     * in this iterable.
+     *
+     * @return an Enumeration over the elements of this iterable
+     */
+    public Enumeration<E> asEnumeration() {
+        return IteratorUtils.asEnumeration(iterator());
     }
 
     /**
@@ -216,6 +255,28 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Checks if the object is contained in this iterable.
+     *
+     * @param object  the object to check
+     * @return true if the object is contained in this iterable, false otherwise
+     */
+    public boolean contains(final Object object) {
+        return IterableUtils.contains(iterable, object);
+    }
+
+    /**
+     * Traverses an iterator of this iterable and adds all elements
+     * to the provided collection.
+     *
+     * @param collection  the collection to add the elements
+     * @throws NullPointerException if collection is null
+     */
+    public void copyInto(final Collection<? super E> collection) {
+        Objects.requireNonNull(collection, "collection");
+        CollectionUtils.addAll(collection, iterable);
+    }
+
+    /**
      * This method fully traverses an iterator of this iterable and returns
      * a new iterable with the same contents, but without any reference
      * to the originating iterables and/or iterators.
@@ -242,6 +303,45 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public FluentIterable<E> filter(final Predicate<? super E> predicate) {
         return of(IterableUtils.filteredIterable(iterable, predicate));
+    }
+
+    /**
+     * Applies the closure to all elements contained in this iterable.
+     *
+     * @param closure  the closure to apply to each element, may not be null
+     * @throws NullPointerException if closure is null
+     */
+    public void forEach(final Closure<? super E> closure) {
+        IterableUtils.forEach(iterable, closure);
+    }
+
+    /**
+     * Returns the element at the provided position in this iterable.
+     * In order to return the element, an iterator needs to be traversed
+     * up to the requested position.
+     *
+     * @param position  the position of the element to return
+     * @return the element
+     * @throws IndexOutOfBoundsException if the provided position is outside the
+     *   valid range of this iterable: [0, size)
+     */
+    public E get(final int position) {
+        return IterableUtils.get(iterable, position);
+    }
+
+    /**
+     * Checks if this iterable is empty.
+     *
+     * @return true if this iterable does not contain any elements, false otherwise
+     */
+    public boolean isEmpty() {
+        return IterableUtils.isEmpty(iterable);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Iterator<E> iterator() {
+        return iterable.iterator();
     }
 
     /**
@@ -277,6 +377,16 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Returns the number of elements that are contained in this iterable.
+     * In order to determine the size, an iterator needs to be traversed.
+     *
+     * @return the size of this iterable
+     */
+    public int size() {
+        return IterableUtils.size(iterable);
+    }
+
+    /**
      * Returns a new FluentIterable whose iterator will skip the first
      * N elements from this iterable.
      *
@@ -287,6 +397,36 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public FluentIterable<E> skip(final long elementsToSkip) {
         return of(IterableUtils.skippingIterable(iterable, elementsToSkip));
+    }
+
+    /**
+     * Returns an array containing all elements of this iterable by traversing
+     * its iterator.
+     *
+     * @param arrayClass  the class of array to create
+     * @return an array of the iterable contents
+     * @throws ArrayStoreException if arrayClass is invalid
+     */
+    public E[] toArray(final Class<E> arrayClass) {
+        return IteratorUtils.toArray(iterator(), arrayClass);
+    }
+
+    /**
+     * Returns a mutable list containing all elements of this iterable
+     * by traversing its iterator.
+     * <p>
+     * The returned list is guaranteed to be mutable.
+     *
+     * @return a list of the iterable contents
+     */
+    public List<E> toList() {
+        return IterableUtils.toList(iterable);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
+        return IterableUtils.toString(iterable);
     }
 
     /**
@@ -346,146 +486,6 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public FluentIterable<E> zip(final Iterable<? extends E>... others) {
         return of(IterableUtils.zippingIterable(iterable, others));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Iterator<E> iterator() {
-        return iterable.iterator();
-    }
-
-    /**
-     * Returns an Enumeration that will enumerate all elements contained
-     * in this iterable.
-     *
-     * @return an Enumeration over the elements of this iterable
-     */
-    public Enumeration<E> asEnumeration() {
-        return IteratorUtils.asEnumeration(iterator());
-    }
-
-    /**
-     * Checks if all elements contained in this iterable are matching the
-     * provided predicate.
-     * <p>
-     * A {@code null} or empty iterable returns true.
-     *
-     * @param predicate  the predicate to use, may not be null
-     * @return true if all elements contained in this iterable match the predicate,
-     *   false otherwise
-     * @throws NullPointerException if predicate is null
-     */
-    public boolean allMatch(final Predicate<? super E> predicate) {
-        return IterableUtils.matchesAll(iterable, predicate);
-    }
-
-    /**
-     * Checks if this iterable contains any element matching the provided predicate.
-     * <p>
-     * A {@code null} or empty iterable returns false.
-     *
-     * @param predicate  the predicate to use, may not be null
-     * @return true if at least one element contained in this iterable matches the predicate,
-     *   false otherwise
-     * @throws NullPointerException if predicate is null
-     */
-    public boolean anyMatch(final Predicate<? super E> predicate) {
-        return IterableUtils.matchesAny(iterable, predicate);
-    }
-
-    /**
-     * Checks if this iterable is empty.
-     *
-     * @return true if this iterable does not contain any elements, false otherwise
-     */
-    public boolean isEmpty() {
-        return IterableUtils.isEmpty(iterable);
-    }
-
-    /**
-     * Checks if the object is contained in this iterable.
-     *
-     * @param object  the object to check
-     * @return true if the object is contained in this iterable, false otherwise
-     */
-    public boolean contains(final Object object) {
-        return IterableUtils.contains(iterable, object);
-    }
-
-    /**
-     * Applies the closure to all elements contained in this iterable.
-     *
-     * @param closure  the closure to apply to each element, may not be null
-     * @throws NullPointerException if closure is null
-     */
-    public void forEach(final Closure<? super E> closure) {
-        IterableUtils.forEach(iterable, closure);
-    }
-
-    /**
-     * Returns the element at the provided position in this iterable.
-     * In order to return the element, an iterator needs to be traversed
-     * up to the requested position.
-     *
-     * @param position  the position of the element to return
-     * @return the element
-     * @throws IndexOutOfBoundsException if the provided position is outside the
-     *   valid range of this iterable: [0, size)
-     */
-    public E get(final int position) {
-        return IterableUtils.get(iterable, position);
-    }
-
-    /**
-     * Returns the number of elements that are contained in this iterable.
-     * In order to determine the size, an iterator needs to be traversed.
-     *
-     * @return the size of this iterable
-     */
-    public int size() {
-        return IterableUtils.size(iterable);
-    }
-
-    /**
-     * Traverses an iterator of this iterable and adds all elements
-     * to the provided collection.
-     *
-     * @param collection  the collection to add the elements
-     * @throws NullPointerException if collection is null
-     */
-    public void copyInto(final Collection<? super E> collection) {
-        Objects.requireNonNull(collection, "collection");
-        CollectionUtils.addAll(collection, iterable);
-    }
-
-    /**
-     * Returns an array containing all elements of this iterable by traversing
-     * its iterator.
-     *
-     * @param arrayClass  the class of array to create
-     * @return an array of the iterable contents
-     * @throws ArrayStoreException if arrayClass is invalid
-     */
-    public E[] toArray(final Class<E> arrayClass) {
-        return IteratorUtils.toArray(iterator(), arrayClass);
-    }
-
-    /**
-     * Returns a mutable list containing all elements of this iterable
-     * by traversing its iterator.
-     * <p>
-     * The returned list is guaranteed to be mutable.
-     *
-     * @return a list of the iterable contents
-     */
-    public List<E> toList() {
-        return IterableUtils.toList(iterable);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return IterableUtils.toString(iterable);
     }
 
 }

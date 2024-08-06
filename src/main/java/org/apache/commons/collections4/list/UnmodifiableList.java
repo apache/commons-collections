@@ -35,6 +35,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @since 3.0
  */
 public final class UnmodifiableList<E>
@@ -74,8 +75,8 @@ public final class UnmodifiableList<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
+    public void add(final int index, final E object) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -89,31 +90,18 @@ public final class UnmodifiableList<E>
     }
 
     @Override
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(final Object object) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @since 4.4
-     */
-    @Override
-    public boolean removeIf(final Predicate<? super E> filter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override
@@ -127,17 +115,30 @@ public final class UnmodifiableList<E>
     }
 
     @Override
-    public void add(final int index, final E object) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(final int index, final Collection<? extends E> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public E remove(final int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

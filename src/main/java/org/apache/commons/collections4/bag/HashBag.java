@@ -30,7 +30,7 @@ import java.util.HashMap;
  * A {@code Bag} stores each object in the collection together with a
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once. It is important to read the
- * interface javadoc carefully as several methods violate the
+ * interface Javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
  * </p>
  *
@@ -60,18 +60,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
     }
 
     /**
-     * Write the bag out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        super.doWriteObject(out);
-    }
-
-    /**
-     * Read the bag in using a custom routine.
+     * Deserializes the bag in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -80,6 +69,17 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         super.doReadObject(new HashMap<>(), in);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        super.doWriteObject(out);
     }
 
 }

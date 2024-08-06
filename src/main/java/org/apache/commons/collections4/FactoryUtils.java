@@ -44,36 +44,6 @@ import org.apache.commons.collections4.functors.PrototypeFactory;
 public class FactoryUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private FactoryUtils() {}
-
-    /**
-     * Gets a Factory that always throws an exception.
-     * This could be useful during testing as a placeholder.
-     *
-     * @see org.apache.commons.collections4.functors.ExceptionFactory
-     *
-     * @param <T> the type that the factory creates
-     * @return the factory
-     */
-    public static <T> Factory<T> exceptionFactory() {
-        return ExceptionFactory.<T>exceptionFactory();
-    }
-
-    /**
-     * Gets a Factory that will return null each time the factory is used.
-     * This could be useful during testing as a placeholder.
-     *
-     * @see org.apache.commons.collections4.functors.ConstantFactory
-     * @param <T> the "type" of null object the factory should return.
-     * @return the factory
-     */
-    public static <T> Factory<T> nullFactory() {
-        return ConstantFactory.<T>constantFactory(null);
-    }
-
-    /**
      * Creates a Factory that will return the same object each time the factory
      * is used. No check is made that the object is immutable. In general, only
      * immutable objects should use the constant factory. Mutable objects should
@@ -90,26 +60,16 @@ public class FactoryUtils {
     }
 
     /**
-     * Creates a Factory that will return a clone of the same prototype object
-     * each time the factory is used. The prototype will be cloned using one of these
-     * techniques (in order):
+     * Gets a Factory that always throws an exception.
+     * This could be useful during testing as a placeholder.
      *
-     * <ul>
-     * <li>public clone method</li>
-     * <li>public copy constructor</li>
-     * <li>serialization clone</li>
-     * </ul>
-     *
-     * @see org.apache.commons.collections4.functors.PrototypeFactory
+     * @see org.apache.commons.collections4.functors.ExceptionFactory
      *
      * @param <T> the type that the factory creates
-     * @param prototype  the object to clone each time in the factory
-     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
-     * the {@code prototype} is {@code null}
-     * @throws IllegalArgumentException if the prototype cannot be cloned
+     * @return the factory
      */
-    public static <T> Factory<T> prototypeFactory(final T prototype) {
-        return PrototypeFactory.<T>prototypeFactory(prototype);
+    public static <T> Factory<T> exceptionFactory() {
+        return ExceptionFactory.<T>exceptionFactory();
     }
 
     /**
@@ -145,6 +105,48 @@ public class FactoryUtils {
     public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes,
                                                     final Object[] args) {
         return InstantiateFactory.instantiateFactory(classToInstantiate, paramTypes, args);
+    }
+
+    /**
+     * Gets a Factory that will return null each time the factory is used.
+     * This could be useful during testing as a placeholder.
+     *
+     * @see org.apache.commons.collections4.functors.ConstantFactory
+     * @param <T> the "type" of null object the factory should return.
+     * @return the factory
+     */
+    public static <T> Factory<T> nullFactory() {
+        return ConstantFactory.<T>constantFactory(null);
+    }
+
+    /**
+     * Creates a Factory that will return a clone of the same prototype object
+     * each time the factory is used. The prototype will be cloned using one of these
+     * techniques (in order):
+     *
+     * <ul>
+     * <li>public clone method</li>
+     * <li>public copy constructor</li>
+     * <li>serialization clone</li>
+     * </ul>
+     *
+     * @see org.apache.commons.collections4.functors.PrototypeFactory
+     *
+     * @param <T> the type that the factory creates
+     * @param prototype  the object to clone each time in the factory
+     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * the {@code prototype} is {@code null}
+     * @throws IllegalArgumentException if the prototype cannot be cloned
+     */
+    public static <T> Factory<T> prototypeFactory(final T prototype) {
+        return PrototypeFactory.<T>prototypeFactory(prototype);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private FactoryUtils() {
+        // empty
     }
 
 }

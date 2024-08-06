@@ -31,13 +31,13 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public HashedMap<K, V> makeObject() {
-        return new HashedMap<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public HashedMap<K, V> makeObject() {
+        return new HashedMap<>();
     }
 
     @Test
@@ -49,6 +49,22 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    @Test
+    public void testInitialCapacityZero() {
+        final HashedMap<String, String> map = new HashedMap<>(0);
+        assertEquals(1, map.data.length);
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.fullCollection.version4.obj");
+//    }
 
     @Test
     public void testInternalState() {
@@ -69,21 +85,5 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.putAll(tmpMap);
         // the threshold has changed due to calling ensureCapacity
         assertEquals(96, map.threshold);
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.fullCollection.version4.obj");
-//    }
-
-    /**
-     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
-     */
-    @Test
-    public void testInitialCapacityZero() {
-        final HashedMap<String, String> map = new HashedMap<>(0);
-        assertEquals(1, map.data.length);
     }
 }

@@ -73,11 +73,6 @@ public final class UnmodifiableSet<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
@@ -93,7 +88,17 @@ public final class UnmodifiableSet<E>
     }
 
     @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -102,11 +107,6 @@ public final class UnmodifiableSet<E>
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

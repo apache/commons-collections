@@ -37,11 +37,11 @@ import java.util.List;
  * method is specialized.
  * </p>
  *
+ * @param <T> the type of object to apply commands.
  * @see SequencesComparator
  * @see EditCommand
  * @see CommandVisitor
  * @see ReplacementsHandler
- *
  * @since 4.0
  */
 public class EditScript<T> {
@@ -65,13 +65,13 @@ public class EditScript<T> {
     }
 
     /**
-     * Add a keep command to the script.
+     * Add a delete command to the script.
      *
      * @param command  command to add
      */
-    public void append(final KeepCommand<T> command) {
+    public void append(final DeleteCommand<T> command) {
         commands.add(command);
-        ++lcsLength;
+        ++modifications;
     }
 
     /**
@@ -85,13 +85,35 @@ public class EditScript<T> {
     }
 
     /**
-     * Add a delete command to the script.
+     * Add a keep command to the script.
      *
      * @param command  command to add
      */
-    public void append(final DeleteCommand<T> command) {
+    public void append(final KeepCommand<T> command) {
         commands.add(command);
-        ++modifications;
+        ++lcsLength;
+    }
+
+    /**
+     * Gets the length of the Longest Common Subsequence (LCS). The length of the
+     * longest common subsequence is the number of {@link KeepCommand keep
+     * commands} in the script.
+     *
+     * @return length of the Longest Common Subsequence
+     */
+    public int getLCSLength() {
+        return lcsLength;
+    }
+
+    /**
+     * Gets the number of effective modifications. The number of effective
+     * modification is the number of {@link DeleteCommand delete} and
+     * {@link InsertCommand insert} commands in the script.
+     *
+     * @return number of effective modifications
+     */
+    public int getModifications() {
+        return modifications;
     }
 
     /**
@@ -107,28 +129,6 @@ public class EditScript<T> {
         for (final EditCommand<T> command : commands) {
             command.accept(visitor);
         }
-    }
-
-    /**
-     * Get the length of the Longest Common Subsequence (LCS). The length of the
-     * longest common subsequence is the number of {@link KeepCommand keep
-     * commands} in the script.
-     *
-     * @return length of the Longest Common Subsequence
-     */
-    public int getLCSLength() {
-        return lcsLength;
-    }
-
-    /**
-     * Get the number of effective modifications. The number of effective
-     * modification is the number of {@link DeleteCommand delete} and
-     * {@link InsertCommand insert} commands in the script.
-     *
-     * @return number of effective modifications
-     */
-    public int getModifications() {
-        return modifications;
     }
 
 }

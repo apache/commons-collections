@@ -23,8 +23,6 @@ import java.util.Collection;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link SynchronizedCollection} implementation.
- *
- * @since 3.1
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
@@ -33,8 +31,8 @@ public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public Collection<E> makeObject() {
-        return SynchronizedCollection.synchronizedCollection(new ArrayList<>());
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -48,8 +46,8 @@ public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public Collection<E> makeObject() {
+        return SynchronizedCollection.synchronizedCollection(new ArrayList<>());
     }
 
 //    public void testCreate() throws Exception {

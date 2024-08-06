@@ -63,7 +63,6 @@ public class ListUtils {
         }
     }
 
-
     /**
      * A helper class used to construct the longest common subsequence.
      */
@@ -98,7 +97,7 @@ public class ListUtils {
      * Provides a partition view on a {@link List}.
      * @since 4.0
      */
-    private static class Partition<T> extends AbstractList<List<T>> {
+    private static final class Partition<T> extends AbstractList<List<T>> {
         private final List<T> list;
         private final int size;
 
@@ -183,7 +182,7 @@ public class ListUtils {
      * @param list The list.
      * @return the first element of a list.
      * @see List#get(int)
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <T> T getFirst(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(0);
@@ -198,7 +197,7 @@ public class ListUtils {
      * @param list The list.
      * @return the last element of a list.
      * @see List#get(int)
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <T> T getLast(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(list.size() - 1);
@@ -243,7 +242,7 @@ public class ListUtils {
         if (list != null && predicate != null) {
             for (int i = 0; i < list.size(); i++) {
                 final E item = list.get(i);
-                if (predicate.evaluate(item)) {
+                if (predicate.test(item)) {
                     return i;
                 }
             }
@@ -295,9 +294,9 @@ public class ListUtils {
      * Compares the two list objects for equality.  Returns
      * {@code true} if and only if both
      * lists have the same size, and all corresponding pairs of elements in
-     * the two lists are <i>equal</i>.  (Two elements {@code e1} and
-     * {@code e2} are <i>equal</i> if <code>(e1==null ? e2==null :
-     * e1.equals(e2))</code>.)  In other words, two lists are defined to be
+     * the two lists are <em>equal</em>.  (Two elements {@code e1} and
+     * {@code e2} are <em>equal</em> if {@code (e1==null ? e2==null :
+     * e1.equals(e2))}.)  In other words, two lists are defined to be
      * equal if they contain the same elements in the same order.  This
      * definition ensures that the equals method works properly across
      * different implementations of the {@code List} interface.
@@ -745,5 +744,8 @@ public class ListUtils {
     /**
      * Don't allow instances.
      */
-    private ListUtils() {}
+    private ListUtils() {
+        // empty
+    }
+
 }

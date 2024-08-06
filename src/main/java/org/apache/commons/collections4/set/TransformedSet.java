@@ -42,25 +42,6 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
     private static final long serialVersionUID = 306127383500410386L;
 
     /**
-     * Factory method to create a transforming set.
-     * <p>
-     * If there are any elements already in the set being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedSet(Set, Transformer)}.
-     *
-     * @param <E> the element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed set
-     * @throws NullPointerException if set or transformer is null
-     * @since 4.0
-     */
-    public static <E> TransformedSet<E> transformingSet(final Set<E> set,
-            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedSet<>(set, transformer);
-    }
-
-    /**
      * Factory method to create a transforming set that will transform
      * existing contents of the specified set.
      * <p>
@@ -82,10 +63,29 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;
+    }
+
+    /**
+     * Factory method to create a transforming set.
+     * <p>
+     * If there are any elements already in the set being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedSet(Set, Transformer)}.
+     *
+     * @param <E> the element type
+     * @param set  the set to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed set
+     * @throws NullPointerException if set or transformer is null
+     * @since 4.0
+     */
+    public static <E> TransformedSet<E> transformingSet(final Set<E> set,
+            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSet<>(set, transformer);
     }
 
     /**

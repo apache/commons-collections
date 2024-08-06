@@ -40,36 +40,14 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Override
-    public OrderedMap<K, V> makeObject() {
-        // need an empty singleton map, but that's not possible
-        // use a ridiculous fake instead to make the tests pass
-        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
-    }
-
-    @Override
-    public String[] ignoredTests() {
-        // the ridiculous map above still doesn't pass these tests
-        // but it's not relevant, so we ignore them
-        return new String[] {
-            "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
-            "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
-        };
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public SingletonMap<K, V> makeFullMap() {
-        return new SingletonMap<>((K) ONE, (V) TWO);
-    }
-
-    @Override
-    public boolean isPutAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
+    public V[] getNewSampleValues() {
+        return (V[]) new Object[] { TEN };
     }
 
     @Override
@@ -85,9 +63,45 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Override
+    public String[] ignoredTests() {
+        // the ridiculous map above still doesn't pass these tests
+        // but it's not relevant, so we ignore them
+        return new String[] {
+            "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
+            "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
+        };
+    }
+
+    @Override
+    public boolean isPutAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
-    public V[] getNewSampleValues() {
-        return (V[]) new Object[] { TEN };
+    public SingletonMap<K, V> makeFullMap() {
+        return new SingletonMap<>((K) ONE, (V) TWO);
+    }
+
+    @Override
+    public OrderedMap<K, V> makeObject() {
+        // need an empty singleton map, but that's not possible
+        // use a ridiculous fake instead to make the tests pass
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<>()));
+    }
+
+    @Test
+    public void testBoundedMap() {
+        final SingletonMap<K, V> map = makeFullMap();
+        assertEquals(1, map.size());
+        assertTrue(map.isFull());
+        assertEquals(1, map.maxSize());
+        assertTrue(map instanceof BoundedMap);
     }
 
     @Test
@@ -98,24 +112,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(1, cloned.size());
         assertTrue(cloned.containsKey(ONE));
         assertTrue(cloned.containsValue(TWO));
-    }
-
-    @Test
-    public void testKeyValue() {
-        final SingletonMap<K, V> map = makeFullMap();
-        assertEquals(1, map.size());
-        assertEquals(ONE, map.getKey());
-        assertEquals(TWO, map.getValue());
-        assertTrue(map instanceof KeyValue);
-    }
-
-    @Test
-    public void testBoundedMap() {
-        final SingletonMap<K, V> map = makeFullMap();
-        assertEquals(1, map.size());
-        assertTrue(map.isFull());
-        assertEquals(1, map.maxSize());
-        assertTrue(map instanceof BoundedMap);
     }
 
 //    public BulkTest bulkTestMapIterator() {
@@ -165,9 +161,13 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 //        }
 //    }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testKeyValue() {
+        final SingletonMap<K, V> map = makeFullMap();
+        assertEquals(1, map.size());
+        assertEquals(ONE, map.getKey());
+        assertEquals(TWO, map.getValue());
+        assertTrue(map instanceof KeyValue);
     }
 
 //    public void testCreate() throws Exception {

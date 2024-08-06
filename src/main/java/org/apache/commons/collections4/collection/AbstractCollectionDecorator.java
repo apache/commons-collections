@@ -82,28 +82,6 @@ public abstract class AbstractCollectionDecorator<E>
         this.collection = Objects.requireNonNull(collection, "collection");
     }
 
-    /**
-     * Gets the collection being decorated.
-     * All access to the decorated collection goes via this method.
-     *
-     * @return the decorated collection
-     */
-    protected Collection<E> decorated() {
-        return collection;
-    }
-
-    /**
-     * Sets the collection being decorated.
-     * <p>
-     * <b>NOTE:</b> this method should only be used during deserialization
-     *
-     * @param coll  the decorated collection
-     */
-    protected void setCollection(final Collection<E> coll) {
-        this.collection = coll;
-    }
-
-
     @Override
     public boolean add(final E object) {
         return decorated().add(object);
@@ -125,6 +103,21 @@ public abstract class AbstractCollectionDecorator<E>
     }
 
     @Override
+    public boolean containsAll(final Collection<?> coll) {
+        return decorated().containsAll(coll);
+    }
+
+    /**
+     * Gets the collection being decorated.
+     * All access to the decorated collection goes via this method.
+     *
+     * @return the decorated collection
+     */
+    protected Collection<E> decorated() {
+        return collection;
+    }
+
+    @Override
     public boolean isEmpty() {
         return decorated().isEmpty();
     }
@@ -140,6 +133,35 @@ public abstract class AbstractCollectionDecorator<E>
     }
 
     @Override
+    public boolean removeAll(final Collection<?> coll) {
+        return decorated().removeAll(coll);
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        return decorated().removeIf(filter);
+    }
+
+    @Override
+    public boolean retainAll(final Collection<?> coll) {
+        return decorated().retainAll(coll);
+    }
+
+    /**
+     * Sets the collection being decorated.
+     * <p>
+     * <b>NOTE:</b> this method should only be used during deserialization
+     *
+     * @param coll  the decorated collection
+     */
+    protected void setCollection(final Collection<E> coll) {
+        this.collection = coll;
+    }
+
+    @Override
     public int size() {
         return decorated().size();
     }
@@ -152,29 +174,6 @@ public abstract class AbstractCollectionDecorator<E>
     @Override
     public <T> T[] toArray(final T[] object) {
         return decorated().toArray(object);
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> coll) {
-        return decorated().containsAll(coll);
-    }
-
-    /**
-     * @since 4.4
-     */
-    @Override
-    public boolean removeIf(final Predicate<? super E> filter) {
-        return decorated().removeIf(filter);
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        return decorated().removeAll(coll);
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> coll) {
-        return decorated().retainAll(coll);
     }
 
     @Override

@@ -72,6 +72,44 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     }
 
     /**
+     * Compares this {@code Map.Entry} with another {@code Map.Entry}.
+     * <p>
+     * Returns true if the compared object is also a {@code DefaultKeyValue},
+     * and its key and value are equal to this object's key and value.
+     *
+     * @param obj  the object to compare to
+     * @return true if equal key and value
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof DefaultKeyValue)) {
+            return false;
+        }
+
+        final DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
+        return
+            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
+            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+    }
+
+    /**
+     * Gets a hashCode compatible with the equals method.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()},
+     * however subclasses may override this.
+     *
+     * @return a suitable hash code
+     */
+    @Override
+    public int hashCode() {
+        return (getKey() == null ? 0 : getKey().hashCode()) ^
+               (getValue() == null ? 0 : getValue().hashCode());
+    }
+
+    /**
      * Sets the key.
      *
      * @param key  the new key
@@ -110,44 +148,6 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      */
     public Map.Entry<K, V> toMapEntry() {
         return new DefaultMapEntry<>(this);
-    }
-
-    /**
-     * Compares this {@code Map.Entry} with another {@code Map.Entry}.
-     * <p>
-     * Returns true if the compared object is also a {@code DefaultKeyValue},
-     * and its key and value are equal to this object's key and value.
-     *
-     * @param obj  the object to compare to
-     * @return true if equal key and value
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof DefaultKeyValue)) {
-            return false;
-        }
-
-        final DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
-        return
-            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
-            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
-    }
-
-    /**
-     * Gets a hashCode compatible with the equals method.
-     * <p>
-     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()},
-     * however subclasses may override this.
-     *
-     * @return a suitable hash code
-     */
-    @Override
-    public int hashCode() {
-        return (getKey() == null ? 0 : getKey().hashCode()) ^
-               (getValue() == null ? 0 : getValue().hashCode());
     }
 
 }

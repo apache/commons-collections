@@ -25,15 +25,14 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that returns the value held in a specified map
  * using the input parameter as a key.
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public final class MapTransformer<I, O> implements Transformer<I, O>, Serializable {
+public final class MapTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 862391807045468939L;
-
-    /** The map of data to lookup in */
-    private final Map<? super I, ? extends O> iMap;
 
     /**
      * Factory to create the transformer.
@@ -52,14 +51,27 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
         return new MapTransformer<>(map);
     }
 
+    /** The map of data to lookup in */
+    private final Map<? super T, ? extends R> iMap;
+
     /**
      * Constructor that performs no validation.
      * Use {@code mapTransformer} if you want that.
      *
      * @param map  the map to use for lookup, not cloned
      */
-    private MapTransformer(final Map<? super I, ? extends O> map) {
+    private MapTransformer(final Map<? super T, ? extends R> map) {
         iMap = map;
+    }
+
+    /**
+     * Gets the map to lookup in.
+     *
+     * @return the map
+     * @since 3.1
+     */
+    public Map<? super T, ? extends R> getMap() {
+        return iMap;
     }
 
     /**
@@ -69,18 +81,8 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @return the transformed result
      */
     @Override
-    public O transform(final I input) {
+    public R transform(final T input) {
         return iMap.get(input);
-    }
-
-    /**
-     * Gets the map to lookup in.
-     *
-     * @return the map
-     * @since 3.1
-     */
-    public Map<? super I, ? extends O> getMap() {
-        return iMap;
     }
 
 }

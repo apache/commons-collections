@@ -33,13 +33,27 @@ import org.junit.jupiter.api.Test;
  * a new Map.Entry of the type being tested. Subclasses must also implement
  * {@link #testConstructors()} to test the constructors of the Map.Entry
  * type being tested.
- *
- * @since 3.0
  */
 public abstract class AbstractMapEntryTest<K, V> {
 
     protected final String key = "name";
     protected final String value = "duke";
+
+    /**
+     * Makes a Map.Entry of a type that's known to work correctly.
+     */
+    public Map.Entry<K, V> makeKnownMapEntry() {
+        return makeKnownMapEntry(null, null);
+    }
+
+    /**
+     * Makes a Map.Entry of a type that's known to work correctly.
+     */
+    public Map.Entry<K, V> makeKnownMapEntry(final K key, final V value) {
+        final Map<K, V> map = new HashMap<>(1);
+        map.put(key, value);
+        return map.entrySet().iterator().next();
+    }
 
     /**
      * Make an instance of Map.Entry with the default (null) key and value.
@@ -56,23 +70,6 @@ public abstract class AbstractMapEntryTest<K, V> {
      * of the type being tested.
      */
     public abstract Map.Entry<K, V> makeMapEntry(K key, V value);
-
-    /**
-     * Makes a Map.Entry of a type that's known to work correctly.
-     */
-    public Map.Entry<K, V> makeKnownMapEntry() {
-        return makeKnownMapEntry(null, null);
-    }
-
-    /**
-     * Makes a Map.Entry of a type that's known to work correctly.
-     */
-    public Map.Entry<K, V> makeKnownMapEntry(final K key, final V value) {
-        final Map<K, V> map = new HashMap<>(1);
-        map.put(key, value);
-        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
-        return entry;
-    }
 
     @Test
     @SuppressWarnings("unchecked")
@@ -93,30 +90,7 @@ public abstract class AbstractMapEntryTest<K, V> {
     }
 
     /**
-     * Subclasses should override this method to test the
-     * desired behavior of the class with respect to
-     * handling of self-references.
-     *
-     */
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testSelfReferenceHandling() {
-        // test that #setValue does not permit
-        //  the MapEntry to contain itself (and thus cause infinite recursion
-        //  in #hashCode and #toString)
-
-        final Map.Entry<K, V> entry = makeMapEntry();
-
-        assertThrows(IllegalArgumentException.class, () -> entry.setValue((V) entry));
-
-        // check that the KVP's state has not changed
-        assertTrue(entry.getKey() == null && entry.getValue() == null);
-    }
-
-    /**
      * Subclasses should provide tests for their constructors.
-     *
      */
     public abstract void testConstructors();
 
@@ -140,6 +114,27 @@ public abstract class AbstractMapEntryTest<K, V> {
         assertEquals(e2, e1);
         assertEquals(e1, e2);
         assertEquals(e1.hashCode(), e2.hashCode());
+    }
+
+    /**
+     * Subclasses should override this method to test the
+     * desired behavior of the class with respect to
+     * handling of self-references.
+     */
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testSelfReferenceHandling() {
+        // test that #setValue does not permit
+        //  the MapEntry to contain itself (and thus cause infinite recursion
+        //  in #hashCode and #toString)
+
+        final Map.Entry<K, V> entry = makeMapEntry();
+
+        assertThrows(IllegalArgumentException.class, () -> entry.setValue((V) entry));
+
+        // check that the KVP's state has not changed
+        assertTrue(entry.getKey() == null && entry.getValue() == null);
     }
 
     @Test

@@ -74,26 +74,6 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     /** Serialization version */
     private static final long serialVersionUID = 19698628745827L;
 
-    /** The transformer to use if the map does not contain a key */
-    private final Transformer<? super K, ? extends V> value;
-
-    /**
-     * Factory method to create a defaulting map.
-     * <p>
-     * The value specified is returned when a missing key is found.
-     *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param defaultValue  the default value to return when the key is not found
-     * @return a new defaulting map
-     * @throws NullPointerException if map is null
-     * @since 4.0
-     */
-    public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final V defaultValue) {
-        return new DefaultedMap<>(map, ConstantTransformer.constantTransformer(defaultValue));
-    }
-
     /**
      * Factory method to create a defaulting map.
      * <p>
@@ -134,26 +114,24 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Constructs a new empty {@code DefaultedMap} that decorates
-     * a {@code HashMap}.
+     * Factory method to create a defaulting map.
      * <p>
-     * The object passed in will be returned by the map whenever an
-     * unknown key is requested.
+     * The value specified is returned when a missing key is found.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param map  the map to decorate, must not be null
      * @param defaultValue  the default value to return when the key is not found
+     * @return a new defaulting map
+     * @throws NullPointerException if map is null
+     * @since 4.0
      */
-    public DefaultedMap(final V defaultValue) {
-        this(ConstantTransformer.constantTransformer(defaultValue));
+    public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final V defaultValue) {
+        return new DefaultedMap<>(map, ConstantTransformer.constantTransformer(defaultValue));
     }
 
-    /**
-     * Constructs a new empty {@code DefaultedMap} that decorates a {@code HashMap}.
-     *
-     * @param defaultValueTransformer transformer to use to generate missing values.
-     */
-    public DefaultedMap(final Transformer<? super K, ? extends V> defaultValueTransformer) {
-        this(new HashMap<>(), defaultValueTransformer);
-    }
+    /** The transformer to use if the map does not contain a key */
+    private final Transformer<? super K, ? extends V> value;
 
     /**
      * Constructor that wraps (not copies).
@@ -168,18 +146,38 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Constructs a new empty {@code DefaultedMap} that decorates a {@code HashMap}.
      *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param defaultValueTransformer transformer to use to generate missing values.
      */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    public DefaultedMap(final Transformer<? super K, ? extends V> defaultValueTransformer) {
+        this(new HashMap<>(), defaultValueTransformer);
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Constructs a new empty {@code DefaultedMap} that decorates
+     * a {@code HashMap}.
+     * <p>
+     * The object passed in will be returned by the map whenever an
+     * unknown key is requested.
+     *
+     * @param defaultValue  the default value to return when the key is not found
+     */
+    public DefaultedMap(final V defaultValue) {
+        this(ConstantTransformer.constantTransformer(defaultValue));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public V get(final Object key) {
+        final V v;
+        return (v = map.get(key)) != null || map.containsKey(key)
+            ? v
+            : value.apply((K) key);
+    }
+
+    /**
+     * Deserializes the map in using a custom routine.
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -191,13 +189,15 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         map = (Map<K, V>) in.readObject();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public V get(final Object key) {
-        final V v;
-        return (v = map.get(key)) != null || map.containsKey(key)
-            ? v
-            : value.transform((K) key);
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
     // no need to wrap keySet, entrySet or values as they are views of

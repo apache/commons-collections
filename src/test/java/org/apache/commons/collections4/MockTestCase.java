@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.easymock.IExpectationSetters;
 
@@ -37,13 +38,13 @@ public abstract class MockTestCase {
         return registerMock(mock);
     }
 
+    protected <T> IExpectationSetters<T> expect(final T t) {
+        return EasyMock.expect(t);
+    }
+
     private <T> T registerMock(final T mock) {
         mockObjects.add(mock);
         return mock;
-    }
-
-    protected <T> IExpectationSetters<T> expect(final T t) {
-        return EasyMock.expect(t);
     }
 
     protected final void replay() {
@@ -57,7 +58,7 @@ public abstract class MockTestCase {
             try {
                 EasyMock.verify(i.next());
             } catch (final AssertionError e) {
-                throw new AssertionError(i.previousIndex() + 1 + ""
+                throw new AssertionError(i.previousIndex() + 1 + StringUtils.EMPTY
                         + e.getMessage());
             }
         }

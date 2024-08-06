@@ -42,24 +42,6 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
     private static final long serialVersionUID = -251737742649401930L;
 
     /**
-     * Factory method to create a transforming sorted bag.
-     * <p>
-     * If there are any elements already in the bag being decorated, they
-     * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
-     *
-     * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedBag
-     * @throws NullPointerException if bag or transformer is null
-     * @since 4.0
-     */
-    public static <E> TransformedSortedBag<E> transformingSortedBag(final SortedBag<E> bag,
-            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedSortedBag<>(bag, transformer);
-    }
-
-    /**
      * Factory method to create a transforming sorted bag that will transform
      * existing contents of the specified sorted bag.
      * <p>
@@ -83,10 +65,28 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
             final E[] values = (E[]) bag.toArray(); // NOPMD - false positive for generics
             bag.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;
+    }
+
+    /**
+     * Factory method to create a transforming sorted bag.
+     * <p>
+     * If there are any elements already in the bag being decorated, they
+     * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
+     *
+     * @param <E> the type of the elements in the bag
+     * @param bag  the bag to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed SortedBag
+     * @throws NullPointerException if bag or transformer is null
+     * @since 4.0
+     */
+    public static <E> TransformedSortedBag<E> transformingSortedBag(final SortedBag<E> bag,
+            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSortedBag<>(bag, transformer);
     }
 
     /**
@@ -103,6 +103,16 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         super(bag, transformer);
     }
 
+    @Override
+    public Comparator<? super E> comparator() {
+        return getSortedBag().comparator();
+    }
+
+    @Override
+    public E first() {
+        return getSortedBag().first();
+    }
+
     /**
      * Gets the decorated bag.
      *
@@ -112,20 +122,9 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         return (SortedBag<E>) decorated();
     }
 
-
-    @Override
-    public E first() {
-        return getSortedBag().first();
-    }
-
     @Override
     public E last() {
         return getSortedBag().last();
-    }
-
-    @Override
-    public Comparator<? super E> comparator() {
-        return getSortedBag().comparator();
     }
 
 }

@@ -21,18 +21,11 @@ import org.apache.commons.collections4.MultiSet;
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
  * {@link SynchronizedMultiSet} implementation.
- *
- * @since 4.1
  */
 public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     public SynchronizedMultiSetTest() {
         super(SynchronizedMultiSetTest.class.getSimpleName());
-    }
-
-    @Override
-    public MultiSet<T> makeObject() {
-        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
     }
 
     @Override
@@ -43,6 +36,11 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    public MultiSet<T> makeObject() {
+        return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
     }
 
 //    public void testCreate() throws Exception {

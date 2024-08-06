@@ -28,8 +28,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
  * implementation.
- *
- * @since 3.0
  */
 public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
@@ -38,15 +36,20 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Bag<T> makeObject() {
-        return TransformedBag.transformingBag(new HashBag<>(),
-                (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Bag<T> makeObject() {
+        return TransformedBag.transformingBag(new HashBag<>(),
+                (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Test
@@ -86,11 +89,6 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
         assertFalse(bag.remove(els[0]));
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

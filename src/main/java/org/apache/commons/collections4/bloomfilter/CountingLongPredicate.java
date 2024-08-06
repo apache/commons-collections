@@ -19,20 +19,21 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.function.LongPredicate;
 
 /**
- * A long predicate that applies the test func to each member of the @{code ary} in sequence for each call to @{code test()}.
- * if the @{code ary} is exhausted, the subsequent calls to @{code test} are executed with a zero value.
- * If the calls to @{code test} do not exhaust the @{code ary} the @{code forEachRemaining} method can be called to
- * execute the @code{text} with a zero value for each remaining @{code idx} value.
+ * A long predicate that applies the test func to each member of the {@code ary} in sequence for each call to {@code test()}.
+ * if the {@code ary} is exhausted, the subsequent calls to {@code test} are executed with a zero value.
+ * If the calls to {@code test} do not exhaust the {@code ary} the {@code processRemaining} method can be called to
+ * execute the @{code test} with a zero value for each remaining {@code idx} value.
+ * @since 4.5.0
  */
 class CountingLongPredicate implements LongPredicate {
-    private int idx = 0;
+    private int idx;
     private final long[] ary;
     private final LongBiPredicate func;
 
     /**
-     * Constructs an instance that will compare the elements in @{code ary} with the elements returned by @{code func}.
-     * function is called as @{code func.test( idxValue, otherValue )}. If there are more @{code otherValue} values than
-     * @{code idxValues} then @{code func} is called as @{code func.test( 0, otherValue )}.
+     * Constructs an instance that will compare the elements in {@code ary} with the elements returned by {@code func}.
+     * function is called as {@code func.test( idxValue, otherValue )}. If there are more {@code otherValue} values than
+     * {@code idxValues} then {@code func} is called as {@code func.test( 0, otherValue )}.
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.
      */
@@ -41,20 +42,15 @@ class CountingLongPredicate implements LongPredicate {
         this.func = func;
     }
 
-    @Override
-    public boolean test(final long other) {
-        return func.test(idx == ary.length ? 0 : ary[idx++], other);
-    }
-
     /**
      * Call the long-long consuming bi-predicate for each remaining unpaired long in
      * the input array. This method should be invoked after the predicate has been
-     * passed to {@link BitMapProducer#forEachBitMap(LongPredicate)} to consume any
+     * passed to {@link BitMapExtractor#processBitMaps(LongPredicate)} to consume any
      * unpaired bitmaps. The second argument to the bi-predicate will be zero.
      *
-     * @return true if all calls the predicate were successful
+     * @return true if all calls to the predicate were successful
      */
-    boolean forEachRemaining() {
+    boolean processRemaining() {
         // uses local references for optimization benefit.
         int i = idx;
         final long[] a = ary;
@@ -63,5 +59,10 @@ class CountingLongPredicate implements LongPredicate {
             i++;
         }
         return i == limit;
+    }
+
+    @Override
+    public boolean test(final long other) {
+        return func.test(idx == ary.length ? 0 : ary[idx++], other);
     }
 }

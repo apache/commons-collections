@@ -26,15 +26,13 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that calls a Closure using the input object
  * and then returns the input.
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 478466901448617286L;
-
-    /** The closure to wrap */
-    private final Closure<? super T> iClosure;
 
     /**
      * Factory method that performs validation.
@@ -48,6 +46,9 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
         return new ClosureTransformer<>(Objects.requireNonNull(closure, "closure"));
     }
 
+    /** The closure to wrap */
+    private final Closure<? super T> iClosure;
+
     /**
      * Constructor that performs no validation.
      * Use {@code closureTransformer} if you want that.
@@ -59,18 +60,6 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     }
 
     /**
-     * Transforms the input to result by executing a closure.
-     *
-     * @param input  the input object to transform
-     * @return the transformed result
-     */
-    @Override
-    public T transform(final T input) {
-        iClosure.execute(input);
-        return input;
-    }
-
-    /**
      * Gets the closure.
      *
      * @return the closure
@@ -78,6 +67,18 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      */
     public Closure<? super T> getClosure() {
         return iClosure;
+    }
+
+    /**
+     * Transforms the input to result by executing a closure.
+     *
+     * @param input  the input object to transform
+     * @return the transformed result
+     */
+    @Override
+    public T transform(final T input) {
+        iClosure.accept(input);
+        return input;
     }
 
 }

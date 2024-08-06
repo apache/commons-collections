@@ -35,7 +35,7 @@ import java.io.Serializable;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.lang.Object} methods and contracts.
+ * Abstract test class for {@link Object} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject()} method.
@@ -58,12 +58,125 @@ public abstract class AbstractObjectTest extends BulkTest {
         super(testName);
     }
 
+    protected String getCanonicalEmptyCollectionName(final Object object) {
+        final StringBuilder retval = new StringBuilder();
+        retval.append(TEST_DATA_PATH);
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".") + 1);
+        retval.append(colName);
+        retval.append(".emptyCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
+    protected String getCanonicalFullCollectionName(final Object object) {
+        final StringBuilder retval = new StringBuilder();
+        retval.append(TEST_DATA_PATH);
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".") + 1);
+        retval.append(colName);
+        retval.append(".fullCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
+    // protected implementation
+    /**
+     * Gets the version of Collections that this object tries to
+     * maintain serialization compatibility with. Defaults to 4, due to
+     * the package change to collections4 introduced in version 4.
+     *
+     * This constant makes it possible for TestMap (and other subclasses,
+     * if necessary) to automatically check SCM for a versionX copy of a
+     * Serialized object, so we can make sure that compatibility is maintained.
+     * See, for example, TestMap.getCanonicalFullMapName(Map map).
+     * Subclasses can override this variable, indicating compatibility
+     * with earlier Collections versions.
+     *
+     * @return The version, or {@code null} if this object shouldn't be
+     * tested for compatibility with previous versions.
+     */
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    /**
+     * Returns true to indicate that the collection supports equals() comparisons.
+     * This implementation returns true;
+     */
+    public boolean isEqualsCheckable() {
+        return true;
+    }
+
+    /**
+     * Is serialization testing supported.
+     * Default is true.
+     */
+    public boolean isTestSerialization() {
+        return true;
+    }
+
     /**
      * Implement this method to return the object to test.
      *
      * @return the object to test
      */
     public abstract Object makeObject();
+
+    /**
+     * Read a Serialized or Externalized Object from bytes.
+     * Useful for verifying serialization in memory.
+     *
+     * @param b byte array containing a serialized Object
+     * @return Object contained in the bytes
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    protected Object readExternalFormFromBytes(final byte[] b) throws IOException, ClassNotFoundException {
+        final ByteArrayInputStream stream = new ByteArrayInputStream(b);
+        return readExternalFormFromStream(stream);
+    }
+
+    /**
+     * Reads a Serialized or Externalized Object from disk.
+     * Useful for creating compatibility tests between
+     * different SCM versions of the same class
+     *
+     * @param path path to the serialized Object
+     * @return the Object at the given path
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
+        try (FileInputStream stream = new FileInputStream(path)) {
+            return readExternalFormFromStream(stream);
+        }
+    }
+
+    // private implementation
+    private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
+        final ObjectInputStream oStream = new ObjectInputStream(stream);
+        return oStream.readObject();
+    }
+
+    protected Object serializeDeserialize(final Object obj) throws Exception {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
+        out.writeObject(obj);
+        out.close();
+
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final Object dest = in.readObject();
+        in.close();
+
+        return dest;
+    }
+
+    protected boolean skipSerializedCanonicalTests() {
+        return Boolean.getBoolean("org.apache.commons.collections:with-clover");
+    }
 
     /**
      * Override this method if a subclass is testing an object
@@ -85,98 +198,6 @@ public abstract class AbstractObjectTest extends BulkTest {
      */
     public boolean supportsFullCollections() {
         return true;
-    }
-
-    /**
-     * Is serialization testing supported.
-     * Default is true.
-     */
-    public boolean isTestSerialization() {
-        return true;
-    }
-
-    /**
-     * Returns true to indicate that the collection supports equals() comparisons.
-     * This implementation returns true;
-     */
-    public boolean isEqualsCheckable() {
-        return true;
-    }
-
-    @Test
-    public void testObjectEqualsSelf() {
-        final Object obj = makeObject();
-        assertEquals(obj, obj, "A Object should equal itself");
-    }
-
-    @Test
-    public void testEqualsNull() {
-        final Object obj = makeObject();
-        assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
-    }
-
-    @Test
-    public void testObjectHashCodeEqualsSelfHashCode() {
-        final Object obj = makeObject();
-        assertEquals(obj.hashCode(), obj.hashCode(), "hashCode should be repeatable");
-    }
-
-    @Test
-    public void testObjectHashCodeEqualsContract() {
-        final Object obj1 = makeObject();
-        if (obj1.equals(obj1)) {
-            assertEquals(
-                    obj1.hashCode(), obj1.hashCode(),
-                    "[1] When two objects are equal, their hashCodes should be also.");
-        }
-        final Object obj2 = makeObject();
-        if (obj1.equals(obj2)) {
-            assertEquals(
-                    obj1.hashCode(), obj2.hashCode(),
-                    "[2] When two objects are equal, their hashCodes should be also.");
-            assertEquals(obj2, obj1, "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true");
-        }
-    }
-
-    protected Object serializeDeserialize(final Object obj) throws Exception {
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(obj);
-        out.close();
-
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        final Object dest = in.readObject();
-        in.close();
-
-        return dest;
-    }
-
-    @Test
-    public void testSerializeDeserializeThenCompare() throws Exception {
-        final Object obj = makeObject();
-        if (obj instanceof Serializable && isTestSerialization()) {
-            final Object dest = serializeDeserialize(obj);
-            if (isEqualsCheckable()) {
-                assertEquals(obj, dest, "obj != deserialize(serialize(obj))");
-            }
-        }
-    }
-
-    /**
-     * Sanity check method, makes sure that any Serializable
-     * class can be serialized and de-serialized in memory,
-     * using the handy makeObject() method
-     *
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    @Test
-    public void testSimpleSerialization() throws Exception {
-        final Object o = makeObject();
-        if (o instanceof Serializable && isTestSerialization()) {
-            final byte[] object = writeExternalFormToBytes((Serializable) o);
-            readExternalFormFromBytes(object);
-        }
     }
 
     /**
@@ -213,65 +234,66 @@ public abstract class AbstractObjectTest extends BulkTest {
         }
     }
 
-    // protected implementation
+    @Test
+    public void testEqualsNull() {
+        final Object obj = makeObject();
+        assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
+    }
+
+    @Test
+    public void testObjectEqualsSelf() {
+        final Object obj = makeObject();
+        assertEquals(obj, obj, "A Object should equal itself");
+    }
+
+    @Test
+    public void testObjectHashCodeEqualsContract() {
+        final Object obj1 = makeObject();
+        if (obj1.equals(obj1)) {
+            assertEquals(
+                    obj1.hashCode(), obj1.hashCode(),
+                    "[1] When two objects are equal, their hashCodes should be also.");
+        }
+        final Object obj2 = makeObject();
+        if (obj1.equals(obj2)) {
+            assertEquals(
+                    obj1.hashCode(), obj2.hashCode(),
+                    "[2] When two objects are equal, their hashCodes should be also.");
+            assertEquals(obj2, obj1, "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true");
+        }
+    }
+
+    @Test
+    public void testObjectHashCodeEqualsSelfHashCode() {
+        final Object obj = makeObject();
+        assertEquals(obj.hashCode(), obj.hashCode(), "hashCode should be repeatable");
+    }
+
+    @Test
+    public void testSerializeDeserializeThenCompare() throws Exception {
+        final Object obj = makeObject();
+        if (obj instanceof Serializable && isTestSerialization()) {
+            final Object dest = serializeDeserialize(obj);
+            if (isEqualsCheckable()) {
+                assertEquals(obj, dest, "obj != deserialize(serialize(obj))");
+            }
+        }
+    }
+
     /**
-     * Get the version of Collections that this object tries to
-     * maintain serialization compatibility with. Defaults to 4, due to
-     * the package change to collections4 introduced in version 4.
+     * Sanity check method, makes sure that any Serializable
+     * class can be serialized and de-serialized in memory,
+     * using the handy makeObject() method
      *
-     * This constant makes it possible for TestMap (and other subclasses,
-     * if necessary) to automatically check SCM for a versionX copy of a
-     * Serialized object, so we can make sure that compatibility is maintained.
-     * See, for example, TestMap.getCanonicalFullMapName(Map map).
-     * Subclasses can override this variable, indicating compatibility
-     * with earlier Collections versions.
-     *
-     * @return The version, or {@code null} if this object shouldn't be
-     * tested for compatibility with previous versions.
-     */
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    protected String getCanonicalEmptyCollectionName(final Object object) {
-        final StringBuilder retval = new StringBuilder();
-        retval.append(TEST_DATA_PATH);
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1);
-        retval.append(colName);
-        retval.append(".emptyCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
-    protected String getCanonicalFullCollectionName(final Object object) {
-        final StringBuilder retval = new StringBuilder();
-        retval.append(TEST_DATA_PATH);
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".") + 1);
-        retval.append(colName);
-        retval.append(".fullCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
-    /**
-     * Writes a Serializable or Externalizable object as
-     * a file at the given path.  NOT USEFUL as part
-     * of a unit test; this is just a utility method
-     * for creating disk-based objects in SCM that can become
-     * the basis for compatibility tests using
-     * readExternalFormFromDisk(String path)
-     *
-     * @param o Object to serialize
-     * @param path path to write the serialized Object
      * @throws IOException
+     * @throws ClassNotFoundException
      */
-    protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
-        try (FileOutputStream fileStream = new FileOutputStream(path)) {
-            writeExternalFormToStream(o, fileStream);
+    @Test
+    public void testSimpleSerialization() throws Exception {
+        final Object o = makeObject();
+        if (o instanceof Serializable && isTestSerialization()) {
+            final byte[] object = writeExternalFormToBytes((Serializable) o);
+            readExternalFormFromBytes(object);
         }
     }
 
@@ -290,43 +312,21 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     /**
-     * Reads a Serialized or Externalized Object from disk.
-     * Useful for creating compatibility tests between
-     * different SCM versions of the same class
+     * Writes a Serializable or Externalizable object as
+     * a file at the given path.  NOT USEFUL as part
+     * of a unit test; this is just a utility method
+     * for creating disk-based objects in SCM that can become
+     * the basis for compatibility tests using
+     * readExternalFormFromDisk(String path)
      *
-     * @param path path to the serialized Object
-     * @return the Object at the given path
+     * @param o Object to serialize
+     * @param path path to write the serialized Object
      * @throws IOException
-     * @throws ClassNotFoundException
      */
-    protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
-        try (FileInputStream stream = new FileInputStream(path)) {
-            return readExternalFormFromStream(stream);
+    protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
+        try (FileOutputStream fileStream = new FileOutputStream(path)) {
+            writeExternalFormToStream(o, fileStream);
         }
-    }
-
-    /**
-     * Read a Serialized or Externalized Object from bytes.
-     * Useful for verifying serialization in memory.
-     *
-     * @param b byte array containing a serialized Object
-     * @return Object contained in the bytes
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    protected Object readExternalFormFromBytes(final byte[] b) throws IOException, ClassNotFoundException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(b);
-        return readExternalFormFromStream(stream);
-    }
-
-    protected boolean skipSerializedCanonicalTests() {
-        return Boolean.getBoolean("org.apache.commons.collections:with-clover");
-    }
-
-    // private implementation
-    private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
-        final ObjectInputStream oStream = new ObjectInputStream(stream);
-        return oStream.readObject();
     }
 
     private void writeExternalFormToStream(final Serializable o, final OutputStream stream) throws IOException {

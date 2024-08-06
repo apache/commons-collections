@@ -49,6 +49,15 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     }
 
     /**
+     * Returns the underlying iterator.
+     *
+     * @return the underlying iterator
+     */
+    public Iterator<? extends E> getIterator() {
+        return iterator;
+    }
+
+    /**
      * Returns true if the underlying iterator has more elements.
      *
      * @return true if the underlying iterator has more elements
@@ -68,15 +77,6 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     @Override
     public E nextElement() {
         return iterator.next();
-    }
-
-    /**
-     * Returns the underlying iterator.
-     *
-     * @return the underlying iterator
-     */
-    public Iterator<? extends E> getIterator() {
-        return iterator;
     }
 
     /**

@@ -39,7 +39,7 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
      * <p>
      * Implementations typically return an empty {@code Set} if no values
      * have been mapped to the key.
-     * <p>
+     * </p>
      *
      * @param key  the key to retrieve
      * @return the {@code Set} of values, implementations should return an
@@ -52,9 +52,10 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned set <i>may</i> be modifiable, but updates will not be
+     * The returned set <em>may</em> be modifiable, but updates will not be
      * propagated to this set-valued map. In case no mapping was stored for the
      * specified key, an empty, unmodifiable set will be returned.
+     * </p>
      *
      * @param key  the key to remove values from
      * @return the {@code Set} of values removed, implementations should

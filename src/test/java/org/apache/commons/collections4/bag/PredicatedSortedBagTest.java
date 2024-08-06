@@ -30,25 +30,24 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
  * implementation.
- *
- * @since 3.0
  */
 public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     private final SortedBag<T> nullBag = null;
 
+    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
+
     public PredicatedSortedBagTest() {
         super(PredicatedSortedBagTest.class.getSimpleName());
     }
 
-    protected Predicate<T> stringPredicate() {
-        return o -> o instanceof String;
-    }
-
-    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
-
     protected SortedBag<T> decorateBag(final SortedBag<T> bag, final Predicate<T> predicate) {
         return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -58,6 +57,10 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     protected SortedBag<T> makeTestBag() {
         return decorateBag(new TreeBag<>(), stringPredicate());
+    }
+
+    protected Predicate<T> stringPredicate() {
+        return String.class::isInstance;
     }
 
     @Test
@@ -84,11 +87,6 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertEquals(bag.last(), two, "last element");
         final Comparator<? super T> c = bag.comparator();
         assertNull(c, "natural order, so comparator should be null");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

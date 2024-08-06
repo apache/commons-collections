@@ -39,24 +39,6 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     private static final long serialVersionUID = -7901091318986132033L;
 
     /**
-     * Factory method to create a transforming queue.
-     * <p>
-     * If there are any elements already in the queue being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
-     *
-     * @param <E> the type of the elements in the queue
-     * @param queue  the queue to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Queue
-     * @throws NullPointerException if queue or transformer is null
-     */
-    public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
-                                                            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedQueue<>(queue, transformer);
-    }
-
-    /**
      * Factory method to create a transforming queue that will transform
      * existing contents of the specified queue.
      * <p>
@@ -80,10 +62,28 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
             final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics
             queue.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;
+    }
+
+    /**
+     * Factory method to create a transforming queue.
+     * <p>
+     * If there are any elements already in the queue being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
+     *
+     * @param <E> the type of the elements in the queue
+     * @param queue  the queue to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed Queue
+     * @throws NullPointerException if queue or transformer is null
+     */
+    public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
+                                                            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedQueue<>(queue, transformer);
     }
 
     /**
@@ -100,6 +100,11 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
         super(queue, transformer);
     }
 
+    @Override
+    public E element() {
+        return getQueue().element();
+    }
+
     /**
      * Gets the decorated queue.
      *
@@ -109,15 +114,9 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
         return (Queue<E>) decorated();
     }
 
-
     @Override
     public boolean offer(final E obj) {
         return getQueue().offer(transform(obj));
-    }
-
-    @Override
-    public E poll() {
-        return getQueue().poll();
     }
 
     @Override
@@ -126,8 +125,8 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     }
 
     @Override
-    public E element() {
-        return getQueue().element();
+    public E poll() {
+        return getQueue().poll();
     }
 
     @Override

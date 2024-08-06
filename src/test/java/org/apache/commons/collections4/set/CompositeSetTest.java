@@ -32,21 +32,11 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link CompositeSet} implementation.
- *
- * @since 3.0
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
     public CompositeSetTest() {
         super(CompositeSetTest.class.getSimpleName());
-    }
-
-    @Override
-    public CompositeSet<E> makeObject() {
-        final HashSet<E> contained = new HashSet<>();
-        final CompositeSet<E> set = new CompositeSet<>(contained);
-        set.setMutator( new EmptySetMutator<>(contained) );
-        return set;
     }
 
     @SuppressWarnings("unchecked")
@@ -65,85 +55,22 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         return set;
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testContains() {
-        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
-        assertTrue(set.contains("1"));
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testContainsAll() {
-        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
-        assertFalse(set.containsAll(null));
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveAll() {
-        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
-        assertFalse(set.removeAll(null));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveUnderlying() {
-        final Set<E> one = buildOne();
-        final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(one, two);
-        one.remove("1");
-        assertFalse(set.contains("1"));
-
-        two.remove("3");
-        assertFalse(set.contains("3"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemoveComposited() {
-        final Set<E> one = buildOne();
-        final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(one, two);
-        set.remove("1");
-        assertFalse(one.contains("1"));
-
-        set.remove("3");
-        assertFalse(one.contains("3"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFailedCollisionResolution() {
-        final Set<E> one = buildOne();
-        final Set<E> two = buildTwo();
-        final CompositeSet<E> set = new CompositeSet<>(one, two);
-        set.setMutator(new SetMutator<E>() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing,
-                final Set<E> added, final Collection<E> intersects) {
-                //noop
-            }
-
-            @Override
-            public boolean add(final CompositeSet<E> composite,
-                    final List<Set<E>> collections, final E obj) {
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public boolean addAll(final CompositeSet<E> composite,
-                    final List<Set<E>> collections, final Collection<? extends E> coll) {
-                throw new UnsupportedOperationException();
-            }
-        });
-
-        final HashSet<E> three = new HashSet<>();
-        three.add((E) "1");
-        assertThrows(IllegalArgumentException.class, () -> set.addComposited(three),
-                "IllegalArgumentException should have been thrown");
+    @Override
+    public CompositeSet<E> makeObject() {
+        final HashSet<E> contained = new HashSet<>();
+        final CompositeSet<E> set = new CompositeSet<>(contained);
+        set.setMutator( new EmptySetMutator<>(contained) );
+        return set;
     }
 
     @Test
@@ -189,14 +116,85 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
                 "Expecting UnsupportedOperationException.");
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testContains() {
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
+        assertTrue(set.contains("1"));
     }
 
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testContainsAll() {
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
+        assertFalse(set.containsAll(null));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFailedCollisionResolution() {
+        final Set<E> one = buildOne();
+        final Set<E> two = buildTwo();
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
+        set.setMutator(new SetMutator<E>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean add(final CompositeSet<E> composite,
+                    final List<Set<E>> collections, final E obj) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public boolean addAll(final CompositeSet<E> composite,
+                    final List<Set<E>> collections, final Collection<? extends E> coll) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing,
+                final Set<E> added, final Collection<E> intersects) {
+                //noop
+            }
+        });
+
+        final HashSet<E> three = new HashSet<>();
+        three.add((E) "1");
+        assertThrows(IllegalArgumentException.class, () -> set.addComposited(three),
+                "IllegalArgumentException should have been thrown");
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveAll() {
+        final CompositeSet<E> set = new CompositeSet<>(buildOne(), buildTwo());
+        assertFalse(set.removeAll(null));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveComposited() {
+        final Set<E> one = buildOne();
+        final Set<E> two = buildTwo();
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
+        set.remove("1");
+        assertFalse(one.contains("1"));
+
+        set.remove("3");
+        assertFalse(one.contains("3"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemoveUnderlying() {
+        final Set<E> one = buildOne();
+        final Set<E> two = buildTwo();
+        final CompositeSet<E> set = new CompositeSet<>(one, two);
+        one.remove("1");
+        assertFalse(set.contains("1"));
+
+        two.remove("3");
+        assertFalse(set.contains("3"));
     }
 
 //    public void testCreate() throws Exception {

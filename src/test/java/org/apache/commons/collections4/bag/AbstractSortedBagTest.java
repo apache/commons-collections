@@ -26,13 +26,93 @@ import org.apache.commons.collections4.SortedBag;
  * Abstract test class for
  * {@link org.apache.commons.collections4.SortedBag SortedBag}
  * methods and contracts.
- *
- * @since 3.0
  */
 public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
     public AbstractSortedBagTest(final String testName) {
         super(testName);
+    }
+
+    /**
+     * Returns the {@link #collection} field cast to a {@link SortedBag}.
+     *
+     * @return the collection field as a SortedBag
+     */
+    @Override
+    public SortedBag<T> getCollection() {
+        return (SortedBag<T>) super.getCollection();
+    }
+
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getFullNonNullElements() {
+        final Object[] elements = new Object[30];
+
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 1);
+        }
+        return (T[]) elements;
+    }
+
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getOtherNonNullElements() {
+        final Object[] elements = new Object[30];
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 2);
+        }
+        return (T[]) elements;
+    }
+
+    /**
+     * Overridden because SortedBags don't allow null elements (normally).
+     * @return false
+     */
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
+    /**
+     * Returns an empty {@link TreeBag} for use in modification testing.
+     *
+     * @return a confirmed empty collection
+     */
+    @Override
+    public SortedBag<T> makeConfirmedCollection() {
+        return new TreeBag<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SortedBag<T> makeFullCollection() {
+        return (SortedBag<T>) super.makeFullCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract SortedBag<T> makeObject();
+
+    @Override
+    public void resetEmpty() {
+        setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
+        setConfirmed(makeConfirmedCollection());
+    }
+
+    @Override
+    public void resetFull() {
+        setCollection(CollectionSortedBag.collectionSortedBag(makeFullCollection()));
+        setConfirmed(makeConfirmedFullCollection());
     }
 
     /**
@@ -65,90 +145,6 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
                 "Incorrect element returned by last().");
         }
     }
-
-    /**
-     * Overridden because SortedBags don't allow null elements (normally).
-     * @return false
-     */
-    @Override
-    public boolean isNullSupported() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract SortedBag<T> makeObject();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SortedBag<T> makeFullCollection() {
-        return (SortedBag<T>) super.makeFullCollection();
-    }
-
-    /**
-     * Returns an empty {@link TreeBag} for use in modification testing.
-     *
-     * @return a confirmed empty collection
-     */
-    @Override
-    public SortedBag<T> makeConfirmedCollection() {
-        return new TreeBag<>();
-    }
-
-
-    @Override
-    public void resetEmpty() {
-        this.setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
-        this.setConfirmed(makeConfirmedCollection());
-    }
-
-    @Override
-    public void resetFull() {
-        this.setCollection(CollectionSortedBag.collectionSortedBag(makeFullCollection()));
-        this.setConfirmed(makeConfirmedFullCollection());
-    }
-
-    /**
-     * Override to return comparable objects.
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public T[] getFullNonNullElements() {
-        final Object[] elements = new Object[30];
-
-        for (int i = 0; i < 30; i++) {
-            elements[i] = Integer.valueOf(i + i + 1);
-        }
-        return (T[]) elements;
-    }
-
-    /**
-     * Override to return comparable objects.
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public T[] getOtherNonNullElements() {
-        final Object[] elements = new Object[30];
-        for (int i = 0; i < 30; i++) {
-            elements[i] = Integer.valueOf(i + i + 2);
-        }
-        return (T[]) elements;
-    }
-
-    /**
-     * Returns the {@link #collection} field cast to a {@link SortedBag}.
-     *
-     * @return the collection field as a SortedBag
-     */
-    @Override
-    public SortedBag<T> getCollection() {
-        return (SortedBag<T>) super.getCollection();
-    }
-
 
     // TODO: Add the SortedBag tests!
 }

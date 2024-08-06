@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * A unit test to test the basic functions of {@link SkippingIterator}.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -47,13 +49,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
         super(SkippingIteratorTest.class.getSimpleName());
     }
 
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    public void setUp()
-        throws Exception {
-        testList = Arrays.asList((E[]) testArray);
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return new SkippingIterator<>(Collections.<E>emptyList().iterator(), 0);
@@ -64,62 +59,21 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
         return new SkippingIterator<>(new ArrayList<>(testList).iterator(), 1);
     }
 
-    // ---------------- Tests ---------------------
-
-    /**
-     * Test a decorated iterator bounded such that the first element returned is
-     * at an index greater its first element, and the last element returned is
-     * at an index less than its last element.
-     */
-    @Test
-    public void testSkipping() {
-        final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 2);
-
-        assertTrue(iter.hasNext());
-        assertEquals("c", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("d", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("e", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("f", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("g", iter.next());
-
-        assertFalse(iter.hasNext());
-
-        assertThrows(NoSuchElementException.class, () -> iter.next(),
-                "Expected NoSuchElementException.");
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    public void setUp()
+        throws Exception {
+        testList = Arrays.asList((E[]) testArray);
     }
 
     /**
-     * Test a decorated iterator bounded such that the {@code offset} is
-     * zero, in that the SkippingIterator should return all the same elements
-     * as its decorated iterator.
+     * Test the case if a negative {@code offset} is passed to the
+     * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
-    public void testSameAsDecorated() {
-        final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 0);
-
-        assertTrue(iter.hasNext());
-        assertEquals("a", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("b", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("c", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("d", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("e", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("f", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("g", iter.next());
-
-        assertFalse(iter.hasNext());
-
-        assertThrows(NoSuchElementException.class, () -> iter.next(),
-                "Expected NoSuchElementException.");
+    public void testNegativeOffset() {
+        assertThrows(IllegalArgumentException.class, () -> new SkippingIterator<>(testList.iterator(), -1),
+                "Expected IllegalArgumentException.");
     }
 
     /**
@@ -134,29 +88,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
         assertThrows(NoSuchElementException.class, () -> iter.next(),
                 "Expected NoSuchElementException.");
-    }
-
-    /**
-     * Test the case if a negative {@code offset} is passed to the
-     * constructor. {@link IllegalArgumentException} is expected.
-     */
-    @Test
-    public void testNegativeOffset() {
-        assertThrows(IllegalArgumentException.class, () -> new SkippingIterator<>(testList.iterator(), -1),
-                "Expected IllegalArgumentException.");
-    }
-
-    /**
-     * Test the {@code remove()} method being called without
-     * {@code next()} being called first.
-     */
-    @Test
-    public void testRemoveWithoutCallingNext() {
-        final List<E> testListCopy = new ArrayList<>(testList);
-        final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
-
-        assertThrows(IllegalStateException.class, () -> iter.remove(),
-                "Expected IllegalStateException.");
     }
 
     /**
@@ -203,34 +134,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test removing an element in the middle of the iterator. Verify that the
-     * element is removed from the underlying collection.
-     */
-    @Test
-    public void testRemoveMiddle() {
-        final List<E> testListCopy = new ArrayList<>(testList);
-        final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 3);
-
-        assertTrue(iter.hasNext());
-        assertEquals("d", iter.next());
-
-        iter.remove();
-        assertFalse(testListCopy.contains("d"));
-
-        assertTrue(iter.hasNext());
-        assertEquals("e", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("f", iter.next());
-        assertTrue(iter.hasNext());
-        assertEquals("g", iter.next());
-
-        assertFalse(iter.hasNext());
-
-        assertThrows(NoSuchElementException.class, () -> iter.next(),
-                "Expected NoSuchElementException.");
-    }
-
-    /**
      * Test removing the last element. Verify that the element is removed from
      * the underlying collection.
      */
@@ -259,6 +162,34 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
+     * Test removing an element in the middle of the iterator. Verify that the
+     * element is removed from the underlying collection.
+     */
+    @Test
+    public void testRemoveMiddle() {
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 3);
+
+        assertTrue(iter.hasNext());
+        assertEquals("d", iter.next());
+
+        iter.remove();
+        assertFalse(testListCopy.contains("d"));
+
+        assertTrue(iter.hasNext());
+        assertEquals("e", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("f", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("g", iter.next());
+
+        assertFalse(iter.hasNext());
+
+        assertThrows(NoSuchElementException.class, () -> iter.next(),
+                "Expected NoSuchElementException.");
+    }
+
+    /**
      * Test the case if the decorated iterator does not support the
      * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
@@ -277,6 +208,75 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
         assertThrows(UnsupportedOperationException.class, () -> iter.remove(),
                 "Expected UnsupportedOperationException.");
+    }
+
+    /**
+     * Test the {@code remove()} method being called without
+     * {@code next()} being called first.
+     */
+    @Test
+    public void testRemoveWithoutCallingNext() {
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
+
+        assertThrows(IllegalStateException.class, () -> iter.remove(),
+                "Expected IllegalStateException.");
+    }
+
+    /**
+     * Test a decorated iterator bounded such that the {@code offset} is
+     * zero, in that the SkippingIterator should return all the same elements
+     * as its decorated iterator.
+     */
+    @Test
+    public void testSameAsDecorated() {
+        final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 0);
+
+        assertTrue(iter.hasNext());
+        assertEquals("a", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("b", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("c", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("d", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("e", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("f", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("g", iter.next());
+
+        assertFalse(iter.hasNext());
+
+        assertThrows(NoSuchElementException.class, () -> iter.next(),
+                "Expected NoSuchElementException.");
+    }
+
+    /**
+     * Test a decorated iterator bounded such that the first element returned is
+     * at an index greater its first element, and the last element returned is
+     * at an index less than its last element.
+     */
+    @Test
+    public void testSkipping() {
+        final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 2);
+
+        assertTrue(iter.hasNext());
+        assertEquals("c", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("d", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("e", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("f", iter.next());
+        assertTrue(iter.hasNext());
+        assertEquals("g", iter.next());
+
+        assertFalse(iter.hasNext());
+
+        assertThrows(NoSuchElementException.class, () -> iter.next(),
+                "Expected NoSuchElementException.");
     }
 
 }

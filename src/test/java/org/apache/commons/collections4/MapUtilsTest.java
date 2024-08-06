@@ -50,6 +50,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -58,21 +59,678 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class MapUtilsTest {
 
+    /**
+     * Test class for populateMap(MultiMap).
+     */
+    static class X implements Comparable<X> {
+
+        int key;
+        String name;
+
+        X(final int key, final String name) {
+            this.key = key;
+            this.name = name;
+        }
+
+        @Override
+        public int compareTo(final X o) {
+            return key - o.key | name.compareTo(o.name);
+        }
+
+    }
     private static final String THREE = "Three";
+
     private static final String TWO = "Two";
 
+    private char getDecimalSeparator() {
+        final NumberFormat numberFormat = NumberFormat.getInstance();
+        if (numberFormat instanceof DecimalFormat) {
+            return ((DecimalFormat) numberFormat).getDecimalFormatSymbols().getDecimalSeparator();
+        }
+        return '.';
+    }
+
     public Predicate<Object> getPredicate() {
-        return o -> o instanceof String;
+        return String.class::isInstance;
     }
 
     @Test
-    public void testPredicatedMap() {
-        final Predicate<Object> p = getPredicate();
-        final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
-        assertTrue(map instanceof PredicatedMap);
+    public void testConvertResourceBundle() {
+        final Map<String, String> in = new HashMap<>(5, 1);
+        in.put("1", "A");
+        in.put("2", "B");
+        in.put("3", "C");
+        in.put("4", "D");
+        in.put("5", "E");
 
-        assertThrows(NullPointerException.class, () -> MapUtils.predicatedMap(null, p, p),
-                "Expecting NullPointerException for null map.");
+        final ResourceBundle b = new ListResourceBundle() {
+            @Override
+            public Object[][] getContents() {
+                final Object[][] contents = new Object[in.size()][2];
+                int n = 0;
+                for (final Object key : in.keySet()) {
+                    final Object val = in.get(key);
+                    contents[n][0] = key;
+                    contents[n][1] = val;
+                    ++n;
+                }
+                return contents;
+            }
+        };
+
+        final Map<String, Object> out = MapUtils.toMap(b);
+
+        assertEquals(in, out);
+    }
+
+    @Test
+    public void testDebugAndVerbosePrintCasting() {
+        final Map<Integer, String> inner = new HashMap<>(2, 1);
+        inner.put(2, "B");
+        inner.put(3, "C");
+
+        final Map<Integer, Object> outer = new HashMap<>(2, 1);
+        outer.put(0, inner);
+        outer.put(1, "A");
+
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        try {
+            MapUtils.debugPrint(outPrint, "Print Map", outer);
+        } catch (final ClassCastException e) {
+            fail("No Casting should be occurring!");
+        }
+    }
+
+    @Test
+    public void testDebugAndVerbosePrintNullMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String LABEL = "Print Map";
+        outPrint.println(LABEL + " = " + String.valueOf((Object) null));
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, LABEL, null);
+        assertEquals(EXPECTED_OUT, out.toString());
+
+        out.reset();
+
+        MapUtils.verbosePrint(outPrint, LABEL, null);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrint() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
+
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A " + String.class.getName());
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + INDENT + "3 = C " + String.class.getName());
+        outPrint.println(INDENT + "} " + TreeMap.class.getName());
+        outPrint.println(INDENT + "7 = (this Map) " + TreeMap.class.getName());
+        outPrint.println("} " + TreeMap.class.getName());
+
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();
+
+        final Map<Integer, String> inner = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        inner.put(2, "B");
+        inner.put(3, "C");
+
+        final Map<Integer, Object> outer = new TreeMap<>();
+        outer.put(1, inner);
+        outer.put(0, "A");
+        outer.put(7, outer);
+
+        MapUtils.debugPrint(outPrint, "Print Map", outer);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullKey() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map<Object, String> map = new HashMap<>();
+        map.put(null, "A");
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = A " + String.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullKeyToMap1() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map<Object, Map<?, ?>> map = new HashMap<>();
+        map.put(null, map);
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = (this Map) " + HashMap.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullKeyToMap2() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map<Object, Object> map = new HashMap<>();
+        final Map<Object, Object> map2 = new HashMap<>();
+        map.put(null, map2);
+        map2.put("2", "B");
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + "} " + HashMap.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullLabel() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map<Integer, String> map = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        map.put(2, "B");
+        map.put(3, "C");
+        map.put(4, null);
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + "3 = C " + String.class.getName());
+        outPrint.println(INDENT + "4 = null");
+        outPrint.println("} " + TreeMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullLabelAndMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        outPrint.println("null");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.debugPrint(outPrint, null, null);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testDebugPrintNullStream() {
+        assertThrows(NullPointerException.class, () -> MapUtils.debugPrint(null, "Map", new HashMap<>()),
+                "Should generate NullPointerException");
+    }
+
+    @Test
+    public void testDebugPrintSelfReference() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
+
+        final Map<Integer, Object> grandfather = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        final Map<Integer, Object> father = new TreeMap<>();
+        final Map<Integer, Object> son    = new TreeMap<>();
+
+        grandfather.put(0, "A");
+        grandfather.put(1, father);
+
+        father.put(2, "B");
+        father.put(3, grandfather);
+        father.put(4, son);
+
+        son.put(5, "C");
+        son.put(6, grandfather);
+        son.put(7, father);
+
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A " + String.class.getName());
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + INDENT + "3 = (ancestor[0] Map) " + TreeMap.class.getName());
+        outPrint.println(INDENT + INDENT + "4 = ");
+        outPrint.println(INDENT + INDENT + "{");
+        outPrint.println(INDENT + INDENT + INDENT + "5 = C " + String.class.getName());
+        outPrint.println(INDENT + INDENT + INDENT + "6 = (ancestor[1] Map) " + TreeMap.class.getName());
+        outPrint.println(INDENT + INDENT + INDENT + "7 = (ancestor[0] Map) " + TreeMap.class.getName());
+        outPrint.println(INDENT + INDENT + "} " + TreeMap.class.getName());
+        outPrint.println(INDENT + "} " + TreeMap.class.getName());
+        outPrint.println("} " + TreeMap.class.getName());
+
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();
+        MapUtils.debugPrint(outPrint, "Print Map", grandfather);
+
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    @Test
+    public void testEmptyIfNull() {
+        assertTrue(MapUtils.emptyIfNull(null).isEmpty());
+
+        final Map<Long, Long> map = new HashMap<>();
+        assertSame(map, MapUtils.emptyIfNull(map));
+    }
+
+    @Test
+    public void testFixedSizeMap() {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object()));
+    }
+
+    @Test
+    public void testFixedSizeSortedMap() {
+        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<>()).put(1L, 1L));
+    }
+
+    @Test
+    public void testGetBooleanValue() {
+        final Map<String, Object> in = new HashMap<>();
+        in.put("key", true);
+        in.put("keyNumberTrue", 1);
+        in.put("keyNumberFalse", 0);
+        in.put("keyUnmapped", new Object());
+
+        assertFalse(MapUtils.getBooleanValue(null, "keyString", null));
+        assertFalse(MapUtils.getBooleanValue(in, null, null));
+        assertFalse(MapUtils.getBooleanValue(null, null, null));
+        assertTrue(MapUtils.getBooleanValue(in, "key", true));
+        assertTrue(MapUtils.getBooleanValue(in, "key"));
+        assertTrue(MapUtils.getBooleanValue(in, "noKey", true));
+        assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> true));
+        assertFalse(MapUtils.getBooleanValue(in, "noKey"));
+        assertTrue(MapUtils.getBoolean(in, "key", true));
+        assertTrue(MapUtils.getBoolean(in, "noKey", true));
+        assertTrue(MapUtils.getBoolean(in, "noKey", key -> {
+            if (System.currentTimeMillis() > 0) {
+                return true;
+            }
+            return false;
+        }));
+        assertNull(MapUtils.getBoolean(in, "noKey", key -> null));
+        assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> null));
+        assertNull(MapUtils.getBoolean(null, "noKey"));
+        // Values are Numbers
+        assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));
+        assertTrue(MapUtils.getBoolean(in, "keyNumberTrue"));
+        assertNull(MapUtils.getBoolean(in, "keyString"));
+        assertNull(MapUtils.getBoolean(null, "keyString"));
+        assertNull(MapUtils.getBoolean(in, null));
+        assertNull(MapUtils.getBoolean(null, null));
+
+        final Map<String, String> inStr = new HashMap<>();
+        inStr.put("str1", "true");
+
+        assertTrue(MapUtils.getBooleanValue(inStr, "str1", true));
+        assertTrue(MapUtils.getBoolean(inStr, "str1", true));
+    }
+
+    @Test
+    public void testGetByteValue() {
+        final Map<String, Byte> in = new HashMap<>();
+        final byte val = 100;
+        in.put("key", val);
+
+        assertEquals(val, MapUtils.getByteValue(in, "key", val), 0);
+        assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
+        assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
+        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> ((byte) 100)), 0);
+        assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
+        assertEquals(val, MapUtils.getByte(in, "key", val), 0);
+        assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
+        assertEquals(val, MapUtils.getByte(in, "noKey", key -> val), 0);
+
+        final Map<String, String> inStr = new HashMap<>();
+        inStr.put("str1", "100");
+
+        assertEquals(MapUtils.getByteValue(inStr, "str1", val), val, 0);
+    }
+
+    @Test
+    public void testGetDoubleValue() {
+        final Map<String, Double> in = new HashMap<>();
+        in.put("key", 2.0);
+
+        assertEquals(2.0, MapUtils.getDoubleValue(in, "key", 0.0), 0);
+        assertEquals(2.0, MapUtils.getDoubleValue(in, "key"), 0);
+        assertEquals(1.0, MapUtils.getDoubleValue(in, "noKey", 1.0), 0);
+        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> 5.0D), 0);
+
+        assertEquals(0, MapUtils.getDoubleValue(in, "noKey"), 0);
+        assertEquals(2.0, MapUtils.getDouble(in, "key", 0.0), 0);
+        assertEquals(1.0, MapUtils.getDouble(in, "noKey", 1.0), 0);
+        assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> 1.0), 0);
+
+        final Map<String, String> inStr = new HashMap<>();
+        final char decimalSeparator = getDecimalSeparator();
+        inStr.put("str1", "2" + decimalSeparator + "0");
+
+        assertEquals(MapUtils.getDoubleValue(inStr, "str1", 0.0), 2.0, 0);
+    }
+
+    @Test
+    public void testGetFloatValue() {
+        final Map<String, Float> in = new HashMap<>();
+        in.put("key", 2.0f);
+
+        assertEquals(2.0, MapUtils.getFloatValue(in, "key", 0.0f), 0);
+        assertEquals(2.0, MapUtils.getFloatValue(in, "key"), 0);
+        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", 1.0f), 0);
+        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> 1.0F), 0);
+        assertEquals(0, MapUtils.getFloatValue(in, "noKey"), 0);
+        assertEquals(2.0, MapUtils.getFloat(in, "key", 0.0f), 0);
+        assertEquals(1.0, MapUtils.getFloat(in, "noKey", 1.0f), 0);
+        assertEquals(1.0, MapUtils.getFloat(in, "noKey", key -> 1.0F), 0);
+
+        final Map<String, String> inStr = new HashMap<>();
+        final char decimalSeparator = getDecimalSeparator();
+        inStr.put("str1", "2" + decimalSeparator + "0");
+
+        assertEquals(MapUtils.getFloatValue(inStr, "str1", 0.0f), 2.0, 0);
+    }
+
+    @Test
+    public void testGetIntValue() {
+        final Map<String, Integer> in = new HashMap<>();
+        in.put("key", 2);
+
+        assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
+        assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
+        assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
+        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
+        assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
+        assertEquals(2, MapUtils.getInteger(in, "key", 0), 0);
+        assertEquals(0, MapUtils.getInteger(in, "noKey", 0), 0);
+        assertEquals(0, MapUtils.getInteger(in, "noKey", key -> 0), 0);
+
+        final Map<String, String> inStr = new HashMap<>();
+        inStr.put("str1", "2");
+
+        assertEquals(MapUtils.getIntValue(inStr, "str1", 0), 2, 0);
+    }
+
+    @Test
+    public void testGetLongValue() {
+        final Map<String, Long> in = new HashMap<>();
+        in.put("key", 2L);
+
+        assertEquals(2.0, MapUtils.getLongValue(in, "key", 0L), 0);
+        assertEquals(2.0, MapUtils.getLongValue(in, "key"), 0);
+        assertEquals(1, MapUtils.getLongValue(in, "noKey", 1L), 0);
+        assertEquals(1, MapUtils.getLongValue(in, "noKey", key -> 1L), 0);
+        assertEquals(0, MapUtils.getLongValue(in, "noKey"), 0);
+        assertEquals(2.0, MapUtils.getLong(in, "key", 0L), 0);
+        assertEquals(1, MapUtils.getLong(in, "noKey", 1L), 0);
+        assertEquals(1, MapUtils.getLong(in, "noKey", key -> 1L), 0);
+
+        final Map<String, Number> in1 = new HashMap<>();
+        in1.put("key", 2);
+
+        assertEquals(Long.valueOf(2), MapUtils.getLong(in1, "key"));
+
+        final Map<String, String> inStr = new HashMap<>();
+        inStr.put("str1", "2");
+
+        assertEquals(MapUtils.getLongValue(inStr, "str1", 0L), 2, 0);
+        assertEquals(MapUtils.getLong(inStr, "str1", 1L), 2, 0);
+    }
+
+    @Test
+    public void testGetMap() {
+        final Map<String, Map<String, String>> in = new HashMap<>();
+        final Map<String, String> valMap = new HashMap<>();
+        valMap.put("key1", "value1");
+        in.put("key1", valMap);
+        final Map<?, ?> outValue =  MapUtils.getMap(in, "key1", (Map<?, ?>) null);
+
+        assertEquals("value1", outValue.get("key1"));
+        assertNull(outValue.get("key2"));
+        assertNull(MapUtils.getMap(in, "key2", (Map<?, ?>) null));
+        assertNull(MapUtils.getMap(null, "key2", (Map<?, ?>) null));
+    }
+
+    @Test
+    public void testGetNumber() {
+        final Map<String, Number> in = new HashMap<>();
+        final Number val = 1000;
+        in.put("key", val);
+
+        assertEquals(val.intValue(), MapUtils.getNumber(in, "key", val).intValue(), 0);
+        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", val).intValue(), 0);
+        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", key -> {
+            if (true) {
+                return val;
+            }
+            return null;
+        }).intValue(), 0);
+    }
+
+    @Test
+    public void testGetNumberValueWithInvalidString() {
+        final Map<String, String> map = new HashMap<>();
+        map.put("key", "one");
+
+        assertNull(MapUtils.getNumber(map, "key"));
+    }
+
+    @Test
+    public void testGetObject() {
+        final Map<String, Object> in = new HashMap<>();
+        in.put("key", "str");
+
+        assertEquals("str", MapUtils.getObject(in, "key", "default"));
+        assertEquals("str", MapUtils.getObject(in, "key"));
+        assertNull(MapUtils.getObject(null, "key"));
+        assertEquals("default", MapUtils.getObject(in, "noKey", "default"));
+        assertEquals("default", MapUtils.getObject(null, "noKey", "default"));
+    }
+
+    @Test
+    public void testGetShortValue() {
+        final Map<String, Short> in = new HashMap<>();
+        final short val = 10;
+        in.put("key", val);
+
+        assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
+        assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
+        assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
+        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
+        assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
+        assertEquals(val, MapUtils.getShort(in, "key", val), 0);
+        assertEquals(val, MapUtils.getShort(in, "noKey", val), 0);
+        assertEquals(val, MapUtils.getShort(in, "noKey", key -> val), 0);
+
+        final Map<String, String> inStr = new HashMap<>();
+        inStr.put("str1", "10");
+
+        assertEquals(MapUtils.getShortValue(inStr, "str1", val), val, 0);
+    }
+
+    @Test
+    public void testGetString() {
+        final Map<String, String> in = new HashMap<>();
+        in.put("key", "str");
+
+        assertEquals("str", MapUtils.getString(in, "key", "default"));
+        assertEquals("str", MapUtils.getString(in, "key"));
+        assertNull(MapUtils.getString(null, "key"));
+        assertEquals("default", MapUtils.getString(in, "noKey", "default"));
+        assertEquals("default", MapUtils.getString(in, "noKey", key -> {
+            if ("noKey".equals(key)) {
+                return "default";
+            }
+            return StringUtils.EMPTY;
+        }));
+        assertEquals("default", MapUtils.getString(null, "noKey", "default"));
+    }
+
+    @Test
+    public void testInvertEmptyMap() {
+        final Map<String, String> emptyMap = new HashMap<>();
+        final Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
+        assertEquals(emptyMap, resultMap);
+    }
+
+    @Test
+    public void testInvertMap() {
+        final Map<String, String> in = new HashMap<>(5, 1);
+        in.put("1", "A");
+        in.put("2", "B");
+        in.put("3", "C");
+        in.put("4", "D");
+        in.put("5", "E");
+
+        final Set<String> inKeySet = new HashSet<>(in.keySet());
+        final Set<String> inValSet = new HashSet<>(in.values());
+
+        final Map<String, String> out = MapUtils.invertMap(in);
+
+        final Set<String> outKeySet = new HashSet<>(out.keySet());
+        final Set<String> outValSet = new HashSet<>(out.values());
+
+        assertEquals(inKeySet, outValSet);
+        assertEquals(inValSet, outKeySet);
+
+        assertEquals("1", out.get("A"));
+        assertEquals("2", out.get("B"));
+        assertEquals("3", out.get("C"));
+        assertEquals("4", out.get("D"));
+        assertEquals("5", out.get("E"));
+    }
+
+    @Test
+    public void testInvertMapNull() {
+        final Map<String, String> nullMap = null;
+        final Exception exception = assertThrows(NullPointerException.class, () -> MapUtils.invertMap(nullMap));
+        final String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains("map"));
+    }
+
+    @Test
+    public void testIsEmptyWithEmptyMap() {
+        final Map<Object, Object> map = new HashMap<>();
+        assertTrue(MapUtils.isEmpty(map));
+    }
+
+    @Test
+    public void testIsEmptyWithNonEmptyMap() {
+        final Map<String, String> map = new HashMap<>();
+        map.put("item", "value");
+        assertFalse(MapUtils.isEmpty(map));
+    }
+
+    @Test
+    public void testIsEmptyWithNull() {
+        final Map<Object, Object> map = null;
+        assertTrue(MapUtils.isEmpty(map));
+    }
+
+    @Test
+    public void testIsNotEmptyWithEmptyMap() {
+        final Map<Object, Object> map = new HashMap<>();
+        assertFalse(MapUtils.isNotEmpty(map));
+    }
+
+    @Test
+    public void testIsNotEmptyWithNonEmptyMap() {
+        final Map<String, String> map = new HashMap<>();
+        map.put("item", "value");
+        assertTrue(MapUtils.isNotEmpty(map));
+    }
+
+    @Test
+    public void testIsNotEmptyWithNull() {
+        final Map<Object, Object> map = null;
+        assertFalse(MapUtils.isNotEmpty(map));
+    }
+
+    @Test
+    public void testIterableMap() {
+        assertThrows(NullPointerException.class, () -> MapUtils.iterableMap(null),
+                "Should throw NullPointerException");
+
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("foo", "foov");
+        map.put("bar", "barv");
+        map.put("baz", "bazv");
+        final IterableMap<String, String> iMap = MapUtils.iterableMap(map);
+        assertEquals(map, iMap);
+        assertNotSame(map, iMap);
+        final HashedMap<String, String> hMap = new HashedMap<>(map);
+        assertSame(hMap, MapUtils.iterableMap(hMap));
+    }
+
+    @Test
+    public void testIterableSortedMap() {
+        assertThrows(NullPointerException.class, () -> MapUtils.iterableSortedMap(null),
+                "Should throw NullPointerException");
+
+        final TreeMap<String, String> map = new TreeMap<>();
+        map.put("foo", "foov");
+        map.put("bar", "barv");
+        map.put("baz", "bazv");
+        final IterableSortedMap<String, String> iMap = MapUtils.iterableSortedMap(map);
+        assertEquals(map, iMap);
+        assertNotSame(map, iMap);
+        assertSame(iMap, MapUtils.iterableMap(iMap));
+    }
+
+    @Test
+    public void testLazyMap() {
+        final Map<String, Integer> lazyMap = MapUtils.lazyMap(new HashMap<>(), () -> 1);
+        lazyMap.put(TWO, 2);
+
+        assertEquals(Integer.valueOf(2), lazyMap.get(TWO));
+        assertEquals(Integer.valueOf(1), lazyMap.get(THREE));
     }
 
     @Test
@@ -118,45 +776,110 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testInvertMap() {
-        final Map<String, String> in = new HashMap<>(5, 1);
-        in.put("1", "A");
-        in.put("2", "B");
-        in.put("3", "C");
-        in.put("4", "D");
-        in.put("5", "E");
+    public void testLazySortedMapFactory() {
+        final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), () -> 1);
+        lazySortedMap.put(TWO, 2);
 
-        final Set<String> inKeySet = new HashSet<>(in.keySet());
-        final Set<String> inValSet = new HashSet<>(in.values());
+        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
+        assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
 
-        final Map<String, String> out = MapUtils.invertMap(in);
+        final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
+        entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
+        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
 
-        final Set<String> outKeySet = new HashSet<>(out.keySet());
-        final Set<String> outValSet = new HashSet<>(out.values());
-
-        assertEquals(inKeySet, outValSet);
-        assertEquals(inValSet, outKeySet);
-
-        assertEquals("1", out.get("A"));
-        assertEquals("2", out.get("B"));
-        assertEquals("3", out.get("C"));
-        assertEquals("4", out.get("D"));
-        assertEquals("5", out.get("E"));
+        assertEquals(entrySet, lazySortedMap.entrySet());
     }
 
     @Test
-    public void testInvertEmptyMap() {
-        final Map<String, String> emptyMap = new HashMap<>();
-        final Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
-        assertEquals(emptyMap, resultMap);
+    public void testLazySortedMapTransformer() {
+        final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), s -> 1);
+        lazySortedMap.put(TWO, 2);
+
+        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
+        assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
+
+        final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
+        entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
+        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
+
+        assertEquals(entrySet, lazySortedMap.entrySet());
     }
 
     @Test
-    public void testInvertMapNull() {
-        final Map<String, String> nullMap = null;
-        final Exception exception = assertThrows(NullPointerException.class, () -> MapUtils.invertMap(nullMap));
-        final String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains("map"));
+    public void testOrderedMap() {
+        final Map<String, String> inMap = new HashMap<>();
+        inMap.put("key1", "value1");
+        inMap.put("key2", "value2");
+        final Map<String, String> map = MapUtils.orderedMap(inMap);
+        assertTrue(map instanceof OrderedMap);
+    }
+
+    @Test
+    public void testPopulateMap() {
+        // Setup Test Data
+        final List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("3");
+        list.add("5");
+        list.add("7");
+        list.add("2");
+        list.add("4");
+        list.add("6");
+
+        // Now test key transform population
+        Map<Object, Object> map = new HashMap<>();
+        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(list.size(), map.size());
+
+        for (final String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(element));
+            assertEquals(element, map.get(Integer.valueOf(element)));
+        }
+
+        // Now test both Key-Value transform population
+        map = new HashMap<>();
+        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+
+        assertEquals(list.size(), map.size());
+        for (final String element : list) {
+            assertTrue(map.containsKey(Integer.valueOf(element)));
+            assertFalse(map.containsKey(element));
+            assertTrue(map.containsValue(Integer.valueOf(element)));
+            assertEquals(Integer.valueOf(element), map.get(Integer.valueOf(element)));
+        }
+    }
+
+    @Test
+    public void testPopulateMultiMap() {
+        // Setup Test Data
+        final List<X> list = new ArrayList<>();
+        list.add(new X(1, "x1"));
+        list.add(new X(2, "x2"));
+        list.add(new X(2, "x3"));
+        list.add(new X(5, "x4"));
+        list.add(new X(5, "x5"));
+
+        // Now test key transform population
+        final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<>());
+        MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
+        assertEquals(list.size(), map.totalSize());
+
+        for (final X element : list) {
+            assertTrue(map.containsKey(element.key));
+            assertTrue(map.containsValue(element));
+        }
+    }
+
+    @Test
+    public void testPredicatedMap() {
+        final Predicate<Object> p = getPredicate();
+        final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
+        assertTrue(map instanceof PredicatedMap);
+
+        assertThrows(NullPointerException.class, () -> MapUtils.predicatedMap(null, p, p),
+                "Expecting NullPointerException for null map.");
     }
 
     @Test
@@ -261,648 +984,22 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testConvertResourceBundle() {
-        final Map<String, String> in = new HashMap<>(5, 1);
-        in.put("1", "A");
-        in.put("2", "B");
-        in.put("3", "C");
-        in.put("4", "D");
-        in.put("5", "E");
+    public void testSafeAddToMap() {
 
-        final ResourceBundle b = new ListResourceBundle() {
-            @Override
-            public Object[][] getContents() {
-                final Object[][] contents = new Object[in.size()][2];
-                int n = 0;
-                for (final Object key : in.keySet()) {
-                    final Object val = in.get(key);
-                    contents[n][0] = key;
-                    contents[n][1] = val;
-                    ++n;
-                }
-                return contents;
-            }
-        };
+        final Map<String, Object> inMap = new HashMap<>();
 
-        final Map<String, Object> out = MapUtils.toMap(b);
-
-        assertEquals(in, out);
+        MapUtils.safeAddToMap(inMap, "key1", "value1");
+        MapUtils.safeAddToMap(inMap, "key2", null);
+        assertEquals("value1", inMap.get("key1"));
+        assertEquals(StringUtils.EMPTY, inMap.get("key2"));
     }
 
     @Test
-    public void testDebugAndVerbosePrintCasting() {
-        final Map<Integer, String> inner = new HashMap<>(2, 1);
-        inner.put(2, "B");
-        inner.put(3, "C");
-
-        final Map<Integer, Object> outer = new HashMap<>(2, 1);
-        outer.put(0, inner);
-        outer.put(1, "A");
-
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        try {
-            MapUtils.debugPrint(outPrint, "Print Map", outer);
-        } catch (final ClassCastException e) {
-            fail("No Casting should be occurring!");
-        }
-    }
-
-    @Test
-    public void testDebugAndVerbosePrintNullMap() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String LABEL = "Print Map";
-        outPrint.println(LABEL + " = " + String.valueOf((Object) null));
-        final String EXPECTED_OUT = out.toString();
-
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, LABEL, null);
-        assertEquals(EXPECTED_OUT, out.toString());
-
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, LABEL, null);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullLabel() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Integer, String> map = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        map.put(2, "B");
-        map.put(3, "C");
-        map.put(4, null);
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "2 = B");
-        outPrint.println(INDENT + "3 = C");
-        outPrint.println(INDENT + "4 = null");
-        outPrint.println("}");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrintNullLabel() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Integer, String> map = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        map.put(2, "B");
-        map.put(3, "C");
-        map.put(4, null);
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "2 = B " + String.class.getName());
-        outPrint.println(INDENT + "3 = C " + String.class.getName());
-        outPrint.println(INDENT + "4 = null");
-        outPrint.println("} " + TreeMap.class.getName());
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullLabelAndMap() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        outPrint.println("null");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, null, null);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrintNullLabelAndMap() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        outPrint.println("null");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, null, null);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullStream() {
-        assertThrows(NullPointerException.class, () -> MapUtils.verbosePrint(null, "Map", new HashMap<>()),
-                "Should generate NullPointerException");
-    }
-
-    @Test
-    public void testDebugPrintNullStream() {
-        assertThrows(NullPointerException.class, () -> MapUtils.debugPrint(null, "Map", new HashMap<>()),
-                "Should generate NullPointerException");
-    }
-
-    @Test
-    public void testDebugPrintNullKey() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, String> map = new HashMap<>();
-        map.put(null, "A");
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = A " + String.class.getName());
-        outPrint.println("} " + HashMap.class.getName());
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullKey() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, String> map = new HashMap<>();
-        map.put(null, "A");
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = A");
-        outPrint.println("}");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrintNullKeyToMap1() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, Map<?, ?>> map = new HashMap<>();
-        map.put(null, map);
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = (this Map) " + HashMap.class.getName());
-        outPrint.println("} " + HashMap.class.getName());
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullKeyToMap1() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, Map<?, ?>> map = new HashMap<>();
-        map.put(null, map);
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = (this Map)");
-        outPrint.println("}");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrintNullKeyToMap2() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, Object> map = new HashMap<>();
-        final Map<Object, Object> map2= new HashMap<>();
-        map.put(null, map2);
-        map2.put("2", "B");
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
-        outPrint.println(INDENT + "} " + HashMap.class.getName());
-        outPrint.println("} " + HashMap.class.getName());
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.debugPrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintNullKeyToMap2() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String INDENT = "    ";
-
-        final Map<Object, Object> map = new HashMap<>();
-        final Map<Object, Object> map2 = new HashMap<>();
-        map.put(null, map2);
-        map2.put("2", "B");
-
-        outPrint.println("{");
-        outPrint.println(INDENT + "null = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B");
-        outPrint.println(INDENT + "}");
-        outPrint.println("}");
-        final String EXPECTED_OUT = out.toString();
-        out.reset();
-
-        MapUtils.verbosePrint(outPrint, null, map);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrint() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String LABEL = "Print Map";
-        final String INDENT = "    ";
-
-        outPrint.println(LABEL + " = ");
-        outPrint.println("{");
-        outPrint.println(INDENT + "0 = A");
-        outPrint.println(INDENT + "1 = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B");
-        outPrint.println(INDENT + INDENT + "3 = C");
-        outPrint.println(INDENT + "}");
-        outPrint.println(INDENT + "7 = (this Map)");
-        outPrint.println("}");
-
-        final String EXPECTED_OUT = out.toString();
-
-        out.reset();
-
-        final Map<Integer, String> inner = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        inner.put(2, "B");
-        inner.put(3, "C");
-
-        final Map<Integer, Object> outer = new TreeMap<>();
-        outer.put(1, inner);
-        outer.put(0, "A");
-        outer.put(7, outer);
-
-        MapUtils.verbosePrint(outPrint, "Print Map", outer);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrint() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String LABEL = "Print Map";
-        final String INDENT = "    ";
-
-        outPrint.println(LABEL + " = ");
-        outPrint.println("{");
-        outPrint.println(INDENT + "0 = A " + String.class.getName());
-        outPrint.println(INDENT + "1 = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
-        outPrint.println(INDENT + INDENT + "3 = C " + String.class.getName());
-        outPrint.println(INDENT + "} " + TreeMap.class.getName());
-        outPrint.println(INDENT + "7 = (this Map) " + TreeMap.class.getName());
-        outPrint.println("} " + TreeMap.class.getName());
-
-        final String EXPECTED_OUT = out.toString();
-
-        out.reset();
-
-        final Map<Integer, String> inner = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        inner.put(2, "B");
-        inner.put(3, "C");
-
-        final Map<Integer, Object> outer = new TreeMap<>();
-        outer.put(1, inner);
-        outer.put(0, "A");
-        outer.put(7, outer);
-
-        MapUtils.debugPrint(outPrint, "Print Map", outer);
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testVerbosePrintSelfReference() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String LABEL = "Print Map";
-        final String INDENT = "    ";
-
-        final Map<Integer, Object> grandfather = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        final Map<Integer, Object> father = new TreeMap<>();
-        final Map<Integer, Object> son    = new TreeMap<>();
-
-        grandfather.put(0, "A");
-        grandfather.put(1, father);
-
-        father.put(2, "B");
-        father.put(3, grandfather);
-        father.put(4, son);
-
-        son.put(5, "C");
-        son.put(6, grandfather);
-        son.put(7, father);
-
-        outPrint.println(LABEL + " = ");
-        outPrint.println("{");
-        outPrint.println(INDENT + "0 = A");
-        outPrint.println(INDENT + "1 = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B");
-        outPrint.println(INDENT + INDENT + "3 = (ancestor[0] Map)");
-        outPrint.println(INDENT + INDENT + "4 = ");
-        outPrint.println(INDENT + INDENT + "{");
-        outPrint.println(INDENT + INDENT + INDENT + "5 = C");
-        outPrint.println(INDENT + INDENT + INDENT + "6 = (ancestor[1] Map)");
-        outPrint.println(INDENT + INDENT + INDENT + "7 = (ancestor[0] Map)");
-        outPrint.println(INDENT + INDENT + "}");
-        outPrint.println(INDENT + "}");
-        outPrint.println("}");
-
-        final String EXPECTED_OUT = out.toString();
-
-        out.reset();
-        MapUtils.verbosePrint(outPrint, "Print Map", grandfather);
-
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testDebugPrintSelfReference() {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final PrintStream outPrint = new PrintStream(out);
-
-        final String LABEL = "Print Map";
-        final String INDENT = "    ";
-
-        final Map<Integer, Object> grandfather = new TreeMap<>(); // treeMap guarantees order across JDKs for test
-        final Map<Integer, Object> father = new TreeMap<>();
-        final Map<Integer, Object> son    = new TreeMap<>();
-
-        grandfather.put(0, "A");
-        grandfather.put(1, father);
-
-        father.put(2, "B");
-        father.put(3, grandfather);
-        father.put(4, son);
-
-        son.put(5, "C");
-        son.put(6, grandfather);
-        son.put(7, father);
-
-        outPrint.println(LABEL + " = ");
-        outPrint.println("{");
-        outPrint.println(INDENT + "0 = A " + String.class.getName());
-        outPrint.println(INDENT + "1 = ");
-        outPrint.println(INDENT + "{");
-        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
-        outPrint.println(INDENT + INDENT + "3 = (ancestor[0] Map) " + TreeMap.class.getName());
-        outPrint.println(INDENT + INDENT + "4 = ");
-        outPrint.println(INDENT + INDENT + "{");
-        outPrint.println(INDENT + INDENT + INDENT + "5 = C " + String.class.getName());
-        outPrint.println(INDENT + INDENT + INDENT + "6 = (ancestor[1] Map) " + TreeMap.class.getName());
-        outPrint.println(INDENT + INDENT + INDENT + "7 = (ancestor[0] Map) " + TreeMap.class.getName());
-        outPrint.println(INDENT + INDENT + "} " + TreeMap.class.getName());
-        outPrint.println(INDENT + "} " + TreeMap.class.getName());
-        outPrint.println("} " + TreeMap.class.getName());
-
-        final String EXPECTED_OUT = out.toString();
-
-        out.reset();
-        MapUtils.debugPrint(outPrint, "Print Map", grandfather);
-
-        assertEquals(EXPECTED_OUT, out.toString());
-    }
-
-    @Test
-    public void testEmptyIfNull() {
-        assertTrue(MapUtils.emptyIfNull(null).isEmpty());
-
-        final Map<Long, Long> map = new HashMap<>();
-        assertSame(map, MapUtils.emptyIfNull(map));
-    }
-
-    @Test
-    public void testIsEmptyWithEmptyMap() {
-        final Map<Object, Object> map = new HashMap<>();
-        assertTrue(MapUtils.isEmpty(map));
-    }
-
-    @Test
-    public void testIsEmptyWithNonEmptyMap() {
-        final Map<String, String> map = new HashMap<>();
-        map.put("item", "value");
-        assertFalse(MapUtils.isEmpty(map));
-    }
-
-    @Test
-    public void testIsEmptyWithNull() {
-        final Map<Object, Object> map = null;
-        assertTrue(MapUtils.isEmpty(map));
-    }
-
-    @Test
-    public void testIsNotEmptyWithEmptyMap() {
-        final Map<Object, Object> map = new HashMap<>();
-        assertFalse(MapUtils.isNotEmpty(map));
-    }
-
-    @Test
-    public void testIsNotEmptyWithNonEmptyMap() {
-        final Map<String, String> map = new HashMap<>();
-        map.put("item", "value");
-        assertTrue(MapUtils.isNotEmpty(map));
-    }
-
-    @Test
-    public void testIsNotEmptyWithNull() {
-        final Map<Object, Object> map = null;
-        assertFalse(MapUtils.isNotEmpty(map));
-    }
-
-    @Test
-    public void testPopulateMap() {
-        // Setup Test Data
-        final List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("3");
-        list.add("5");
-        list.add("7");
-        list.add("2");
-        list.add("4");
-        list.add("6");
-
-        // Now test key transform population
-        Map<Object, Object> map = new HashMap<>();
-        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(list.size(), map.size());
-
-        for (final String element : list) {
-            assertTrue(map.containsKey(Integer.valueOf(element)));
-            assertFalse(map.containsKey(element));
-            assertTrue(map.containsValue(element));
-            assertEquals(element, map.get(Integer.valueOf(element)));
-        }
-
-        // Now test both Key-Value transform population
-        map = new HashMap<>();
-        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-
-        assertEquals(list.size(), map.size());
-        for (final String element : list) {
-            assertTrue(map.containsKey(Integer.valueOf(element)));
-            assertFalse(map.containsKey(element));
-            assertTrue(map.containsValue(Integer.valueOf(element)));
-            assertEquals(Integer.valueOf(element), map.get(Integer.valueOf(element)));
-        }
-    }
-
-    /**
-     * Test class for populateMap(MultiMap).
-     */
-    static class X implements Comparable<X> {
-
-        int key;
-        String name;
-
-        X(final int key, final String name) {
-            this.key = key;
-            this.name = name;
-        }
-
-        @Override
-        public int compareTo(final X o) {
-            return key - o.key | name.compareTo(o.name);
-        }
-
-    }
-
-    @Test
-    public void testPopulateMultiMap() {
-        // Setup Test Data
-        final List<X> list = new ArrayList<>();
-        list.add(new X(1, "x1"));
-        list.add(new X(2, "x2"));
-        list.add(new X(2, "x3"));
-        list.add(new X(5, "x4"));
-        list.add(new X(5, "x5"));
-
-        // Now test key transform population
-        final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<>());
-        MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X>nopTransformer());
-        assertEquals(list.size(), map.totalSize());
-
-        for (final X element : list) {
-            assertTrue(map.containsKey(element.key));
-            assertTrue(map.containsValue(element));
-        }
-    }
-
-    @Test
-    public void testIterableMap() {
-        assertThrows(NullPointerException.class, () -> MapUtils.iterableMap(null),
-                "Should throw NullPointerException");
-
-        final HashMap<String, String> map = new HashMap<>();
-        map.put("foo", "foov");
-        map.put("bar", "barv");
-        map.put("baz", "bazv");
-        final IterableMap<String, String> iMap = MapUtils.iterableMap(map);
-        assertEquals(map, iMap);
-        assertNotSame(map, iMap);
-        final HashedMap<String, String> hMap = new HashedMap<>(map);
-        assertSame(hMap, MapUtils.iterableMap(hMap));
-    }
-
-    @Test
-    public void testIterableSortedMap() {
-        assertThrows(NullPointerException.class, () -> MapUtils.iterableSortedMap(null),
-                "Should throw NullPointerException");
-
-        final TreeMap<String, String> map = new TreeMap<>();
-        map.put("foo", "foov");
-        map.put("bar", "barv");
-        map.put("baz", "bazv");
-        final IterableSortedMap<String, String> iMap = MapUtils.iterableSortedMap(map);
-        assertEquals(map, iMap);
-        assertNotSame(map, iMap);
-        assertSame(iMap, MapUtils.iterableMap(iMap));
-    }
-
-    @Test
-    public void testLazyMap() {
-        final Map<String, Integer> lazyMap = MapUtils.lazyMap(new HashMap<>(), () -> 1);
-        lazyMap.put(TWO, 2);
-
-        assertEquals(Integer.valueOf(2), lazyMap.get(TWO));
-        assertEquals(Integer.valueOf(1), lazyMap.get(THREE));
-    }
-
-    @Test
-    public void testLazySortedMapFactory() {
-        final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), () -> 1);
-        lazySortedMap.put(TWO, 2);
-
-        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
-        assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
-
-        final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
-        entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
-        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
-
-        assertEquals(entrySet, lazySortedMap.entrySet());
-    }
-
-    @Test
-    public void testLazySortedMapTransformer() {
-        final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), s -> 1);
-        lazySortedMap.put(TWO, 2);
-
-        assertEquals(Integer.valueOf(2), lazySortedMap.get(TWO));
-        assertEquals(Integer.valueOf(1), lazySortedMap.get(THREE));
-
-        final Set<Map.Entry<String, Integer>> entrySet = new HashSet<>();
-        entrySet.add(new AbstractMap.SimpleEntry<>(THREE, 1));
-        entrySet.add(new AbstractMap.SimpleEntry<>(TWO, 2));
-
-        assertEquals(entrySet, lazySortedMap.entrySet());
+    public void testSize() {
+        final HashMap<Object, Object> map = new HashMap<>();
+        map.put("A", "1");
+        map.put("B", "2");
+        assertEquals(2, MapUtils.size(map));
     }
 
     @Test
@@ -913,14 +1010,6 @@ public class MapUtilsTest {
     @Test
     public void testSizeNull() {
         assertEquals(0, MapUtils.size(null));
-    }
-
-    @Test
-    public void testSize() {
-        final HashMap<Object, Object> map = new HashMap<>();
-        map.put("A", "1");
-        map.put("B", "2");
-        assertEquals(2, MapUtils.size(map));
     }
 
     @Test
@@ -984,284 +1073,194 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testFixedSizeMap() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object()));
+    public void testVerbosePrint() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
+
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A");
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B");
+        outPrint.println(INDENT + INDENT + "3 = C");
+        outPrint.println(INDENT + "}");
+        outPrint.println(INDENT + "7 = (this Map)");
+        outPrint.println("}");
+
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();
+
+        final Map<Integer, String> inner = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        inner.put(2, "B");
+        inner.put(3, "C");
+
+        final Map<Integer, Object> outer = new TreeMap<>();
+        outer.put(1, inner);
+        outer.put(0, "A");
+        outer.put(7, outer);
+
+        MapUtils.verbosePrint(outPrint, "Print Map", outer);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testFixedSizeSortedMap() {
-        final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<>()).put(1L, 1L));
+    public void testVerbosePrintNullKey() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map<Object, String> map = new HashMap<>();
+        map.put(null, "A");
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = A");
+        outPrint.println("}");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.verbosePrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testGetNumberValueWithInvalidString() {
-        final Map<String, String> map = new HashMap<>();
-        map.put("key", "one");
+    public void testVerbosePrintNullKeyToMap1() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
 
-        assertNull(MapUtils.getNumber(map, "key"));
+        final String INDENT = "    ";
+
+        final Map<Object, Map<?, ?>> map = new HashMap<>();
+        map.put(null, map);
+
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = (this Map)");
+        outPrint.println("}");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.verbosePrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testGetDoubleValue() {
-        final Map<String, Double> in = new HashMap<>();
-        in.put("key", 2.0);
+    public void testVerbosePrintNullKeyToMap2() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
 
-        assertEquals(2.0, MapUtils.getDoubleValue(in, "key", 0.0), 0);
-        assertEquals(2.0, MapUtils.getDoubleValue(in, "key"), 0);
-        assertEquals(1.0, MapUtils.getDoubleValue(in, "noKey", 1.0), 0);
-        assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> 5.0D), 0);
+        final String INDENT = "    ";
 
-        assertEquals(0, MapUtils.getDoubleValue(in, "noKey"), 0);
-        assertEquals(2.0, MapUtils.getDouble(in, "key", 0.0), 0);
-        assertEquals(1.0, MapUtils.getDouble(in, "noKey", 1.0), 0);
-        assertEquals(1.0, MapUtils.getDouble(in, "noKey", key -> 1.0), 0);
+        final Map<Object, Object> map = new HashMap<>();
+        final Map<Object, Object> map2 = new HashMap<>();
+        map.put(null, map2);
+        map2.put("2", "B");
 
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B");
+        outPrint.println(INDENT + "}");
+        outPrint.println("}");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
 
-        final Map<String, String> inStr = new HashMap<>();
-        final char decimalSeparator = getDecimalSeparator();
-        inStr.put("str1", "2" + decimalSeparator + "0");
-
-        assertEquals(MapUtils.getDoubleValue(inStr, "str1", 0.0), 2.0, 0);
+        MapUtils.verbosePrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testGetFloatValue() {
-        final Map<String, Float> in = new HashMap<>();
-        in.put("key", 2.0f);
+    public void testVerbosePrintNullLabel() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
 
-        assertEquals(2.0, MapUtils.getFloatValue(in, "key", 0.0f), 0);
-        assertEquals(2.0, MapUtils.getFloatValue(in, "key"), 0);
-        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> 1.0F), 0);
-        assertEquals(0, MapUtils.getFloatValue(in, "noKey"), 0);
-        assertEquals(2.0, MapUtils.getFloat(in, "key", 0.0f), 0);
-        assertEquals(1.0, MapUtils.getFloat(in, "noKey", 1.0f), 0);
-        assertEquals(1.0, MapUtils.getFloat(in, "noKey", key -> 1.0F), 0);
+        final String INDENT = "    ";
 
-        final Map<String, String> inStr = new HashMap<>();
-        final char decimalSeparator = getDecimalSeparator();
-        inStr.put("str1", "2" + decimalSeparator + "0");
+        final Map<Integer, String> map = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        map.put(2, "B");
+        map.put(3, "C");
+        map.put(4, null);
 
-        assertEquals(MapUtils.getFloatValue(inStr, "str1", 0.0f), 2.0, 0);
+        outPrint.println("{");
+        outPrint.println(INDENT + "2 = B");
+        outPrint.println(INDENT + "3 = C");
+        outPrint.println(INDENT + "4 = null");
+        outPrint.println("}");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.verbosePrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testGetLongValue() {
-        final Map<String, Long> in = new HashMap<>();
-        in.put("key", 2L);
+    public void testVerbosePrintNullLabelAndMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
 
-        assertEquals(2.0, MapUtils.getLongValue(in, "key", 0L), 0);
-        assertEquals(2.0, MapUtils.getLongValue(in, "key"), 0);
-        assertEquals(1, MapUtils.getLongValue(in, "noKey", 1L), 0);
-        assertEquals(1, MapUtils.getLongValue(in, "noKey", key -> 1L), 0);
-        assertEquals(0, MapUtils.getLongValue(in, "noKey"), 0);
-        assertEquals(2.0, MapUtils.getLong(in, "key", 0L), 0);
-        assertEquals(1, MapUtils.getLong(in, "noKey", 1L), 0);
-        assertEquals(1, MapUtils.getLong(in, "noKey", key -> 1L), 0);
+        outPrint.println("null");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
 
-        final Map<String, Number> in1 = new HashMap<>();
-        in1.put("key", 2);
-
-        assertEquals(Long.valueOf(2), MapUtils.getLong(in1, "key"));
-
-        final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "2");
-
-        assertEquals(MapUtils.getLongValue(inStr, "str1", 0L), 2, 0);
-        assertEquals(MapUtils.getLong(inStr, "str1", 1L), 2, 0);
+        MapUtils.verbosePrint(outPrint, null, null);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     @Test
-    public void testGetIntValue() {
-        final Map<String, Integer> in = new HashMap<>();
-        in.put("key", 2);
-
-        assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
-        assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
-        assertEquals(2, MapUtils.getInteger(in, "key", 0), 0);
-        assertEquals(0, MapUtils.getInteger(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getInteger(in, "noKey", key -> 0), 0);
-
-        final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "2");
-
-        assertEquals(MapUtils.getIntValue(inStr, "str1", 0), 2, 0);
+    public void testVerbosePrintNullStream() {
+        assertThrows(NullPointerException.class, () -> MapUtils.verbosePrint(null, "Map", new HashMap<>()),
+                "Should generate NullPointerException");
     }
 
     @Test
-    public void testGetShortValue() {
-        final Map<String, Short> in = new HashMap<>();
-        final short val = 10;
-        in.put("key", val);
+    public void testVerbosePrintSelfReference() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
 
-        assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
-        assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
-        assertEquals(val, MapUtils.getShort(in, "key", val), 0);
-        assertEquals(val, MapUtils.getShort(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShort(in, "noKey", key -> val), 0);
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
 
-        final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "10");
+        final Map<Integer, Object> grandfather = new TreeMap<>(); // treeMap guarantees order across JDKs for test
+        final Map<Integer, Object> father = new TreeMap<>();
+        final Map<Integer, Object> son    = new TreeMap<>();
 
-        assertEquals(MapUtils.getShortValue(inStr, "str1", val), val, 0);
-    }
+        grandfather.put(0, "A");
+        grandfather.put(1, father);
 
-    @Test
-    public void testGetByteValue() {
-        final Map<String, Byte> in = new HashMap<>();
-        final byte val = 100;
-        in.put("key", val);
+        father.put(2, "B");
+        father.put(3, grandfather);
+        father.put(4, son);
 
-        assertEquals(val, MapUtils.getByteValue(in, "key", val), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> ((byte) 100)), 0);
-        assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
-        assertEquals(val, MapUtils.getByte(in, "key", val), 0);
-        assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByte(in, "noKey", key -> val), 0);
+        son.put(5, "C");
+        son.put(6, grandfather);
+        son.put(7, father);
 
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A");
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B");
+        outPrint.println(INDENT + INDENT + "3 = (ancestor[0] Map)");
+        outPrint.println(INDENT + INDENT + "4 = ");
+        outPrint.println(INDENT + INDENT + "{");
+        outPrint.println(INDENT + INDENT + INDENT + "5 = C");
+        outPrint.println(INDENT + INDENT + INDENT + "6 = (ancestor[1] Map)");
+        outPrint.println(INDENT + INDENT + INDENT + "7 = (ancestor[0] Map)");
+        outPrint.println(INDENT + INDENT + "}");
+        outPrint.println(INDENT + "}");
+        outPrint.println("}");
 
-        final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "100");
+        final String EXPECTED_OUT = out.toString();
 
-        assertEquals(MapUtils.getByteValue(inStr, "str1", val), val, 0);
-    }
+        out.reset();
+        MapUtils.verbosePrint(outPrint, "Print Map", grandfather);
 
-    @Test
-    public void testGetNumber() {
-        final Map<String, Number> in = new HashMap<>();
-        final Number val = 1000;
-        in.put("key", val);
-
-        assertEquals(val.intValue(), MapUtils.getNumber(in, "key", val).intValue(), 0);
-        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", val).intValue(), 0);
-        assertEquals(val.intValue(), MapUtils.getNumber(in, "noKey", key -> {
-            if (true) {
-                return val;
-            }
-            return null;
-        }).intValue(), 0);
-    }
-
-    @Test
-    public void testGetString() {
-        final Map<String, String> in = new HashMap<>();
-        in.put("key", "str");
-
-        assertEquals("str", MapUtils.getString(in, "key", "default"));
-        assertEquals("str", MapUtils.getString(in, "key"));
-        assertNull(MapUtils.getString(null, "key"));
-        assertEquals("default", MapUtils.getString(in, "noKey", "default"));
-        assertEquals("default", MapUtils.getString(in, "noKey", key -> {
-            if ("noKey".equals(key)) {
-                return "default";
-            }
-            return "";
-        }));
-        assertEquals("default", MapUtils.getString(null, "noKey", "default"));
-    }
-
-    @Test
-    public void testGetObject() {
-        final Map<String, Object> in = new HashMap<>();
-        in.put("key", "str");
-
-        assertEquals("str", MapUtils.getObject(in, "key", "default"));
-        assertEquals("str", MapUtils.getObject(in, "key"));
-        assertNull(MapUtils.getObject(null, "key"));
-        assertEquals("default", MapUtils.getObject(in, "noKey", "default"));
-        assertEquals("default", MapUtils.getObject(null, "noKey", "default"));
-    }
-
-    @Test
-    public void testGetBooleanValue() {
-        final Map<String, Object> in = new HashMap<>();
-        in.put("key", true);
-        in.put("keyNumberTrue", 1);
-        in.put("keyNumberFalse", 0);
-        in.put("keyUnmapped", new Object());
-
-        assertFalse(MapUtils.getBooleanValue(null, "keyString", null));
-        assertFalse(MapUtils.getBooleanValue(in, null, null));
-        assertFalse(MapUtils.getBooleanValue(null, null, null));
-        assertTrue(MapUtils.getBooleanValue(in, "key", true));
-        assertTrue(MapUtils.getBooleanValue(in, "key"));
-        assertTrue(MapUtils.getBooleanValue(in, "noKey", true));
-        assertTrue(MapUtils.getBooleanValue(in, "noKey", key -> true));
-        assertFalse(MapUtils.getBooleanValue(in, "noKey"));
-        assertTrue(MapUtils.getBoolean(in, "key", true));
-        assertTrue(MapUtils.getBoolean(in, "noKey", true));
-        assertTrue(MapUtils.getBoolean(in, "noKey", key -> {
-            if (System.currentTimeMillis() > 0) {
-                return true;
-            }
-            return false;
-        }));
-        assertNull(MapUtils.getBoolean(in, "noKey", key -> null));
-        assertFalse(MapUtils.getBooleanValue(in, "noKey", key -> null));
-        assertNull(MapUtils.getBoolean(null, "noKey"));
-        // Values are Numbers
-        assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));
-        assertTrue(MapUtils.getBoolean(in, "keyNumberTrue"));
-        assertNull(MapUtils.getBoolean(in, "keyString"));
-        assertNull(MapUtils.getBoolean(null, "keyString"));
-        assertNull(MapUtils.getBoolean(in, null));
-        assertNull(MapUtils.getBoolean(null, null));
-
-        final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "true");
-
-        assertTrue(MapUtils.getBooleanValue(inStr, "str1", true));
-        assertTrue(MapUtils.getBoolean(inStr, "str1", true));
-    }
-
-    @Test
-    public void testGetMap() {
-        final Map<String, Map<String, String>> in = new HashMap<>();
-        final Map<String, String> valMap = new HashMap<>();
-        valMap.put("key1", "value1");
-        in.put("key1", valMap);
-        final Map<?, ?> outValue =  MapUtils.getMap(in, "key1", (Map<?, ?>) null);
-
-        assertEquals("value1", outValue.get("key1"));
-        assertNull(outValue.get("key2"));
-        assertNull(MapUtils.getMap(in, "key2", (Map<?, ?>) null));
-        assertNull(MapUtils.getMap(null, "key2", (Map<?, ?>) null));
-    }
-
-    @Test
-    public void testSafeAddToMap() {
-
-        final Map<String, Object> inMap = new HashMap<>();
-
-        MapUtils.safeAddToMap(inMap, "key1", "value1");
-        MapUtils.safeAddToMap(inMap, "key2", null);
-        assertEquals("value1", inMap.get("key1"));
-        assertEquals("", inMap.get("key2"));
-    }
-
-    @Test
-    public void testOrderedMap() {
-        final Map<String, String> inMap = new HashMap<>();
-        inMap.put("key1", "value1");
-        inMap.put("key2", "value2");
-        final Map<String, String> map = MapUtils.orderedMap(inMap);
-        assertTrue(map instanceof OrderedMap);
-    }
-
-    private char getDecimalSeparator() {
-        final NumberFormat numberFormat = NumberFormat.getInstance();
-        if (numberFormat instanceof DecimalFormat) {
-            return ((DecimalFormat) numberFormat).getDecimalFormatSymbols().getDecimalSeparator();
-        }
-        return '.';
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
 }

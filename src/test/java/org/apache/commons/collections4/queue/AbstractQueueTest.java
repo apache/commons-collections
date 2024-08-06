@@ -44,8 +44,6 @@ import org.junit.jupiter.api.Test;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Queue} fails or override one of the
  * protected methods from AbstractCollectionTest.
- *
- * @since 4.0
  */
 public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
@@ -59,6 +57,16 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
+     * Returns the {@link #collection} field cast to a {@link Queue}.
+     *
+     * @return the collection field as a Queue
+     */
+    @Override
+    public Queue<E> getCollection() {
+        return (Queue<E>) super.getCollection();
+    }
+
+    /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
      *  support the <code>set operation.<p>
@@ -67,22 +75,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     public boolean isSetSupported() {
         return true;
-    }
-
-    /**
-     *  Verifies that the test queue implementation matches the confirmed queue
-     *  implementation.
-     */
-    @Override
-    public void verify() {
-        super.verify();
-        final Iterator<E> iterator1 = getCollection().iterator();
-        for (final E e : getConfirmed()) {
-            assertTrue(iterator1.hasNext());
-            final Object o1 = iterator1.next();
-            final Object o2 = e;
-            assertEquals(o1, o2);
-        }
     }
 
     /**
@@ -102,14 +94,6 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Returns {@link #makeObject()}.
-     *
-     * @return an empty queue to be used for testing
-     */
-    @Override
-    public abstract Queue<E> makeObject();
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -121,46 +105,89 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Returns the {@link #collection} field cast to a {@link Queue}.
+     * Returns {@link #makeObject()}.
      *
-     * @return the collection field as a Queue
+     * @return an empty queue to be used for testing
      */
     @Override
-    public Queue<E> getCollection() {
-        return (Queue<E>) super.getCollection();
-    }
+    public abstract Queue<E> makeObject();
 
     /**
-     *  Tests {@link Queue#offer(Object)}.
+     * Compare the current serialized form of the Queue
+     * against the canonical version in SCM.
      */
     @Test
-    public void testQueueOffer() {
-        if (!isAddSupported()) {
+    @SuppressWarnings("unchecked")
+    public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
+        /*
+         * Create canonical objects with this code
+        Queue queue = makeEmptyQueue();
+        if (!(queue instanceof Serializable)) return;
+
+        writeExternalFormToDisk((Serializable) queue, getCanonicalEmptyCollectionName(queue));
+        */
+
+        // test to make sure the canonical form has been preserved
+        final Queue<E> queue = makeObject();
+        if (queue instanceof Serializable && !skipSerializedCanonicalTests()
+                && isTestSerialization()) {
+            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue));
+            assertEquals(0, queue2.size(), "Queue is empty");
+        }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
+        final Queue<E> queue = makeObject();
+        if (!(queue instanceof Serializable && isTestSerialization())) {
             return;
         }
 
-        final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            final boolean r = getCollection().offer(element);
-            getConfirmed().add(element);
-            verify();
-            assertTrue(r, "Empty queue changed after add");
-            assertEquals(1, getCollection().size(), "Queue size is 1 after first add");
+        final byte[] object = writeExternalFormToBytes((Serializable) queue);
+        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
+
+        assertEquals(0, queue.size(), "Both queues are empty");
+        assertEquals(0, queue2.size(), "Both queues are empty");
+    }
+
+    /**
+     * Compare the current serialized form of the Queue
+     * against the canonical version in SCM.
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
+        /*
+         * Create canonical objects with this code
+        Queue queue = makeFullQueue();
+        if (!(queue instanceof Serializable)) return;
+
+        writeExternalFormToDisk((Serializable) queue, getCanonicalFullCollectionName(queue));
+        */
+
+        // test to make sure the canonical form has been preserved
+        final Queue<E> queue = makeFullCollection();
+        if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
+            assertEquals(queue.size(), queue2.size(), "Queues are not the right size");
+        }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
+        final Queue<E> queue = makeFullCollection();
+        final int size = getFullElements().length;
+        if (!(queue instanceof Serializable && isTestSerialization())) {
+            return;
         }
 
-        resetEmpty();
-        int size = 0;
-        for (final E element : elements) {
-            final boolean r = getCollection().offer(element);
-            getConfirmed().add(element);
-            verify();
-            if (r) {
-                size++;
-            }
-            assertEquals(size, getCollection().size(), "Queue size should grow after add");
-            assertTrue(getCollection().contains(element), "Queue should contain added element");
-        }
+        final byte[] object = writeExternalFormToBytes((Serializable) queue);
+        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
+
+        assertEquals(size, queue.size(), "Both queues are same size");
+        assertEquals(size, queue2.size(), "Both queues are same size");
     }
 
     /**
@@ -202,6 +229,39 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
+     *  Tests {@link Queue#offer(Object)}.
+     */
+    @Test
+    public void testQueueOffer() {
+        if (!isAddSupported()) {
+            return;
+        }
+
+        final E[] elements = getFullElements();
+        for (final E element : elements) {
+            resetEmpty();
+            final boolean r = getCollection().offer(element);
+            getConfirmed().add(element);
+            verify();
+            assertTrue(r, "Empty queue changed after add");
+            assertEquals(1, getCollection().size(), "Queue size is 1 after first add");
+        }
+
+        resetEmpty();
+        int size = 0;
+        for (final E element : elements) {
+            final boolean r = getCollection().offer(element);
+            getConfirmed().add(element);
+            verify();
+            if (r) {
+                size++;
+            }
+            assertEquals(size, getCollection().size(), "Queue size should grow after add");
+            assertTrue(getCollection().contains(element), "Queue should contain added element");
+        }
+    }
+
+    /**
      *  Tests {@link Queue#peek()}.
      */
     @Test
@@ -238,6 +298,34 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
+     *  Tests {@link Queue#poll()}.
+     */
+    @Test
+    public void testQueuePoll() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetEmpty();
+
+        E element = getCollection().poll();
+        assertNull(element);
+
+        resetFull();
+
+        final int max = getFullElements().length;
+        for (int i = 0; i < max; i++) {
+            element = getCollection().poll();
+            final boolean success = getConfirmed().remove(element);
+            assertTrue(success, "poll should return correct element");
+            verify();
+        }
+
+        element = getCollection().poll();
+        assertNull(element);
+    }
+
+    /**
      *  Tests {@link Queue#remove()}.
      */
     @Test
@@ -266,108 +354,18 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     *  Tests {@link Queue#poll()}.
+     *  Verifies that the test queue implementation matches the confirmed queue
+     *  implementation.
      */
-    @Test
-    public void testQueuePoll() {
-        if (!isRemoveSupported()) {
-            return;
-        }
-
-        resetEmpty();
-
-        E element = getCollection().poll();
-        assertNull(element);
-
-        resetFull();
-
-        final int max = getFullElements().length;
-        for (int i = 0; i < max; i++) {
-            element = getCollection().poll();
-            final boolean success = getConfirmed().remove(element);
-            assertTrue(success, "poll should return correct element");
-            verify();
-        }
-
-        element = getCollection().poll();
-        assertNull(element);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
-        final Queue<E> queue = makeObject();
-        if (!(queue instanceof Serializable && isTestSerialization())) {
-            return;
-        }
-
-        final byte[] object = writeExternalFormToBytes((Serializable) queue);
-        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
-
-        assertEquals(0, queue.size(), "Both queues are empty");
-        assertEquals(0, queue2.size(), "Both queues are empty");
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
-        final Queue<E> queue = makeFullCollection();
-        final int size = getFullElements().length;
-        if (!(queue instanceof Serializable && isTestSerialization())) {
-            return;
-        }
-
-        final byte[] object = writeExternalFormToBytes((Serializable) queue);
-        final Queue<E> queue2 = (Queue<E>) readExternalFormFromBytes(object);
-
-        assertEquals(size, queue.size(), "Both queues are same size");
-        assertEquals(size, queue2.size(), "Both queues are same size");
-    }
-
-    /**
-     * Compare the current serialized form of the Queue
-     * against the canonical version in SCM.
-     */
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
-        /*
-         * Create canonical objects with this code
-        Queue queue = makeEmptyQueue();
-        if (!(queue instanceof Serializable)) return;
-
-        writeExternalFormToDisk((Serializable) queue, getCanonicalEmptyCollectionName(queue));
-        */
-
-        // test to make sure the canonical form has been preserved
-        final Queue<E> queue = makeObject();
-        if (queue instanceof Serializable && !skipSerializedCanonicalTests()
-                && isTestSerialization()) {
-            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(queue));
-            assertEquals(0, queue2.size(), "Queue is empty");
-        }
-    }
-
-    /**
-     * Compare the current serialized form of the Queue
-     * against the canonical version in SCM.
-     */
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
-        /*
-         * Create canonical objects with this code
-        Queue queue = makeFullQueue();
-        if (!(queue instanceof Serializable)) return;
-
-        writeExternalFormToDisk((Serializable) queue, getCanonicalFullCollectionName(queue));
-        */
-
-        // test to make sure the canonical form has been preserved
-        final Queue<E> queue = makeFullCollection();
-        if (queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
-            assertEquals(queue.size(), queue2.size(), "Queues are not the right size");
+    @Override
+    public void verify() {
+        super.verify();
+        final Iterator<E> iterator1 = getCollection().iterator();
+        for (final E e : getConfirmed()) {
+            assertTrue(iterator1.hasNext());
+            final Object o1 = iterator1.next();
+            final Object o2 = e;
+            assertEquals(o1, o2);
         }
     }
 

@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.iterators;
 
 import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.ResettableIterator;
 
 /**
  * Provides an implementation of an empty map iterator.
@@ -27,7 +26,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @since 3.1
  */
 public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
-        MapIterator<K, V>, ResettableIterator<K> {
+        MapIterator<K, V> {
 
     /**
      * Singleton instance of the iterator.
@@ -37,7 +36,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
     public static final MapIterator INSTANCE = new EmptyMapIterator<>();
 
     /**
-     * Get a typed instance of the iterator.
+     * Gets a typed instance of the iterator.
      * @param <K> the key type
      * @param <V> the value type
      * @return {@link MapIterator}&lt;K, V&gt;
@@ -47,7 +46,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     protected EmptyMapIterator() {
     }

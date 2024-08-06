@@ -30,6 +30,7 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  * </p>
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public class CloneTransformer<T> implements Transformer<T, T> {
@@ -50,7 +51,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
     }
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      */
     private CloneTransformer() {
     }
@@ -66,7 +67,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
         if (input == null) {
             return null;
         }
-        return PrototypeFactory.prototypeFactory(input).create();
+        return PrototypeFactory.prototypeFactory(input).get();
     }
 
 }

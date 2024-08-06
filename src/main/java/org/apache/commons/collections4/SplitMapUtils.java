@@ -38,13 +38,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  */
 public class SplitMapUtils {
 
-    /**
-     * Don't allow instances.
-     */
-    private SplitMapUtils() {}
-
-
-    private static class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
+    private static final class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
         private final Get<K, V> get;
 
         private WrappedGet(final Get<K, V> get) {
@@ -100,6 +94,17 @@ public class SplitMapUtils {
         }
 
         @Override
+        public MapIterator<K, V> mapIterator() {
+            final MapIterator<K, V> it;
+            if (get instanceof IterableGet) {
+                it = ((IterableGet<K, V>) get).mapIterator();
+            } else {
+                it = new EntrySetToMapIteratorAdapter<>(get.entrySet());
+            }
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+        }
+
+        @Override
         public V put(final K key, final V value) {
             throw new UnsupportedOperationException();
         }
@@ -123,20 +128,9 @@ public class SplitMapUtils {
         public Collection<V> values() {
             return UnmodifiableCollection.unmodifiableCollection(get.values());
         }
-
-        @Override
-        public MapIterator<K, V> mapIterator() {
-            final MapIterator<K, V> it;
-            if (get instanceof IterableGet) {
-                it = ((IterableGet<K, V>) get).mapIterator();
-            } else {
-                it = new EntrySetToMapIteratorAdapter<>(get.entrySet());
-            }
-            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
-        }
     }
 
-    private static class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
+    private static final class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
         private final Put<K, V> put;
 
         private WrappedPut(final Put<K, V> put) {
@@ -218,9 +212,8 @@ public class SplitMapUtils {
         }
     }
 
-
     /**
-     * Get the specified {@link Get} as an instance of {@link IterableMap}.
+     * Gets the specified {@link Get} as an instance of {@link IterableMap}.
      * If {@code get} implements {@link IterableMap} directly, no conversion will take place.
      * If {@code get} implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise, an {@link Unmodifiable} {@link IterableMap} will be returned.
@@ -242,7 +235,7 @@ public class SplitMapUtils {
     }
 
     /**
-     * Get the specified {@link Put} as an instanceof {@link Map}.
+     * Gets the specified {@link Put} as an instanceof {@link Map}.
      * If {@code put} implements {@link Map} directly, no conversion will take place.
      * Otherwise, a <em>write-only</em> {@link Map} will be returned.  On such a {@link Map}
      * it is recommended that the result of #put(K, V) be discarded as it likely will not
@@ -261,6 +254,13 @@ public class SplitMapUtils {
             return (Map<K, V>) put;
         }
         return new WrappedPut<>(put);
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private SplitMapUtils() {
+        // empty
     }
 
 }

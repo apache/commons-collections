@@ -70,11 +70,6 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
-    }
-
-    @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
@@ -90,7 +85,69 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     @Override
+    public Iterator<E> descendingIterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().descendingIterator());
+    }
+
+    // NavigableSet
+    @Override
+    public NavigableSet<E> descendingSet() {
+        return unmodifiableNavigableSet(decorated().descendingSet());
+    }
+
+    @Override
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> head = decorated().headSet(toElement);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(head);
+    }
+
+    @Override
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
+        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
+        return unmodifiableNavigableSet(head);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
+    }
+
+    /**
+     * @since 4.5.0
+     */
+    @Override
+    public E pollFirst() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.5.0
+     */
+    @Override
+    public E pollLast() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Deserializes the collection in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject()); // (1)
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -103,29 +160,15 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @since 4.5
-     */
-    @Override
-    public E pollFirst() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @since 4.5
-     */
-    @Override
-    public E pollLast() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
+            final boolean toInclusive) {
+        final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
+        return unmodifiableNavigableSet(sub);
     }
 
     // SortedSet
@@ -136,39 +179,9 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     @Override
-    public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> head = decorated().headSet(toElement);
-        return UnmodifiableSortedSet.unmodifiableSortedSet(head);
-    }
-
-    @Override
     public SortedSet<E> tailSet(final E fromElement) {
         final SortedSet<E> tail = decorated().tailSet(fromElement);
         return UnmodifiableSortedSet.unmodifiableSortedSet(tail);
-    }
-
-    // NavigableSet
-    @Override
-    public NavigableSet<E> descendingSet() {
-        return unmodifiableNavigableSet(decorated().descendingSet());
-    }
-
-    @Override
-    public Iterator<E> descendingIterator() {
-        return UnmodifiableIterator.unmodifiableIterator(decorated().descendingIterator());
-    }
-
-    @Override
-    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
-            final boolean toInclusive) {
-        final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
-        return unmodifiableNavigableSet(sub);
-    }
-
-    @Override
-    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
-        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
-        return unmodifiableNavigableSet(head);
     }
 
     @Override
@@ -178,27 +191,14 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     /**
-     * Write the collection out using a custom routine.
+     * Serializes this object to an ObjectOutputStream.
      *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(decorated());
-    }
-
-    /**
-     * Read the collection in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject()); // (1)
     }
 
 }

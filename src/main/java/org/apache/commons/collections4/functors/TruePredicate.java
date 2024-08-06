@@ -23,9 +23,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that always returns true.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class TruePredicate<T> implements Predicate<T>, Serializable {
+public final class TruePredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3374767158756189740L;
@@ -52,18 +53,23 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning true always.
      *
      * @param object  the input object
      * @return true always
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         return true;
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

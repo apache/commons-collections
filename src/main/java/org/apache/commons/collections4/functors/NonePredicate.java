@@ -29,31 +29,13 @@ import org.apache.commons.collections4.Predicate;
  * threw an exception.
  * </p>
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
 public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /** Serial version UID */
     private static final long serialVersionUID = 2007613066565892961L;
-
-    /**
-     * Factory to create the predicate.
-     * <p>
-     * If the array is size zero, the predicate always returns true.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code any} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
-        FunctorUtils.validate(predicates);
-        if (predicates.length == 0) {
-            return TruePredicate.<T>truePredicate();
-        }
-        return new NonePredicate<>(FunctorUtils.copy(predicates));
-    }
 
     /**
      * Factory to create the predicate.
@@ -75,6 +57,26 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
     }
 
     /**
+     * Factory to create the predicate.
+     * <p>
+     * If the array is size zero, the predicate always returns true.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code any} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
+        FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return TruePredicate.<T>truePredicate();
+        }
+        // <T> not needed in Eclipse but needed by the command line compiler
+        return new NonePredicate<T>(FunctorUtils.copy(predicates));
+    }
+
+    /**
      * Constructor that performs no validation.
      * Use {@code nonePredicate} if you want that.
      *
@@ -91,9 +93,9 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @return true if none of decorated predicates return true
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         for (final Predicate<? super T> iPredicate : iPredicates) {
-            if (iPredicate.evaluate(object)) {
+            if (iPredicate.test(object)) {
                 return false;
             }
         }

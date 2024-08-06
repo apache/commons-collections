@@ -25,14 +25,6 @@ public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         super(DualLinkedHashBidiMapTest.class.getSimpleName());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DualLinkedHashBidiMap<K, V> makeObject() {
-        return new DualLinkedHashBidiMap<>();
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";
@@ -44,6 +36,14 @@ public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     @Override
     public String[] ignoredTests() {
         return new String[] { "DualLinkedHashBidiMapTest.bulkTestInverseMap.bulkTestInverseMap" };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DualLinkedHashBidiMap<K, V> makeObject() {
+        return new DualLinkedHashBidiMap<>();
     }
 
 //    public void testCreate() throws Exception {

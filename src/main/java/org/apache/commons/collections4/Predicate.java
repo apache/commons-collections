@@ -30,12 +30,12 @@ package org.apache.commons.collections4;
  * or, not, method invocation and null testing.
  * </p>
  *
- * @param <T> the type that the predicate queries
- *
+ * @param <T> the type of the input to the predicate.
  * @since 1.0
+ * @deprecated Use {@link java.util.function.Predicate}.
  */
-@FunctionalInterface
-public interface Predicate<T> {
+@Deprecated
+public interface Predicate<T> extends java.util.function.Predicate<T> {
 
     /**
      * Use the specified parameter to perform a test that returns true or false.
@@ -47,5 +47,10 @@ public interface Predicate<T> {
      * @throws FunctorException (runtime) if the predicate encounters a problem
      */
     boolean evaluate(T object);
+
+    @Override
+    default boolean test(final T t) {
+        return evaluate(t);
+    }
 
 }

@@ -34,20 +34,21 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedSetTest} for exercising the
  * {@link PredicatedSortedSet} implementation.
- *
- * @since 3.0
  */
 public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate =
+        o -> o instanceof String && ((String) o).startsWith("A");
 
     public PredicatedSortedSetTest() {
         super(PredicatedSortedSetTest.class.getSimpleName());
     }
 
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
-
     @Override
-    public SortedSet<E> makeObject() {
-        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<>(), truePredicate);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -56,11 +57,20 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return PredicatedSortedSet.predicatedSortedSet(set, truePredicate);
     }
 
-    protected Predicate<E> testPredicate =
-        o -> o instanceof String && ((String) o).startsWith("A");
+    @Override
+    public SortedSet<E> makeObject() {
+        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<>(), truePredicate);
+    }
 
     protected PredicatedSortedSet<E> makeTestSet() {
         return PredicatedSortedSet.predicatedSortedSet(new TreeSet<>(), testPredicate);
+    }
+
+    @Test
+    public void testComparator() {
+        final SortedSet<E> set = makeTestSet();
+        final Comparator<? super E> c = set.comparator();
+        assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
@@ -94,18 +104,6 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertFalse(set.contains("Atwo"), "Set shouldn't contain illegal element");
         assertFalse(set.contains("Bthree"), "Set shouldn't contain illegal element");
         assertFalse(set.contains("Afour"), "Set shouldn't contain illegal element");
-    }
-
-    @Test
-    public void testComparator() {
-        final SortedSet<E> set = makeTestSet();
-        final Comparator<? super E> c = set.comparator();
-        assertNull(c, "natural order, so comparator should be null");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

@@ -24,6 +24,7 @@ import org.apache.commons.collections4.Predicate;
  * This interface enables tools to access the decorated predicates.
  * </p>
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.1
  */
 public interface PredicateDecorator<T> extends Predicate<T> {

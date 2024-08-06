@@ -25,6 +25,29 @@ import java.util.function.IntPredicate;
  * <p>To be used for testing only.</p>
  */
 public final class ArrayHasher implements Hasher {
+    private final class Extractor implements IndexExtractor {
+        Shape shape;
+
+        Extractor(final Shape shape) {
+            this.shape = shape;
+        }
+
+        @Override
+        public boolean processIndices(final IntPredicate consumer) {
+            Objects.requireNonNull(consumer, "consumer");
+
+            int pos = 0;
+            for (int i = 0; i < shape.getNumberOfHashFunctions(); i++) {
+                final int result = values[pos++] % shape.getNumberOfBits();
+                pos %= values.length;
+                if (!consumer.test(result)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     private final int[] values;
 
     public ArrayHasher(final int... values) {
@@ -32,31 +55,8 @@ public final class ArrayHasher implements Hasher {
     }
 
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
-        return new Producer(shape);
-    }
-
-    private class Producer implements IndexProducer {
-        Shape shape;
-
-        Producer(final Shape shape) {
-            this.shape = shape;
-        }
-
-        @Override
-        public boolean forEachIndex(final IntPredicate consumer) {
-            Objects.requireNonNull(consumer, "consumer");
-
-            int pos = 0;
-            for (int i = 0; i < shape.getNumberOfHashFunctions(); i++) {
-                final int result = values[pos++] % shape.getNumberOfBits();
-                pos = pos % values.length;
-                if (!consumer.test(result)) {
-                    return false;
-                }
-            }
-            return true;
-        }
+        return new Extractor(shape);
     }
 }

@@ -26,15 +26,13 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Predicate implementation that returns the result of a transformer.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class TransformerPredicate<T> implements Predicate<T>, Serializable {
+public final class TransformerPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2407966402920578741L;
-
-    /** The transformer to call */
-    private final Transformer<? super T, Boolean> iTransformer;
 
     /**
      * Factory to create the predicate.
@@ -48,6 +46,9 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
         return new TransformerPredicate<>(Objects.requireNonNull(transformer, "transformer"));
     }
 
+    /** The transformer to call */
+    private final Transformer<? super T, Boolean> iTransformer;
+
     /**
      * Constructor that performs no validation.
      * Use {@code transformerPredicate} if you want that.
@@ -59,23 +60,6 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
     }
 
     /**
-     * Evaluates the predicate returning the result of the decorated transformer.
-     *
-     * @param object  the input object
-     * @return true if decorated transformer returns Boolean.TRUE
-     * @throws FunctorException if the transformer returns an invalid type
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        final Boolean result = iTransformer.transform(object);
-        if (result == null) {
-            throw new FunctorException(
-                    "Transformer must return an instanceof Boolean, it was a null object");
-        }
-        return result.booleanValue();
-    }
-
-    /**
      * Gets the transformer.
      *
      * @return the transformer
@@ -83,6 +67,23 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      */
     public Transformer<? super T, Boolean> getTransformer() {
         return iTransformer;
+    }
+
+    /**
+     * Evaluates the predicate returning the result of the decorated transformer.
+     *
+     * @param object  the input object
+     * @return true if decorated transformer returns Boolean.TRUE
+     * @throws FunctorException if the transformer returns an invalid type
+     */
+    @Override
+    public boolean test(final T object) {
+        final Boolean result = iTransformer.apply(object);
+        if (result == null) {
+            throw new FunctorException(
+                    "Transformer must return an instanceof Boolean, it was a null object");
+        }
+        return result.booleanValue();
     }
 
 }

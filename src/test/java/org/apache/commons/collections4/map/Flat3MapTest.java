@@ -44,11 +44,62 @@ import org.junit.jupiter.api.Test;
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
+        public TestFlatMapIterator() {
+            super("TestFlatMapIterator");
+        }
+
+        @Override
+        public V[] addSetValues() {
+            return getNewSampleValues();
+        }
+
+        @Override
+        public Map<K, V> getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return getConfirmed();
+        }
+
+        @Override
+        public IterableMap<K, V> getMap() {
+            // assumes makeFullMapIterator() called first
+            return Flat3MapTest.this.getMap();
+        }
+
+        @Override
+        public MapIterator<K, V> makeEmptyIterator() {
+            resetEmpty();
+            return Flat3MapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public MapIterator<K, V> makeObject() {
+            resetFull();
+            return Flat3MapTest.this.getMap().mapIterator();
+        }
+
+        @Override
+        public boolean supportsRemove() {
+            return isRemoveSupported();
+        }
+
+        @Override
+        public boolean supportsSetValue() {
+            return isSetValueSupported();
+        }
+
+        @Override
+        public void verify() {
+            super.verify();
+            Flat3MapTest.this.verify();
+        }
+    }
     private static final Integer ONE = Integer.valueOf(1);
     private static final Integer TWO = Integer.valueOf(2);
     private static final Integer THREE = Integer.valueOf(3);
     private static final String TEN = "10";
     private static final String TWENTY = "20";
+
     private static final String THIRTY = "30";
 
     public Flat3MapTest() {
@@ -56,32 +107,34 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public BulkTest bulkTestMapIterator() {
+        return new TestFlatMapIterator();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public Flat3Map<K, V> makeObject() {
         return new Flat3Map<>();
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testEquals1() {
-        final Flat3Map<K, V> map1 = makeObject();
-        map1.put((K) "a", (V) "testA");
-        map1.put((K) "b", (V) "testB");
-        final Flat3Map<K, V> map2 = makeObject();
-        map2.put((K) "a", (V) "testB");
-        map2.put((K) "b", (V) "testA");
-        assertFalse(map1.equals(map2));
-    }
+    private void putAndRemove(final Map<K, V> map) {
+        map.put((K) "A", (V) "one");
+        map.put((K) "B", (V) "two");
+        map.put((K) "C", (V) "three");
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testEquals2() {
-        final Flat3Map<K, V> map1 = makeObject();
-        map1.put((K) "a", (V) "testA");
-        map1.put((K) "b", (V) "testB");
-        final Flat3Map<K, V> map2 = makeObject();
-        map2.put((K) "a", (V) "testB");
-        map2.put((K) "c", (V) "testA");
-        assertFalse(map1.equals(map2));
+        final Map.Entry<K, V> mapEntry1 = it.next();
+        final Map.Entry<K, V> mapEntry2 = it.next();
+        final Map.Entry<K, V> mapEntry3 = it.next();
+        it.remove();
+        assertEquals(2, map.size());
+        assertEquals("one", map.get("A"));
+        assertEquals("two", map.get("B"));
+        assertNull(map.get("C"));
     }
 
     @Test
@@ -154,73 +207,79 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testSerialisation0() throws Exception {
-        final Flat3Map<K, V> map = makeObject();
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
-        assertEquals(0, map.size());
-        assertEquals(0, ser.size());
+    public void testCollections261() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
+
+        m.put( Integer.valueOf(2), Integer.valueOf(2) );
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) );
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testSerialisation2() throws Exception {
-        final Flat3Map<K, V> map = makeObject();
-        map.put((K) ONE, (V) TEN);
-        map.put((K) TWO, (V) TWENTY);
+    public void testContainsKey1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
-        assertEquals(2, map.size());
-        assertEquals(2, ser.size());
-        assertTrue(ser.containsKey(ONE));
-        assertTrue(ser.containsKey(TWO));
-        assertEquals(TEN, ser.get(ONE));
-        assertEquals(TWENTY, ser.get(TWO));
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        final boolean contains = m.containsKey(null);
+        assertTrue(contains);
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testSerialisation4() throws Exception {
-        final Flat3Map<K, V> map = makeObject();
-        map.put((K) ONE, (V) TEN);
-        map.put((K) TWO, (V) TWENTY);
-        map.put((K) TEN, (V) ONE);
-        map.put((K) TWENTY, (V) TWO);
+    public void testContainsKey2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(map);
-        final byte[] bytes = bout.toByteArray();
-        out.close();
-        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        final ObjectInputStream in = new ObjectInputStream(bin);
-        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
-        in.close();
-        assertEquals(4, map.size());
-        assertEquals(4, ser.size());
-        assertTrue(ser.containsKey(ONE));
-        assertTrue(ser.containsKey(TWO));
-        assertTrue(ser.containsKey(TEN));
-        assertTrue(ser.containsKey(TWENTY));
-        assertEquals(TEN, ser.get(ONE));
-        assertEquals(TWENTY, ser.get(TWO));
-        assertEquals(ONE, ser.get(TEN));
-        assertEquals(TWO, ser.get(TWENTY));
+        m.put(ONE, ONE);
+        m.put(null, TWO);
+        final boolean contains = m.containsKey(null);
+        assertTrue(contains);
+    }
+
+    @Test
+    public void testContainsKey3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(null, ONE);
+        final boolean contains = m.containsKey(null);
+        assertTrue(contains);
+    }
+
+    @Test
+    public void testContainsValue1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, null);
+        final boolean contains = m.containsValue(null);
+        assertTrue(contains);
+    }
+
+    @Test
+    public void testContainsValue2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, ONE);
+        m.put(TWO, null);
+        final boolean contains = m.containsValue(null);
+        assertTrue(contains);
+    }
+
+    @Test
+    public void testContainsValue3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, null);
+        final boolean contains = m.containsValue(null);
+        assertTrue(contains);
     }
 
     @Test
@@ -287,6 +346,82 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
+    public void testEntrySet() {
+        // Sanity check
+        putAndRemove(new LinkedHashMap<>());
+        // Actual test
+        putAndRemove(new Flat3Map<>());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testEquals1() {
+        final Flat3Map<K, V> map1 = makeObject();
+        map1.put((K) "a", (V) "testA");
+        map1.put((K) "b", (V) "testB");
+        final Flat3Map<K, V> map2 = makeObject();
+        map2.put((K) "a", (V) "testB");
+        map2.put((K) "b", (V) "testA");
+        assertFalse(map1.equals(map2));
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "src/test/resources/data/test/Flat3Map.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "src/test/resources/data/test/Flat3Map.fullCollection.version4.obj");
+//    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testEquals2() {
+        final Flat3Map<K, V> map1 = makeObject();
+        map1.put((K) "a", (V) "testA");
+        map1.put((K) "b", (V) "testB");
+        final Flat3Map<K, V> map2 = makeObject();
+        map2.put((K) "a", (V) "testB");
+        map2.put((K) "c", (V) "testA");
+        assertFalse(map1.equals(map2));
+    }
+
+    @Test
+    public void testGet1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(null, ONE);
+        obj = m.get(null);
+        assertSame(ONE, obj);
+    }
+
+    @Test
+    public void testGet2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(null, TWO);
+        obj = m.get(null);
+        assertSame(TWO, obj);
+    }
+
+    @Test
+    public void testGet3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        obj = m.get(null);
+        assertSame(THREE, obj);
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -350,137 +485,81 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testEntrySet() {
-        // Sanity check
-        putAndRemove(new LinkedHashMap<>());
-        // Actual test
-        putAndRemove(new Flat3Map<>());
-    }
+    public void testNewInstance1() {
+        final Map<Integer, Integer> orig = new HashMap<>();
+        orig.put(ONE, ONE);
+        orig.put(TWO, TWO);
 
-    private void putAndRemove(final Map<K, V> map) {
-        map.put((K) "A", (V) "one");
-        map.put((K) "B", (V) "two");
-        map.put((K) "C", (V) "three");
-        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>(orig);
 
-        final Map.Entry<K, V> mapEntry1 = it.next();
-        final Map.Entry<K, V> mapEntry2 = it.next();
-        final Map.Entry<K, V> mapEntry3 = it.next();
-        it.remove();
-        assertEquals(2, map.size());
-        assertEquals("one", map.get("A"));
-        assertEquals("two", map.get("B"));
-        assertNull(map.get("C"));
-    }
-
-    @Override
-    public BulkTest bulkTestMapIterator() {
-        return new TestFlatMapIterator();
-    }
-
-    public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
-        public TestFlatMapIterator() {
-            super("TestFlatMapIterator");
-        }
-
-        @Override
-        public V[] addSetValues() {
-            return Flat3MapTest.this.getNewSampleValues();
-        }
-
-        @Override
-        public boolean supportsRemove() {
-            return Flat3MapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean supportsSetValue() {
-            return Flat3MapTest.this.isSetValueSupported();
-        }
-
-        @Override
-        public MapIterator<K, V> makeEmptyIterator() {
-            resetEmpty();
-            return Flat3MapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public MapIterator<K, V> makeObject() {
-            resetFull();
-            return Flat3MapTest.this.getMap().mapIterator();
-        }
-
-        @Override
-        public IterableMap<K, V> getMap() {
-            // assumes makeFullMapIterator() called first
-            return Flat3MapTest.this.getMap();
-        }
-
-        @Override
-        public Map<K, V> getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return Flat3MapTest.this.getConfirmed();
-        }
-
-        @Override
-        public void verify() {
-            super.verify();
-            Flat3MapTest.this.verify();
-        }
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/Flat3Map.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/Flat3Map.fullCollection.version4.obj");
-//    }
-
-    @Test
-    public void testCollections261() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
-
-        m.put( Integer.valueOf(2), Integer.valueOf(2) );
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
+        assertEquals(orig, m);
+        assertEquals(2, m.size());
     }
 
     @Test
-    public void testToString() {
+    public void testPut1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final String string0 = m.toString();
-        assertNotNull(string0);
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        final String string1 = m.toString();
-        assertNotNull(string1);
-        assertNotSame(string0, string1);
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        final String string2 = m.toString();
-        assertNotNull(string2);
-        assertNotSame(string0, string2);
-        assertNotSame(string1, string2);
-        m.put( Integer.valueOf(2), Integer.valueOf(2) );
-        final String string3 = m.toString();
-        assertNotNull(string3);
-        assertNotSame(string0, string3);
-        assertNotSame(string1, string3);
-        assertNotSame(string2, string3);
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        final Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(null));
+    }
+
+    @Test
+    public void testPut2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, ONE);
+        m.put(null, THREE);
+        final Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(null));
+    }
+
+    @Test
+    public void testPut3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(null, THREE);
+        final Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertNull(m.get(ONE));
+    }
+
+    @Test
+    public void testPut4() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        final Object old = m.put(THREE, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(THREE));
+    }
+
+    @Test
+    public void testPut5() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, ONE);
+        m.put(TWO, THREE);
+        final Object old = m.put(TWO, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(TWO));
+    }
+
+    @Test
+    public void testPut6() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        m.put(ONE, THREE);
+        final Object old = m.put(ONE, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(ONE));
     }
 
     @Test
@@ -511,6 +590,56 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNull(obj);
         obj = m.get(TWO);
         assertSame(TWO, obj);
+    }
+
+    @Test
+    public void testRemove10() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+
+        obj = m.remove(null);
+        assertNull(obj);
+    }
+
+    @Test
+    public void testRemove11() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+
+        obj = m.remove(null);
+        assertNull(obj);
+    }
+
+    @Test
+    public void testRemove12() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+
+        obj = m.remove(42);
+        assertNull(obj);
+    }
+
+    @Test
+    public void testRemove13() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        final Object obj;
+
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+
+        obj = m.remove(42);
+        assertNull(obj);
     }
 
     @Test
@@ -653,223 +782,94 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove10() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-
-        obj = m.remove(null);
-        assertNull(obj);
+    public void testSerialisation0() throws Exception {
+        final Flat3Map<K, V> map = makeObject();
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
+        out.writeObject(map);
+        final byte[] bytes = bout.toByteArray();
+        out.close();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        in.close();
+        assertEquals(0, map.size());
+        assertEquals(0, ser.size());
     }
 
     @Test
-    public void testRemove11() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
+    @SuppressWarnings("unchecked")
+    public void testSerialisation2() throws Exception {
+        final Flat3Map<K, V> map = makeObject();
+        map.put((K) ONE, (V) TEN);
+        map.put((K) TWO, (V) TWENTY);
 
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(THREE, THREE);
-
-        obj = m.remove(null);
-        assertNull(obj);
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
+        out.writeObject(map);
+        final byte[] bytes = bout.toByteArray();
+        out.close();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        in.close();
+        assertEquals(2, map.size());
+        assertEquals(2, ser.size());
+        assertTrue(ser.containsKey(ONE));
+        assertTrue(ser.containsKey(TWO));
+        assertEquals(TEN, ser.get(ONE));
+        assertEquals(TWENTY, ser.get(TWO));
     }
 
     @Test
-    public void testRemove12() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
+    @SuppressWarnings("unchecked")
+    public void testSerialisation4() throws Exception {
+        final Flat3Map<K, V> map = makeObject();
+        map.put((K) ONE, (V) TEN);
+        map.put((K) TWO, (V) TWENTY);
+        map.put((K) TEN, (V) ONE);
+        map.put((K) TWENTY, (V) TWO);
 
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(THREE, THREE);
-
-        obj = m.remove(42);
-        assertNull(obj);
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
+        out.writeObject(map);
+        final byte[] bytes = bout.toByteArray();
+        out.close();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        in.close();
+        assertEquals(4, map.size());
+        assertEquals(4, ser.size());
+        assertTrue(ser.containsKey(ONE));
+        assertTrue(ser.containsKey(TWO));
+        assertTrue(ser.containsKey(TEN));
+        assertTrue(ser.containsKey(TWENTY));
+        assertEquals(TEN, ser.get(ONE));
+        assertEquals(TWENTY, ser.get(TWO));
+        assertEquals(ONE, ser.get(TEN));
+        assertEquals(TWO, ser.get(TWENTY));
     }
 
     @Test
-    public void testRemove13() {
+    public void testToString() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-
-        obj = m.remove(42);
-        assertNull(obj);
-    }
-
-    @Test
-    public void testNewInstance1() {
-        final Map<Integer, Integer> orig = new HashMap<>();
-        orig.put(ONE, ONE);
-        orig.put(TWO, TWO);
-
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>(orig);
-
-        assertEquals(orig, m);
-        assertEquals(2, m.size());
-    }
-
-    @Test
-    public void testGet1() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
-
-        m.put(null, ONE);
-        obj = m.get(null);
-        assertSame(ONE, obj);
-    }
-
-    @Test
-    public void testGet2() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
-
-        m.put(ONE, ONE);
-        m.put(null, TWO);
-        obj = m.get(null);
-        assertSame(TWO, obj);
-    }
-
-    @Test
-    public void testGet3() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        final Object obj;
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(null, THREE);
-        obj = m.get(null);
-        assertSame(THREE, obj);
-    }
-
-    @Test
-    public void testContainsKey1() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(null, THREE);
-        final boolean contains = m.containsKey(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testContainsKey2() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(null, TWO);
-        final boolean contains = m.containsKey(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testContainsKey3() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(null, ONE);
-        final boolean contains = m.containsKey(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testContainsValue1() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(THREE, null);
-        final boolean contains = m.containsValue(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testContainsValue2() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, null);
-        final boolean contains = m.containsValue(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testContainsValue3() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, null);
-        final boolean contains = m.containsValue(null);
-        assertTrue(contains);
-    }
-
-    @Test
-    public void testPut1() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(null, THREE);
-        final Object old = m.put(null, ONE);
-        assertEquals(THREE, old);
-        assertEquals(ONE, m.get(null));
-    }
-
-    @Test
-    public void testPut2() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(null, THREE);
-        final Object old = m.put(null, ONE);
-        assertEquals(THREE, old);
-        assertEquals(ONE, m.get(null));
-    }
-
-    @Test
-    public void testPut3() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(null, THREE);
-        final Object old = m.put(null, ONE);
-        assertEquals(THREE, old);
-        assertNull(m.get(ONE));
-    }
-
-    @Test
-    public void testPut4() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, TWO);
-        m.put(THREE, THREE);
-        final Object old = m.put(THREE, ONE);
-        assertEquals(THREE, old);
-        assertEquals(ONE, m.get(THREE));
-    }
-
-    @Test
-    public void testPut5() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, ONE);
-        m.put(TWO, THREE);
-        final Object old = m.put(TWO, ONE);
-        assertEquals(THREE, old);
-        assertEquals(ONE, m.get(TWO));
-    }
-
-    @Test
-    public void testPut6() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-
-        m.put(ONE, THREE);
-        final Object old = m.put(ONE, ONE);
-        assertEquals(THREE, old);
-        assertEquals(ONE, m.get(ONE));
+        final String string0 = m.toString();
+        assertNotNull(string0);
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        final String string1 = m.toString();
+        assertNotNull(string1);
+        assertNotSame(string0, string1);
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        final String string2 = m.toString();
+        assertNotNull(string2);
+        assertNotSame(string0, string2);
+        assertNotSame(string1, string2);
+        m.put( Integer.valueOf(2), Integer.valueOf(2) );
+        final String string3 = m.toString();
+        assertNotNull(string3);
+        assertNotSame(string0, string3);
+        assertNotSame(string1, string3);
+        assertNotSame(string2, string3);
     }
 }

@@ -61,120 +61,6 @@ import org.apache.commons.collections4.set.PredicatedSet;
  */
 public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 
-    /** Serialization version */
-    private static final long serialVersionUID = -5259182142076705162L;
-
-    /** The predicate to use */
-    protected final Predicate<? super E> predicate;
-
-    /**
-     * Returns a Builder with the given predicate.
-     *
-     * @param <E>  the element type
-     * @param predicate  the predicate to use
-     * @return a new Builder for predicated collections
-     * @since 4.1
-     */
-    public static <E> Builder<E> builder(final Predicate<? super E> predicate) {
-        return new Builder<>(predicate);
-    }
-
-    /**
-     * Returns a Builder with a NotNullPredicate.
-     *
-     * @param <E>  the element type
-     * @return a new Builder for predicated collections that ignores null values.
-     * @since 4.1
-     */
-    public static <E> Builder<E> notNullBuilder() {
-        return new Builder<>(NotNullPredicate.<E>notNullPredicate());
-    }
-
-    /**
-     * Factory method to create a predicated (validating) collection.
-     * <p>
-     * If there are any elements already in the collection being decorated, they
-     * are validated.
-     *
-     * @param <T> the type of the elements in the collection
-     * @param coll  the collection to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
-     * @return a new predicated collection
-     * @throws NullPointerException if collection or predicate is null
-     * @throws IllegalArgumentException if the collection contains invalid elements
-     * @since 4.0
-     */
-    public static <T> PredicatedCollection<T> predicatedCollection(final Collection<T> coll,
-                                                                   final Predicate<? super T> predicate) {
-        return new PredicatedCollection<>(coll, predicate);
-    }
-
-    /**
-     * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the collection being decorated, they
-     * are validated.
-     *
-     * @param collection  the collection to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
-     * @throws NullPointerException if collection or predicate is null
-     * @throws IllegalArgumentException if the collection contains invalid elements
-     */
-    protected PredicatedCollection(final Collection<E> collection, final Predicate<? super E> predicate) {
-        super(collection);
-        this.predicate = Objects.requireNonNull(predicate, "predicate");
-        for (final E item : collection) {
-            validate(item);
-        }
-    }
-
-    /**
-     * Validates the object being added to ensure it matches the predicate.
-     * <p>
-     * The predicate itself should not throw an exception, but return false to
-     * indicate that the object cannot be added.
-     *
-     * @param object  the object being added
-     * @throws IllegalArgumentException if the add is invalid
-     */
-    protected void validate(final E object) {
-        if (!predicate.evaluate(object)) {
-            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
-                                               predicate + "' rejected it");
-        }
-    }
-
-    /**
-     * Override to validate the object being added to ensure it matches
-     * the predicate.
-     *
-     * @param object  the object being added
-     * @return the result of adding to the underlying collection
-     * @throws IllegalArgumentException if the add is invalid
-     */
-    @Override
-    public boolean add(final E object) {
-        validate(object);
-        return decorated().add(object);
-    }
-
-    /**
-     * Override to validate the objects being added to ensure they match
-     * the predicate. If anyone fails, no update is made to the underlying
-     * collection.
-     *
-     * @param coll  the collection being added
-     * @return the result of adding to the underlying collection
-     * @throws IllegalArgumentException if the add is invalid
-     */
-    @Override
-    public boolean addAll(final Collection<? extends E> coll) {
-        for (final E item : coll) {
-            validate(item);
-        }
-        return decorated().addAll(coll);
-    }
-
     /**
      * Builder for creating predicated collections.
      * <p>
@@ -232,7 +118,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return the PredicatedCollectionBuilder.
          */
         public Builder<E> add(final E item) {
-            if (predicate.evaluate(item)) {
+            if (predicate.test(item)) {
                 accepted.add(item);
             } else {
                 rejected.add(item);
@@ -256,6 +142,37 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
                 }
             }
             return this;
+        }
+
+        /**
+         * Create a new predicated bag filled with the accepted elements.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned bag.
+         *
+         * @return a new predicated bag.
+         */
+        public Bag<E> createPredicatedBag() {
+            return createPredicatedBag(new HashBag<>());
+        }
+
+        /**
+         * Decorates the given bag with validating behavior using the predicate. All accepted elements
+         * are appended to the bag. If the bag already contains elements, they are validated.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned bag.
+         *
+         * @param bag  the bag to decorate, must not be null
+         * @return the decorated bag.
+         * @throws NullPointerException if bag is null
+         * @throws IllegalArgumentException if bag contains invalid elements
+         */
+        public Bag<E> createPredicatedBag(final Bag<E> bag) {
+            Objects.requireNonNull(bag, "bag");
+            final PredicatedBag<E> predicatedBag = PredicatedBag.predicatedBag(bag, predicate);
+            predicatedBag.addAll(accepted);
+            return predicatedBag;
         }
 
         /**
@@ -287,37 +204,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
             final List<E> predicatedList = PredicatedList.predicatedList(list, predicate);
             predicatedList.addAll(accepted);
             return predicatedList;
-        }
-
-        /**
-         * Create a new predicated set filled with the accepted elements.
-         * <p>
-         * The builder is not modified by this method, so it is possible to create more collections
-         * or add more elements afterwards. Further changes will not propagate to the returned set.
-         *
-         * @return a new predicated set.
-         */
-        public Set<E> createPredicatedSet() {
-            return createPredicatedSet(new HashSet<>());
-        }
-
-        /**
-         * Decorates the given list with validating behavior using the predicate. All accepted elements
-         * are appended to the set. If the set already contains elements, they are validated.
-         * <p>
-         * The builder is not modified by this method, so it is possible to create more collections
-         * or add more elements afterwards. Further changes will not propagate to the returned set.
-         *
-         * @param set  the set to decorate, must not be null
-         * @return the decorated set.
-         * @throws NullPointerException if set is null
-         * @throws IllegalArgumentException if set contains invalid elements
-         */
-        public Set<E> createPredicatedSet(final Set<E> set) {
-            Objects.requireNonNull(set, "set");
-            final PredicatedSet<E> predicatedSet = PredicatedSet.predicatedSet(set, predicate);
-            predicatedSet.addAll(accepted);
-            return predicatedSet;
         }
 
         /**
@@ -353,37 +239,6 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         }
 
         /**
-         * Create a new predicated bag filled with the accepted elements.
-         * <p>
-         * The builder is not modified by this method, so it is possible to create more collections
-         * or add more elements afterwards. Further changes will not propagate to the returned bag.
-         *
-         * @return a new predicated bag.
-         */
-        public Bag<E> createPredicatedBag() {
-            return createPredicatedBag(new HashBag<>());
-        }
-
-        /**
-         * Decorates the given bag with validating behavior using the predicate. All accepted elements
-         * are appended to the bag. If the bag already contains elements, they are validated.
-         * <p>
-         * The builder is not modified by this method, so it is possible to create more collections
-         * or add more elements afterwards. Further changes will not propagate to the returned bag.
-         *
-         * @param bag  the bag to decorate, must not be null
-         * @return the decorated bag.
-         * @throws NullPointerException if bag is null
-         * @throws IllegalArgumentException if bag contains invalid elements
-         */
-        public Bag<E> createPredicatedBag(final Bag<E> bag) {
-            Objects.requireNonNull(bag, "bag");
-            final PredicatedBag<E> predicatedBag = PredicatedBag.predicatedBag(bag, predicate);
-            predicatedBag.addAll(accepted);
-            return predicatedBag;
-        }
-
-        /**
          * Create a new predicated queue filled with the accepted elements.
          * <p>
          * The builder is not modified by this method, so it is possible to create more collections
@@ -415,6 +270,37 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         }
 
         /**
+         * Create a new predicated set filled with the accepted elements.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned set.
+         *
+         * @return a new predicated set.
+         */
+        public Set<E> createPredicatedSet() {
+            return createPredicatedSet(new HashSet<>());
+        }
+
+        /**
+         * Decorates the given list with validating behavior using the predicate. All accepted elements
+         * are appended to the set. If the set already contains elements, they are validated.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned set.
+         *
+         * @param set  the set to decorate, must not be null
+         * @return the decorated set.
+         * @throws NullPointerException if set is null
+         * @throws IllegalArgumentException if set contains invalid elements
+         */
+        public Set<E> createPredicatedSet(final Set<E> set) {
+            Objects.requireNonNull(set, "set");
+            final PredicatedSet<E> predicatedSet = PredicatedSet.predicatedSet(set, predicate);
+            predicatedSet.addAll(accepted);
+            return predicatedSet;
+        }
+
+        /**
          * Returns an unmodifiable collection containing all rejected elements.
          *
          * @return an unmodifiable collection
@@ -423,6 +309,120 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
             return Collections.unmodifiableCollection(rejected);
         }
 
+    }
+
+    /** Serialization version */
+    private static final long serialVersionUID = -5259182142076705162L;
+
+    /**
+     * Returns a Builder with the given predicate.
+     *
+     * @param <E>  the element type
+     * @param predicate  the predicate to use
+     * @return a new Builder for predicated collections
+     * @since 4.1
+     */
+    public static <E> Builder<E> builder(final Predicate<? super E> predicate) {
+        return new Builder<>(predicate);
+    }
+
+    /**
+     * Returns a Builder with a NotNullPredicate.
+     *
+     * @param <E>  the element type
+     * @return a new Builder for predicated collections that ignores null values.
+     * @since 4.1
+     */
+    public static <E> Builder<E> notNullBuilder() {
+        return new Builder<>(NotNullPredicate.<E>notNullPredicate());
+    }
+
+    /**
+     * Factory method to create a predicated (validating) collection.
+     * <p>
+     * If there are any elements already in the collection being decorated, they
+     * are validated.
+     *
+     * @param <T> the type of the elements in the collection
+     * @param coll  the collection to decorate, must not be null
+     * @param predicate  the predicate to use for validation, must not be null
+     * @return a new predicated collection
+     * @throws NullPointerException if collection or predicate is null
+     * @throws IllegalArgumentException if the collection contains invalid elements
+     * @since 4.0
+     */
+    public static <T> PredicatedCollection<T> predicatedCollection(final Collection<T> coll,
+                                                                   final Predicate<? super T> predicate) {
+        return new PredicatedCollection<>(coll, predicate);
+    }
+
+    /** The predicate to use */
+    protected final Predicate<? super E> predicate;
+
+    /**
+     * Constructor that wraps (not copies).
+     * <p>
+     * If there are any elements already in the collection being decorated, they
+     * are validated.
+     *
+     * @param collection  the collection to decorate, must not be null
+     * @param predicate  the predicate to use for validation, must not be null
+     * @throws NullPointerException if collection or predicate is null
+     * @throws IllegalArgumentException if the collection contains invalid elements
+     */
+    protected PredicatedCollection(final Collection<E> collection, final Predicate<? super E> predicate) {
+        super(collection);
+        this.predicate = Objects.requireNonNull(predicate, "predicate");
+        for (final E item : collection) {
+            validate(item);
+        }
+    }
+
+    /**
+     * Override to validate the object being added to ensure it matches
+     * the predicate.
+     *
+     * @param object  the object being added
+     * @return the result of adding to the underlying collection
+     * @throws IllegalArgumentException if the add is invalid
+     */
+    @Override
+    public boolean add(final E object) {
+        validate(object);
+        return decorated().add(object);
+    }
+
+    /**
+     * Override to validate the objects being added to ensure they match
+     * the predicate. If anyone fails, no update is made to the underlying
+     * collection.
+     *
+     * @param coll  the collection being added
+     * @return the result of adding to the underlying collection
+     * @throws IllegalArgumentException if the add is invalid
+     */
+    @Override
+    public boolean addAll(final Collection<? extends E> coll) {
+        for (final E item : coll) {
+            validate(item);
+        }
+        return decorated().addAll(coll);
+    }
+
+    /**
+     * Validates the object being added to ensure it matches the predicate.
+     * <p>
+     * The predicate itself should not throw an exception, but return false to
+     * indicate that the object cannot be added.
+     *
+     * @param object  the object being added
+     * @throws IllegalArgumentException if the add is invalid
+     */
+    protected void validate(final E object) {
+        if (!predicate.test(object)) {
+            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
+                                               predicate + "' rejected it");
+        }
     }
 
 }

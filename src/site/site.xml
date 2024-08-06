@@ -23,6 +23,26 @@
     </bannerRight>
 
     <body>
+        <head>&lt;script type="text/javascript" id="MathJax-script" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;
+        &lt;style&gt;
+            .footnotes ol li p {
+            display: inline;
+            }
+            .footnote-ref {
+             font-size: .83em ;
+             vertical-align: super ;
+             font-weight:bold;
+            }
+            .footnote-ref:after {
+            content: "\00a0";
+            }
+            .bodyTable {
+            width : max-content;
+            border: 1px solid black;
+            }
+
+            &lt;/style&gt;
+        </head>
         <menu name="Commons Collections">
             <item name="Overview" href="/index.html" />
             <item name="Download" href="/download_collections.cgi" />

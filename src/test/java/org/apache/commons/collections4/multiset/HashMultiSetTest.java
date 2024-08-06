@@ -21,18 +21,11 @@ import org.apache.commons.collections4.MultiSet;
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
  * {@link HashMultiSet} implementation.
- *
- * @since 4.1
  */
 public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     public HashMultiSetTest() {
         super(HashMultiSetTest.class.getSimpleName());
-    }
-
-    @Override
-    public MultiSet<T> makeObject() {
-        return new HashMultiSet<>();
     }
 
     @Override
@@ -43,6 +36,11 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    public MultiSet<T> makeObject() {
+        return new HashMultiSet<>();
     }
 
 //    public void testCreate() throws Exception {

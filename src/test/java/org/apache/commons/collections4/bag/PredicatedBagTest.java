@@ -31,23 +31,27 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
  * implementation.
- *
- * @since 3.0
  */
 public class PredicatedBagTest<T> extends AbstractBagTest<T> {
+
+    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
     public PredicatedBagTest() {
         super(PredicatedBagTest.class.getSimpleName());
     }
 
-    protected Predicate<T> stringPredicate() {
-        return o -> o instanceof String;
-    }
-
-    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
-
     protected Bag<T> decorateBag(final HashBag<T> bag, final Predicate<T> predicate) {
         return PredicatedBag.predicatedBag(bag, predicate);
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
     @Override
@@ -59,27 +63,8 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         return decorateBag(new HashBag<>(), stringPredicate());
     }
 
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testLegalAddRemove() {
-        final Bag<T> bag = makeTestBag();
-        assertEquals(0, bag.size());
-        final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
-        for (int i = 0; i < els.length; i++) {
-            bag.add(els[i]);
-            assertEquals(i + 1, bag.size());
-            assertTrue(bag.contains(els[i]));
-        }
-        Set<T> set = bag.uniqueSet();
-        assertTrue(set.contains(els[0]), "Unique set contains the first element");
-        assertTrue(bag.remove(els[0]));
-        set = bag.uniqueSet();
-        assertFalse(set.contains(els[0]), "Unique set now does not contain the first element");
+    protected Predicate<T> stringPredicate() {
+        return String.class::isInstance;
     }
 
     @Test
@@ -107,9 +92,22 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         assertThrows(NullPointerException.class, () -> decorateBag(new HashBag<>(), null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testLegalAddRemove() {
+        final Bag<T> bag = makeTestBag();
+        assertEquals(0, bag.size());
+        final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
+        for (int i = 0; i < els.length; i++) {
+            bag.add(els[i]);
+            assertEquals(i + 1, bag.size());
+            assertTrue(bag.contains(els[i]));
+        }
+        Set<T> set = bag.uniqueSet();
+        assertTrue(set.contains(els[0]), "Unique set contains the first element");
+        assertTrue(bag.remove(els[0]));
+        set = bag.uniqueSet();
+        assertFalse(set.contains(els[0]), "Unique set now does not contain the first element");
     }
 
 //    public void testCreate() throws Exception {

@@ -31,6 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ListIteratorWrapper to ensure that it behaves as expected when wrapping a ListIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
@@ -38,10 +40,21 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List<E> list1 = null;
+    protected List<E> list1;
 
     public ListIteratorWrapper2Test() {
         super(ListIteratorWrapper2Test.class.getSimpleName());
+    }
+
+    @Override
+    public ResettableListIterator<E> makeEmptyIterator() {
+        final ArrayList<E> list = new ArrayList<>();
+        return new ListIteratorWrapper<>(list.listIterator());
+    }
+
+    @Override
+    public ResettableListIterator<E> makeObject() {
+        return new ListIteratorWrapper<>(list1.listIterator());
     }
 
     @BeforeEach
@@ -54,17 +67,6 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         list1.add((E) "Four");
         list1.add((E) "Five");
         list1.add((E) "Six");
-    }
-
-    @Override
-    public ResettableListIterator<E> makeEmptyIterator() {
-        final ArrayList<E> list = new ArrayList<>();
-        return new ListIteratorWrapper<>(list.listIterator());
-    }
-
-    @Override
-    public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<>(list1.listIterator());
     }
 
     @Test

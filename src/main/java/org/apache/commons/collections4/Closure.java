@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.function.Consumer;
+
 /**
  * Defines a functor interface implemented by classes that do something.
  * <p>
@@ -27,11 +29,17 @@ package org.apache.commons.collections4;
  * {@link ClosureUtils}. These include method invocation and for/while loops.
  * </p>
  *
- * @param <T> the type that the closure acts on
+ * @param <T> the type of the input to the operation.
  * @since 1.0
+ * @deprecated Use {@link Consumer}.
  */
-@FunctionalInterface
-public interface Closure<T> {
+@Deprecated
+public interface Closure<T> extends Consumer<T> {
+
+    @Override
+    default void accept(final T input) {
+        execute(input);
+    }
 
     /**
      * Performs an action on the specified input object.

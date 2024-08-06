@@ -198,9 +198,8 @@ public class SetUtils {
         return set == null ? Collections.<T>emptySet() : set;
     }
 
-
     /**
-     * Get a typed empty unmodifiable Set.
+     * Gets a typed empty unmodifiable Set.
      * @param <E> the element type
      * @return an empty Set
      */
@@ -209,7 +208,7 @@ public class SetUtils {
     }
 
     /**
-     * Get a typed empty unmodifiable sorted set.
+     * Gets a typed empty unmodifiable sorted set.
      * @param <E> the element type
      * @return an empty sorted Set
      */
@@ -294,7 +293,7 @@ public class SetUtils {
 
     /**
      * Tests two sets for equality as per the {@code equals()} contract
-     * in {@link java.util.Set#equals(java.lang.Object)}.
+     * in {@link java.util.Set#equals(Object)}.
      * <p>
      * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
@@ -435,7 +434,7 @@ public class SetUtils {
      * avoid non-deterministic behavior:
      *
      * <pre>
-     * Set s = SetUtils.synchronizedSet(mySet);
+     * Sets s = SetUtils.synchronizedSet(mySet);
      * synchronized (s) {
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
@@ -653,5 +652,8 @@ public class SetUtils {
     /**
      * Don't allow instances.
      */
-    private SetUtils() {}
+    private SetUtils() {
+        // empty
+    }
+
 }

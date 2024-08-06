@@ -39,90 +39,98 @@ import org.apache.commons.collections4.Transformer;
  */
 public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {
 
-    /** View of the elements */
-    private transient Set<E> uniqueSet;
-    /** View of the entries */
-    private transient Set<Entry<E>> entrySet;
-
     /**
-     * Constructor needed for subclass serialisation.
-     */
-    protected AbstractMultiSet() {
-    }
-
-    /**
-     * Returns the number of elements in this multiset.
+     * Inner class AbstractEntry.
      *
-     * @return current size of the multiset
+     * @param <E> the element type.
      */
-    @Override
-    public int size() {
-        int totalSize = 0;
-        for (final Entry<E> entry : entrySet()) {
-            totalSize += entry.getCount();
-        }
-        return totalSize;
-    }
+    protected abstract static class AbstractEntry<E> implements Entry<E> {
 
-    /**
-     * Returns the number of occurrence of the given element in this multiset by
-     * iterating over its entrySet.
-     *
-     * @param object the object to search for
-     * @return the number of occurrences of the object, zero if not found
-     */
-    @Override
-    public int getCount(final Object object) {
-        for (final Entry<E> entry : entrySet()) {
-            final E element = entry.getElement();
-            if (Objects.equals(element, object)) {
-                return entry.getCount();
+        @Override
+        public boolean equals(final Object object) {
+            if (object instanceof Entry) {
+                final Entry<?> other = (Entry<?>) object;
+                final E element = getElement();
+                final Object otherElement = other.getElement();
+
+                return this.getCount() == other.getCount() &&
+                       Objects.equals(element, otherElement);
             }
-        }
-        return 0;
-    }
-
-    @Override
-    public int setCount(final E object, final int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("Count must not be negative.");
+            return false;
         }
 
-        final int oldCount = getCount(object);
-        if (oldCount < count) {
-            add(object, count - oldCount);
-        } else {
-            remove(object, oldCount - count);
+        @Override
+        public int hashCode() {
+            final E element = getElement();
+            return (element == null ? 0 : element.hashCode()) ^ getCount();
         }
-        return oldCount;
+
+        @Override
+        public String toString() {
+            return String.format("%s:%d", getElement(), getCount());
+        }
     }
 
     /**
-     * Determines if the multiset contains the given element.
+     * Inner class EntrySet.
      *
-     * @param object the object to search for
-     * @return true if the multiset contains the given element
+     * @param <E> the element type.
      */
-    @Override
-    public boolean contains(final Object object) {
-        return getCount(object) > 0;
-    }
+    protected static class EntrySet<E> extends AbstractSet<Entry<E>> {
 
-    /**
-     * Gets an iterator over the multiset elements. Elements present in the
-     * MultiSet more than once will be returned repeatedly.
-     *
-     * @return the iterator
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new MultiSetIterator<>(this);
+        private final AbstractMultiSet<E> parent;
+
+        /**
+         * Constructs a new view of the MultiSet.
+         *
+         * @param parent  the parent MultiSet
+         */
+        protected EntrySet(final AbstractMultiSet<E> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public boolean contains(final Object obj) {
+            if (!(obj instanceof Entry<?>)) {
+                return false;
+            }
+            final Entry<?> entry = (Entry<?>) obj;
+            final Object element = entry.getElement();
+            return parent.getCount(element) == entry.getCount();
+        }
+
+        @Override
+        public Iterator<Entry<E>> iterator() {
+            return parent.createEntrySetIterator();
+        }
+
+        @Override
+        public boolean remove(final Object obj) {
+            if (!(obj instanceof Entry<?>)) {
+                return false;
+            }
+            final Entry<?> entry = (Entry<?>) obj;
+            final Object element = entry.getElement();
+            if (parent.contains(element)) {
+                final int count = parent.getCount(element);
+                if (entry.getCount() == count) {
+                    parent.remove(element, count);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public int size() {
+            return parent.uniqueElements();
+        }
     }
 
     /**
      * Inner class iterator for the MultiSet.
      */
-    private static class MultiSetIterator<E> implements Iterator<E> {
+    private static final class MultiSetIterator<E> implements Iterator<E> {
         private final AbstractMultiSet<E> parent;
         private final Iterator<Entry<E>> entryIterator;
         private Entry<E> current;
@@ -130,7 +138,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         private boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent the parent multiset
          */
@@ -175,6 +183,68 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
+    /**
+     * Inner class UniqueSet.
+     *
+     * @param <E> the element type.
+     */
+    protected static class UniqueSet<E> extends AbstractSet<E> {
+
+        /** The parent multiset */
+        protected final AbstractMultiSet<E> parent;
+
+        /**
+         * Constructs a new unique element view of the MultiSet.
+         *
+         * @param parent  the parent MultiSet
+         */
+        protected UniqueSet(final AbstractMultiSet<E> parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void clear() {
+            parent.clear();
+        }
+
+        @Override
+        public boolean contains(final Object key) {
+            return parent.contains(key);
+        }
+
+        @Override
+        public boolean containsAll(final Collection<?> coll) {
+            return parent.containsAll(coll);
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return parent.createUniqueSetIterator();
+        }
+
+        @Override
+        public boolean remove(final Object key) {
+            return parent.remove(key, parent.getCount(key)) != 0;
+        }
+
+        @Override
+        public int size() {
+            return parent.uniqueElements();
+        }
+    }
+
+    /** View of the elements */
+    private transient Set<E> uniqueSet;
+
+    /** View of the entries */
+    private transient Set<Entry<E>> entrySet;
+
+    /**
+     * Constructor needed for subclass serialisation.
+     */
+    protected AbstractMultiSet() {
+    }
+
     @Override
     public boolean add(final E object) {
         add(object, 1);
@@ -198,38 +268,33 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         }
     }
 
+    /**
+     * Determines if the multiset contains the given element.
+     *
+     * @param object the object to search for
+     * @return true if the multiset contains the given element
+     */
     @Override
-    public boolean remove(final Object object) {
-        return remove(object, 1) != 0;
-    }
-
-    @Override
-    public int remove(final Object object, final int occurrences) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        boolean result = false;
-        for (final Object obj : coll) {
-            final boolean changed = remove(obj, getCount(obj)) != 0;
-            result = result || changed;
-        }
-        return result;
+    public boolean contains(final Object object) {
+        return getCount(object) > 0;
     }
 
     /**
-     * Returns a view of the unique elements of this multiset.
+     * Create a new view for the set of entries in this multiset.
      *
-     * @return the set of unique elements in this multiset
+     * @return a view of the set of entries
      */
-    @Override
-    public Set<E> uniqueSet() {
-        if (uniqueSet == null) {
-            uniqueSet = createUniqueSet();
-        }
-        return uniqueSet;
+    protected Set<Entry<E>> createEntrySet() {
+        return new EntrySet<>(this);
     }
+
+    /**
+     * Creates an entry set iterator.
+     * Subclasses can override this to return iterators with different properties.
+     *
+     * @return the entrySet iterator
+     */
+    protected abstract Iterator<Entry<E>> createEntrySetIterator();
 
     /**
      * Create a new view for the set of unique elements in this multiset.
@@ -252,171 +317,20 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Returns an unmodifiable view of the entries of this multiset.
-     *
-     * @return the set of entries in this multiset
+     * Read the multiset in using a custom routine.
+     * @param in the input stream
+     * @throws IOException any of the usual I/O related exceptions
+     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
+     * @throws ClassCastException if the stream does not contain the correct objects
      */
-    @Override
-    public Set<Entry<E>> entrySet() {
-        if (entrySet == null) {
-            entrySet = createEntrySet();
-        }
-        return entrySet;
-    }
-
-    /**
-     * Create a new view for the set of entries in this multiset.
-     *
-     * @return a view of the set of entries
-     */
-    protected Set<Entry<E>> createEntrySet() {
-        return new EntrySet<>(this);
-    }
-
-    /**
-     * Returns the number of unique elements in this multiset.
-     *
-     * @return the number of unique elements
-     */
-    protected abstract int uniqueElements();
-
-    /**
-     * Creates an entry set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @return the entrySet iterator
-     */
-    protected abstract Iterator<Entry<E>> createEntrySetIterator();
-
-    /**
-     * Inner class UniqueSet.
-     */
-    protected static class UniqueSet<E> extends AbstractSet<E> {
-
-        /** The parent multiset */
-        protected final AbstractMultiSet<E> parent;
-
-        /**
-         * Constructs a new unique element view of the MultiSet.
-         *
-         * @param parent  the parent MultiSet
-         */
-        protected UniqueSet(final AbstractMultiSet<E> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public Iterator<E> iterator() {
-            return parent.createUniqueSetIterator();
-        }
-
-        @Override
-        public boolean contains(final Object key) {
-            return parent.contains(key);
-        }
-
-        @Override
-        public boolean containsAll(final Collection<?> coll) {
-            return parent.containsAll(coll);
-        }
-
-        @Override
-        public boolean remove(final Object key) {
-            return parent.remove(key, parent.getCount(key)) != 0;
-        }
-
-        @Override
-        public int size() {
-            return parent.uniqueElements();
-        }
-
-        @Override
-        public void clear() {
-            parent.clear();
-        }
-    }
-
-    /**
-     * Inner class EntrySet.
-     */
-    protected static class EntrySet<E> extends AbstractSet<Entry<E>> {
-
-        private final AbstractMultiSet<E> parent;
-
-        /**
-         * Constructs a new view of the MultiSet.
-         *
-         * @param parent  the parent MultiSet
-         */
-        protected EntrySet(final AbstractMultiSet<E> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.uniqueElements();
-        }
-
-        @Override
-        public Iterator<Entry<E>> iterator() {
-            return parent.createEntrySetIterator();
-        }
-
-        @Override
-        public boolean contains(final Object obj) {
-            if (!(obj instanceof Entry<?>)) {
-                return false;
-            }
-            final Entry<?> entry = (Entry<?>) obj;
-            final Object element = entry.getElement();
-            return parent.getCount(element) == entry.getCount();
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            if (!(obj instanceof Entry<?>)) {
-                return false;
-            }
-            final Entry<?> entry = (Entry<?>) obj;
-            final Object element = entry.getElement();
-            if (parent.contains(element)) {
-                final int count = parent.getCount(element);
-                if (entry.getCount() == count) {
-                    parent.remove(element, count);
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    /**
-     * Inner class AbstractEntry.
-     */
-    protected abstract static class AbstractEntry<E> implements Entry<E> {
-
-        @Override
-        public boolean equals(final Object object) {
-            if (object instanceof Entry) {
-                final Entry<?> other = (Entry<?>) object;
-                final E element = this.getElement();
-                final Object otherElement = other.getElement();
-
-                return this.getCount() == other.getCount() &&
-                       Objects.equals(element, otherElement);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            final E element = getElement();
-            return (element == null ? 0 : element.hashCode()) ^ getCount();
-        }
-
-        @Override
-        public String toString() {
-            return String.format("%s:%d", getElement(), getCount());
+    protected void doReadObject(final ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        final int entrySize = in.readInt();
+        for (int i = 0; i < entrySize; i++) {
+            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+            final E obj = (E) in.readObject();
+            final int count = in.readInt();
+            setCount(obj, count);
         }
     }
 
@@ -434,21 +348,16 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Read the multiset in using a custom routine.
-     * @param in the input stream
-     * @throws IOException any of the usual I/O related exceptions
-     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
-     * @throws ClassCastException if the stream does not contain the correct objects
+     * Returns an unmodifiable view of the entries of this multiset.
+     *
+     * @return the set of entries in this multiset
      */
-    protected void doReadObject(final ObjectInputStream in)
-            throws IOException, ClassNotFoundException {
-        final int entrySize = in.readInt();
-        for (int i = 0; i < entrySize; i++) {
-            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-            final E obj = (E) in.readObject();
-            final int count = in.readInt();
-            setCount(obj, count);
+    @Override
+    public Set<Entry<E>> entrySet() {
+        if (entrySet == null) {
+            entrySet = createEntrySet();
         }
+        return entrySet;
     }
 
     @Override
@@ -471,9 +380,87 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return true;
     }
 
+    /**
+     * Returns the number of occurrence of the given element in this multiset by
+     * iterating over its entrySet.
+     *
+     * @param object the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    @Override
+    public int getCount(final Object object) {
+        for (final Entry<E> entry : entrySet()) {
+            final E element = entry.getElement();
+            if (Objects.equals(element, object)) {
+                return entry.getCount();
+            }
+        }
+        return 0;
+    }
+
     @Override
     public int hashCode() {
         return entrySet().hashCode();
+    }
+
+    /**
+     * Gets an iterator over the multiset elements. Elements present in the
+     * MultiSet more than once will be returned repeatedly.
+     *
+     * @return the iterator
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new MultiSetIterator<>(this);
+    }
+
+    @Override
+    public boolean remove(final Object object) {
+        return remove(object, 1) != 0;
+    }
+
+    @Override
+    public int remove(final Object object, final int occurrences) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        boolean result = false;
+        for (final Object obj : coll) {
+            final boolean changed = remove(obj, getCount(obj)) != 0;
+            result = result || changed;
+        }
+        return result;
+    }
+
+    @Override
+    public int setCount(final E object, final int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Count must not be negative.");
+        }
+
+        final int oldCount = getCount(object);
+        if (oldCount < count) {
+            add(object, count - oldCount);
+        } else {
+            remove(object, oldCount - count);
+        }
+        return oldCount;
+    }
+
+    /**
+     * Returns the number of elements in this multiset.
+     *
+     * @return current size of the multiset
+     */
+    @Override
+    public int size() {
+        int totalSize = 0;
+        for (final Entry<E> entry : entrySet()) {
+            totalSize += entry.getCount();
+        }
+        return totalSize;
     }
 
     /**
@@ -484,6 +471,26 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public String toString() {
         return entrySet().toString();
+    }
+
+    /**
+     * Returns the number of unique elements in this multiset.
+     *
+     * @return the number of unique elements
+     */
+    protected abstract int uniqueElements();
+
+    /**
+     * Returns a view of the unique elements of this multiset.
+     *
+     * @return the set of unique elements in this multiset
+     */
+    @Override
+    public Set<E> uniqueSet() {
+        if (uniqueSet == null) {
+            uniqueSet = createUniqueSet();
+        }
+        return uniqueSet;
     }
 
 }

@@ -31,11 +31,6 @@ public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
     }
 
     @Override
-    public Comparator<Integer> makeObject() {
-        return new ComparableComparator<>();
-    }
-
-    @Override
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<>();
         list.add(1);
@@ -49,6 +44,11 @@ public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    public Comparator<Integer> makeObject() {
+        return new ComparableComparator<>();
     }
 
 //    public void testCreate() throws Exception {

@@ -74,38 +74,13 @@ public final class UnmodifiableMultiSet<E>
         super((MultiSet<E>) multiset);
     }
 
-    /**
-     * Write the collection out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(decorated());
-    }
-
-    /**
-     * Read the collection in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @throws ClassCastException if deserialized object has wrong type
-     */
-    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        setCollection((Collection<E>) in.readObject());
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
-    }
-
     @Override
     public boolean add(final E object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int add(final E object, final int count) {
         throw new UnsupportedOperationException();
     }
 
@@ -120,7 +95,42 @@ public final class UnmodifiableMultiSet<E>
     }
 
     @Override
+    public Set<MultiSet.Entry<E>> entrySet() {
+        final Set<MultiSet.Entry<E>> set = decorated().entrySet();
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
+    }
+
+    /**
+     * Deserializes the collection in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassCastException if deserialized object has wrong type
+     */
+    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        setCollection((Collection<E>) in.readObject());
+    }
+
+    @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int remove(final Object object, final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -129,11 +139,6 @@ public final class UnmodifiableMultiSet<E>
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -148,25 +153,20 @@ public final class UnmodifiableMultiSet<E>
     }
 
     @Override
-    public int add(final E object, final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int remove(final Object object, final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Set<E> uniqueSet() {
         final Set<E> set = decorated().uniqueSet();
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
-    @Override
-    public Set<MultiSet.Entry<E>> entrySet() {
-        final Set<MultiSet.Entry<E>> set = decorated().entrySet();
-        return UnmodifiableSet.unmodifiableSet(set);
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(decorated());
     }
 
 }

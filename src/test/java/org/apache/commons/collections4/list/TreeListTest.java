@@ -28,27 +28,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests
- *
- * @since 3.1
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
-
-    public TreeListTest() {
-        super(TreeListTest.class.getSimpleName());
-    }
-
-//    public static void main(String[] args) {
-//        junit.textui.TestRunner.run(suite());
-//        System.out.println("         add; toArray; iterator; insert; get; indexOf; remove");
-//        System.out.print("   TreeList = ");
-//        benchmark(new TreeList());
-//        System.out.print("\n  ArrayList = ");
-//        benchmark(new java.util.ArrayList());
-//        System.out.print("\n LinkedList = ");
-//        benchmark(new java.util.LinkedList());
-//        System.out.print("\n NodeCachingLinkedList = ");
-//        benchmark(new NodeCachingLinkedList());
-//    }
 
     public static void benchmark(final List<? super Integer> l) {
         long startMillis = System.currentTimeMillis();
@@ -101,6 +82,23 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         System.out.print(System.currentTimeMillis() - startMillis + ";");
     }
 
+//    public static void main(String[] args) {
+//        junit.textui.TestRunner.run(suite());
+//        System.out.println("         add; toArray; iterator; insert; get; indexOf; remove");
+//        System.out.print("   TreeList = ");
+//        benchmark(new TreeList());
+//        System.out.print("\n  ArrayList = ");
+//        benchmark(new java.util.ArrayList());
+//        System.out.print("\n LinkedList = ");
+//        benchmark(new java.util.LinkedList());
+//        System.out.print("\n NodeCachingLinkedList = ");
+//        benchmark(new NodeCachingLinkedList());
+//    }
+
+    public TreeListTest() {
+        super(TreeListTest.class.getSimpleName());
+    }
+
     @Override
     public TreeList<E> makeObject() {
         return new TreeList<>();
@@ -123,98 +121,6 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("andres", l.get(4));
         assertEquals("harald", l.get(5));
     }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testRemove() {
-        final List<E> l = makeObject();
-        l.add((E) "hugo");
-        l.add((E) "erna");
-        l.add((E) "daniel");
-        l.add((E) "andres");
-        l.add((E) "harald");
-        l.add(0, null);
-        int i = 0;
-        assertNull(l.get(i++));
-        assertEquals("hugo", l.get(i++));
-        assertEquals("erna", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
-        assertEquals("harald", l.get(i++));
-
-        l.remove(0);
-        i = 0;
-        assertEquals("hugo", l.get(i++));
-        assertEquals("erna", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
-        assertEquals("harald", l.get(i++));
-
-        i = 0;
-        l.remove(1);
-        assertEquals("hugo", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("andres", l.get(i++));
-        assertEquals("harald", l.get(i++));
-
-        i = 0;
-        l.remove(2);
-        assertEquals("hugo", l.get(i++));
-        assertEquals("daniel", l.get(i++));
-        assertEquals("harald", l.get(i++));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testInsertBefore() {
-        final List<E> l = makeObject();
-        l.add((E) "erna");
-        l.add(0, (E) "hugo");
-        assertEquals("hugo", l.get(0));
-        assertEquals("erna", l.get(1));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testIndexOf() {
-        final List<E> l = makeObject();
-        l.add((E) "0");
-        l.add((E) "1");
-        l.add((E) "2");
-        l.add((E) "3");
-        l.add((E) "4");
-        l.add((E) "5");
-        l.add((E) "6");
-        assertEquals(0, l.indexOf("0"));
-        assertEquals(1, l.indexOf("1"));
-        assertEquals(2, l.indexOf("2"));
-        assertEquals(3, l.indexOf("3"));
-        assertEquals(4, l.indexOf("4"));
-        assertEquals(5, l.indexOf("5"));
-        assertEquals(6, l.indexOf("6"));
-
-        l.set(1, (E) "0");
-        assertEquals(0, l.indexOf("0"));
-
-        l.set(3, (E) "3");
-        assertEquals(3, l.indexOf("3"));
-        l.set(2, (E) "3");
-        assertEquals(2, l.indexOf("3"));
-        l.set(1, (E) "3");
-        assertEquals(1, l.indexOf("3"));
-        l.set(0, (E) "3");
-        assertEquals(0, l.indexOf("3"));
-    }
-
-//    public void testCheck() {
-//        List l = makeEmptyList();
-//        l.add("A1");
-//        l.add("A2");
-//        l.add("A3");
-//        l.add("A4");
-//        l.add("A5");
-//        l.add("A6");
-//    }
 
     @Test
     public void testBug35258() {
@@ -266,6 +172,58 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         // previous() after remove() should move to
         // the element before the one just removed
         assertEquals("A", li.previous());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testIndexOf() {
+        final List<E> l = makeObject();
+        l.add((E) "0");
+        l.add((E) "1");
+        l.add((E) "2");
+        l.add((E) "3");
+        l.add((E) "4");
+        l.add((E) "5");
+        l.add((E) "6");
+        assertEquals(0, l.indexOf("0"));
+        assertEquals(1, l.indexOf("1"));
+        assertEquals(2, l.indexOf("2"));
+        assertEquals(3, l.indexOf("3"));
+        assertEquals(4, l.indexOf("4"));
+        assertEquals(5, l.indexOf("5"));
+        assertEquals(6, l.indexOf("6"));
+
+        l.set(1, (E) "0");
+        assertEquals(0, l.indexOf("0"));
+
+        l.set(3, (E) "3");
+        assertEquals(3, l.indexOf("3"));
+        l.set(2, (E) "3");
+        assertEquals(2, l.indexOf("3"));
+        l.set(1, (E) "3");
+        assertEquals(1, l.indexOf("3"));
+        l.set(0, (E) "3");
+        assertEquals(0, l.indexOf("3"));
+    }
+
+//    public void testCheck() {
+//        List l = makeEmptyList();
+//        l.add("A1");
+//        l.add("A2");
+//        l.add("A3");
+//        l.add("A4");
+//        l.add("A5");
+//        l.add("A6");
+//    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testInsertBefore() {
+        final List<E> l = makeObject();
+        l.add((E) "erna");
+        l.add(0, (E) "hugo");
+        assertEquals("hugo", l.get(0));
+        assertEquals("erna", l.get(1));
     }
 
     @Test
@@ -330,6 +288,46 @@ public class TreeListTest<E> extends AbstractListTest<E> {
                 assertEquals(--cnt, val.intValue());
             }
         }
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testRemove() {
+        final List<E> l = makeObject();
+        l.add((E) "hugo");
+        l.add((E) "erna");
+        l.add((E) "daniel");
+        l.add((E) "andres");
+        l.add((E) "harald");
+        l.add(0, null);
+        int i = 0;
+        assertNull(l.get(i++));
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
+
+        l.remove(0);
+        i = 0;
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
+
+        i = 0;
+        l.remove(1);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
+
+        i = 0;
+        l.remove(2);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("harald", l.get(i++));
     }
 
 }

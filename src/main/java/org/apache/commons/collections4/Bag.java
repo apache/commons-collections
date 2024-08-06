@@ -29,8 +29,8 @@ import java.util.Set;
  * calling {@link #uniqueSet()} would return {@code {a, b, c}}.
  * </p>
  * <p>
- * <i>NOTE: This interface violates the {@link Collection} contract.</i>
- * The behavior specified in many of these methods is <i>not</i> the same
+ * <em>NOTE: This interface violates the {@link Collection} contract.</em>
+ * The behavior specified in many of these methods is <em>not</em> the same
  * as the behavior specified by {@code Collection}.
  * The non-compliant methods are clearly marked with "(Violation)".
  * Exercise caution when using a bag as a {@code Collection}.
@@ -47,17 +47,7 @@ import java.util.Set;
 public interface Bag<E> extends Collection<E> {
 
     /**
-     * Returns the number of occurrences (cardinality) of the given
-     * object currently in the bag. If the object does not exist in the
-     * bag, return 0.
-     *
-     * @param object  the object to search for
-     * @return the number of occurrences of the object, zero if not found
-     */
-    int getCount(Object object);
-
-    /**
-     * <i>(Violation)</i>
+     * <em>(Violation)</em>
      * Adds one copy of the specified object to the Bag.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
@@ -92,15 +82,56 @@ public interface Bag<E> extends Collection<E> {
     boolean add(E object, int nCopies);
 
     /**
-     * <i>(Violation)</i>
+     * <em>(Violation)</em>
+     * Returns {@code true} if the bag contains all elements in
+     * the given collection, respecting cardinality.  That is, if the
+     * given collection {@code coll} contains {@code n} copies
+     * of a given object, calling {@link #getCount(Object)} on that object must
+     * be {@code &gt;= n} for all {@code n} in {@code coll}.
+     *
+     * <p>
+     * The {@link Collection#containsAll(Collection)} method specifies
+     * that cardinality should <em>not</em> be respected; this method should
+     * return true if the bag contains at least one of every object contained
+     * in the given collection.
+     * </p>
+     *
+     * @param coll  the collection to check against
+     * @return {@code true} if the Bag contains all the collection
+     */
+    @Override
+    boolean containsAll(Collection<?> coll);
+
+    /**
+     * Returns the number of occurrences (cardinality) of the given
+     * object currently in the bag. If the object does not exist in the
+     * bag, return 0.
+     *
+     * @param object  the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    int getCount(Object object);
+
+    /**
+     * Returns an {@link Iterator} over the entire set of members,
+     * including copies due to cardinality. This iterator is fail-fast
+     * and will not tolerate concurrent modifications.
+     *
+     * @return iterator over all elements in the Bag
+     */
+    @Override
+    Iterator<E> iterator();
+
+    /**
+     * <em>(Violation)</em>
      * Removes all occurrences of the given object from the bag.
      * <p>
      * This will also remove the object from the {@link #uniqueSet()}.
      * </p>
      * <p>
      * According to the {@link Collection#remove(Object)} method,
-     * this method should only remove the <i>first</i> occurrence of the
-     * given object, not <i>all</i> occurrences.
+     * this method should only remove the <em>first</em> occurrence of the
+     * given object, not <em>all</em> occurrences.
      * </p>
      *
      * @param object  the object to remove
@@ -123,46 +154,7 @@ public interface Bag<E> extends Collection<E> {
     boolean remove(Object object, int nCopies);
 
     /**
-     * Returns a {@link Set} of unique elements in the Bag.
-     * <p>
-     * Uniqueness constraints are the same as those in {@link java.util.Set}.
-     * </p>
-     *
-     * @return the Set of unique Bag elements
-     */
-    Set<E> uniqueSet();
-
-    /**
-     * Returns the total number of items in the bag across all types.
-     *
-     * @return the total size of the Bag
-     */
-    @Override
-    int size();
-
-    /**
-     * <i>(Violation)</i>
-     * Returns {@code true} if the bag contains all elements in
-     * the given collection, respecting cardinality.  That is, if the
-     * given collection {@code coll} contains {@code n} copies
-     * of a given object, calling {@link #getCount(Object)} on that object must
-     * be {@code &gt;= n} for all {@code n} in {@code coll}.
-     *
-     * <p>
-     * The {@link Collection#containsAll(Collection)} method specifies
-     * that cardinality should <i>not</i> be respected; this method should
-     * return true if the bag contains at least one of every object contained
-     * in the given collection.
-     * </p>
-     *
-     * @param coll  the collection to check against
-     * @return {@code true} if the Bag contains all the collection
-     */
-    @Override
-    boolean containsAll(Collection<?> coll);
-
-    /**
-     * <i>(Violation)</i>
+     * <em>(Violation)</em>
      * Remove all elements represented in the given collection,
      * respecting cardinality.  That is, if the given collection
      * {@code coll} contains {@code n} copies of a given object,
@@ -171,8 +163,8 @@ public interface Bag<E> extends Collection<E> {
      *
      * <p>
      * The {@link Collection#removeAll(Collection)} method specifies
-     * that cardinality should <i>not</i> be respected; this method should
-     * remove <i>all</i> occurrences of every object contained in the
+     * that cardinality should <em>not</em> be respected; this method should
+     * remove <em>all</em> occurrences of every object contained in the
      * given collection.
      * </p>
      *
@@ -183,7 +175,7 @@ public interface Bag<E> extends Collection<E> {
     boolean removeAll(Collection<?> coll);
 
     /**
-     * <i>(Violation)</i>
+     * <em>(Violation)</em>
      * Remove any members of the bag that are not in the given
      * collection, respecting cardinality.  That is, if the given
      * collection {@code coll} contains {@code n} copies of a
@@ -195,8 +187,8 @@ public interface Bag<E> extends Collection<E> {
      *
      * <p>
      * The {@link Collection#retainAll(Collection)} method specifies
-     * that cardinality should <i>not</i> be respected; this method should
-     * keep <i>all</i> occurrences of every object contained in the
+     * that cardinality should <em>not</em> be respected; this method should
+     * keep <em>all</em> occurrences of every object contained in the
      * given collection.
      * </p>
      *
@@ -207,14 +199,22 @@ public interface Bag<E> extends Collection<E> {
     boolean retainAll(Collection<?> coll);
 
     /**
-     * Returns an {@link Iterator} over the entire set of members,
-     * including copies due to cardinality. This iterator is fail-fast
-     * and will not tolerate concurrent modifications.
+     * Returns the total number of items in the bag across all types.
      *
-     * @return iterator over all elements in the Bag
+     * @return the total size of the Bag
      */
     @Override
-    Iterator<E> iterator();
+    int size();
+
+    /**
+     * Returns a {@link Set} of unique elements in the Bag.
+     * <p>
+     * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * </p>
+     *
+     * @return the Set of unique Bag elements
+     */
+    Set<E> uniqueSet();
 
     // The following is not part of the formal Bag interface, however where possible
     // Bag implementations should follow these comments.

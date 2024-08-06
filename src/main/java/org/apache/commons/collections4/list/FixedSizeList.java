@@ -49,6 +49,23 @@ public class FixedSizeList<E>
         extends AbstractSerializableListDecorator<E>
         implements BoundedCollection<E> {
 
+    /**
+     * List iterator that only permits changes via set()
+     */
+    private final class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
+        protected FixedSizeListIterator(final ListIterator<E> iterator) {
+            super(iterator);
+        }
+        @Override
+        public void add(final Object object) {
+            throw unsupportedOperationException();
+        }
+        @Override
+        public void remove() {
+            throw unsupportedOperationException();
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = -2218010673611160319L;
 
@@ -63,6 +80,10 @@ public class FixedSizeList<E>
      */
     public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
         return new FixedSizeList<>(list);
+    }
+
+    private static UnsupportedOperationException unsupportedOperationException() {
+        return new UnsupportedOperationException("List is fixed size");
     }
 
     /**
@@ -111,6 +132,11 @@ public class FixedSizeList<E>
     }
 
     @Override
+    public boolean isFull() {
+        return true;
+    }
+
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
@@ -131,6 +157,11 @@ public class FixedSizeList<E>
     }
 
     @Override
+    public int maxSize() {
+        return size();
+    }
+
+    @Override
     public E remove(final int index) {
         throw unsupportedOperationException();
     }
@@ -140,16 +171,16 @@ public class FixedSizeList<E>
         throw unsupportedOperationException();
     }
 
+    @Override
+    public boolean removeAll(final Collection<?> coll) {
+        throw unsupportedOperationException();
+    }
+
     /**
      * @since 4.4
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        throw unsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
         throw unsupportedOperationException();
     }
 
@@ -167,37 +198,6 @@ public class FixedSizeList<E>
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new FixedSizeList<>(sub);
-    }
-
-    /**
-     * List iterator that only permits changes via set()
-     */
-    private class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
-        protected FixedSizeListIterator(final ListIterator<E> iterator) {
-            super(iterator);
-        }
-        @Override
-        public void remove() {
-            throw unsupportedOperationException();
-        }
-        @Override
-        public void add(final Object object) {
-            throw unsupportedOperationException();
-        }
-    }
-
-    @Override
-    public boolean isFull() {
-        return true;
-    }
-
-    @Override
-    public int maxSize() {
-        return size();
-    }
-
-    private static UnsupportedOperationException unsupportedOperationException() {
-        return new UnsupportedOperationException("List is fixed size");
     }
 
 }

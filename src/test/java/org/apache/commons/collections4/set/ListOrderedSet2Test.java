@@ -29,8 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSetTest} for exercising the {@link ListOrderedSet}
  * implementation.
- *
- * @since 3.1
  */
 public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
@@ -41,6 +39,11 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     public ListOrderedSet2Test() {
         super(ListOrderedSet2Test.class.getSimpleName());
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -56,71 +59,6 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
             set.add((E) Integer.toString(i));
         }
         return set;
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testOrdering() {
-        final ListOrderedSet<E> set = setupSet();
-        Iterator<E> it = set.iterator();
-
-        for (int i = 0; i < 10; i++) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
-
-        for (int i = 0; i < 10; i += 2) {
-            assertTrue(set.remove(Integer.toString(i)), "Must be able to remove int");
-        }
-
-        it = set.iterator();
-        for (int i = 1; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong after remove ");
-        }
-
-        for (int i = 0; i < 10; i++) {
-            set.add((E) Integer.toString(i));
-        }
-
-        assertEquals(10, set.size(), "Size of set is wrong!");
-
-        it = set.iterator();
-        for (int i = 1; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
-        for (int i = 0; i < 10; i += 2) {
-            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
-        }
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testListAddRemove() {
-        final ListOrderedSet<E> set = makeObject();
-        final List<E> view = set.asList();
-        set.add((E) ZERO);
-        set.add((E) ONE);
-        set.add((E) TWO);
-
-        assertEquals(3, set.size());
-        assertSame(ZERO, set.get(0));
-        assertSame(ONE, set.get(1));
-        assertSame(TWO, set.get(2));
-        assertEquals(3, view.size());
-        assertSame(ZERO, view.get(0));
-        assertSame(ONE, view.get(1));
-        assertSame(TWO, view.get(2));
-
-        assertEquals(0, set.indexOf(ZERO));
-        assertEquals(1, set.indexOf(ONE));
-        assertEquals(2, set.indexOf(TWO));
-
-        set.remove(1);
-        assertEquals(2, set.size());
-        assertSame(ZERO, set.get(0));
-        assertSame(TWO, set.get(1));
-        assertEquals(2, view.size());
-        assertSame(ZERO, view.get(0));
-        assertSame(TWO, view.get(1));
     }
 
     @Test
@@ -162,9 +100,69 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         assertSame(ONE, set.get(3));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testListAddRemove() {
+        final ListOrderedSet<E> set = makeObject();
+        final List<E> view = set.asList();
+        set.add((E) ZERO);
+        set.add((E) ONE);
+        set.add((E) TWO);
+
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        assertEquals(3, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(ONE, view.get(1));
+        assertSame(TWO, view.get(2));
+
+        assertEquals(0, set.indexOf(ZERO));
+        assertEquals(1, set.indexOf(ONE));
+        assertEquals(2, set.indexOf(TWO));
+
+        set.remove(1);
+        assertEquals(2, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(TWO, set.get(1));
+        assertEquals(2, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(TWO, view.get(1));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testOrdering() {
+        final ListOrderedSet<E> set = setupSet();
+        Iterator<E> it = set.iterator();
+
+        for (int i = 0; i < 10; i++) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
+
+        for (int i = 0; i < 10; i += 2) {
+            assertTrue(set.remove(Integer.toString(i)), "Must be able to remove int");
+        }
+
+        it = set.iterator();
+        for (int i = 1; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong after remove ");
+        }
+
+        for (int i = 0; i < 10; i++) {
+            set.add((E) Integer.toString(i));
+        }
+
+        assertEquals(10, set.size(), "Size of set is wrong!");
+
+        it = set.iterator();
+        for (int i = 1; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
+        for (int i = 0; i < 10; i += 2) {
+            assertEquals(Integer.toString(i), it.next(), "Sequence is wrong");
+        }
     }
 
 //    public void testCreate() throws Exception {

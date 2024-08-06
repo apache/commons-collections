@@ -25,10 +25,6 @@ import java.util.List;
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public AbstractNullComparatorTest(final String testName) {
-        super(testName);
-    }
-
     /**
      *  Test the NullComparator with nulls high, using comparable comparator
      **/
@@ -39,8 +35,8 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public Comparator<Integer> makeObject() {
-            return new NullComparator<>();
+        public String getCanonicalComparatorName(final Object object) {
+            return super.getCanonicalComparatorName(object) + "1";
         }
 
         @Override
@@ -56,13 +52,13 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public String getCanonicalComparatorName(final Object object) {
-            return super.getCanonicalComparatorName(object) + "1";
+        public String getCompatibilityVersion() {
+            return "4";
         }
 
         @Override
-        public String getCompatibilityVersion() {
-            return "4";
+        public Comparator<Integer> makeObject() {
+            return new NullComparator<>();
         }
 
 //        public void testCreate() throws Exception {
@@ -81,8 +77,8 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public Comparator<Integer> makeObject() {
-            return new NullComparator<>(false);
+        public String getCanonicalComparatorName(final Object object) {
+            return super.getCanonicalComparatorName(object) + "2";
         }
 
         @Override
@@ -98,18 +94,22 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public String getCanonicalComparatorName(final Object object) {
-            return super.getCanonicalComparatorName(object) + "2";
+        public String getCompatibilityVersion() {
+            return "4";
         }
 
         @Override
-        public String getCompatibilityVersion() {
-            return "4";
+        public Comparator<Integer> makeObject() {
+            return new NullComparator<>(false);
         }
 
 //        public void testCreate() throws Exception {
 //            writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/NullComparator.version4.obj2");
 //        }
 
+    }
+
+    public AbstractNullComparatorTest(final String testName) {
+        super(testName);
     }
 }

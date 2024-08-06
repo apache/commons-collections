@@ -31,8 +31,8 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 4.0.
  * </p>
  *
- * @param <I> the input type to the transformer
- * @param <O> the output type from the transformer
+ * @param <I> the type of the input to the function
+ * @param <O> the type of the result of the function
  *
  * @since 2.1
  *
@@ -46,6 +46,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
 
     /** The decorated comparator. */
     private final Comparator<O> decorated;
+
     /** The transformer being used. */
     private final Transformer<? super I, ? extends O> transformer;
 
@@ -80,32 +81,18 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      */
     @Override
     public int compare(final I obj1, final I obj2) {
-        final O value1 = this.transformer.transform(obj1);
-        final O value2 = this.transformer.transform(obj2);
+        final O value1 = this.transformer.apply(obj1);
+        final O value2 = this.transformer.apply(obj2);
         return this.decorated.compare(value1, value2);
     }
 
     /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     */
-    @Override
-    public int hashCode() {
-        int total = 17;
-        total = total*37 + (decorated == null ? 0 : decorated.hashCode());
-        total = total*37 + (transformer == null ? 0 : transformer.hashCode());
-        return total;
-    }
-
-    /**
-     * Returns {@code true} iff <i>that</i> Object is
+     * Returns {@code true} iff <em>that</em> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
-     * iff {@code <i>that</i>} is a {@link TransformingComparator}
+     * iff {@code <em>that</em>} is a {@link TransformingComparator}
      * whose attributes are equal to mine.
      *
      * @param object  the object to compare to
@@ -125,6 +112,19 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
                    Objects.equals(transformer, comp.transformer);
         }
         return false;
+    }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     */
+    @Override
+    public int hashCode() {
+        int total = 17;
+        total = total * 37 + (decorated == null ? 0 : decorated.hashCode());
+        return total * 37 + (transformer == null ? 0 : transformer.hashCode());
     }
 
 }

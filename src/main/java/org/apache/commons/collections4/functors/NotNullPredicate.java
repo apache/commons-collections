@@ -23,9 +23,10 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if the input is not null.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
+public final class NotNullPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
@@ -52,18 +53,23 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Evaluates the predicate returning true if the object does not equal null.
      *
      * @param object  the object to evaluate
      * @return true if not null
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         return object != null;
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

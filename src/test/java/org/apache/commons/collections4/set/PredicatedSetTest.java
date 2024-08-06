@@ -30,24 +30,25 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link PredicatedSet} implementation.
- *
- * @since 3.0
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate =
+        String.class::isInstance;
 
     public PredicatedSetTest() {
         super(PredicatedSetTest.class.getSimpleName());
     }
-
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected PredicatedSet<E> decorateSet(final Set<E> set, final Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
     }
 
     @Override
-    public PredicatedSet<E> makeObject() {
-        return decorateSet(new HashSet<>(), truePredicate);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -56,8 +57,15 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         return (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
 
-    protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
+    @Override
+    public PredicatedSet<E> makeObject() {
+        return decorateSet(new HashSet<>(), truePredicate);
+    }
 
     protected PredicatedSet<E> makeTestSet() {
         return decorateSet(new HashSet<>(), testPredicate);
@@ -94,16 +102,6 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         assertFalse(set.contains("two"), "Set shouldn't contain illegal element");
         assertFalse(set.contains(Integer.valueOf(3)), "Set shouldn't contain illegal element");
         assertFalse(set.contains("four"), "Set shouldn't contain illegal element");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
     }
 
 //    public void testCreate() throws Exception {

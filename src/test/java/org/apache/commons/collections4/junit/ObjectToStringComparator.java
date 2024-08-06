@@ -24,8 +24,6 @@ public final class ObjectToStringComparator implements Comparator<Object>, Seria
 
     /**
      * Singleton instance.
-     *
-     * @since 4.5
      */
     public static final ObjectToStringComparator INSTANCE = new ObjectToStringComparator();
 

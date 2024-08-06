@@ -37,23 +37,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  */
 public class IndexFilterTest {
 
-    @Test
-    public void testFiltering() {
-        final Shape shape = Shape.fromKM(3, 12);
-        final List<Integer> consumer = new ArrayList<>();
-        final IntPredicate filter = IndexFilter.create(shape, consumer::add);
-
-        for (int i = 0; i < 12; i++) {
-            assertTrue(filter.test(i));
-        }
-        assertEquals(12, consumer.size());
-
-        for (int i = 0; i < 12; i++) {
-            assertTrue(filter.test(i));
-        }
-        assertEquals(12, consumer.size());
-    }
-
     @ParameterizedTest
     @CsvSource({
         "1, 64",
@@ -95,5 +78,22 @@ public class IndexFilterTest {
             assertThrows(IndexOutOfBoundsException.class, () -> filter.test(m));
             assertThrows(IndexOutOfBoundsException.class, () -> filter.test(-1));
         }
+    }
+
+    @Test
+    public void testFiltering() {
+        final Shape shape = Shape.fromKM(3, 12);
+        final List<Integer> consumer = new ArrayList<>();
+        final IntPredicate filter = IndexFilter.create(shape, consumer::add);
+
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
+        }
+        assertEquals(12, consumer.size());
+
+        for (int i = 0; i < 12; i++) {
+            assertTrue(filter.test(i));
+        }
+        assertEquals(12, consumer.size());
     }
 }

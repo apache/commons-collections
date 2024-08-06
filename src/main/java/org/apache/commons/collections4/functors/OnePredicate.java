@@ -29,12 +29,27 @@ import org.apache.commons.collections4.Predicate;
  * threw an exception.
  * </p>
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
 public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8125389089924745785L;
+
+    /**
+     * Factory to create the predicate.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code one} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
+        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+        return new OnePredicate<>(preds);
+    }
 
     /**
      * Factory to create the predicate.
@@ -57,21 +72,8 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 1) {
             return (Predicate<T>) predicates[0];
         }
-        return new OnePredicate<>(FunctorUtils.copy(predicates));
-    }
-
-    /**
-     * Factory to create the predicate.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code one} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
-        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
-        return new OnePredicate<>(preds);
+        // <T> not needed in Eclipse but needed by the command line compiler
+        return new OnePredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**
@@ -92,10 +94,10 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @return true if only one decorated predicate returns true
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         boolean match = false;
         for (final Predicate<? super T> iPredicate : iPredicates) {
-            if (iPredicate.evaluate(object)) {
+            if (iPredicate.test(object)) {
                 if (match) {
                     return false;
                 }

@@ -39,20 +39,6 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
     }
 
     /**
-     * Sets the value stored in this {@code Map.Entry}.
-     * <p>
-     * This {@code Map.Entry} is not connected to a Map, so only the
-     * local data is changed.
-     *
-     * @param value  the new value
-     * @return the previous value
-     */
-    @Override
-    public V setValue(final V value) { // NOPMD
-        return super.setValue(value);
-    }
-
-    /**
      * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
@@ -85,6 +71,20 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (getValue() == null ? 0 : getValue().hashCode());
+    }
+
+    /**
+     * Sets the value stored in this {@code Map.Entry}.
+     * <p>
+     * This {@code Map.Entry} is not connected to a Map, so only the
+     * local data is changed.
+     *
+     * @param value  the new value
+     * @return the previous value
+     */
+    @Override
+    public V setValue(final V value) { // NOPMD
+        return super.setValue(value);
     }
 
 }

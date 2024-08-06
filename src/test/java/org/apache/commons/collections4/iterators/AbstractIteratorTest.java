@@ -35,8 +35,9 @@ import org.junit.jupiter.api.Test;
  * Concrete subclasses must provide the iterator to be tested.
  * They must also specify certain details of how the iterator operates by
  * overriding the supportsXxx() methods if necessary.
+ * </p>
  *
- * @since 3.0
+ * @param <E> the type of elements tested by this iterator.
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
@@ -92,13 +93,6 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      */
     public boolean supportsRemove() {
         return true;
-    }
-
-    /**
-     * Allows subclasses to add complex cross verification
-     */
-    public void verify() {
-        // do nothing
     }
 
     /**
@@ -166,9 +160,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
         if (!supportsRemove()) {
             // check for UnsupportedOperationException if not supported
-            try {
-                it.remove();
-            } catch (final UnsupportedOperationException ex) {}
+            assertThrows(UnsupportedOperationException.class, it::remove);
             return;
         }
 
@@ -182,6 +174,13 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
         // should throw IllegalStateException for second remove()
         assertThrows(IllegalStateException.class, () -> it.remove());
+    }
+
+    /**
+     * Allows subclasses to add complex cross verification
+     */
+    public void verify() {
+        // do nothing
     }
 
 }

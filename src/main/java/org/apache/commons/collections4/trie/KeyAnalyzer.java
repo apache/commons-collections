@@ -53,13 +53,6 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     public static final int OUT_OF_BOUNDS_BIT_KEY = -3;
 
     /**
-     * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}.
-     */
-    static boolean isOutOfBoundsIndex(final int bitIndex) {
-        return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
-    }
-
-    /**
      * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}.
      */
     static boolean isEqualBitKey(final int bitIndex) {
@@ -74,39 +67,19 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     }
 
     /**
+     * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}.
+     */
+    static boolean isOutOfBoundsIndex(final int bitIndex) {
+        return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
+    }
+
+    /**
      * Returns true if the given bitIndex is valid.
      * Indices are considered valid if they're between 0 and {@link Integer#MAX_VALUE}
      */
     static boolean isValidBitIndex(final int bitIndex) {
         return bitIndex >= 0;
     }
-
-    /**
-     * Returns the number of bits per element in the key.
-     * This is only useful for variable-length keys, such as Strings.
-     *
-     * @return the number of bits per element
-     */
-    public abstract int bitsPerElement();
-
-    /**
-     * Returns the length of the Key in bits.
-     *
-     * @param key  the key
-     * @return the bit length of the key
-     */
-    public abstract int lengthInBits(K key);
-
-    /**
-     * Returns whether or not a bit is set.
-     *
-     * @param key  the key to check, may not be null
-     * @param bitIndex  the bit index to check
-     * @param lengthInBits  the maximum key length in bits to check
-     * @return {@code true} if the bit is set in the given key and
-     *   {@code bitIndex} &lt; {@code lengthInBits}, {@code false} otherwise.
-     */
-    public abstract boolean isBitSet(K key, int bitIndex, int lengthInBits);
 
     /**
      * Returns the n-th different bit between key and other. This starts the comparison in
@@ -125,15 +98,12 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
                                  K other, int otherOffsetInBits, int otherLengthInBits);
 
     /**
-     * Determines whether or not the given prefix (from offset to length) is a prefix of the given key.
+     * Returns the number of bits per element in the key.
+     * This is only useful for variable-length keys, such as Strings.
      *
-     * @param prefix  the prefix to check
-     * @param offsetInBits  the bit offset in the key
-     * @param lengthInBits  the maximum key length in bits to use
-     * @param key  the key to check
-     * @return {@code true} if this is a valid prefix for the given key
+     * @return the number of bits per element
      */
-    public abstract boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
+    public abstract int bitsPerElement();
 
     @Override
     @SuppressWarnings("unchecked")
@@ -147,5 +117,35 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
 
         return ((Comparable<K>) o1).compareTo(o2);
     }
+
+    /**
+     * Returns whether or not a bit is set.
+     *
+     * @param key  the key to check, may not be null
+     * @param bitIndex  the bit index to check
+     * @param lengthInBits  the maximum key length in bits to check
+     * @return {@code true} if the bit is set in the given key and
+     *   {@code bitIndex} &lt; {@code lengthInBits}, {@code false} otherwise.
+     */
+    public abstract boolean isBitSet(K key, int bitIndex, int lengthInBits);
+
+    /**
+     * Determines whether or not the given prefix (from offset to length) is a prefix of the given key.
+     *
+     * @param prefix  the prefix to check
+     * @param offsetInBits  the bit offset in the key
+     * @param lengthInBits  the maximum key length in bits to use
+     * @param key  the key to check
+     * @return {@code true} if this is a valid prefix for the given key
+     */
+    public abstract boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
+
+    /**
+     * Returns the length of the Key in bits.
+     *
+     * @param key  the key
+     * @return the bit length of the key
+     */
+    public abstract int lengthInBits(K key);
 
 }

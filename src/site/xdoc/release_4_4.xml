@@ -29,7 +29,7 @@ Apache Commons Collections is a project to develop and maintain collection
 classes based on and inspired by the JDK collection framework.
 </p>
 <p>
-This 4.4 release is a minor and requires Java 8.
+This 4.4 release is a minor and requires Java 8 or above.
 This release fixes several bugs present in previous releases of the 4.x branch.
 </p>
 <p>

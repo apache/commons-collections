@@ -39,23 +39,13 @@ public class QueueUtilsTest {
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     @Test
-    public void testSynchronizedQueue() {
-        final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
-        assertTrue(queue instanceof SynchronizedQueue, "Returned object should be a SynchronizedQueue.");
-
-        assertThrows(NullPointerException.class, () -> QueueUtils.synchronizedQueue(null),
-                "Expecting NullPointerException for null queue.");
-    }
-
-    @Test
-    public void testUnmodifiableQueue() {
-        final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
+    public void testEmptyQueue() {
+        final Queue<Object> queue = QueueUtils.emptyQueue();
         assertTrue(queue instanceof UnmodifiableQueue, "Returned object should be an UnmodifiableQueue.");
+        assertTrue(queue.isEmpty(), "Returned queue is not empty.");
 
-        assertThrows(NullPointerException.class, () -> QueueUtils.unmodifiableQueue(null),
-                "Expecting NullPointerException for null queue.");
-
-        assertSame(queue, QueueUtils.unmodifiableQueue(queue), "UnmodifiableQueue shall not be decorated");
+        assertThrows(UnsupportedOperationException.class, () -> queue.add(new Object()),
+                "Expecting UnsupportedOperationException for empty queue.");
     }
 
     @Test
@@ -71,6 +61,15 @@ public class QueueUtilsTest {
     }
 
     @Test
+    public void testSynchronizedQueue() {
+        final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
+        assertTrue(queue instanceof SynchronizedQueue, "Returned object should be a SynchronizedQueue.");
+
+        assertThrows(NullPointerException.class, () -> QueueUtils.synchronizedQueue(null),
+                "Expecting NullPointerException for null queue.");
+    }
+
+    @Test
     public void testTransformedQueue() {
         final Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
         assertTrue(queue instanceof TransformedQueue, "Returned object should be an TransformedQueue.");
@@ -83,13 +82,14 @@ public class QueueUtilsTest {
     }
 
     @Test
-    public void testEmptyQueue() {
-        final Queue<Object> queue = QueueUtils.emptyQueue();
+    public void testUnmodifiableQueue() {
+        final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
         assertTrue(queue instanceof UnmodifiableQueue, "Returned object should be an UnmodifiableQueue.");
-        assertTrue(queue.isEmpty(), "Returned queue is not empty.");
 
-        assertThrows(UnsupportedOperationException.class, () -> queue.add(new Object()),
-                "Expecting UnsupportedOperationException for empty queue.");
+        assertThrows(NullPointerException.class, () -> QueueUtils.unmodifiableQueue(null),
+                "Expecting NullPointerException for null queue.");
+
+        assertSame(queue, QueueUtils.unmodifiableQueue(queue), "UnmodifiableQueue shall not be decorated");
     }
 
 }

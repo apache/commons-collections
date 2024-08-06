@@ -30,8 +30,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link UnmodifiableMap} implementation.
- *
- * @since 3.0
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -40,17 +38,17 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public IterableMap<K, V> makeObject() {
-        return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(new HashMap<>());
-    }
-
-    @Override
-    public boolean isPutChangeSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     public boolean isPutAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isPutChangeSupported() {
         return false;
     }
 
@@ -66,10 +64,9 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public IterableMap<K, V> makeObject() {
+        return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(new HashMap<>());
     }
 
     @Test
@@ -80,9 +77,10 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertThrows(NullPointerException.class, () -> UnmodifiableMap.unmodifiableMap(null));
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

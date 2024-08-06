@@ -122,6 +122,16 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
         super(map, factory);
     }
 
+    @Override
+    public Comparator<? super K> comparator() {
+        return getSortedMap().comparator();
+    }
+
+    @Override
+    public K firstKey() {
+        return getSortedMap().firstKey();
+    }
+
     /**
      * Gets the map being decorated.
      *
@@ -132,8 +142,9 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
     }
 
     @Override
-    public K firstKey() {
-        return getSortedMap().firstKey();
+    public SortedMap<K, V> headMap(final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
+        return new LazySortedMap<>(map, factory);
     }
 
     @Override
@@ -142,19 +153,8 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
     }
 
     @Override
-    public Comparator<? super K> comparator() {
-        return getSortedMap().comparator();
-    }
-
-    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
-        return new LazySortedMap<>(map, factory);
-    }
-
-    @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
         return new LazySortedMap<>(map, factory);
     }
 

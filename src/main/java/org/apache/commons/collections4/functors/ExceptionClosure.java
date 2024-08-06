@@ -24,9 +24,10 @@ import org.apache.commons.collections4.FunctorException;
 /**
  * Closure implementation that always throws an exception.
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public final class ExceptionClosure<E> implements Closure<E>, Serializable {
+public final class ExceptionClosure<T> implements Closure<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
@@ -38,11 +39,11 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
-     * @param <E> the type that the closure acts on
+     * @param <T> the type of the input to the operation.
      * @return the singleton instance
      * @since 3.1
      */
-    public static <E> Closure<E> exceptionClosure() {
+    public static <T> Closure<T> exceptionClosure() {
         return INSTANCE;
     }
 
@@ -59,10 +60,15 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
      * @throws FunctorException always
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         throw new FunctorException("ExceptionClosure invoked");
     }
 
+    /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
     private Object readResolve() {
         return INSTANCE;
     }

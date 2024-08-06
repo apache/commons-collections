@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations of the
+ * Implements the
  * {@link org.apache.commons.collections4.BidiMap BidiMap},
  * {@link org.apache.commons.collections4.OrderedBidiMap OrderedBidiMap} and
  * {@link org.apache.commons.collections4.SortedBidiMap SortedBidiMap} interfaces.
@@ -24,6 +25,7 @@
  * from the new format to the old format and vice versa.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
  *   <li>DualHashBidiMap - uses two HashMaps to implement BidiMap
  *   <li>DualLinkedHashBidiMap - uses two LinkedHashMaps to implement BidiMap
@@ -32,6 +34,7 @@
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
  *   <li>Unmodifiable - ensures the map cannot be altered
  * </ul>

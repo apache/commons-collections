@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 public class ComparatorUtilsTest {
 
     @Test
-    public void booleanComparator() {
+    public void testBooleanComparator() {
         Comparator<Boolean> comp = ComparatorUtils.booleanComparator(true);
         assertTrue(comp.compare(Boolean.TRUE, Boolean.FALSE) < 0);
         assertEquals(0, comp.compare(Boolean.TRUE, Boolean.TRUE));
@@ -44,7 +44,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void chainedComparator() {
+    public void testChainedComparator() {
         // simple test: chain 2 natural comparators
         final Comparator<Integer> comp = ComparatorUtils.chainedComparator(ComparatorUtils.<Integer>naturalComparator(),
                 ComparatorUtils.naturalComparator());
@@ -54,7 +54,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void max() {
+    public void testMax() {
         final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
@@ -72,7 +72,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void min() {
+    public void testMin() {
         final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
@@ -90,18 +90,18 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void nullLowComparator() {
-        final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
-        assertTrue(comp.compare(null, 10) < 0);
-        assertEquals(0, comp.compare(null, null));
-        assertTrue(comp.compare(10, null) > 0);
-    }
-
-    @Test
-    public void nullHighComparator() {
+    public void testNullHighComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
         assertTrue(comp.compare(null, 10) > 0);
         assertEquals(0, comp.compare(null, null));
         assertTrue(comp.compare(10, null) < 0);
+    }
+
+    @Test
+    public void testNullLowComparator() {
+        final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
+        assertTrue(comp.compare(null, 10) < 0);
+        assertEquals(0, comp.compare(null, null));
+        assertTrue(comp.compare(10, null) > 0);
     }
 }

@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
@@ -62,12 +64,12 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Override
-    public boolean supportsRemove() {
+    public boolean supportsEmptyIterator() {
         return true;
     }
 
     @Override
-    public boolean supportsEmptyIterator() {
+    public boolean supportsRemove() {
         return true;
     }
 

@@ -53,7 +53,7 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned list <i>may</i> be modifiable, but updates will not be
+     * The returned list <em>may</em> be modifiable, but updates will not be
      * propagated to this list-valued map. In case no mapping was stored for the
      * specified key, an empty, unmodifiable list will be returned.
      *

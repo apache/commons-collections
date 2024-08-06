@@ -24,6 +24,7 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that returns the result of calling
  * {@code String.valueOf} on the input object.
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public final class StringValueTransformer<T> implements Transformer<T, String>, Serializable {
@@ -53,6 +54,15 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     }
 
     /**
+     * Returns the singleton instance.
+     *
+     * @return the singleton instance.
+     */
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
+    /**
      * Transforms the input to result by calling {@code String.valueOf}.
      *
      * @param input  the input object to transform
@@ -61,10 +71,6 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     @Override
     public String transform(final T input) {
         return String.valueOf(input);
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

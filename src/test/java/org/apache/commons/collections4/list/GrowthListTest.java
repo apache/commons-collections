@@ -33,8 +33,6 @@ import org.junit.jupiter.api.function.Executable;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
- *
- * @since 3.2
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 
@@ -43,8 +41,8 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
-    public List<E> makeObject() {
-        return new GrowthList<>();
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -53,19 +51,9 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         return GrowthList.growthList(list);
     }
 
-    @Test
-    public void testGrowthList() {
-        final Integer zero = Integer.valueOf(0);
-        final Integer one = Integer.valueOf(1);
-        final Integer two = Integer.valueOf(2);
-        final GrowthList<Integer> grower = new GrowthList(1);
-        assertEquals(0, grower.size());
-        grower.add(0, zero);
-        assertEquals(1, grower.size());
-        grower.add(1, one);
-        assertEquals(2, grower.size());
-        grower.add(2, two);
-        assertEquals(3, grower.size());
+    @Override
+    public List<E> makeObject() {
+        return new GrowthList<>();
     }
 
     @Test
@@ -93,6 +81,21 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         assertNull(grower.get(0));
         assertEquals(one, grower.get(1));
         assertEquals(two, grower.get(2));
+    }
+
+    @Test
+    public void testGrowthList() {
+        final Integer zero = Integer.valueOf(0);
+        final Integer one = Integer.valueOf(1);
+        final Integer two = Integer.valueOf(2);
+        final GrowthList<Integer> grower = new GrowthList(1);
+        assertEquals(0, grower.size());
+        grower.add(0, zero);
+        assertEquals(1, grower.size());
+        grower.add(1, one);
+        assertEquals(2, grower.size());
+        grower.add(2, two);
+        assertEquals(3, grower.size());
     }
 
     @Test
@@ -165,11 +168,6 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         final E element = getOtherElements()[0];
         assertThrows(IndexOutOfBoundsException.class, () -> list.set(-1, element),
                 "List.set should throw IndexOutOfBoundsException [-1]");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

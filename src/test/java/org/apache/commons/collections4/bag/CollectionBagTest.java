@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
  * <p>
  * Note: This test is mainly for serialization support, the CollectionBag decorator
  * is extensively used and tested in AbstractBagTest.
- *
- * @since 4.0
  */
 public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
@@ -46,10 +44,14 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         super(CollectionBagTest.class.getSimpleName());
     }
 
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
 
     @Override
-    public Bag<T> makeObject() {
-        return CollectionBag.collectionBag(new HashBag<>());
+    protected int getIterationBehaviour() {
+        return UNORDERED;
     }
 
     /**
@@ -75,13 +77,8 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+    public Bag<T> makeObject() {
+        return CollectionBag.collectionBag(new HashBag<>());
     }
 
 //    public void testCreate() throws Exception {
@@ -90,7 +87,6 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
 //    }
-
 
     /**
      * Compares the current serialized form of the Bag

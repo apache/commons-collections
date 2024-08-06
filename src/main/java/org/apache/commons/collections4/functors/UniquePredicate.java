@@ -26,15 +26,13 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true the first time an object is
  * passed into the predicate.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class UniquePredicate<T> implements Predicate<T>, Serializable {
+public final class UniquePredicate<T>  extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3319417438027438040L;
-
-    /** The set of previously seen objects */
-    private final Set<T> iSet = new HashSet<>();
 
     /**
      * Factory to create the predicate.
@@ -46,6 +44,9 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
     public static <T> Predicate<T> uniquePredicate() {
         return new UniquePredicate<>();
     }
+
+    /** The set of previously seen objects */
+    private final Set<T> iSet = new HashSet<>();
 
     /**
      * Constructor that performs no validation.
@@ -62,7 +63,7 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
      * @return true if this is the first time the object is seen
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         return iSet.add(object);
     }
 

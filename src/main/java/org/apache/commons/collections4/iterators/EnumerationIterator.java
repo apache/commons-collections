@@ -68,6 +68,16 @@ public class EnumerationIterator<E> implements Iterator<E> {
         this.last = null;
     }
 
+    // Properties
+    /**
+     * Returns the underlying enumeration.
+     *
+     * @return the underlying enumeration
+     */
+    public Enumeration<? extends E> getEnumeration() {
+        return enumeration;
+    }
+
     // Iterator interface
     /**
      * Returns true if the underlying enumeration has more elements.
@@ -111,16 +121,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
             throw new IllegalStateException("next() must have been called for remove() to function");
         }
         collection.remove(last);
-    }
-
-    // Properties
-    /**
-     * Returns the underlying enumeration.
-     *
-     * @return the underlying enumeration
-     */
-    public Enumeration<? extends E> getEnumeration() {
-        return enumeration;
     }
 
     /**

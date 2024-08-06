@@ -28,9 +28,11 @@ import org.apache.commons.collections4.Transformer;
  * use the prototype factory.
  * </p>
  *
+ * @param <T> the type of the input to the function.
+ * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializable {
+public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 6374440726369055124L;
@@ -38,20 +40,6 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     /** Returns null each time */
     @SuppressWarnings("rawtypes")
     public static final Transformer NULL_INSTANCE = new ConstantTransformer<>(null);
-
-    /** The closures to call in turn */
-    private final O iConstant;
-
-    /**
-     * Get a typed null instance.
-     *
-     * @param <I>  the input type
-     * @param <O>  the output type
-     * @return Transformer&lt;I, O&gt; that always returns null.
-     */
-    public static <I, O> Transformer<I, O> nullTransformer() {
-        return NULL_INSTANCE;
-    }
 
     /**
      * Transformer method that performs validation.
@@ -69,34 +57,27 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     }
 
     /**
+     * Gets a typed null instance.
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
+     * @return Transformer&lt;I, O&gt; that always returns null.
+     */
+    public static <I, O> Transformer<I, O> nullTransformer() {
+        return NULL_INSTANCE;
+    }
+
+    /** The closures to call in turn */
+    private final R iConstant;
+
+    /**
      * Constructor that performs no validation.
      * Use {@code constantTransformer} if you want that.
      *
      * @param constantToReturn  the constant to return each time
      */
-    public ConstantTransformer(final O constantToReturn) {
+    public ConstantTransformer(final R constantToReturn) {
         iConstant = constantToReturn;
-    }
-
-    /**
-     * Transforms the input by ignoring it and returning the stored constant instead.
-     *
-     * @param input  the input object which is ignored
-     * @return the stored constant
-     */
-    @Override
-    public O transform(final I input) {
-        return iConstant;
-    }
-
-    /**
-     * Gets the constant.
-     *
-     * @return the constant
-     * @since 3.1
-     */
-    public O getConstant() {
-        return iConstant;
     }
 
     /**
@@ -115,6 +96,16 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     }
 
     /**
+     * Gets the constant.
+     *
+     * @return the constant
+     * @since 3.1
+     */
+    public R getConstant() {
+        return iConstant;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -124,5 +115,16 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
             result |= getConstant().hashCode();
         }
         return result;
+    }
+
+    /**
+     * Transforms the input by ignoring it and returning the stored constant instead.
+     *
+     * @param input  the input object which is ignored
+     * @return the stored constant
+     */
+    @Override
+    public R transform(final T input) {
+        return iConstant;
     }
 }

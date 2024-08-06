@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableListIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
@@ -41,15 +43,6 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
 
     public UnmodifiableListIteratorTest() {
         super(UnmodifiableListIteratorTest.class.getSimpleName());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @BeforeEach
-    protected void setUp() throws Exception {
-        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
     @Override
@@ -62,9 +55,10 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         return UnmodifiableListIterator.unmodifiableListIterator(testList.listIterator());
     }
 
-    @Override
-    public boolean supportsRemove() {
-        return false;
+    @SuppressWarnings("unchecked")
+    @BeforeEach
+    protected void setUp() throws Exception {
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
     @Override
@@ -73,13 +67,13 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
     }
 
     @Override
-    public boolean supportsSet() {
+    public boolean supportsRemove() {
         return false;
     }
 
-    @Test
-    public void testListIterator() {
-        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
+    @Override
+    public boolean supportsSet() {
+        return false;
     }
 
     @Test
@@ -91,6 +85,11 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         assertNotSame(it, UnmodifiableListIterator.unmodifiableListIterator(it));
 
         assertThrows(NullPointerException.class, () -> UnmodifiableListIterator.unmodifiableListIterator(null));
+    }
+
+    @Test
+    public void testListIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
 }

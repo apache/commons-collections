@@ -29,20 +29,76 @@ import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
- * implementation.
- *
- * @since 3.1
+ * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap} implementation.
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
+
+    public class TestListView extends AbstractListTest<K> {
+
+        TestListView() {
+            super("TestListView");
+        }
+
+        @Override
+        public K[] getFullElements() {
+            return getSampleKeys();
+        }
+
+        @Override
+        public boolean isAddSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isNullSupported() {
+            return isAllowNullKey();
+        }
+
+        @Override
+        public boolean isRemoveSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isSetSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+
+        @Override
+        public List<K> makeFullCollection() {
+            return ListOrderedMap2Test.this.makeFullMap().asList();
+        }
+
+        @Override
+        public List<K> makeObject() {
+            return ListOrderedMap2Test.this.makeObject().asList();
+        }
+    }
 
     public ListOrderedMap2Test() {
         super(ListOrderedMap2Test.class.getSimpleName());
     }
 
+    public BulkTest bulkTestListView() {
+        return new TestListView();
+    }
+
     @Override
-    public ListOrderedMap<K, V> makeObject() {
-        return new ListOrderedMap<>();
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ListOrderedMap<K, V> getMap() {
+        return (ListOrderedMap<K, V>) super.getMap();
     }
 
     /**
@@ -53,25 +109,34 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         return (ListOrderedMap<K, V>) super.makeFullMap();
     }
 
+    @Override
+    public ListOrderedMap<K, V> makeObject() {
+        return new ListOrderedMap<>();
+    }
+
     @Test
     public void testGetByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.get(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.get(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.get(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -85,19 +150,23 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.getValue(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.getValue(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.getValue(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         int i = 0;
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
@@ -123,25 +192,40 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/ListOrderedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/ListOrderedMap.fullCollection.version3.1.obj");
+//    }
+
     @Test
     public void testRemoveByIndex() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.remove(0);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         resetFull();
         lom = getMap();
         try {
             lom.remove(-1);
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
         try {
             lom.remove(lom.size());
-        } catch (final IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {
+        }
 
         final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
@@ -154,75 +238,5 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
             list.remove(i);
             assertFalse(lom.containsKey(key));
         }
-    }
-
-    public BulkTest bulkTestListView() {
-        return new TestListView();
-    }
-
-    public class TestListView extends AbstractListTest<K> {
-
-        TestListView() {
-            super("TestListView");
-        }
-
-        @Override
-        public List<K> makeObject() {
-            return ListOrderedMap2Test.this.makeObject().asList();
-        }
-
-        @Override
-        public List<K> makeFullCollection() {
-            return ListOrderedMap2Test.this.makeFullMap().asList();
-        }
-
-        @Override
-        public K[] getFullElements() {
-            return ListOrderedMap2Test.this.getSampleKeys();
-        }
-        @Override
-        public boolean isAddSupported() {
-            return false;
-        }
-        @Override
-        public boolean isRemoveSupported() {
-            return false;
-        }
-        @Override
-        public boolean isSetSupported() {
-            return false;
-        }
-        @Override
-        public boolean isNullSupported() {
-            return ListOrderedMap2Test.this.isAllowNullKey();
-        }
-        @Override
-        public boolean isTestSerialization() {
-            return false;
-        }
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/ListOrderedMap.emptyCollection.version3.1.obj");
-//        resetFull();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/ListOrderedMap.fullCollection.version3.1.obj");
-//    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ListOrderedMap<K, V> getMap() {
-        return (ListOrderedMap<K, V>) super.getMap();
     }
 }

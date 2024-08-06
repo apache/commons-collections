@@ -27,13 +27,10 @@ import org.apache.commons.collections4.Predicate;
  *
  * @since 3.0
  */
-public final class InstanceofPredicate implements Predicate<Object>, Serializable {
+public final class InstanceofPredicate extends AbstractPredicate<Object> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6682656911025165584L;
-
-    /** The type to compare to */
-    private final Class<?> iType;
 
     /**
      * Factory to create the identity predicate.
@@ -46,6 +43,9 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
         return new InstanceofPredicate(Objects.requireNonNull(type, "type"));
     }
 
+    /** The type to compare to */
+    private final Class<?> iType;
+
     /**
      * Constructor that performs no validation.
      * Use {@code instanceOfPredicate} if you want that.
@@ -57,17 +57,6 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
     }
 
     /**
-     * Evaluates the predicate returning true if the input object is of the correct type.
-     *
-     * @param object  the input object
-     * @return true if input is of stored type
-     */
-    @Override
-    public boolean evaluate(final Object object) {
-        return iType.isInstance(object);
-    }
-
-    /**
      * Gets the type to compare to.
      *
      * @return the type
@@ -75,6 +64,17 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      */
     public Class<?> getType() {
         return iType;
+    }
+
+    /**
+     * Evaluates the predicate returning true if the input object is of the correct type.
+     *
+     * @param object  the input object
+     * @return true if input is of stored type
+     */
+    @Override
+    public boolean test(final Object object) {
+        return iType.isInstance(object);
     }
 
 }

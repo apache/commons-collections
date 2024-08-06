@@ -39,8 +39,11 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  * </p>
  *
+ * @param <E> the type of the elements in the list.
  * @since 3.0
+ * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21
  */
+@Deprecated
 public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /** Serialization version */
@@ -96,63 +99,6 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     }
 
     /**
-     * Gets the maximum size of the cache.
-     *
-     * @return the maximum cache size
-     */
-    protected int getMaximumCacheSize() {
-        return maximumCacheSize;
-    }
-
-    /**
-     * Sets the maximum size of the cache.
-     *
-     * @param maximumCacheSize  the new maximum cache size
-     */
-    protected void setMaximumCacheSize(final int maximumCacheSize) {
-        this.maximumCacheSize = maximumCacheSize;
-        shrinkCacheToMaximumSize();
-    }
-
-    /**
-     * Reduce the size of the cache to the maximum, if necessary.
-     */
-    protected void shrinkCacheToMaximumSize() {
-        // Rich Dougherty: This could be more efficient.
-        while (cacheSize > maximumCacheSize) {
-            getNodeFromCache();
-        }
-    }
-
-    /**
-     * Gets a node from the cache. If a node is returned, then the value of
-     * {@link #cacheSize} is decreased accordingly. The node that is returned
-     * will have {@code null} values for next, previous and element.
-     *
-     * @return a node, or {@code null} if there are no nodes in the cache.
-     */
-    protected Node<E> getNodeFromCache() {
-        if (cacheSize == 0) {
-            return null;
-        }
-        final Node<E> cachedNode = firstCachedNode;
-        firstCachedNode = cachedNode.next;
-        cachedNode.next = null; // This should be changed anyway, but defensively
-                                // set it to null.
-        cacheSize--;
-        return cachedNode;
-    }
-
-    /**
-     * Checks whether the cache is full.
-     *
-     * @return true if the cache is full
-     */
-    protected boolean isCacheFull() {
-        return cacheSize >= maximumCacheSize;
-    }
-
-    /**
      * Adds a node to the cache, if the cache isn't full.
      * The node's contents are cleared, so they can be garbage collected.
      *
@@ -190,21 +136,57 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     }
 
     /**
-     * Removes the node from the list, storing it in the cache for reuse
-     * if the cache is not yet full.
+     * Gets the maximum size of the cache.
      *
-     * @param node  the node to remove
+     * @return the maximum cache size
      */
-    @Override
-    protected void removeNode(final Node<E> node) {
-        super.removeNode(node);
-        addNodeToCache(node);
+    protected int getMaximumCacheSize() {
+        return maximumCacheSize;
+    }
+
+    /**
+     * Gets a node from the cache. If a node is returned, then the value of
+     * {@link #cacheSize} is decreased accordingly. The node that is returned
+     * will have {@code null} values for next, previous and element.
+     *
+     * @return a node, or {@code null} if there are no nodes in the cache.
+     */
+    protected Node<E> getNodeFromCache() {
+        if (cacheSize == 0) {
+            return null;
+        }
+        final Node<E> cachedNode = firstCachedNode;
+        firstCachedNode = cachedNode.next;
+        cachedNode.next = null; // This should be changed anyway, but defensively
+                                // set it to null.
+        cacheSize--;
+        return cachedNode;
+    }
+
+    /**
+     * Checks whether the cache is full.
+     *
+     * @return true if the cache is full
+     */
+    protected boolean isCacheFull() {
+        return cacheSize >= maximumCacheSize;
+    }
+
+    /**
+     * Deserializes the data held in this object to the stream specified.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
 
     /**
      * Removes all the nodes from the list, storing as many as required in the
      * cache for reuse.
-     *
      */
     @Override
     protected void removeAllNodes() {
@@ -223,26 +205,46 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     }
 
     /**
-     * Serializes the data held in this object to the stream specified.
+     * Removes the node from the list, storing it in the cache for reuse
+     * if the cache is not yet full.
      *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @param node  the node to remove
+     */
+    @Override
+    protected void removeNode(final Node<E> node) {
+        super.removeNode(node);
+        addNodeToCache(node);
+    }
+
+    /**
+     * Sets the maximum size of the cache.
+     *
+     * @param maximumCacheSize  the new maximum cache size
+     */
+    protected void setMaximumCacheSize(final int maximumCacheSize) {
+        this.maximumCacheSize = maximumCacheSize;
+        shrinkCacheToMaximumSize();
+    }
+
+    /**
+     * Reduce the size of the cache to the maximum, if necessary.
+     */
+    protected void shrinkCacheToMaximumSize() {
+        // Rich Dougherty: This could be more efficient.
+        while (cacheSize > maximumCacheSize) {
+            getNodeFromCache();
+        }
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
-    }
-
-    /**
-     * Deserializes the data held in this object to the stream specified.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
     }
 
 }

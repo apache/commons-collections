@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package contains implementations of collection and map related key/value classes.
+ * Implements collection and map related key/value classes.
  * These are usually used in maps, however they can be used as data holders in any collection.
  * <p>
  * The following key/value designs are included:

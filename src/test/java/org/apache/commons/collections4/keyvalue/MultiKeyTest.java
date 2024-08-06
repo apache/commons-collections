@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -86,7 +87,7 @@ public class MultiKeyTest {
         }
 
         private Object readResolve() {
-            hashCode=2; // simulate different hashCode after deserialization in another process
+            hashCode = 2; // simulate different hashCode after deserialization in another process
             return this;
         }
     }
@@ -170,7 +171,7 @@ public class MultiKeyTest {
         assertEquals(mk1, mk1);
         assertEquals(mk1, mk2);
         assertNotEquals(mk1, mk3);
-        assertNotEquals("", mk1);
+        assertNotEquals(StringUtils.EMPTY, mk1);
         assertNotEquals(null, mk1);
     }
 

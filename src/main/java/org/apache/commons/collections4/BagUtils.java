@@ -49,9 +49,81 @@ public class BagUtils {
             UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<>());
 
     /**
-     * Don't allow instances.
+     * Returns a bag that complies to the Collection contract, backed by the given bag.
+     *
+     * @param <E> the element type
+     * @param bag the bag to decorate, must not be null
+     * @return a Bag that complies to the Collection contract
+     * @throws NullPointerException if bag is null
+     * @since 4.0
      */
-    private BagUtils() {}
+    public static <E> Bag<E> collectionBag(final Bag<E> bag) {
+        return CollectionBag.collectionBag(bag);
+    }
+
+    /**
+     * Gets an empty {@code Bag}.
+     *
+     * @param <E> the element type
+     * @return an empty Bag
+     */
+    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
+    public static <E> Bag<E> emptyBag() {
+        return EMPTY_BAG;
+    }
+
+    /**
+     * Gets an empty {@code SortedBag}.
+     *
+     * @param <E> the element type
+     * @return an empty sorted Bag
+     */
+    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
+    public static <E> SortedBag<E> emptySortedBag() {
+        return (SortedBag<E>) EMPTY_SORTED_BAG;
+    }
+
+    /**
+     * Returns a predicated (validating) bag backed by the given bag.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to
+     * the bag. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original bag
+     * after invoking this method, as it is a backdoor for adding invalid
+     * objects.
+     * </p>
+     *
+     * @param <E> the element type
+     * @param bag the bag to predicate, must not be null
+     * @param predicate the predicate for the bag, must not be null
+     * @return a predicated bag backed by the given bag
+     * @throws NullPointerException if the Bag or Predicate is null
+     */
+    public static <E> Bag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
+        return PredicatedBag.predicatedBag(bag, predicate);
+    }
+
+    /**
+     * Returns a predicated (validating) sorted bag backed by the given sorted
+     * bag.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to
+     * the bag. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original bag
+     * after invoking this method, as it is a backdoor for adding invalid
+     * objects.
+     * </p>
+     *
+     * @param <E> the element type
+     * @param bag the sorted bag to predicate, must not be null
+     * @param predicate the predicate for the bag, must not be null
+     * @return a predicated bag backed by the given bag
+     * @throws NullPointerException if the SortedBag or Predicate is null
+     */
+    public static <E> SortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
+            final Predicate<? super E> predicate) {
+        return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
+    }
 
     /**
      * Returns a synchronized (thread-safe) bag backed by the given bag. In
@@ -82,74 +154,6 @@ public class BagUtils {
      */
     public static <E> Bag<E> synchronizedBag(final Bag<E> bag) {
         return SynchronizedBag.synchronizedBag(bag);
-    }
-
-    /**
-     * Returns an unmodifiable view of the given bag. Any modification attempts
-     * to the returned bag will raise an {@link UnsupportedOperationException}.
-     *
-     * @param <E> the element type
-     * @param bag the bag whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that bag
-     * @throws NullPointerException if the Bag is null
-     */
-    public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
-        return UnmodifiableBag.unmodifiableBag(bag);
-    }
-
-    /**
-     * Returns a predicated (validating) bag backed by the given bag.
-     * <p>
-     * Only objects that pass the test in the given predicate can be added to
-     * the bag. Trying to add an invalid object results in an
-     * IllegalArgumentException. It is important not to use the original bag
-     * after invoking this method, as it is a backdoor for adding invalid
-     * objects.
-     * </p>
-     *
-     * @param <E> the element type
-     * @param bag the bag to predicate, must not be null
-     * @param predicate the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
-     * @throws NullPointerException if the Bag or Predicate is null
-     */
-    public static <E> Bag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
-        return PredicatedBag.predicatedBag(bag, predicate);
-    }
-
-    /**
-     * Returns a transformed bag backed by the given bag.
-     * <p>
-     * Each object is passed through the transformer as it is added to the Bag.
-     * It is important not to use the original bag after invoking this method,
-     * as it is a backdoor for adding untransformed objects.
-     * </p>
-     * <p>
-     * Existing entries in the specified bag will not be transformed.
-     * If you want that behavior, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
-     * </p>
-     *
-     * @param <E> the element type
-     * @param bag the bag to predicate, must not be null
-     * @param transformer the transformer for the bag, must not be null
-     * @return a transformed bag backed by the given bag
-     * @throws NullPointerException if the Bag or Transformer is null
-     */
-    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
-        return TransformedBag.transformingBag(bag, transformer);
-    }
-
-    /**
-     * Returns a bag that complies to the Collection contract, backed by the given bag.
-     *
-     * @param <E> the element type
-     * @param bag the bag to decorate, must not be null
-     * @return a Bag that complies to the Collection contract
-     * @throws NullPointerException if bag is null
-     * @since 4.0
-     */
-    public static <E> Bag<E> collectionBag(final Bag<E> bag) {
-        return CollectionBag.collectionBag(bag);
     }
 
     /**
@@ -184,39 +188,25 @@ public class BagUtils {
     }
 
     /**
-     * Returns an unmodifiable view of the given sorted bag. Any modification
-     * attempts to the returned bag will raise an
-     * {@link UnsupportedOperationException}.
-     *
-     * @param <E> the element type
-     * @param bag the bag whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that bag
-     * @throws NullPointerException if the SortedBag is null
-     */
-    public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
-        return UnmodifiableSortedBag.unmodifiableSortedBag(bag);
-    }
-
-    /**
-     * Returns a predicated (validating) sorted bag backed by the given sorted
-     * bag.
+     * Returns a transformed bag backed by the given bag.
      * <p>
-     * Only objects that pass the test in the given predicate can be added to
-     * the bag. Trying to add an invalid object results in an
-     * IllegalArgumentException. It is important not to use the original bag
-     * after invoking this method, as it is a backdoor for adding invalid
-     * objects.
+     * Each object is passed through the transformer as it is added to the Bag.
+     * It is important not to use the original bag after invoking this method,
+     * as it is a backdoor for adding untransformed objects.
+     * </p>
+     * <p>
+     * Existing entries in the specified bag will not be transformed.
+     * If you want that behavior, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
      * </p>
      *
      * @param <E> the element type
-     * @param bag the sorted bag to predicate, must not be null
-     * @param predicate the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
-     * @throws NullPointerException if the SortedBag or Predicate is null
+     * @param bag the bag to predicate, must not be null
+     * @param transformer the transformer for the bag, must not be null
+     * @return a transformed bag backed by the given bag
+     * @throws NullPointerException if the Bag or Transformer is null
      */
-    public static <E> SortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
-            final Predicate<? super E> predicate) {
-        return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
+    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
+        return TransformedBag.transformingBag(bag, transformer);
     }
 
     /**
@@ -244,24 +234,37 @@ public class BagUtils {
     }
 
     /**
-     * Get an empty {@code Bag}.
+     * Returns an unmodifiable view of the given bag. Any modification attempts
+     * to the returned bag will raise an {@link UnsupportedOperationException}.
      *
      * @param <E> the element type
-     * @return an empty Bag
+     * @param bag the bag whose unmodifiable view is to be returned, must not be null
+     * @return an unmodifiable view of that bag
+     * @throws NullPointerException if the Bag is null
      */
-    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
-    public static <E> Bag<E> emptyBag() {
-        return EMPTY_BAG;
+    public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
+        return UnmodifiableBag.unmodifiableBag(bag);
     }
 
     /**
-     * Get an empty {@code SortedBag}.
+     * Returns an unmodifiable view of the given sorted bag. Any modification
+     * attempts to the returned bag will raise an
+     * {@link UnsupportedOperationException}.
      *
      * @param <E> the element type
-     * @return an empty sorted Bag
+     * @param bag the bag whose unmodifiable view is to be returned, must not be null
+     * @return an unmodifiable view of that bag
+     * @throws NullPointerException if the SortedBag is null
      */
-    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
-    public static <E> SortedBag<E> emptySortedBag() {
-        return (SortedBag<E>) EMPTY_SORTED_BAG;
+    public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
+        return UnmodifiableSortedBag.unmodifiableSortedBag(bag);
     }
+
+    /**
+     * Don't allow instances.
+     */
+    private BagUtils() {
+        // empty
+    }
+
 }

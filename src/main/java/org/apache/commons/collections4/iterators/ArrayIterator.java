@@ -73,7 +73,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Construct an ArrayIterator that will iterate over a range of values
+     * Constructs an ArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over.
@@ -120,6 +120,36 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
         }
     }
 
+    // Properties
+    /**
+     * Gets the array that this iterator is iterating over.
+     *
+     * @return the array this iterator iterates over.
+     */
+    public Object getArray() {
+        return array;
+    }
+
+    /**
+     * Gets the end index to loop to.
+     *
+     * @return the end index
+     * @since 4.0
+     */
+    public int getEndIndex() {
+        return this.endIndex;
+    }
+
+    /**
+     * Gets the start index to loop from.
+     *
+     * @return the start index
+     * @since 4.0
+     */
+    public int getStartIndex() {
+        return this.startIndex;
+    }
+
     // Iterator interface
     /**
      * Returns true if there are more elements to return from the array.
@@ -155,36 +185,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() method is not supported");
-    }
-
-    // Properties
-    /**
-     * Gets the array that this iterator is iterating over.
-     *
-     * @return the array this iterator iterates over.
-     */
-    public Object getArray() {
-        return array;
-    }
-
-    /**
-     * Gets the start index to loop from.
-     *
-     * @return the start index
-     * @since 4.0
-     */
-    public int getStartIndex() {
-        return this.startIndex;
-    }
-
-    /**
-     * Gets the end index to loop to.
-     *
-     * @return the end index
-     * @since 4.0
-     */
-    public int getEndIndex() {
-        return this.endIndex;
     }
 
     /**

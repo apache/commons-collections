@@ -26,18 +26,13 @@ import org.apache.commons.collections4.Transformer;
  * Predicate implementation that transforms the given object before invoking
  * another {@code Predicate}.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.1
  */
-public final class TransformedPredicate<T> implements PredicateDecorator<T>, Serializable {
+public final class TransformedPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -5596090919668315834L;
-
-    /** The transformer to call */
-    private final Transformer<? super T, ? extends T> iTransformer;
-
-    /** The predicate to call */
-    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory to create the predicate.
@@ -54,6 +49,12 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
                 Objects.requireNonNull(predicate, "predicate"));
     }
 
+    /** The transformer to call */
+    private final Transformer<? super T, ? extends T> iTransformer;
+
+    /** The predicate to call */
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Constructor that performs no validation.
      * Use {@code transformedPredicate} if you want that.
@@ -65,19 +66,6 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
                                 final Predicate<? super T> predicate) {
         iTransformer = transformer;
         iPredicate = predicate;
-    }
-
-    /**
-     * Evaluates the predicate returning the result of the decorated predicate
-     * once the input has been transformed
-     *
-     * @param object  the input object which will be transformed
-     * @return true if decorated predicate returns true
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        final T result = iTransformer.transform(object);
-        return iPredicate.evaluate(result);
     }
 
     /**
@@ -99,6 +87,19 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
      */
     public Transformer<? super T, ? extends T> getTransformer() {
         return iTransformer;
+    }
+
+    /**
+     * Evaluates the predicate returning the result of the decorated predicate
+     * once the input has been transformed
+     *
+     * @param object  the input object which will be transformed
+     * @return true if decorated predicate returns true
+     */
+    @Override
+    public boolean test(final T object) {
+        final T result = iTransformer.apply(object);
+        return iPredicate.test(result);
     }
 
 }

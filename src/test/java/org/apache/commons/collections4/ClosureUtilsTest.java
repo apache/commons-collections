@@ -37,15 +37,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ClosureUtils class.
- *
- * @since 3.0
  */
 public class ClosureUtilsTest {
 
-    private static final Object cString = "Hello";
-
     static class MockClosure<T> implements Closure<T> {
-        int count = 0;
+        int count;
 
         @Override
         public void execute(final T object) {
@@ -58,7 +54,7 @@ public class ClosureUtilsTest {
     }
 
     static class MockTransformer<T> implements Transformer<T, T> {
-        int count = 0;
+        int count;
 
         @Override
         public T transform(final T object) {
@@ -67,82 +63,14 @@ public class ClosureUtilsTest {
         }
     }
 
-    @Test
-    public void testExceptionClosure() {
-        assertNotNull(ClosureUtils.exceptionClosure());
-        assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
-        assertAll(
-                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(null)),
-                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(cString))
-        );
-    }
-
-    @Test
-    public void testNopClosure() {
-        final StringBuilder buf = new StringBuilder("Hello");
-        ClosureUtils.nopClosure().execute(null);
-        assertEquals("Hello", buf.toString());
-        ClosureUtils.nopClosure().execute("Hello");
-        assertEquals("Hello", buf.toString());
-    }
-
-    @Test
-    public void testInvokeClosure() {
-        StringBuilder buf = new StringBuilder("Hello"); // Only StringBuffer has setLength() method
-        ClosureUtils.invokerClosure("reverse").execute(buf);
-        assertEquals("olleH", buf.toString());
-        buf = new StringBuilder("Hello");
-        ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
-        assertEquals("He", buf.toString());
-    }
-
-    @Test
-    public void testForClosure() {
-        final MockClosure<Object> cmd = new MockClosure<>();
-        ClosureUtils.forClosure(5, cmd).execute(null);
-        assertEquals(5, cmd.count);
-        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(0, new MockClosure<>()));
-        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(-1, new MockClosure<>()));
-        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(1, null));
-        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(3, null));
-        assertSame(cmd, ClosureUtils.forClosure(1, cmd));
-    }
-
-    @Test
-    public void testWhileClosure() {
-        MockClosure<Object> cmd = new MockClosure<>();
-        ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), cmd).execute(null);
-        assertEquals(0, cmd.count);
-
-        cmd = new MockClosure<>();
-        ClosureUtils.whileClosure(PredicateUtils.uniquePredicate(), cmd).execute(null);
-        assertEquals(1, cmd.count);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, ClosureUtils.nopClosure())),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, null))
-        );
-    }
-
-    @Test
-    public void testDoWhileClosure() {
-        MockClosure<Object> cmd = new MockClosure<>();
-        ClosureUtils.doWhileClosure(cmd, FalsePredicate.falsePredicate()).execute(null);
-        assertEquals(1, cmd.count);
-
-        cmd = new MockClosure<>();
-        ClosureUtils.doWhileClosure(cmd, PredicateUtils.uniquePredicate()).execute(null);
-        assertEquals(2, cmd.count);
-
-        assertThrows(NullPointerException.class, () -> ClosureUtils.doWhileClosure(null, null));
-    }
+    private static final Object cString = "Hello";
 
     @Test
     @SuppressWarnings("unchecked")
     public void testChainedClosure() {
         MockClosure<Object> a = new MockClosure<>();
         MockClosure<Object> b = new MockClosure<>();
-        ClosureUtils.chainedClosure(a, b).execute(null);
+        ClosureUtils.chainedClosure(a, b).accept(null);
         assertEquals(1, a.count);
         assertEquals(1, b.count);
 
@@ -179,6 +107,41 @@ public class ClosureUtilsTest {
     }
 
     @Test
+    public void testDoWhileClosure() {
+        MockClosure<Object> cmd = new MockClosure<>();
+        ClosureUtils.doWhileClosure(cmd, FalsePredicate.falsePredicate()).execute(null);
+        assertEquals(1, cmd.count);
+
+        cmd = new MockClosure<>();
+        ClosureUtils.doWhileClosure(cmd, PredicateUtils.uniquePredicate()).execute(null);
+        assertEquals(2, cmd.count);
+
+        assertThrows(NullPointerException.class, () -> ClosureUtils.doWhileClosure(null, null));
+    }
+
+    @Test
+    public void testExceptionClosure() {
+        assertNotNull(ClosureUtils.exceptionClosure());
+        assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
+        assertAll(
+                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(null)),
+                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(cString))
+        );
+    }
+
+    @Test
+    public void testForClosure() {
+        final MockClosure<Object> cmd = new MockClosure<>();
+        ClosureUtils.forClosure(5, cmd).execute(null);
+        assertEquals(5, cmd.count);
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(0, new MockClosure<>()));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(-1, new MockClosure<>()));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(1, null));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(3, null));
+        assertSame(cmd, ClosureUtils.forClosure(1, cmd));
+    }
+
+    @Test
     public void testIfClosure() {
         MockClosure<Object> a = new MockClosure<>();
         MockClosure<Object> b;
@@ -200,6 +163,44 @@ public class ClosureUtilsTest {
         ClosureUtils.ifClosure(FalsePredicate.<Object>falsePredicate(), a, b).execute(null);
         assertEquals(0, a.count);
         assertEquals(1, b.count);
+    }
+
+    @Test
+    public void testInvokeClosure() {
+        StringBuilder buf = new StringBuilder("Hello"); // Only StringBuffer has setLength() method
+        ClosureUtils.invokerClosure("reverse").execute(buf);
+        assertEquals("olleH", buf.toString());
+        buf = new StringBuilder("Hello");
+        ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
+        assertEquals("He", buf.toString());
+    }
+
+    @Test
+    public void testNopClosure() {
+        final StringBuilder buf = new StringBuilder("Hello");
+        ClosureUtils.nopClosure().execute(null);
+        assertEquals("Hello", buf.toString());
+        ClosureUtils.nopClosure().execute("Hello");
+        assertEquals("Hello", buf.toString());
+    }
+
+    /**
+     * Test that all Closure singletons hold singleton pattern in
+     * serialization/deserialization process.
+     */
+    @Test
+    public void testSingletonPatternInSerialization() {
+        final Object[] singletons = {
+            ExceptionClosure.INSTANCE,
+            NOPClosure.INSTANCE,
+        };
+
+        for (final Object original : singletons) {
+            TestUtils.assertSameAfterSerialization(
+                    "Singleton pattern broken for " + original.getClass(),
+                    original
+            );
+        }
     }
 
     @Test
@@ -326,23 +327,20 @@ public class ClosureUtilsTest {
         assertEquals(ClosureUtils.nopClosure(), ClosureUtils.asClosure(null));
     }
 
-    /**
-     * Test that all Closure singletons hold singleton pattern in
-     * serialization/deserialization process.
-     */
     @Test
-    public void testSingletonPatternInSerialization() {
-        final Object[] singletons = {
-            ExceptionClosure.INSTANCE,
-            NOPClosure.INSTANCE,
-        };
+    public void testWhileClosure() {
+        MockClosure<Object> cmd = new MockClosure<>();
+        ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), cmd).execute(null);
+        assertEquals(0, cmd.count);
 
-        for (final Object original : singletons) {
-            TestUtils.assertSameAfterSerialization(
-                    "Singleton pattern broken for " + original.getClass(),
-                    original
-            );
-        }
+        cmd = new MockClosure<>();
+        ClosureUtils.whileClosure(PredicateUtils.uniquePredicate(), cmd).execute(null);
+        assertEquals(1, cmd.count);
+        assertAll(
+                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, ClosureUtils.nopClosure())),
+                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null)),
+                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, null))
+        );
     }
 
 }

@@ -34,9 +34,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test ArrayListValuedHashMap
- *
- * @since 4.1
+ * Tests {@link ArrayListValuedHashMap}.
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
@@ -45,13 +43,50 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Override
+    protected int getIterationBehaviour() {
+        return AbstractCollectionTest.UNORDERED;
+    }
+
+    @Override
     public ListValuedMap<K, V> makeObject() {
         return new ArrayListValuedHashMap<>();
     }
 
-    @Override
-    protected int getIterationBehaviour() {
-        return AbstractCollectionTest.UNORDERED;
+    @Test
+    public void testArrayListValuedHashMap() {
+        final ListValuedMap<K, V> listMap;
+        final ListValuedMap<K, V> listMap1;
+        final Map<K, V> map = new HashMap<>();
+        final Map<K, V> map1 = new HashMap<>();
+        map.put((K) "A", (V) "W");
+        map.put((K) "B", (V) "X");
+        map.put((K) "C", (V) "F");
+
+        listMap = new ArrayListValuedHashMap<>(map);
+        assertEquals(1, listMap.get((K) "A").size());
+        assertEquals(1, listMap.get((K) "B").size());
+        assertEquals(1, listMap.get((K) "C").size());
+
+        listMap1 = new ArrayListValuedHashMap<>(map1);
+        assertEquals("{}", listMap1.toString());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void testEqualsHashCodeContract() {
+        final MultiValuedMap map1 = makeObject();
+        final MultiValuedMap map2 = makeObject();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a1");
+        map2.put("a", "a2");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a2");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
     @Test
@@ -78,6 +113,27 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertTrue(listMap.containsKey("B"));
         // As ListIterator always adds before the current cursor
         assertFalse(listIt.hasNext());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void testListValuedMapEqualsHashCodeContract() {
+        final ListValuedMap map1 = makeObject();
+        final ListValuedMap map2 = makeObject();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a1");
+        map2.put("a", "a2");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map1.put("b", "b1");
+        map1.put("b", "b2");
+        map2.put("b", "b2");
+        map2.put("b", "b1");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
     @Test
@@ -119,66 +175,8 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals(2, listMap.get((K) "B").size());
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testEqualsHashCodeContract() {
-        final MultiValuedMap map1 = makeObject();
-        final MultiValuedMap map2 = makeObject();
-
-        map1.put("a", "a1");
-        map1.put("a", "a2");
-        map2.put("a", "a1");
-        map2.put("a", "a2");
-        assertEquals(map1, map2);
-        assertEquals(map1.hashCode(), map2.hashCode());
-
-        map2.put("a", "a2");
-        assertNotSame(map1, map2);
-        assertNotSame(map1.hashCode(), map2.hashCode());
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Test
-    public void testListValuedMapEqualsHashCodeContract() {
-        final ListValuedMap map1 = makeObject();
-        final ListValuedMap map2 = makeObject();
-
-        map1.put("a", "a1");
-        map1.put("a", "a2");
-        map2.put("a", "a1");
-        map2.put("a", "a2");
-        assertEquals(map1, map2);
-        assertEquals(map1.hashCode(), map2.hashCode());
-
-        map1.put("b", "b1");
-        map1.put("b", "b2");
-        map2.put("b", "b2");
-        map2.put("b", "b1");
-        assertNotSame(map1, map2);
-        assertNotSame(map1.hashCode(), map2.hashCode());
-    }
-
-    @Test
-    public void testArrayListValuedHashMap() {
-        final ListValuedMap<K, V> listMap;
-        final ListValuedMap<K, V> listMap1;
-        final Map<K, V> map = new HashMap<>();
-        final Map<K, V> map1 = new HashMap<>();
-        map.put((K) "A", (V) "W");
-        map.put((K) "B", (V) "X");
-        map.put((K) "C", (V) "F");
-
-        listMap = new ArrayListValuedHashMap<>(map);
-        assertEquals(1, listMap.get((K) "A").size());
-        assertEquals(1, listMap.get((K) "B").size());
-        assertEquals(1, listMap.get((K) "C").size());
-
-        listMap1 = new ArrayListValuedHashMap<>(map1);
-        assertEquals("{}", listMap1.toString());
-    }
-
-    @Test
-    public void testTrimToSize(){
+    public void testTrimToSize() {
         final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
@@ -191,6 +189,25 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         listMap.trimToSize();
         assertEquals(2, listMap.get((K) "A").size());
         assertEquals(1, listMap.get((K) "B").size());
+    }
+
+    @Test
+    public void testValuesListIteratorMethods() {
+        final ListValuedMap<K, V> listMap = makeObject();
+        final List<V> listA = listMap.get((K) "A");
+        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
+        listA.addAll(0, list);
+        final ListIterator<V> it = listMap.get((K) "A").listIterator(1);
+        assertTrue(it.hasNext());
+        assertEquals("X", it.next());
+        assertEquals("F", it.next());
+        assertTrue(it.hasPrevious());
+        assertEquals("F", it.previous());
+        assertEquals(2, it.nextIndex());
+        assertEquals(1, it.previousIndex());
+        it.set((V) "Z");
+        assertEquals("Z", it.next());
+        assertEquals("Q", it.next());
     }
 
     @Test
@@ -235,25 +252,6 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         final List<V> list3 = listMap.get((K) "A").subList(1, 4);
         assertEquals(3, list3.size());
         assertEquals("Q", list3.get(2));
-    }
-
-    @Test
-    public void testValuesListIteratorMethods(){
-        final ListValuedMap<K, V> listMap = makeObject();
-        final List<V> listA = listMap.get((K) "A");
-        final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
-        listA.addAll(0, list);
-        final ListIterator<V> it = listMap.get((K) "A").listIterator(1);
-        assertTrue(it.hasNext());
-        assertEquals("X", it.next());
-        assertEquals("F", it.next());
-        assertTrue(it.hasPrevious());
-        assertEquals("F", it.previous());
-        assertEquals(2, it.nextIndex());
-        assertEquals(1, it.previousIndex());
-        it.set((V) "Z");
-        assertEquals("Z", it.next());
-        assertEquals("Q", it.next());
     }
 
 //    public void testCreate() throws Exception {

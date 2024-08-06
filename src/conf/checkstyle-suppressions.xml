@@ -15,23 +15,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-
 <!DOCTYPE suppressions PUBLIC
-     "-//Checkstyle//DTD SuppressionFilter Configuration 1.0//EN"
-     "https://checkstyle.org/dtds/suppressions_1_0.dtd">
-
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
   <!-- Suppress switch fallthrough / default case for class Flat3Map -->
   <suppress checks="FallThrough" files="Flat3Map.java" />
   <suppress checks="MissingSwitchDefault" files="Flat3Map.java" />
-
   <!-- Ignore missing javadoc for Get/Put interfaces, they refer to java.util.Map -->
   <suppress checks="JavadocMethod" files="Get.java" />
   <suppress checks="JavadocMethod" files="Put.java" />
-
   <!-- Ignore missing javadoc param for unsupported method -->
   <suppress checks="JavadocMethod" files="FilterListIterator.java" lines="116,166" />
-
   <!-- Be more lenient on tests. -->
   <suppress checks="Javadoc" files=".*[/\\]test[/\\].*" />
   <suppress checks="MultipleStringLiterals" files=".*[/\\]test[/\\].*" />

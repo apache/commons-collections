@@ -39,35 +39,35 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for FluentIterable.
- *
- * @since 4.1
  */
 public class FluentIterableTest {
+
+    private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
     /**
      * Iterable of {@link Integer}s
      */
-    private Iterable<Integer> iterableA = null;
+    private Iterable<Integer> iterableA;
 
     /**
      * Iterable of {@link Long}s
      */
-    private Iterable<Long> iterableB = null;
+    private Iterable<Long> iterableB;
 
     /**
      * Collection of even {@link Integer}s
      */
-    private Iterable<Integer> iterableEven = null;
+    private Iterable<Integer> iterableEven;
 
     /**
      * Collection of odd {@link Integer}s
      */
-    private Iterable<Integer> iterableOdd = null;
+    private Iterable<Integer> iterableOdd;
 
     /**
      * An empty Iterable.
      */
-    private Iterable<Integer> emptyIterable = null;
+    private Iterable<Integer> emptyIterable;
 
     @BeforeEach
     public void setUp() {
@@ -103,29 +103,28 @@ public class FluentIterableTest {
         emptyIterable = Collections.emptyList();
     }
 
-    private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
-
     @Test
-    public void factoryMethodOf() {
-        FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
-        List<Integer> result = iterable.toList();
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+    public void testAllMatch() {
+        assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
 
-        iterable = FluentIterable.of(1);
-        assertEquals(1, iterable.size());
-        assertFalse(iterable.isEmpty());
-        assertEquals(Arrays.asList(1), iterable.toList());
-
-        result = FluentIterable.of(new Integer[0]).toList();
-        assertTrue(result.isEmpty());
-
-        final Iterable<Integer> it = null;
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(it).toList(),
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).allMatch(null),
                 "expecting NullPointerException");
     }
 
     @Test
-    public void appendElements() {
+    public void testAnyMatch() {
+        assertTrue(FluentIterable.of(iterableEven).anyMatch(EVEN));
+        assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
+        assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).anyMatch(null),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testAppendElements() {
         final FluentIterable<Integer> it = FluentIterable.of(iterableA).append(10, 20, 30);
         assertEquals(IterableUtils.size(iterableA) + 3, IterableUtils.size(it));
         assertTrue(IterableUtils.contains(it, 1));
@@ -139,7 +138,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void appendIterable() {
+    public void testAppendIterable() {
         final List<Integer> listB = Arrays.asList(10, 20, 30);
         final FluentIterable<Integer> it = FluentIterable.of(iterableA).append(listB);
         assertEquals(IterableUtils.size(iterableA) + listB.size(), IterableUtils.size(it));
@@ -151,191 +150,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void collate() {
-        final List<Integer> result = FluentIterable.of(iterableOdd).collate(iterableEven).toList();
-        final List<Integer> combinedList = new ArrayList<>();
-        CollectionUtils.addAll(combinedList, iterableOdd);
-        CollectionUtils.addAll(combinedList, iterableEven);
-        combinedList.sort(null);
-        assertEquals(combinedList, result);
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableOdd).collate(null).toList(),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void collateWithComparator() {
-        List<Integer> result =
-                FluentIterable
-                    .of(iterableOdd)
-                    .collate(iterableEven, ComparatorUtils.<Integer>naturalComparator())
-                    .toList();
-
-        final List<Integer> combinedList = new ArrayList<>();
-        CollectionUtils.addAll(combinedList, iterableOdd);
-        CollectionUtils.addAll(combinedList, iterableEven);
-        combinedList.sort(null);
-        assertEquals(combinedList, result);
-
-        // null comparator is equivalent to natural ordering
-        result = FluentIterable.of(iterableOdd).collate(iterableEven, null).toList();
-        assertEquals(combinedList, result);
-    }
-
-    @Test
-    public void filter() {
-        final Predicate<Integer> smallerThan3 = object -> object.intValue() < 3;
-        List<Integer> result = FluentIterable.of(iterableA).filter(smallerThan3).toList();
-        assertEquals(3, result.size());
-        assertEquals(Arrays.asList(1, 2, 2), result);
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).filter(smallerThan3).toList();
-        assertEquals(0, result.size());
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).filter(null).toList(),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void forEach() {
-        final AtomicInteger sum = new AtomicInteger(0);
-        final Closure<Integer> closure = sum::addAndGet;
-
-        FluentIterable.of(iterableA).forEach(closure);
-        int expectedSum = 0;
-        for (final Integer i : iterableA) {
-            expectedSum += i;
-        }
-        assertEquals(expectedSum, sum.get());
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).forEach((Closure<Integer>) null),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void limit() {
-        List<Integer> result = FluentIterable.of(iterableA).limit(3).toList();
-        assertEquals(3, result.size());
-        assertEquals(Arrays.asList(1, 2, 2), result);
-
-        // limit larger than input
-        result = FluentIterable.of(iterableA).limit(100).toList();
-        final List<Integer> expected = IterableUtils.toList(iterableA);
-        assertEquals(expected.size(), result.size());
-        assertEquals(expected, result);
-
-        // limit is 0
-        result = FluentIterable.of(iterableA).limit(0).toList();
-        assertEquals(0, result.size());
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).limit(3).toList();
-        assertEquals(0, result.size());
-
-        assertThrows(IllegalArgumentException.class, () -> FluentIterable.of(iterableA).limit(-2).toList(),
-                "expecting IllegalArgumentException");
-    }
-
-    @Test
-    public void reverse() {
-        List<Integer> result = FluentIterable.of(iterableA).reverse().toList();
-        final List<Integer> expected = IterableUtils.toList(iterableA);
-        Collections.reverse(expected);
-        assertEquals(expected, result);
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).reverse().toList();
-        assertEquals(0, result.size());
-    }
-
-    @Test
-    public void skip() {
-        List<Integer> result = FluentIterable.of(iterableA).skip(4).toList();
-        assertEquals(6, result.size());
-        assertEquals(Arrays.asList(3, 3, 4, 4, 4, 4), result);
-
-        // skip larger than input
-        result = FluentIterable.of(iterableA).skip(100).toList();
-        assertEquals(0, result.size());
-
-        // skip 0 elements
-        result = FluentIterable.of(iterableA).skip(0).toList();
-        final List<Integer> expected = IterableUtils.toList(iterableA);
-        assertEquals(expected.size(), result.size());
-        assertEquals(expected, result);
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).skip(3).toList();
-        assertEquals(0, result.size());
-
-        assertThrows(IllegalArgumentException.class, () -> FluentIterable.of(iterableA).skip(-4).toList(),
-                "expecting IllegalArgumentException");
-    }
-
-    @Test
-    public void transform() {
-        final Transformer<Integer, Integer> squared = object -> object * object;
-        List<Integer> result = FluentIterable.of(iterableA).transform(squared).toList();
-        assertEquals(10, result.size());
-        assertEquals(Arrays.asList(1, 4, 4, 9, 9, 9, 16, 16, 16, 16), result);
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).transform(squared).toList();
-        assertEquals(0, result.size());
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).transform(null).toList(),
-                "expecting NullPointerException");
-    }
-
-    @Test
-    public void unique() {
-        List<Integer> result = FluentIterable.of(iterableA).unique().toList();
-        assertEquals(4, result.size());
-        assertEquals(Arrays.asList(1, 2, 3, 4), result);
-
-        // empty iterable
-        result = FluentIterable.of(emptyIterable).unique().toList();
-        assertEquals(0, result.size());
-    }
-
-    @Test
-    public void unmodifiable() {
-        final FluentIterable<Integer> iterable1 = FluentIterable.of(iterableA).unmodifiable();
-        final Iterator<Integer> it = iterable1.iterator();
-        assertEquals(1, it.next().intValue());
-
-        assertThrows(UnsupportedOperationException.class, () -> it.remove(),
-                "expecting UnsupportedOperationException");
-
-        // calling unmodifiable on an already unmodifiable iterable shall return the same instance
-        final FluentIterable<Integer> iterable2 = iterable1.unmodifiable();
-        assertSame(iterable1, iterable2);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void zip() {
-        List<Integer> result = FluentIterable.of(iterableOdd).zip(iterableEven).toList();
-        List<Integer> combinedList = new ArrayList<>();
-        CollectionUtils.addAll(combinedList, iterableOdd);
-        CollectionUtils.addAll(combinedList, iterableEven);
-        combinedList.sort(null);
-        assertEquals(combinedList, result);
-
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList(),
-                "expecting NullPointerException");
-
-        result = FluentIterable
-                    .of(Arrays.asList(1, 4, 7))
-                    .zip(Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9))
-                    .toList();
-        combinedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        assertEquals(combinedList, result);
-    }
-
-    @Test
-    public void asEnumeration() {
+    public void testAsEnumeration() {
         Enumeration<Long> enumeration = FluentIterable.of(iterableB).asEnumeration();
         final List<Long> result = EnumerationUtils.toList(enumeration);
         assertEquals(iterableB, result);
@@ -345,53 +160,39 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void allMatch() {
-        assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
+    public void testCollate() {
+        final List<Integer> result = FluentIterable.of(iterableOdd).collate(iterableEven).toList();
+        final List<Integer> combinedList = new ArrayList<>();
+        CollectionUtils.addAll(combinedList, iterableOdd);
+        CollectionUtils.addAll(combinedList, iterableEven);
+        Collections.sort(combinedList);
+        assertEquals(combinedList, result);
 
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).allMatch(null),
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableOdd).collate(null).toList(),
                 "expecting NullPointerException");
     }
 
     @Test
-    public void anyMatch() {
-        assertTrue(FluentIterable.of(iterableEven).anyMatch(EVEN));
-        assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
-        assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
+    public void testCollateWithComparator() {
+        List<Integer> result =
+                FluentIterable
+                    .of(iterableOdd)
+                    .collate(iterableEven, ComparatorUtils.<Integer>naturalComparator())
+                    .toList();
 
-        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableEven).anyMatch(null),
-                "expecting NullPointerException");
+        final List<Integer> combinedList = new ArrayList<>();
+        CollectionUtils.addAll(combinedList, iterableOdd);
+        CollectionUtils.addAll(combinedList, iterableEven);
+        Collections.sort(combinedList);
+        assertEquals(combinedList, result);
+
+        // null comparator is equivalent to natural ordering
+        result = FluentIterable.of(iterableOdd).collate(iterableEven, null).toList();
+        assertEquals(combinedList, result);
     }
 
     @Test
-    public void isEmpty() {
-        assertTrue(FluentIterable.of(emptyIterable).isEmpty());
-        assertFalse(FluentIterable.of(iterableOdd).isEmpty());
-    }
-
-    @Test
-    public void size() {
-        assertEquals(0, FluentIterable.of(emptyIterable).size());
-        assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
-    }
-
-    @Test
-    public void eval() {
-        final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-        final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
-        final FluentIterable<Integer> materialized = iterable.eval();
-
-        listNumbers.addAll(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
-        assertEquals(5, materialized.size());
-        assertEquals(10, iterable.size());
-
-        assertEquals(Arrays.asList(2, 4, 6, 8, 10), materialized.toList());
-        assertEquals(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20), iterable.toList());
-    }
-
-    @Test
-    public void contains() {
+    public void testContains() {
         assertTrue(FluentIterable.of(iterableEven).contains(2));
         assertFalse(FluentIterable.of(iterableEven).contains(1));
         assertFalse(FluentIterable.of(iterableEven).contains(null));
@@ -399,7 +200,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void copyInto() {
+    public void testCopyInto() {
         List<Integer> result = new ArrayList<>();
         FluentIterable.of(iterableA).copyInto(result);
 
@@ -423,16 +224,71 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void iterator() {
-        Iterator<Integer> iterator = FluentIterable.of(iterableA).iterator();
-        assertTrue(iterator.hasNext());
+    public void testEval() {
+        final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
+        final FluentIterable<Integer> materialized = iterable.eval();
 
-        iterator = FluentIterable.<Integer>empty().iterator();
-        assertFalse(iterator.hasNext());
+        listNumbers.addAll(Arrays.asList(11, 12, 13, 14, 15, 16, 17, 18, 19, 20));
+        assertEquals(5, materialized.size());
+        assertEquals(10, iterable.size());
+
+        assertEquals(Arrays.asList(2, 4, 6, 8, 10), materialized.toList());
+        assertEquals(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 16, 18, 20), iterable.toList());
     }
 
     @Test
-    public void get() {
+    public void testFactoryMethodOf() {
+        FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
+        List<Integer> result = iterable.toList();
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+
+        iterable = FluentIterable.of(1);
+        assertEquals(1, iterable.size());
+        assertFalse(iterable.isEmpty());
+        assertEquals(Arrays.asList(1), iterable.toList());
+
+        result = FluentIterable.of(new Integer[0]).toList();
+        assertTrue(result.isEmpty());
+
+        final Iterable<Integer> it = null;
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(it).toList(),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testFilter() {
+        final Predicate<Integer> smallerThan3 = object -> object.intValue() < 3;
+        List<Integer> result = FluentIterable.of(iterableA).filter(smallerThan3).toList();
+        assertEquals(3, result.size());
+        assertEquals(Arrays.asList(1, 2, 2), result);
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).filter(smallerThan3).toList();
+        assertEquals(0, result.size());
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).filter(null).toList(),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testForEach() {
+        final AtomicInteger sum = new AtomicInteger();
+        final Closure<Integer> closure = sum::addAndGet;
+
+        FluentIterable.of(iterableA).forEach(closure);
+        int expectedSum = 0;
+        for (final Integer i : iterableA) {
+            expectedSum += i;
+        }
+        assertEquals(expectedSum, sum.get());
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).forEach((Closure<Integer>) null),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testGet() {
         assertEquals(2, FluentIterable.of(iterableEven).get(0).intValue());
 
         assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(-1),
@@ -442,9 +298,90 @@ public class FluentIterableTest {
                 "expecting IndexOutOfBoundsException");
     }
 
+    @Test
+    public void testIsEmpty() {
+        assertTrue(FluentIterable.of(emptyIterable).isEmpty());
+        assertFalse(FluentIterable.of(iterableOdd).isEmpty());
+    }
+
+    @Test
+    public void testIterator() {
+        Iterator<Integer> iterator = FluentIterable.of(iterableA).iterator();
+        assertTrue(iterator.hasNext());
+
+        iterator = FluentIterable.<Integer>empty().iterator();
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testLimit() {
+        List<Integer> result = FluentIterable.of(iterableA).limit(3).toList();
+        assertEquals(3, result.size());
+        assertEquals(Arrays.asList(1, 2, 2), result);
+
+        // limit larger than input
+        result = FluentIterable.of(iterableA).limit(100).toList();
+        final List<Integer> expected = IterableUtils.toList(iterableA);
+        assertEquals(expected.size(), result.size());
+        assertEquals(expected, result);
+
+        // limit is 0
+        result = FluentIterable.of(iterableA).limit(0).toList();
+        assertEquals(0, result.size());
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).limit(3).toList();
+        assertEquals(0, result.size());
+
+        assertThrows(IllegalArgumentException.class, () -> FluentIterable.of(iterableA).limit(-2).toList(),
+                "expecting IllegalArgumentException");
+    }
+
+    @Test
+    public void testReverse() {
+        List<Integer> result = FluentIterable.of(iterableA).reverse().toList();
+        final List<Integer> expected = IterableUtils.toList(iterableA);
+        Collections.reverse(expected);
+        assertEquals(expected, result);
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).reverse().toList();
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    public void testSize() {
+        assertEquals(0, FluentIterable.of(emptyIterable).size());
+        assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
+    }
+
+    @Test
+    public void testSkip() {
+        List<Integer> result = FluentIterable.of(iterableA).skip(4).toList();
+        assertEquals(6, result.size());
+        assertEquals(Arrays.asList(3, 3, 4, 4, 4, 4), result);
+
+        // skip larger than input
+        result = FluentIterable.of(iterableA).skip(100).toList();
+        assertEquals(0, result.size());
+
+        // skip 0 elements
+        result = FluentIterable.of(iterableA).skip(0).toList();
+        final List<Integer> expected = IterableUtils.toList(iterableA);
+        assertEquals(expected.size(), result.size());
+        assertEquals(expected, result);
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).skip(3).toList();
+        assertEquals(0, result.size());
+
+        assertThrows(IllegalArgumentException.class, () -> FluentIterable.of(iterableA).skip(-4).toList(),
+                "expecting IllegalArgumentException");
+    }
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
-    public void toArray() {
+    public void testToArray() {
         final Long[] arr = {1L, 2L, 3L, 4L, 5L};
         final Long[] result = FluentIterable.of(arr).toArray(Long.class);
         assertNotNull(result);
@@ -460,6 +397,67 @@ public class FluentIterableTest {
 
         result = FluentIterable.empty().toString();
         assertEquals("[]", result);
+    }
+
+    @Test
+    public void testTransform() {
+        final Transformer<Integer, Integer> squared = object -> object * object;
+        List<Integer> result = FluentIterable.of(iterableA).transform(squared).toList();
+        assertEquals(10, result.size());
+        assertEquals(Arrays.asList(1, 4, 4, 9, 9, 9, 16, 16, 16, 16), result);
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).transform(squared).toList();
+        assertEquals(0, result.size());
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableA).transform(null).toList(),
+                "expecting NullPointerException");
+    }
+
+    @Test
+    public void testUnique() {
+        List<Integer> result = FluentIterable.of(iterableA).unique().toList();
+        assertEquals(4, result.size());
+        assertEquals(Arrays.asList(1, 2, 3, 4), result);
+
+        // empty iterable
+        result = FluentIterable.of(emptyIterable).unique().toList();
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        final FluentIterable<Integer> iterable1 = FluentIterable.of(iterableA).unmodifiable();
+        final Iterator<Integer> it = iterable1.iterator();
+        assertEquals(1, it.next().intValue());
+
+        assertThrows(UnsupportedOperationException.class, () -> it.remove(),
+                "expecting UnsupportedOperationException");
+
+        // calling unmodifiable on an already unmodifiable iterable shall return the same instance
+        final FluentIterable<Integer> iterable2 = iterable1.unmodifiable();
+        assertSame(iterable1, iterable2);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testZip() {
+        List<Integer> result = FluentIterable.of(iterableOdd).zip(iterableEven).toList();
+        List<Integer> combinedList = new ArrayList<>();
+        CollectionUtils.addAll(combinedList, iterableOdd);
+        CollectionUtils.addAll(combinedList, iterableEven);
+        Collections.sort(combinedList);
+        assertEquals(combinedList, result);
+
+        assertThrows(NullPointerException.class, () -> FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList(),
+                "expecting NullPointerException");
+
+        result = FluentIterable
+                    .of(Arrays.asList(1, 4, 7))
+                    .zip(Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9))
+                    .toList();
+        combinedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        assertEquals(combinedList, result);
     }
 
 }

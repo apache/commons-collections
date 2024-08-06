@@ -51,6 +51,11 @@ public abstract class AbstractNavigableSetDecorator<E>
         super(set);
     }
 
+    @Override
+    public E ceiling(final E e) {
+        return decorated().ceiling(e);
+    }
+
     /**
      * Gets the set being decorated.
      *
@@ -61,10 +66,14 @@ public abstract class AbstractNavigableSetDecorator<E>
         return (NavigableSet<E>) super.decorated();
     }
 
+    @Override
+    public Iterator<E> descendingIterator() {
+        return decorated().descendingIterator();
+    }
 
     @Override
-    public E lower(final E e) {
-        return decorated().lower(e);
+    public NavigableSet<E> descendingSet() {
+        return decorated().descendingSet();
     }
 
     @Override
@@ -73,13 +82,18 @@ public abstract class AbstractNavigableSetDecorator<E>
     }
 
     @Override
-    public E ceiling(final E e) {
-        return decorated().ceiling(e);
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
+        return decorated().headSet(toElement, inclusive);
     }
 
     @Override
     public E higher(final E e) {
         return decorated().higher(e);
+    }
+
+    @Override
+    public E lower(final E e) {
+        return decorated().lower(e);
     }
 
     @Override
@@ -93,24 +107,9 @@ public abstract class AbstractNavigableSetDecorator<E>
     }
 
     @Override
-    public NavigableSet<E> descendingSet() {
-        return decorated().descendingSet();
-    }
-
-    @Override
-    public Iterator<E> descendingIterator() {
-        return decorated().descendingIterator();
-    }
-
-    @Override
     public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
             final boolean toInclusive) {
         return decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
-    }
-
-    @Override
-    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
-        return decorated().headSet(toElement, inclusive);
     }
 
     @Override

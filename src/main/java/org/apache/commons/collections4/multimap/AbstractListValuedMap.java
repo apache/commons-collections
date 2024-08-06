@@ -40,177 +40,8 @@ import org.apache.commons.collections4.ListValuedMap;
 public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
         implements ListValuedMap<K, V> {
 
-    /**
-     * Constructor needed for subclass serialisation.
-     */
-    protected AbstractListValuedMap() {
-    }
-
-    /**
-     * A constructor that wraps, not copies
-     *
-     * @param map  the map to wrap, must not be null
-     * @throws NullPointerException if the map is null
-     */
-    protected AbstractListValuedMap(final Map<K, ? extends List<V>> map) {
-        super(map);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    protected Map<K, List<V>> getMap() {
-        return (Map<K, List<V>>) super.getMap();
-    }
-
-    /**
-     * Creates a new value collection using the provided factory.
-     * @return a new list
-     */
-    @Override
-    protected abstract List<V> createCollection();
-
-    /**
-     * Gets the list of values associated with the specified key. This would
-     * return an empty list in case the mapping is not present
-     *
-     * @param key  the key to retrieve
-     * @return the {@code List} of values, will return an empty {@link List} for no mapping
-     */
-    @Override
-    public List<V> get(final K key) {
-        return wrappedCollection(key);
-    }
-
-    @Override
-    List<V> wrappedCollection(final K key) {
-        return new WrappedList(key);
-    }
-
-    /**
-     * Removes all values associated with the specified key.
-     * <p>
-     * A subsequent {@code get(Object)} would return an empty list.
-     *
-     * @param key  the key to remove values from
-     * @return the {@code List} of values removed, will return an empty,
-     *   unmodifiable list for no mapping found.
-     */
-    @Override
-    public List<V> remove(final Object key) {
-        return ListUtils.emptyIfNull(getMap().remove(key));
-    }
-
-    /**
-     * Wrapped list to handle add and remove on the list returned by get(object)
-     */
-    private class WrappedList extends WrappedCollection implements List<V> {
-
-        WrappedList(final K key) {
-            super(key);
-        }
-
-        @Override
-        protected List<V> getMapping() {
-            return getMap().get(key);
-        }
-
-        @Override
-        public void add(final int index, final V value) {
-            List<V> list = getMapping();
-            if (list == null) {
-                list = createCollection();
-                getMap().put(key, list);
-            }
-            list.add(index, value);
-        }
-
-        @Override
-        public boolean addAll(final int index, final Collection<? extends V> c) {
-            List<V> list = getMapping();
-            if (list == null) {
-                list = createCollection();
-                final boolean changed = list.addAll(index, c);
-                if (changed) {
-                    getMap().put(key, list);
-                }
-                return changed;
-            }
-            return list.addAll(index, c);
-        }
-
-        @Override
-        public V get(final int index) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            return list.get(index);
-        }
-
-        @Override
-        public int indexOf(final Object o) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            return list.indexOf(o);
-        }
-
-        @Override
-        public int lastIndexOf(final Object o) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            return list.lastIndexOf(o);
-        }
-
-        @Override
-        public ListIterator<V> listIterator() {
-            return new ValuesListIterator(key);
-        }
-
-        @Override
-        public ListIterator<V> listIterator(final int index) {
-            return new ValuesListIterator(key, index);
-        }
-
-        @Override
-        public V remove(final int index) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            final V value = list.remove(index);
-            if (list.isEmpty()) {
-                AbstractListValuedMap.this.remove(key);
-            }
-            return value;
-        }
-
-        @Override
-        public V set(final int index, final V value) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            return list.set(index, value);
-        }
-
-        @Override
-        public List<V> subList(final int fromIndex, final int toIndex) {
-            final List<V> list = ListUtils.emptyIfNull(getMapping());
-            return list.subList(fromIndex, toIndex);
-        }
-
-        @Override
-        public boolean equals(final Object other) {
-            final List<V> list = getMapping();
-            if (list == null) {
-                return Collections.emptyList().equals(other);
-            }
-            if (!(other instanceof List)) {
-                return false;
-            }
-            final List<?> otherList = (List<?>) other;
-            return ListUtils.isEqualList(list, otherList);
-        }
-
-        @Override
-        public int hashCode() {
-            final List<V> list = getMapping();
-            return ListUtils.hashCodeForList(list);
-        }
-
-    }
-
     /** Values ListIterator */
-    private class ValuesListIterator implements ListIterator<V> {
+    private final class ValuesListIterator implements ListIterator<V> {
 
         private final K key;
         private List<V> values;
@@ -282,6 +113,175 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             iterator.set(value);
         }
 
+    }
+
+    /**
+     * Wrapped list to handle add and remove on the list returned by get(object)
+     */
+    private final class WrappedList extends WrappedCollection implements List<V> {
+
+        WrappedList(final K key) {
+            super(key);
+        }
+
+        @Override
+        public void add(final int index, final V value) {
+            List<V> list = getMapping();
+            if (list == null) {
+                list = createCollection();
+                getMap().put(key, list);
+            }
+            list.add(index, value);
+        }
+
+        @Override
+        public boolean addAll(final int index, final Collection<? extends V> c) {
+            List<V> list = getMapping();
+            if (list == null) {
+                list = createCollection();
+                final boolean changed = list.addAll(index, c);
+                if (changed) {
+                    getMap().put(key, list);
+                }
+                return changed;
+            }
+            return list.addAll(index, c);
+        }
+
+        @Override
+        public boolean equals(final Object other) {
+            final List<V> list = getMapping();
+            if (list == null) {
+                return Collections.emptyList().equals(other);
+            }
+            if (!(other instanceof List)) {
+                return false;
+            }
+            final List<?> otherList = (List<?>) other;
+            return ListUtils.isEqualList(list, otherList);
+        }
+
+        @Override
+        public V get(final int index) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.get(index);
+        }
+
+        @Override
+        protected List<V> getMapping() {
+            return getMap().get(key);
+        }
+
+        @Override
+        public int hashCode() {
+            final List<V> list = getMapping();
+            return ListUtils.hashCodeForList(list);
+        }
+
+        @Override
+        public int indexOf(final Object o) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.indexOf(o);
+        }
+
+        @Override
+        public int lastIndexOf(final Object o) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.lastIndexOf(o);
+        }
+
+        @Override
+        public ListIterator<V> listIterator() {
+            return new ValuesListIterator(key);
+        }
+
+        @Override
+        public ListIterator<V> listIterator(final int index) {
+            return new ValuesListIterator(key, index);
+        }
+
+        @Override
+        public V remove(final int index) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            final V value = list.remove(index);
+            if (list.isEmpty()) {
+                AbstractListValuedMap.this.remove(key);
+            }
+            return value;
+        }
+
+        @Override
+        public V set(final int index, final V value) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.set(index, value);
+        }
+
+        @Override
+        public List<V> subList(final int fromIndex, final int toIndex) {
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.subList(fromIndex, toIndex);
+        }
+
+    }
+
+    /**
+     * Constructor needed for subclass serialisation.
+     */
+    protected AbstractListValuedMap() {
+    }
+
+    /**
+     * A constructor that wraps, not copies
+     *
+     * @param map  the map to wrap, must not be null
+     * @throws NullPointerException if the map is null
+     */
+    protected AbstractListValuedMap(final Map<K, ? extends List<V>> map) {
+        super(map);
+    }
+
+    /**
+     * Creates a new value collection using the provided factory.
+     * @return a new list
+     */
+    @Override
+    protected abstract List<V> createCollection();
+
+    /**
+     * Gets the list of values associated with the specified key. This would
+     * return an empty list in case the mapping is not present
+     *
+     * @param key  the key to retrieve
+     * @return the {@code List} of values, will return an empty {@link List} for no mapping
+     */
+    @Override
+    public List<V> get(final K key) {
+        return wrappedCollection(key);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected Map<K, List<V>> getMap() {
+        return (Map<K, List<V>>) super.getMap();
+    }
+
+    /**
+     * Removes all values associated with the specified key.
+     * <p>
+     * A subsequent {@code get(Object)} would return an empty list.
+     *
+     * @param key  the key to remove values from
+     * @return the {@code List} of values removed, will return an empty,
+     *   unmodifiable list for no mapping found.
+     */
+    @Override
+    public List<V> remove(final Object key) {
+        return ListUtils.emptyIfNull(getMap().remove(key));
+    }
+
+    @Override
+    List<V> wrappedCollection(final K key) {
+        return new WrappedList(key);
     }
 
 }

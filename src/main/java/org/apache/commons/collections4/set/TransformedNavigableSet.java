@@ -39,24 +39,6 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     private static final long serialVersionUID = 20150528L;
 
     /**
-     * Factory method to create a transforming navigable set.
-     * <p>
-     * If there are any elements already in the set being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedNavigableSet(NavigableSet, Transformer)}.
-     *
-     * @param <E> the element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed {@link NavigableSet}
-     * @throws NullPointerException if set or transformer is null
-     */
-    public static <E> TransformedNavigableSet<E> transformingNavigableSet(final NavigableSet<E> set,
-            final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedNavigableSet<>(set, transformer);
-    }
-
-    /**
      * Factory method to create a transforming navigable set that will transform
      * existing contents of the specified navigable set.
      * <p>
@@ -79,10 +61,28 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
             for (final E value : values) {
-                decorated.decorated().add(transformer.transform(value));
+                decorated.decorated().add(transformer.apply(value));
             }
         }
         return decorated;
+    }
+
+    /**
+     * Factory method to create a transforming navigable set.
+     * <p>
+     * If there are any elements already in the set being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedNavigableSet(NavigableSet, Transformer)}.
+     *
+     * @param <E> the element type
+     * @param set  the set to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed {@link NavigableSet}
+     * @throws NullPointerException if set or transformer is null
+     */
+    public static <E> TransformedNavigableSet<E> transformingNavigableSet(final NavigableSet<E> set,
+            final Transformer<? super E, ? extends E> transformer) {
+        return new TransformedNavigableSet<>(set, transformer);
     }
 
     /**
@@ -100,6 +100,11 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
         super(set, transformer);
     }
 
+    @Override
+    public E ceiling(final E e) {
+        return decorated().ceiling(e);
+    }
+
     /**
      * Gets the decorated navigable set.
      *
@@ -110,10 +115,14 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
         return (NavigableSet<E>) super.decorated();
     }
 
+    @Override
+    public Iterator<E> descendingIterator() {
+        return decorated().descendingIterator();
+    }
 
     @Override
-    public E lower(final E e) {
-        return decorated().lower(e);
+    public NavigableSet<E> descendingSet() {
+        return transformingNavigableSet(decorated().descendingSet(), transformer);
     }
 
     @Override
@@ -122,13 +131,19 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     }
 
     @Override
-    public E ceiling(final E e) {
-        return decorated().ceiling(e);
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
+        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
+        return transformingNavigableSet(head, transformer);
     }
 
     @Override
     public E higher(final E e) {
         return decorated().higher(e);
+    }
+
+    @Override
+    public E lower(final E e) {
+        return decorated().lower(e);
     }
 
     @Override
@@ -142,26 +157,10 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     }
 
     @Override
-    public NavigableSet<E> descendingSet() {
-        return transformingNavigableSet(decorated().descendingSet(), transformer);
-    }
-
-    @Override
-    public Iterator<E> descendingIterator() {
-        return decorated().descendingIterator();
-    }
-
-    @Override
     public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
             final boolean toInclusive) {
         final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
         return transformingNavigableSet(sub, transformer);
-    }
-
-    @Override
-    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
-        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
-        return transformingNavigableSet(head, transformer);
     }
 
     @Override

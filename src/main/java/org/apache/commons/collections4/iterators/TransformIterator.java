@@ -23,6 +23,8 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Decorates an iterator such that each element returned is transformed.
  *
+ * @param <I> the type of the input to the function.
+ * @param <O> the type of the result of the function.
  * @since 1.0
  */
 public class TransformIterator<I, O> implements Iterator<O> {
@@ -64,6 +66,24 @@ public class TransformIterator<I, O> implements Iterator<O> {
         this.transformer = transformer;
     }
 
+    /**
+     * Gets the iterator this iterator is using.
+     *
+     * @return the iterator.
+     */
+    public Iterator<? extends I> getIterator() {
+        return iterator;
+    }
+
+    /**
+     * Gets the transformer this iterator is using.
+     *
+     * @return the transformer.
+     */
+    public Transformer<? super I, ? extends O> getTransformer() {
+        return transformer;
+    }
+
     @Override
     public boolean hasNext() {
         return iterator.hasNext();
@@ -88,15 +108,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Gets the iterator this iterator is using.
-     *
-     * @return the iterator.
-     */
-    public Iterator<? extends I> getIterator() {
-        return iterator;
-    }
-
-    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
@@ -104,15 +115,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      */
     public void setIterator(final Iterator<? extends I> iterator) {
         this.iterator = iterator;
-    }
-
-    /**
-     * Gets the transformer this iterator is using.
-     *
-     * @return the transformer.
-     */
-    public Transformer<? super I, ? extends O> getTransformer() {
-        return transformer;
     }
 
     /**
@@ -133,6 +135,6 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @return the transformed object
      */
     protected O transform(final I source) {
-        return transformer.transform(source);
+        return transformer.apply(source);
     }
 }

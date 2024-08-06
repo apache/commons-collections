@@ -30,29 +30,20 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractListTest} for exercising the
  * {@link UnmodifiableList} implementation.
- *
- * @since 3.0
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
+
+    protected UnmodifiableList<E> list;
+
+    protected ArrayList<E> array;
 
     public UnmodifiableListTest() {
         super(UnmodifiableListTest.class.getSimpleName());
     }
 
     @Override
-    public UnmodifiableList<E> makeObject() {
-        return new UnmodifiableList<>(new ArrayList<>());
-    }
-
-    @Override
-    public UnmodifiableList<E> makeFullCollection() {
-        final ArrayList<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
-        return new UnmodifiableList<>(list);
-    }
-
-    @Override
-    public boolean isSetSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -65,14 +56,34 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         return false;
     }
 
-    protected UnmodifiableList<E> list;
-    protected ArrayList<E> array;
+    @Override
+    public boolean isSetSupported() {
+        return false;
+    }
+    @Override
+    public UnmodifiableList<E> makeFullCollection() {
+        final ArrayList<E> list = new ArrayList<>(Arrays.asList(getFullElements()));
+        return new UnmodifiableList<>(list);
+    }
+
+    @Override
+    public UnmodifiableList<E> makeObject() {
+        return new UnmodifiableList<>(new ArrayList<>());
+    }
 
     @SuppressWarnings("unchecked")
     protected void setupList() {
         list = makeFullCollection();
         array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
+    }
+
+    @Test
+    public void testDecorateFactory() {
+        final List<E> list = makeObject();
+        assertSame(list, UnmodifiableList.unmodifiableList(list));
+
+        assertThrows(NullPointerException.class, () -> UnmodifiableList.unmodifiableList(null));
     }
 
     /**
@@ -85,12 +96,17 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         verifyUnmodifiable(list.subList(0, 2));
     }
 
+    /**
+     * Verify that iterator is not modifiable
+     */
     @Test
-    public void testDecorateFactory() {
-        final List<E> list = makeObject();
-        assertSame(list, UnmodifiableList.unmodifiableList(list));
+    public void testUnmodifiableIterator() {
+        setupList();
+        final Iterator<E> iterator = list.iterator();
+        iterator.next();
 
-        assertThrows(NullPointerException.class, () -> UnmodifiableList.unmodifiableList(null));
+        assertThrows(UnsupportedOperationException.class, () -> iterator.remove(),
+                "Expecting UnsupportedOperationException.");
     }
 
     @SuppressWarnings("unchecked")
@@ -117,24 +133,6 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
                 () -> assertThrows(UnsupportedOperationException.class, () -> list.set(0, (E) Integer.valueOf(0)),
                         "Expecting UnsupportedOperationException.")
         );
-    }
-
-    /**
-     * Verify that iterator is not modifiable
-     */
-    @Test
-    public void testUnmodifiableIterator() {
-        setupList();
-        final Iterator<E> iterator = list.iterator();
-        iterator.next();
-
-        assertThrows(UnsupportedOperationException.class, () -> iterator.remove(),
-                "Expecting UnsupportedOperationException.");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

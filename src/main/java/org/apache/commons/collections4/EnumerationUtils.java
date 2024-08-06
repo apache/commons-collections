@@ -32,20 +32,13 @@ import org.apache.commons.collections4.iterators.IteratorIterable;
 public class EnumerationUtils {
 
     /**
-     * Don't allow instances.
-     */
-    private EnumerationUtils() {
-        // no instances.
-    }
-
-    /**
      * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
      * single iteration.
      *
      * @param <T> the element type
      * @param enumeration the enumeration to use, may not be null
      * @return a new, single use {@link Iterable}
-     * @since 4.5
+     * @since 4.5.0
      */
     public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
         return new IteratorIterable<>(new EnumerationIterator<>(enumeration));
@@ -107,6 +100,13 @@ public class EnumerationUtils {
             result.add(stringTokenizer.nextToken());
         }
         return result;
+    }
+
+    /**
+     * Don't allow instances.
+     */
+    private EnumerationUtils() {
+        // no instances.
     }
 
 }

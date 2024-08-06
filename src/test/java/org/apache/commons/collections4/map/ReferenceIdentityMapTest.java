@@ -322,7 +322,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
             // create garbage:
             @SuppressWarnings("unused")
             final byte[] b =  new byte[bytz];
-            bytz = bytz * 2;
+            bytz *= 2;
         }
     }
 

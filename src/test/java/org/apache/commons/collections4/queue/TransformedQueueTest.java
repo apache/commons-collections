@@ -33,13 +33,16 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link TransformedQueue} implementation.
- *
- * @since 4.0
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
     public TransformedQueueTest() {
         super(TransformedQueueTest.class.getSimpleName());
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -54,16 +57,16 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Queue<E> makeObject() {
-        return TransformedQueue.transformingQueue(new LinkedList<>(),
-                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public Queue<E> makeFullCollection() {
+        final Queue<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
+        return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Queue<E> makeFullCollection() {
-        final Queue<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
-        return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
+    public Queue<E> makeObject() {
+        return TransformedQueue.transformingQueue(new LinkedList<>(),
+                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Test
@@ -100,11 +103,6 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
         assertFalse(queue.remove(elements[0]));
         assertTrue(queue.remove(Integer.valueOf((String) elements[0])));
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //  public void testCreate() throws Exception {

@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import org.apache.commons.collections4.Predicate;
@@ -33,30 +32,24 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
  * {@link PredicatedQueue} implementation.
- *
- * @since 4.0
  */
 public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate = String.class::isInstance;
 
     public PredicatedQueueTest() {
         super(PredicatedQueueTest.class.getSimpleName());
     }
-
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Queue<E> decorateCollection(final Queue<E> queue, final Predicate<E> predicate) {
         return PredicatedQueue.predicatedQueue(queue, predicate);
     }
 
     @Override
-    public Queue<E> makeObject() {
-        return decorateCollection(new LinkedList<>(), truePredicate);
-    }
-
-    @Override
-    public Queue<E> makeFullCollection() {
-        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
-        return decorateCollection(queue, truePredicate);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -66,11 +59,19 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final List<E> list = new LinkedList<>(Arrays.asList(getFullElements()));
-        return list;
+        return new LinkedList<>(Arrays.asList(getFullElements()));
     }
 
-    protected Predicate<E> testPredicate = o -> o instanceof String;
+    @Override
+    public Queue<E> makeFullCollection() {
+        final Queue<E> queue = new LinkedList<>(Arrays.asList(getFullElements()));
+        return decorateCollection(queue, truePredicate);
+    }
+
+    @Override
+    public Queue<E> makeObject() {
+        return decorateCollection(new LinkedList<>(), truePredicate);
+    }
 
     public Queue<E> makeTestQueue() {
         return decorateCollection(new LinkedList<>(), testPredicate);
@@ -96,11 +97,6 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
         queue.add((E) "one");
         assertEquals("one", queue.poll(), "Queue get");
         assertNull(queue.peek());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

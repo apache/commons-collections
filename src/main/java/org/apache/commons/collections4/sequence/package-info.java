@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * This package provides classes to compare two sequences of objects.
+ * Compares two sequences of objects.
  * <p>
  * The two sequences can hold any object type, as only the
  * {@code equals} method is used to compare the elements of the

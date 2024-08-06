@@ -25,15 +25,13 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that calls a Predicate using the input object
  * and then returns the result.
  *
+ * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
 public class PredicateTransformer<T> implements Transformer<T, Boolean>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 5278818408044349346L;
-
-    /** The closure to wrap */
-    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory method that performs validation.
@@ -50,6 +48,9 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
         return new PredicateTransformer<>(predicate);
     }
 
+    /** The closure to wrap */
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Constructor that performs no validation.
      * Use {@code predicateTransformer} if you want that.
@@ -61,17 +62,6 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     }
 
     /**
-     * Transforms the input to result by calling a predicate.
-     *
-     * @param input  the input object to transform
-     * @return the transformed result
-     */
-    @Override
-    public Boolean transform(final T input) {
-        return Boolean.valueOf(iPredicate.evaluate(input));
-    }
-
-    /**
      * Gets the predicate.
      *
      * @return the predicate
@@ -79,6 +69,17 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      */
     public Predicate<? super T> getPredicate() {
         return iPredicate;
+    }
+
+    /**
+     * Transforms the input to result by calling a predicate.
+     *
+     * @param input  the input object to transform
+     * @return the transformed result
+     */
+    @Override
+    public Boolean transform(final T input) {
+        return Boolean.valueOf(iPredicate.test(input));
     }
 
 }

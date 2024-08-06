@@ -33,9 +33,6 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
 
-    /** The iterator being decorated */
-    private final MapIterator<? extends K, ? extends V> iterator;
-
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
@@ -56,23 +53,16 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
         return new UnmodifiableMapIterator<>(iterator);
     }
 
+    /** The iterator being decorated */
+    private final MapIterator<? extends K, ? extends V> iterator;
+
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param iterator  the iterator to decorate
      */
     private UnmodifiableMapIterator(final MapIterator<? extends K, ? extends V> iterator) {
         this.iterator = iterator;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    @Override
-    public K next() {
-        return iterator.next();
     }
 
     @Override
@@ -86,13 +76,23 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
     }
 
     @Override
-    public V setValue(final V value) {
-        throw new UnsupportedOperationException("setValue() is not supported");
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public K next() {
+        return iterator.next();
     }
 
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
+    }
+
+    @Override
+    public V setValue(final V value) {
+        throw new UnsupportedOperationException("setValue() is not supported");
     }
 
 }

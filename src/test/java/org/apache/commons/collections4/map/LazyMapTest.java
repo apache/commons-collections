@@ -32,8 +32,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link LazyMap} implementation.
- *
- * @since 3.0
  */
 @SuppressWarnings("boxing")
 public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
@@ -42,6 +40,11 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public LazyMapTest() {
         super(LazyMapTest.class.getSimpleName());
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -56,7 +59,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void mapGetWithFactory() {
+    public void testMapGetWithFactory() {
         Map<Integer, Number> map = lazyMap(new HashMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get("Five");
@@ -74,19 +77,13 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void mapGetWithTransformer() {
+    public void testMapGetWithTransformer() {
         final Transformer<Number, Integer> intConverter = Number::intValue;
         final Map<Long, Number> map = lazyMap(new HashMap<>(), intConverter);
         assertEquals(0, map.size());
         final Number i1 = map.get(123L);
         assertEquals(123, i1);
         assertEquals(1, map.size());
-    }
-
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

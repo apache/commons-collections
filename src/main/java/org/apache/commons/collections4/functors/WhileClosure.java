@@ -31,16 +31,10 @@ import org.apache.commons.collections4.Predicate;
  * for more details.
  * </p>
  *
+ * @param <T> the type of the input to the operation.
  * @since 3.0
  */
-public class WhileClosure<E> implements Closure<E> {
-
-    /** The test condition */
-    private final Predicate<? super E> iPredicate;
-    /** The closure to call */
-    private final Closure<? super E> iClosure;
-    /** The flag, true is a do loop, false is a while */
-    private final boolean iDoLoop;
+public class WhileClosure<T> implements Closure<T> {
 
     /**
      * Factory method that performs validation.
@@ -57,6 +51,13 @@ public class WhileClosure<E> implements Closure<E> {
         return new WhileClosure<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(closure, "closure"), doLoop);
     }
+    /** The test condition */
+    private final Predicate<? super T> iPredicate;
+    /** The closure to call */
+    private final Closure<? super T> iClosure;
+
+    /** The flag, true is a do loop, false is a while */
+    private final boolean iDoLoop;
 
     /**
      * Constructor that performs no validation.
@@ -66,7 +67,7 @@ public class WhileClosure<E> implements Closure<E> {
      * @param closure  the closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
-    public WhileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure, final boolean doLoop) {
+    public WhileClosure(final Predicate<? super T> predicate, final Closure<? super T> closure, final boolean doLoop) {
         iPredicate = predicate;
         iClosure = closure;
         iDoLoop = doLoop;
@@ -78,23 +79,13 @@ public class WhileClosure<E> implements Closure<E> {
      * @param input  the input object
      */
     @Override
-    public void execute(final E input) {
+    public void execute(final T input) {
         if (iDoLoop) {
-            iClosure.execute(input);
+            iClosure.accept(input);
         }
-        while (iPredicate.evaluate(input)) {
-            iClosure.execute(input);
+        while (iPredicate.test(input)) {
+            iClosure.accept(input);
         }
-    }
-
-    /**
-     * Gets the predicate in use.
-     *
-     * @return the predicate
-     * @since 3.1
-     */
-    public Predicate<? super E> getPredicate() {
-        return iPredicate;
     }
 
     /**
@@ -103,8 +94,18 @@ public class WhileClosure<E> implements Closure<E> {
      * @return the closure
      * @since 3.1
      */
-    public Closure<? super E> getClosure() {
+    public Closure<? super T> getClosure() {
         return iClosure;
+    }
+
+    /**
+     * Gets the predicate in use.
+     *
+     * @return the predicate
+     * @since 3.1
+     */
+    public Predicate<? super T> getPredicate() {
+        return iPredicate;
     }
 
     /**

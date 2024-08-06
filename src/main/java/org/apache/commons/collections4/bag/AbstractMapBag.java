@@ -45,130 +45,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  */
 public abstract class AbstractMapBag<E> implements Bag<E> {
 
-    /** The map to use to store the data */
-    private transient Map<E, MutableInteger> map;
-    /** The current total size of the bag */
-    private int size;
-    /** The modification count for fail fast iterators */
-    private transient int modCount;
-    /** Unique view of the elements */
-    private transient Set<E> uniqueSet;
-
-    /**
-     * Constructor needed for subclass serialisation.
-     */
-    protected AbstractMapBag() {
-    }
-
-    /**
-     * Constructor that assigns the specified Map as the backing store. The map
-     * must be empty and non-null.
-     *
-     * @param map the map to assign
-     */
-    protected AbstractMapBag(final Map<E, MutableInteger> map) {
-        this.map = map;
-    }
-
-    /**
-     * Utility method for implementations to access the map that backs this bag.
-     * Not intended for interactive use outside of subclasses.
-     *
-     * @return the map being used by the Bag
-     */
-    protected Map<E, MutableInteger> getMap() {
-        return map;
-    }
-
-    /**
-     * Returns the number of elements in this bag.
-     *
-     * @return current size of the bag
-     */
-    @Override
-    public int size() {
-        return size;
-    }
-
-    /**
-     * Returns true if the underlying map is empty.
-     *
-     * @return true if bag is empty
-     */
-    @Override
-    public boolean isEmpty() {
-        return map.isEmpty();
-    }
-
-    /**
-     * Returns the number of occurrence of the given element in this bag by
-     * looking up its count in the underlying map.
-     *
-     * @param object the object to search for
-     * @return the number of occurrences of the object, zero if not found
-     */
-    @Override
-    public int getCount(final Object object) {
-        final MutableInteger count = map.get(object);
-        if (count != null) {
-            return count.value;
-        }
-        return 0;
-    }
-
-    /**
-     * Determines if the bag contains the given element by checking if the
-     * underlying map contains the element as a key.
-     *
-     * @param object the object to search for
-     * @return true if the bag contains the given element
-     */
-    @Override
-    public boolean contains(final Object object) {
-        return map.containsKey(object);
-    }
-
-    /**
-     * Determines if the bag contains the given elements.
-     *
-     * @param coll the collection to check against
-     * @return {@code true} if the Bag contains all the collection
-     */
-    @Override
-    public boolean containsAll(final Collection<?> coll) {
-        if (coll instanceof Bag) {
-            return containsAll((Bag<?>) coll);
-        }
-        return containsAll(new HashBag<>(coll));
-    }
-
-    /**
-     * Returns {@code true} if the bag contains all elements in the given
-     * collection, respecting cardinality.
-     *
-     * @param other the bag to check against
-     * @return {@code true} if the Bag contains all the collection
-     */
-    boolean containsAll(final Bag<?> other) {
-        for (final Object current : other.uniqueSet()) {
-            if (getCount(current) < other.getCount(current)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Gets an iterator over the bag elements. Elements present in the Bag more
-     * than once will be returned repeatedly.
-     *
-     * @return the iterator
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new BagIterator<>(this);
-    }
-
     /**
      * Inner class iterator for the Bag.
      */
@@ -181,7 +57,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         private boolean canRemove;
 
         /**
-         * Constructor.
+         * Constructs a new instance.
          *
          * @param parent the parent bag
          */
@@ -232,6 +108,60 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             parent.size--;
             canRemove = false;
         }
+    }
+    /**
+     * Mutable integer class for storing the data.
+     */
+    protected static class MutableInteger {
+        /** The value of this mutable. */
+        protected int value;
+
+        /**
+         * Constructs a new instance.
+         * @param value the initial value
+         */
+        MutableInteger(final int value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (!(obj instanceof MutableInteger)) {
+                return false;
+            }
+            return ((MutableInteger) obj).value == value;
+        }
+
+        @Override
+        public int hashCode() {
+            return value;
+        }
+    }
+    /** The map to use to store the data */
+    private transient Map<E, MutableInteger> map;
+    /** The current total size of the bag */
+    private int size;
+
+    /** The modification count for fail fast iterators */
+    private transient int modCount;
+
+    /** Unique view of the elements */
+    private transient Set<E> uniqueSet;
+
+    /**
+     * Constructor needed for subclass serialisation.
+     */
+    protected AbstractMapBag() {
+    }
+
+    /**
+     * Constructor that assigns the specified Map as the backing store. The map
+     * must be empty and non-null.
+     *
+     * @param map the map to assign
+     */
+    protected AbstractMapBag(final Map<E, MutableInteger> map) {
+        this.map = map;
     }
 
     /**
@@ -291,6 +221,176 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         modCount++;
         map.clear();
         size = 0;
+    }
+
+    /**
+     * Determines if the bag contains the given element by checking if the
+     * underlying map contains the element as a key.
+     *
+     * @param object the object to search for
+     * @return true if the bag contains the given element
+     */
+    @Override
+    public boolean contains(final Object object) {
+        return map.containsKey(object);
+    }
+
+    /**
+     * Returns {@code true} if the bag contains all elements in the given
+     * collection, respecting cardinality.
+     *
+     * @param other the bag to check against
+     * @return {@code true} if the Bag contains all the collection
+     */
+    boolean containsAll(final Bag<?> other) {
+        for (final Object current : other.uniqueSet()) {
+            if (getCount(current) < other.getCount(current)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Determines if the bag contains the given elements.
+     *
+     * @param coll the collection to check against
+     * @return {@code true} if the Bag contains all the collection
+     */
+    @Override
+    public boolean containsAll(final Collection<?> coll) {
+        if (coll instanceof Bag) {
+            return containsAll((Bag<?>) coll);
+        }
+        return containsAll(new HashBag<>(coll));
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * @param map the map to use
+     * @param in the input stream
+     * @throws IOException any of the usual I/O related exceptions
+     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
+     * @throws ClassCastException if the stream does not contain the correct objects
+     */
+    protected void doReadObject(final Map<E, MutableInteger> map, final ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        this.map = map;
+        final int entrySize = in.readInt();
+        for (int i = 0; i < entrySize; i++) {
+            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+            final E obj = (E) in.readObject();
+            final int count = in.readInt();
+            map.put(obj, new MutableInteger(count));
+            size += count;
+        }
+    }
+
+    /**
+     * Write the map out using a custom routine.
+     * @param out the output stream
+     * @throws IOException any of the usual I/O related exceptions
+     */
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
+        out.writeInt(map.size());
+        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
+            out.writeObject(entry.getKey());
+            out.writeInt(entry.getValue().value);
+        }
+    }
+
+    /**
+     * Compares this Bag to another. This Bag equals another Bag if it contains
+     * the same number of occurrences of the same elements.
+     *
+     * @param object the Bag to compare to
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(final Object object) {
+        if (object == this) {
+            return true;
+        }
+        if (!(object instanceof Bag)) {
+            return false;
+        }
+        final Bag<?> other = (Bag<?>) object;
+        if (other.size() != size()) {
+            return false;
+        }
+        for (final E element : map.keySet()) {
+            if (other.getCount(element) != getCount(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns the number of occurrence of the given element in this bag by
+     * looking up its count in the underlying map.
+     *
+     * @param object the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    @Override
+    public int getCount(final Object object) {
+        final MutableInteger count = map.get(object);
+        if (count != null) {
+            return count.value;
+        }
+        return 0;
+    }
+
+    /**
+     * Utility method for implementations to access the map that backs this bag.
+     * Not intended for interactive use outside of subclasses.
+     *
+     * @return the map being used by the Bag
+     */
+    protected Map<E, MutableInteger> getMap() {
+        return map;
+    }
+
+    /**
+     * Gets a hash code for the Bag compatible with the definition of equals.
+     * The hash code is defined as the sum total of a hash code for each
+     * element. The per element hash code is defined as
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}. This hash code
+     * is compatible with the Set interface.
+     *
+     * @return the hash code of the Bag
+     */
+    @Override
+    public int hashCode() {
+        int total = 0;
+        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
+            final E element = entry.getKey();
+            final MutableInteger count = entry.getValue();
+            total += (element == null ? 0 : element.hashCode()) ^ count.value;
+        }
+        return total;
+    }
+
+    /**
+     * Returns true if the underlying map is empty.
+     *
+     * @return true if bag is empty
+     */
+    @Override
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
+    /**
+     * Gets an iterator over the bag elements. Elements present in the Bag more
+     * than once will be returned repeatedly.
+     *
+     * @return the iterator
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new BagIterator<>(this);
     }
 
     /**
@@ -360,21 +460,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Remove any members of the bag that are not in the given bag, respecting
      * cardinality.
-     *
-     * @param coll the collection to retain
-     * @return true if this call changed the collection
-     */
-    @Override
-    public boolean retainAll(final Collection<?> coll) {
-        if (coll instanceof Bag) {
-            return retainAll((Bag<?>) coll);
-        }
-        return retainAll(new HashBag<>(coll));
-    }
-
-    /**
-     * Remove any members of the bag that are not in the given bag, respecting
-     * cardinality.
      * @see #retainAll(Collection)
      *
      * @param other the bag to retain
@@ -399,32 +484,28 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Mutable integer class for storing the data.
+     * Remove any members of the bag that are not in the given bag, respecting
+     * cardinality.
+     *
+     * @param coll the collection to retain
+     * @return true if this call changed the collection
      */
-    protected static class MutableInteger {
-        /** The value of this mutable. */
-        protected int value;
-
-        /**
-         * Constructor.
-         * @param value the initial value
-         */
-        MutableInteger(final int value) {
-            this.value = value;
+    @Override
+    public boolean retainAll(final Collection<?> coll) {
+        if (coll instanceof Bag) {
+            return retainAll((Bag<?>) coll);
         }
+        return retainAll(new HashBag<>(coll));
+    }
 
-        @Override
-        public boolean equals(final Object obj) {
-            if (!(obj instanceof MutableInteger)) {
-                return false;
-            }
-            return ((MutableInteger) obj).value == value;
-        }
-
-        @Override
-        public int hashCode() {
-            return value;
-        }
+    /**
+     * Returns the number of elements in this bag.
+     *
+     * @return current size of the bag
+     */
+    @Override
+    public int size() {
+        return size;
     }
 
     /**
@@ -468,7 +549,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         int i = 0;
         for (final E current : map.keySet()) {
             for (int index = getCount(current); index > 0; index--) {
-                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
+                // unsafe, will throw ArrayStoreException if types are not compatible, see Javadoc
                 @SuppressWarnings("unchecked")
                 final T unchecked = (T) current;
                 array[i++] = unchecked;
@@ -478,100 +559,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             array[i++] = null;
         }
         return array;
-    }
-
-    /**
-     * Returns an unmodifiable view of the underlying map's key set.
-     *
-     * @return the set of unique elements in this bag
-     */
-    @Override
-    public Set<E> uniqueSet() {
-        if (uniqueSet == null) {
-            uniqueSet = UnmodifiableSet.<E>unmodifiableSet(map.keySet());
-        }
-        return uniqueSet;
-    }
-
-    /**
-     * Write the map out using a custom routine.
-     * @param out the output stream
-     * @throws IOException any of the usual I/O related exceptions
-     */
-    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
-        out.writeInt(map.size());
-        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
-            out.writeObject(entry.getKey());
-            out.writeInt(entry.getValue().value);
-        }
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     * @param map the map to use
-     * @param in the input stream
-     * @throws IOException any of the usual I/O related exceptions
-     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
-     * @throws ClassCastException if the stream does not contain the correct objects
-     */
-    protected void doReadObject(final Map<E, MutableInteger> map, final ObjectInputStream in)
-            throws IOException, ClassNotFoundException {
-        this.map = map;
-        final int entrySize = in.readInt();
-        for (int i = 0; i < entrySize; i++) {
-            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-            final E obj = (E) in.readObject();
-            final int count = in.readInt();
-            map.put(obj, new MutableInteger(count));
-            size += count;
-        }
-    }
-
-    /**
-     * Compares this Bag to another. This Bag equals another Bag if it contains
-     * the same number of occurrences of the same elements.
-     *
-     * @param object the Bag to compare to
-     * @return true if equal
-     */
-    @Override
-    public boolean equals(final Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (!(object instanceof Bag)) {
-            return false;
-        }
-        final Bag<?> other = (Bag<?>) object;
-        if (other.size() != size()) {
-            return false;
-        }
-        for (final E element : map.keySet()) {
-            if (other.getCount(element) != getCount(element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Gets a hash code for the Bag compatible with the definition of equals.
-     * The hash code is defined as the sum total of a hash code for each
-     * element. The per element hash code is defined as
-     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}. This hash code
-     * is compatible with the Set interface.
-     *
-     * @return the hash code of the Bag
-     */
-    @Override
-    public int hashCode() {
-        int total = 0;
-        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
-            final E element = entry.getKey();
-            final MutableInteger count = entry.getValue();
-            total += (element == null ? 0 : element.hashCode()) ^ count.value;
-        }
-        return total;
     }
 
     /**
@@ -599,6 +586,19 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
         buf.append(CollectionUtils.DEFAULT_TOSTRING_SUFFIX);
         return buf.toString();
+    }
+
+    /**
+     * Returns an unmodifiable view of the underlying map's key set.
+     *
+     * @return the set of unique elements in this bag
+     */
+    @Override
+    public Set<E> uniqueSet() {
+        if (uniqueSet == null) {
+            uniqueSet = UnmodifiableSet.<E>unmodifiableSet(map.keySet());
+        }
+        return uniqueSet;
     }
 
 }

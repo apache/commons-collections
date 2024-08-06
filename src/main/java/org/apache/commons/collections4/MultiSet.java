@@ -35,29 +35,62 @@ import java.util.Set;
 public interface MultiSet<E> extends Collection<E> {
 
     /**
-     * Returns the number of occurrences of the given object currently
-     * in the MultiSet. If the object does not exist in the multiset,
-     * return 0.
-     *
-     * @param object  the object to search for
-     * @return the number of occurrences of the object, zero if not found
-     */
-    int getCount(Object object);
-
-    /**
-     * Sets the number of occurrences of the specified object in the MultiSet
-     * to the given count.
+     * An unmodifiable entry for an element and its occurrence as contained in a MultiSet.
      * <p>
-     * If the provided count is zero, the object will be removed from the
-     * {@link #uniqueSet()}.
+     * The {@link MultiSet#entrySet()} method returns a view of the multiset whose elements
+     * implement this interface.
      *
-     * @param object  the object to update
-     * @param count  the number of occurrences of the object
-     * @return the number of occurrences of the object before this operation, zero
-     *   if the object was not contained in the multiset
-     * @throws IllegalArgumentException if count is negative
+     * @param <E>  the element type
      */
-    int setCount(E object, int count);
+    interface Entry<E> {
+
+        /**
+         * Compares the specified object with this entry for equality.
+         * Returns true if the given object is also a multiset entry
+         * and the two entries represent the same element with the same
+         * number of occurrences.
+         * <p>
+         * More formally, two entries {@code e1} and {@code e2} represent
+         * the same mapping if
+         * <pre>
+         *     (e1.getElement()==null ? e2.getElement()==null
+         *                            : e1.getElement().equals(e2.getElement())) &amp;&amp;
+         *     (e1.getCount()==e2.getCount())
+         * </pre>
+         *
+         * @param o object to be compared for equality with this multiset entry
+         * @return true if the specified object is equal to this multiset entry
+         */
+        @Override
+        boolean equals(Object o);
+
+        /**
+         * Returns the number of occurrences for the element of this entry.
+         *
+         * @return the number of occurrences of the element
+         */
+        int getCount();
+
+        /**
+         * Returns the element corresponding to this entry.
+         *
+         * @return the element corresponding to this entry
+         */
+        E getElement();
+
+        /**
+         * Returns the hash code value for this multiset entry.
+         * <p>
+         * The hash code of a multiset entry {@code e} is defined to be:
+         * <pre>
+         *      (e==null ? 0 : e.hashCode()) ^ noOccurrences)
+         * </pre>
+         *
+         * @return the hash code value for this multiset entry
+         */
+        @Override
+        int hashCode();
+    }
 
     /**
      * Adds one copy of the specified object to the MultiSet.
@@ -90,6 +123,69 @@ public interface MultiSet<E> extends Collection<E> {
     int add(E object, int occurrences);
 
     /**
+     * Returns {@code true} if the MultiSet contains at least one
+     * occurrence for each element contained in the given collection.
+     *
+     * @param coll  the collection to check against
+     * @return {@code true} if the MultiSet contains all the collection
+     */
+    @Override
+    boolean containsAll(Collection<?> coll);
+
+    /**
+     * Returns a {@link Set} of all entries contained in the MultiSet.
+     * <p>
+     * The returned set is backed by this multiset, so any change to either
+     * is immediately reflected in the other.
+     *
+     * @return the Set of MultiSet entries
+     */
+    Set<Entry<E>> entrySet();
+
+    /**
+     * Compares this MultiSet to another object.
+     * <p>
+     * This MultiSet equals another object if it is also a MultiSet
+     * that contains the same number of occurrences of the same elements.
+     *
+     * @param obj  the object to compare to
+     * @return true if equal
+     */
+    @Override
+    boolean equals(Object obj);
+
+    /**
+     * Returns the number of occurrences of the given object currently
+     * in the MultiSet. If the object does not exist in the multiset,
+     * return 0.
+     *
+     * @param object  the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    int getCount(Object object);
+
+    /**
+     * Gets a hash code for the MultiSet compatible with the definition of equals.
+     * The hash code is defined as the sum total of a hash code for each element.
+     * The per element hash code is defined as
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}.
+     *
+     * @return the hash code of the MultiSet
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Returns an {@link Iterator} over the entire set of members,
+     * including copies due to cardinality. This iterator is fail-fast
+     * and will not tolerate concurrent modifications.
+     *
+     * @return iterator over all elements in the MultiSet
+     */
+    @Override
+    Iterator<E> iterator();
+
+    /**
      * Removes one occurrence of the given object from the MultiSet.
      * <p>
      * If the number of occurrences after this operation is reduced
@@ -117,58 +213,6 @@ public interface MultiSet<E> extends Collection<E> {
     int remove(Object object, int occurrences);
 
     /**
-     * Returns a {@link Set} of unique elements in the MultiSet.
-     * <p>
-     * Uniqueness constraints are the same as those in {@link java.util.Set}.
-     * <p>
-     * The returned set is backed by this multiset, so any change to either
-     * is immediately reflected in the other. Only removal operations are
-     * supported, in which case all occurrences of the element are removed
-     * from the backing multiset.
-     *
-     * @return the Set of unique MultiSet elements
-     */
-    Set<E> uniqueSet();
-
-    /**
-     * Returns a {@link Set} of all entries contained in the MultiSet.
-     * <p>
-     * The returned set is backed by this multiset, so any change to either
-     * is immediately reflected in the other.
-     *
-     * @return the Set of MultiSet entries
-     */
-    Set<Entry<E>> entrySet();
-
-    /**
-     * Returns an {@link Iterator} over the entire set of members,
-     * including copies due to cardinality. This iterator is fail-fast
-     * and will not tolerate concurrent modifications.
-     *
-     * @return iterator over all elements in the MultiSet
-     */
-    @Override
-    Iterator<E> iterator();
-
-    /**
-     * Returns the total number of items in the MultiSet.
-     *
-     * @return the total size of the multiset
-     */
-    @Override
-    int size();
-
-    /**
-     * Returns {@code true} if the MultiSet contains at least one
-     * occurrence for each element contained in the given collection.
-     *
-     * @param coll  the collection to check against
-     * @return {@code true} if the MultiSet contains all the collection
-     */
-    @Override
-    boolean containsAll(Collection<?> coll);
-
-    /**
      * Remove all occurrences of all elements from this MultiSet represented
      * in the given collection.
      *
@@ -189,84 +233,40 @@ public interface MultiSet<E> extends Collection<E> {
     boolean retainAll(Collection<?> coll);
 
     /**
-     * Compares this MultiSet to another object.
+     * Sets the number of occurrences of the specified object in the MultiSet
+     * to the given count.
      * <p>
-     * This MultiSet equals another object if it is also a MultiSet
-     * that contains the same number of occurrences of the same elements.
+     * If the provided count is zero, the object will be removed from the
+     * {@link #uniqueSet()}.
      *
-     * @param obj  the object to compare to
-     * @return true if equal
+     * @param object  the object to update
+     * @param count  the number of occurrences of the object
+     * @return the number of occurrences of the object before this operation, zero
+     *   if the object was not contained in the multiset
+     * @throws IllegalArgumentException if count is negative
      */
-    @Override
-    boolean equals(Object obj);
+    int setCount(E object, int count);
 
     /**
-     * Gets a hash code for the MultiSet compatible with the definition of equals.
-     * The hash code is defined as the sum total of a hash code for each element.
-     * The per element hash code is defined as
-     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}.
+     * Returns the total number of items in the MultiSet.
      *
-     * @return the hash code of the MultiSet
+     * @return the total size of the multiset
      */
     @Override
-    int hashCode();
+    int size();
 
     /**
-     * An unmodifiable entry for an element and its occurrence as contained in a MultiSet.
+     * Returns a {@link Set} of unique elements in the MultiSet.
      * <p>
-     * The {@link MultiSet#entrySet()} method returns a view of the multiset whose elements
-     * implement this interface.
+     * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * <p>
+     * The returned set is backed by this multiset, so any change to either
+     * is immediately reflected in the other. Only removal operations are
+     * supported, in which case all occurrences of the element are removed
+     * from the backing multiset.
      *
-     * @param <E>  the element type
+     * @return the Set of unique MultiSet elements
      */
-    interface Entry<E> {
-
-        /**
-         * Returns the element corresponding to this entry.
-         *
-         * @return the element corresponding to this entry
-         */
-        E getElement();
-
-        /**
-         * Returns the number of occurrences for the element of this entry.
-         *
-         * @return the number of occurrences of the element
-         */
-        int getCount();
-
-        /**
-         * Compares the specified object with this entry for equality.
-         * Returns true if the given object is also a multiset entry
-         * and the two entries represent the same element with the same
-         * number of occurrences.
-         * <p>
-         * More formally, two entries {@code e1} and {@code e2} represent
-         * the same mapping if
-         * <pre>
-         *     (e1.getElement()==null ? e2.getElement()==null
-         *                            : e1.getElement().equals(e2.getElement())) &amp;&amp;
-         *     (e1.getCount()==e2.getCount())
-         * </pre>
-         *
-         * @param o object to be compared for equality with this multiset entry
-         * @return true if the specified object is equal to this multiset entry
-         */
-        @Override
-        boolean equals(Object o);
-
-        /**
-         * Returns the hash code value for this multiset entry.
-         * <p>
-         * The hash code of a multiset entry {@code e} is defined to be:
-         * <pre>
-         *      (e==null ? 0 : e.hashCode()) ^ noOccurrences)
-         * </pre>
-         *
-         * @return the hash code value for this multiset entry
-         */
-        @Override
-        int hashCode();
-    }
+    Set<E> uniqueSet();
 
 }

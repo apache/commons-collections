@@ -29,36 +29,13 @@ import org.apache.commons.collections4.Predicate;
  * threw an exception.
  * </p>
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
 public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7429999530934647542L;
-
-    /**
-     * Factory to create the predicate.
-     * <p>
-     * If the array is size zero, the predicate always returns false.
-     * If the array is size one, then that predicate is returned.
-     *
-     * @param <T> the type that the predicate queries
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code any} predicate
-     * @throws NullPointerException if the predicates array is null
-     * @throws NullPointerException if any predicate in the array is null
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
-        FunctorUtils.validate(predicates);
-        if (predicates.length == 0) {
-            return FalsePredicate.<T>falsePredicate();
-        }
-        if (predicates.length == 1) {
-            return (Predicate<T>) predicates[0];
-        }
-        return new AnyPredicate<>(FunctorUtils.copy(predicates));
-    }
 
     /**
      * Factory to create the predicate.
@@ -85,6 +62,30 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
     }
 
     /**
+     * Factory to create the predicate.
+     * <p>
+     * If the array is size zero, the predicate always returns false.
+     * If the array is size one, then that predicate is returned.
+     *
+     * @param <T> the type that the predicate queries
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the {@code any} predicate
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
+        FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return FalsePredicate.<T>falsePredicate();
+        }
+        if (predicates.length == 1) {
+            return (Predicate<T>) predicates[0];
+        }
+        return new AnyPredicate<T>(FunctorUtils.copy(predicates));
+    }
+
+    /**
      * Constructor that performs no validation.
      * Use {@code anyPredicate} if you want that.
      *
@@ -101,9 +102,9 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @return true if any decorated predicate return true
      */
     @Override
-    public boolean evaluate(final T object) {
+    public boolean test(final T object) {
         for (final Predicate<? super T> iPredicate : iPredicates) {
-            if (iPredicate.evaluate(object)) {
+            if (iPredicate.test(object)) {
                 return true;
             }
         }

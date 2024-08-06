@@ -32,24 +32,25 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractListTest} for exercising the
  * {@link PredicatedList} implementation.
- *
- * @since 3.0
  */
 public class PredicatedListTest<E> extends AbstractListTest<E> {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Predicate<E> testPredicate =
+        String.class::isInstance;
 
     public PredicatedListTest() {
         super(PredicatedListTest.class.getSimpleName());
     }
-
-    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected List<E> decorateList(final List<E> list, final Predicate<E> predicate) {
         return PredicatedList.predicatedList(list, predicate);
     }
 
     @Override
-    public List<E> makeObject() {
-        return decorateList(new ArrayList<>(), truePredicate);
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
@@ -58,8 +59,10 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
     }
 
-    protected Predicate<E> testPredicate =
-        o -> o instanceof String;
+    @Override
+    public List<E> makeObject() {
+        return decorateList(new ArrayList<>(), truePredicate);
+    }
 
     public List<E> makeTestList() {
         return decorateList(new ArrayList<>(), testPredicate);
@@ -141,11 +144,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         //subList with all elements of list
         subList = list.subList(0, list.size());
         assertEquals(list.size(), subList.size());
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

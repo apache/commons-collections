@@ -82,60 +82,9 @@ public final class UnmodifiableMap<K, V>
         super((Map<K, V>) map);
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @since 3.1
-     */
-    @SuppressWarnings("unchecked")
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject();
-    }
-
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public V put(final K key, final V value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public V remove(final Object key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public MapIterator<K, V> mapIterator() {
-        if (map instanceof IterableMap) {
-            final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
-            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
-        }
-        final MapIterator<K, V> it = new EntrySetMapIterator<>(map);
-        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
     @Override
@@ -151,9 +100,60 @@ public final class UnmodifiableMap<K, V>
     }
 
     @Override
+    public MapIterator<K, V> mapIterator() {
+        if (map instanceof IterableMap) {
+            final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+        }
+        final MapIterator<K, V> it = new EntrySetMapIterator<>(map);
+        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
+    }
+
+    @Override
+    public V put(final K key, final V value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Deserializes the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @since 3.1
+     */
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject();
+    }
+
+    @Override
+    public V remove(final Object key) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Collection<V> values() {
         final Collection<V> coll = super.values();
         return UnmodifiableCollection.unmodifiableCollection(coll);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

@@ -36,6 +36,11 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    @Override
     public ArrayStack<E> makeObject() {
         return new ArrayStack<>();
     }
@@ -94,11 +99,6 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                 "Next Item is 'First Item'");
         assertEquals(-1, stack.search("Missing Item"),
                 "Cannot find 'Missing Item'");
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
     }
 
 //    public void testCreate() throws Exception {

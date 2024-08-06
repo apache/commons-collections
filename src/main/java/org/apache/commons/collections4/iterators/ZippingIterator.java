@@ -49,6 +49,23 @@ public class ZippingIterator<E> implements Iterator<E> {
 
     /**
      * Constructs a new {@code ZippingIterator} that will provide
+     * interleaved iteration of the specified iterators.
+     *
+     * @param iterators  the array of iterators
+     * @throws NullPointerException if any iterator is null
+     */
+    public ZippingIterator(final Iterator<? extends E>... iterators) {
+        // create a mutable list to be able to remove exhausted iterators
+        final List<Iterator<? extends E>> list = new ArrayList<>();
+        for (final Iterator<? extends E> iterator : iterators) {
+            Objects.requireNonNull(iterator, "iterator");
+            list.add(iterator);
+        }
+        this.iterators = FluentIterable.of(list).loop().iterator();
+    }
+
+    /**
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
      *
      * @param a  the first child iterator
@@ -74,23 +91,6 @@ public class ZippingIterator<E> implements Iterator<E> {
                            final Iterator<? extends E> b,
                            final Iterator<? extends E> c) {
         this(new Iterator[] {a, b, c});
-    }
-
-    /**
-     * Constructs a new {@code ZippingIterator} that will provide
-     * interleaved iteration of the specified iterators.
-     *
-     * @param iterators  the array of iterators
-     * @throws NullPointerException if any iterator is null
-     */
-    public ZippingIterator(final Iterator<? extends E>... iterators) {
-        // create a mutable list to be able to remove exhausted iterators
-        final List<Iterator<? extends E>> list = new ArrayList<>();
-        for (final Iterator<? extends E> iterator : iterators) {
-            Objects.requireNonNull(iterator, "iterator");
-            list.add(iterator);
-        }
-        this.iterators = FluentIterable.of(list).loop().iterator();
     }
 
     /**

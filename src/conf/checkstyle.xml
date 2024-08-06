@@ -42,6 +42,7 @@ limitations under the License.
     <property name="headerFile" value="${checkstyle.header.file}"/>
   </module>
   <module name="TreeWalker">
+    <module name="ExplicitInitializationCheck" />
     <module name="AvoidStarImport"/>
     <module name="IllegalImport"/>
     <module name="RedundantImport"/>
@@ -58,10 +59,24 @@ limitations under the License.
     <module name="RightCurly"/>
     <module name="GenericWhitespace"/>
     <module name="WhitespaceAfter"/>
+    <module name="WhitespaceAround"/>
     <module name="NoWhitespaceBefore"/>
     <module name="Indentation">
       <!-- Indentation style recommended by Oracle -->
       <property name="caseIndent" value="0"/>
     </module>
- </module>
+    <module name="ImportOrder">
+      <property name="option" value="top"/>
+      <property name="groups" value="java,javax,junit,org,com"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+    </module>
+  </module>
+  <!-- @author tags are deprecated -->
+  <module name="RegexpSingleline">
+    <property name="format" value="^\s+\*\s+@author\s" />
+    <property name="message" value="Deprecated @author tag" />
+    <property name="fileExtensions" value="java" />
+    <property name="severity" value="warning" />
+  </module>
 </module>

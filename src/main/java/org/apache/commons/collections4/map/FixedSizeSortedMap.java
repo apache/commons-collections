@@ -90,6 +90,16 @@ public class FixedSizeSortedMap<K, V>
         super(map);
     }
 
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Map is fixed size");
+    }
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        return UnmodifiableSet.unmodifiableSet(map.entrySet());
+    }
+
     /**
      * Gets the map being decorated.
      *
@@ -99,28 +109,24 @@ public class FixedSizeSortedMap<K, V>
         return (SortedMap<K, V>) map;
     }
 
-    /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
+    @Override
+    public SortedMap<K, V> headMap(final K toKey) {
+        return new FixedSizeSortedMap<>(getSortedMap().headMap(toKey));
     }
 
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
+    @Override
+    public boolean isFull() {
+        return true;
+    }
+
+    @Override
+    public Set<K> keySet() {
+        return UnmodifiableSet.unmodifiableSet(map.keySet());
+    }
+
+    @Override
+    public int maxSize() {
+        return size();
     }
 
     @Override
@@ -139,9 +145,17 @@ public class FixedSizeSortedMap<K, V>
         map.putAll(mapToCopy);
     }
 
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Map is fixed size");
+    /**
+     * Deserializes the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
     }
 
     @Override
@@ -150,28 +164,8 @@ public class FixedSizeSortedMap<K, V>
     }
 
     @Override
-    public Set<Map.Entry<K, V>> entrySet() {
-        return UnmodifiableSet.unmodifiableSet(map.entrySet());
-    }
-
-    @Override
-    public Set<K> keySet() {
-        return UnmodifiableSet.unmodifiableSet(map.keySet());
-    }
-
-    @Override
-    public Collection<V> values() {
-        return UnmodifiableCollection.unmodifiableCollection(map.values());
-    }
-
-    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return new FixedSizeSortedMap<>(getSortedMap().subMap(fromKey, toKey));
-    }
-
-    @Override
-    public SortedMap<K, V> headMap(final K toKey) {
-        return new FixedSizeSortedMap<>(getSortedMap().headMap(toKey));
     }
 
     @Override
@@ -180,13 +174,19 @@ public class FixedSizeSortedMap<K, V>
     }
 
     @Override
-    public boolean isFull() {
-        return true;
+    public Collection<V> values() {
+        return UnmodifiableCollection.unmodifiableCollection(map.values());
     }
 
-    @Override
-    public int maxSize() {
-        return size();
+    /**
+     * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

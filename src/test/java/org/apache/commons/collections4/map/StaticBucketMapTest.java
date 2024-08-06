@@ -34,8 +34,14 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public StaticBucketMap<K, V> makeObject() {
-        return new StaticBucketMap<>(30);
+    public String[] ignoredTests() {
+        final String pre = "StaticBucketMapTest.bulkTestMap";
+        final String post = ".testCollectionIteratorFailFast";
+        return new String[] {
+            pre + "EntrySet" + post,
+            pre + "KeySet" + post,
+            pre + "Values" + post
+        };
     }
 
     /**
@@ -47,28 +53,8 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public String[] ignoredTests() {
-        final String pre = "StaticBucketMapTest.bulkTestMap";
-        final String post = ".testCollectionIteratorFailFast";
-        return new String[] {
-            pre + "EntrySet" + post,
-            pre + "KeySet" + post,
-            pre + "Values" + post
-        };
-    }
-
-    // Bugzilla 37567
-    @Test
-    @SuppressWarnings("unchecked")
-    public void test_get_nullMatchesIncorrectly() {
-        final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
-        map.put(null, (V) "A");
-        assertEquals("A", map.get(null));
-        // loop so we find a string that is in the same bucket as the null
-        for (int i = 'A'; i <= 'Z'; i++) {
-            final String str = String.valueOf((char) i);
-            assertNull(map.get(str), "String: " + str);
-        }
+    public StaticBucketMap<K, V> makeObject() {
+        return new StaticBucketMap<>(30);
     }
 
     @Test
@@ -94,6 +80,20 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         for (int i = 'A'; i <= 'Z'; i++) {
             final String str = String.valueOf((char) i);
             assertFalse(map.containsValue(str), "String: " + str);
+        }
+    }
+
+    // Bugzilla 37567
+    @Test
+    @SuppressWarnings("unchecked")
+    public void test_get_nullMatchesIncorrectly() {
+        final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
+        map.put(null, (V) "A");
+        assertEquals("A", map.get(null));
+        // loop so we find a string that is in the same bucket as the null
+        for (int i = 'A'; i <= 'Z'; i++) {
+            final String str = String.valueOf((char) i);
+            assertNull(map.get(str), "String: " + str);
         }
     }
 

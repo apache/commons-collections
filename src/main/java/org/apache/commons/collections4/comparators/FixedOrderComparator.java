@@ -52,9 +52,6 @@ import java.util.Objects;
  */
 public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
 
-    /** Serialization version from Collections 4.0. */
-    private static final long serialVersionUID = 82794675842863201L;
-
     /**
      * Unknown object behavior enum.
      * @since 4.0
@@ -62,6 +59,9 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     public enum UnknownObjectBehavior {
         BEFORE, AFTER, EXCEPTION
     }
+
+    /** Serialization version from Collections 4.0. */
+    private static final long serialVersionUID = 82794675842863201L;
 
     /** Internal map of object to position */
     private final Map<T, Integer> map = new HashMap<>();
@@ -83,21 +83,6 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     /**
-     * Constructs a FixedOrderComparator which uses the order of the given array
-     * to compare the objects.
-     * <p>
-     * The array is copied, so later changes will not affect the comparator.
-     *
-     * @param items  the items that the comparator can compare in order
-     * @throws NullPointerException if the array is null
-     */
-    public FixedOrderComparator(final T... items) {
-        for (final T item : Objects.requireNonNull(items, "items")) {
-            add(item);
-        }
-    }
-
-    /**
      * Constructs a FixedOrderComparator which uses the order of the given list
      * to compare the objects.
      * <p>
@@ -112,49 +97,19 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         }
     }
 
-    // Bean methods / state querying methods
     /**
-     * Returns true if modifications cannot be made to the FixedOrderComparator.
-     * FixedOrderComparators cannot be modified once they have performed a comparison.
+     * Constructs a FixedOrderComparator which uses the order of the given array
+     * to compare the objects.
+     * <p>
+     * The array is copied, so later changes will not affect the comparator.
      *
-     * @return true if attempts to change the FixedOrderComparator yield an
-     *  UnsupportedOperationException, false if it can be changed.
+     * @param items  the items that the comparator can compare in order
+     * @throws NullPointerException if the array is null
      */
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    /**
-     * Checks to see whether the comparator is now locked against further changes.
-     *
-     * @throws UnsupportedOperationException if the comparator is locked
-     */
-    protected void checkLocked() {
-        if (isLocked()) {
-            throw new UnsupportedOperationException("Cannot modify a FixedOrderComparator after a comparison");
+    public FixedOrderComparator(final T... items) {
+        for (final T item : Objects.requireNonNull(items, "items")) {
+            add(item);
         }
-    }
-
-    /**
-     * Gets the behavior for comparing unknown objects.
-     *
-     * @return {@link UnknownObjectBehavior}
-     */
-    public UnknownObjectBehavior getUnknownObjectBehavior() {
-        return unknownObjectBehavior;
-    }
-
-    /**
-     * Sets the behavior for comparing unknown objects.
-     *
-     * @param unknownObjectBehavior  the flag for unknown behavior -
-     * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
-     * @throws UnsupportedOperationException if a comparison has been performed
-     * @throws NullPointerException if unknownObjectBehavior is null
-     */
-    public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
-        checkLocked();
-        this.unknownObjectBehavior = Objects.requireNonNull(unknownObjectBehavior, "unknownObjectBehavior");
     }
 
     // Methods for adding items
@@ -197,6 +152,17 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         return result == null;
     }
 
+    /**
+     * Checks to see whether the comparator is now locked against further changes.
+     *
+     * @throws UnsupportedOperationException if the comparator is locked
+     */
+    protected void checkLocked() {
+        if (isLocked()) {
+            throw new UnsupportedOperationException("Cannot modify a FixedOrderComparator after a comparison");
+        }
+    }
+
     // Comparator methods
     /**
      * Compares two objects according to the order of this Comparator.
@@ -235,52 +201,58 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         return position1.compareTo(position2);
     }
 
-    /**
-     * Implement a hash code for this comparator that is consistent with
-     * {@link #equals(Object) equals}.
-     *
-     * @return a hash code for this comparator.
-     */
     @Override
-    public int hashCode() {
-        int total = 17;
-        total = total*37 + map.hashCode();
-        total = total*37 + (unknownObjectBehavior == null ? 0 : unknownObjectBehavior.hashCode());
-        total = total*37 + counter;
-        total = total*37 + (isLocked ? 0 : 1);
-        return total;
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FixedOrderComparator<?> other = (FixedOrderComparator<?>) obj;
+        return counter == other.counter && isLocked == other.isLocked && Objects.equals(map, other.map) && unknownObjectBehavior == other.unknownObjectBehavior;
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is
-     * a {@link Comparator} whose ordering is known to be
-     * equivalent to mine.
-     * <p>
-     * This implementation returns {@code true}
-     * iff {@code <i>that</i>} is a {@link FixedOrderComparator}
-     * whose attributes are equal to mine.
+     * Gets the behavior for comparing unknown objects.
      *
-     * @param object  the object to compare to
-     * @return true if equal
+     * @return {@link UnknownObjectBehavior}
      */
+    public UnknownObjectBehavior getUnknownObjectBehavior() {
+        return unknownObjectBehavior;
+    }
+
     @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (null == object) {
-            return false;
-        }
-        if (object.getClass().equals(this.getClass())) {
-            final FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
-            return (null == map ? null == comp.map : map.equals(comp.map)) &&
-                   (null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
-                        unknownObjectBehavior == comp.unknownObjectBehavior &&
-                        counter == comp.counter &&
-                        isLocked == comp.isLocked &&
-                        unknownObjectBehavior == comp.unknownObjectBehavior);
-        }
-        return false;
+    public int hashCode() {
+        return Objects.hash(counter, isLocked, map, unknownObjectBehavior);
+    }
+
+    // Bean methods / state querying methods
+    /**
+     * Returns true if modifications cannot be made to the FixedOrderComparator.
+     * FixedOrderComparators cannot be modified once they have performed a comparison.
+     *
+     * @return true if attempts to change the FixedOrderComparator yield an
+     *  UnsupportedOperationException, false if it can be changed.
+     */
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    /**
+     * Sets the behavior for comparing unknown objects.
+     *
+     * @param unknownObjectBehavior  the flag for unknown behavior -
+     * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
+     * @throws UnsupportedOperationException if a comparison has been performed
+     * @throws NullPointerException if unknownObjectBehavior is null
+     */
+    public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
+        checkLocked();
+        this.unknownObjectBehavior = Objects.requireNonNull(unknownObjectBehavior, "unknownObjectBehavior");
     }
 
 }

@@ -29,8 +29,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableSortedMap} implementation.
- *
- * @since 3.0
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
@@ -39,17 +37,17 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Override
-    public SortedMap<K, V> makeObject() {
-        return UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<>());
-    }
-
-    @Override
-    public boolean isPutChangeSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "4";
     }
 
     @Override
     public boolean isPutAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isPutChangeSupported() {
         return false;
     }
 
@@ -65,10 +63,9 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         return UnmodifiableSortedMap.unmodifiableSortedMap(m);
     }
 
-    @Test
-    public void testUnmodifiable() {
-        assertTrue(makeObject() instanceof Unmodifiable);
-        assertTrue(makeFullMap() instanceof Unmodifiable);
+    @Override
+    public SortedMap<K, V> makeObject() {
+        return UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<>());
     }
 
     @Test
@@ -93,19 +90,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testTailMap() {
-        final SortedMap<K, V> map = makeFullMap();
-
-        assertSame(18, map.size());
-        // "you" is the last key of the map
-        assertSame(1, map.tailMap((K) "you").size());
-        // "we'll" is the before key of "you"
-        assertSame(2, map.tailMap((K) "we'll").size());
-        // "again" is the first key of the map
-        assertSame(18, map.tailMap((K) "again").size());
-    }
-
-    @Test
     public void testSubMap() {
         final SortedMap<K, V> map = makeFullMap();
 
@@ -120,9 +104,23 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(map.headMap((K) "you").size(), map.subMap((K) "again", (K) "you").size());
     }
 
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    @Test
+    public void testTailMap() {
+        final SortedMap<K, V> map = makeFullMap();
+
+        assertSame(18, map.size());
+        // "you" is the last key of the map
+        assertSame(1, map.tailMap((K) "you").size());
+        // "we'll" is the before key of "you"
+        assertSame(2, map.tailMap((K) "we'll").size());
+        // "again" is the first key of the map
+        assertSame(18, map.tailMap((K) "again").size());
+    }
+
+    @Test
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
 //    public void testCreate() throws Exception {

@@ -44,31 +44,6 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
         this.entry = Objects.requireNonNull(entry, "entry");
     }
 
-    /**
-     * Gets the map being decorated.
-     *
-     * @return the decorated map
-     */
-    protected Map.Entry<K, V> getMapEntry() {
-        return entry;
-    }
-
-
-    @Override
-    public K getKey() {
-        return entry.getKey();
-    }
-
-    @Override
-    public V getValue() {
-        return entry.getValue();
-    }
-
-    @Override
-    public V setValue(final V object) {
-        return entry.setValue(object);
-    }
-
     @Override
     public boolean equals(final Object object) {
         if (object == this) {
@@ -78,8 +53,32 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
     }
 
     @Override
+    public K getKey() {
+        return entry.getKey();
+    }
+
+    /**
+     * Gets the map being decorated.
+     *
+     * @return the decorated map
+     */
+    protected Map.Entry<K, V> getMapEntry() {
+        return entry;
+    }
+
+    @Override
+    public V getValue() {
+        return entry.getValue();
+    }
+
+    @Override
     public int hashCode() {
         return entry.hashCode();
+    }
+
+    @Override
+    public V setValue(final V object) {
+        return entry.setValue(object);
     }
 
     @Override

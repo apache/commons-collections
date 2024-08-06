@@ -25,7 +25,7 @@ import java.util.Set;
  * the class has to be separate of CompositeSetTest, else the test
  * class also has to be serialized.
  */
-class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
+final class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 5321193666420238910L;
@@ -37,11 +37,6 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
     }
 
     @Override
-    public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing, final Set<E> added, final Collection<E> intersects) {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
     public boolean add(final CompositeSet<E> composite, final List<Set<E>> collections, final E obj) {
         return contained.add(obj);
     }
@@ -49,5 +44,10 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
     @Override
     public boolean addAll(final CompositeSet<E> composite, final List<Set<E>> collections, final Collection<? extends E> coll) {
         return contained.addAll(coll);
+    }
+
+    @Override
+    public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing, final Set<E> added, final Collection<E> intersects) {
+        throw new IllegalArgumentException();
     }
 }

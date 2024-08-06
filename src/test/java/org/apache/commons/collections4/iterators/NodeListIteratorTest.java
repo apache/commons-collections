@@ -49,36 +49,17 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         super(NodeListIteratorTest.class.getSimpleName());
     }
 
-    @BeforeEach
-    protected void setUp() throws Exception {
-
-        // Default: use standard constr.
-        createIteratorWithStandardConstr = true;
-
-
-        // create mocked Node Instances and fill Node[] to be used by test cases
-        final Node node1 = createMock(Element.class);
-        final Node node2 = createMock(Element.class);
-        final Node node3 = createMock(Text.class);
-        final Node node4 = createMock(Element.class);
-        nodes = new Node[] {node1, node2, node3, node4};
-
-        replay(node1);
-        replay(node2);
-        replay(node3);
-        replay(node4);
-    }
-
     @Override
     public Iterator<Node> makeEmptyIterator() {
         final NodeList emptyNodeList = new NodeList() {
             @Override
-            public Node item(final int index) {
-                throw new IndexOutOfBoundsException();
-            }
-            @Override
             public int getLength() {
                 return 0;
+            }
+
+            @Override
+            public Node item(final int index) {
+                throw new IndexOutOfBoundsException();
             }
         };
 
@@ -96,16 +77,36 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     public Iterator<Node> makeObject() {
         final NodeList nodeList = new NodeList() {
             @Override
-            public Node item(final int index) {
-                return nodes[index];
-            }
-            @Override
             public int getLength() {
                 return nodes.length;
+            }
+
+            @Override
+            public Node item(final int index) {
+                return nodes[index];
             }
         };
 
         return new NodeListIterator(nodeList);
+    }
+
+    @BeforeEach
+    protected void setUp() throws Exception {
+
+        // Default: use standard constr.
+        createIteratorWithStandardConstr = true;
+
+        // create mocked Node Instances and fill Node[] to be used by test cases
+        final Node node1 = createMock(Element.class);
+        final Node node2 = createMock(Element.class);
+        final Node node3 = createMock(Text.class);
+        final Node node4 = createMock(Element.class);
+        nodes = new Node[] { node1, node2, node3, node4 };
+
+        replay(node1);
+        replay(node2);
+        replay(node3);
+        replay(node4);
     }
 
     @Override
@@ -113,16 +114,11 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         return false;
     }
 
-    @Test
-    public void testNullConstructor() {
-        assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
-    }
-
     /**
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testEmptyIteratorWithNodeConstructor(){
+    public void testEmptyIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
     }
@@ -131,9 +127,14 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testFullIteratorWithNodeConstructor(){
+    public void testFullIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testFullIterator();
+    }
+
+    @Test
+    public void testNullConstructor() {
+        assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 
 }

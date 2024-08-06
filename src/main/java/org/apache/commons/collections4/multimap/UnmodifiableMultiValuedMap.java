@@ -80,13 +80,8 @@ public final class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public Collection<V> remove(final Object key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean removeMapping(final Object key, final Object item) {
-        throw new UnsupportedOperationException();
+    public Map<K, Collection<V>> asMap() {
+        return UnmodifiableMap.unmodifiableMap(decorated().asMap());
     }
 
     @Override
@@ -95,23 +90,13 @@ public final class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public Collection<V> get(final K key) {
-        return UnmodifiableCollection.unmodifiableCollection(decorated().get(key));
-    }
-
-    @Override
-    public boolean put(final K key, final V value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<K> keySet() {
-        return UnmodifiableSet.unmodifiableSet(decorated().keySet());
-    }
-
-    @Override
     public Collection<Entry<K, V>> entries() {
         return UnmodifiableCollection.unmodifiableCollection(decorated().entries());
+    }
+
+    @Override
+    public Collection<V> get(final K key) {
+        return UnmodifiableCollection.unmodifiableCollection(decorated().get(key));
     }
 
     @Override
@@ -120,18 +105,18 @@ public final class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public Collection<V> values() {
-        return UnmodifiableCollection.unmodifiableCollection(decorated().values());
-    }
-
-    @Override
-    public Map<K, Collection<V>> asMap() {
-        return UnmodifiableMap.unmodifiableMap(decorated().asMap());
+    public Set<K> keySet() {
+        return UnmodifiableSet.unmodifiableSet(decorated().keySet());
     }
 
     @Override
     public MapIterator<K, V> mapIterator() {
         return UnmodifiableMapIterator.unmodifiableMapIterator(decorated().mapIterator());
+    }
+
+    @Override
+    public boolean put(final K key, final V value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -147,6 +132,21 @@ public final class UnmodifiableMultiValuedMap<K, V>
     @Override
     public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Collection<V> remove(final Object key) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeMapping(final Object key, final Object item) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Collection<V> values() {
+        return UnmodifiableCollection.unmodifiableCollection(decorated().values());
     }
 
 }

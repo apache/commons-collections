@@ -42,19 +42,9 @@ import java.util.function.IntPredicate;
  * than the number of bits then the modulus will create a 'random' position and increment within the size.
  * </p>
  *
- * @since 4.5
+ * @since 4.5.0
  */
 public class EnhancedDoubleHasher implements Hasher {
-
-    /**
-     * The initial hash value.
-     */
-    private final long initial;
-
-    /**
-     * The value to increment the hash value by.
-     */
-    private final long increment;
 
     /**
      * Convert bytes to big-endian long filling with zero bytes as necessary..
@@ -75,6 +65,16 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     /**
+     * The initial hash value.
+     */
+    private final long initial;
+
+    /**
+     * The value to increment the hash value by.
+     */
+    private final long increment;
+
+    /**
      * Constructs the EnhancedDoubleHasher from a byte array.
      * <p>
      * This method simplifies the conversion from a Digest or hasher algorithm output
@@ -85,7 +85,7 @@ public class EnhancedDoubleHasher implements Hasher {
      *</p>
      * <ol>
      * <li>If there is an odd number of bytes the excess byte is assigned to the increment value</li>
-     * <li>The bytes alloted are read in big-endian order any byte not populated is set to zero.</li>
+     * <li>The bytes allotted are read in big-endian order any byte not populated is set to zero.</li>
      * </ol>
      * <p>
      * This ensures that small arrays generate the largest possible increment and initial values.
@@ -114,14 +114,6 @@ public class EnhancedDoubleHasher implements Hasher {
     }
 
     /**
-     * Gets the initial value for the hash calculation.
-     * @return the initial value for the hash calculation.
-     */
-    long getInitial() {
-        return initial;
-    }
-
-    /**
      * Gets the increment value for the hash calculation.
      * @return the increment value for the hash calculation.
      */
@@ -129,14 +121,36 @@ public class EnhancedDoubleHasher implements Hasher {
         return increment;
     }
 
+    /**
+     * Gets the initial value for the hash calculation.
+     * @return the initial value for the hash calculation.
+     */
+    long getInitial() {
+        return initial;
+    }
+
     @Override
-    public IndexProducer indices(final Shape shape) {
+    public IndexExtractor indices(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
 
-        return new IndexProducer() {
+        return new IndexExtractor() {
 
             @Override
-            public boolean forEachIndex(final IntPredicate consumer) {
+            public int[] asIndexArray() {
+                final int[] result = new int[shape.getNumberOfHashFunctions()];
+                final int[] idx = new int[1];
+
+                // This method needs to return duplicate indices
+
+                processIndices(i -> {
+                    result[idx[0]++] = i;
+                    return true;
+                });
+                return result;
+            }
+
+            @Override
+            public boolean processIndices(final IntPredicate consumer) {
                 Objects.requireNonNull(consumer, "consumer");
                 final int bits = shape.getNumberOfBits();
                 // Enhanced double hashing:
@@ -152,59 +166,51 @@ public class EnhancedDoubleHasher implements Hasher {
                 // The final hash is:
                 // hash[i] = ( h1(x) - i*h2(x) - (i*i*i - i)/6 ) wrapped in [0, bits)
 
-                int index = BitMap.mod(initial, bits);
-                int inc = BitMap.mod(increment, bits);
+                int index = BitMaps.mod(initial, bits);
+                if (!consumer.test(index)) {
+                    return false;
+                }
+                int inc = BitMaps.mod(increment, bits);
 
                 final int k = shape.getNumberOfHashFunctions();
-                if (k > bits) {
-                    for (int j = k; j > 0;) {
-                        // handle k > bits
-                        final int block = Math.min(j, bits);
-                        j -= block;
-                        for (int i = 0; i < block; i++) {
-                            if (!consumer.test(index)) {
-                                return false;
-                            }
-                            // Update index and handle wrapping
-                            index -= inc;
-                            index = index < 0 ? index + bits : index;
 
-                            // Incorporate the counter into the increment to create a
-                            // tetrahedral number additional term, and handle wrapping.
-                            inc -= i;
-                            inc = inc < 0 ? inc + bits : inc;
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < k; i++) {
-                        if (!consumer.test(index)) {
-                            return false;
-                        }
+                if (k >= bits) {
+                    // the tetraheadral incrementer.  We need to ensure that this
+                    // number does not exceed bits-1 or we may end up with an index > bits.
+                    int tet = 1;
+                    for (int i = 1; i < k; i++) {
                         // Update index and handle wrapping
                         index -= inc;
                         index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
+
+                        // Incorporate the counter into the increment to create a
+                        // tetrahedral number additional term, and handle wrapping.
+                        inc -= tet;
+                        inc = inc < 0 ? inc + bits : inc;
+                        if (++tet == bits) {
+                            tet = 0;
+                        }
+                    }
+                } else {
+                    for (int i = 1; i < k; i++) {
+                        // Update index and handle wrapping
+                        index -= inc;
+                        index = index < 0 ? index + bits : index;
+                        if (!consumer.test(index)) {
+                            return false;
+                        }
 
                         // Incorporate the counter into the increment to create a
                         // tetrahedral number additional term, and handle wrapping.
                         inc -= i;
                         inc = inc < 0 ? inc + bits : inc;
                     }
+
                 }
                 return true;
-            }
-
-            @Override
-            public int[] asIndexArray() {
-                final int[] result = new int[shape.getNumberOfHashFunctions()];
-                final int[] idx = new int[1];
-
-                // This method needs to return duplicate indices
-
-                forEachIndex(i -> {
-                    result[idx[0]++] = i;
-                    return true;
-                });
-                return result;
             }
         };
     }

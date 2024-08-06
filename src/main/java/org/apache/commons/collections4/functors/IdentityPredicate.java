@@ -24,15 +24,13 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if the input is the same object
  * as the one stored in this predicate.
  *
+ * @param <T> the type of the input to the predicate.
  * @since 3.0
  */
-public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
+public final class IdentityPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -89901658494523293L;
-
-    /** The value to compare to */
-    private final T iValue;
 
     /**
      * Factory to create the identity predicate.
@@ -48,6 +46,9 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
         return new IdentityPredicate<>(object);
     }
 
+    /** The value to compare to */
+    private final T iValue;
+
     /**
      * Constructor that performs no validation.
      * Use {@code identityPredicate} if you want that.
@@ -59,18 +60,6 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
-     * Evaluates the predicate returning true if the input object is identical to
-     * the stored object.
-     *
-     * @param object  the input object
-     * @return true if input is the same object as the stored value
-     */
-    @Override
-    public boolean evaluate(final T object) {
-        return iValue == object;
-    }
-
-    /**
      * Gets the value.
      *
      * @return the value
@@ -78,6 +67,18 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      */
     public T getValue() {
         return iValue;
+    }
+
+    /**
+     * Evaluates the predicate returning true if the input object is identical to
+     * the stored object.
+     *
+     * @param object  the input object
+     * @return true if input is the same object as the stored value
+     */
+    @Override
+    public boolean test(final T object) {
+        return iValue == object;
     }
 
 }

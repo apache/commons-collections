@@ -56,33 +56,6 @@ public class TransformedMap<K, V>
     /** Serialization version */
     private static final long serialVersionUID = 7023152376788900464L;
 
-    /** The transformer to use for the key */
-    protected final Transformer<? super K, ? extends K> keyTransformer;
-    /** The transformer to use for the value */
-    protected final Transformer<? super V, ? extends V> valueTransformer;
-
-    /**
-     * Factory method to create a transforming map.
-     * <p>
-     * If there are any elements already in the map being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedMap(Map, Transformer, Transformer)}.
-     *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
-     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
-     * @return a new transformed map
-     * @throws NullPointerException if map is null
-     * @since 4.0
-     */
-    public static <K, V> TransformedMap<K, V> transformingMap(final Map<K, V> map,
-            final Transformer<? super K, ? extends K> keyTransformer,
-            final Transformer<? super V, ? extends V> valueTransformer) {
-        return new TransformedMap<>(map, keyTransformer, valueTransformer);
-    }
-
     /**
      * Factory method to create a transforming map that will transform
      * existing contents of the specified map.
@@ -111,6 +84,33 @@ public class TransformedMap<K, V>
         }
         return decorated;
     }
+    /**
+     * Factory method to create a transforming map.
+     * <p>
+     * If there are any elements already in the map being decorated, they
+     * are NOT transformed.
+     * Contrast this with {@link #transformedMap(Map, Transformer, Transformer)}.
+     *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param map  the map to decorate, must not be null
+     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @return a new transformed map
+     * @throws NullPointerException if map is null
+     * @since 4.0
+     */
+    public static <K, V> TransformedMap<K, V> transformingMap(final Map<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
+        return new TransformedMap<>(map, keyTransformer, valueTransformer);
+    }
+
+    /** The transformer to use for the key */
+    protected final Transformer<? super K, ? extends K> keyTransformer;
+
+    /** The transformer to use for the value */
+    protected final Transformer<? super V, ? extends V> valueTransformer;
 
     /**
      * Constructor that wraps (not copies).
@@ -131,83 +131,6 @@ public class TransformedMap<K, V>
     }
 
     /**
-     * Write the map out using a custom routine.
-     *
-     * @param out  the output stream
-     * @throws IOException if an error occurs while writing to the stream
-     * @since 3.1
-     */
-    private void writeObject(final ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     *
-     * @param in  the input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
-     * @since 3.1
-     */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
-    }
-
-    /**
-     * Transforms a key.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param object  the object to transform
-     * @return the transformed object
-     */
-    protected K transformKey(final K object) {
-        if (keyTransformer == null) {
-            return object;
-        }
-        return keyTransformer.transform(object);
-    }
-
-    /**
-     * Transforms a value.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param object  the object to transform
-     * @return the transformed object
-     */
-    protected V transformValue(final V object) {
-        if (valueTransformer == null) {
-            return object;
-        }
-        return valueTransformer.transform(object);
-    }
-
-    /**
-     * Transforms a map.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param map  the map to transform
-     * @return the transformed object
-     */
-    @SuppressWarnings("unchecked")
-    protected Map<K, V> transformMap(final Map<? extends K, ? extends V> map) {
-        if (map.isEmpty()) {
-            return (Map<K, V>) map;
-        }
-        final Map<K, V> result = new LinkedMap<>(map.size());
-
-        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
-        }
-        return result;
-    }
-
-    /**
      * Override to transform the value when using {@code setValue}.
      *
      * @param value  the value to transform
@@ -216,7 +139,7 @@ public class TransformedMap<K, V>
      */
     @Override
     protected V checkSetValue(final V value) {
-        return valueTransformer.transform(value);
+        return valueTransformer.apply(value);
     }
 
     /**
@@ -241,6 +164,83 @@ public class TransformedMap<K, V>
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         mapToCopy = transformMap(mapToCopy);
         decorated().putAll(mapToCopy);
+    }
+
+    /**
+     * Deserializes the map in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @since 3.1
+     */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<K, V>) in.readObject(); // (1)
+    }
+
+    /**
+     * Transforms a key.
+     * <p>
+     * The transformer itself may throw an exception if necessary.
+     *
+     * @param object  the object to transform
+     * @return the transformed object
+     */
+    protected K transformKey(final K object) {
+        if (keyTransformer == null) {
+            return object;
+        }
+        return keyTransformer.apply(object);
+    }
+
+    /**
+     * Transforms a map.
+     * <p>
+     * The transformer itself may throw an exception if necessary.
+     *
+     * @param map  the map to transform
+     * @return the transformed object
+     */
+    @SuppressWarnings("unchecked")
+    protected Map<K, V> transformMap(final Map<? extends K, ? extends V> map) {
+        if (map.isEmpty()) {
+            return (Map<K, V>) map;
+        }
+        final Map<K, V> result = new LinkedMap<>(map.size());
+
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
+        }
+        return result;
+    }
+
+    /**
+     * Transforms a value.
+     * <p>
+     * The transformer itself may throw an exception if necessary.
+     *
+     * @param object  the object to transform
+     * @return the transformed object
+     */
+    protected V transformValue(final V object) {
+        if (valueTransformer == null) {
+            return object;
+        }
+        return valueTransformer.apply(object);
+    }
+
+    /**
+     * Serializes this object to an ObjectOutputStream.
+     *
+     * @param out the target ObjectOutputStream.
+     * @throws IOException thrown when an I/O errors occur writing to the target stream.
+     * @since 3.1
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
     }
 
 }

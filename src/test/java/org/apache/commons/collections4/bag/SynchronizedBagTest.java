@@ -19,21 +19,12 @@ package org.apache.commons.collections4.bag;
 import org.apache.commons.collections4.Bag;
 
 /**
- * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
- * implementation.
- *
- * @since 4.0
+ * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag} implementation.
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
     public SynchronizedBagTest() {
         super(SynchronizedBagTest.class.getSimpleName());
-    }
-
-
-    @Override
-    public Bag<T> makeObject() {
-        return SynchronizedBag.synchronizedBag(new HashBag<>());
     }
 
     @Override
@@ -42,8 +33,13 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Override
-    protected int getIterationBehaviour(){
+    protected int getIterationBehaviour() {
         return UNORDERED;
+    }
+
+    @Override
+    public Bag<T> makeObject() {
+        return SynchronizedBag.synchronizedBag(new HashBag<>());
     }
 
 //    public void testCreate() throws Exception {

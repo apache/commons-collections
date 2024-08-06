@@ -35,94 +35,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
- *
- * @since 3.0
  */
 public class FactoryUtilsTest {
-
-    @Test
-    public void testExceptionFactory() {
-        assertNotNull(FactoryUtils.exceptionFactory());
-        assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
-
-        assertThrows(FunctorException.class, () -> FactoryUtils.exceptionFactory().create());
-    }
-
-    @Test
-    public void testNullFactory() {
-        final Factory<Object> factory = FactoryUtils.nullFactory();
-        assertNotNull(factory);
-        final Object created = factory.create();
-        assertNull(created);
-    }
-
-    @Test
-    public void testConstantFactoryNull() {
-        final Factory<Object> factory = FactoryUtils.constantFactory(null);
-        assertNotNull(factory);
-        final Object created = factory.create();
-        assertNull(created);
-    }
-
-    @Test
-    public void testConstantFactoryConstant() {
-        final Integer constant = Integer.valueOf(9);
-        final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
-        assertNotNull(factory);
-        final Integer created = factory.create();
-        assertSame(constant, created);
-    }
-
-    @Test
-    public void testPrototypeFactoryNull() {
-        assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
-    }
-
-    @Test
-    public void testPrototypeFactoryPublicCloneMethod() throws Exception {
-        final Date proto = new Date();
-        final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
-        assertNotNull(factory);
-        final Date created = factory.create();
-        assertNotSame(proto, created);
-        assertEquals(proto, created);
-    }
-
-    @Test
-    public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
-        final Mock1 proto = new Mock1(6);
-        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
-        assertNotNull(factory);
-        final Object created = factory.create();
-        assertNotSame(proto, created);
-        assertEquals(proto, created);
-    }
-
-    @Test
-    public void testPrototypeFactoryPublicSerialization() throws Exception {
-        final Integer proto = 9;
-        final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
-        assertNotNull(factory);
-        final Integer created = factory.create();
-        assertNotSame(proto, created);
-        assertEquals(proto, created);
-    }
-
-    @Test
-    public void testPrototypeFactoryPublicSerializationError() {
-        final Mock2 proto = new Mock2(new Object());
-        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
-        assertNotNull(factory);
-
-        final FunctorException thrown = assertThrows(FunctorException.class, () -> factory.create());
-        assertTrue(thrown.getCause() instanceof IOException);
-    }
-
-    @Test
-    public void testPrototypeFactoryPublicBad() {
-        final Object proto = new Object();
-        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.prototypeFactory(proto));
-    }
 
     public static class Mock1 {
         private final int iVal;
@@ -168,7 +82,7 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock3 {
-        private static int cCounter = 0;
+        private static int cCounter;
         private final int iVal;
         public Mock3() {
             iVal = cCounter++;
@@ -179,32 +93,32 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void instantiateFactoryNull() {
-        assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
-    }
-
-    @Test
-    public void instantiateFactorySimple() {
-        final Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
+    public void testConstantFactoryConstant() {
+        final Integer constant = Integer.valueOf(9);
+        final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
         assertNotNull(factory);
-        Mock3 created = factory.create();
-        assertEquals(0, created.getValue());
-        created = factory.create();
-        assertEquals(1, created.getValue());
+        final Integer created = factory.create();
+        assertSame(constant, created);
     }
 
     @Test
-    public void instantiateFactoryMismatch() {
-        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null}));
+    public void testConstantFactoryNull() {
+        final Factory<Object> factory = FactoryUtils.constantFactory(null);
+        assertNotNull(factory);
+        final Object created = factory.create();
+        assertNull(created);
     }
 
     @Test
-    public void instantiateFactoryNoConstructor() {
-        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null}));
+    public void testExceptionFactory() {
+        assertNotNull(FactoryUtils.exceptionFactory());
+        assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
+
+        assertThrows(FunctorException.class, () -> FactoryUtils.exceptionFactory().create());
     }
 
     @Test
-    public void instantiateFactoryComplex() {
+    public void testInstantiateFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
         final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
@@ -214,6 +128,90 @@ public class FactoryUtilsTest {
         final Date created = factory.create();
         // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
+    }
+
+    @Test
+    public void testInstantiateFactoryMismatch() {
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null}));
+    }
+
+    @Test
+    public void testInstantiateFactoryNoConstructor() {
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null}));
+    }
+
+    @Test
+    public void testInstantiateFactoryNull() {
+        assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
+    }
+
+    @Test
+    public void testInstantiateFactorySimple() {
+        final Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
+        assertNotNull(factory);
+        Mock3 created = factory.get();
+        assertEquals(0, created.getValue());
+        created = factory.create();
+        assertEquals(1, created.getValue());
+    }
+
+    @Test
+    public void testNullFactory() {
+        final Factory<Object> factory = FactoryUtils.nullFactory();
+        assertNotNull(factory);
+        final Object created = factory.create();
+        assertNull(created);
+    }
+
+    @Test
+    public void testPrototypeFactoryNull() {
+        assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
+    }
+
+    @Test
+    public void testPrototypeFactoryPublicBad() {
+        final Object proto = new Object();
+        assertThrows(IllegalArgumentException.class, () -> FactoryUtils.prototypeFactory(proto));
+    }
+
+    @Test
+    public void testPrototypeFactoryPublicCloneMethod() throws Exception {
+        final Date proto = new Date();
+        final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
+        assertNotNull(factory);
+        final Date created = factory.create();
+        assertNotSame(proto, created);
+        assertEquals(proto, created);
+    }
+
+    @Test
+    public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
+        final Mock1 proto = new Mock1(6);
+        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
+        assertNotNull(factory);
+        final Object created = factory.create();
+        assertNotSame(proto, created);
+        assertEquals(proto, created);
+    }
+
+    @Test
+    public void testPrototypeFactoryPublicSerialization() throws Exception {
+        final Integer proto = 9;
+        final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
+        assertNotNull(factory);
+        final Integer created = factory.create();
+        assertNotSame(proto, created);
+        assertEquals(proto, created);
+    }
+
+    @Test
+    public void testPrototypeFactoryPublicSerializationError() {
+        final Mock2 proto = new Mock2(new Object());
+        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
+        assertNotNull(factory);
+
+        final FunctorException thrown = assertThrows(FunctorException.class, () -> factory.create());
+        assertTrue(thrown.getCause() instanceof IOException);
     }
 
     /**
