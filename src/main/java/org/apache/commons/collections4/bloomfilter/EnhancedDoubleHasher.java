@@ -47,7 +47,7 @@ import java.util.function.IntPredicate;
 public class EnhancedDoubleHasher implements Hasher {
 
     /**
-     * Convert bytes to big-endian long filling with zero bytes as necessary..
+     * Convert bytes to big-endian long filling with zero bytes as necessary.
      * @param byteArray the byte array to extract the values from.
      * @param offset the offset to start extraction from.
      * @param len the length of the extraction, may be longer than 8.
