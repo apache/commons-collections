@@ -220,11 +220,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     private final class KeysMultiSet extends AbstractMultiSet<K> {
 
-        private final class MapEntryTransformer
-            implements Transformer<Map.Entry<K, Collection<V>>, MultiSet.Entry<K>> {
+        private final class MapEntryTransformer implements Transformer<Map.Entry<K, Collection<V>>, MultiSet.Entry<K>> {
+
             @Override
             public MultiSet.Entry<K> transform(final Map.Entry<K, Collection<V>> mapEntry) {
                 return new AbstractMultiSet.AbstractEntry<K>() {
+
                     @Override
                     public int getCount() {
                         return mapEntry.getValue().size();
@@ -617,6 +618,11 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         return values().contains(value);
     }
 
+    /**
+     * Creates a new Collection typed for a given subclass.
+     *
+     * @return a new Collection typed for a given subclass.
+     */
     protected abstract Collection<V> createCollection();
 
     /**

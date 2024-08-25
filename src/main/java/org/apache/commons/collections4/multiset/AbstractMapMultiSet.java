@@ -51,6 +51,9 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         /** The parent map */
         protected final AbstractMapMultiSet<E> parent;
 
+        /**
+         * The source Iterator.
+         */
         protected final Iterator<Map.Entry<E, MutableInteger>> iterator;
 
         /** The last returned entry */
