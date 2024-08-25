@@ -250,10 +250,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
          * As a consequence, all subsequent call to {@link #getKey()},
          * {@link #setValue(Object)} and {@link #getValue()} will fail.
          *
-         * @param flag the new value of the removed flag
+         * @param removed the new value of the removed flag
          */
-        void setRemoved(final boolean flag) {
-            this.removed = flag;
+        void setRemoved(final boolean removed) {
+            this.removed = removed;
         }
 
         @Override

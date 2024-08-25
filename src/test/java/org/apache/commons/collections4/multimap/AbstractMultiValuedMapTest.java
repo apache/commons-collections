@@ -693,8 +693,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //        assertEquals(expected, actual);
 //    }
 
-    public void setConfirmed(final MultiValuedMap<K, V> map) {
-        this.confirmed = map;
+    public void setConfirmed(final MultiValuedMap<K, V> confirmed) {
+        this.confirmed = confirmed;
     }
 
     @Test
