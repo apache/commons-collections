@@ -114,8 +114,8 @@
     <commons.componentid>collections</commons.componentid>
     <commons.module.name>org.apache.commons.collections4</commons.module.name>
     <!-- Current 4.x release series -->
-    <commons.release.version>4.5.0-M2</commons.release.version>
-    <commons.release.next>4.5.0-M3</commons.release.next>
+    <commons.release.version>4.5.0-M3</commons.release.version>
+    <commons.release.next>4.5.0-M4</commons.release.next>
     <commons.release.desc>(Requires Java 8 or above)</commons.release.desc>
     <!-- Previous 4.2 release on Java 7 -->
     <commons.release.2.version>4.2</commons.release.2.version>
