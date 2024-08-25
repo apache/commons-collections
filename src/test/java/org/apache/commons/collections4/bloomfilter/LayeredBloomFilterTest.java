@@ -21,11 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -40,16 +41,16 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * A Predicate that advances after a quantum of time.
      */
     static class AdvanceOnTimeQuanta implements Predicate<LayerManager<TimestampedBloomFilter>> {
-        long quanta;
+        Duration quanta;
 
-        AdvanceOnTimeQuanta(final long quanta, final TimeUnit unit) {
-            this.quanta = unit.toMillis(quanta);
+        AdvanceOnTimeQuanta(final Duration quanta) {
+            this.quanta = quanta;
         }
 
         @Override
-        public boolean test(final LayerManager<TimestampedBloomFilter> lm) {
+        public boolean test(final LayerManager<TimestampedBloomFilter> layerManager) {
             // can not use getTarget() as it causes recursion.
-            return lm.last().timestamp + quanta < System.currentTimeMillis();
+            return layerManager.last().getTimestamp().plus(quanta).isBefore(Instant.now());
         }
     }
 
@@ -58,23 +59,22 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * the list.
      */
     static class CleanByTime<T extends TimestampedBloomFilter> implements Consumer<List<T>> {
-        long elapsedTime;
+        Duration elapsedTime;
 
-        CleanByTime(final long duration, final TimeUnit unit) {
-            elapsedTime = unit.toMillis(duration);
+        CleanByTime(final Duration elapsedTime) {
+            this.elapsedTime = elapsedTime;
         }
 
         @Override
         public void accept(final List<T> t) {
-            final long min = System.currentTimeMillis() - elapsedTime;
+            final Instant min = Instant.now().minus(elapsedTime);
             final Iterator<T> iter = t.iterator();
             while (iter.hasNext()) {
                 final TimestampedBloomFilter bf = iter.next();
-                if (bf.getTimestamp() >= min) {
+                if (bf.getTimestamp().isAfter(min) || bf.getTimestamp().equals(min)) {
                     return;
                 }
-                dbgInstrument.add(String.format("Removing old entry: T:%s (Aged: %s) \n", bf.getTimestamp(),
-                        min - bf.getTimestamp()));
+                dbgInstrument.add(String.format("Removing old entry: T:%s (Aged: %s) \n", bf.getTimestamp(), Duration.between(bf.getTimestamp(), min)));
                 iter.remove();
             }
         }
@@ -96,17 +96,17 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     /**
-     * A Bloomfilter implementation that tracks the creation time.
+     * A Bloom filter implementation that tracks the creation time.
      */
     public static class TimestampedBloomFilter extends WrappedBloomFilter {
-        final long timestamp;
+
+        private final Instant timestamp;
 
         TimestampedBloomFilter(final BloomFilter bf) {
-            super(bf);
-            this.timestamp = System.currentTimeMillis();
+            this(bf, Instant.now());
         }
 
-        TimestampedBloomFilter(final BloomFilter bf, final long timestamp) {
+        TimestampedBloomFilter(final BloomFilter bf, final Instant timestamp) {
             super(bf);
             this.timestamp = timestamp;
         }
@@ -116,7 +116,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
             return new TimestampedBloomFilter(getWrapped().copy(), timestamp);
         }
 
-        public long getTimestamp() {
+        public Instant getTimestamp() {
             return timestamp;
         }
     }
@@ -131,20 +131,17 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      *
      * @param shape    The shape of the Bloom filters.
      * @param duration The length of time to keep filters in the list.
-     * @param dUnit    The unit of time to apply to duration.
      * @param quanta   The quantization factor for each filter. Individual filters
      *                 will span at most this much time.
-     * @param qUnit    the unit of time to apply to quanta.
      * @return LayeredBloomFilter with the above properties.
      */
-    static LayeredBloomFilter<TimestampedBloomFilter> createTimedLayeredFilter(final Shape shape, final long duration, final TimeUnit dUnit, final long quanta,
-            final TimeUnit qUnit) {
+    static LayeredBloomFilter<TimestampedBloomFilter> createTimedLayeredFilter(final Shape shape, final Duration duration, final Duration quanta) {
         final LayerManager.Builder<TimestampedBloomFilter> builder = LayerManager.builder();
-        final Consumer<Deque<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration, dUnit));
+        final Consumer<Deque<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration));
         final LayerManager<TimestampedBloomFilter> layerManager = builder
                 .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
                 .setCleanup(cleanup)
-                .setExtendCheck(new AdvanceOnTimeQuanta(quanta, qUnit)
+                .setExtendCheck(new AdvanceOnTimeQuanta(quanta)
                         .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
                 .build();
         return new LayeredBloomFilter<>(shape, layerManager);
@@ -183,8 +180,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     // instrumentation to record timestamps in dbgInstrument list
     private final Predicate<BloomFilter> dbg = bf -> {
         final TimestampedBloomFilter tbf = (TimestampedBloomFilter) bf;
-        final long ts = System.currentTimeMillis();
-        dbgInstrument.add(String.format("T:%s (Elapsed:%s)- EstN:%s (Card:%s)\n", tbf.timestamp, ts - tbf.timestamp,
+        final Instant ts = Instant.now();
+        dbgInstrument.add(String.format("T:%s (Elapsed:%s)- EstN:%s (Card:%s)\n", tbf.timestamp, Duration.between(tbf.timestamp, ts),
                 tbf.estimateN(), tbf.cardinality()));
         return true;
     };
@@ -280,13 +277,12 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         // purposes.
 
         // list of timestamps that are expected to be expired.
-        final List<Long> lst = new ArrayList<>();
+        final List<Instant> lst = new ArrayList<>();
         final Shape shape = Shape.fromNM(4, 64);
 
         // create a filter that removes filters that are 4 seconds old
         // and quantises time to 1 second intervals.
-        final LayeredBloomFilter<TimestampedBloomFilter> underTest = createTimedLayeredFilter(shape, 600, TimeUnit.MILLISECONDS, 150,
-                TimeUnit.MILLISECONDS);
+        final LayeredBloomFilter<TimestampedBloomFilter> underTest = createTimedLayeredFilter(shape, Duration.ofMillis(600), Duration.ofMillis(150));
 
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
