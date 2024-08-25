@@ -54,15 +54,15 @@ public class IterableUtils {
      * Inner class to distinguish unmodifiable instances.
      */
     private static final class UnmodifiableIterable<E> extends FluentIterable<E> {
-        private final Iterable<E> unmodifiable;
+        private final Iterable<E> iterable;
 
         UnmodifiableIterable(final Iterable<E> iterable) {
-            this.unmodifiable = iterable;
+            this.iterable = iterable;
         }
 
         @Override
         public Iterator<E> iterator() {
-            return IteratorUtils.unmodifiableIterator(unmodifiable.iterator());
+            return IteratorUtils.unmodifiableIterator(iterable.iterator());
         }
     }
 
