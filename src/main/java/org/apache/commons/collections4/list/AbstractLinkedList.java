@@ -293,6 +293,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             return true;
         }
 
+        /**
+         * Throws a {@link ConcurrentModificationException} if this instance fails its concurrency check.
+         */
         protected void checkModCount() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -329,6 +332,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             return parent.createSubListListIterator(this, index);
         }
 
+        /**
+         * Throws an {@link IndexOutOfBoundsException} if the given indices are out of bounds.
+         *
+         * @param index lower index.
+         * @param beyond upper index.
+         */
         protected void rangeCheck(final int index, final int beyond) {
             if (index < 0 || index >= beyond) {
                 throw new IndexOutOfBoundsException("Index '" + index + "' out of bounds for size '" + size + "'");
@@ -583,13 +592,25 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return true;
     }
 
-    public boolean addFirst(final E o) {
-        addNodeAfter(header, o);
+    /**
+     * Adds an element at the beginning.
+     *
+     * @param e the element to beginning.
+     * @return true.
+     */
+    public boolean addFirst(final E e) {
+        addNodeAfter(header, e);
         return true;
     }
 
-    public boolean addLast(final E o) {
-        addNodeBefore(header, o);
+    /**
+     * Adds an element at the end.
+     *
+     * @param e the element to add.
+     * @return true.
+     */
+    public boolean addLast(final E e) {
+        addNodeBefore(header, e);
         return true;
     }
 
@@ -771,6 +792,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return node.getValue();
     }
 
+    /**
+     * Gets the first element.
+     *
+     * @return the first element.
+     */
     public E getFirst() {
         final Node<E> node = header.next;
         if (node == header) {
@@ -779,6 +805,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return node.getValue();
     }
 
+    /**
+     * Gets the last element.
+     *
+     * @return the last element.
+     */
     public E getLast() {
         final Node<E> node = header.previous;
         if (node == header) {
@@ -958,6 +989,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         modCount++;
     }
 
+    /**
+     * Removes the first element.
+     *
+     * @return The value removed.
+     */
     public E removeFirst() {
         final Node<E> node = header.next;
         if (node == header) {
@@ -968,6 +1004,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return oldValue;
     }
 
+    /**
+     * Removes the last element.
+     *
+     * @return The value removed.
+     */
     public E removeLast() {
         final Node<E> node = header.previous;
         if (node == header) {

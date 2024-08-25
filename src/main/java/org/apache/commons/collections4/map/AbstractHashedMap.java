@@ -272,14 +272,29 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             this.expectedModCount = parent.modCount;
         }
 
+        /**
+         * Gets the current entry.
+         *
+         * @return the current entry.
+         */
         protected HashEntry<K, V> currentEntry() {
             return last;
         }
 
+        /**
+         * Tests whether there is a next entry.
+         *
+         * @return whether there is a next entry.
+         */
         public boolean hasNext() {
             return next != null;
         }
 
+        /**
+         * Gets the next entry.
+         *
+         * @return the next entry.
+         */
         protected HashEntry<K, V> nextEntry() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -300,6 +315,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return newCurrent;
         }
 
+        /**
+         * Removes the current element.
+         */
         public void remove() {
             if (last == null) {
                 throw new IllegalStateException(REMOVE_INVALID);
