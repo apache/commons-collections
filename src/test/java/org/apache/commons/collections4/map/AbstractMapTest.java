@@ -843,18 +843,18 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet}, {@link #values} and {@link #confirmed} fields to empty.
      */
     public void resetEmpty() {
-        this.map = makeObject();
+        map = makeObject();
         views();
-        this.confirmed = makeConfirmedMap();
+        confirmed = makeConfirmedMap();
     }
 
     /**
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet}, {@link #values} and {@link #confirmed} fields to full.
      */
     public void resetFull() {
-        this.map = makeFullMap();
+        map = makeFullMap();
         views();
-        this.confirmed = makeConfirmedMap();
+        confirmed = makeConfirmedMap();
         final K[] k = getSampleKeys();
         final V[] v = getSampleValues();
         for (int i = 0; i < k.length; i++) {
@@ -1920,10 +1920,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Resets the collection view fields.
      */
     private void views() {
-        this.keySet = getMap().keySet();
+        keySet = getMap().keySet();
         // see verifyValues: retrieve the values collection only when verifying them
         // this.values = getMap().values();
-        this.entrySet = getMap().entrySet();
+        entrySet = getMap().entrySet();
     }
 
 }

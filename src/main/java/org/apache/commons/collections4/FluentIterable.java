@@ -131,7 +131,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Don't allow instances.
      */
     FluentIterable() {
-        this.iterable = this;
+        iterable = this;
     }
 
     /**

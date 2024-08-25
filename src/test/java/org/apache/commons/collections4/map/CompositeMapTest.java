@@ -72,7 +72,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.pass = false;
+        pass = false;
     }
 
     @Test

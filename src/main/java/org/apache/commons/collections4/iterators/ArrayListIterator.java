@@ -113,7 +113,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     @Override
     public boolean hasPrevious() {
-        return this.index > this.startIndex;
+        return index > startIndex;
     }
 
     /**
@@ -128,8 +128,8 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        this.lastItemIndex = this.index;
-        return (E) Array.get(this.array, this.index++);
+        lastItemIndex = index;
+        return (E) Array.get(array, index++);
     }
 
     /**
@@ -139,7 +139,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     @Override
     public int nextIndex() {
-        return this.index - this.startIndex;
+        return index - startIndex;
     }
 
     /**
@@ -154,8 +154,8 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         if (!hasPrevious()) {
             throw new NoSuchElementException();
         }
-        this.lastItemIndex = --this.index;
-        return (E) Array.get(this.array, this.index);
+        lastItemIndex = --index;
+        return (E) Array.get(array, index);
     }
 
     /**
@@ -165,7 +165,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     @Override
     public int previousIndex() {
-        return this.index - this.startIndex - 1;
+        return index - startIndex - 1;
     }
 
     /**
@@ -174,7 +174,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     @Override
     public void reset() {
         super.reset();
-        this.lastItemIndex = -1;
+        lastItemIndex = -1;
     }
 
     /**
@@ -197,11 +197,11 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     @Override
     public void set(final Object o) {
-        if (this.lastItemIndex == -1) {
+        if (lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }
 
-        Array.set(this.array, this.lastItemIndex, o);
+        Array.set(array, lastItemIndex, o);
     }
 
 }

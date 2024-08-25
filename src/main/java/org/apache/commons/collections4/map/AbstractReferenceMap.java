@@ -797,10 +797,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        this.keyType = ReferenceStrength.resolve(in.readInt());
-        this.valueType = ReferenceStrength.resolve(in.readInt());
-        this.purgeValues = in.readBoolean();
-        this.loadFactor = in.readFloat();
+        keyType = ReferenceStrength.resolve(in.readInt());
+        valueType = ReferenceStrength.resolve(in.readInt());
+        purgeValues = in.readBoolean();
+        loadFactor = in.readFloat();
         final int capacity = in.readInt();
         init();
         data = new HashEntry[capacity];
@@ -958,7 +958,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return true if keyType has the specified type
      */
     protected boolean isKeyType(final ReferenceStrength type) {
-        return this.keyType == type;
+        return keyType == type;
     }
 
     /**
@@ -967,7 +967,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return true if valueType has the specified type
      */
     protected boolean isValueType(final ReferenceStrength type) {
-        return this.valueType == type;
+        return valueType == type;
     }
 
     /**
@@ -1031,7 +1031,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
                 } else {
                     previous.next = entry.next;
                 }
-                this.size--;
+                size--;
                 refEntry.onPurge();
                 return;
             }

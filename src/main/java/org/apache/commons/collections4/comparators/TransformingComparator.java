@@ -81,9 +81,9 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      */
     @Override
     public int compare(final I obj1, final I obj2) {
-        final O value1 = this.transformer.apply(obj1);
-        final O value2 = this.transformer.apply(obj2);
-        return this.decorated.compare(value1, value2);
+        final O value1 = transformer.apply(obj1);
+        final O value2 = transformer.apply(obj2);
+        return decorated.compare(value1, value2);
     }
 
     /**

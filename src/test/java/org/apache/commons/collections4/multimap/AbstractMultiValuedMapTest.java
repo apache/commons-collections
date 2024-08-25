@@ -669,16 +669,16 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * Resets the {@link #map} and {@link #confirmed} fields to empty.
      */
     public void resetEmpty() {
-        this.map = makeObject();
-        this.confirmed = makeConfirmedMap();
+        map = makeObject();
+        confirmed = makeConfirmedMap();
     }
 
     /**
      * Resets the {@link #map} and {@link #confirmed} fields to full.
      */
     public void resetFull() {
-        this.map = makeFullMap();
-        this.confirmed = makeConfirmedMap();
+        map = makeFullMap();
+        confirmed = makeConfirmedMap();
         final K[] k = getSampleKeys();
         final V[] v = getSampleValues();
         for (int i = 0; i < k.length; i++) {

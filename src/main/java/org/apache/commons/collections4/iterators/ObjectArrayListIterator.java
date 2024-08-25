@@ -105,7 +105,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public boolean hasPrevious() {
-        return this.index > getStartIndex();
+        return index > getStartIndex();
     }
 
     /**
@@ -119,8 +119,8 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        this.lastItemIndex = this.index;
-        return this.array[this.index++];
+        lastItemIndex = index;
+        return array[index++];
     }
 
     /**
@@ -130,7 +130,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public int nextIndex() {
-        return this.index - getStartIndex();
+        return index - getStartIndex();
     }
 
     /**
@@ -144,8 +144,8 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         if (!hasPrevious()) {
             throw new NoSuchElementException();
         }
-        this.lastItemIndex = --this.index;
-        return this.array[this.index];
+        lastItemIndex = --index;
+        return array[index];
     }
 
     /**
@@ -155,7 +155,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public int previousIndex() {
-        return this.index - getStartIndex() - 1;
+        return index - getStartIndex() - 1;
     }
 
     /**
@@ -164,7 +164,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     @Override
     public void reset() {
         super.reset();
-        this.lastItemIndex = -1;
+        lastItemIndex = -1;
     }
 
     /**
@@ -186,11 +186,11 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     @Override
     public void set(final E obj) {
-        if (this.lastItemIndex == -1) {
+        if (lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }
 
-        this.array[this.lastItemIndex] = obj;
+        array[lastItemIndex] = obj;
     }
 
 }

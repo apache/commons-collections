@@ -157,7 +157,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     public boolean equals(final Object object) {
         return this == object ||
                object instanceof BooleanComparator &&
-                this.trueFirst == ((BooleanComparator) object).trueFirst;
+                trueFirst == ((BooleanComparator) object).trueFirst;
     }
 
     /**

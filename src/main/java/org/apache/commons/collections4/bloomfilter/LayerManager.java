@@ -326,7 +326,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      * @see LayerManager.Builder#setCleanup(Consumer)
      */
     void cleanup() {
-        this.filterCleanup.accept(filters);
+        filterCleanup.accept(filters);
         if (filters.isEmpty()) {
             addFilter();
         }
@@ -429,7 +429,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      * @see LayerManager.Builder#setCleanup(Consumer)
      */
     void next() {
-        this.filterCleanup.accept(filters);
+        filterCleanup.accept(filters);
         addFilter();
     }
 

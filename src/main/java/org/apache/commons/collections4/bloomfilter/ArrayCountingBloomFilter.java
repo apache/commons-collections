@@ -157,7 +157,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 
     @Override
     public boolean contains(final IndexExtractor indexExtractor) {
-        return indexExtractor.processIndices(idx -> this.cells[idx] != 0);
+        return indexExtractor.processIndices(idx -> cells[idx] != 0);
     }
 
     @Override

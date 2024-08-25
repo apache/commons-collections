@@ -194,7 +194,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
             for (final Set<E> existingSet : getSets()) {
                 final Collection<E> intersects = CollectionUtils.intersection(existingSet, set);
                 if (!intersects.isEmpty()) {
-                    if (this.mutator == null) {
+                    if (mutator == null) {
                         throw new UnsupportedOperationException(
                                 "Collision adding composited set with no SetMutator set");
                     }

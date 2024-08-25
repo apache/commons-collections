@@ -137,7 +137,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @since 4.0
      */
     public int getEndIndex() {
-        return this.endIndex;
+        return endIndex;
     }
 
     /**
@@ -147,7 +147,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @since 4.0
      */
     public int getStartIndex() {
-        return this.startIndex;
+        return startIndex;
     }
 
     // Iterator interface
@@ -192,7 +192,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public void reset() {
-        this.index = this.startIndex;
+        index = startIndex;
     }
 
 }

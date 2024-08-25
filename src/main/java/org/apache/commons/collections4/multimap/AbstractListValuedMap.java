@@ -64,10 +64,10 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             if (getMap().get(key) == null) {
                 final List<V> list = createCollection();
                 getMap().put(key, list);
-                this.values = list;
-                this.iterator = list.listIterator();
+                values = list;
+                iterator = list.listIterator();
             }
-            this.iterator.add(value);
+            iterator.add(value);
         }
 
         @Override

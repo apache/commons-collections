@@ -92,9 +92,9 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
             throw new IllegalArgumentException("End index must not be less than start index");
         }
         this.array = array;
-        this.startIndex = start;
-        this.endIndex = end;
-        this.index = start;
+        startIndex = start;
+        endIndex = end;
+        index = start;
     }
 
     /**
@@ -103,7 +103,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the array this iterator iterates over
      */
     public E[] getArray() {
-        return this.array;
+        return array;
     }
 
     /**
@@ -112,7 +112,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the end index
      */
     public int getEndIndex() {
-        return this.endIndex;
+        return endIndex;
     }
 
     /**
@@ -121,7 +121,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the start index
      */
     public int getStartIndex() {
-        return this.startIndex;
+        return startIndex;
     }
 
     /**
@@ -131,7 +131,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public boolean hasNext() {
-        return this.index < this.endIndex;
+        return index < endIndex;
     }
 
     /**
@@ -146,7 +146,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return this.array[this.index++];
+        return array[index++];
     }
 
     /**
@@ -164,7 +164,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public void reset() {
-        this.index = this.startIndex;
+        index = startIndex;
     }
 
 }

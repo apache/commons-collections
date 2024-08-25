@@ -138,14 +138,14 @@ public final class SparseBloomFilter implements BloomFilter {
     public boolean merge(final IndexExtractor indexExtractor) {
         Objects.requireNonNull(indexExtractor, "indexExtractor");
         indexExtractor.processIndices(this::add);
-        if (!this.indices.isEmpty()) {
-            if (this.indices.last() >= shape.getNumberOfBits()) {
+        if (!indices.isEmpty()) {
+            if (indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                        this.indices.last(), shape.getNumberOfBits() - 1));
+                        indices.last(), shape.getNumberOfBits() - 1));
             }
-            if (this.indices.first() < 0) {
+            if (indices.first() < 0) {
                 throw new IllegalArgumentException(
-                        String.format("Value in list %s is less than 0", this.indices.first()));
+                        String.format("Value in list %s is less than 0", indices.first()));
             }
         }
         return true;

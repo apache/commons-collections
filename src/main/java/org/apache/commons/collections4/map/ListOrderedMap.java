@@ -97,7 +97,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public void clear() {
-            this.parent.clear();
+            parent.clear();
         }
 
         @Override
@@ -131,7 +131,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public boolean isEmpty() {
-            return this.parent.isEmpty();
+            return parent.isEmpty();
         }
 
         @Override
@@ -155,7 +155,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public int size() {
-            return this.parent.size();
+            return parent.size();
         }
 
         @Override
@@ -174,12 +174,12 @@ public class ListOrderedMap<K, V>
 
         @Override
         public void clear() {
-            this.parent.clear();
+            parent.clear();
         }
 
         @Override
         public boolean contains(final Object value) {
-            return this.parent.containsKey(value);
+            return parent.containsKey(value);
         }
 
         @Override
@@ -194,7 +194,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public int size() {
-            return this.parent.size();
+            return parent.size();
         }
     }
 
@@ -334,17 +334,17 @@ public class ListOrderedMap<K, V>
 
         @Override
         public void clear() {
-            this.parent.clear();
+            parent.clear();
         }
 
         @Override
         public boolean contains(final Object value) {
-            return this.parent.containsValue(value);
+            return parent.containsValue(value);
         }
 
         @Override
         public V get(final int index) {
-            return this.parent.getValue(index);
+            return parent.getValue(index);
         }
 
         @Override
@@ -359,17 +359,17 @@ public class ListOrderedMap<K, V>
 
         @Override
         public V remove(final int index) {
-            return this.parent.remove(index);
+            return parent.remove(index);
         }
 
         @Override
         public V set(final int index, final V value) {
-            return this.parent.setValue(index, value);
+            return parent.setValue(index, value);
         }
 
         @Override
         public int size() {
-            return this.parent.size();
+            return parent.size();
         }
     }
 
@@ -452,7 +452,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return new EntrySetView<>(this, this.insertOrder);
+        return new EntrySetView<>(this, insertOrder);
     }
 
     /**
