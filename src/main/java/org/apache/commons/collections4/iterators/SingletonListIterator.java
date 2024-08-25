@@ -166,16 +166,16 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     /**
      * Sets sets the value of the singleton.
      *
-     * @param obj  the object to set
+     * @param object  the object to set
      * @throws IllegalStateException if {@code next} has not been called
      *          or the object has been removed
      */
     @Override
-    public void set(final E obj) {
+    public void set(final E object) {
         if (!nextCalled || removed) {
             throw new IllegalStateException();
         }
-        this.object = obj;
+        this.object = object;
     }
 
 }

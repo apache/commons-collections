@@ -327,15 +327,15 @@ public class CollatingIterator<E> implements Iterator<E> {
      *
      * @return {@code false} iff there was no value to set
      */
-    private boolean set(final int i) {
-        final Iterator<? extends E> it = iterators.get(i);
+    private boolean set(final int index) {
+        final Iterator<? extends E> it = iterators.get(index);
         if (it.hasNext()) {
-            values.set(i, it.next());
-            valueSet.set(i);
+            values.set(index, it.next());
+            valueSet.set(index);
             return true;
         }
-        values.set(i, null);
-        valueSet.clear(i);
+        values.set(index, null);
+        valueSet.clear(index);
         return false;
     }
 

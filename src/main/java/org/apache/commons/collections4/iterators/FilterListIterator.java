@@ -193,11 +193,11 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     /**
      * Not supported.
-     * @param o the element with which to replace the last element returned by
+     * @param ignored the element with which to replace the last element returned by
      *          {@code next} or {@code previous}
      */
     @Override
-    public void set(final E o) {
+    public void set(final E ignored) {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
     }
 

@@ -189,7 +189,6 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         if (lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }
-
         array[lastItemIndex] = obj;
     }
 
