@@ -213,9 +213,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public void set(final E obj) {
+        public void set(final E value) {
             checkModCount();
-            getLastNodeReturned().setValue(obj);
+            getLastNodeReturned().setValue(value);
         }
 
     }

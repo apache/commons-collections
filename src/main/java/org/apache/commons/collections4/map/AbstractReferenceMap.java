@@ -329,17 +329,17 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Sets the value of the entry.
          *
-         * @param obj  the object to store
+         * @param value  the object to store
          * @return the previous value
          */
         @Override
         @SuppressWarnings("unchecked")
-        public V setValue(final V obj) {
+        public V setValue(final V value) {
             final V old = getValue();
             if (parent.valueType != ReferenceStrength.HARD) {
-                ((Reference<V>) value).clear();
+                ((Reference<V>) this.value).clear();
             }
-            value = toReference(parent.valueType, obj, hashCode);
+            this.value = toReference(parent.valueType, value, hashCode);
             return old;
         }
 

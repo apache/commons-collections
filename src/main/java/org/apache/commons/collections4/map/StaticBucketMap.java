@@ -304,10 +304,10 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
         @Override
-        public V setValue(final V obj) {
-            final V retVal = value;
-            value = obj;
-            return retVal;
+        public V setValue(final V value) {
+            final V old = this.value;
+            this.value = value;
+            return old;
         }
     }
 

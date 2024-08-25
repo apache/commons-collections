@@ -515,7 +515,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         @Override
-        public K setValue(final K obj) {
+        public K setValue(final K value) {
             throw new UnsupportedOperationException();
         }
     }
@@ -860,7 +860,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         @Override
-        public V setValue(final V obj) {
+        public V setValue(final V value) {
             throw new UnsupportedOperationException();
         }
     }

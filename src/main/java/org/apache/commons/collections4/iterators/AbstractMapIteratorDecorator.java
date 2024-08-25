@@ -85,8 +85,8 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
 
     /** {@inheritDoc} */
     @Override
-    public V setValue(final V obj) {
-        return iterator.setValue(obj);
+    public V setValue(final V value) {
+        return iterator.setValue(value);
     }
 
 }

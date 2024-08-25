@@ -97,8 +97,8 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
 
     /** {@inheritDoc} */
     @Override
-    public V setValue(final V obj) {
-        return iterator.setValue(obj);
+    public V setValue(final V value) {
+        return iterator.setValue(value);
     }
 
 }
