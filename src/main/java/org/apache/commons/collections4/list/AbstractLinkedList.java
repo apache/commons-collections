@@ -101,9 +101,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /**
          * Create a ListIterator for a list.
          *
-         * @param parent  the parent list
-         * @param fromIndex  the index to start at
-         * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
+         * @param parent  the parent list.
+         * @param fromIndex  The starting index.
+         * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list.
          */
         protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex)
                 throws IndexOutOfBoundsException {
@@ -226,15 +226,26 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
+
         /** The main list */
         AbstractLinkedList<E> parent;
+
         /** Offset from the main list */
         int offset;
+
         /** Sublist size */
         int size;
+
         /** Sublist modCount */
         int expectedModCount;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedList.
+         * @param fromIndex An index greater or equal to 0 and less than {@code toIndex}.
+         * @param toIndex An index greater than {@code fromIndex}.
+         */
         protected LinkedSubList(final AbstractLinkedList<E> parent, final int fromIndex, final int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
@@ -361,9 +372,15 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      */
     protected static class LinkedSubListIterator<E> extends LinkedListIterator<E> {
 
-        /** The sub list */
+        /** The sub list. */
         protected final LinkedSubList<E> sub;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param sub The sub-list.
+         * @param startIndex The starting index.
+         */
         protected LinkedSubListIterator(final LinkedSubList<E> sub, final int startIndex) {
             super(sub.parent, startIndex + sub.offset);
             this.sub = sub;

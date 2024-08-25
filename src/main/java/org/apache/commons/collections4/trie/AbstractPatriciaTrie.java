@@ -996,11 +996,16 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         /** The entry who uplinks to this entry. */
         protected TrieEntry<K, V> predecessor;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param key The entry's key.
+         * @param value The entry's value.
+         * @param bitIndex The entry's bitIndex.
+         */
         public TrieEntry(final K key, final V value, final int bitIndex) {
             super(key, value);
-
             this.bitIndex = bitIndex;
-
             this.parent = null;
             this.left = this;
             this.right = null;
@@ -1008,23 +1013,29 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Whether or not the entry is storing a key.
+         * Whether the entry is storing a key.
          * Only the root can potentially be empty, all other
          * nodes must have a key.
+         *
+         * @return Whether the entry is storing a key
          */
         public boolean isEmpty() {
             return key == null;
         }
 
         /**
-         * Either the left or right child is a loopback.
+         * Whether the left or right child is a loopback.
+         *
+         * @return Whether the left or right child is a loopback.
          */
         public boolean isExternalNode() {
             return !isInternalNode();
         }
 
         /**
-         * Neither the left nor right child is a loopback.
+         * Tests that neither the left nor right child is a loopback.
+         *
+         * @return That neither the left nor right child is a loopback.
          */
         public boolean isInternalNode() {
             return left != this && right != this;
@@ -1245,19 +1256,20 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
      *
-     * @param keyAnalyzer  the {@link KeyAnalyzer} to use
+     * @param keyAnalyzer  the {@link KeyAnalyzer}.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         super(keyAnalyzer);
     }
 
     /**
-     * Constructs a new {@link org.apache.commons.collections4.Trie}
-     * using the given {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie}
-     * with the values from the provided {@link Map}.
+     * Constructs a new {@link org.apache.commons.collections4.Trie} using the given {@link KeyAnalyzer} and initializes the
+     * {@link org.apache.commons.collections4.Trie} with the values from the provided {@link Map}.
+     *
+     * @param keyAnalyzer  the {@link KeyAnalyzer}.
+     * @param map The source map.
      */
-    protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer,
-                                   final Map<? extends K, ? extends V> map) {
+    protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer, final Map<? extends K, ? extends V> map) {
         super(keyAnalyzer);
         putAll(map);
     }

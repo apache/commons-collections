@@ -168,6 +168,14 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         /** The value */
         protected Object value;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param next next.
+         * @param hashCode hash code.
+         * @param key key.
+         * @param value value.
+         */
         protected HashEntry(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
             this.next = next;
             this.hashCode = hashCode;
@@ -246,6 +254,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         /** The modification count expected */
         private int expectedModCount;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         protected HashIterator(final AbstractHashedMap<K, V> parent) {
             this.parent = parent;
             final HashEntry<K, V>[] data = parent.data;
@@ -316,6 +329,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class HashMapIterator<K, V> extends HashIterator<K, V> implements MapIterator<K, V> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         protected HashMapIterator(final AbstractHashedMap<K, V> parent) {
             super(parent);
         }
@@ -359,9 +377,15 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param <K> the type of elements maintained by this set
      */
     protected static class KeySet<K> extends AbstractSet<K> {
+
         /** The parent map */
         private final AbstractHashedMap<K, ?> parent;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         protected KeySet(final AbstractHashedMap<K, ?> parent) {
             this.parent = parent;
         }
@@ -401,6 +425,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class KeySetIterator<K> extends HashIterator<K, Object> implements Iterator<K> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         @SuppressWarnings("unchecked")
         protected KeySetIterator(final AbstractHashedMap<K, ?> parent) {
             super((AbstractHashedMap<K, Object>) parent);
@@ -418,9 +447,15 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param <V> the type of elements maintained by this collection
      */
     protected static class Values<V> extends AbstractCollection<V> {
+
         /** The parent map */
         private final AbstractHashedMap<?, V> parent;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         protected Values(final AbstractHashedMap<?, V> parent) {
             this.parent = parent;
         }
@@ -453,6 +488,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class ValuesIterator<V> extends HashIterator<Object, V> implements Iterator<V> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractHashedMap.
+         */
         @SuppressWarnings("unchecked")
         protected ValuesIterator(final AbstractHashedMap<?, V> parent) {
             super((AbstractHashedMap<Object, V>) parent);

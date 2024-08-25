@@ -53,11 +53,26 @@ import java.util.Objects;
 public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
 
     /**
-     * Unknown object behavior enum.
+     * Enumerates the unknown object behaviors.
+     *
      * @since 4.0
      */
     public enum UnknownObjectBehavior {
-        BEFORE, AFTER, EXCEPTION
+
+        /**
+         * Before unknown object behaviors.
+         */
+        BEFORE,
+
+        /**
+         * After unknown object behaviors.
+         */
+        AFTER,
+
+        /**
+         * Exception unknown object behaviors.
+         */
+        EXCEPTION
     }
 
     /** Serialization version from Collections 4.0. */

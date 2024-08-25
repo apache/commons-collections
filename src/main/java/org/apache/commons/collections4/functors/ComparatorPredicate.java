@@ -79,13 +79,38 @@ import org.apache.commons.collections4.Predicate;
  */
 public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Serializable {
 
+    /**
+     * Enumerates the comparator criteria.
+     */
     public enum Criterion {
-        EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL,
+
+        /**
+         * Equal criterion.
+         */
+        EQUAL,
+
+        /**
+         * Greater criterion.
+         */
+        GREATER,
+
+        /**
+         * Less criterion.
+         */
+        LESS,
+
+        /**
+         * Greater or equal criterion.
+         */
+        GREATER_OR_EQUAL,
+
+        /**
+         * Less or equal Criterion.
+         */
+        LESS_OR_EQUAL,
     }
 
     private static final long serialVersionUID = -1863209236504077399L;
-
-    // Instance variables:
 
     /**
      * Factory to create the comparator predicate

@@ -495,10 +495,24 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Reference type enum.
+     * Enumerates reference types.
      */
     public enum ReferenceStrength {
-        HARD(0), SOFT(1), WEAK(2);
+
+        /**
+         * Hard reference type.
+         */
+        HARD(0),
+
+        /**
+         * Soft reference type.
+         */
+        SOFT(1),
+
+        /**
+         * Weak reference type.
+         */
+        WEAK(2);
 
         /**
          * Resolve enum from int.

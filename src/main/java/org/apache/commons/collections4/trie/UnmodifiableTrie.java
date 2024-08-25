@@ -60,6 +60,9 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return new UnmodifiableTrie<>(trie);
     }
 
+    /**
+     * The delegate Trie.
+     */
     private final Trie<K, V> delegate;
 
     /**
