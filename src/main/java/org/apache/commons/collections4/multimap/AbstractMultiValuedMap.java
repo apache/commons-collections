@@ -72,12 +72,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
             @Override
             public boolean contains(final Object o) {
-                return decoratedMap.entrySet().contains(o);
+                return map.entrySet().contains(o);
             }
 
             @Override
             public Iterator<Map.Entry<K, Collection<V>>> iterator() {
-                return new AsMapEntrySetIterator(decoratedMap.entrySet().iterator());
+                return new AsMapEntrySetIterator(map.entrySet().iterator());
             }
 
             @Override
@@ -113,10 +113,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             }
         }
 
-        final transient Map<K, Collection<V>> decoratedMap;
+        final transient Map<K, Collection<V>> map;
 
         AsMap(final Map<K, Collection<V>> map) {
-            this.decoratedMap = map;
+            this.map = map;
         }
 
         @Override
@@ -126,7 +126,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public boolean containsKey(final Object key) {
-            return decoratedMap.containsKey(key);
+            return map.containsKey(key);
         }
 
         @Override
@@ -136,12 +136,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public boolean equals(final Object object) {
-            return this == object || decoratedMap.equals(object);
+            return this == object || map.equals(object);
         }
 
         @Override
         public Collection<V> get(final Object key) {
-            final Collection<V> collection = decoratedMap.get(key);
+            final Collection<V> collection = map.get(key);
             if (collection == null) {
                 return null;
             }
@@ -152,7 +152,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public int hashCode() {
-            return decoratedMap.hashCode();
+            return map.hashCode();
         }
 
         @Override
@@ -162,7 +162,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public Collection<V> remove(final Object key) {
-            final Collection<V> collection = decoratedMap.remove(key);
+            final Collection<V> collection = map.remove(key);
             if (collection == null) {
                 return null;
             }
@@ -175,12 +175,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public int size() {
-            return decoratedMap.size();
+            return map.size();
         }
 
         @Override
         public String toString() {
-            return decoratedMap.toString();
+            return map.toString();
         }
     }
 
