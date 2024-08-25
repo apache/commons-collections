@@ -289,7 +289,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
     private final Supplier<T> filterSupplier;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param filterSupplier the supplier of new Bloom filters to add the the list
      *                       when necessary.

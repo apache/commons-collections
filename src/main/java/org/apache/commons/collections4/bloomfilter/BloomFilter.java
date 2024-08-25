@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The interface that describes a Bloom filter.
  * <p>
- * <em>See implementation notes for BitMapExtractor and IndexExtractor.</em>
+ * <em>See implementation notes for {@link BitMapExtractor} and {@link IndexExtractor}.</em>
  * </p>
  * @see BitMapExtractor
  * @see IndexExtractor

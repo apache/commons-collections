@@ -23,7 +23,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * Produces Bloom filters from a collection (e.g. LayeredBloomFilter).
+ * Produces Bloom filters from a collection (for example, {@link LayeredBloomFilter}).
  *
  * @since 4.5.0
  */

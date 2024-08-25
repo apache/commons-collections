@@ -17,8 +17,8 @@
 package org.apache.commons.collections4.bloomfilter;
 
 /**
- * A Hasher creates IndexExtractor based on the hash implementation and the
- * provided Shape.
+ * A Hasher creates {@link IndexExtractor}s based on the hash implementation and the
+ * provided {@link Shape}.
  *
  * @since 4.5.0
  */

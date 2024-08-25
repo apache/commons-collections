@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * The definition of a Bloom filter shape.
  *
- * <p> This class contains the values for the filter configuration and is used to
+ * <p>This class contains the values for the filter configuration and is used to
  * convert a Hasher into a BloomFilter as well as verify that two Bloom filters are
  * compatible. (i.e. can be compared or merged)</p>
  *
