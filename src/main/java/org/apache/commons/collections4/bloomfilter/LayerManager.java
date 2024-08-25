@@ -76,9 +76,6 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * @return a new LayerManager.
          */
         public LayerManager<T> build() {
-            Objects.requireNonNull(supplier, "Supplier must not be null");
-            Objects.requireNonNull(extendCheck, "ExtendCheck must not be null");
-            Objects.requireNonNull(cleanup, "Cleanup must not be null");
             return new LayerManager<>(supplier, extendCheck, cleanup, true);
         }
 
@@ -291,19 +288,19 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
     /**
      * Constructs a new instance.
      *
-     * @param filterSupplier the supplier of new Bloom filters to add the the list
+     * @param filterSupplier the non-null supplier of new Bloom filters to add the the list
      *                       when necessary.
-     * @param extendCheck    The predicate that checks if a new filter should be
+     * @param extendCheck    The non-null predicate that checks if a new filter should be
      *                       added to the list.
-     * @param filterCleanup  the consumer that removes any old filters from the
+     * @param filterCleanup  the non-null consumer that removes any old filters from the
      *                       list.
      * @param initialize     true if the filter list should be initialized.
      */
     private LayerManager(final Supplier<T> filterSupplier, final Predicate<LayerManager<T>> extendCheck,
             final Consumer<Deque<T>> filterCleanup, final boolean initialize) {
-        this.filterSupplier = filterSupplier;
-        this.extendCheck = extendCheck;
-        this.filterCleanup = filterCleanup;
+        this.filterSupplier = Objects.requireNonNull(filterSupplier, "filterSupplier");
+        this.extendCheck = Objects.requireNonNull(extendCheck, "extendCheck");
+        this.filterCleanup = Objects.requireNonNull(filterCleanup, "filterCleanup");
         if (initialize) {
             addFilter();
         }
@@ -313,11 +310,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
      * Adds a new Bloom filter to the list.
      */
     private void addFilter() {
-        final T bf = filterSupplier.get();
-        if (bf == null) {
-            throw new NullPointerException("filterSupplier returned null.");
-        }
-        filters.add(bf);
+        filters.add(Objects.requireNonNull(filterSupplier.get(), "filterSupplier.get() returned null."));
     }
 
     /**

@@ -89,17 +89,17 @@ public class LayerManagerTest {
     public void testBuilder() {
         final LayerManager.Builder<BloomFilter> underTest = LayerManager.builder();
         NullPointerException npe = assertThrows(NullPointerException.class, underTest::build);
-        assertTrue(npe.getMessage().contains("Supplier must not be null"));
+        assertTrue(npe.getMessage().contains("filterSupplier"));
         underTest.setSupplier(() -> null).setCleanup(null);
         npe = assertThrows(NullPointerException.class, underTest::build);
-        assertTrue(npe.getMessage().contains("Cleanup must not be null"));
+        assertTrue(npe.getMessage().contains("filterCleanup"));
         underTest.setCleanup(x -> {
         }).setExtendCheck(null);
         npe = assertThrows(NullPointerException.class, underTest::build);
-        assertTrue(npe.getMessage().contains("ExtendCheck must not be null"));
+        assertTrue(npe.getMessage().contains("extendCheck"));
 
         npe = assertThrows(NullPointerException.class, () -> LayerManager.builder().setSupplier(() -> null).build());
-        assertTrue(npe.getMessage().contains("filterSupplier returned null."));
+        assertTrue(npe.getMessage().contains("filterSupplier.get() returned null."));
 
     }
 
