@@ -206,7 +206,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Removes the previously retrieved item from the underlying list.
      * <p>
      * This feature is only supported if the underlying list's
-     * {@link List#iterator iterator} method returns an implementation
+     * {@link List#iterator()} method returns an implementation
      * that supports it.
      * <p>
      * This method can only be called after at least one {@link #next}

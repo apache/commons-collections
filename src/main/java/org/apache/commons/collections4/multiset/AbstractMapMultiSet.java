@@ -54,7 +54,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         /**
          * The source Iterator.
          */
-        protected final Iterator<Map.Entry<E, MutableInteger>> iterator;
+        protected final Iterator<Map.Entry<E, MutableInteger>> decorated;
 
         /** The last returned entry */
         protected Entry<E> last;
@@ -64,23 +64,23 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
-         * @param iterator  the iterator to decorate
+         * @param decorated  the iterator to decorate
          * @param parent  the parent multiset
          */
-        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> iterator,
+        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> decorated,
                                    final AbstractMapMultiSet<E> parent) {
-            this.iterator = iterator;
+            this.decorated = decorated;
             this.parent = parent;
         }
 
         @Override
         public boolean hasNext() {
-            return iterator.hasNext();
+            return decorated.hasNext();
         }
 
         @Override
         public Entry<E> next() {
-            last = new MultiSetEntry<>(iterator.next());
+            last = new MultiSetEntry<>(decorated.next());
             canRemove = true;
             return last;
         }
@@ -90,7 +90,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            iterator.remove();
+            decorated.remove();
             last = null;
             canRemove = false;
         }

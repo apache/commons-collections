@@ -94,7 +94,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * Removes the previously retrieved item from the underlying collection.
      * <p>
      * This feature is only supported if the underlying collection's
-     * {@link Collection#iterator iterator} method returns an implementation
+     * {@link Collection#iterator()} method returns an implementation
      * that supports it.
      * <p>
      * This method can only be called after at least one {@link #next} method call.
