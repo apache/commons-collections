@@ -56,11 +56,12 @@ import java.util.function.Supplier;
 public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor {
 
     /**
-     * Builder to create Layer Manager.
+     * Builds new instances of {@link LayerManager}.
      *
      * @param <T> the {@link BloomFilter} type.
      */
-    public static class Builder<T extends BloomFilter> {
+    public static class Builder<T extends BloomFilter> implements Supplier<LayerManager<T>> {
+
         private Predicate<LayerManager<T>> extendCheck;
         private Supplier<T> supplier;
         private Consumer<Deque<T>> cleanup;
@@ -75,7 +76,8 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          *
          * @return a new LayerManager.
          */
-        public LayerManager<T> build() {
+        @Override
+        public LayerManager<T> get() {
             return new LayerManager<>(supplier, extendCheck, cleanup, true);
         }
 
@@ -97,7 +99,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          *
          * @param extendCheck The predicate to determine if a new target should be
          *                    created.
-         * @return this for chaining.
+         * @return {@code this} instance.
          */
         public Builder<T> setExtendCheck(final Predicate<LayerManager<T>> extendCheck) {
             this.extendCheck = extendCheck;
@@ -109,7 +111,7 @@ public class LayerManager<T extends BloomFilter> implements BloomFilterExtractor
          * the supplier provides the instance of the Bloom filter.
          *
          * @param supplier The supplier of new Bloom filter instances.
-         * @return this for chaining.
+         * @return {@code this} instance.
          */
         public Builder<T> setSupplier(final Supplier<T> supplier) {
             this.supplier = supplier;

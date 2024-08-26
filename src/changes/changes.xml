@@ -36,6 +36,7 @@
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán. Gary Gregory">Increase test coverage for ListUtils #517.</action>
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
     <!-- ADD -->
+    <action type="add" dev="ggregory" due-to="Dávid Szigecsán">LayerManager.Builder implements Supplier.</action>
     <!-- UPDATE -->
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>

@@ -46,7 +46,7 @@ public class LayerManagerTest {
     @ValueSource(ints = {4, 10, 2, 1})
     public void testAdvanceOnCount(final int breakAt) {
         final Predicate<LayerManager<BloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnCount(breakAt);
-        final LayerManager<BloomFilter> layerManager = testingBuilder().build();
+        final LayerManager<BloomFilter> layerManager = testingBuilder().get();
         for (int i = 0; i < breakAt - 1; i++) {
             assertFalse(underTest.test(layerManager), "at " + i);
             layerManager.getTarget().merge(TestingHashers.FROM1);
@@ -63,7 +63,7 @@ public class LayerManagerTest {
     @Test
     public void testAdvanceOnPopulated() {
         final Predicate<LayerManager<BloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnPopulated();
-        final LayerManager<BloomFilter> layerManager = testingBuilder().build();
+        final LayerManager<BloomFilter> layerManager = testingBuilder().get();
         assertFalse(underTest.test(layerManager));
         layerManager.getTarget().merge(TestingHashers.FROM1);
         assertTrue(underTest.test(layerManager));
@@ -74,7 +74,7 @@ public class LayerManagerTest {
         final double maxN = shape.estimateMaxN();
         int hashStart = 0;
         final Predicate<LayerManager<BloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnSaturation(maxN);
-        final LayerManager<BloomFilter> layerManager = testingBuilder().build();
+        final LayerManager<BloomFilter> layerManager = testingBuilder().get();
         while (layerManager.getTarget().getShape().estimateN(layerManager.getTarget().cardinality()) < maxN) {
             assertFalse(underTest.test(layerManager));
             layerManager.getTarget().merge(new IncrementingHasher(hashStart, shape.getNumberOfHashFunctions()));
@@ -88,24 +88,24 @@ public class LayerManagerTest {
     @Test
     public void testBuilder() {
         final LayerManager.Builder<BloomFilter> underTest = LayerManager.builder();
-        NullPointerException npe = assertThrows(NullPointerException.class, underTest::build);
+        NullPointerException npe = assertThrows(NullPointerException.class, underTest::get);
         assertTrue(npe.getMessage().contains("filterSupplier"));
         underTest.setSupplier(() -> null).setCleanup(null);
-        npe = assertThrows(NullPointerException.class, underTest::build);
+        npe = assertThrows(NullPointerException.class, underTest::get);
         assertTrue(npe.getMessage().contains("filterCleanup"));
         underTest.setCleanup(x -> {
         }).setExtendCheck(null);
-        npe = assertThrows(NullPointerException.class, underTest::build);
+        npe = assertThrows(NullPointerException.class, underTest::get);
         assertTrue(npe.getMessage().contains("extendCheck"));
 
-        npe = assertThrows(NullPointerException.class, () -> LayerManager.builder().setSupplier(() -> null).build());
+        npe = assertThrows(NullPointerException.class, () -> LayerManager.builder().setSupplier(() -> null).get());
         assertTrue(npe.getMessage().contains("filterSupplier.get() returned null."));
 
     }
 
     @Test
     public void testClear() {
-        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).build();
+        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.next();
         underTest.getTarget().merge(TestingHashers.randomHasher());
@@ -119,7 +119,7 @@ public class LayerManagerTest {
 
     @Test
     public void testCopy() {
-        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).build();
+        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.next();
         underTest.getTarget().merge(TestingHashers.randomHasher());
@@ -140,7 +140,7 @@ public class LayerManagerTest {
     @Test
     public void testForEachBloomFilter() {
         final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape))
-                .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).build();
+                .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).get();
 
         final List<BloomFilter> lst = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -161,7 +161,7 @@ public class LayerManagerTest {
     @Test
     public void testGet() {
         final SimpleBloomFilter f = new SimpleBloomFilter(shape);
-        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> f).build();
+        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> f).get();
         assertEquals(1, underTest.getDepth());
         assertSame(f, underTest.get(0));
         assertThrows(NoSuchElementException.class, () -> underTest.get(-1));
@@ -175,7 +175,7 @@ public class LayerManagerTest {
     @Test
     public void testNeverAdvance() {
         final Predicate<LayerManager<BloomFilter>> underTest = LayerManager.ExtendCheck.neverAdvance();
-        final LayerManager<BloomFilter> layerManager = testingBuilder().build();
+        final LayerManager<BloomFilter> layerManager = testingBuilder().get();
         assertFalse(underTest.test(layerManager));
         for (int i = 0; i < 10; i++) {
             layerManager.getTarget().merge(TestingHashers.randomHasher());
@@ -185,7 +185,7 @@ public class LayerManagerTest {
 
     @Test
     public void testNextAndGetDepth() {
-        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).build();
+        final LayerManager<BloomFilter> underTest = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         assertEquals(1, underTest.getDepth());
         underTest.getTarget().merge(TestingHashers.randomHasher());
         assertEquals(1, underTest.getDepth());
@@ -281,7 +281,7 @@ public class LayerManagerTest {
             return true;
         }).setCleanup(ll -> {
             cleanupCalled[0] = true;
-        }).build();
+        }).get();
         assertFalse(extendCheckCalled[0]);
         assertFalse(cleanupCalled[0]);
         assertEquals(1, supplierCount[0]);

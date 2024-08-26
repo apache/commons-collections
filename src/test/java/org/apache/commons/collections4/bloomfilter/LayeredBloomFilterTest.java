@@ -143,7 +143,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
                 .setCleanup(cleanup)
                 .setExtendCheck(new AdvanceOnTimeQuanta(quanta)
                         .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
-                .build();
+                .get();
         return new LayeredBloomFilter<>(shape, layerManager);
     }
 
@@ -174,7 +174,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         final LayerManager.Builder<T> builder = LayerManager.builder();
         builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
                 .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(supplier);
-        return new LayeredBloomFilter<>(shape, builder.build());
+        return new LayeredBloomFilter<>(shape, builder.get());
     }
 
     // instrumentation to record timestamps in dbgInstrument list
@@ -221,7 +221,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Test
     public void testCardinalityAndIsEmpty() {
         final LayerManager<BloomFilter> layerManager = LayerManager.builder().setExtendCheck(ExtendCheck.neverAdvance())
-                .setSupplier(() -> new SimpleBloomFilter(getTestShape())).build();
+                .setSupplier(() -> new SimpleBloomFilter(getTestShape())).get();
         testCardinalityAndIsEmpty(new LayeredBloomFilter<>(getTestShape(), layerManager));
     }
 
@@ -233,7 +233,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         final LayerManager layerManager = LayerManager.builder()
                 .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
                 .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).build();
+                .setCleanup(ll -> ll.removeIf( f -> (((NumberedBloomFilter) f).value-- == 0))).get();
         final LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager );
         assertEquals(1, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());
@@ -385,7 +385,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Test
     public final void testNext() {
         final LayerManager<BloomFilter> layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(getTestShape()))
-                .build();
+                .get();
 
         final LayeredBloomFilter<BloomFilter> filter = new LayeredBloomFilter<>(getTestShape(), layerManager);
         filter.merge(TestingHashers.FROM1);
