@@ -156,7 +156,7 @@
     <commons.jacoco.lineRatio>0.85</commons.jacoco.lineRatio>
     <commons.jacoco.complexityRatio>0.78</commons.jacoco.complexityRatio>
     <doxia.module.markdown.version>1.12.0</doxia.module.markdown.version>
-    <math.mathjax.version>2.7.2</math.mathjax.version>
+    <math.mathjax.version>2.7.9</math.mathjax.version>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
