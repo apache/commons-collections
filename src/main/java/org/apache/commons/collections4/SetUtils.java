@@ -276,8 +276,6 @@ public class SetUtils {
         Objects.requireNonNull(setA, "setA");
         Objects.requireNonNull(setB, "setB");
 
-        final Predicate<E> containedInB = setB::contains;
-
         return new SetView<E>() {
             @Override
             public boolean contains(final Object o) {
@@ -286,7 +284,7 @@ public class SetUtils {
 
             @Override
             public Iterator<E> createIterator() {
-                return IteratorUtils.filteredIterator(setA.iterator(), containedInB);
+                return IteratorUtils.filteredIterator(setA.iterator(), setB::contains);
             }
         };
     }
