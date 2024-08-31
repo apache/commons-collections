@@ -103,6 +103,54 @@ public class ListUtilsTest {
     }
 
     @Test
+    public void testFindDuplicatesWithDuplicates() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
+        List<Integer> expected = Arrays.asList(2, 3);
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should contain only the duplicate elements.");
+    }
+
+    @Test
+    public void testFindDuplicatesNoDuplicates() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> expected = Arrays.asList();
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should be empty as there are no duplicates.");
+    }
+
+    @Test
+    public void testFindDuplicatesEmptyList() {
+        List<Integer> input = Arrays.asList();
+        List<Integer> expected = Arrays.asList();
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should be empty as the input list is empty.");
+    }
+
+    @Test
+    public void testFindDuplicatesSingleElement() {
+        List<Integer> input = Arrays.asList(1);
+        List<Integer> expected = Arrays.asList();
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should be empty as there is only one element.");
+    }
+
+    @Test
+    public void testFindDuplicatesMultipleDuplicates() {
+        List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
+        List<Integer> expected = Arrays.asList(1, 2, 3, 4);
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should contain all duplicate elements.");
+    }
+
+    @Test
+    public void testFindDuplicatesAllSameElements() {
+        List<Integer> input = Arrays.asList(5, 5, 5, 5);
+        List<Integer> expected = Arrays.asList(5);
+        List<Integer> actual = ListUtils.findDuplicates(input);
+        assertEquals(expected, actual, "The list should contain the single element as all elements are the same.");
+    }
+
+    @Test
     public void testGetFirst() {
         assertEquals(a, ListUtils.getFirst(fullList));
         assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
