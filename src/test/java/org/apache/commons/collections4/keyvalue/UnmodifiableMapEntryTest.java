@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
@@ -89,7 +89,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(key, entry2.getKey());
         assertSame(value, entry2.getValue());
 
-        assertTrue(entry instanceof Unmodifiable);
+        assertInstanceOf(Unmodifiable.class, entry);
     }
 
     @Test

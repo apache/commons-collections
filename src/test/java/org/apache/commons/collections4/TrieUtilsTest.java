@@ -16,9 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.collections4.trie.UnmodifiableTrie;
@@ -32,7 +32,7 @@ public class TrieUtilsTest {
     @Test
     public void testUnmodifiableTrie() {
         final Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());
-        assertTrue(trie instanceof UnmodifiableTrie, "Returned object should be an UnmodifiableTrie.");
+        assertInstanceOf(UnmodifiableTrie.class, trie, "Returned object should be an UnmodifiableTrie.");
 
         assertThrows(NullPointerException.class, () -> TrieUtils.unmodifiableTrie(null));
 

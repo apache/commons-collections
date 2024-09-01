@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -365,7 +366,7 @@ public class ListUtilsTest {
     public void testPredicatedList() {
         final Predicate<Object> predicate = String.class::isInstance;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
-        assertTrue(list instanceof PredicatedList, "returned object should be a PredicatedList");
+        assertInstanceOf(PredicatedList.class, list, "returned object should be a PredicatedList");
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> ListUtils.predicatedList(new ArrayList<>(), null),
                         "Expecting IllegalArgumentException for null predicate."),
