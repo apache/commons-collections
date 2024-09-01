@@ -186,11 +186,10 @@ public class ListUtils {
      * @param list the list to check for duplicates, must not be null
      * @return a list of duplicate elements, or an empty list if no duplicates are found
      * @throws NullPointerException if the list is null
+     * @since 4.5.0-M3
      */
     public static <E> List<E> findDuplicates(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("The input list must not be null.");
-        }
+        Objects.requireNonNull(list, "The input list must not be null.");
 
         Set<E> seen = new HashSet<>();
         Set<E> duplicates = new HashSet<>();
