@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -210,7 +211,7 @@ public class SetUtilsTest {
     public void testpredicatedSet() {
         final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
-        assertTrue(set instanceof PredicatedSet, "returned object should be a PredicatedSet");
+        assertInstanceOf(PredicatedSet.class, set, "returned object should be a PredicatedSet");
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(new HashSet<>(), null),
                         "Expecting NullPointerException for null predicate."),
