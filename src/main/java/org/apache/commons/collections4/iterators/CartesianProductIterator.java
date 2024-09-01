@@ -29,7 +29,7 @@ import java.util.Objects;
  * The iterables provided to the constructor are used in reverse order, each
  * until exhaustion before proceeding to the next element of the prior iterable
  * and repeating. Consider the following example:
- *
+ * </p>
  * <pre>{@code
  * List<Character> iterable1 = Arrays.asList('A', 'B', 'C');
  * List<Character> iterable2 = Arrays.asList('1', '2', '3');
@@ -41,9 +41,9 @@ import java.util.Objects;
  *     System.out.println(tuple.get(0) + ", " + tuple.get(1));
  * }
  * }</pre>
- *
+ * <p>
  * The output will be:
- *
+ * </p>
  * <pre>
  * A, 1
  * A, 2
@@ -58,10 +58,12 @@ import java.util.Objects;
  * <p>
  * The {@code remove()} operation is not supported, and will throw an
  * {@code UnsupportedOperationException}.
+ * </p>
  * <p>
  * If any of the input iterables is empty, the Cartesian product will be empty.
  * If any of the input iterables is infinite, the Cartesian product will be
  * infinite.
+ * </p>
  *
  * @param <E> the type of the objects being permuted
  * @since 4.5.0
@@ -127,7 +129,6 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-
         if (previousTuple == null) {
             previousTuple = new ArrayList<>(iterables.size());
             for (final Iterator<? extends E> iterator : iterators) {
@@ -135,7 +136,6 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
             }
             return new ArrayList<>(previousTuple);
         }
-
         for (int i = iterators.size() - 1; i >= 0; i--) {
             Iterator<? extends E> iterator = iterators.get(i);
             if (iterator.hasNext()) {
