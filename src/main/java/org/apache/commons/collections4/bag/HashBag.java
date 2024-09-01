@@ -50,13 +50,23 @@ public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
     }
 
     /**
-     * Constructs a bag containing all the members of the given collection.
+     * Constructs a bag containing all the members of the given Collection.
      *
-     * @param coll  a collection to copy into this bag
+     * @param collection a collection to copy into this bag.
      */
-    public HashBag(final Collection<? extends E> coll) {
+    public HashBag(final Collection<? extends E> collection) {
         this();
-        addAll(coll);
+        addAll(collection);
+    }
+
+    /**
+     * Constructs a bag containing all the members of the given Iterable.
+     *
+     * @param iterable an iterable to copy into this bag.
+     * @since 4.5.0-M3
+     */
+    public HashBag(final Iterable<? extends E> iterable) {
+        super(new HashMap<>(), iterable);
     }
 
     /**
