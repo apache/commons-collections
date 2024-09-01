@@ -113,9 +113,7 @@ public class ListUtilsTest {
     @Test
     public void testFindDuplicatesNoDuplicates() {
         List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
-        List<Integer> expected = Arrays.asList();
-        List<Integer> actual = ListUtils.findDuplicates(input);
-        assertEquals(expected, actual, "The list should be empty as there are no duplicates.");
+        assertTrue(ListUtils.findDuplicates(input).isEmpty(), "The list should be empty as the input list has no duplicates.");
     }
 
     @Test
