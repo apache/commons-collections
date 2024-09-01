@@ -40,6 +40,8 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateSet(Collection).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateSequencedSet(Collection).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add HashBag.HashBag(Iterable).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add TreeBag.TreeBag(Iterable).</action>
     <!-- UPDATE -->
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
     <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
