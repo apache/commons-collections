@@ -63,6 +63,8 @@ public class CollectionUtils {
      */
     private static class CardinalityHelper<O> {
 
+        private static final Integer ZERO = Integer.valueOf(0);
+
         /** Contains the cardinality for each object in collection A. */
         final Map<O, Integer> cardinalityA;
 
@@ -81,28 +83,26 @@ public class CollectionUtils {
 
         /**
          * Returns the frequency of this object in collection A.
-         * @param obj  the object
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection A
          */
-        public int freqA(final Object obj) {
-            return getFreq(obj, cardinalityA);
+        public int freqA(final Object key) {
+            return getFreq(key, cardinalityA);
         }
 
         /**
          * Returns the frequency of this object in collection B.
-         * @param obj  the object
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection B
          */
-        public int freqB(final Object obj) {
-            return getFreq(obj, cardinalityB);
+        public int freqB(final Object key) {
+            return getFreq(key, cardinalityB);
         }
 
-        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
-            final Integer count = freqMap.get(obj);
-            if (count != null) {
-                return count.intValue();
-            }
-            return 0;
+        private int getFreq(final Object key, final Map<?, Integer> freqMap) {
+            return freqMap.getOrDefault(key, ZERO).intValue();
         }
 
         /**
