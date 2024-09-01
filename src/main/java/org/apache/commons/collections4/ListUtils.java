@@ -196,10 +196,8 @@ public class ListUtils {
         List<E> result = new ArrayList<>();
 
         for (E element : list) {
-            if (!seen.add(element)) {
-                if (duplicates.add(element)) {
-                    result.add(element);
-                }
+            if (!seen.add(element) && duplicates.add(element)) {
+                result.add(element);
             }
         }
 
