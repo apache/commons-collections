@@ -63,26 +63,29 @@ public class CollectionUtils {
      */
     private static class CardinalityHelper<O> {
 
-        private static final Integer ZERO = Integer.valueOf(0);
+        static boolean equals(final Collection<?> a, final Collection<?> b) {
+            return new HashBag<>(a).equals(new HashBag<>(b));
+        }
 
         /** Contains the cardinality for each object in collection A. */
-        final Map<O, Integer> cardinalityA;
+        final Bag<O> cardinalityA;
 
         /** Contains the cardinality for each object in collection B. */
-        final Map<O, Integer> cardinalityB;
+        final Bag<O> cardinalityB;
 
         /**
-         * Create a new CardinalityHelper for two collections.
+         * Creates a new CardinalityHelper for two collections.
+         *
          * @param a  the first collection
          * @param b  the second collection
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = getCardinalityMap(a);
-            cardinalityB = getCardinalityMap(b);
+            cardinalityA = new HashBag<>(a);
+            cardinalityB = new HashBag<>(b);
         }
 
         /**
-         * Returns the frequency of this object in collection A.
+         * Gets the frequency of this object in collection A.
          *
          * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection A
@@ -92,7 +95,7 @@ public class CollectionUtils {
         }
 
         /**
-         * Returns the frequency of this object in collection B.
+         * Gets the frequency of this object in collection B.
          *
          * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection B
@@ -101,12 +104,13 @@ public class CollectionUtils {
             return getFreq(key, cardinalityB);
         }
 
-        private int getFreq(final Object key, final Map<?, Integer> freqMap) {
-            return freqMap.getOrDefault(key, ZERO).intValue();
+        private int getFreq(final Object key, final Bag<?> freqMap) {
+            return freqMap.getCount(key);
         }
 
         /**
-         * Returns the maximum frequency of an object.
+         * Gets the maximum frequency of an object.
+         *
          * @param obj  the object
          * @return the maximum frequency of the object
          */
@@ -115,7 +119,8 @@ public class CollectionUtils {
         }
 
         /**
-         * Returns the minimum frequency of an object.
+         * Gets the minimum frequency of an object.
+         *
          * @param obj  the object
          * @return the minimum frequency of the object
          */
@@ -1257,21 +1262,7 @@ public class CollectionUtils {
      * @throws NullPointerException if either collection is null
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "a");
-        Objects.requireNonNull(b, "b");
-        if (a.size() != b.size()) {
-            return false;
-        }
-        final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
-        if (helper.cardinalityA.size() != helper.cardinalityB.size()) {
-            return false;
-        }
-        for (final Object obj : helper.cardinalityA.keySet()) {
-            if (helper.freqA(obj) != helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return CardinalityHelper.equals(a, b);
     }
 
     /**
