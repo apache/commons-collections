@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -754,6 +755,62 @@ public class CollectionUtils {
             helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
         }
         return helper.list();
+    }
+
+    /**
+     * Finds and returns the List of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param collection the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> List<E> duplicateList(final Collection<E> collection) {
+        return new ArrayList<>(duplicateSet(collection));
+    }
+
+    /**
+     * Finds and returns the sequenced Set of duplicate elements in the given collection.
+     * <p>
+     * Once we are on Java 21 and a new major version, the return type should be SequencedSet.
+     * </p>
+     *
+     * @param <E> the type of elements in the collection.
+     * @param collection the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSequencedSet(final Collection<E> collection) {
+        return duplicateSet(collection, new LinkedHashSet<>());
+    }
+
+    /**
+     * Finds and returns the set of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param collection the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSet(final Collection<E> collection) {
+        return duplicateSet(collection, new HashSet<>());
+    }
+
+    /**
+     * Worker method for {@link #duplicateSet(Collection)} and friends.
+     *
+     * @param <C> the type of Collection.
+     * @param <E> the type of elements in the Collection.
+     * @param collection the list to test, must not be null.
+     * @param duplicates the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     */
+    static <C extends Collection<E>, E> C duplicateSet(final Collection<E> collection, final C duplicates) {
+        final Set<E> set = new HashSet<>();
+        for (final E e : collection) {
+            (set.contains(e) ? duplicates : set).add(e);
+        }
+        return duplicates;
     }
 
     /**
