@@ -109,10 +109,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             canRemove = false;
         }
     }
+
     /**
      * Mutable integer class for storing the data.
      */
     protected static class MutableInteger {
+
         /** The value of this mutable. */
         protected int value;
 
@@ -137,8 +139,10 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             return value;
         }
     }
+
     /** The map to use to store the data */
     private transient Map<E, MutableInteger> map;
+
     /** The current total size of the bag */
     private int size;
 
