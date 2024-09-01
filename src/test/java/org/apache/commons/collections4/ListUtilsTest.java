@@ -121,18 +121,15 @@ public class ListUtilsTest {
     @Test
     public void testFindDuplicatesEmptyList() {
         List<Integer> input = Arrays.asList();
-        List<Integer> expected = Arrays.asList();
-        List<Integer> actual = ListUtils.findDuplicates(input);
-        assertEquals(expected, actual, "The list should be empty as the input list is empty.");
+        assertTrue(ListUtils.findDuplicates(input).isEmpty(), "The list should be empty as the input list is empty.");
     }
 
     @Test
     public void testFindDuplicatesSingleElement() {
         List<Integer> input = Arrays.asList(1);
-        List<Integer> expected = Arrays.asList();
-        List<Integer> actual = ListUtils.findDuplicates(input);
-        assertEquals(expected, actual, "The list should be empty as there is only one element.");
+        assertTrue(ListUtils.findDuplicates(input).isEmpty(), "The list should be empty as there is only one element.");
     }
+
 
     @Test
     public void testFindDuplicatesMultipleDuplicates() {
