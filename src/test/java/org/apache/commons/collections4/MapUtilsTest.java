@@ -603,6 +603,7 @@ public class MapUtilsTest {
 
         assertEquals("str", MapUtils.getString(in, "key", "default"));
         assertEquals("str", MapUtils.getString(in, "key"));
+        assertEquals("str", MapUtils.getString(in, "key", null));
         assertNull(MapUtils.getString(null, "key"));
         assertEquals("default", MapUtils.getString(in, "noKey", "default"));
         assertEquals("default", MapUtils.getString(in, "noKey", key -> {

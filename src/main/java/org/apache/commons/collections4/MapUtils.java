@@ -1165,8 +1165,12 @@ public class MapUtils {
      * @return the value in the map as a string, or defaultValue if the original value is null, the map is null or the
      *         string conversion fails
      */
-    public static <K> String getString(final Map<? super K, ?> map, final K key, final String defaultValue) {
-        return applyDefaultValue(map, key, MapUtils::getString, defaultValue);
+    public static <K> String getString(final Map<? super K, ?> map, final K key, final Object defaultValue) {
+        boolean isFunctional = Function.class.isAssignableFrom(defaultValue.getClass());
+        if (isFunctional) {
+            return getString(map, key, (Function<K, String>) defaultValue);
+        }
+        return applyDefaultValue(map, key, MapUtils::getString, (String) defaultValue);
     }
 
     /**
