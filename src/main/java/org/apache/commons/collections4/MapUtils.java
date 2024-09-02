@@ -1142,15 +1142,14 @@ public class MapUtils {
      * produce the default value if the conversion fails.
      *
      * @param <K> the key type
+     * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @param map the map whose value to look up
      * @param key the key of the value to look up in that map
-     * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a string, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the string conversion fails
      * @since 4.5.0
      */
-    public static <K> String getString(final Map<? super K, ?> map, final K key,
-            final Function<K, String> defaultFunction) {
+    public static <K> String getString(final Function<K, String> defaultFunction, final Map<? super K, ?> map, final K key) {
         return applyDefaultFunction(map, key, MapUtils::getString, defaultFunction);
     }
 
