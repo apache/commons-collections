@@ -68,6 +68,16 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     /**
+     * Constructs a bag containing all the members of the given Iterable.
+     *
+     * @param iterable an iterable to copy into this bag.
+     * @since 4.5.0-M3
+     */
+    public TreeBag(final Iterable<? extends E> iterable) {
+        super(new TreeMap<>(), iterable);
+    }
+
+    /**
      * Constructs an empty bag that maintains order on its unique representative
      * members according to the given {@link Comparator}.
      *

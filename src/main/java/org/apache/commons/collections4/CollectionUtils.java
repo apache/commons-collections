@@ -25,7 +25,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -63,50 +62,54 @@ public class CollectionUtils {
      */
     private static class CardinalityHelper<O> {
 
+        static boolean equals(final Collection<?> a, final Collection<?> b) {
+            return new HashBag<>(a).equals(new HashBag<>(b));
+        }
+
         /** Contains the cardinality for each object in collection A. */
-        final Map<O, Integer> cardinalityA;
+        final Bag<O> cardinalityA;
 
         /** Contains the cardinality for each object in collection B. */
-        final Map<O, Integer> cardinalityB;
+        final Bag<O> cardinalityB;
 
         /**
-         * Create a new CardinalityHelper for two collections.
+         * Creates a new CardinalityHelper for two collections.
+         *
          * @param a  the first collection
          * @param b  the second collection
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = getCardinalityMap(a);
-            cardinalityB = getCardinalityMap(b);
+            cardinalityA = new HashBag<>(a);
+            cardinalityB = new HashBag<>(b);
         }
 
         /**
-         * Returns the frequency of this object in collection A.
-         * @param obj  the object
+         * Gets the frequency of this object in collection A.
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection A
          */
-        public int freqA(final Object obj) {
-            return getFreq(obj, cardinalityA);
+        public int freqA(final Object key) {
+            return getFreq(key, cardinalityA);
         }
 
         /**
-         * Returns the frequency of this object in collection B.
-         * @param obj  the object
+         * Gets the frequency of this object in collection B.
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection B
          */
-        public int freqB(final Object obj) {
-            return getFreq(obj, cardinalityB);
+        public int freqB(final Object key) {
+            return getFreq(key, cardinalityB);
         }
 
-        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
-            final Integer count = freqMap.get(obj);
-            if (count != null) {
-                return count.intValue();
-            }
-            return 0;
+        private int getFreq(final Object key, final Bag<?> freqMap) {
+            return freqMap.getCount(key);
         }
 
         /**
-         * Returns the maximum frequency of an object.
+         * Gets the maximum frequency of an object.
+         *
          * @param obj  the object
          * @return the maximum frequency of the object
          */
@@ -115,7 +118,8 @@ public class CollectionUtils {
         }
 
         /**
-         * Returns the minimum frequency of an object.
+         * Gets the minimum frequency of an object.
+         *
          * @param obj  the object
          * @return the minimum frequency of the object
          */
@@ -758,62 +762,6 @@ public class CollectionUtils {
     }
 
     /**
-     * Finds and returns the List of duplicate elements in the given collection.
-     *
-     * @param <E> the type of elements in the collection.
-     * @param collection the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
-     * @since 4.5.0-M3
-     */
-    public static <E> List<E> duplicateList(final Collection<E> collection) {
-        return new ArrayList<>(duplicateSet(collection));
-    }
-
-    /**
-     * Finds and returns the sequenced Set of duplicate elements in the given collection.
-     * <p>
-     * Once we are on Java 21 and a new major version, the return type should be SequencedSet.
-     * </p>
-     *
-     * @param <E> the type of elements in the collection.
-     * @param collection the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
-     * @since 4.5.0-M3
-     */
-    public static <E> Set<E> duplicateSequencedSet(final Collection<E> collection) {
-        return duplicateSet(collection, new LinkedHashSet<>());
-    }
-
-    /**
-     * Finds and returns the set of duplicate elements in the given collection.
-     *
-     * @param <E> the type of elements in the collection.
-     * @param collection the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
-     * @since 4.5.0-M3
-     */
-    public static <E> Set<E> duplicateSet(final Collection<E> collection) {
-        return duplicateSet(collection, new HashSet<>());
-    }
-
-    /**
-     * Worker method for {@link #duplicateSet(Collection)} and friends.
-     *
-     * @param <C> the type of Collection.
-     * @param <E> the type of elements in the Collection.
-     * @param collection the list to test, must not be null.
-     * @param duplicates the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
-     */
-    static <C extends Collection<E>, E> C duplicateSet(final Collection<E> collection, final C duplicates) {
-        final Set<E> set = new HashSet<>();
-        for (final E e : collection) {
-            (set.contains(e) ? duplicates : set).add(e);
-        }
-        return duplicates;
-    }
-
-    /**
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
      *
      * @see #EMPTY_COLLECTION
@@ -1257,21 +1205,7 @@ public class CollectionUtils {
      * @throws NullPointerException if either collection is null
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "a");
-        Objects.requireNonNull(b, "b");
-        if (a.size() != b.size()) {
-            return false;
-        }
-        final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
-        if (helper.cardinalityA.size() != helper.cardinalityB.size()) {
-            return false;
-        }
-        for (final Object obj : helper.cardinalityA.keySet()) {
-            if (helper.freqA(obj) != helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return CardinalityHelper.equals(a, b);
     }
 
     /**

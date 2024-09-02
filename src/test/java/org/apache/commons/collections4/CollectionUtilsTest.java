@@ -21,25 +21,23 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -876,137 +874,6 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
-    public void testDuplicateListAllSameInList() {
-        final List<Integer> input = Arrays.asList(5, 5, 5, 5);
-        assertEquals(Arrays.asList(5), CollectionUtils.duplicateList(input));
-    }
-
-    @Test
-    public void testDuplicateListEmptyDeque() {
-        assertTrue(CollectionUtils.duplicateList(new ArrayDeque<>()).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateListEmptyList() {
-        final List<Integer> input = Arrays.asList();
-        assertTrue(CollectionUtils.duplicateList(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateListEmptySet() {
-        assertTrue(CollectionUtils.duplicateList(new HashSet<>()).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateListMultipleDuplicatesInDeque() {
-        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
-        final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
-        assertEquals(expected, CollectionUtils.duplicateList(input));
-    }
-
-    @Test
-    public void testDuplicateListMultipleDuplicatesInList() {
-        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
-        final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
-        assertEquals(expected, CollectionUtils.duplicateList(input));
-    }
-
-    @Test
-    public void testDuplicateListNoDuplicates() {
-        final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
-        assertTrue(CollectionUtils.duplicateList(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateListSingleElement() {
-        final List<Integer> input = Arrays.asList(1);
-        assertTrue(CollectionUtils.duplicateList(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateListWithDuplicates() {
-        final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
-        final List<Integer> expected = Arrays.asList(2, 3);
-        assertEquals(expected, CollectionUtils.duplicateList(input));
-    }
-
-    @Test
-    public void testDuplicateSequencedSetMultipleDuplicates() {
-        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
-        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
-        assertEquals(list, new ArrayList<>(CollectionUtils.duplicateSequencedSet(input)));
-        assertEquals(new LinkedHashSet<>(list), CollectionUtils.duplicateSequencedSet(input));
-    }
-
-    @Test
-    public void testDuplicateSetEmptyDeque() {
-        assertTrue(CollectionUtils.duplicateSet(new ArrayDeque<>()).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetEmptyList() {
-        final List<Integer> input = Arrays.asList();
-        assertTrue(CollectionUtils.duplicateSet(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetEmptySet() {
-        assertTrue(CollectionUtils.duplicateSet(new HashSet<>()).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetInSet() {
-        // Sets don't have duplicates, so the result is always an empty set.
-        final Set<Integer> input = new HashSet<>(Arrays.asList(5));
-        assertTrue(CollectionUtils.duplicateSet(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetMultipleDuplicatesInDeque() {
-        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
-        final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
-        assertEquals(expected, CollectionUtils.duplicateSet(input));
-    }
-
-    @Test
-    public void testDuplicateSetMultipleDuplicatesInList() {
-        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
-        final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
-        assertEquals(expected, CollectionUtils.duplicateSet(input));
-    }
-
-    @Test
-    public void testDuplicateSetNoDuplicates() {
-        final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
-        assertTrue(CollectionUtils.duplicateSet(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetSingleElement() {
-        final List<Integer> input = Arrays.asList(1);
-        assertTrue(CollectionUtils.duplicateSet(input).isEmpty());
-    }
-
-    @Test
-    public void testDuplicateSetWithDuplicates() {
-        final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
-        final Set<Integer> expected = new HashSet<>(Arrays.asList(2, 3));
-        assertEquals(expected, CollectionUtils.duplicateSet(input));
-    }
-
-    @Test
-    public void testDuplicatListAllSameInDeque() {
-        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
-        assertEquals(Arrays.asList(5), CollectionUtils.duplicateList(input));
-    }
-
-    @Test
-    public void testDuplicatSetAllSameInDeque() {
-        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
-        assertEquals(new HashSet<>(Arrays.asList(5)), CollectionUtils.duplicateSet(input));
-    }
-
-    @Test
     public void testEmptyCollection() throws Exception {
         final Collection<Number> coll = CollectionUtils.emptyCollection();
         assertEquals(CollectionUtils.EMPTY_COLLECTION, coll);
@@ -1746,7 +1613,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testPredicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
         final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<>(), predicate);
-        assertTrue(collection instanceof PredicatedCollection, "returned object should be a PredicatedCollection");
+        assertInstanceOf(PredicatedCollection.class, collection, "returned object should be a PredicatedCollection");
     }
 
     @Test
@@ -2321,7 +2188,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
-        assertTrue(col instanceof SynchronizedCollection, "Returned object should be a SynchronizedCollection.");
+        assertInstanceOf(SynchronizedCollection.class, col, "Returned object should be a SynchronizedCollection.");
 
         assertThrows(NullPointerException.class, () -> CollectionUtils.synchronizedCollection(null),
                 "Expecting NullPointerException for null collection.");
@@ -2366,7 +2233,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testTransformedCollection() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
         final Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<>(), transformer);
-        assertTrue(collection instanceof TransformedCollection, "returned object should be a TransformedCollection");
+        assertInstanceOf(TransformedCollection.class, collection, "returned object should be a TransformedCollection");
     }
 
     @Test
@@ -2430,7 +2297,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
-        assertTrue(col instanceof UnmodifiableCollection, "Returned object should be a UnmodifiableCollection.");
+        assertInstanceOf(UnmodifiableCollection.class, col, "Returned object should be a UnmodifiableCollection.");
 
         assertThrows(NullPointerException.class, () -> CollectionUtils.unmodifiableCollection(null),
                 "Expecting NullPointerException for null collection.");

@@ -931,10 +931,22 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeysBagIterator() {
+    public void testKeysBagIterator1() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<K> col = new ArrayList<>(map.keys());
         final Bag<K> bag = new HashBag<>(col);
+        final int maxK = getSampleKeySize();
+        for (int k = 0; k < maxK; k++) {
+            assertEquals(getSampleCountPerKey(), bag.getCount(makeKey(k)));
+        }
+        assertEquals(getSampleTotalValueCount(), bag.size());
+    }
+
+    @Test
+    public void testKeysBagIterator2() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        final Iterable<K> iterable = new ArrayList<>(map.keys());
+        final Bag<K> bag = new HashBag<>(iterable);
         final int maxK = getSampleKeySize();
         for (int k = 0; k < maxK; k++) {
             assertEquals(getSampleCountPerKey(), bag.getCount(makeKey(k)));
