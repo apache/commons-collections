@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -343,6 +345,62 @@ public class IterableUtils {
     public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
         Objects.requireNonNull(predicate, "predicate");
         return size(filteredIterable(emptyIfNull(input), predicate));
+    }
+
+    /**
+     * Finds and returns the List of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> List<E> duplicateList(final Iterable<E> iterable) {
+        return new ArrayList<>(duplicateSet(iterable));
+    }
+
+    /**
+     * Finds and returns the sequenced Set of duplicate elements in the given collection.
+     * <p>
+     * Once we are on Java 21 and a new major version, the return type should be SequencedSet.
+     * </p>
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSequencedSet(final Iterable<E> iterable) {
+        return duplicateSet(iterable, new LinkedHashSet<>());
+    }
+
+    /**
+     * Finds and returns the set of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSet(final Iterable<E> iterable) {
+        return duplicateSet(iterable, new HashSet<>());
+    }
+
+    /**
+     * Worker method for {@link #duplicateSet(Collection)} and friends.
+     *
+     * @param <C> the type of Collection.
+     * @param <E> the type of elements in the Collection.
+     * @param iterable the list to test, must not be null.
+     * @param duplicates the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     */
+    static <C extends Collection<E>, E> C duplicateSet(final Iterable<E> iterable, final C duplicates) {
+        final Set<E> set = new HashSet<>();
+        for (final E e : iterable) {
+            (set.contains(e) ? duplicates : set).add(e);
+        }
+        return duplicates;
     }
 
     /**

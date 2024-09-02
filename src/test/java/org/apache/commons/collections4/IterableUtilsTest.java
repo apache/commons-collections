@@ -27,11 +27,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -151,6 +154,137 @@ public class IterableUtilsTest {
                 () -> assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(null, null)),
                         "predicate must not be null")
         );
+    }
+
+    @Test
+    public void testDuplicateListAllSameInList() {
+        final List<Integer> input = Arrays.asList(5, 5, 5, 5);
+        assertEquals(Arrays.asList(5), IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListEmptyDeque() {
+        assertTrue(IterableUtils.duplicateList(new ArrayDeque<>()).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateListEmptyList() {
+        final List<Integer> input = Arrays.asList();
+        assertTrue(IterableUtils.duplicateList(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateListEmptySet() {
+        assertTrue(IterableUtils.duplicateList(new HashSet<>()).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateListMultipleDuplicatesInDeque() {
+        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
+        final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListMultipleDuplicatesInList() {
+        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
+        final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListNoDuplicates() {
+        final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
+        assertTrue(IterableUtils.duplicateList(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateListSingleElement() {
+        final List<Integer> input = Arrays.asList(1);
+        assertTrue(IterableUtils.duplicateList(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateListWithDuplicates() {
+        final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
+        final List<Integer> expected = Arrays.asList(2, 3);
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateSequencedSetMultipleDuplicates() {
+        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4);
+        assertEquals(list, new ArrayList<>(IterableUtils.duplicateSequencedSet(input)));
+        assertEquals(new LinkedHashSet<>(list), IterableUtils.duplicateSequencedSet(input));
+    }
+
+    @Test
+    public void testDuplicateSetEmptyDeque() {
+        assertTrue(IterableUtils.duplicateSet(new ArrayDeque<>()).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetEmptyList() {
+        final List<Integer> input = Arrays.asList();
+        assertTrue(IterableUtils.duplicateSet(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetEmptySet() {
+        assertTrue(IterableUtils.duplicateSet(new HashSet<>()).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetInSet() {
+        // Sets don't have duplicates, so the result is always an empty set.
+        final Set<Integer> input = new HashSet<>(Arrays.asList(5));
+        assertTrue(IterableUtils.duplicateSet(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetMultipleDuplicatesInDeque() {
+        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
+        final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
+        assertEquals(expected, IterableUtils.duplicateSet(input));
+    }
+
+    @Test
+    public void testDuplicateSetMultipleDuplicatesInList() {
+        final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
+        final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
+        assertEquals(expected, IterableUtils.duplicateSet(input));
+    }
+
+    @Test
+    public void testDuplicateSetNoDuplicates() {
+        final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
+        assertTrue(IterableUtils.duplicateSet(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetSingleElement() {
+        final List<Integer> input = Arrays.asList(1);
+        assertTrue(IterableUtils.duplicateSet(input).isEmpty());
+    }
+
+    @Test
+    public void testDuplicateSetWithDuplicates() {
+        final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
+        final Set<Integer> expected = new HashSet<>(Arrays.asList(2, 3));
+        assertEquals(expected, IterableUtils.duplicateSet(input));
+    }
+
+    @Test
+    public void testDuplicatListAllSameInDeque() {
+        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
+        assertEquals(Arrays.asList(5), IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicatSetAllSameInDeque() {
+        final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
+        assertEquals(new HashSet<>(Arrays.asList(5)), IterableUtils.duplicateSet(input));
     }
 
     @Test
