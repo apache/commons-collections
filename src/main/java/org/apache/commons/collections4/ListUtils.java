@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
@@ -189,19 +188,7 @@ public class ListUtils {
      * @since 4.5.0-M3
      */
     public static <E> List<E> findDuplicates(final List<E> list) {
-        Objects.requireNonNull(list, "The input list must not be null.");
-
-        Set<E> seen = new HashSet<>();
-        Set<E> duplicates = new HashSet<>();
-        List<E> result = new ArrayList<>();
-
-        for (E element : list) {
-            if (!seen.add(element) && duplicates.add(element)) {
-                result.add(element);
-            }
-        }
-
-        return result;
+        return CollectionUtils.duplicateList(list);
     }
 
     /**
