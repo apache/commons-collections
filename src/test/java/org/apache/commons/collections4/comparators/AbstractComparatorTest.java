@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.comparators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
@@ -159,7 +159,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
-        assertTrue(comparator instanceof Serializable,
+        assertInstanceOf(Serializable.class, comparator,
                    "This comparator should be Serializable.");
     }
 

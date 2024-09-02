@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
@@ -101,7 +102,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(1, map.size());
         assertTrue(map.isFull());
         assertEquals(1, map.maxSize());
-        assertTrue(map instanceof BoundedMap);
+        assertInstanceOf(BoundedMap.class, map);
     }
 
     @Test
@@ -167,7 +168,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(1, map.size());
         assertEquals(ONE, map.getKey());
         assertEquals(TWO, map.getValue());
-        assertTrue(map instanceof KeyValue);
+        assertInstanceOf(KeyValue.class, map);
     }
 
 //    public void testCreate() throws Exception {
