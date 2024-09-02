@@ -188,7 +188,7 @@ public class ListUtils {
      * @since 4.5.0-M3
      */
     public static <E> List<E> findDuplicates(final List<E> list) {
-        return CollectionUtils.duplicateList(list);
+        return IterableUtils.duplicateList(list);
     }
 
     /**
