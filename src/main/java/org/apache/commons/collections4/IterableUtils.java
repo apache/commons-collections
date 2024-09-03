@@ -356,7 +356,7 @@ public class IterableUtils {
      * @since 4.5.0-M3
      */
     public static <E> List<E> duplicateList(final Iterable<E> iterable) {
-        return new ArrayList<>(duplicateSet(iterable));
+        return new ArrayList<>(duplicateSequencedSet(iterable));
     }
 
     /**
