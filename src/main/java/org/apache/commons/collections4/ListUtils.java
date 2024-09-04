@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
@@ -172,38 +171,6 @@ public class ListUtils {
      */
     public static <E> List<E> fixedSizeList(final List<E> list) {
         return FixedSizeList.fixedSizeList(list);
-    }
-
-    /**
-     * Finds and returns a list of duplicate elements in the given list.
-     * <p>
-     * This method uses two sets: one for tracking seen elements and one for
-     * collecting duplicates. It iterates through the list once and collects
-     * duplicates in a result list.
-     * </p>
-     *
-     * @param <E> the type of elements in the list
-     * @param list the list to check for duplicates, must not be null
-     * @return a list of duplicate elements, or an empty list if no duplicates are found
-     * @throws NullPointerException if the list is null
-     * @since 4.5.0-M3
-     */
-    public static <E> List<E> findDuplicates(final List<E> list) {
-        Objects.requireNonNull(list, "The input list must not be null.");
-
-        Set<E> seen = new HashSet<>();
-        Set<E> duplicates = new HashSet<>();
-        List<E> result = new ArrayList<>();
-
-        for (E element : list) {
-            if (!seen.add(element)) {
-                if (duplicates.add(element)) {
-                    result.add(element);
-                }
-            }
-        }
-
-        return result;
     }
 
     /**
