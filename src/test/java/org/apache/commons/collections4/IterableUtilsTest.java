@@ -37,6 +37,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -298,6 +299,92 @@ public class IterableUtilsTest {
     public void testDuplicatSetAllSameInDeque() {
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
         assertEquals(new HashSet<>(Arrays.asList(5)), IterableUtils.duplicateSet(input));
+    }
+
+    @Test
+    public void testDuplicateListMixedElementTypes() {
+        final List<Object> input = Arrays.asList(1, "a", 2, "a", 3, "b", "b");
+        final List<Object> expected = Arrays.asList("a", "b");
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListNestedCollections() {
+        final List<List<Integer>> input = Arrays.asList(
+            Arrays.asList(1, 2, 3),
+            Arrays.asList(1, 2, 3),
+            Arrays.asList(4, 5, 6),
+            Arrays.asList(4, 5, 6)
+        );
+        final List<List<Integer>> expected = Arrays.asList(
+            Arrays.asList(1, 2, 3),
+            Arrays.asList(4, 5, 6)
+        );
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListCustomObjects() {
+        class Person {
+            String name;
+            int age;
+
+            Person(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) {
+                    return true;
+                }
+                if (o == null || getClass() != o.getClass()) {
+                    return false;
+                }
+                Person person = (Person) o;
+                return age == person.age && name.equals(person.name);
+            }
+
+            @Override
+            public int hashCode() {
+                return Objects.hash(name, age);
+            }
+        }
+
+        final List<Person> input = Arrays.asList(
+            new Person("Linus", 30),
+            new Person("Torvalds", 25),
+            new Person("Linus", 30),
+            new Person("Tim", 35),
+            new Person("Torvalds", 25)
+        );
+        final List<Person> expected = Arrays.asList(
+            new Person("Linus", 30),
+            new Person("Torvalds", 25)
+        );
+        assertEquals(expected, IterableUtils.duplicateList(input));
+    }
+
+    @Test
+    public void testDuplicateListLargeScaleData() {
+        final List<Integer> input = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            input.add(i % 100);
+        }
+        final List<Integer> expected = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            expected.add(i);
+        }
+        final List<Integer> actual = IterableUtils.duplicateList(input);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDuplicateListImmutableCollections() {
+        final List<Integer> input = Collections.unmodifiableList(Arrays.asList(1, 2, 3, 1, 2, 4));
+        final List<Integer> expected = Arrays.asList(1, 2);
+        assertEquals(expected, IterableUtils.duplicateList(input));
     }
 
     @Test
