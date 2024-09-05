@@ -172,6 +172,7 @@ public class ListUtils {
     public static <E> List<E> fixedSizeList(final List<E> list) {
         return FixedSizeList.fixedSizeList(list);
     }
+
     /**
      * Gets the first element of a list.
      * <p>
