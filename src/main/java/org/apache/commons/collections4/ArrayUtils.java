@@ -109,6 +109,52 @@ final class ArrayUtils {
     }
 
     /**
+     * <p> 
+     * Reverses the given array and returns a new array.
+     * </p>
+     * <p>
+     * This method returns {@code null} if the input array is {@code null}.
+     * </p>
+     *
+     * @param array the array to reverse, may be {@code null}
+     * @param <T> the type of elements in the array
+     * @return a new array with elements in reverse order, or {@code null} if input is {@code null}
+     */
+    static <T> T[] reverse(final T[] array) {
+        if (array == null) {
+            return null;
+        }
+        T[] result = array.clone();
+        reverseInPlace(result);
+        return result;
+    }
+
+    /**
+     * <p>
+     * Reverses the given array in place.
+     * </p>
+     * <p>
+     * This method does nothing if the input array is {@code null}.
+     * </p>
+     *
+     * @param array the array to reverse in place, may be {@code null}
+     */
+    static void reverseInPlace(final Object[] array) {
+        if (array == null) {
+            return;
+        }
+        int start = 0;
+        int end = array.length - 1;
+        while (start < end) {
+            Object temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    /**
      * Don't allow instances.
      */
     private ArrayUtils() {
