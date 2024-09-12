@@ -356,14 +356,15 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @return the reference to the object
          */
         protected <T> Object toReference(final ReferenceStrength type, final T referent, final int hash) {
-            if (type == ReferenceStrength.HARD) {
+            switch (type) {
+            case HARD:
                 return referent;
-            }
-            if (type == ReferenceStrength.SOFT) {
+            case SOFT:
                 return new SoftRef<>(hash, referent, parent.queue);
-            }
-            if (type == ReferenceStrength.WEAK) {
+            case WEAK:
                 return new WeakRef<>(hash, referent, parent.queue);
+            default:
+                break;
             }
             throw new Error();
         }
