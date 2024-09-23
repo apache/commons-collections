@@ -41,6 +41,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

@@ -38,6 +38,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link PredicatedMapTest} for exercising the
  * {@link PredicatedSortedMap} implementation.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

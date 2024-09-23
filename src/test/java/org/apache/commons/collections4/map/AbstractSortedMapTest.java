@@ -32,6 +32,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> {
 

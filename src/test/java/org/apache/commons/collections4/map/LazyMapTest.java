@@ -32,6 +32,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link LazyMap} implementation.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 @SuppressWarnings("boxing")
 public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
