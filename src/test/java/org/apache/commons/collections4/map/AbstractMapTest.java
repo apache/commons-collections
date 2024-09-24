@@ -1384,6 +1384,37 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
+     * Tests {@link Map#getOrDefault(Object, Object)}.
+     */
+    @Test
+    public void testMapGetOrDefault() {
+        resetEmpty();
+        final K[] keys = getSampleKeys();
+        final V[] values = getSampleValues();
+        for (final K key : keys) {
+            assertNull(getMap().getOrDefault(key, null));
+        }
+        final K[] otherKeys = getOtherKeys();
+        final V[] otherValues = getOtherValues();
+        for (int i = 0; i < otherKeys.length; i++) {
+            final K otherKey = otherKeys[i];
+            assertNull(getMap().getOrDefault(otherKey, null));
+            final V otherValue = otherValues[i];
+            if (getMap().containsKey(otherKey)) {
+                assertEquals(getMap().get(otherKey), getMap().getOrDefault(otherKey, otherValue));
+            } else {
+                assertEquals(otherValue, getMap().getOrDefault(otherKey, otherValue));
+            }
+        }
+        // LazyMap does not like this check:
+        // verify();
+        resetFull();
+        for (int i = 0; i < keys.length; i++) {
+            assertEquals(values[i], getMap().getOrDefault(keys[i], values[i]));
+        }
+    }
+
+    /**
      * Tests Map.hashCode()
      */
     @Test
@@ -1482,6 +1513,65 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         } else {
             assertThrows(UnsupportedOperationException.class, () -> getMap().put(keys[0], values[0]), "Expected UnsupportedOperationException on put (add)");
         }
+    }
+
+    /**
+     * Tests Map.putAll(map)
+     */
+    @Test
+    public void testMapPutAll() {
+        if (!isPutAddSupported()) {
+            if (!isPutChangeSupported()) {
+                final Map<K, V> temp = makeFullMap();
+                resetEmpty();
+                assertThrows(UnsupportedOperationException.class, () -> getMap().putAll(temp), "Expected UnsupportedOperationException on putAll");
+            }
+            return;
+        }
+
+        // check putAll OK adding empty map to empty map
+        resetEmpty();
+        assertEquals(0, getMap().size());
+        getMap().putAll(new HashMap<>());
+        assertEquals(0, getMap().size());
+
+        // check putAll OK adding empty map to non-empty map
+        resetFull();
+        final int size = getMap().size();
+        getMap().putAll(new HashMap<>());
+        assertEquals(size, getMap().size());
+
+        // check putAll OK adding non-empty map to empty map
+        resetEmpty();
+        Map<K, V> m2 = makeFullMap();
+        getMap().putAll(m2);
+        getConfirmed().putAll(m2);
+        verify();
+
+        // check putAll OK adding non-empty JDK map to empty map
+        resetEmpty();
+        m2 = makeConfirmedMap();
+        final K[] keys = getSampleKeys();
+        final V[] values = getSampleValues();
+        for (int i = 0; i < keys.length; i++) {
+            m2.put(keys[i], values[i]);
+        }
+        getMap().putAll(m2);
+        getConfirmed().putAll(m2);
+        verify();
+
+        // check putAll OK adding non-empty JDK map to non-empty map
+        resetEmpty();
+        m2 = makeConfirmedMap();
+        getMap().put(keys[0], values[0]);
+        getConfirmed().put(keys[0], values[0]);
+        verify();
+        for (int i = 1; i < keys.length; i++) {
+            m2.put(keys[i], values[i]);
+        }
+        getMap().putAll(m2);
+        getConfirmed().putAll(m2);
+        verify();
     }
 
     /**
@@ -1586,65 +1676,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             assertThrows(UnsupportedOperationException.class, () -> getMap().putIfAbsent(keys[0], values[0]),
                     "Expected UnsupportedOperationException on put (add)");
         }
-    }
-
-    /**
-     * Tests Map.putAll(map)
-     */
-    @Test
-    public void testMapPutAll() {
-        if (!isPutAddSupported()) {
-            if (!isPutChangeSupported()) {
-                final Map<K, V> temp = makeFullMap();
-                resetEmpty();
-                assertThrows(UnsupportedOperationException.class, () -> getMap().putAll(temp), "Expected UnsupportedOperationException on putAll");
-            }
-            return;
-        }
-
-        // check putAll OK adding empty map to empty map
-        resetEmpty();
-        assertEquals(0, getMap().size());
-        getMap().putAll(new HashMap<>());
-        assertEquals(0, getMap().size());
-
-        // check putAll OK adding empty map to non-empty map
-        resetFull();
-        final int size = getMap().size();
-        getMap().putAll(new HashMap<>());
-        assertEquals(size, getMap().size());
-
-        // check putAll OK adding non-empty map to empty map
-        resetEmpty();
-        Map<K, V> m2 = makeFullMap();
-        getMap().putAll(m2);
-        getConfirmed().putAll(m2);
-        verify();
-
-        // check putAll OK adding non-empty JDK map to empty map
-        resetEmpty();
-        m2 = makeConfirmedMap();
-        final K[] keys = getSampleKeys();
-        final V[] values = getSampleValues();
-        for (int i = 0; i < keys.length; i++) {
-            m2.put(keys[i], values[i]);
-        }
-        getMap().putAll(m2);
-        getConfirmed().putAll(m2);
-        verify();
-
-        // check putAll OK adding non-empty JDK map to non-empty map
-        resetEmpty();
-        m2 = makeConfirmedMap();
-        getMap().put(keys[0], values[0]);
-        getConfirmed().put(keys[0], values[0]);
-        verify();
-        for (int i = 1; i < keys.length; i++) {
-            m2.put(keys[i], values[i]);
-        }
-        getMap().putAll(m2);
-        getConfirmed().putAll(m2);
-        verify();
     }
 
     /**
