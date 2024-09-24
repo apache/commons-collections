@@ -40,7 +40,7 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * JUnit tests.
+ * Tests {@link Flat3Map}.
  *
  * @param <K> the key type.
  * @param <V> the value type.
