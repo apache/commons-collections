@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.BulkTest;
@@ -1112,6 +1113,21 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             return;
         }
         assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Tests {@link Map#forEach(java.util.function.BiConsumer)}.
+     */
+    @Test
+    public void testForEach() {
+        resetFull();
+        AtomicInteger i = new AtomicInteger();
+        getMap().forEach((k, v) -> {
+            assertTrue(getMap().containsKey(k));
+            assertTrue(getMap().containsValue(v));
+            i.incrementAndGet();
+        });
+        assertEquals(i.get(), getMap().size());
     }
 
     /**
