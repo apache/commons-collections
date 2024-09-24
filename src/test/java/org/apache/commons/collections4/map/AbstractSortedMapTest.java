@@ -70,7 +70,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap<K, V>) main.makeObject()).headMap(toKey);
         }
-        
+
         @Test
         public void testHeadMapOutOfRange() {
             if (!isPutAddSupported()) {
