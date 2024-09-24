@@ -46,7 +46,6 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -1489,7 +1488,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Tests {@link Map#putIfAbsent(Object, Object)}.
      */
     @Test
-    @Disabled("TODO bidimap")
     public void testMapPutIfAbsent() {
         resetEmpty();
         final K[] keys = getSampleKeys();
@@ -1532,8 +1530,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     }
                     // if duplicates are allowed, we're not guaranteed that the value
                     // no longer exists, so don't try checking that.
-                    if (!isAllowDuplicateValues()) {
-                        assertFalse(getMap().containsValue(arrValue), "Map should not contain old value after put when changed");
+                    if (!isAllowDuplicateValues() && newValueAlready && newValue != null) {
+                        assertFalse(getMap().containsValue(arrValue),
+                                String.format("Map should not contain old value after putIfAbsent when changed: [%,d] key '%s', prevValue '%s', newValue '%s'",
+                                        i, key, prevValue, newValue));
                     }
                 }
             } else {
