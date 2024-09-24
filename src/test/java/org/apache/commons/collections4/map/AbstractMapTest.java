@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -1808,6 +1809,22 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         assertNotNull(getMap().toString(), "Empty map toString() should not return null");
         verify();
+    }
+
+    /**
+     * Tests {@link Map#remove(Object, Object)}.
+     */
+    @Test
+    public void testRemoveKeyValue() {
+        assumeTrue(isRemoveSupported());
+        resetFull();
+        final K[] sampleKeys = getSampleKeys();
+        final V[] sampleValues = getSampleValues();
+        assertFalse(getMap().isEmpty());
+        for (int i = 0; i < sampleKeys.length; i++) {
+            assertTrue(getMap().remove(sampleKeys[i], sampleValues[i]));
+        }
+        assertTrue(getMap().isEmpty());
     }
 
     /**
