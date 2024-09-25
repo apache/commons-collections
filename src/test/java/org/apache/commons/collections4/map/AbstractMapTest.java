@@ -644,8 +644,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         final Object[] result = { isAllowNullValue() && isAllowDuplicateValues() ? null : "newnonnullvalue", "newvalue",
-            isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
-            "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
+                isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
+                "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
         return (V[]) result;
     }
 
@@ -663,7 +663,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] { "For", "then", "despite", /* of */"space", "I", "would", "be", "brought", "From", "limits", "far", "remote", "where", "thou",
-            "dost", "stay" };
+                "dost", "stay" };
     }
 
     @SuppressWarnings("unchecked")
@@ -679,7 +679,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final Object[] result = { "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee", "hello", "goodbye", "we'll", "see", "you", "all", "again", "key",
-            "key2", isAllowNullKey() ? null : "nonnullkey" };
+                "key2", isAllowNullKey() ? null : "nonnullkey" };
         return (K[]) result;
     }
 
@@ -691,7 +691,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         final Object[] result = { "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev", "hellov", "goodbyev", "we'llv", "seev", "youv", "allv",
-            "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
+                "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
         return (V[]) result;
     }
 
@@ -741,6 +741,15 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         return false;
     }
 
+    protected boolean isLazyMapTest() {
+        return false;
+    }
+
+    // tests begin here. Each test adds a little bit of tested functionality.
+    // Many methods assume previous methods passed. That is, they do not
+    // exhaustively recheck things that have already been checked in a previous
+    // test methods.
+
     /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code put} and {@code putAll} operations adding new
      * mappings.
@@ -750,11 +759,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     public boolean isPutAddSupported() {
         return true;
     }
-
-    // tests begin here. Each test adds a little bit of tested functionality.
-    // Many methods assume previous methods passed. That is, they do not
-    // exhaustively recheck things that have already been checked in a previous
-    // test methods.
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code put} and {@code putAll} operations changing
@@ -1313,6 +1317,132 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
+     * Tests {@link Map#computeIfAbsent(Object, java.util.function.Function)}.
+     *
+     * @see Map#putIfAbsent(Object, Object)
+     * @see #testMapPutIfAbsent()
+     */
+    @Test
+    public void testMapComputeIfAbsent() {
+        resetEmpty();
+        final K[] keys = getSampleKeys();
+        final V[] values = getSampleValues();
+        final V[] newValues = getNewSampleValues();
+        if (isPutAddSupported()) {
+            for (final AtomicInteger inc = new AtomicInteger(); inc.get() < keys.length; inc.incrementAndGet()) {
+                final int i = inc.get();
+                final K key = keys[i];
+                final V value = values[i];
+                final boolean expectKey = key != null && value != null || key == null && !getMap().containsKey(key);
+                final Map<K, V> oldMap = new HashMap<>(getMap());
+                final Object currValue = getMap().computeIfAbsent(key, k -> value);
+                // map is updated if new value is not null
+                getConfirmed().computeIfAbsent(key, k -> value);
+                if (!isLazyMapTest()) {
+                    // TODO LazyMap tests do not like this check
+                    verify();
+                }
+                final Supplier<String> messageSupplier = () -> String.format("[%,d] map.computeIfAbsent key '%s', value '%s', old %s", inc.get(), key, value,
+                        oldMap);
+                assertEquals(value, currValue, messageSupplier);
+                if (isLazyMapTest()) {
+                    // TODO Is there a better way to write generic tests?
+                    assertTrue(getMap().containsKey(key), messageSupplier);
+                    assertTrue(getMap().containsValue(value), messageSupplier);
+                } else {
+                    assertEquals(expectKey, getMap().containsKey(key), messageSupplier);
+                    assertEquals(expectKey, getMap().containsValue(value), messageSupplier);
+                }
+            }
+            if (isPutChangeSupported()) {
+                // Piggyback on isPutChangeSupported() for computeIfAbsent with a caveat for null values.
+                for (int i = 0; i < keys.length; i++) {
+                    final K key = keys[i];
+                    final V newValue = newValues[i];
+                    final boolean newValueAlready = getMap().containsValue(newValue);
+                    final V prevValue = getMap().get(key);
+                    final Object oldValue = getMap().putIfAbsent(key, newValue);
+                    getConfirmed().putIfAbsent(key, newValue);
+                    if (!isLazyMapTest()) {
+                        // TODO LazyMap tests do not like this check
+                        verify();
+                    }
+                    final V arrValue = values[i];
+                    assertEquals(arrValue, oldValue, "Map.computeIfAbsent should return previous value when changed");
+                    assertEquals(prevValue, oldValue, "Map.computeIfAbsent should return previous value when changed");
+                    if (prevValue == null) {
+                        assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                    } else {
+                        assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                    }
+                    assertTrue(getMap().containsKey(key), "Map should still contain key after computeIfAbsent when changed");
+                    if (newValueAlready && newValue != null) {
+                        // TODO The test fixture already contain a null value, so we condition this assertion
+                        assertFalse(getMap().containsValue(newValue),
+                                String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after computeIfAbsent when changed", i, key, newValue));
+                    }
+                    // if duplicates are allowed, we're not guaranteed that the value
+                    // no longer exists, so don't try checking that.
+                    if (!isAllowDuplicateValues() && newValueAlready && newValue != null) {
+                        assertFalse(getMap().containsValue(arrValue),
+                                String.format(
+                                        "Map should not contain old value after computeIfAbsent when changed: [%,d] key '%s', prevValue '%s', newValue '%s'", i,
+                                        key, prevValue, newValue));
+                    }
+                }
+            } else {
+                try {
+                    // two possible exception here, either valid
+                    getMap().putIfAbsent(keys[0], newValues[0]);
+                    fail("Expected IllegalArgumentException or UnsupportedOperationException on putIfAbsent (change)");
+                } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                    // ignore
+                }
+            }
+        } else if (isPutChangeSupported()) {
+            resetEmpty();
+            try {
+                getMap().putIfAbsent(keys[0], values[0]);
+                fail("Expected UnsupportedOperationException or IllegalArgumentException on putIfAbsent (add) when fixed size");
+            } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                // ignore
+            }
+            resetFull();
+            int i = 0;
+            for (final Iterator<K> it = getMap().keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
+                final K key = it.next();
+                final V newValue = newValues[i];
+                final boolean newValueAlready = getMap().containsValue(newValue);
+                final V prevValue = getMap().get(key);
+                final V oldValue = getMap().putIfAbsent(key, newValue);
+                final V value = getConfirmed().putIfAbsent(key, newValue);
+                verify();
+                assertEquals(value, oldValue, "Map.putIfAbsent should return previous value when changed");
+                assertEquals(prevValue, oldValue, "Map.putIfAbsent should return previous value when changed");
+                if (prevValue == null) {
+                    assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                } else {
+                    assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                }
+                assertTrue(getMap().containsKey(key), "Map should still contain key after putIfAbsent when changed");
+                if (newValueAlready && newValue != null) {
+                    // TODO The test fixture already contain a null value, so we condition this assertion
+                    assertFalse(getMap().containsValue(newValue),
+                            String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after putIfAbsent when changed", i, key, newValue));
+                }
+                // if duplicates are allowed, we're not guaranteed that the value
+                // no longer exists, so don't try checking that.
+                if (!isAllowDuplicateValues()) {
+                    assertFalse(getMap().containsValue(values[i]), "Map should not contain old value after putIfAbsent when changed");
+                }
+            }
+        } else {
+            assertThrows(UnsupportedOperationException.class, () -> getMap().putIfAbsent(keys[0], values[0]),
+                    "Expected UnsupportedOperationException on put (add)");
+        }
+    }
+
+    /**
      * Tests Map.containsKey(Object) by verifying it returns false for all sample keys on a map created using an empty map and returns true for all sample keys
      * returned on a full map.
      */
@@ -1424,8 +1554,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 assertEquals(otherValue, getMap().getOrDefault(otherKey, otherValue));
             }
         }
-        // LazyMap does not like this check:
-        // verify();
+        if (!isLazyMapTest()) {
+            // TODO LazyMap tests do not like this check
+            verify();
+        }
         resetFull();
         for (int i = 0; i < keys.length; i++) {
             assertEquals(values[i], getMap().getOrDefault(keys[i], values[i]));
@@ -1594,6 +1726,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Tests {@link Map#putIfAbsent(Object, Object)}.
+     *
+     * @see Map#computeIfAbsent(Object, java.util.function.Function)
      */
     @Test
     public void testMapPutIfAbsent() {

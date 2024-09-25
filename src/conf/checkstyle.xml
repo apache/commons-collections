@@ -61,10 +61,6 @@ limitations under the License.
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
     <module name="NoWhitespaceBefore"/>
-    <module name="Indentation">
-      <!-- Indentation style recommended by Oracle -->
-      <property name="caseIndent" value="0"/>
-    </module>
     <module name="ImportOrder">
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,junit,org,com"/>
