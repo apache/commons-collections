@@ -644,8 +644,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         final Object[] result = { isAllowNullValue() && isAllowDuplicateValues() ? null : "newnonnullvalue", "newvalue",
-                isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
-                "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
+            isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
+            "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
         return (V[]) result;
     }
 
@@ -663,7 +663,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] { "For", "then", "despite", /* of */"space", "I", "would", "be", "brought", "From", "limits", "far", "remote", "where", "thou",
-                "dost", "stay" };
+            "dost", "stay" };
     }
 
     @SuppressWarnings("unchecked")
@@ -679,7 +679,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final Object[] result = { "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee", "hello", "goodbye", "we'll", "see", "you", "all", "again", "key",
-                "key2", isAllowNullKey() ? null : "nonnullkey" };
+            "key2", isAllowNullKey() ? null : "nonnullkey" };
         return (K[]) result;
     }
 
@@ -691,7 +691,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         final Object[] result = { "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev", "hellov", "goodbyev", "we'llv", "seev", "youv", "allv",
-                "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
+            "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
         return (V[]) result;
     }
 
@@ -1826,6 +1826,28 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             assertTrue(getMap().remove(sampleKeys[i], sampleValues[i]));
         }
         assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Tests {@link Map#replace(Object, Object)}.
+     */
+    @Test
+    public void testReplaceAll() {
+        assumeTrue(isSetValueSupported());
+        resetFull();
+        final V[] newValues = getNewSampleValues();
+        assertFalse(getMap().isEmpty());
+        getMap().replaceAll((k, v) -> v);
+        assertEquals(makeFullMap(), getMap());
+        getMap().replaceAll((k, v) -> v);
+        final AtomicInteger i = new AtomicInteger();
+        final Map<K, V> newMap = new HashMap<>();
+        getMap().replaceAll((k, v) -> {
+            final V v2 = newValues[i.getAndIncrement()];
+            newMap.put(k, v2);
+            return v2;
+        });
+        assertEquals(newMap, getMap());
     }
 
     /**
