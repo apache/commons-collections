@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.BulkTest;
@@ -643,8 +644,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         final Object[] result = { isAllowNullValue() && isAllowDuplicateValues() ? null : "newnonnullvalue", "newvalue",
-            isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
-            "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
+                isAllowDuplicateValues() ? "newvalue" : "newvalue2", "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", "newgollyv", "newgeev",
+                "newhellov", "newgoodbyev", "newwe'llv", "newseev", "newyouv", "newallv", "newagainv" };
         return (V[]) result;
     }
 
@@ -662,7 +663,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     public Object[] getOtherNonNullStringElements() {
         return new Object[] { "For", "then", "despite", /* of */"space", "I", "would", "be", "brought", "From", "limits", "far", "remote", "where", "thou",
-            "dost", "stay" };
+                "dost", "stay" };
     }
 
     @SuppressWarnings("unchecked")
@@ -678,7 +679,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         final Object[] result = { "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee", "hello", "goodbye", "we'll", "see", "you", "all", "again", "key",
-            "key2", isAllowNullKey() ? null : "nonnullkey" };
+                "key2", isAllowNullKey() ? null : "nonnullkey" };
         return (K[]) result;
     }
 
@@ -690,7 +691,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         final Object[] result = { "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev", "hellov", "goodbyev", "we'llv", "seev", "youv", "allv",
-            "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
+                "againv", isAllowNullValue() ? null : "nonnullvalue", "value", isAllowDuplicateValues() ? "value" : "value2", };
         return (V[]) result;
     }
 
@@ -1122,7 +1123,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @Test
     public void testForEach() {
         resetFull();
-        AtomicInteger i = new AtomicInteger();
+        final AtomicInteger i = new AtomicInteger();
         getMap().forEach((k, v) -> {
             assertTrue(getMap().containsKey(k));
             assertTrue(getMap().containsValue(v));
@@ -1825,6 +1826,40 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             assertTrue(getMap().remove(sampleKeys[i], sampleValues[i]));
         }
         assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Tests {@link Map#replace(Object, Object)}.
+     */
+    @Test
+    public void testReplaceKeyValue() {
+        assumeTrue(isRemoveSupported());
+        resetFull();
+        final K[] sampleKeys = getSampleKeys();
+        final V[] sampleValues = getSampleValues();
+        final V[] newValues = getNewSampleValues();
+        assertFalse(getMap().isEmpty());
+        for (final AtomicInteger inc = new AtomicInteger(); inc.get() < sampleKeys.length; inc.incrementAndGet()) {
+            final int i = inc.get();
+            final V value = sampleValues[i];
+            final K sampleKey = sampleKeys[i];
+            final Supplier<String> messageSupplier = () -> String.format("[%,d] key '%s'; %s", inc.get(), sampleKey, getMap());
+            assertEquals(value, getMap().replace(sampleKey, value), messageSupplier);
+            assertEquals(value, getMap().replace(sampleKey, value), messageSupplier);
+            final V newValue = newValues[i];
+            assertEquals(value, getMap().replace(sampleKey, newValue), messageSupplier);
+            V oldValue = getMap().get(sampleKey);
+            assertEquals(oldValue, getMap().replace(sampleKey, newValue), messageSupplier);
+            oldValue = getMap().get(sampleKey);
+            assertEquals(oldValue, getMap().replace(sampleKey, value), messageSupplier);
+            if (isAllowNullValue()) {
+                final V expected = getMap().get(sampleKey);
+                assertEquals(expected, getMap().replace(sampleKey, null), messageSupplier);
+                assertNull(getMap().get(sampleKey), messageSupplier);
+                assertNull(getMap().replace(sampleKey, null), messageSupplier);
+                assertNull(getMap().replace(sampleKey, value), messageSupplier);
+            }
+        }
     }
 
     /**
