@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.apache.commons.collections4.map.LazyMap.lazyMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -51,8 +50,13 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    protected boolean isLazyMapTest() {
+        return true;
+    }
+
+    @Override
     public LazyMap<K, V> makeObject() {
-        return lazyMap(new HashMap<>(), FactoryUtils.<V>nullFactory());
+        return LazyMap.lazyMap(new HashMap<>(), FactoryUtils.<V>nullFactory());
     }
 
     @Test
@@ -63,7 +67,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     public void testMapGetWithFactory() {
-        Map<Integer, Number> map = lazyMap(new HashMap<>(), oneFactory);
+        Map<Integer, Number> map = LazyMap.lazyMap(new HashMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get("Five");
         assertEquals(1, i1);
@@ -73,7 +77,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.size());
         assertSame(i1, i2);
 
-        map = lazyMap(new HashMap<>(), FactoryUtils.<Long>nullFactory());
+        map = LazyMap.lazyMap(new HashMap<>(), FactoryUtils.<Long>nullFactory());
         final Object o = map.get("Five");
         assertNull(o);
         assertEquals(1, map.size());
@@ -82,7 +86,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Test
     public void testMapGetWithTransformer() {
         final Transformer<Number, Integer> intConverter = Number::intValue;
-        final Map<Long, Number> map = lazyMap(new HashMap<>(), intConverter);
+        final Map<Long, Number> map = LazyMap.lazyMap(new HashMap<>(), intConverter);
         assertEquals(0, map.size());
         final Number i1 = map.get(123L);
         assertEquals(123, i1);

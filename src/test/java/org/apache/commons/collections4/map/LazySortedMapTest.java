@@ -74,6 +74,11 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
+    protected boolean isLazyMapTest() {
+        return true;
+    }
+
+    @Override
     public SortedMap<K, V> makeObject() {
         return lazySortedMap(new TreeMap<>(), FactoryUtils.<V>nullFactory());
     }
