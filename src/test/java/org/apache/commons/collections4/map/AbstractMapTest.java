@@ -1829,7 +1829,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Tests {@link Map#replace(Object, Object)}.
+     * Tests {@link Map#replaceAll(java.util.function.BiFunction)}.
      */
     @Test
     public void testReplaceAll() {
