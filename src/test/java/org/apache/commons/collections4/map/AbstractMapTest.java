@@ -1853,11 +1853,53 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             oldValue = getMap().get(sampleKey);
             assertEquals(oldValue, getMap().replace(sampleKey, value), messageSupplier);
             if (isAllowNullValue()) {
-                final V expected = getMap().get(sampleKey);
-                assertEquals(expected, getMap().replace(sampleKey, null), messageSupplier);
+                oldValue = getMap().get(sampleKey);
+                assertEquals(oldValue, getMap().replace(sampleKey, null), messageSupplier);
                 assertNull(getMap().get(sampleKey), messageSupplier);
                 assertNull(getMap().replace(sampleKey, null), messageSupplier);
                 assertNull(getMap().replace(sampleKey, value), messageSupplier);
+            }
+        }
+    }
+
+    /**
+     * Tests {@link Map#replace(Object, Object, Object)}.
+     */
+    @Test
+    public void testReplaceKeyValueValue() {
+        assumeTrue(isRemoveSupported());
+        resetFull();
+        final K[] sampleKeys = getSampleKeys();
+        final V[] sampleValues = getSampleValues();
+        final V[] newValues = getNewSampleValues();
+        assertFalse(getMap().isEmpty());
+        for (final AtomicInteger inc = new AtomicInteger(); inc.get() < sampleKeys.length; inc.incrementAndGet()) {
+            final int i = inc.get();
+            final V value = sampleValues[i];
+            final K key = sampleKeys[i];
+            final Supplier<String> messageSupplier = () -> String.format("[%,d] key '%s', value '%s'; %s", inc.get(), key, value, getMap());
+            boolean containsKey = getMap().containsKey(key);
+            assertEquals(containsKey, getMap().replace(key, value, value), messageSupplier);
+            containsKey = getMap().containsKey(key);
+            assertEquals(containsKey, getMap().replace(key, value, value), messageSupplier);
+            final V newValue = newValues[i];
+            containsKey = getMap().containsKey(key);
+            assertEquals(containsKey, getMap().replace(key, value, newValue), messageSupplier);
+            V oldValue = getMap().get(key);
+            containsKey = getMap().containsKey(key);
+            assertEquals(containsKey, getMap().replace(key, oldValue, newValue), messageSupplier);
+            oldValue = getMap().get(key);
+            containsKey = getMap().containsKey(key);
+            assertEquals(containsKey, getMap().replace(key, oldValue, value), messageSupplier);
+            if (isAllowNullValue()) {
+                oldValue = getMap().get(key);
+                containsKey = getMap().containsKey(key);
+                assertEquals(containsKey, getMap().replace(key, oldValue, null), messageSupplier);
+                assertNull(getMap().get(key), messageSupplier);
+                containsKey = getMap().containsKey(key);
+                assertEquals(containsKey, getMap().replace(key, null, null), messageSupplier);
+                containsKey = getMap().containsKey(key);
+                assertEquals(containsKey, getMap().replace(key, null, value), messageSupplier);
             }
         }
     }
