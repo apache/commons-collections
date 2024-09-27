@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -1356,44 +1357,56 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             }
             if (isPutChangeSupported()) {
                 // Piggyback on isPutChangeSupported() for computeIfAbsent with a caveat for null values.
-                for (int i = 0; i < keys.length; i++) {
+                for (final AtomicInteger inc = new AtomicInteger(); inc.get() < keys.length; inc.incrementAndGet()) {
+                    final int i = inc.get();
                     final K key = keys[i];
-                    final V newValue = newValues[i];
-                    final boolean newValueAlready = getMap().containsValue(newValue);
+                    final V value = newValues[i];
+                    final boolean valueAlreadyPresent = getMap().containsValue(value);
                     final V prevValue = getMap().get(key);
-                    final Object oldValue = getMap().putIfAbsent(key, newValue);
-                    getConfirmed().putIfAbsent(key, newValue);
+                    final Map<K, V> oldMap = new HashMap<>(getMap());
+                    final Object computedValue = getMap().computeIfAbsent(key, k -> value);
+                    getConfirmed().computeIfAbsent(key, k -> value);
                     if (!isLazyMapTest()) {
                         // TODO LazyMap tests do not like this check
                         verify();
                     }
                     final V arrValue = values[i];
-                    assertEquals(arrValue, oldValue, "Map.computeIfAbsent should return previous value when changed");
-                    assertEquals(prevValue, oldValue, "Map.computeIfAbsent should return previous value when changed");
-                    if (prevValue == null) {
-                        assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
-                    } else {
-                        assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                    final Supplier<String> messageSupplier = () -> String.format("[%,d] map.computeIfAbsent key '%s', value '%s', old %s", inc.get(), key,
+                            value, oldMap);
+                    if (valueAlreadyPresent) {
+                        assertNotEquals(value, computedValue, messageSupplier);
+                    } else if (key == null) {
+                        assertNotEquals(value, computedValue, messageSupplier);
+                    } else if (prevValue != null && value != null) {
+                        assertEquals(prevValue, computedValue, messageSupplier);
+                    } else if (prevValue == null) {
+                        assertEquals(value, computedValue, messageSupplier);
+                    } else if (value == null){
+                        assertEquals(prevValue, computedValue, messageSupplier);
                     }
-                    assertTrue(getMap().containsKey(key), "Map should still contain key after computeIfAbsent when changed");
-                    if (newValueAlready && newValue != null) {
+                    if (prevValue == null) {
+                        assertEquals(value, getMap().get(key), messageSupplier);
+                    } else {
+                        assertEquals(computedValue, getMap().get(key), messageSupplier);
+                    }
+                    assertTrue(getMap().containsKey(key), messageSupplier);
+                    if (valueAlreadyPresent && value != null) {
                         // TODO The test fixture already contain a null value, so we condition this assertion
-                        assertFalse(getMap().containsValue(newValue),
-                                String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after computeIfAbsent when changed", i, key, newValue));
+                        assertFalse(getMap().containsValue(value), messageSupplier);
                     }
                     // if duplicates are allowed, we're not guaranteed that the value
                     // no longer exists, so don't try checking that.
-                    if (!isAllowDuplicateValues() && newValueAlready && newValue != null) {
+                    if (!isAllowDuplicateValues() && valueAlreadyPresent && value != null) {
                         assertFalse(getMap().containsValue(arrValue),
                                 String.format(
                                         "Map should not contain old value after computeIfAbsent when changed: [%,d] key '%s', prevValue '%s', newValue '%s'", i,
-                                        key, prevValue, newValue));
+                                        key, prevValue, value));
                     }
                 }
             } else {
                 try {
                     // two possible exception here, either valid
-                    getMap().putIfAbsent(keys[0], newValues[0]);
+                    getMap().computeIfAbsent(keys[0], k -> newValues[0]);
                     fail("Expected IllegalArgumentException or UnsupportedOperationException on putIfAbsent (change)");
                 } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
                     // ignore
@@ -1402,7 +1415,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         } else if (isPutChangeSupported()) {
             resetEmpty();
             try {
-                getMap().putIfAbsent(keys[0], values[0]);
+                getMap().computeIfAbsent(keys[0], k -> values[0]);
                 fail("Expected UnsupportedOperationException or IllegalArgumentException on putIfAbsent (add) when fixed size");
             } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
                 // ignore
