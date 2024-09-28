@@ -1373,9 +1373,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                     final V arrValue = values[i];
                     final Supplier<String> messageSupplier = () -> String.format("[%,d] map.computeIfAbsent key '%s', value '%s', old %s", inc.get(), key,
                             value, oldMap);
-                    if (valueAlreadyPresent) {
-                        assertNotEquals(value, computedValue, messageSupplier);
-                    } else if (key == null) {
+                    if (valueAlreadyPresent || (key == null)) {
                         assertNotEquals(value, computedValue, messageSupplier);
                     } else if (prevValue != null && value != null) {
                         assertEquals(prevValue, computedValue, messageSupplier);
@@ -1453,6 +1451,163 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             assertThrows(UnsupportedOperationException.class, () -> getMap().putIfAbsent(keys[0], values[0]),
                     "Expected UnsupportedOperationException on put (add)");
         }
+    }
+
+    /**
+     * Tests {@link Map#computeIfPresent(Object, java.util.function.BiFunction)}.
+     *
+     * @see Map#computeIfPresent(Object, java.util.function.BiFunction)
+     * @see #testMapComputeIfPresent()
+     */
+    @Test
+    public void testMapComputeIfPresent() {
+        resetEmpty();
+        final K[] keys = getSampleKeys();
+        final V[] values = getSampleValues();
+        final V[] newValues = getNewSampleValues();
+        if (isPutAddSupported()) {
+            for (final AtomicInteger inc = new AtomicInteger(); inc.get() < keys.length; inc.incrementAndGet()) {
+                final int i = inc.get();
+                final K key = keys[i];
+                final V value = values[i];
+                final boolean expectKey = getMap().containsKey(key);
+                final Map<K, V> oldMap = new HashMap<>(getMap());
+                final Object computedValue = getMap().computeIfPresent(key, (k, v) -> value);
+                // map is updated if new or old value is not null
+                getConfirmed().computeIfPresent(key, (k, v) -> value);
+                if (!isLazyMapTest()) {
+                    // TODO LazyMap tests do not like this check
+                    verify();
+                }
+                final Supplier<String> messageSupplier = () -> String.format("[%,d] map.computeIfPresent key '%s', value '%s', old %s", inc.get(), key, value,
+                        oldMap);
+                assertNull(computedValue, messageSupplier);
+                if (isLazyMapTest()) {
+                    // TODO Is there a better way to write abstract tests?
+                    assertTrue(getMap().containsKey(key), messageSupplier);
+                    assertEquals(value == null, getMap().containsValue(value), messageSupplier);
+                } else {
+                    assertEquals(expectKey, getMap().containsKey(key), messageSupplier);
+                    assertEquals(expectKey, getMap().containsValue(value), messageSupplier);
+                }
+                // again, same result
+                getConfirmed().computeIfPresent(key, (k, v) -> value);
+                assertNull(computedValue, messageSupplier);
+            }
+            if (isPutChangeSupported()) {
+                // Piggyback on isPutChangeSupported() for computeIfAbsent with a caveat for null values.
+                for (final AtomicInteger inc = new AtomicInteger(); inc.get() < keys.length; inc.incrementAndGet()) {
+                    final int i = inc.get();
+                    final K key = keys[i];
+                    final V value = values[i];
+                    final V newValue = newValues[i];
+                    final boolean valueAlreadyPresent = getMap().containsValue(newValue);
+                    final V prevValue = getMap().get(key);
+                    final Map<K, V> oldMap = new HashMap<>(getMap());
+                    final Supplier<String> messageSupplier0 = () -> String.format("[%,d] map.computeIfPresent key '%s', value '%s', old %s", inc.get(), key,
+                            value, oldMap);
+                    final Supplier<String> messageSupplier1 = () -> String.format("[%,d] map.computeIfPresent key '%s', newValue '%s', old %s", inc.get(), key,
+                            newValue, oldMap);
+                    // compute same
+                    oldMap.clear();
+                    oldMap.putAll(getMap());
+                    getMap().put(key, value);
+                    getConfirmed().put(key, value);
+                    V computedValue = getMap().computeIfPresent(key, (k, v) -> value);
+                    getConfirmed().computeIfPresent(key, (k, v) -> value);
+                    if (value != null) {
+                        assertNotNull(computedValue, messageSupplier0);
+                    } else {
+                        assertNull(computedValue, messageSupplier0);
+                    }
+                    // compute new (mod null)
+                    oldMap.clear();
+                    oldMap.putAll(getMap());
+                    final boolean keyPresent = getMap().containsKey(key);
+                    computedValue = getMap().computeIfPresent(key, (k, v) -> newValue);
+                    getConfirmed().computeIfPresent(key, (k, v) -> newValue);
+                    if (!isLazyMapTest()) {
+                        // TODO LazyMap tests do not like this check
+                        verify();
+                    }
+                    if (keyPresent && value != null) {
+                        assertEquals(newValue, computedValue, messageSupplier1);
+                    } else {
+                        assertNull(computedValue, messageSupplier1);
+                    }
+                    assertEquals(newValue != null, getMap().containsKey(key), messageSupplier1);
+                    // if duplicates are allowed, we're not guaranteed that the value
+                    // no longer exists, so don't try checking that.
+                    if (!isAllowDuplicateValues() && valueAlreadyPresent && newValue != null) {
+                        assertFalse(getMap().containsValue(value),
+                                String.format(
+                                        "Map should not contain old value after computeIfPresent when changed: [%,d] key '%s', prevValue '%s', newValue '%s'",
+                                        i, key, prevValue, newValue));
+                    }
+                }
+            } else {
+                try {
+                    // two possible exception here, either valid
+                    getMap().computeIfAbsent(keys[0], k -> newValues[0]);
+                    fail("Expected IllegalArgumentException or UnsupportedOperationException on putIfAbsent (change)");
+                } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                    // ignore
+                }
+            }
+        } else if (isPutChangeSupported()) {
+            resetEmpty();
+            try {
+                getMap().computeIfAbsent(keys[0], k -> values[0]);
+                fail("Expected UnsupportedOperationException or IllegalArgumentException on putIfAbsent (add) when fixed size");
+            } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
+                // ignore
+            }
+            resetFull();
+            int i = 0;
+            for (final Iterator<K> it = getMap().keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
+                final K key = it.next();
+                final V newValue = newValues[i];
+                final boolean newValueAlready = getMap().containsValue(newValue);
+                final V prevValue = getMap().get(key);
+                final V oldValue = getMap().putIfAbsent(key, newValue);
+                final V value = getConfirmed().putIfAbsent(key, newValue);
+                verify();
+                assertEquals(value, oldValue, "Map.putIfAbsent should return previous value when changed");
+                assertEquals(prevValue, oldValue, "Map.putIfAbsent should return previous value when changed");
+                if (prevValue == null) {
+                    assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                } else {
+                    assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                }
+                assertTrue(getMap().containsKey(key), "Map should still contain key after putIfAbsent when changed");
+                if (newValueAlready && newValue != null) {
+                    // TODO The test fixture already contain a null value, so we condition this assertion
+                    assertFalse(getMap().containsValue(newValue),
+                            String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after putIfAbsent when changed", i, key, newValue));
+                }
+                // if duplicates are allowed, we're not guaranteed that the value
+                // no longer exists, so don't try checking that.
+                if (!isAllowDuplicateValues()) {
+                    assertFalse(getMap().containsValue(values[i]), "Map should not contain old value after putIfAbsent when changed");
+                }
+            }
+        } else {
+            assertThrows(UnsupportedOperationException.class, () -> getMap().putIfAbsent(keys[0], values[0]),
+                    "Expected UnsupportedOperationException on put (add)");
+        }
+    }
+
+    @Test
+    public void testMapComputeIfPresentOnEmpty() {
+        resetEmpty();
+        assertTrue(getMap().isEmpty());
+        final K[] otherKeys = getOtherKeys();
+        final V[] otherValues = getOtherValues();
+        final K key = otherKeys[0];
+        assertFalse(getMap().containsKey(key));
+        assertNull(getMap().computeIfPresent(key, (k, v) -> otherValues[0]));
+        assertEquals(isLazyMapTest(), getMap().containsKey(key));
+        assertEquals(!isLazyMapTest(), getMap().isEmpty());
     }
 
     /**
