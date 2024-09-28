@@ -1379,7 +1379,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                         assertEquals(prevValue, computedValue, messageSupplier);
                     } else if (prevValue == null) {
                         assertEquals(value, computedValue, messageSupplier);
-                    } else if (value == null){
+                    } else if (value == null) {
                         assertEquals(prevValue, computedValue, messageSupplier);
                     }
                     if (prevValue == null) {
