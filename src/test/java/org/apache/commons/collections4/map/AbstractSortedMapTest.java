@@ -268,6 +268,16 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         }
 
         @Override
+        public boolean isAllowNullValueGet() {
+            return main.isAllowNullValueGet();
+        }
+
+        @Override
+        public boolean isAllowNullValuePut() {
+            return main.isAllowNullValuePut();
+        }
+
+        @Override
         public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }

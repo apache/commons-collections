@@ -65,7 +65,12 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 

@@ -48,7 +48,12 @@ public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> e
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 

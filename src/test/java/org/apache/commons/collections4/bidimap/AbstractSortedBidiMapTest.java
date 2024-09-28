@@ -94,7 +94,12 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 

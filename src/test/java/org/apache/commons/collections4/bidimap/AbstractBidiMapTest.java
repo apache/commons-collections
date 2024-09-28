@@ -200,6 +200,16 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         }
 
         @Override
+        public boolean isAllowNullValueGet() {
+            return main.isAllowNullValueGet();
+        }
+
+        @Override
+        public boolean isAllowNullValuePut() {
+            return main.isAllowNullValuePut();
+        }
+
+        @Override
         public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }

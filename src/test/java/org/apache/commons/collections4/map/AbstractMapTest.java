@@ -718,8 +718,29 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} supports null values.
      * <p>
      * Default implementation returns true. Override if your collection class does not support null values.
+     * </p>
      */
     public boolean isAllowNullValue() {
+        return isAllowNullValueGet() && isAllowNullValuePut();
+    }
+
+    /**
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} supports null values.
+     * <p>
+     * Default implementation returns true. Override if your collection class does not support null values.
+     * </p>
+     */
+    public boolean isAllowNullValueGet() {
+        return true;
+    }
+
+    /**
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} supports null values.
+     * <p>
+     * Default implementation returns true. Override if your collection class does not support null values.
+     * </p>
+     */
+    public boolean isAllowNullValuePut() {
         return true;
     }
 
@@ -1637,8 +1658,12 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @Test
     public void testMapContainsValue() {
         final Object[] values = getSampleValues();
-
         resetEmpty();
+        if (isAllowNullValueGet()) {
+            assertFalse(getMap().containsValue(null));
+        } else {
+            assertThrows(NullPointerException.class, () -> getMap().containsValue(null));
+        }
         for (final Object value : values) {
             assertFalse(getMap().containsValue(value), "Empty map must not contain value");
         }

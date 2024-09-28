@@ -238,7 +238,12 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return true;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 
