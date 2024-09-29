@@ -16,7 +16,7 @@
  */
 
 /**
- * Collects extensible Bloom filter classes and interfaces.
+ * Implements Bloom filter classes and interfaces.
  *
  * <h2>Background</h2>
  *
