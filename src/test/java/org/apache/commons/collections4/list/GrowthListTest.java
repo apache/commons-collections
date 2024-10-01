@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections4.list;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -131,7 +128,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
         final Executable testMethod = () -> list.add(-1, element);
         final IndexOutOfBoundsException thrown = assertThrows(IndexOutOfBoundsException.class, testMethod,
                 "List.add should throw IndexOutOfBoundsException [-1]");
-        assertThat(thrown.getMessage(), is(equalTo("Index: -1, Size: 0")));
+        assertEquals("Index: -1, Size: 0", thrown.getMessage());
     }
 
     /**
