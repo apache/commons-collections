@@ -57,12 +57,16 @@ import org.junit.jupiter.api.Test;
  * <p>
  * The forces at work here are similar to those in {@link AbstractCollectionTest}. If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the {@link #makeObject()} method.
+ * </p>
  * <p>
  * On the other hand, if your map implementation is weird, you may have to override one or more of the other protected methods. They're described below.
+ * </p>
  * <p>
  * <b>Entry Population Methods</b>
+ * </p>
  * <p>
  * Override these methods if your map requires special entries:
+ * </p>
  *
  * <ul>
  * <li>{@link #getSampleKeys()}
@@ -75,6 +79,7 @@ import org.junit.jupiter.api.Test;
  * <b>Indicate Map Behaviour</b>
  * <p>
  * Override these if your map makes specific behavior guarantees:
+ * </p>
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
@@ -82,6 +87,7 @@ import org.junit.jupiter.api.Test;
  * <b>Supported Operation Methods</b>
  * <p>
  * Override these methods if your map doesn't support certain operations:
+ * </p>
  *
  * <ul>
  * <li>{@link #isPutAddSupported()}
@@ -101,29 +107,30 @@ import org.junit.jupiter.api.Test;
  * <em>confirmed</em> map implementation. A confirmed map implementation is something like <Code>java.util.HashMap</Code>, which is known to conform exactly to
  * the {@link Map} contract. After the modification takes place on both your map implementation and the confirmed map implementation, the two maps are compared
  * to see if their state is identical. The comparison also compares the collection views to make sure they're still the same.
- * <P>
- *
+ * </p>
+ * <p>
  * The upshot of all that is that <em>any</em> test that modifies the map in <em>any</em> way will verify that <em>all</em> of the map's state is still correct,
  * including the state of its collection views. So for instance if a key is removed by the map's key set's iterator, then the entry set is checked to make sure
  * the key/value pair no longer appears.
- * <P>
- *
+ * </p>
+ * <p>
  * The {@link #map} field holds an instance of your collection implementation. The {@link #entrySet}, {@link #keySet} and {@link #values} fields hold that map's
  * collection views. And the {@link #confirmed} field holds an instance of the confirmed collection implementation. The {@link #resetEmpty()} and
  * {@link #resetFull()} methods set these fields to empty or full maps, so that tests can proceed from a known state.
- * <P>
- *
+ * </p>
+ * <p>
  * After a modification operation to both {@link #map} and {@link #confirmed}, the {@link #verify()} method is invoked to compare the results. The
  * {@link #verify} method calls separate methods to verify the map and its three collection views ({@link #verifyMap}, {@link #verifyEntrySet},
  * {@link #verifyKeySet}, and {@link #verifyValues}). You may want to override one of the verification methods to perform additional verifications. For
  * instance, TestDoubleOrderedMap would want override its {@link #verifyValues()} method to verify that the values are unique and in ascending order.
- * <P>
+ * </p>
  *
  * <b>Other Notes</b>
  * <p>
  * If your {@link Map} fails one of these tests by design, you may still use this base set of cases. Simply override the test case (method) your map fails
  * and/or the methods that define the assumptions used by the test cases. For example, if your map does not allow duplicate values, override
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
+ * </p>
  *
  * @param <K> the key type.
  * @param <V> the value type.
@@ -748,6 +755,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} provide fail-fast behavior on their various iterators.
      * <p>
      * Default implementation returns true. Override if your collection class does not support fast failure.
+     * </p>
      */
     public boolean isFailFastExpected() {
         return true;
@@ -758,6 +766,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * LRUMap.
      * <p>
      * Default implementation returns false. Override if your map class structurally modifies on get.
+     * </p>
      */
     public boolean isGetStructuralModify() {
         return false;
@@ -777,6 +786,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * mappings.
      * <p>
      * Default implementation returns true. Override if your collection class does not support put adding.
+     * </p>
      */
     public boolean isPutAddSupported() {
         return true;
@@ -787,6 +797,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * existing mappings.
      * <p>
      * Default implementation returns true. Override if your collection class does not support put changing.
+     * </p>
      */
     public boolean isPutChangeSupported() {
         return true;
@@ -796,6 +807,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code remove} and {@code clear} operations.
      * <p>
      * Default implementation returns true. Override if your collection class does not support removal operations.
+     * </p>
      */
     public boolean isRemoveSupported() {
         return true;
@@ -805,6 +817,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code setValue} operation on entrySet entries.
      * <p>
      * Default implementation returns isPutChangeSupported(). Override if your collection class does not support setValue but does support put changing.
+     * </p>
      */
     public boolean isSetValueSupported() {
         return isPutChangeSupported();
@@ -831,7 +844,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     /**
      * Utility methods to create an array of Map.Entry objects out of the given key and value arrays.
-     * <P>
      *
      * @param keys   the array of keys
      * @param values the array of values
