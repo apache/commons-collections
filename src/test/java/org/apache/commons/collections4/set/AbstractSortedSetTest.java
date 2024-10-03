@@ -25,7 +25,7 @@ import java.util.TreeSet;
 import org.apache.commons.collections4.BulkTest;
 
 /**
- * Abstract test class for {@link SortedSet} methods and contracts.
+ * Tests {@link SortedSet}.
  * <p>
  * To use, subclass and override the {@link #makeObject()}
  * method.  You may have to override other protected methods if your

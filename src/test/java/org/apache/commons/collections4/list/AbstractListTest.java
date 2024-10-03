@@ -43,7 +43,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.util.List} methods and contracts.
+ * Tests {@link java.util.List}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.

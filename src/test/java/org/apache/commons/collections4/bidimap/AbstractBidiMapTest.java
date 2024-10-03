@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link BidiMap} methods and contracts.
+ * Tests {@link BidiMap}.
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

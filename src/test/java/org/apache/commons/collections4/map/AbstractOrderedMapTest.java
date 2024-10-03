@@ -37,7 +37,7 @@ import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link OrderedMap} methods and contracts.
+ * Tests {@link OrderedMap}.
  *
  * @param <K> the type of the keys in the maps tested.
  * @param <V> the type of the values in the maps tested.

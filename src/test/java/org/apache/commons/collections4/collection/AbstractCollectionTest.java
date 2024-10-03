@@ -50,7 +50,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.util.Collection} methods and contracts.
+ * Tests {@link java.util.Collection}.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to

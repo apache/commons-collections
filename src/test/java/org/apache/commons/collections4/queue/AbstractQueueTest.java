@@ -35,7 +35,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.util.Queue} methods and contracts.
+ * Tests {@link java.util.Queue}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.

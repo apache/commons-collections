@@ -31,7 +31,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.util.SortedMap} methods and contracts.
+ * Tests {@link java.util.SortedMap}.
  *
  * @param <K> the key type.
  * @param <V> the value type.
