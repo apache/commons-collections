@@ -156,7 +156,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * @param maxDepth The maximum depth of layers.
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
-    public static  LayeredBloomFilter<BloomFilter> fixed(final Shape shape, final int maxDepth) {
+    public static LayeredBloomFilter<BloomFilter> fixed(final Shape shape, final int maxDepth) {
         return fixed(shape, maxDepth, () -> new SimpleBloomFilter(shape));
     }
 
