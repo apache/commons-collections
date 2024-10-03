@@ -814,6 +814,17 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@link Map#replaceAll(java.util.function.BiFunction)}
+     * operations.
+     * <p>
+     * Default implementation returns true. Override if your collection class does not support replaceAll operations.
+     * </p>
+     */
+    public boolean isReplaceAllSupported() {
+        return true;
+    }
+
+    /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code setValue} operation on entrySet entries.
      * <p>
      * Default implementation returns isPutChangeSupported(). Override if your collection class does not support setValue but does support put changing.
@@ -2172,7 +2183,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      */
     @Test
     public void testReplaceAll() {
-        assumeTrue(isSetValueSupported());
+        assumeTrue(isSetValueSupported() && isReplaceAllSupported());
         resetFull();
         final V[] newValues = getNewSampleValues();
         assertFalse(getMap().isEmpty());
