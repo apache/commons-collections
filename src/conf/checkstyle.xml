@@ -51,6 +51,7 @@ limitations under the License.
     <module name="JavadocMethod">
       <property name="accessModifiers" value="protected" />
     </module>
+    <module name="MethodParamPad"/>
     <module name="ModifierOrder"/>
     <module name="RedundantModifier"/>
     <module name="UpperEll" />
