@@ -61,6 +61,7 @@ limitations under the License.
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
     <module name="NoWhitespaceBefore"/>
+    <module name="NoWhitespaceBeforeCaseDefaultColon"/>
     <module name="ImportOrder">
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,junit,org,com"/>

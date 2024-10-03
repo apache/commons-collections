@@ -127,13 +127,13 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         private SortedSet<E> getSubSet(final SortedSet<E> set) {
             final E[] elements = AbstractSortedSetTest.this.getFullElements();
             switch (type) {
-            case TYPE_SUBSET :
+            case TYPE_SUBSET:
                 return set.subSet(elements[lowBound], elements[highBound]);
-            case TYPE_HEADSET :
+            case TYPE_HEADSET:
                 return set.headSet(elements[highBound]);
-            case TYPE_TAILSET :
+            case TYPE_TAILSET:
                 return set.tailSet(elements[lowBound]);
-            default :
+            default:
                 return null;
             }
         }

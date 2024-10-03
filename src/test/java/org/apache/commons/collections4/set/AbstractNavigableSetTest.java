@@ -131,16 +131,17 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         public E[] getOtherElements() {
             return otherElements;
         }
+
         private NavigableSet<E> getSubSet(final NavigableSet<E> set) {
             final E[] elements = AbstractNavigableSetTest.this.getFullElements();
             switch (type) {
-            case TYPE_SUBSET :
+            case TYPE_SUBSET:
                 return set.subSet(elements[lowBound], inclusive, elements[highBound], inclusive);
-            case TYPE_HEADSET :
+            case TYPE_HEADSET:
                 return set.headSet(elements[highBound], inclusive);
-            case TYPE_TAILSET :
+            case TYPE_TAILSET:
                 return set.tailSet(elements[lowBound], inclusive);
-            default :
+            default:
                 return null;
             }
         }
