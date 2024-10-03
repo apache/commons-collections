@@ -55,7 +55,7 @@ public class TransformedSplitMapTest extends BulkTest {
         final TransformedSplitMap<String, String, String, String> map =
                 TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(),
-                                                    NOPTransformer.<String>nopTransformer() );
+                                                    NOPTransformer.<String>nopTransformer());
 
         final ObjectInputStream in = new ObjectInputStream(new FileInputStream(TEST_DATA_PATH + "/TransformedSplitMap.emptyCollection.version4.obj"));
         final Object readObject = in.readObject();

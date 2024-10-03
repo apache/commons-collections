@@ -81,7 +81,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      *
      * @param iterator  the iterator to use
      */
-    public FilterListIterator(final ListIterator<? extends E> iterator ) {
+    public FilterListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
     }
 

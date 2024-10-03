@@ -105,18 +105,12 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @param type  the index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    protected void checkBound(final int bound, final int len, final String type ) {
+    protected void checkBound(final int bound, final int len, final String type) {
         if (bound > len) {
-            throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that " + type +
-              "s beyond the end of the array. "
-            );
+            throw new ArrayIndexOutOfBoundsException("Attempt to make an ArrayIterator that " + type + "s beyond the end of the array. ");
         }
         if (bound < 0) {
-            throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that " + type +
-              "s before the start of the array. "
-            );
+            throw new ArrayIndexOutOfBoundsException("Attempt to make an ArrayIterator that " + type + "s before the start of the array. ");
         }
     }
 

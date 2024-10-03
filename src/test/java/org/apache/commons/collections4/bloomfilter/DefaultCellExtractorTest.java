@@ -31,7 +31,7 @@ public class DefaultCellExtractorTest extends AbstractCellExtractorTest {
     protected CellExtractor createExtractor() {
         return consumer -> {
             for (int i = 0; i < indices.length; i++) {
-                if (!consumer.test(indices[i], values[i] )) {
+                if (!consumer.test(indices[i], values[i])) {
                     return false;
                 }
             }

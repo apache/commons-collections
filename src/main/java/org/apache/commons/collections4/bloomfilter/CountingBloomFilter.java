@@ -147,7 +147,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #getMaxInsert(CellExtractor)
      */
     default int getMaxInsert(final IndexExtractor indexExtractor) {
-        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()) );
+        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()));
     }
 
     /**
