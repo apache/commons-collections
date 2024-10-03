@@ -708,6 +708,9 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} supports duplicate values.
      * <p>
      * Default implementation returns true. Override if your collection class does not support duplicate values.
+     * </p>
+     *
+     * @return true by default.
      */
     public boolean isAllowDuplicateValues() {
         return true;
@@ -717,6 +720,9 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} supports null keys.
      * <p>
      * Default implementation returns true. Override if your collection class does not support null keys.
+     * </p>
+     *
+     * @return true by default.
      */
     public boolean isAllowNullKey() {
         return true;
@@ -737,6 +743,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * <p>
      * Default implementation returns true. Override if your collection class does not support null values.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isAllowNullValueGet() {
         return true;
@@ -747,6 +755,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * <p>
      * Default implementation returns true. Override if your collection class does not support null values.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isAllowNullValuePut() {
         return true;
@@ -757,6 +767,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * <p>
      * Default implementation returns true. Override if your collection class does not support fast failure.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isFailFastExpected() {
         return true;
@@ -768,6 +780,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * <p>
      * Default implementation returns false. Override if your map class structurally modifies on get.
      * </p>
+     *
+     * @return false by default.
      */
     public boolean isGetStructuralModify() {
         return false;
@@ -783,32 +797,38 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // test methods.
 
     /**
-     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code put} and {@code putAll} operations adding new
-     * mappings.
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@link Map#put(Object, Object)} and
+     * {@link Map#putAll(Map)} operations adding new mappings.
      * <p>
      * Default implementation returns true. Override if your collection class does not support put adding.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isPutAddSupported() {
         return true;
     }
 
     /**
-     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code put} and {@code putAll} operations changing
-     * existing mappings.
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@link Map#put(Object, Object)} and
+     * {@link Map#putAll(Map)} operations changing existing mappings.
      * <p>
      * Default implementation returns true. Override if your collection class does not support put changing.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isPutChangeSupported() {
         return true;
     }
 
     /**
-     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code remove} and {@code clear} operations.
+     * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code remove} and {@link Map#clear()} operations.
      * <p>
      * Default implementation returns true. Override if your collection class does not support removal operations.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isRemoveSupported() {
         return true;
@@ -820,6 +840,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * <p>
      * Default implementation returns true. Override if your collection class does not support replaceAll operations.
      * </p>
+     *
+     * @return true by default.
      */
     public boolean isReplaceAllSupported() {
         return true;
@@ -839,7 +861,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Returns whether the sub map views of SortedMap are serializable. If the class being tested is based around a TreeMap then you should override and return
      * false as TreeMap has a bug in deserialization.
      *
-     * @return false
+     * @return true by default.
      */
     public boolean isSubMapViewsSerializable() {
         return true;
@@ -1418,7 +1440,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
                     final V arrValue = values[i];
                     final Supplier<String> messageSupplier = () -> String.format("[%,d] map.computeIfAbsent key '%s', value '%s', old %s", inc.get(), key,
                             value, oldMap);
-                    if (valueAlreadyPresent || (key == null)) {
+                    if (valueAlreadyPresent || key == null) {
                         assertNotEquals(value, computedValue, messageSupplier);
                     } else if (prevValue != null && value != null) {
                         assertEquals(prevValue, computedValue, messageSupplier);
@@ -1593,7 +1615,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
             } else {
                 try {
                     // two possible exception here, either valid
-                    getMap().computeIfAbsent(keys[0], k -> newValues[0]);
+                    getMap().computeIfPresent(keys[0], (k, v) -> newValues[0]);
                     fail("Expected IllegalArgumentException or UnsupportedOperationException on putIfAbsent (change)");
                 } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
                     // ignore
@@ -1602,7 +1624,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         } else if (isPutChangeSupported()) {
             resetEmpty();
             try {
-                getMap().computeIfAbsent(keys[0], k -> values[0]);
+                getMap().computeIfPresent(keys[0], (k, v) -> values[0]);
                 fail("Expected UnsupportedOperationException or IllegalArgumentException on putIfAbsent (add) when fixed size");
             } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
                 // ignore
