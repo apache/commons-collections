@@ -17,12 +17,16 @@
 
 package org.apache.commons.collections4.map;
 
-import java.util.Map;
-
+/**
+ * Tests {@link ConcurrentReferenceHashMap}.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
+ */
 public class ConcurrentReferenceHashMapKWeakVStrongIdCTest<K, V> extends AbstractConcurrentReferenceHashMapTest<K, V> {
 
     @Override
-    public Map<K, V> makeObject() {
+    public ConcurrentReferenceHashMap<K, V> makeObject() {
         // @formatter:off
         return ConcurrentReferenceHashMap.<K, V>builder()
             .weakKeys()

@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
-    public class TestMultiValuedMapAsMap extends AbstractMapTest<K, Collection<V>> {
+    public class TestMultiValuedMapAsMap extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
 
         public TestMultiValuedMapAsMap() {
             super(StringUtils.EMPTY);

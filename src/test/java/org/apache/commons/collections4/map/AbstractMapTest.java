@@ -132,10 +132,11 @@ import org.junit.jupiter.api.Test;
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
  * </p>
  *
+ * @param <M> the Map type.
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
+public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
@@ -514,7 +515,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /** Map created by reset(). */
-    protected Map<K, V> map;
+    protected M map;
 
     /** Entry set of map created by reset(). */
     protected Set<Map.Entry<K, V>> entrySet;
@@ -639,7 +640,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      *
      * @return Map<K, V>
      */
-    public Map<K, V> getMap() {
+    public M getMap() {
         return map;
     }
 
@@ -877,8 +878,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      *
      * @return the map to be tested
      */
-    public Map<K, V> makeFullMap() {
-        final Map<K, V> m = makeObject();
+    public M makeFullMap() {
+        final M m = makeObject();
         addSampleMappings(m);
         return m;
     }
@@ -889,7 +890,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * @return the map to be tested
      */
     @Override
-    public abstract Map<K, V> makeObject();
+    public abstract M makeObject();
 
     /**
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet}, {@link #values} and {@link #confirmed} fields to empty.

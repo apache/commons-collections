@@ -17,7 +17,6 @@
 
 package org.apache.commons.collections4.map;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<K, V> {
+public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<ConcurrentHashMap<K, V>, K, V> {
 
     public ConcurrentHashMapSanityTest() {
         super(ConcurrentHashMapSanityTest.class.getSimpleName());
@@ -56,7 +55,7 @@ public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     @Override
-    public Map<K, V> makeObject() {
+    public ConcurrentHashMap<K, V> makeObject() {
         return new ConcurrentHashMap<>();
     }
 

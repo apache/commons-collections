@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<IterableMap<K, V>, K, V> {
 
     public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
         public InnerTestMapIterator() {

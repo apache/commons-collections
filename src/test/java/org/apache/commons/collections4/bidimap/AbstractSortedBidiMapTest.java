@@ -77,15 +77,15 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 //    }
 
     public BulkTest bulkTestHeadMap() {
-        return new AbstractSortedMapTest.TestHeadMap<>(this);
+        return new AbstractSortedMapTest.TestHeadMap<K, V>((AbstractBidiMapTest) this);
     }
 
     public BulkTest bulkTestSubMap() {
-        return new AbstractSortedMapTest.TestSubMap<>(this);
+        return new AbstractSortedMapTest.TestSubMap<>((AbstractBidiMapTest) this);
     }
 
     public BulkTest bulkTestTailMap() {
-        return new AbstractSortedMapTest.TestTailMap<>(this);
+        return new AbstractSortedMapTest.TestTailMap<>((AbstractBidiMapTest) this);
     }
 
     @Override

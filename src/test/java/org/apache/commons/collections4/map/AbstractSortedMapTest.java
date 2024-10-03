@@ -36,13 +36,13 @@ import org.junit.jupiter.api.Test;
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<SortedMap<K, V>, K, V> {
 
     public static class TestHeadMap<K, V> extends TestViewMap<K, V> {
         static final int SUBSIZE = 6;
         final K toKey;
 
-        public TestHeadMap(final AbstractMapTest<K, V> main) {
+        public TestHeadMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
             super("SortedMap.HeadMap", main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
@@ -98,7 +98,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         final K fromKey;
         final K toKey;
 
-        public TestSubMap(final AbstractMapTest<K, V> main) {
+        public TestSubMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
             super("SortedMap.SubMap", main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
@@ -161,7 +161,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         final K fromKey;
         final K invalidKey;
 
-        public TestTailMap(final AbstractMapTest<K, V> main) {
+        public TestTailMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
             super("SortedMap.TailMap", main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
@@ -214,12 +214,12 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
     }
 
     public abstract static class TestViewMap<K, V> extends AbstractSortedMapTest<K, V> {
-        protected final AbstractMapTest<K, V> main;
+        protected final AbstractMapTest<SortedMap<K, V>, K, V> main;
         protected final List<K> subSortedKeys = new ArrayList<>();
         protected final List<V> subSortedValues = new ArrayList<>();
         protected final List<V> subSortedNewValues = new ArrayList<>();
 
-        public TestViewMap(final String name, final AbstractMapTest<K, V> main) {
+        public TestViewMap(final String name, final AbstractMapTest<SortedMap<K, V>, K, V> main) {
             super(name);
             this.main = main;
         }

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.map.ConcurrentReferenceHashMap.Option;
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public abstract class AbstractConcurrentReferenceHashMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractConcurrentReferenceHashMapTest<K, V> extends AbstractMapTest<ConcurrentReferenceHashMap<K, V>, K, V> {
 
     protected static final EnumSet<Option> IDENTITY_COMPARISONS = EnumSet.of(Option.IDENTITY_COMPARISONS);
 

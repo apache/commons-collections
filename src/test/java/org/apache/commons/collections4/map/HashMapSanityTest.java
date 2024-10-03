@@ -18,7 +18,6 @@
 package org.apache.commons.collections4.map;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A sanity test for the test framework.
@@ -26,7 +25,7 @@ import java.util.Map;
  * @param <K> the key type.
  * @param <V> the value type.
  */
-public class HashMapSanityTest<K, V> extends AbstractMapTest<K, V> {
+public class HashMapSanityTest<K, V> extends AbstractMapTest<HashMap<K, V>, K, V> {
 
     public HashMapSanityTest() {
         super(HashMapSanityTest.class.getSimpleName());
@@ -41,7 +40,7 @@ public class HashMapSanityTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     @Override
-    public Map<K, V> makeObject() {
+    public HashMap<K, V> makeObject() {
         return new HashMap<>();
     }
 
