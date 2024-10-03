@@ -53,7 +53,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link java.util.Map} methods and contracts.
+ * Tests {@link java.util.Map}.
  * <p>
  * The forces at work here are similar to those in {@link AbstractCollectionTest}. If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the {@link #makeObject()} method.
@@ -1625,38 +1625,45 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
             // compute if present is a put.
             resetEmpty();
             getMap().computeIfPresent(keys[0], (k, v) -> values[0]);
-            resetFull();
-            int i = 0;
-            for (final Iterator<K> it = getMap().keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
-                final K key = it.next();
-                final V newValue = newValues[i];
-                final boolean newValueAlready = getMap().containsValue(newValue);
-                final V prevValue = getMap().get(key);
-                final V oldValue = getMap().putIfAbsent(key, newValue);
-                final V value = getConfirmed().putIfAbsent(key, newValue);
-                verify();
-                assertEquals(value, oldValue, "Map.putIfAbsent should return previous value when changed");
-                assertEquals(prevValue, oldValue, "Map.putIfAbsent should return previous value when changed");
-                if (prevValue == null) {
-                    assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
-                } else {
-                    assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
-                }
-                assertTrue(getMap().containsKey(key), "Map should still contain key after putIfAbsent when changed");
-                if (newValueAlready && newValue != null) {
-                    // TODO The test fixture already contain a null value, so we condition this assertion
-                    assertFalse(getMap().containsValue(newValue),
-                            String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after putIfAbsent when changed", i, key, newValue));
-                }
-                // if duplicates are allowed, we're not guaranteed that the value
-                // no longer exists, so don't try checking that.
-                if (!isAllowDuplicateValues()) {
-                    assertFalse(getMap().containsValue(values[i]), "Map should not contain old value after putIfAbsent when changed");
+            if (isPutAddSupported()) {
+                resetFull();
+                int i = 0;
+                for (final Iterator<K> it = getMap().keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
+                    final K key = it.next();
+                    final V newValue = newValues[i];
+                    final boolean newValueAlready = getMap().containsValue(newValue);
+                    final V prevValue = getMap().get(key);
+                    final V oldValue = getMap().computeIfPresent(key, (k, v) -> newValue);
+                    final V value = getConfirmed().computeIfPresent(key, (k, v) -> newValue);
+                    verify();
+                    assertEquals(value, oldValue, "Map.putIfAbsent should return previous value when changed");
+                    assertEquals(prevValue, oldValue, "Map.putIfAbsent should return previous value when changed");
+                    if (prevValue == null) {
+                        assertEquals(newValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                    } else {
+                        assertEquals(oldValue, getMap().get(key), String.format("[%,d] key '%s', prevValue '%s', newValue '%s'", i, key, prevValue, newValue));
+                    }
+                    assertTrue(getMap().containsKey(key), "Map should still contain key after putIfAbsent when changed");
+                    if (newValueAlready && newValue != null) {
+                        // TODO The test fixture already contain a null value, so we condition this assertion
+                        assertFalse(getMap().containsValue(newValue),
+                                String.format("[%,d] Map at '%s' shouldn't contain new value '%s' after putIfAbsent when changed", i, key, newValue));
+                    }
+                    // if duplicates are allowed, we're not guaranteed that the value
+                    // no longer exists, so don't try checking that.
+                    if (!isAllowDuplicateValues()) {
+                        assertFalse(getMap().containsValue(values[i]), "Map should not contain old value after putIfAbsent when changed");
+                    }
                 }
             }
         } else {
-            assertThrows(UnsupportedOperationException.class, () -> getMap().putIfAbsent(keys[0], values[0]),
-                    "Expected UnsupportedOperationException on put (add)");
+            if (getMap().containsKey(keys[0])) {
+                assertThrows(UnsupportedOperationException.class, () -> getMap().computeIfPresent(keys[0], (k, v) -> values[0]),
+                        "Expected UnsupportedOperationException on put (add)");
+            } else {
+                // doesn't throw
+                getMap().computeIfPresent(keys[0], (k, v) -> values[0]);
+            }
         }
     }
 
