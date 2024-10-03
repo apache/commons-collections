@@ -105,7 +105,7 @@ public interface BloomFilterExtractor {
             if (bf[0] == null) {
                 bf[0] = new SimpleBloomFilter( x.getShape());
             }
-            return bf[0].merge( x );
+            return bf[0].merge(x);
         });
         return bf[0];
     }
