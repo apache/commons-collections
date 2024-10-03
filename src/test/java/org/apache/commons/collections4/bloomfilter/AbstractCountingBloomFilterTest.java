@@ -161,7 +161,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     public final void testCountingBloomFilterSpecificContains() {
         final BloomFilter bf = new SimpleBloomFilter(getTestShape());
         bf.merge(TestingHashers.FROM1);
-        final CountingBloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11( createEmptyFilter(getTestShape()));
+        final CountingBloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
         assertTrue(bf.contains(bf), "BF Should contain itself");
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");

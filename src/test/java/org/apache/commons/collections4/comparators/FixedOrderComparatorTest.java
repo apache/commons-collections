@@ -290,8 +290,8 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
         assertEquals(-1, comparator.compare("Minneapolis", "New York"));
-        assertEquals( 1, comparator.compare("New York", "Minneapolis"));
-        assertEquals( 0, comparator.compare("Minneapolis", "St Paul"));
+        assertEquals(1, comparator.compare("New York", "Minneapolis"));
+        assertEquals(0, comparator.compare("Minneapolis", "St Paul"));
 
         comparator = new FixedOrderComparator<>(topCities);
         comparator.setUnknownObjectBehavior(FixedOrderComparator.UnknownObjectBehavior.AFTER);
@@ -299,8 +299,8 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         keys.add("Minneapolis");
         assertComparatorYieldsOrder(keys.toArray(ArrayUtils.EMPTY_STRING_ARRAY), comparator);
 
-        assertEquals( 1, comparator.compare("Minneapolis", "New York"));
+        assertEquals(1, comparator.compare("Minneapolis", "New York"));
         assertEquals(-1, comparator.compare("New York", "Minneapolis"));
-        assertEquals( 0, comparator.compare("Minneapolis", "St Paul"));
+        assertEquals(0, comparator.compare("Minneapolis", "St Paul"));
     }
 }

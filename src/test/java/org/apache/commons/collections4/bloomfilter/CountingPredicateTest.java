@@ -86,8 +86,8 @@ public class CountingPredicateTest {
     public void testPredicateSameLength() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
-        expected.add( Pair.of(1, 3));
-        expected.add( Pair.of(2, 3));
+        expected.add(Pair.of(1, 3));
+        expected.add(Pair.of(2, 3));
         final CountingPredicate<Integer> cp = new CountingPredicate<>(ary, makeFunc((x, y) -> true, result));
         assertTrue(cp.test(3));
         assertTrue(cp.test(3));

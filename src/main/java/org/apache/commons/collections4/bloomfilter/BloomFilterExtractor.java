@@ -100,10 +100,10 @@ public interface BloomFilterExtractor {
      * @return the merged bloom filter.
      */
     default BloomFilter flatten() {
-        final BloomFilter[] bf = {null};
+        final BloomFilter[] bf = { null };
         processBloomFilters(x -> {
             if (bf[0] == null) {
-                bf[0] = new SimpleBloomFilter( x.getShape());
+                bf[0] = new SimpleBloomFilter(x.getShape());
             }
             return bf[0].merge(x);
         });

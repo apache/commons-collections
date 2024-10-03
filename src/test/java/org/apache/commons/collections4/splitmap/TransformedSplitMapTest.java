@@ -68,14 +68,12 @@ public class TransformedSplitMapTest extends BulkTest {
 
     @Test
     public void testFullMap() throws IOException, ClassNotFoundException {
-        final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
-                new HashMap<>(),
-                NOPTransformer.<String>nopTransformer(),
-                NOPTransformer.<String>nopTransformer() );
-        map.put( "a", "b" );
-        map.put( "c", "d" );
-        map.put( "e", "f" );
-        map.put( "g", "h" );
+        final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(new HashMap<>(),
+                NOPTransformer.<String>nopTransformer(), NOPTransformer.<String>nopTransformer());
+        map.put("a", "b");
+        map.put("c", "d");
+        map.put("e", "f");
+        map.put("g", "h");
 
         final ObjectInputStream in = new ObjectInputStream(new FileInputStream(TEST_DATA_PATH + "TransformedSplitMap.fullCollection.version4.obj"));
         final Object readObject = in.readObject();
@@ -150,19 +148,19 @@ public class TransformedSplitMapTest extends BulkTest {
 //        TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
 //                new HashMap<String, String>(),
 //                NOPTransformer.<String>nopTransformer(),
-//                NOPTransformer.<String>nopTransformer() );
+//                NOPTransformer.<String>nopTransformer());
 //
 //        ObjectOutputStream out = new ObjectOutputStream(
-//                new FileOutputStream( "src/test/resources/data/test/TransformedSplitMap.emptyCollection.version4.obj" ) );
-//        out.writeObject( map );
+//                new FileOutputStream("src/test/resources/data/test/TransformedSplitMap.emptyCollection.version4.obj"));
+//        out.writeObject(map);
 //
-//        map.put( "a", "b" );
-//        map.put( "c", "d" );
-//        map.put( "e", "f" );
-//        map.put( "g", "h" );
+//        map.put("a", "b");
+//        map.put("c", "d");
+//        map.put("e", "f");
+//        map.put("g", "h");
 //
 //        out = new ObjectOutputStream(
-//                new FileOutputStream( "src/test/resources/data/test/TransformedSplitMap.fullCollection.version4.obj" ) );
-//        out.writeObject( map );
+//                new FileOutputStream("src/test/resources/data/test/TransformedSplitMap.fullCollection.version4.obj"));
+//        out.writeObject(map);
 //    }
 }

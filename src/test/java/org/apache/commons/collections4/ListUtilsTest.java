@@ -82,8 +82,8 @@ public class ListUtilsTest {
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final List<String> list1 = new ArrayList<>( data );
-        final List<String> list2 = new ArrayList<>( data );
+        final List<String> list1 = new ArrayList<>(data);
+        final List<String> list2 = new ArrayList<>(data);
 
         assertEquals(list1, list2);
         assertTrue(ListUtils.isEqualList(list1, list2));
