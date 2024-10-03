@@ -1622,13 +1622,9 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
                 }
             }
         } else if (isPutChangeSupported()) {
+            // compute if present is a put.
             resetEmpty();
-            try {
-                getMap().computeIfPresent(keys[0], (k, v) -> values[0]);
-                fail("Expected UnsupportedOperationException or IllegalArgumentException on putIfAbsent (add) when fixed size");
-            } catch (final IllegalArgumentException | UnsupportedOperationException ex) {
-                // ignore
-            }
+            getMap().computeIfPresent(keys[0], (k, v) -> values[0]);
             resetFull();
             int i = 0;
             for (final Iterator<K> it = getMap().keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
