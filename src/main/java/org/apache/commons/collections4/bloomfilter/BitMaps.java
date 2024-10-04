@@ -112,6 +112,28 @@ public class BitMaps {
     }
 
     /**
+     * Creates a new bitmap for the number of bit maps (longs) required for the numberOfBits parameter.
+     *
+     * <p><em>If the input is negative the behavior is not defined.</em></p>
+     *
+     * @param numberOfBits the number of bits to store in the array of bit maps.
+     * @return a new bitmap.
+     */
+    static long[] newBitMap(final int numberOfBits) {
+        return new long[numberOfBitMaps(numberOfBits)];
+    }
+
+    /**
+     * Creates a new bitmap for given shape parameter.
+     *
+     * @param shape the shape.
+     * @return a new bitmap.
+     */
+    static long[] newBitMap(final Shape shape) {
+        return newBitMap(shape.getNumberOfBits());
+    }
+
+    /**
      * Calculates the number of bit maps (longs) required for the numberOfBits parameter.
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
@@ -121,6 +143,16 @@ public class BitMaps {
      */
     public static int numberOfBitMaps(final int numberOfBits) {
         return (numberOfBits - 1 >> DIVIDE_BY_64) + 1;
+    }
+
+    /**
+     * Calculates the number of bit maps (longs) required for the shape parameter.
+     *
+     * @param shape the shape.
+     * @return the number of bit maps necessary.
+     */
+    static int numberOfBitMaps(final Shape shape) {
+        return numberOfBitMaps(shape.getNumberOfBits());
     }
 
     /**

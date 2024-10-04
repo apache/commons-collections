@@ -121,7 +121,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     public void testFromBitMapExtractor() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(7, 256);
-            final long[] bits = new long[BitMaps.numberOfBitMaps(256)];
+            final long[] bits = BitMaps.newBitMap(256);
             for (final int bitIndex : expected) {
                 BitMaps.set(bits, bitIndex);
             }

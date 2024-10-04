@@ -66,7 +66,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public long[] asBitMapArray() {
-        final long[] result = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
+        final long[] result = BitMaps.newBitMap(shape);
         for (final int i : indices) {
             BitMaps.set(result, i);
         }
@@ -154,7 +154,7 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        final int limit = BitMaps.numberOfBitMaps(shape.getNumberOfBits());
+        final int limit = BitMaps.numberOfBitMaps(shape);
         /*
          * because our indices are always in order we can shorten the time necessary to
          * create the longs for the consumer

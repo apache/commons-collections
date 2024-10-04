@@ -152,14 +152,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             idx[0]++;
             return true;
         });
-        assertEquals(BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        assertEquals(BitMaps.numberOfBitMaps(getTestShape()), idx[0]);
 
         idx[0] = 0;
         createEmptyFilter(getTestShape()).processBitMaps(i -> {
             idx[0]++;
             return true;
         });
-        assertEquals(BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        assertEquals(BitMaps.numberOfBitMaps(getTestShape()), idx[0]);
     }
 
     @Test
@@ -413,7 +413,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithBitMapExtractor() {
-        final int bitMapCount = BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits());
+        final int bitMapCount = BitMaps.numberOfBitMaps(getTestShape());
         for (int i = 0; i < 5; i++) {
             final long[] values = new long[bitMapCount];
             for (final int idx : DefaultIndexExtractorTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits())) {

@@ -483,7 +483,7 @@ public final class Shape {
          * (number of indexes) is less than or equal to 2*number of bit maps the
          * cardinality is sparse within the shape.
          */
-        return cardinality <= BitMaps.numberOfBitMaps(getNumberOfBits()) * 2;
+        return cardinality <= BitMaps.numberOfBitMaps(this) * 2;
     }
 
     @Override

@@ -51,7 +51,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     public SimpleBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
         this.shape = shape;
-        this.bitMap = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
+        this.bitMap = BitMaps.newBitMap(shape);
         this.cardinality = 0;
     }
 
