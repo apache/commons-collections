@@ -484,6 +484,22 @@ public class IterableUtils {
     }
 
     /**
+     * Returns an {@link Optional} containing the first element in the
+     * {@code iterable}, or an empty {@code Optional} if the iterable is
+     * empty or null.
+     * <p>
+     * A {@code null} or empty iterator returns an empty {@code Optional}.
+     * </p>
+     *
+     * @param <E> the element type
+     * @param iterable  the iterable to search, may be null
+     * @return an {@code Optional} containing the first element of the iterable or an empty {@code Optional} if the iterable is empty or null
+     */
+    public static <E> Optional<E> any(final Iterable<E> iterable) {
+        return Optional.ofNullable(IteratorUtils.find(emptyIteratorIfNull(iterable), x -> true));
+    }
+
+    /**
      * Shortcut for {@code get(iterator, 0)}.
      * <p>
      * Returns the {@code first} value in the {@code iterable}'s {@link Iterator}, throwing
