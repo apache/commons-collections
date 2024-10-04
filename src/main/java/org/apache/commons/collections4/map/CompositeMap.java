@@ -113,6 +113,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
                 Map<K, V> added, Collection<K> intersect);
     }
 
+    @SuppressWarnings("rawtypes")
     private static final Map[] EMPTY_MAP_ARRAY = {};
 
     /** Serialization version */
