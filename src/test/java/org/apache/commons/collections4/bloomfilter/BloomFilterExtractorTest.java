@@ -34,5 +34,4 @@ public class BloomFilterExtractorTest {
         assertNotNull(BloomFilterExtractor.fromBloomFilterArray(new BloomFilter[0]).flatten());
     }
 
-
 }
