@@ -59,6 +59,9 @@ import org.junit.jupiter.api.Test;
  * To use, extend this class and implement the {@link #makeObject} method and if
  * necessary override the {@link #makeFullMap()} method.
  * </p>
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 

@@ -40,6 +40,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link BidiMap}.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

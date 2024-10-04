@@ -41,6 +41,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests for the PatriciaTrie.
+ *
+ * @param <V> the value type.
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
