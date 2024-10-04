@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -199,6 +200,23 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
         assertNotEquals(0, bf1.cardinality());
         bf1.clear();
         assertEquals(0, bf1.cardinality());
+    }
+
+    @Test
+    public void testCopy() {
+        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
+        assertNotEquals(0, bf1.cardinality());
+        final BloomFilter copy = bf1.copy();
+        assertNotSame(bf1, copy);
+        assertArrayEquals(bf1.asBitMapArray(), copy.asBitMapArray());
+        assertArrayEquals(bf1.asIndexArray(), copy.asIndexArray());
+        assertEquals(bf1.cardinality(), copy.cardinality());
+        assertEquals(bf1.characteristics(), copy.characteristics());
+        assertEquals(bf1.estimateN(), copy.estimateN());
+        assertEquals(bf1.getClass(), copy.getClass());
+        assertEquals(bf1.getShape(), copy.getShape());
+        assertEquals(bf1.isEmpty(), copy.isEmpty());
+        assertEquals(bf1.isFull(), copy.isFull());
     }
 
     @Test
