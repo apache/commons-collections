@@ -203,23 +203,6 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testCopy() {
-        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
-        assertNotEquals(0, bf1.cardinality());
-        final BloomFilter copy = bf1.copy();
-        assertNotSame(bf1, copy);
-        assertArrayEquals(bf1.asBitMapArray(), copy.asBitMapArray());
-        assertArrayEquals(bf1.asIndexArray(), copy.asIndexArray());
-        assertEquals(bf1.cardinality(), copy.cardinality());
-        assertEquals(bf1.characteristics(), copy.characteristics());
-        assertEquals(bf1.estimateN(), copy.estimateN());
-        assertEquals(bf1.getClass(), copy.getClass());
-        assertEquals(bf1.getShape(), copy.getShape());
-        assertEquals(bf1.isEmpty(), copy.isEmpty());
-        assertEquals(bf1.isFull(), copy.isFull());
-    }
-
-    @Test
     public final void testContains() {
         BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
@@ -254,6 +237,29 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
+    }
+
+    @Test
+    public void testCopy() {
+        testCopy(true);
+    }
+
+    protected void testCopy(final boolean assertClass) {
+        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
+        assertNotEquals(0, bf1.cardinality());
+        final BloomFilter copy = bf1.copy();
+        assertNotSame(bf1, copy);
+        assertArrayEquals(bf1.asBitMapArray(), copy.asBitMapArray());
+        assertArrayEquals(bf1.asIndexArray(), copy.asIndexArray());
+        assertEquals(bf1.cardinality(), copy.cardinality());
+        assertEquals(bf1.characteristics(), copy.characteristics());
+        assertEquals(bf1.estimateN(), copy.estimateN());
+        if (assertClass) {
+            assertEquals(bf1.getClass(), copy.getClass());
+        }
+        assertEquals(bf1.getShape(), copy.getShape());
+        assertEquals(bf1.isEmpty(), copy.isEmpty());
+        assertEquals(bf1.isFull(), copy.isFull());
     }
 
     @Test

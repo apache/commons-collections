@@ -55,4 +55,10 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
         };
         assertEquals(characteristics, underTest.characteristics());
     }
+
+    @Override
+    public void testCopy() {
+        testCopy(false);
+    }
+
 }
