@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.IntFunction;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
@@ -764,20 +765,38 @@ public class IteratorUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in {@link Iterator}, throwing
-     * {@code IndexOutOfBoundsException} if there is no such element.
+     * Gets the {@code index}-th value in {@link Iterator}, throwing {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Iterator is advanced to {@code index} (or to the end, if
-     * {@code index} exceeds the number of entries) as a side effect of this method.
+     * The Iterator is advanced to {@code index} (or to the end, if {@code index} exceeds the number of entries) as a side effect of this method.
+     * </p>
      *
-     * @param <E> the type of object in the {@link Iterator}
-     * @param iterator  the iterator to get a value from
-     * @param index  the index to get
-     * @return the object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
+     * @param <E>      the type of object in the {@link Iterator}.
+     * @param iterator the iterator to get a value from.
+     * @param index    the index to get, 0-based.
+     * @return the object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
      * @since 4.1
      */
     public static <E> E get(final Iterator<E> iterator, final int index) {
+        return get(iterator, index, ioob -> {
+            throw new IndexOutOfBoundsException("Entry does not exist: " + ioob);
+        });
+    }
+
+    /**
+     * Gets the {@code index}-th value in {@link Iterator}, throwing {@code IndexOutOfBoundsException} if there is no such element.
+     * <p>
+     * The Iterator is advanced to {@code index} (or to the end, if {@code index} exceeds the number of entries) as a side effect of this method.
+     * </p>
+     *
+     * @param <E>             the type of object in the {@link Iterator}
+     * @param iterator        the iterator to get a value from
+     * @param index           the index to get, 0-based.
+     * @param defaultSupplier supplies a default value at an index.
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    static <E> E get(final Iterator<E> iterator, final int index, final IntFunction<E> defaultSupplier) {
         int i = index;
         CollectionUtils.checkIndexBounds(i);
         while (iterator.hasNext()) {
@@ -787,7 +806,7 @@ public class IteratorUtils {
             }
             iterator.next();
         }
-        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+        return defaultSupplier.apply(i);
     }
 
     /**
@@ -1417,7 +1436,6 @@ public class IteratorUtils {
         return new ZippingIterator<>(iterators);
     }
 
-    // Zipping
     /**
      * Returns an iterator that interleaves elements from the decorated iterators.
      *
