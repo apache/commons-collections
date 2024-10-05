@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
@@ -97,17 +98,18 @@ public interface BloomFilterExtractor {
      * Create a standard (non-layered) Bloom filter by merging all of the layers. If
      * the filter is empty this method will return an empty Bloom filter.
      *
-     * @return the merged bloom filter.
+     * @return the merged bloom filter, never null.
+     * @throws NullPointerException if this call did not process any filters.
      */
     default BloomFilter flatten() {
-        final BloomFilter[] bf = { null };
+        final AtomicReference<BloomFilter> ref = new AtomicReference<>();
         processBloomFilters(x -> {
-            if (bf[0] == null) {
-                bf[0] = new SimpleBloomFilter(x.getShape());
+            if (ref.get() == null) {
+                ref.set(new SimpleBloomFilter(x.getShape()));
             }
-            return bf[0].merge(x);
+            return ref.get().merge(x);
         });
-        return bf[0];
+        return Objects.requireNonNull(ref.get(), "No filters.");
     }
 
     /**

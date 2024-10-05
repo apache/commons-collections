@@ -35,6 +35,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...).</action>
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán. Gary Gregory">Increase test coverage for ListUtils #517.</action>
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory, Alex Herbert">BloomFilterExtractor.flatten() should throw an exception instead of returning null.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
