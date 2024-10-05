@@ -44,7 +44,7 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add TreeBag.TreeBag(Iterable).</action>
     <action type="add" issue="COLLECTIONS-858" dev="ggregory" due-to="Alexey Pelykh, Alex Herbert, Gary Gregory">Add CartesianProductIterator #509.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add missing methods in AbstractMapTests.</action>
-    <action type="add" dev="ggregory" due-to="Gary Gregory">Add ConcurrentReferenceHashMap.</action>
+    <action type="add" issue="COLLECTIONS-700" dev="ggregory" due-to="Gary Gregory">Add ConcurrentReferenceHashMap.</action>
     <!-- UPDATE -->
     <action type="update" issue="COLLECTIONS-857" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
