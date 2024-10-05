@@ -659,6 +659,7 @@ public class IteratorUtils {
      * Finds the first element in the given iterator which matches the given predicate.
      * <p>
      * A {@code null} or empty iterator returns null.
+     * </p>
      *
      * @param <E> the element type
      * @param iterator  the iterator to search, may be null
@@ -668,8 +669,24 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> E find(final Iterator<E> iterator, final Predicate<? super E> predicate) {
-        Objects.requireNonNull(predicate, "predicate");
+        return find(iterator, predicate, null);
+    }
 
+    /**
+     * Finds the first element in the given iterator which matches the given predicate.
+     * <p>
+     * A {@code null} or empty iterator returns {@code defaultValue}.
+     * </p>
+     *
+     * @param <E>          the element type.
+     * @param iterator     the iterator to search, may be null.
+     * @param predicate    the predicate to use, must not be null.
+     * @param defaultValue the default value, may be null.
+     * @return the first element of the iterator which matches the predicate or null if none could be found.
+     * @throws NullPointerException if predicate is null.
+     */
+    private static <E> E find(final Iterator<E> iterator, final Predicate<? super E> predicate, final E defaultValue) {
+        Objects.requireNonNull(predicate, "predicate");
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
@@ -678,7 +695,7 @@ public class IteratorUtils {
                 }
             }
         }
-        return null;
+        return defaultValue;
     }
 
     /**
