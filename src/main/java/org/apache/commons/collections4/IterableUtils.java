@@ -496,7 +496,7 @@ public class IterableUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
      * @return the first object
-     * @throws IndexOutOfBoundsException if the request  is invalid
+     * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2
      */
     public static <T> T first(final Iterable<T> iterable) {
