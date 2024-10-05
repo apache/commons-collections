@@ -17,9 +17,8 @@
 
 package org.apache.commons.collections4.bloomfilter;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,10 +27,13 @@ import org.junit.jupiter.api.Test;
 public class BloomFilterExtractorTest {
 
     @Test
-    @Disabled
     public void testFlattenEmpty() {
-        // TODO ?
-        assertNotNull(BloomFilterExtractor.fromBloomFilterArray(new BloomFilter[0]).flatten());
+        assertThrows(NullPointerException.class, () -> BloomFilterExtractor.fromBloomFilterArray().flatten());
+    }
+
+    @Test
+    public void testFromBloomFilterArray() {
+        assertThrows(NullPointerException.class, () -> BloomFilterExtractor.fromBloomFilterArray((BloomFilter[]) null));
     }
 
 }
