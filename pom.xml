@@ -355,6 +355,22 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <!-- Java 24 and up -->
+      <id>java-24-up</id>
+      <activation>
+        <jdk>[24,)</jdk>
+      </activation>
+      <properties>
+        <commons.jacoco.version>0.8.13-SNAPSHOT</commons.jacoco.version>
+      </properties>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>sonatype-snapshots</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
   </profiles>
   <developers>
     <developer>
