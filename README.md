@@ -44,7 +44,7 @@ Apache Commons Collections
 ===================
 
 [![Java CI](https://github.com/apache/commons-collections/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/maven.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg?gav=true)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/?gav=true)
+[![Maven Central](https://img.shields.io/maven-central/v/org.apache.commons/commons-collections4?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.commons/commons-collections4)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0-M2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0-M2)
 [![CodeQL](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
