@@ -29,17 +29,18 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link ArrayListValuedHashMap}.
+ * Tests {@link ArrayListValuedLinkedHashMap}.
  */
-public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
+public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedHashMapTest() {
-        super(ArrayListValuedHashMapTest.class.getSimpleName());
+    public ArrayListValuedLinkedHashMapTest() {
+        super(ArrayListValuedLinkedHashMapTest.class.getSimpleName());
     }
 
     @Override
@@ -49,11 +50,16 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @Override
     public ListValuedMap<K, V> makeObject() {
-        return new ArrayListValuedHashMap<>();
+        return new ArrayListValuedLinkedHashMap<>();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4.5"; // ArrayListValuedLinkedHashMap has been added in version 4.5
     }
 
     @Test
-    public void testArrayListValuedHashMap() {
+    public void testArrayListValuedLinkedHashMap() {
         final ListValuedMap<K, V> listMap;
         final ListValuedMap<K, V> listMap1;
         final Map<K, V> map = new HashMap<>();
@@ -62,12 +68,12 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         map.put((K) "B", (V) "X");
         map.put((K) "C", (V) "F");
 
-        listMap = new ArrayListValuedHashMap<>(map);
+        listMap = new ArrayListValuedLinkedHashMap<>(map);
         assertEquals(1, listMap.get((K) "A").size());
         assertEquals(1, listMap.get((K) "B").size());
         assertEquals(1, listMap.get((K) "C").size());
 
-        listMap1 = new ArrayListValuedHashMap<>(map1);
+        listMap1 = new ArrayListValuedLinkedHashMap<>(map1);
         assertEquals("{}", listMap1.toString());
     }
 
@@ -177,7 +183,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @Test
     public void testTrimToSize() {
-        final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
+        final ArrayListValuedLinkedHashMap<K, V> listMap = new ArrayListValuedLinkedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
         listMap.put((K) "A", (V) "W");
@@ -255,18 +261,35 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
+    public void testPreservesKeyInsertionOrder() {
+        final ListValuedMap<K, V> map = makeObject();
+        map.put((K) Integer.valueOf(5), (V) "five");
+        map.put((K) Integer.valueOf(1), (V) "one");
+        map.put((K) Integer.valueOf(5), (V) "vijf"); // "vijf" = "five" in Dutch
+        MapIterator<K, V> mapIterator = map.mapIterator();
+        assertEquals(5, mapIterator.next());
+        assertEquals("five", mapIterator.getValue());
+        assertEquals(5, mapIterator.next());
+        assertEquals("vijf", mapIterator.getValue());
+        assertEquals(1, mapIterator.next());
+        assertEquals("one", mapIterator.getValue());
+        assertFalse(mapIterator.hasNext());
+    }
+
+    @Test
     public void testCopyConstructorWithMultiValuedMap() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) "key", (V) "sleutel");
-        final ListValuedMap<K, V> copy = new ArrayListValuedHashMap<>(map);
+        final ListValuedMap<K, V> copy = new ArrayListValuedLinkedHashMap<>(map);
         assertEquals(map, copy);
     }
 
+//    @Test
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-//                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedHashMap.emptyCollection.version4.1.obj");
+//                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-//                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedHashMap.fullCollection.version4.1.obj");
+//                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedLinkedHashMap.fullCollection.version4.5.obj");
 //    }
 
 }
