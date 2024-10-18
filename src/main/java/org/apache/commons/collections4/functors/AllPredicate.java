@@ -42,7 +42,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
     private static final long serialVersionUID = -3094696765038308799L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the collection is size zero, the predicate always returns true.
      * If the collection is size one, then that predicate is returned.
@@ -66,7 +66,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
     }
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the array is size zero, the predicate always returns true.
      * If the array is size one, then that predicate is returned.

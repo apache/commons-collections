@@ -33,7 +33,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
     private static final long serialVersionUID = -89901658494523293L;
 
     /**
-     * Factory to create the identity predicate.
+     * Creates the identity predicate.
      *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to

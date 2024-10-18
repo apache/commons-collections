@@ -33,7 +33,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     private static final long serialVersionUID = -2654603322338049674L;
 
     /**
-     * Factory to create the not predicate.
+     * Creates the not predicate.
      *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null

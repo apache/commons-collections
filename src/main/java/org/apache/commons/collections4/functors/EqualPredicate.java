@@ -34,7 +34,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
     private static final long serialVersionUID = 5633766978029907089L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to
@@ -48,7 +48,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
     }
 
     /**
-     * Factory to create the identity predicate.
+     * Creates the identity predicate.
      *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to

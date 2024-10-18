@@ -38,7 +38,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
     private static final long serialVersionUID = 2007613066565892961L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the collection is size zero, the predicate always returns true.
      * </p>
@@ -58,7 +58,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
     }
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the array is size zero, the predicate always returns true.
      * </p>

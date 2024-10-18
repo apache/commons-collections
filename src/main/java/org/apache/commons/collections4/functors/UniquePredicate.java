@@ -35,7 +35,7 @@ public final class UniquePredicate<T>  extends AbstractPredicate<T> implements S
     private static final long serialVersionUID = -3319417438027438040L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      *
      * @param <T> the type that the predicate queries
      * @return the predicate
