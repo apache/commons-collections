@@ -26,7 +26,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
+import org.apache.commons.collections4.functors.NonePredicate;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,6 +39,14 @@ import org.junit.jupiter.api.Test;
  */
 public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
+    @Test
+    public void testAdd_Always() throws Throwable {
+        TreeBag<Predicate<Object>> treeBagOfPredicateOfObject = new TreeBag<>();
+        CollectionBag<Predicate<Object>> collectionBagOfPredicateOfObject = new CollectionBag<>(treeBagOfPredicateOfObject);
+        Predicate<Object> predicate0 = NonePredicate.nonePredicate(collectionBagOfPredicateOfObject);
+        collectionBagOfPredicateOfObject.add(predicate0, 24);
+    }
+    
     /**
      * JUnit constructor.
      */

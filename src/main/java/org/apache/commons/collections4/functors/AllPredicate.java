@@ -46,6 +46,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * <p>
      * If the collection is size zero, the predicate always returns true.
      * If the collection is size one, then that predicate is returned.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
@@ -69,6 +70,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * <p>
      * If the array is size zero, the predicate always returns true.
      * If the array is size one, then that predicate is returned.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
