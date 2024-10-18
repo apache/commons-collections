@@ -64,6 +64,7 @@ import java.util.function.Predicate;
  * @since 4.5.0
  */
 public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter<LayeredBloomFilter<T>>, BloomFilterExtractor {
+
     /**
      * A class used to locate matching filters across all the layers.
      */
@@ -96,7 +97,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     private final LayerManager<T> layerManager;
 
     /**
-     * Constructor.
+     * Constructs a new instance.
      *
      * @param shape        the Shape of the enclosed Bloom filters
      * @param layerManager the LayerManager to manage the layers.
