@@ -24,40 +24,30 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Layered Bloom filters are described in Zhiwang, Cen; Jungang, Xu; Jian, Sun
- * (2010), "A multi-layer Bloom filter for duplicated URL detection", Proc. 3rd
- * International Conference on Advanced Computer Theory and Engineering (ICACTE
- * 2010), vol. 1, pp. V1-586-V1-591, doi:10.1109/ICACTE.2010.5578947, ISBN
+ * Layered Bloom filters are described in Zhiwang, Cen; Jungang, Xu; Jian, Sun (2010), "A multi-layer Bloom filter for duplicated URL detection", Proc. 3rd
+ * International Conference on Advanced Computer Theory and Engineering (ICACTE 2010), vol. 1, pp. V1-586-V1-591, doi:10.1109/ICACTE.2010.5578947, ISBN
  * 978-1-4244-6539-2, S2CID 3108985
  * <p>
- * In short, Layered Bloom filter contains several bloom filters arranged in
- * layers.
+ * In short, Layered Bloom filter contains several bloom filters arranged in layers.
  * </p>
  * <ul>
- * <li>When membership in the filter is checked each layer in turn is checked
- * and if a match is found {@code true} is returned.</li>
- * <li>When merging each bloom filter is merged into the newest filter in the
- * list of layers.</li>
- * <li>When questions of cardinality are asked the cardinality of the union of
- * the enclosed Bloom filters is used.</li>
+ * <li>When membership in the filter is checked each layer in turn is checked and if a match is found {@code true} is returned.</li>
+ * <li>When merging each bloom filter is merged into the newest filter in the list of layers.</li>
+ * <li>When questions of cardinality are asked the cardinality of the union of the enclosed Bloom filters is used.</li>
  * </ul>
  * <p>
- * The net result is that the layered Bloom filter can be populated with more
- * items than the Shape would indicate and yet still return a false positive
- * rate in line with the Shape and not the over population.
+ * The net result is that the layered Bloom filter can be populated with more items than the Shape would indicate and yet still return a false positive rate in
+ * line with the Shape and not the over population.
  * </p>
  * <p>
- * This implementation uses a LayerManager to handle the manipulation of the
- * layers.
+ * This implementation uses a LayerManager to handle the manipulation of the layers.
  * </p>
  * <ul>
  * <li>Level 0 is the oldest layer and the highest level is the newest.</li>
  * <li>There is always at least one enclosed filter.</li>
  * <li>The newest filter is the {@code target} into which merges are performed.
- * <li>Whenever the target is retrieved, or a {@code merge} operation is
- * performed the code checks if any older layers should be removed, and if so
- * removes them. It also checks it a new layer should be added, and if so adds
- * it and sets the {@code target} before the operation.</li>
+ * <li>Whenever the target is retrieved, or a {@code merge} operation is performed the code checks if any older layers should be removed, and if so removes
+ * them. It also checks it a new layer should be added, and if so adds it and sets the {@code target} before the operation.</li>
  * </ul>
  *
  * @param <T> The type of Bloom Filter that is used for the layers.
@@ -118,8 +108,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Forces the execution of the cleanup Consumer that was provided when the associated LayerManager
-     * was built.
+     * Forces the execution of the cleanup Consumer that was provided when the associated LayerManager was built.
      *
      * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
      */
@@ -138,11 +127,9 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Returns {@code true} if this any layer contained by this filter contains the
-     * specified filter.
+     * Returns {@code true} if this any layer contained by this filter contains the specified filter.
      * <p>
-     * If the {@code other} is a BloomFilterExtractor each filter within the
-     * {@code other} is checked to see if it exits within this filter.
+     * If the {@code other} is a BloomFilterExtractor each filter within the {@code other} is checked to see if it exits within this filter.
      * </p>
      *
      * @param other the other Bloom filter
@@ -150,18 +137,14 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      */
     @Override
     public boolean contains(final BloomFilter other) {
-        return other instanceof BloomFilterExtractor ? contains((BloomFilterExtractor) other)
-                : !processBloomFilters(x -> !x.contains(other));
+        return other instanceof BloomFilterExtractor ? contains((BloomFilterExtractor) other) : !processBloomFilters(x -> !x.contains(other));
     }
 
     /**
-     * Returns {@code true} if each filter within the {@code bloomFilterExtractor} exits within
-     * this filter.
+     * Returns {@code true} if each filter within the {@code bloomFilterExtractor} exits within this filter.
      *
-     * @param bloomFilterExtractor the BloomFilterExtractor that provides the filters to check
-     *                 for.
-     * @return {@code true} if this filter contains all of the filters contained in
-     *         the {@code bloomFilterExtractor}.
+     * @param bloomFilterExtractor the BloomFilterExtractor that provides the filters to check for.
+     * @return {@code true} if this filter contains all of the filters contained in the {@code bloomFilterExtractor}.
      */
     public boolean contains(final BloomFilterExtractor bloomFilterExtractor) {
         final boolean[] result = { true };
@@ -290,8 +273,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Create a standard (non-layered) Bloom filter by merging all of the layers. If
-     * the filter is empty this method will return an empty Bloom filter.
+     * Create a standard (non-layered) Bloom filter by merging all of the layers. If the filter is empty this method will return an empty Bloom filter.
      *
      * @return the merged bloom filter.
      */
@@ -314,8 +296,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Gets the depth of the deepest layer. The minimum value returned by this
-     * method is 1.
+     * Gets the depth of the deepest layer. The minimum value returned by this method is 1.
      *
      * @return the depth of the deepest layer.
      */
@@ -349,8 +330,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Forces and advance to the next layer. This method will clean-up the current
-     * layers and generate a new filter layer. In most cases is it unnecessary to
+     * Forces and advance to the next layer. This method will clean-up the current layers and generate a new filter layer. In most cases is it unnecessary to
      * call this method directly.
      *
      * @see LayerManager.Builder#setCleanup(java.util.function.Consumer)
@@ -366,13 +346,11 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     }
 
     /**
-     * Processes the Bloom filters in depth order with the most recent filters
-     * first. Each filter is passed to the predicate in turn. The function exits on
-     * the first {@code false} returned by the predicate.
+     * Processes the Bloom filters in depth order with the most recent filters first. Each filter is passed to the predicate in turn. The function exits on the
+     * first {@code false} returned by the predicate.
      *
      * @param bloomFilterPredicate the predicate to execute.
-     * @return {@code true} if all filters passed the predicate, {@code false}
-     *         otherwise.
+     * @return {@code true} if all filters passed the predicate, {@code false} otherwise.
      */
     @Override
     public final boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {

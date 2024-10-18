@@ -25,25 +25,23 @@ import java.util.stream.IntStream;
 /**
  * A counting Bloom filter using an int array to track cells for each enabled bit.
  *
- * <p>Any operation that results in negative counts or integer overflow of
- * counts will mark this filter as invalid. This transition is not reversible.
- * The operation is completed in full, no exception is raised and the state is
- * set to invalid. This allows the cells for the filter immediately prior to the
- * operation that created the invalid state to be recovered. See the documentation
- * in {@link #isValid()} for details.</p>
+ * <p>
+ * Any operation that results in negative counts or integer overflow of counts will mark this filter as invalid. This transition is not reversible. The
+ * operation is completed in full, no exception is raised and the state is set to invalid. This allows the cells for the filter immediately prior to the
+ * operation that created the invalid state to be recovered. See the documentation in {@link #isValid()} for details.
+ * </p>
  *
- * <p>All the operations in the filter assume the cells are currently valid,
- * for example {@code cardinality} or {@code contains} operations. Behavior of an invalid
- * filter is undefined. It will no longer function identically to a standard
- * Bloom filter that is the merge of all the Bloom filters that have been added
- * to and not later subtracted from the counting Bloom filter.</p>
+ * <p>
+ * All the operations in the filter assume the cells are currently valid, for example {@code cardinality} or {@code contains} operations. Behavior of an invalid
+ * filter is undefined. It will no longer function identically to a standard Bloom filter that is the merge of all the Bloom filters that have been added to and
+ * not later subtracted from the counting Bloom filter.
+ * </p>
  *
- * <p>The maximum supported number of items that can be stored in the filter is
- * limited by the maximum array size combined with the {@link Shape}. For
- * example an implementation using a {@link Shape} with a false-positive
- * probability of 1e-6 and {@link Integer#MAX_VALUE} bits can reversibly store
- * approximately 75 million items using 20 hash functions per item with a memory
- * consumption of approximately 8 GB.
+ * <p>
+ * The maximum supported number of items that can be stored in the filter is limited by the maximum array size combined with the {@link Shape}. For example an
+ * implementation using a {@link Shape} with a false-positive probability of 1e-6 and {@link Integer#MAX_VALUE} bits can reversibly store approximately 75
+ * million items using 20 hash functions per item with a memory consumption of approximately 8 GB.
+ * </p>
  *
  * @see Shape
  * @see CellExtractor
@@ -196,16 +194,19 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * {@inheritDoc}
      *
-     * <p><em>Implementation note</em>
+     * <p>
+     * <em>Implementation note</em>
+     * </p>
      *
-     * <p>The state transition to invalid is permanent.</p>
+     * <p>
+     * The state transition to invalid is permanent.
+     * </p>
      *
-     * <p>This implementation does not correct negative cells to zero or integer
-     * overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that
-     * generated invalid cells can be reversed by using the complement of the
-     * original operation with the same Bloom filter. This will restore the cells
-     * to the state prior to the invalid operation. Cells can then be extracted
-     * using {@link #processCells(CellPredicate)}.</p>
+     * <p>
+     * This implementation does not correct negative cells to zero or integer overflow cells to {@link Integer#MAX_VALUE}. Thus the operation that generated
+     * invalid cells can be reversed by using the complement of the original operation with the same Bloom filter. This will restore the cells to the state
+     * prior to the invalid operation. Cells can then be extracted using {@link #processCells(CellPredicate)}.
+     * </p>
      */
     @Override
     public boolean isValid() {
@@ -270,7 +271,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     }
 
     /**
-     * Subtract from the cell for the bit index.
+     * Subtracts from the cell for the bit index.
      *
      * @param idx the index
      * @param subtrahend the amount to subtract

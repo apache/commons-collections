@@ -193,6 +193,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * the depth of a LayerManager.
      */
     public static final class ExtendCheck {
+
         /**
          * Creates a new target after a specific number of filters have been added to
          * the current target.
@@ -268,8 +269,8 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     }
 
     /**
-     * Creates a new Builder with defaults of {@code ExtendCheck.neverAdvance()} and
-     * {@code Cleanup.noCleanup()}.
+     * Creates a new Builder with defaults of {@link ExtendCheck#neverAdvance()} and
+     * {@link Cleanup#noCleanup()}.
      *
      * @param <T> Type of BloomFilter.
      * @return A builder.
@@ -319,6 +320,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Forces execution the configured cleanup without creating a new filter except in cases
      * where the cleanup removes all the layers.
+     *
      * @see LayerManager.Builder#setCleanup(Consumer)
      */
     void cleanup() {
@@ -408,6 +410,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Gets the Bloom filter from the last layer.
      * No extension check is performed during this call.
+     *
      * @return The Bloom filter from the last layer.
      * @see #getTarget()
      */
@@ -423,6 +426,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * Ths method is used within {@link #getTarget()} when the configured
      * {@code ExtendCheck} returns {@code true}.
      * </p>
+     *
      * @see LayerManager.Builder#setExtendCheck(Predicate)
      * @see LayerManager.Builder#setCleanup(Consumer)
      */

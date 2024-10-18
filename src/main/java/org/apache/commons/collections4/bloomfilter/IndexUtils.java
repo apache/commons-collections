@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 /**
  * Provides functions to assist in IndexExtractor creation and manipulation.
+ *
  * @see IndexExtractor
  */
 final class IndexUtils {
@@ -31,6 +32,7 @@ final class IndexUtils {
 
     /**
      * Ensure the array can add an element at the specified index.
+     *
      * @param array the array to check.
      * @param index the index to add at.
      * @return the array or a newly allocated copy of the array.

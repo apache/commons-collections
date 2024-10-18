@@ -33,9 +33,10 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
 
     /**
      * The sparse characteristic used to determine the best method for matching: {@value}.
-     * <p>For `sparse` implementations
-     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations
-     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier
+     * <p>
+     * For `sparse` implementations the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations the
+     * {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier.
+     * </p>
      */
     int SPARSE = 0x1;
 
@@ -51,15 +52,17 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
     // Query Operations
 
     /**
-     * Returns the characteristics of the filter.
+     * Gets the characteristics of the filter.
      * <p>
      * Characteristics are defined as bits within the characteristics integer.
+     * </p>
+     *
      * @return the characteristics for this bloom filter.
      */
     int characteristics();
 
     /**
-     * Resets the filter to its initial, unpopulated state.
+     * Clears the filter to by resetting it to its initial, unpopulated state.
      */
     void clear();
 

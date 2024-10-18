@@ -24,6 +24,7 @@ import java.util.function.LongPredicate;
 /**
  * A bloom filter using a TreeSet of integers to track enabled bits. This is a standard
  * implementation and should work well for most low cardinality Bloom filters.
+ *
  * @since 4.5.0
  */
 public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
@@ -56,6 +57,7 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
 
     /**
      * Adds the index to the indices.
+     *
      * @param idx the index to add.
      * @return {@code true} always
      */
@@ -160,10 +162,10 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
         final int limit = BitMaps.numberOfBitMaps(shape);
-        /*
-         * because our indices are always in order we can shorten the time necessary to
-         * create the longs for the consumer
-         */
+        //
+        // because our indices are always in order we can shorten the time necessary to
+        // create the longs for the consumer
+        //
         // the currently constructed bitMap
         long bitMap = 0;
         // the bitmap we are working on

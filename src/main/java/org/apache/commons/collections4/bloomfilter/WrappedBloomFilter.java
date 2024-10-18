@@ -33,6 +33,7 @@ public abstract class WrappedBloomFilter<T extends WrappedBloomFilter<T, W>, W e
     /**
      * Wraps a Bloom filter.  The wrapped filter is maintained as a reference
      * not a copy.  Changes in one will be reflected in the other.
+     *
      * @param wrapped The Bloom filter.
      */
     public WrappedBloomFilter(final W wrapped) {

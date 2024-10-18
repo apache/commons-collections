@@ -22,8 +22,7 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**
- * A bloom filter using an array of bit maps to track enabled bits. This is a standard
- * implementation and should work well for most Bloom filters.
+ * A bloom filter using an array of bit maps to track enabled bits. This is a standard implementation and should work well for most Bloom filters.
  *
  * @since 4.5.0
  */
@@ -58,6 +57,7 @@ public final class SimpleBloomFilter implements BloomFilter<SimpleBloomFilter> {
 
     /**
      * Copy constructor for {@code copy()} use.
+     *
      * @param source
      */
     private SimpleBloomFilter(final SimpleBloomFilter source) {
@@ -133,14 +133,12 @@ public final class SimpleBloomFilter implements BloomFilter<SimpleBloomFilter> {
                 final long excess = bitMap[idxLimit] >> shape.getNumberOfBits();
                 if (excess != 0) {
                     throw new IllegalArgumentException(
-                            String.format("BitMapExtractor set a bit higher than the limit for the shape: %s",
-                                    shape.getNumberOfBits()));
+                            String.format("BitMapExtractor set a bit higher than the limit for the shape: %s", shape.getNumberOfBits()));
                 }
             }
             cardinality = -1;
         } catch (final IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(
-                    String.format("BitMapExtractor should send at most %s maps", bitMap.length), e);
+            throw new IllegalArgumentException(String.format("BitMapExtractor should send at most %s maps", bitMap.length), e);
         }
         return true;
     }
@@ -167,8 +165,7 @@ public final class SimpleBloomFilter implements BloomFilter<SimpleBloomFilter> {
         Objects.requireNonNull(indexExtractor, "indexExtractor");
         indexExtractor.processIndices(idx -> {
             if (idx < 0 || idx >= shape.getNumberOfBits()) {
-                throw new IllegalArgumentException(String.format(
-                        "IndexExtractor should only send values in the range[0,%s)", shape.getNumberOfBits()));
+                throw new IllegalArgumentException(String.format("IndexExtractor should only send values in the range[0,%s)", shape.getNumberOfBits()));
             }
             BitMaps.set(bitMap, idx);
             return true;

@@ -25,13 +25,15 @@ package org.apache.commons.collections4.bloomfilter;
  * @since 4.5.0
  */
 public class BitMaps {
+
     /** A bit shift to apply to an integer to divided by 64 (2^6). */
     private static final int DIVIDE_BY_64 = 6;
 
     /**
      * Checks if the specified index bit is enabled in the array of bit maps.
-     *
+     * <p>
      * If the bit specified by bitIndex is not in the bit map false is returned.
+     * </p>
      *
      * @param bitMaps  The array of bit maps.
      * @param bitIndex the index of the bit to locate.

@@ -29,7 +29,7 @@ import java.util.function.IntPredicate;
  *
  * <h2>Thoughts on the hasher input</h2>
  *
- *<p>Note that it is worse to create smaller numbers for the {@code initial} and {@code increment}. If the {@code initial} is smaller than
+ * <p>Note that it is worse to create smaller numbers for the {@code initial} and {@code increment}. If the {@code initial} is smaller than
  * the number of bits in a filter then hashing will start at the same point when the size increases; likewise the {@code increment} will be
  * the same if it remains smaller than the number of bits in the filter and so the first few indices will be the same if the number of bits
  * changes (but is still larger than the {@code increment}). In a worse case scenario with small {@code initial} and {@code increment} for
@@ -48,6 +48,7 @@ public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * Convert bytes to big-endian long filling with zero bytes as necessary.
+     *
      * @param byteArray the byte array to extract the values from.
      * @param offset the offset to start extraction from.
      * @param len the length of the extraction, may be longer than 8.
@@ -82,7 +83,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * <p>The byte array is split in 2 and the first 8 bytes of each half are interpreted as a big-endian long value.
      * Excess bytes are ignored.
      * If there are fewer than 16 bytes the following conversions are made.
-     *</p>
+     * </p>
      * <ol>
      * <li>If there is an odd number of bytes the excess byte is assigned to the increment value</li>
      * <li>The bytes allotted are read in big-endian order any byte not populated is set to zero.</li>
@@ -90,6 +91,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * <p>
      * This ensures that small arrays generate the largest possible increment and initial values.
      * </p>
+     *
      * @param buffer the buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
      */
@@ -105,6 +107,7 @@ public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * Constructs the EnhancedDoubleHasher from 2 longs. The long values will be interpreted as unsigned values.
+     *
      * @param initial The initial value for the hasher.
      * @param increment The value to increment the hash by on each iteration.
      */
@@ -115,6 +118,7 @@ public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * Gets the increment value for the hash calculation.
+     *
      * @return the increment value for the hash calculation.
      */
     long getIncrement() {
@@ -123,6 +127,7 @@ public class EnhancedDoubleHasher implements Hasher {
 
     /**
      * Gets the initial value for the hash calculation.
+     *
      * @return the initial value for the hash calculation.
      */
     long getInitial() {
