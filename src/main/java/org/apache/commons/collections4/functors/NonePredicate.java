@@ -41,6 +41,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * Factory to create the predicate.
      * <p>
      * If the collection is size zero, the predicate always returns true.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
@@ -60,6 +61,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * Factory to create the predicate.
      * <p>
      * If the array is size zero, the predicate always returns true.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
