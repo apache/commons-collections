@@ -25,7 +25,7 @@ import java.util.Arrays;
 final class IndexUtils {
 
     /**
-     * The maximum array size for the methods in this class.
+     * The maximum array size for the methods in this class: {@value}.
      */
     static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 

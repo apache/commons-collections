@@ -32,11 +32,10 @@ import java.util.Objects;
 public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, BitMapExtractor {
 
     /**
-     * The sparse characteristic used to determine the best method for matching.
+     * The sparse characteristic used to determine the best method for matching: {@value}.
      * <p>For `sparse` implementations
      * the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations
      * the {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier
-     * for the implementation to produce indexes of bit map blocks.</p>
      */
     int SPARSE = 0x1;
 
