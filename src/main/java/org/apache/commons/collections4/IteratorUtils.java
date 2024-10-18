@@ -29,6 +29,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
