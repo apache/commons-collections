@@ -40,7 +40,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     /**
      * A Predicate that advances after a quantum of time.
      */
-    static class AdvanceOnTimeQuanta implements Predicate<LayerManager<TimestampedBloomFilter>> {
+    static class AdvanceOnTimeQuanta<T extends BloomFilter<T>> implements Predicate<LayerManager<TimestampedBloomFilter<T>>> {
         Duration quanta;
 
         AdvanceOnTimeQuanta(final Duration quanta) {
@@ -48,7 +48,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
 
         @Override
-        public boolean test(final LayerManager<TimestampedBloomFilter> layerManager) {
+        public boolean test(final LayerManager<TimestampedBloomFilter<T>> layerManager) {
             // can not use getTarget() as it causes recursion.
             return layerManager.last().getTimestamp().plus(quanta).isBefore(Instant.now());
         }
@@ -80,9 +80,11 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
     }
 
-    static class NumberedBloomFilter extends WrappedBloomFilter {
+    static class NumberedBloomFilter extends WrappedBloomFilter<NumberedBloomFilter, SimpleBloomFilter> {
+
         int value;
         int sequence;
+
         NumberedBloomFilter(final Shape shape, final int value, final int sequence) {
             super(new SimpleBloomFilter(shape));
             this.value = value;
@@ -90,7 +92,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         }
 
         @Override
-        public BloomFilter copy() {
+        public NumberedBloomFilter copy() {
             return new NumberedBloomFilter(getShape(), value, sequence);
         }
     }
@@ -98,22 +100,22 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     /**
      * A Bloom filter implementation that tracks the creation time.
      */
-    public static class TimestampedBloomFilter extends WrappedBloomFilter {
+    public static class TimestampedBloomFilter<T extends BloomFilter<T>> extends WrappedBloomFilter<TimestampedBloomFilter<T>, T> {
 
         private final Instant timestamp;
 
-        TimestampedBloomFilter(final BloomFilter bf) {
+        TimestampedBloomFilter(final T bf) {
             this(bf, Instant.now());
         }
 
-        TimestampedBloomFilter(final BloomFilter bf, final Instant timestamp) {
+        TimestampedBloomFilter(final T bf, final Instant timestamp) {
             super(bf);
             this.timestamp = timestamp;
         }
 
         @Override
-        public TimestampedBloomFilter copy() {
-            return new TimestampedBloomFilter(getWrapped().copy(), timestamp);
+        public TimestampedBloomFilter<T> copy() {
+            return new TimestampedBloomFilter<>(getWrapped().copy(), timestamp);
         }
 
         public Instant getTimestamp() {
@@ -135,11 +137,11 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      *                 will span at most this much time.
      * @return LayeredBloomFilter with the above properties.
      */
-    static LayeredBloomFilter<TimestampedBloomFilter> createTimedLayeredFilter(final Shape shape, final Duration duration, final Duration quanta) {
-        final LayerManager.Builder<TimestampedBloomFilter> builder = LayerManager.builder();
-        final Consumer<Deque<TimestampedBloomFilter>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration));
-        final LayerManager<TimestampedBloomFilter> layerManager = builder
-                .setSupplier(() -> new TimestampedBloomFilter(new SimpleBloomFilter(shape)))
+    static LayeredBloomFilter<TimestampedBloomFilter<SimpleBloomFilter>> createTimedLayeredFilter(final Shape shape, final Duration duration, final Duration quanta) {
+        final LayerManager.Builder<TimestampedBloomFilter<SimpleBloomFilter>> builder = LayerManager.builder();
+        final Consumer<Deque<TimestampedBloomFilter<SimpleBloomFilter>>> cleanup = Cleanup.removeEmptyTarget().andThen(new CleanByTime(duration));
+        final LayerManager<TimestampedBloomFilter<SimpleBloomFilter>> layerManager = builder
+                .setSupplier(() -> new TimestampedBloomFilter<>(new SimpleBloomFilter(shape)))
                 .setCleanup(cleanup)
                 .setExtendCheck(new AdvanceOnTimeQuanta(quanta)
                         .or(LayerManager.ExtendCheck.advanceOnSaturation(shape.estimateMaxN())))
@@ -156,7 +158,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * @param maxDepth The maximum depth of layers.
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
-    public static LayeredBloomFilter<BloomFilter> fixed(final Shape shape, final int maxDepth) {
+    public static LayeredBloomFilter<SimpleBloomFilter> fixed(final Shape shape, final int maxDepth) {
         return fixed(shape, maxDepth, () -> new SimpleBloomFilter(shape));
     }
 
@@ -170,7 +172,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
      * @param supplier A supplier of the Bloom filters to create layers with.
      * @return An empty layered Bloom filter of the specified shape and depth.
      */
-    public static <T extends BloomFilter> LayeredBloomFilter<T> fixed(final Shape shape, final int maxDepth, final Supplier<T> supplier) {
+    public static <T extends BloomFilter<T>> LayeredBloomFilter<T> fixed(final Shape shape, final int maxDepth, final Supplier<T> supplier) {
         final LayerManager.Builder<T> builder = LayerManager.builder();
         builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
                 .setCleanup(LayerManager.Cleanup.onMaxSize(maxDepth)).setSupplier(supplier);
@@ -188,7 +190,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     // *** end of instrumentation ***
 
     @Override
-    protected LayeredBloomFilter<BloomFilter> createEmptyFilter(final Shape shape) {
+    protected LayeredBloomFilter<SimpleBloomFilter> createEmptyFilter(final Shape shape) {
         return LayeredBloomFilterTest.fixed(shape, 10);
     }
 
@@ -208,8 +210,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         return makeFilter(IndexExtractor.fromIndexArray(values));
     }
 
-    private LayeredBloomFilter<BloomFilter> setupFindTest() {
-        final LayeredBloomFilter<BloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
+    private LayeredBloomFilter<SimpleBloomFilter> setupFindTest() {
+        final LayeredBloomFilter<SimpleBloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
         filter.merge(TestingHashers.FROM1);
         filter.merge(TestingHashers.FROM11);
         filter.merge(new IncrementingHasher(11, 2));
@@ -220,7 +222,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Override
     @Test
     public void testCardinalityAndIsEmpty() {
-        final LayerManager<BloomFilter> layerManager = LayerManager.builder().setExtendCheck(ExtendCheck.neverAdvance())
+        final LayerManager<SimpleBloomFilter> layerManager = LayerManager.<SimpleBloomFilter>builder().setExtendCheck(ExtendCheck.neverAdvance())
                 .setSupplier(() -> new SimpleBloomFilter(getTestShape())).get();
         testCardinalityAndIsEmpty(new LayeredBloomFilter<>(getTestShape(), layerManager));
     }
@@ -230,11 +232,11 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Test
     public void testCleanup() {
         final int[] sequence = {1};
-        final LayerManager layerManager = LayerManager.builder()
+        final LayerManager<NumberedBloomFilter> layerManager = LayerManager.<NumberedBloomFilter>builder()
                 .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
                 .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf(f -> (((NumberedBloomFilter) f).value-- == 0))).get();
-        final LayeredBloomFilter underTest = new LayeredBloomFilter(getTestShape(), layerManager);
+                .setCleanup(ll -> ll.removeIf(f -> (f.value-- == 0))).get();
+        final LayeredBloomFilter<NumberedBloomFilter> underTest = new LayeredBloomFilter<>(getTestShape(), layerManager);
         assertEquals(1, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());
         underTest.cleanup(); // first count == 2
@@ -243,19 +245,19 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         assertEquals(2, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());
         underTest.cleanup(); // first count == 0
-        NumberedBloomFilter f = (NumberedBloomFilter) underTest.get(0);
+        NumberedBloomFilter f = underTest.get(0);
         assertEquals(1, f.sequence);
 
         assertEquals(2, underTest.getDepth());
         underTest.cleanup(); // should be removed ; second is now 1st with value 1
         assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
+        f = underTest.get(0);
         assertEquals(2, f.sequence);
 
         underTest.cleanup(); // first count == 0
         underTest.cleanup(); // should be removed.  But there is always at least one
         assertEquals(1, underTest.getDepth());
-        f = (NumberedBloomFilter) underTest.get(0);
+        f = underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.
     }
     /**
@@ -282,7 +284,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         // create a filter that removes filters that are 4 seconds old
         // and quantises time to 1 second intervals.
-        final LayeredBloomFilter<TimestampedBloomFilter> underTest = createTimedLayeredFilter(shape, Duration.ofMillis(600), Duration.ofMillis(150));
+        final LayeredBloomFilter<TimestampedBloomFilter<SimpleBloomFilter>> underTest = createTimedLayeredFilter(shape, Duration.ofMillis(600),
+                Duration.ofMillis(150));
 
         for (int i = 0; i < 10; i++) {
             underTest.merge(TestingHashers.randomHasher());
@@ -314,7 +317,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public void testFindBitMapExtractor() {
-        final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
+        final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
 
         IndexExtractor indexExtractor = TestingHashers.FROM1.indices(getTestShape());
         BitMapExtractor bitMapExtractor = BitMapExtractor.fromIndexExtractor(indexExtractor, getTestShape().getNumberOfBits());
@@ -332,7 +335,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public void testFindBloomFilter() {
-        final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
+        final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
         int[] expected = {0, 3};
         int[] result = filter.find(TestingHashers.FROM1);
         assertArrayEquals(expected, result);
@@ -344,7 +347,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     @Test
     public void testFindIndexExtractor() {
         IndexExtractor indexExtractor = TestingHashers.FROM1.indices(getTestShape());
-        final LayeredBloomFilter<BloomFilter> filter = setupFindTest();
+        final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
 
         int[] expected = {0, 3};
         int[] result = filter.find(indexExtractor);
@@ -360,7 +363,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     public final void testGetLayer() {
         final BloomFilter bf = new SimpleBloomFilter(getTestShape());
         bf.merge(TestingHashers.FROM11);
-        final LayeredBloomFilter<BloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
+        final LayeredBloomFilter<SimpleBloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
         filter.merge(TestingHashers.FROM1);
         filter.merge(TestingHashers.FROM11);
         filter.merge(new IncrementingHasher(11, 2));
@@ -370,7 +373,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public void testMultipleFilters() {
-        final LayeredBloomFilter<BloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
+        final LayeredBloomFilter<SimpleBloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
         filter.merge(TestingHashers.FROM1);
         filter.merge(TestingHashers.FROM11);
         assertEquals(2, filter.getDepth());
@@ -384,10 +387,8 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Test
     public final void testNext() {
-        final LayerManager<BloomFilter> layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(getTestShape()))
-                .get();
-
-        final LayeredBloomFilter<BloomFilter> filter = new LayeredBloomFilter<>(getTestShape(), layerManager);
+        final LayerManager<SimpleBloomFilter> layerManager = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(getTestShape())).get();
+        final LayeredBloomFilter<SimpleBloomFilter> filter = new LayeredBloomFilter<>(getTestShape(), layerManager);
         filter.merge(TestingHashers.FROM1);
         filter.merge(TestingHashers.FROM11);
         assertEquals(1, filter.getDepth());

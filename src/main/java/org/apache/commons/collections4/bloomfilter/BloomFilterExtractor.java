@@ -41,12 +41,14 @@ public interface BloomFilterExtractor {
      * </ul>
      * <p><em>All modifications to the Bloom filters are reflected in the original filters</em></p>
      *
+     * @param <T> The BloomFilter type.
      * @param filters The filters to be returned by the extractor.
      * @return THe BloomFilterExtractor containing the filters.
      */
-    static BloomFilterExtractor fromBloomFilterArray(final BloomFilter... filters) {
+    static <T extends BloomFilter<T>> BloomFilterExtractor fromBloomFilterArray(final BloomFilter<?>... filters) {
         Objects.requireNonNull(filters, "filters");
         return new BloomFilterExtractor() {
+
             /**
              * This implementation returns a copy the original array, the contained Bloom filters
              * are references to the originals, any modifications to them are reflected in the original

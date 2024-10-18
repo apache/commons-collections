@@ -29,8 +29,8 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractBloomFilterExtractorTest {
     private final Shape shape = Shape.fromKM(17, 72);
 
-    BloomFilter one = new SimpleBloomFilter(shape);
-    BloomFilter two = new SimpleBloomFilter(shape);
+    SimpleBloomFilter one = new SimpleBloomFilter(shape);
+    SimpleBloomFilter two = new SimpleBloomFilter(shape);
     int[] nullCount = { 0, 0 };
     int[] equalityCount = { 0 };
     BiPredicate<BloomFilter, BloomFilter> counter = (x, y) -> {

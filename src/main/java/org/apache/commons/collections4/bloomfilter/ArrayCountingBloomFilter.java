@@ -160,6 +160,11 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
         return indexExtractor.processIndices(idx -> cells[idx] != 0);
     }
 
+    /**
+     * Creates a new instance of this {@link ArrayCountingBloomFilter} with the same properties as the current one.
+     *
+     * @return a copy of this BloomFilter.
+     */
     @Override
     public ArrayCountingBloomFilter copy() {
         return new ArrayCountingBloomFilter(this);

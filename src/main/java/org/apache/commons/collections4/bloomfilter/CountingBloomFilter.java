@@ -54,7 +54,7 @@ import java.util.Objects;
  * @see CellExtractor
  * @since 4.5.0
  */
-public interface CountingBloomFilter extends BloomFilter, CellExtractor {
+public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, CellExtractor {
 
     // Query Operations
 
@@ -73,13 +73,6 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #subtract(CellExtractor)
      */
     boolean add(CellExtractor other);
-
-    /**
-     * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
-     * @return a copy of this CountingBloomFilter
-     */
-    @Override
-    CountingBloomFilter copy();
 
     /**
      * Returns the maximum allowable value for a cell count in this Counting filter.
@@ -114,7 +107,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @param bloomFilter the Bloom filter the check for.
      * @return the maximum number of times the Bloom filter could have been inserted.
      */
-    default int getMaxInsert(final BloomFilter bloomFilter) {
+    default int getMaxInsert(final BloomFilter<?> bloomFilter) {
         return getMaxInsert((BitMapExtractor) bloomFilter);
     }
 
@@ -204,7 +197,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #add(CellExtractor)
      */
     @Override
-    default boolean merge(final BloomFilter other) {
+    default boolean merge(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         return merge((IndexExtractor) other);
     }
@@ -288,7 +281,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #isValid()
      * @see #subtract(CellExtractor)
      */
-    default boolean remove(final BloomFilter other) {
+    default boolean remove(final BloomFilter<?> other) {
         return remove((IndexExtractor) other);
     }
 

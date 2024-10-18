@@ -24,9 +24,10 @@ import java.util.function.LongPredicate;
 /**
  * A bloom filter using an array of bit maps to track enabled bits. This is a standard
  * implementation and should work well for most Bloom filters.
+ *
  * @since 4.5.0
  */
-public final class SimpleBloomFilter implements BloomFilter {
+public final class SimpleBloomFilter implements BloomFilter<SimpleBloomFilter> {
 
     /**
      * The array of bit map longs that defines this Bloom filter. Will be null if the filter is empty.
@@ -96,6 +97,11 @@ public final class SimpleBloomFilter implements BloomFilter {
         return indexExtractor.processIndices(idx -> BitMaps.contains(bitMap, idx));
     }
 
+    /**
+     * Creates a new instance of this {@link SimpleBloomFilter} with the same properties as the current one.
+     *
+     * @return a copy of this {@link SimpleBloomFilter}.
+     */
     @Override
     public SimpleBloomFilter copy() {
         return new SimpleBloomFilter(this);
@@ -140,7 +146,7 @@ public final class SimpleBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BloomFilter other) {
+    public boolean merge(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         if ((other.characteristics() & SPARSE) != 0) {
             merge((IndexExtractor) other);

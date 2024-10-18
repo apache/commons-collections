@@ -26,7 +26,7 @@ import java.util.function.LongPredicate;
  * implementation and should work well for most low cardinality Bloom filters.
  * @since 4.5.0
  */
-public final class SparseBloomFilter implements BloomFilter {
+public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
 
     /**
      * The bitSet that defines this BloomFilter.
@@ -98,6 +98,11 @@ public final class SparseBloomFilter implements BloomFilter {
         return indexExtractor.processIndices(indices::contains);
     }
 
+    /**
+     * Creates a new instance of this {@link SparseBloomFilter} with the same properties as the current one.
+     *
+     * @return a copy of this {@link SparseBloomFilter}.
+     */
     @Override
     public SparseBloomFilter copy() {
         return new SparseBloomFilter(this);
@@ -120,7 +125,7 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BloomFilter other) {
+    public boolean merge(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         final IndexExtractor indexExtractor = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapExtractor(other);
         merge(indexExtractor);

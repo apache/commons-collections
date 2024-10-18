@@ -112,7 +112,7 @@ public final class SetOperations {
      * @param second the second Bloom filter.
      * @return the Cosine similarity.
      */
-    public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
+    public static double cosineSimilarity(final BloomFilter<?> first, final BloomFilter<?> second) {
         final int numerator = andCardinality(first, second);
         // Given that the cardinality is an int then the product as a double will not
         // overflow, we can use one sqrt:
