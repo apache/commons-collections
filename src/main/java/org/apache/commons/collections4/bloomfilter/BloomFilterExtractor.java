@@ -118,7 +118,7 @@ public interface BloomFilterExtractor {
      * Applies the {@code func} to each Bloom filter pair in order. Will apply all
      * of the Bloom filters from the other BloomFilterExtractor to this extractor. If
      * either {@code this} extractor or {@code other} extractor has fewer BloomFilters
-     * ths method will provide {@code null} for all excess calls to the {@code func}.
+     * the method will provide {@code null} for all excess calls to the {@code func}.
      *
      * <p><em>This implementation returns references to the Bloom filter.  Other implementations
      * should specify if the array contains deep copies, immutable instances,
