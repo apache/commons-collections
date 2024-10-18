@@ -37,6 +37,7 @@
     <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory, Alex Herbert">BloomFilterExtractor.flatten() should throw an exception instead of returning null.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory, Claude Warren">Improve WrappedBloomFilterTest. All tests now assert copy() the same way.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory,  Daniele" issue="COLLECTIONS-860">Javadoc CollectionBag.add* to throw ClassCastException.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
