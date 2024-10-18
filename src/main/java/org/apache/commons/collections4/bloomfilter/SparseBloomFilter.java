@@ -199,11 +199,6 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     @Override
     public boolean processIndices(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (final int value : indices) {
-            if (!consumer.test(value)) {
-                return false;
-            }
-        }
-        return true;
+        return indices.stream().allMatch(consumer::test);
     }
 }
