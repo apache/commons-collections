@@ -76,7 +76,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     public boolean hasNext() {
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-
         return currentIterator.hasNext();
     }
 
@@ -90,7 +89,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     public E next() {
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-
         return currentIterator.next();
     }
 
@@ -141,7 +139,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
-
         while (!currentIterator.hasNext() && !chainExhausted) {
             final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
             if (nextIterator != null) {
