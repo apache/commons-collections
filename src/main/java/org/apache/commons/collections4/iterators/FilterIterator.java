@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another {@link Iterator} using a predicate to filter elements.
+ * Decorates an {@link Iterator} using an optional predicate to filter elements.
  * <p>
  * This iterator decorates the underlying iterator, only allowing through
  * those elements that match the specified {@link Predicate Predicate}.
@@ -33,16 +33,16 @@ import org.apache.commons.collections4.Predicate;
  */
 public class FilterIterator<E> implements Iterator<E> {
 
-    /** The iterator being used */
+    /** The iterator to be filtered. */
     private Iterator<? extends E> iterator;
 
-    /** The predicate being used */
+    /** The predicate to filter elements. */
     private Predicate<? super E> predicate;
 
-    /** The next object in the iteration */
+    /** The next object in the iteration. */
     private E nextObject;
 
-    /** Whether the next object has been calculated yet */
+    /** Whether the next object has been calculated yet. */
     private boolean nextObjectSet;
 
     /**
@@ -77,7 +77,7 @@ public class FilterIterator<E> implements Iterator<E> {
     /**
      * Gets the iterator this iterator is using.
      *
-     * @return the iterator
+     * @return the underlying iterator.
      */
     public Iterator<? extends E> getIterator() {
         return iterator;
@@ -86,7 +86,7 @@ public class FilterIterator<E> implements Iterator<E> {
     /**
      * Gets the predicate this iterator is using.
      *
-     * @return the predicate
+     * @return the filtering predicate.
      */
     public Predicate<? super E> getPredicate() {
         return predicate;
