@@ -70,12 +70,6 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     }
 
     @Test
-    public void testRemoveThrows() {
-        final CartesianProductIterator<Character> it = makeObject();
-        assertThrows(UnsupportedOperationException.class, it::remove);
-    }
-
-    @Test
     public void testEmptyCollection() {
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, Collections.emptyList());
         assertFalse(it.hasNext());
@@ -106,12 +100,12 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     }
 
     /**
-     * test checking that no tuples are returned when at least one of the lists is empty
+     * test checking that no tuples are returned when all the lists are empty
      */
     @Test
-    public void testExhaustivityWithEmptyList() {
+    public void testExhaustivityWithAllEmptyLists() {
         final List<Character[]> resultsList = new ArrayList<>();
-        final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, emptyList, symbols);
+        final CartesianProductIterator<Character> it = new CartesianProductIterator<>(emptyList, emptyList, emptyList);
         while (it.hasNext()) {
             final List<Character> tuple = it.next();
             resultsList.add(tuple.toArray(new Character[0]));
@@ -151,12 +145,12 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     }
 
     /**
-     * test checking that no tuples are returned when all the lists are empty
+     * test checking that no tuples are returned when at least one of the lists is empty
      */
     @Test
-    public void testExhaustivityWithAllEmptyLists() {
+    public void testExhaustivityWithEmptyList() {
         final List<Character[]> resultsList = new ArrayList<>();
-        final CartesianProductIterator<Character> it = new CartesianProductIterator<>(emptyList, emptyList, emptyList);
+        final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, emptyList, symbols);
         while (it.hasNext()) {
             final List<Character> tuple = it.next();
             resultsList.add(tuple.toArray(new Character[0]));
@@ -205,5 +199,11 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
                 }
             }
         }
+    }
+
+    @Test
+    public void testRemoveThrows() {
+        final CartesianProductIterator<Character> it = makeObject();
+        assertThrows(UnsupportedOperationException.class, it::remove);
     }
 }

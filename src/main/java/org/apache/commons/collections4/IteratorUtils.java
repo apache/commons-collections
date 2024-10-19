@@ -428,27 +428,6 @@ public class IteratorUtils {
     }
 
     /**
-     * Gets an iterator that iterates through an {@link Iterator} of Iterators one after another.
-     *
-     * @param <E>       the element type
-     * @param iterators the iterators to use, not null or empty or contain nulls
-     * @return a combination iterator over the iterators
-     * @throws NullPointerException if iterators collection is null or contains a null
-     * @throws ClassCastException   if the iterators collection contains the wrong object type
-     * @since 4.5.0-M3
-     */
-    public static <E> Iterator<E> chainedIterator(final Iterator<? extends Iterator<? extends E>> iterators) {
-        return new LazyIteratorChain<E>() {
-
-            @Override
-            protected Iterator<? extends E> nextIterator(final int count) {
-                return iterators.hasNext() ? iterators.next() : null;
-            }
-
-        };
-    }
-
-    /**
      * Gets an iterator that iterates through an array of {@link Iterator}s
      * one after another.
      *
@@ -476,6 +455,27 @@ public class IteratorUtils {
         // keep a version with two iterators to avoid the following warning in client code (Java 5 & 6)
         // "A generic array of E is created for a varargs parameter"
         return new IteratorChain<>(iterator1, iterator2);
+    }
+
+    /**
+     * Gets an iterator that iterates through an {@link Iterator} of Iterators one after another.
+     *
+     * @param <E>       the element type
+     * @param iterators the iterators to use, not null or empty or contain nulls
+     * @return a combination iterator over the iterators
+     * @throws NullPointerException if iterators collection is null or contains a null
+     * @throws ClassCastException   if the iterators collection contains the wrong object type
+     * @since 4.5.0-M3
+     */
+    public static <E> Iterator<E> chainedIterator(final Iterator<? extends Iterator<? extends E>> iterators) {
+        return new LazyIteratorChain<E>() {
+
+            @Override
+            protected Iterator<? extends E> nextIterator(final int count) {
+                return iterators.hasNext() ? iterators.next() : null;
+            }
+
+        };
     }
 
     /**

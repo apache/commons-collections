@@ -94,6 +94,21 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
+    public void testConstructList() {
+        final List<Iterator<String>> list = new ArrayList<>();
+        list.add(list1.iterator());
+        list.add(list2.iterator());
+        list.add(list3.iterator());
+        final List<String> expected = new ArrayList<>(list1);
+        expected.addAll(list2);
+        expected.addAll(list3);
+        final IteratorChain<String> iter = new IteratorChain<>(list);
+        final List<String> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(actual, expected);
+    }
+
+    @Test
     public void testEmptyChain() {
         final IteratorChain<Object> chain = new IteratorChain<>();
         assertFalse(chain.hasNext());
@@ -135,21 +150,6 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         } catch (final Exception e) {
             assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
         }
-    }
-
-    @Test
-    public void testConstructList() {
-        final List<Iterator<String>> list = new ArrayList<>();
-        list.add(list1.iterator());
-        list.add(list2.iterator());
-        list.add(list3.iterator());
-        final List<String> expected = new ArrayList<>(list1);
-        expected.addAll(list2);
-        expected.addAll(list3);
-        final IteratorChain<String> iter = new IteratorChain<>(list);
-        final List<String> actual = new ArrayList<>();
-        iter.forEachRemaining(actual::add);
-        assertEquals(actual, expected);
     }
 
     @Test
