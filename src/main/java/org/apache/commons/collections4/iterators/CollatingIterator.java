@@ -34,6 +34,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * Given two ordered {@link Iterator} instances {@code A} and
  * {@code B}, the {@link #next} method on this iterator will return the
  * lesser of {@code A.next()} and {@code B.next()}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 2.1

@@ -26,6 +26,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * This class provides an implementation of an empty iterator.
  * This class provides for binary compatibility between Commons Collections
  * 2.1.1 and 3.1 due to issues with {@code IteratorUtils}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 2.1.1 and 3.1
@@ -34,6 +35,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> {
 
     /**
      * Singleton instance of the iterator.
+     *
      * @since 3.1
      */
     @SuppressWarnings("rawtypes")
@@ -41,6 +43,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> {
 
     /**
      * Singleton instance of the iterator.
+     *
      * @since 2.1.1 and 3.1
      */
     @SuppressWarnings("rawtypes")
@@ -48,6 +51,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> {
 
     /**
      * Gets a typed empty iterator instance.
+     *
      * @param <E> the element type
      * @return Iterator&lt;E&gt;
      */
@@ -57,6 +61,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> {
 
     /**
      * Gets a typed resettable empty iterator instance.
+     *
      * @param <E> the element type
      * @return ResettableIterator&lt;E&gt;
      */

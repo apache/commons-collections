@@ -26,9 +26,11 @@ import java.util.Objects;
  * <p>
  * The decorator stores the pushed back elements in a LIFO manner: the last element
  * that has been pushed back, will be returned as the next element in a call to {@link #next()}.
+ * </p>
  * <p>
  * The decorator does not support the removal operation. Any call to {@link #remove()} will
  * result in an {@link UnsupportedOperationException}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 4.0
@@ -39,6 +41,7 @@ public class PushbackIterator<E> implements Iterator<E> {
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
      * If the iterator is already a {@link PushbackIterator} it is returned directly.
+     * </p>
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
@@ -84,6 +87,7 @@ public class PushbackIterator<E> implements Iterator<E> {
      * Push back the given element to the iterator.
      * <p>
      * Calling {@link #next()} immediately afterwards will return exactly this element.
+     * </p>
      *
      * @param item  the element to push back to the iterator
      */

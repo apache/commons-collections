@@ -25,9 +25,11 @@ import java.util.Iterator;
  * method from the Iterator interface is called, the LazyIteratorChain will delegate
  * to a single underlying Iterator. The LazyIteratorChain will invoke the Iterators
  * in sequence until all Iterators are exhausted.
+ * </p>
  * <p>
  * The Iterators are provided by {@link #nextIterator(int)} which has to be overridden by
  * subclasses and allows to lazily create the Iterators as they are accessed:
+ * </p>
  * <pre>
  * return new LazyIteratorChain&lt;String&gt;() {
  *     protected Iterator&lt;String&gt; nextIterator(int count) {
@@ -39,9 +41,11 @@ import java.util.Iterator;
  * Once the inner Iterator's {@link Iterator#hasNext()} method returns false,
  * {@link #nextIterator(int)} will be called to obtain another iterator, and so on
  * until {@link #nextIterator(int)} returns null, indicating that the chain is exhausted.
+ * </p>
  * <p>
  * NOTE: The LazyIteratorChain may contain no iterators. In this case the class will
  * function as an empty iterator.
+ * </p>
  *
  * @param <E> the type of elements in this iterator.
  * @since 4.0
@@ -94,6 +98,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * Gets the next iterator after the previous one has been exhausted.
      * <p>
      * This method <b>MUST</b> return null when there are no more iterators.
+     * </p>
      *
      * @param count the number of time this method has been called (starts with 1)
      * @return the next iterator, or null if there are no more.
@@ -106,6 +111,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * As with next() and hasNext(), this method calls remove() on the underlying Iterator.
      * Therefore, this method may throw an UnsupportedOperationException if the underlying
      * Iterator does not support this method.
+     * </p>
      *
      * @throws UnsupportedOperationException if the remove operator is not
      *   supported by the underlying Iterator

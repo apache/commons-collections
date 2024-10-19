@@ -33,9 +33,11 @@ import java.util.Objects;
  * The iterator will return exactly n! permutations of the input collection.
  * The {@code remove()} operation is not supported, and will throw an
  * {@code UnsupportedOperationException}.
+ * </p>
  * <p>
  * NOTE: in case an empty collection is provided, the iterator will
  * return exactly one empty list as result, as 0! = 1.
+ * </p>
  *
  * @param <E>  the type of the objects being permuted
  *

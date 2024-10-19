@@ -25,9 +25,11 @@ import org.apache.commons.collections4.ResettableIterator;
  * <p>
  * This iterator does not support {@link #remove}, as the object array cannot be
  * structurally modified.
+ * </p>
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.0

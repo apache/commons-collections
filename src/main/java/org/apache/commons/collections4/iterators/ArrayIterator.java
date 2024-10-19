@@ -28,9 +28,11 @@ import org.apache.commons.collections4.ResettableIterator;
  * that you have an object array, the
  * {@link org.apache.commons.collections4.iterators.ObjectArrayIterator ObjectArrayIterator}
  * class is a better choice, as it will perform better.
+ * </p>
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of
  * the iterator back to the start if required.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 1.0
@@ -114,7 +116,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
         }
     }
 
-    // Properties
     /**
      * Gets the array that this iterator is iterating over.
      *
@@ -144,7 +145,6 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
         return startIndex;
     }
 
-    // Iterator interface
     /**
      * Returns true if there are more elements to return from the array.
      *

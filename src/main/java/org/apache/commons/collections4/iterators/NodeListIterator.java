@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
  * <p>
  * This iterator does not support {@link #remove()} as a {@link NodeList} does not support
  * removal of items.
+ * </p>
  *
  * @since 4.0
  * @see NodeList

@@ -25,9 +25,11 @@ import org.apache.commons.collections4.ResettableListIterator;
  * <p>
  * This iterator does not support {@link #add} or {@link #remove}, as the object array
  * cannot be structurally modified. The {@link #set} method is supported however.
+ * </p>
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @see org.apache.commons.collections4.iterators.ObjectArrayIterator
@@ -172,13 +174,15 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * <p>
      * This method sets the element that was returned by the last call
      * to {@link #next()} of {@link #previous()}.
-     *
+     * </p>
+     * <p>
      * <b>Note:</b> {@link java.util.ListIterator} implementations that support {@code add()}
      * and {@code remove()} only allow {@code set()} to be called once per call
      * to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
      * Javadoc for more details). Since this implementation does not support
      * {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
+     * </p>
      *
      * @param obj  the object to set into the array
      * @throws IllegalStateException if next() has not yet been called.

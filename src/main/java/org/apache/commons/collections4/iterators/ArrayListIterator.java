@@ -27,10 +27,11 @@ import org.apache.commons.collections4.ResettableListIterator;
  * The array can be either an array of object or of primitives. If you know
  * that you have an object array, the {@link ObjectArrayListIterator}
  * class is a better choice, as it will perform better.
- *
+ * </p>
  * <p>
  * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the array
  * cannot be changed in size. The {@link #set(Object)} method is supported however.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @see org.apache.commons.collections4.iterators.ArrayIterator
@@ -105,7 +106,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         throw new UnsupportedOperationException("add() method is not supported");
     }
 
-    // ListIterator interface
     /**
      * Returns true if there are previous elements to return from the array.
      *
@@ -182,6 +182,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * <p>
      * This method sets the element that was returned by the last call
      * to {@link #next()} of {@link #previous()}.
+     * </p>
      * <p>
      * <b>Note:</b> {@link java.util.ListIterator} implementations that support
      * {@code add()} and {@code remove()} only allow {@code set()} to be called
@@ -189,6 +190,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * Javadoc for more details). Since this implementation does
      * not support {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
+     * </p>
      *
      * @param o  the element to set
      * @throws IllegalStateException if {@link #next()} or {@link #previous()} has not been called

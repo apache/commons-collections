@@ -33,6 +33,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * However, the {@code nextIndex()} method returns the correct
  * index in the list, thus it starts high and reduces as the iteration
  * continues. The previous methods work similarly.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.2
