@@ -49,6 +49,22 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         super(IteratorChainTest.class.getSimpleName());
     }
 
+    public List<String> getList1() {
+        return list1;
+    }
+
+    public List<String> getList2() {
+        return list2;
+    }
+
+    public List<String> getList3() {
+        return list3;
+    }
+
+    public String[] getTestArray() {
+        return testArray;
+    }
+
     @Override
     public IteratorChain<String> makeEmptyIterator() {
         final ArrayList<String> list = new ArrayList<>();

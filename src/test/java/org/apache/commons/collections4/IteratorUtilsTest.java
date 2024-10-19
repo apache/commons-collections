@@ -53,6 +53,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.IteratorChainTest;
 import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ZippingIterator;
@@ -435,12 +436,32 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testChainedIterator() {
+    public void testChainedIteratorRawGenerics() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.chainedIterator(iterator) instanceof Iterator, "create instance fail");
         final Collection<Iterator<?>> coll = new ArrayList();
         assertTrue(IteratorUtils.chainedIterator(coll) instanceof Iterator, "create instance fail");
+    }
+
+    @Test
+    public void testChainedIteratorString() {
+        // String
+        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
+        iteratorChainTest.setUp();
+        // @formateter:off
+        final Iterator<String> iterator = IteratorUtils.chainedIterator(
+                iteratorChainTest.getList1().iterator(),
+                iteratorChainTest.getList2().iterator(),
+                iteratorChainTest.getList3().iterator());
+        // @formateter:on
+        assertEquals("One", iterator.next());
+        assertEquals("Two", iterator.next());
+        assertEquals("Three", iterator.next());
+        assertEquals("Four", iterator.next());
+        assertEquals("Five", iterator.next());
+        assertEquals("Six", iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     /**
