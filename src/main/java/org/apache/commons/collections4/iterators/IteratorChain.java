@@ -97,8 +97,8 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws ClassCastException if iterators collection doesn't contain an
      * iterator
      */
-    public IteratorChain(final Collection<? extends Iterator<? extends E>> iteratorChain) {
-        for (final Iterator<? extends E> iterator : iteratorChain) {
+    public IteratorChain(final Collection<? extends Iterator<? extends E>> iteratorQueue) {
+        for (final Iterator<? extends E> iterator : iteratorQueue) {
             addIterator(iterator);
         }
     }
