@@ -57,7 +57,7 @@ import java.util.Queue;
 public class IteratorChain<E> implements Iterator<E> {
 
     /** The chain of iterators */
-    private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<>();
+    private final Queue<Iterator<? extends E>> iteratorQueue = new LinkedList<>();
 
     /** The current iterator */
     private Iterator<? extends E> currentIterator;
@@ -92,7 +92,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterator will iterate through each one of the input iterators in turn.
      * </p>
      *
-     * @param iteratorChain the collection of iterators, not null
+     * @param iteratorQueue the collection of iterators, not null
      * @throws NullPointerException if iterators collection is or contains null
      * @throws ClassCastException if iterators collection doesn't contain an
      * iterator
@@ -129,7 +129,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * will iterate through each one of the input iterators in turn.
      * </p>
      *
-     * @param iteratorChain the array of iterators, not null
+     * @param iteratorQueue the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
     public IteratorChain(final Iterator<? extends E>... iteratorChain) {
@@ -163,7 +163,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        iteratorChain.add(Objects.requireNonNull(iterator, "iterator"));
+        iteratorQueue.add(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**
@@ -171,8 +171,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     private void checkLocked() {
         if (isLocked) {
-            throw new UnsupportedOperationException(
-                    "IteratorChain cannot be changed after the first use of a method from the Iterator interface");
+            throw new UnsupportedOperationException("IteratorChain cannot be changed after the first use of a method from the Iterator interface");
         }
     }
 
@@ -186,7 +185,6 @@ public class IteratorChain<E> implements Iterator<E> {
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-
         return currentIterator.hasNext();
     }
 
@@ -255,7 +253,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @return Iterator count
      */
     public int size() {
-        return iteratorChain.size();
+        return iteratorQueue.size();
     }
 
     /**
@@ -264,18 +262,17 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
-            if (iteratorChain.isEmpty()) {
+            if (iteratorQueue.isEmpty()) {
                 currentIterator = EmptyIterator.<E>emptyIterator();
             } else {
-                currentIterator = iteratorChain.remove();
+                currentIterator = iteratorQueue.remove();
             }
             // set last used iterator here, in case the user calls remove
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
-
-        while (!currentIterator.hasNext() && !iteratorChain.isEmpty()) {
-            currentIterator = iteratorChain.remove();
+        while (!currentIterator.hasNext() && !iteratorQueue.isEmpty()) {
+            currentIterator = iteratorQueue.remove();
         }
     }
 
