@@ -132,8 +132,8 @@ public class IteratorChain<E> implements Iterator<E> {
      * @param iteratorQueue the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
-    public IteratorChain(final Iterator<? extends E>... iteratorChain) {
-        for (final Iterator<? extends E> element : iteratorChain) {
+    public IteratorChain(final Iterator<? extends E>... iteratorQueue) {
+        for (final Iterator<? extends E> element : iteratorQueue) {
             addIterator(element);
         }
     }
