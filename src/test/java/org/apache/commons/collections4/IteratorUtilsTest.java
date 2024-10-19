@@ -440,12 +440,12 @@ public class IteratorUtilsTest {
         // String
         final IteratorChainTest iteratorChainTest = new IteratorChainTest();
         iteratorChainTest.setUp();
-        // @formateter:off
+        // @formatter:off
         final Iterator<String> iterator = IteratorUtils.chainedIterator(
                 iteratorChainTest.getList1().iterator(),
                 iteratorChainTest.getList2().iterator(),
                 iteratorChainTest.getList3().iterator());
-        // @formateter:on
+        // @formatter:on
         assertEquals("One", iterator.next());
         assertEquals("Two", iterator.next());
         assertEquals("Three", iterator.next());
