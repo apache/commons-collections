@@ -436,6 +436,26 @@ public class IteratorUtilsTest {
     }
 
     @Test
+    public void testChainedIteratorArrayOfIterator() {
+        // String
+        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
+        iteratorChainTest.setUp();
+        // @formateter:off
+        final Iterator<String> iterator = IteratorUtils.chainedIterator(
+                iteratorChainTest.getList1().iterator(),
+                iteratorChainTest.getList2().iterator(),
+                iteratorChainTest.getList3().iterator());
+        // @formateter:on
+        assertEquals("One", iterator.next());
+        assertEquals("Two", iterator.next());
+        assertEquals("Three", iterator.next());
+        assertEquals("Four", iterator.next());
+        assertEquals("Five", iterator.next());
+        assertEquals("Six", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
     public void testChainedIteratorList() {
         final IteratorChainTest iteratorChainTest = new IteratorChainTest();
         iteratorChainTest.setUp();
@@ -453,32 +473,39 @@ public class IteratorUtilsTest {
     }
 
     @Test
+    public void testChainedIteratorOfIterators() {
+        final List<List<Number>> lst = new ArrayList<>();
+        final List<Integer> iList = Arrays.asList(1, 3);
+        lst.add(Arrays.asList(3.14f, Math.sqrt(2.0)));
+        final Iterator<Iterator<Number>> toBeUnwound = new Iterator<Iterator<Number>>() {
+            List<List<Number>> lst = Arrays.asList(Arrays.asList(1, 3), Arrays.asList(3.14F, Math.sqrt(2.0)));
+            Iterator<List<Number>> lstIter = lst.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return lstIter.hasNext();
+            }
+
+            @Override
+            public Iterator<Number> next() {
+                return lstIter.next().iterator();
+            }
+        };
+
+        final List<Number> expected = Arrays.asList(1, 3, 3.14f, Math.sqrt(2.0));
+        final Iterator<Number> iter = IteratorUtils.chainedIterator(toBeUnwound);
+        final List<Number> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(actual, expected);
+    }
+
+    @Test
     public void testChainedIteratorRawGenerics() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.chainedIterator(iterator) instanceof Iterator, "create instance fail");
         final Collection<Iterator<?>> coll = new ArrayList();
         assertTrue(IteratorUtils.chainedIterator(coll) instanceof Iterator, "create instance fail");
-    }
-
-    @Test
-    public void testChainedIteratorString() {
-        // String
-        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
-        iteratorChainTest.setUp();
-        // @formateter:off
-        final Iterator<String> iterator = IteratorUtils.chainedIterator(
-                iteratorChainTest.getList1().iterator(),
-                iteratorChainTest.getList2().iterator(),
-                iteratorChainTest.getList3().iterator());
-        // @formateter:on
-        assertEquals("One", iterator.next());
-        assertEquals("Two", iterator.next());
-        assertEquals("Three", iterator.next());
-        assertEquals("Four", iterator.next());
-        assertEquals("Five", iterator.next());
-        assertEquals("Six", iterator.next());
-        assertFalse(iterator.hasNext());
     }
 
     /**
