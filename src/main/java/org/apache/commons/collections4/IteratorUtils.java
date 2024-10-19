@@ -422,7 +422,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterators collection is null or contains a null
      * @throws ClassCastException if the iterators collection contains the wrong object type
      */
-    public static <E> Iterator<E> chainedIterator(final Collection<Iterator<? extends E>> iterators) {
+    public static <E> Iterator<E> chainedIterator(final Collection<? extends Iterator<? extends E>> iterators) {
         return new IteratorChain<>(iterators);
     }
 

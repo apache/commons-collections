@@ -39,6 +39,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory, Claude Warren">Improve WrappedBloomFilterTest. All tests now assert copy() the same way.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory,  Daniele" issue="COLLECTIONS-860">Javadoc CollectionBag.add* to throw ClassCastException.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in IteratorChain.IteratorChain(Collection).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in org.apache.commons.collections4.IteratorUtils.chainedIterator(Collection).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>

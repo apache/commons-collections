@@ -436,6 +436,23 @@ public class IteratorUtilsTest {
     }
 
     @Test
+    public void testChainedIteratorList() {
+        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
+        iteratorChainTest.setUp();
+        final List<Iterator<String>> list = new ArrayList<>();
+        list.add(iteratorChainTest.getList1().iterator());
+        list.add(iteratorChainTest.getList2().iterator());
+        list.add(iteratorChainTest.getList3().iterator());
+        final List<String> expected = new ArrayList<>(iteratorChainTest.getList1());
+        expected.addAll(iteratorChainTest.getList2());
+        expected.addAll(iteratorChainTest.getList3());
+        final Iterator<String> iter = IteratorUtils.chainedIterator(list);
+        final List<String> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(actual, expected);
+    }
+
+    @Test
     public void testChainedIteratorRawGenerics() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
