@@ -35,10 +35,13 @@ public class FilterIterator<E> implements Iterator<E> {
 
     /** The iterator being used */
     private Iterator<? extends E> iterator;
+
     /** The predicate being used */
     private Predicate<? super E> predicate;
+
     /** The next object in the iteration */
     private E nextObject;
+
     /** Whether the next object has been calculated yet */
     private boolean nextObjectSet;
 
