@@ -35,17 +35,14 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
  * <p>
- * <b>Note</b>: this util class has been designed for fail-fast argument checking.
+ * <b>Note</b>: This utility class has been designed with fail-fast argument checking.
  * </p>
  * <ul>
- * <li>
- * all decorator methods are <b>NOT</b> null-safe wrt the provided Iterable argument, i.e.
- * they will throw a {@link NullPointerException} if a null Iterable is passed as argument.
- * <li>
- * all other utility methods are null-safe wrt the provided Iterable argument, i.e. they will
- * treat a null Iterable the same way as an empty one. Other arguments which are null,
- * e.g. a {@link Predicate}, will result in a {@link NullPointerException}. Exception: passing
- * a null {@link Comparator} is equivalent to a Comparator with natural ordering.
+ * <li>All decorator methods are <em>not</em> null-safe for the provided Iterable argument; for example, they will throw a {@link NullPointerException} if a
+ * null Iterable is passed as argument.
+ * <li>All other utility methods are null-safe for the provided Iterable argument; for example, they will treat a null Iterable the same way as an empty one.
+ * For other arguments which are null, a {@link Predicate} will result in a {@link NullPointerException}. Exception: passing a null {@link Comparator} is
+ * equivalent to a Comparator with natural ordering.
  * </ul>
  *
  * @since 4.1
