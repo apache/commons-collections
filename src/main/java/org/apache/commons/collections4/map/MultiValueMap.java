@@ -273,6 +273,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Checks whether the map contains the value specified.
      * <p>
      * This checks all collections against all keys for the value, and thus could be slow.
+     * </p>
      *
      * @param value  the value to search for
      * @return true if the map contains the value
@@ -312,6 +313,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * <p>
      * This method can be overridden to perform your own processing
      * instead of using the factory.
+     * </p>
      *
      * @param size  the collection size that is about to be added
      * @return the new collection
@@ -323,9 +325,10 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * {@inheritDoc}
      * <p>
-     * NOTE: the returned Entry objects will contain as value a {@link Collection}
+     * Note: the returned Entry objects will contain as value a {@link Collection}
      * of all values that are mapped to the given key. To get a "flattened" version
      * of all mappings contained in this map, use {@link #iterator()}.
+     * </p>
      *
      * @see #iterator()
      */
@@ -351,9 +354,11 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * <p>
      * The iterator will return multiple Entry objects with the same key
      * if there are multiple values mapped to this key.
+     * </p>
      * <p>
-     * NOTE: calling {@link java.util.Map.Entry#setValue(Object)} on any of the returned
+     * Note: calling {@link java.util.Map.Entry#setValue(Object)} on any of the returned
      * elements will result in a {@link UnsupportedOperationException}.
+     * </p>
      *
      * @return the iterator of all mappings in this map
      * @since 4.0
@@ -408,6 +413,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * <p>
      * Unlike a normal {@code Map} the previous value is not replaced.
      * Instead, the new value is added to the collection stored against the key.
+     * </p>
      *
      * @param key  the key to store against
      * @param value  the value to add to the collection at the key
@@ -468,6 +474,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * added using {@code put(Object,Object)}.
      * If you call this method with a multi map, each entry is
      * added using {@code putAll(Object,Collection)}.
+     * </p>
      *
      * @param map  the map to copy (either a normal or multi map)
      */
@@ -504,9 +511,11 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * <p>
      * The item is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
+     * </p>
      * <p>
      * If the last value for a key is removed, {@code null} will be returned
      * from a subsequent {@code get(key)}.
+     * </p>
      *
      * @param key  the key to remove from
      * @param value the value to remove
@@ -559,6 +568,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Gets a collection containing all the values in the map.
      * <p>
      * This returns a collection containing the combination of values from all keys.
+     * </p>
      *
      * @return a collection view of the values contained in this map
      */

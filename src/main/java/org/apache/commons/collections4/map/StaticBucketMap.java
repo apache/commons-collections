@@ -383,21 +383,20 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
-     *  Prevents any operations from occurring on this map while the
-     *  given {@link Runnable} executes.  This method can be used, for
-     *  instance, to execute a bulk operation atomically:
+     * Prevents any operations from occurring on this map while the given {@link Runnable} executes. This method can be used, for instance, to execute a bulk
+     * operation atomically:
+     * <pre>
+     * staticBucketMapInstance.atomic(new Runnable() {
+     *     public void run() {
+     *         staticBucketMapInstance.putAll(map);
+     *     }
+     * });
+     * </pre>
+     * <p>
+     * It can also be used if you need a reliable iterator:
+     * </p>
      *
-     *  <pre>
-     *    staticBucketMapInstance.atomic(new Runnable() {
-     *        public void run() {
-     *            staticBucketMapInstance.putAll(map);
-     *        }
-     *    });
-     *  </pre>
-     *
-     *  It can also be used if you need a reliable iterator:
-     *
-     *  <pre>
+     * <pre>
      *    staticBucketMapInstance.atomic(new Runnable() {
      *        public void run() {
      *            Iterator iterator = staticBucketMapInstance.iterator();
@@ -406,15 +405,13 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *            }
      *        }
      *    });
-     *  </pre>
+     * </pre>
+     * <p>
+     * <b>Implementation note:</b> This method requires a lot of time and a ton of stack space. Essentially a recursive algorithm is used to enter each bucket's
+     * monitor. If you have twenty thousand buckets in your map, then the recursive method will be invoked twenty thousand times. You have been warned.
+     * </p>
      *
-     *  <b>Implementation note:</b> This method requires a lot of time
-     *  and a ton of stack space.  Essentially a recursive algorithm is used
-     *  to enter each bucket's monitor.  If you have twenty thousand buckets
-     *  in your map, then the recursive method will be invoked twenty thousand
-     *  times.  You have been warned.
-     *
-     *  @param runnable  the code to execute atomically
+     * @param runnable the code to execute atomically
      */
     public void atomic(final Runnable runnable) {
         atomic(Objects.requireNonNull(runnable, "runnable"), 0);

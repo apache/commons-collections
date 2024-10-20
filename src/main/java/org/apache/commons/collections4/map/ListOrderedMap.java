@@ -380,6 +380,7 @@ public class ListOrderedMap<K, V>
      * Factory method to create an ordered map.
      * <p>
      * An {@code ArrayList} is used to retain order.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type
@@ -425,9 +426,11 @@ public class ListOrderedMap<K, V>
      * the end of the list, which is an unexpected side effect of changing the
      * value of a list.  This occurs because changing the key, changes when the
      * mapping is added to the map and thus where it appears in the list.
+     * </p>
      * <p>
      * An alternative to this method is to use the better named
      * {@link #keyList()} or {@link #keySet()}.
+     * </p>
      *
      * @see #keyList()
      * @see #keySet()
@@ -447,6 +450,7 @@ public class ListOrderedMap<K, V>
      * Gets a view over the entries in the map.
      * <p>
      * The Set will be ordered by object insertion into the map.
+     * </p>
      *
      * @return the fully modifiable set view over the entries
      */
@@ -506,6 +510,7 @@ public class ListOrderedMap<K, V>
      * <p>
      * The List will be ordered by object insertion into the map.
      * The List is unmodifiable.
+     * </p>
      *
      * @see #keySet()
      * @return the unmodifiable list view over the keys
@@ -519,6 +524,7 @@ public class ListOrderedMap<K, V>
      * Gets a view over the keys in the map.
      * <p>
      * The Collection will be ordered by object insertion into the map.
+     * </p>
      *
      * @see #keyList()
      * @return the fully modifiable collection view over the keys
@@ -542,7 +548,6 @@ public class ListOrderedMap<K, V>
         return insertOrder.get(size() - 1);
     }
 
-    // Implement OrderedMap
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new ListOrderedMapIterator<>(this);
@@ -587,10 +592,12 @@ public class ListOrderedMap<K, V>
      * is removed and the new mapping added at the specified index.
      * The remove may change the effect of the index. The index is
      * always calculated relative to the original state of the map.
+     * </p>
      * <p>
      * Thus, the steps are: (1) remove the existing key-value mapping,
      * then (2) insert the new key-value mapping at the position it
      * would have been inserted had the remove not occurred.
+     * </p>
      *
      * @param index  the index at which the mapping should be inserted
      * @param key  the key
@@ -751,6 +758,7 @@ public class ListOrderedMap<K, V>
      * <p>
      * The List will be ordered by object insertion into the map.
      * The List supports remove and set, but does not support add.
+     * </p>
      *
      * @see #values()
      * @return the partially modifiable list view over the values
@@ -764,9 +772,11 @@ public class ListOrderedMap<K, V>
      * Gets a view over the values in the map.
      * <p>
      * The Collection will be ordered by object insertion into the map.
+     * </p>
      * <p>
      * From Commons Collections 3.2, this Collection can be cast
      * to a list, see {@link #valueList()}
+     * </p>
      *
      * @see #valueList()
      * @return the fully modifiable collection view over the values

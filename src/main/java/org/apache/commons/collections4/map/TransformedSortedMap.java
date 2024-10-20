@@ -59,6 +59,7 @@ public class TransformedSortedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedMap(SortedMap, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type
@@ -88,6 +89,7 @@ public class TransformedSortedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they are NOT transformed.
      * Contrast this with {@link #transformedSortedMap(SortedMap, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type
@@ -108,7 +110,8 @@ public class TransformedSortedMap<K, V>
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the collection being decorated, they
-     * are NOT transformed.</p>
+     * are NOT transformed.
+     * </p>
      *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation

@@ -173,6 +173,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * Gets the hash code for the key specified.
      * <p>
      * This implementation uses the identity hash code.
+     * </p>
      *
      * @param key  the key to get a hash code for
      * @return the hash code
@@ -186,6 +187,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * Gets the hash code for a MapEntry.
      * <p>
      * This implementation uses the identity hash code.
+     * </p>
      *
      * @param key  the key to get a hash code for, may be null
      * @param value  the value to get a hash code for, may be null
@@ -202,6 +204,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * <p>
      * This implementation converts the key from the entry to a real reference
      * before comparison and uses {@code ==}.
+     * </p>
      *
      * @param key1  the first key to compare passed in from outside
      * @param key2  the second key extracted from the entry via {@code entry.key}
@@ -217,6 +220,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * Compares two values for equals.
      * <p>
      * This implementation uses {@code ==}.
+     * </p>
      *
      * @param value1  the first value to compare passed in from outside
      * @param value2  the second value extracted from the entry via {@code getValue()}

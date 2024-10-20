@@ -221,6 +221,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * <p>
          * This implementation uses {@code isEqualKey} and
          * {@code isEqualValue} on the main map for comparison.
+         * </p>
          *
          * @param obj  the other map entry to compare to
          * @return true if equal, false if not
@@ -797,13 +798,16 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
+     * </p>
      * <p>
      * The solution adopted here is to deserialize the state data of this class in
      * this protected method. This method must be called by the
      * {@code readObject()} of the first serializable subclass.
+     * </p>
      * <p>
      * Subclasses may override if the subclass has a specific field that must be present
      * before {@code put()} or {@code calculateThreshold()} will work correctly.
+     * </p>
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -846,14 +850,17 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
+     * </p>
      * <p>
      * The solution adopted here is to serialize the state data of this class in
      * this protected method. This method must be called by the
      * {@code writeObject()} of the first serializable subclass.
+     * </p>
      * <p>
      * Subclasses may override if they have a specific field that must be present
      * on read before this implementation will work. Generally, the read determines
      * what must be serialized here, if anything.
+     * </p>
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream
@@ -955,6 +962,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * <p>
      * This implementation converts the key from the entry to a real reference
      * before comparison.
+     * </p>
      *
      * @param key1  the first key to compare passed in from outside
      * @param key2  the second key extracted from the entry via {@code entry.key}
@@ -969,6 +977,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
     /**
      * Provided protected read-only access to the key type.
+     *
      * @param type the type to check against.
      * @return true if keyType has the specified type
      */
@@ -978,6 +987,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
     /**
      * Provided protected read-only access to the value type.
+     *
      * @param type the type to check against.
      * @return true if valueType has the specified type
      */
@@ -1016,6 +1026,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * care must be taken if, for instance, you want stale
      * mappings to be removed on a periodic basis by some
      * background thread.
+     * </p>
      */
     protected void purge() {
         Reference<?> ref = queue.poll();
@@ -1073,6 +1084,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Purges stale mappings from this map before write operations.
      * <p>
      * This implementation calls {@link #purge()} to maintain a consistent state.
+     * </p>
      */
     protected void purgeBeforeWrite() {
         purge();

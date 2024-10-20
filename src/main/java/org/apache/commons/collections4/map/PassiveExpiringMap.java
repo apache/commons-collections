@@ -419,11 +419,12 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-    * Add the given key-value pair to this map as well as recording the entry's expiration time based on
-    * the current time in milliseconds and this map's {@link #expiringPolicy}.
-    * <p>
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     * <p>
+     * Add the given key-value pair to this map as well as recording the entry's expiration time based on the current time in milliseconds and this map's
+     * {@link #expiringPolicy}.
+     * </p>
+     */
     @Override
     public V put(final K key, final V value) {
         // remove the previous record

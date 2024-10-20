@@ -193,6 +193,7 @@ public class LRUMap<K, V>
      * Constructor copying elements from another map.
      * <p>
      * The maximum size is set from the map's size.
+     * </p>
      *
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
@@ -223,10 +224,12 @@ public class LRUMap<K, V>
      * <p>
      * This implementation checks the LRU size and determines whether to
      * discard an entry or not using {@link #removeLRU(AbstractLinkedMap.LinkEntry)}.
+     * </p>
      * <p>
      * From Commons Collections 3.1 this method uses {@link #isFull()} rather
      * than accessing {@code size} and {@code maxSize} directly.
      * It also handles the scanUntilRemovable functionality.
+     * </p>
      *
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
@@ -327,6 +330,7 @@ public class LRUMap<K, V>
      * If {@code updateToMRU} is {@code true}, the position of the key in the map
      * is changed to the most recently used position (last), otherwise the iteration
      * order is not changed by this operation.
+     * </p>
      *
      * @param key  the key
      * @param updateToMRU  whether the key shall be updated to the
@@ -380,6 +384,7 @@ public class LRUMap<K, V>
      * Moves an entry to the MRU position at the end of the list.
      * <p>
      * This implementation moves the updated entry to the end of the list.
+     * </p>
      *
      * @param entry  the entry to update
      */
@@ -421,6 +426,7 @@ public class LRUMap<K, V>
      * <p>
      * This method exists for subclasses to override. A subclass may wish to
      * provide cleanup of resources when an entry is removed. For example:
+     * </p>
      * <pre>
      * protected boolean removeLRU(LinkEntry entry) {
      *   releaseResources(entry.getValue());  // release resources held by entry
@@ -430,6 +436,7 @@ public class LRUMap<K, V>
      * <p>
      * Alternatively, a subclass may choose to not remove the entry or selectively
      * keep certain LRU entries. For example:
+     * </p>
      * <pre>
      * protected boolean removeLRU(LinkEntry entry) {
      *   if (entry.getKey().toString().startsWith("System.")) {
@@ -439,13 +446,16 @@ public class LRUMap<K, V>
      *   }
      * }
      * </pre>
+     * <p>
      * The effect of returning false is dependent on the scanUntilRemovable flag.
      * If the flag is true, the next LRU entry will be passed to this method and so on
      * until one returns false and is removed, or every entry in the map has been passed.
      * If the scanUntilRemovable flag is false, the map will exceed the maximum size.
+     * </p>
      * <p>
-     * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
+     * Note: Commons Collections 3.0 passed the wrong entry to this method.
      * This is fixed in version 3.1 onwards.
+     * </p>
      *
      * @param entry  the entry to be removed
      * @return {@code true}
@@ -502,6 +512,7 @@ public class LRUMap<K, V>
      * <p>
      * This implementation moves the updated entry to the end of the list
      * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
+     * </p>
      *
      * @param entry  the entry to update
      * @param newValue  the new value to store

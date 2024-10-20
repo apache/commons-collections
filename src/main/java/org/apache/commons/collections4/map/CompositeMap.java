@@ -387,6 +387,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * <p>
      * This implementation returns a {@code CompositeSet} which
      * composites the key sets from all of the composited maps.
+     * </p>
      *
      * @return a set view of the keys contained in this map.
      */

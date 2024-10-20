@@ -53,6 +53,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * If there are any elements already in the map being decorated, they will
      * be transformed by this method. Contrast this with
      * {@link #transformingMap(MultiValuedMap, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -81,6 +82,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * If there are any elements already in the map being decorated, they are
      * NOT transformed. Contrast this with
      * {@link #transformedMap(MultiValuedMap, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -107,6 +109,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
+     * </p>
      *
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
@@ -159,6 +162,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * Transforms a key.
      * <p>
      * The transformer itself may throw an exception if necessary.
+     * </p>
      *
      * @param object  the object to transform
      * @return the transformed object
@@ -174,6 +178,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * Transforms a value.
      * <p>
      * The transformer itself may throw an exception if necessary.
+     * </p>
      *
      * @param object  the object to transform
      * @return the transformed object

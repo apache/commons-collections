@@ -287,6 +287,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
     }
+
     /**
      * FlatMapIterator
      */
@@ -392,10 +393,12 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return "Iterator[]";
         }
     }
+
     /**
      * KeySet
      */
     static class KeySet<K> extends AbstractSet<K> {
+
         private final Flat3Map<K, ?> parent;
 
         KeySet(final Flat3Map<K, ?> parent) {
@@ -435,6 +438,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return parent.size();
         }
     }
+
     /**
      * KeySetIterator
      */
@@ -450,10 +454,12 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return nextEntry().getKey();
         }
     }
+
     /**
      * Values
      */
     static class Values<V> extends AbstractCollection<V> {
+
         private final Flat3Map<?, V> parent;
 
         Values(final Flat3Map<?, V> parent) {
@@ -486,6 +492,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return parent.size();
         }
     }
+
     /**
      * ValuesIterator
      */
@@ -501,10 +508,13 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return nextEntry().getValue();
         }
     }
+
     /** Serialization version */
     private static final long serialVersionUID = -6701087419741928296L;
+
     /** The size of the map, used while in flat mode */
     private transient int size;
+
     /** Hash, used while in flat mode */
     private transient int hash1;
 
@@ -709,6 +719,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * This can be overridden by subclasses to provide a different map implementation.
      * Not every AbstractHashedMap is suitable, identity and reference based maps
      * would be poor choices.
+     * </p>
      *
      * @return a new AbstractHashedMap or subclass
      * @since 3.1
@@ -724,6 +735,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * NOTE: from 4.0, the returned Map Entry will be an independent object and will
      * not change anymore as the iterator progresses. To avoid this additional object
      * creation and simply iterate through the entries, use {@link #mapIterator()}.
+     * </p>
      *
      * @return the entrySet view
      */
@@ -895,6 +907,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
      * It also avoids creating the Map Entry object.
+     * </p>
      *
      * @return the map iterator
      */

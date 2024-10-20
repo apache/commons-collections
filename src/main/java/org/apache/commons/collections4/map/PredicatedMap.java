@@ -63,6 +63,7 @@ public class PredicatedMap<K, V>
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type

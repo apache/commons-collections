@@ -115,6 +115,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * Removes all values associated with the specified key.
      * <p>
      * A subsequent {@code get(Object)} would return an empty set.
+     * </p>
      *
      * @param key the key to remove values from
      * @return the {@code Set} of values removed, will return an empty,

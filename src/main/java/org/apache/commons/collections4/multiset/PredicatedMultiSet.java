@@ -71,6 +71,7 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      * <p>
      * If there are any elements already in the multiset being decorated, they
      * are validated.
+     * </p>
      *
      * @param multiset  the multiset to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null

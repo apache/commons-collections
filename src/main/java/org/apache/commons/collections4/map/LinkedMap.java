@@ -227,8 +227,10 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * the end of the list, which is an unexpected side effect of changing the
      * value of a list.  This occurs because changing the key, changes when the
      * mapping is added to the map and thus where it appears in the list.
+     * </p>
      * <p>
      * An alternative to this method is to use {@link #keySet()}.
+     * </p>
      *
      * @see #keySet()
      * @return The ordered list of keys.

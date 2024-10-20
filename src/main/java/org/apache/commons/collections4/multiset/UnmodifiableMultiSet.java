@@ -48,6 +48,7 @@ public final class UnmodifiableMultiSet<E>
      * Factory method to create an unmodifiable multiset.
      * <p>
      * If the multiset passed in is already unmodifiable, it is returned.
+     * </p>
      *
      * @param <E>  the type of the elements in the multiset
      * @param multiset  the multiset to decorate, may not be null

@@ -45,14 +45,17 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * Key-value entries are stored in instances of the {@code HashEntry} class,
  * which can be overridden and replaced. The iterators can similarly be replaced,
  * without the need to replace the KeySet, EntrySet and Values view classes.
+ * </p>
  * <p>
  * Overridable methods are provided to change the default hashing behavior, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
+ * </p>
  * <p>
  * NOTE: From Commons Collections 3.1 this class extends AbstractMap.
  * This is to provide backwards compatibility for ReferenceMap between v3.0 and v3.1.
  * This extends clause will be removed in v5.0.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
@@ -651,6 +654,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * This implementation adds the entry to the data storage table.
      * Subclasses could override to handle changes to the map.
+     * </p>
      *
      * @param entry  the entry to add
      * @param hashIndex  the index into the data array to store at
@@ -666,6 +670,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * and {@code checkCapacity()}.
      * It also handles changes to {@code modCount} and {@code size}.
      * Subclasses could override to fully control adds to the map.
+     * </p>
      *
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
@@ -718,6 +723,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Checks the capacity of the map and enlarges it if necessary.
      * <p>
      * This implementation uses the threshold to check if the map needs enlarging
+     * </p>
      */
     protected void checkCapacity() {
         if (size >= threshold) {
@@ -745,6 +751,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * To implement {@code clone()}, a subclass must implement the
      * {@code Cloneable} interface and make this method public.
+     * </p>
      *
      * @return a shallow clone
      * @throws InternalError if {@link AbstractMap#clone()} failed
@@ -827,6 +834,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * The reverse conversion can be changed, if required, by overriding the
      * getKey() method in the hash entry.
+     * </p>
      *
      * @param key  the key convert
      * @return the converted key
@@ -841,6 +849,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * This implementation creates a new HashEntry instance.
      * Subclasses can override this to return a different storage class,
      * or implement caching.
+     * </p>
      *
      * @param next  the next entry in sequence
      * @param hashCode  the hash code to use
@@ -896,6 +905,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * This implementation prepares the HashEntry for garbage collection.
      * Subclasses can override this to implement caching (override clear as well).
+     * </p>
      *
      * @param entry  the entry to destroy
      */
@@ -913,13 +923,16 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
+     * </p>
      * <p>
      * The solution adopted here is to deserialize the state data of this class in
      * this protected method. This method must be called by the
      * {@code readObject()} of the first serializable subclass.
+     * </p>
      * <p>
      * Subclasses may override if the subclass has a specific field that must be present
      * before {@code put()} or {@code calculateThreshold()} will work correctly.
+     * </p>
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
@@ -948,14 +961,17 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * initialize the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the {@code put()} method on read can be
      * affected by subclass state.
+     * </p>
      * <p>
      * The solution adopted here is to serialize the state data of this class in
      * this protected method. This method must be called by the
      * {@code writeObject()} of the first serializable subclass.
+     * </p>
      * <p>
      * Subclasses may override if they have a specific field that must be present
      * on read before this implementation will work. Generally, the read determines
      * what must be serialized here, if anything.
+     * </p>
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream
@@ -1137,6 +1153,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * This method exists for subclasses that may need to perform a multi-step
      * process accessing the entry. The public methods in this class don't use this
      * method to gain a small performance boost.
+     * </p>
      *
      * @param key  the key
      * @return the entry, null if no match
@@ -1266,6 +1283,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
      * It also avoids creating the Map.Entry object.
+     * </p>
      *
      * @return the map iterator
      */
@@ -1308,6 +1326,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * This implementation iterates around the specified map and
      * uses {@link #put(Object, Object)}.
+     * </p>
      *
      * @param map  the map to add
      * @throws NullPointerException if the map is null
@@ -1356,6 +1375,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * This implementation removes the entry from the data storage table.
      * The size is not updated.
      * Subclasses could override to handle changes to the map.
+     * </p>
      *
      * @param entry  the entry to remove
      * @param hashIndex  the index into the data structure
@@ -1375,6 +1395,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * This implementation calls {@code removeEntry()} and {@code destroyEntry()}.
      * It also handles changes to {@code modCount} and {@code size}.
      * Subclasses could override to fully control removals from the map.
+     * </p>
      *
      * @param entry  the entry to remove
      * @param hashIndex  the index into the data structure
@@ -1392,6 +1413,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * This implementation sets all the data fields on the entry.
      * Subclasses could populate additional entry fields.
+     * </p>
      *
      * @param entry  the entry to update, not null
      * @param hashIndex  the index in the data array
@@ -1454,6 +1476,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <p>
      * This implementation calls {@code setValue()} on the entry.
      * Subclasses could override to handle changes to the map.
+     * </p>
      *
      * @param entry  the entry to update
      * @param newValue  the new value to store

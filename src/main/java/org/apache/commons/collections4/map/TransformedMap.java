@@ -63,6 +63,7 @@ public class TransformedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingMap(Map, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type
@@ -90,6 +91,7 @@ public class TransformedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedMap(Map, Transformer, Transformer)}.
+     * </p>
      *
      * @param <K>  the key type
      * @param <V>  the value type
@@ -117,6 +119,7 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
+     * </p>
      *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
@@ -199,6 +202,7 @@ public class TransformedMap<K, V>
      * Transforms a map.
      * <p>
      * The transformer itself may throw an exception if necessary.
+     * </p>
      *
      * @param map  the map to transform
      * @return the transformed object
@@ -220,6 +224,7 @@ public class TransformedMap<K, V>
      * Transforms a value.
      * <p>
      * The transformer itself may throw an exception if necessary.
+     * </p>
      *
      * @param object  the object to transform
      * @return the transformed object

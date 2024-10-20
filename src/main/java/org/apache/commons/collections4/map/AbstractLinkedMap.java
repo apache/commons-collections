@@ -426,6 +426,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * <p>
      * This implementation adds the entry to the data storage table and
      * to the end of the linked list.
+     * </p>
      *
      * @param entry  the entry to add
      * @param hashIndex  the index into the data array to store at
@@ -480,6 +481,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Creates an entry to store the data.
      * <p>
      * This implementation creates a new LinkEntry instance.
+     * </p>
      *
      * @param next  the next entry in sequence
      * @param hashCode  the hash code to use
@@ -612,9 +614,10 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Initialize this subclass during construction.
      * <p>
-     * NOTE: As from v3.2 this method calls
+     * Note: As from v3.2 this method calls
      * {@link #createEntry(HashEntry, int, Object, Object)} to create
      * the map entry object.
+     * </p>
      */
     @Override
     protected void init() {
@@ -675,6 +678,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * <p>
      * This implementation removes the entry from the linked list chain, then
      * calls the superclass implementation.
+     * </p>
      *
      * @param entry  the entry to remove
      * @param hashIndex  the index into the data structure

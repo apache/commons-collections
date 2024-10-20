@@ -684,6 +684,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the {@code MultiKey}
      * has one or more keys, and the first matches that specified.
+     * </p>
      *
      * @param key1  the first key
      * @return true if any elements were removed
@@ -707,6 +708,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the {@code MultiKey}
      * has two or more keys, and the first two match those specified.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -732,6 +734,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the {@code MultiKey}
      * has three or more keys, and the first three match those specified.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -759,6 +762,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the {@code MultiKey}
      * has four or more keys, and the first four match those specified.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
