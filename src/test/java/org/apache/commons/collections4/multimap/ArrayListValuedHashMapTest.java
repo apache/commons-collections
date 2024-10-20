@@ -71,6 +71,14 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals("{}", listMap1.toString());
     }
 
+    @Test
+    public void testCopyConstructorWithMultiValuedMap() {
+        final ListValuedMap<K, V> map = makeObject();
+        map.put((K) "key", (V) "sleutel");
+        final ListValuedMap<K, V> copy = new ArrayListValuedHashMap<>(map);
+        assertEquals(map, copy);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testEqualsHashCodeContract() {
@@ -252,14 +260,6 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         final List<V> list3 = listMap.get((K) "A").subList(1, 4);
         assertEquals(3, list3.size());
         assertEquals("Q", list3.get(2));
-    }
-
-    @Test
-    public void testCopyConstructorWithMultiValuedMap() {
-        final ListValuedMap<K, V> map = makeObject();
-        map.put((K) "key", (V) "sleutel");
-        final ListValuedMap<K, V> copy = new ArrayListValuedHashMap<>(map);
-        assertEquals(map, copy);
     }
 
 //    public void testCreate() throws Exception {

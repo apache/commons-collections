@@ -44,6 +44,11 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4.5"; // ArrayListValuedLinkedHashMap has been added in version 4.5
+    }
+
+    @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;
     }
@@ -51,11 +56,6 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     @Override
     public ListValuedMap<K, V> makeObject() {
         return new ArrayListValuedLinkedHashMap<>();
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.5"; // ArrayListValuedLinkedHashMap has been added in version 4.5
     }
 
     @Test
@@ -75,6 +75,14 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
         listMap1 = new ArrayListValuedLinkedHashMap<>(map1);
         assertEquals("{}", listMap1.toString());
+    }
+
+    @Test
+    public void testCopyConstructorWithMultiValuedMap() {
+        final ListValuedMap<K, V> map = makeObject();
+        map.put((K) "key", (V) "sleutel");
+        final ListValuedMap<K, V> copy = new ArrayListValuedLinkedHashMap<>(map);
+        assertEquals(map, copy);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -182,6 +190,22 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
+    public void testPreservesKeyInsertionOrder() {
+        final ListValuedMap<K, V> map = makeObject();
+        map.put((K) Integer.valueOf(5), (V) "five");
+        map.put((K) Integer.valueOf(1), (V) "one");
+        map.put((K) Integer.valueOf(5), (V) "vijf"); // "vijf" = "five" in Dutch
+        MapIterator<K, V> mapIterator = map.mapIterator();
+        assertEquals(5, mapIterator.next());
+        assertEquals("five", mapIterator.getValue());
+        assertEquals(5, mapIterator.next());
+        assertEquals("vijf", mapIterator.getValue());
+        assertEquals(1, mapIterator.next());
+        assertEquals("one", mapIterator.getValue());
+        assertFalse(mapIterator.hasNext());
+    }
+
+    @Test
     public void testTrimToSize() {
         final ArrayListValuedLinkedHashMap<K, V> listMap = new ArrayListValuedLinkedHashMap<>(4);
 
@@ -258,30 +282,6 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
         final List<V> list3 = listMap.get((K) "A").subList(1, 4);
         assertEquals(3, list3.size());
         assertEquals("Q", list3.get(2));
-    }
-
-    @Test
-    public void testPreservesKeyInsertionOrder() {
-        final ListValuedMap<K, V> map = makeObject();
-        map.put((K) Integer.valueOf(5), (V) "five");
-        map.put((K) Integer.valueOf(1), (V) "one");
-        map.put((K) Integer.valueOf(5), (V) "vijf"); // "vijf" = "five" in Dutch
-        MapIterator<K, V> mapIterator = map.mapIterator();
-        assertEquals(5, mapIterator.next());
-        assertEquals("five", mapIterator.getValue());
-        assertEquals(5, mapIterator.next());
-        assertEquals("vijf", mapIterator.getValue());
-        assertEquals(1, mapIterator.next());
-        assertEquals("one", mapIterator.getValue());
-        assertFalse(mapIterator.hasNext());
-    }
-
-    @Test
-    public void testCopyConstructorWithMultiValuedMap() {
-        final ListValuedMap<K, V> map = makeObject();
-        map.put((K) "key", (V) "sleutel");
-        final ListValuedMap<K, V> copy = new ArrayListValuedLinkedHashMap<>(map);
-        assertEquals(map, copy);
     }
 
 //    @Test
