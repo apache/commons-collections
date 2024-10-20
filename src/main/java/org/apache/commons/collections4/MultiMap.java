@@ -57,6 +57,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * <p>
      * Implementations typically check all collections against all keys for the value.
      * This cannot be mandated due to backwards compatibility of this interface.
+     * </p>
      *
      * @param value  the value to search for
      * @return true if the map contains the value
@@ -72,12 +73,15 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * The returned value will implement {@code Collection}. Implementations
      * are free to declare that they return {@code Collection} subclasses
      * such as {@code List} or {@code Set}.
+     * </p>
      * <p>
      * Implementations typically return {@code null} if no values have
      * been mapped to the key, however the implementation may choose to
      * return an empty collection.
+     * </p>
      * <p>
      * Implementations may choose to return a clone of the internal collection.
+     * </p>
      *
      * @param key  the key to retrieve
      * @return the {@code Collection} of values, implementations should
@@ -95,6 +99,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Instead, the new value is added to the collection stored against the key.
      * The collection may be a {@code List}, {@code Set} or other
      * collection dependent on implementation.
+     * </p>
      *
      * @param key  the key to store against
      * @param value  the value to add to the collection at the key
@@ -112,6 +117,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * <p>
      * Implementations typically return {@code null} from a subsequent
      * {@code get(Object)}, however they may choose to return an empty collection.
+     * </p>
      *
      * @param key  the key to remove values from
      * @return the {@code Collection} of values removed, implementations should
@@ -128,10 +134,12 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * <p>
      * The item is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
+     * </p>
      * <p>
      * If the last value for a key is removed, implementations typically
      * return {@code null} from a subsequent {@code get(Object)}, however
      * they may choose to return an empty collection.
+     * </p>
      *
      * @param key  the key to remove from
      * @param item  the item to remove
@@ -148,6 +156,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * <p>
      * Implementations typically return only the count of keys in the map
      * This cannot be mandated due to backwards compatibility of this interface.
+     * </p>
      *
      * @return the number of key-collection mappings in this map
      */
@@ -160,6 +169,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Implementations typically return a collection containing the combination
      * of values from all keys.
      * This cannot be mandated due to backwards compatibility of this interface.
+     * </p>
      *
      * @return a collection view of the values contained in this map
      */

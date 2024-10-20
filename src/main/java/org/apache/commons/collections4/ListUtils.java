@@ -42,6 +42,7 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
  * @since 1.0
  */
 public class ListUtils {
+
     /**
      * A simple wrapper to use a CharSequence as List.
      */
@@ -178,6 +179,7 @@ public class ListUtils {
      * <p>
      * Shorthand for {@code list.get(0)}
      * </p>
+     *
      * @param <T> The list type.
      * @param list The list.
      * @return the first element of a list.
@@ -193,6 +195,7 @@ public class ListUtils {
      * <p>
      * Shorthand for {@code list.get(list.size() - 1)}
      * </p>
+     *
      * @param <T> The list type.
      * @param list The list.
      * @return the last element of a list.
@@ -210,6 +213,7 @@ public class ListUtils {
      * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
+     * </p>
      *
      * @see java.util.List#hashCode()
      * @param list  the list to generate the hashCode for, may be null
@@ -232,6 +236,7 @@ public class ListUtils {
      * <p>
      * If the input List or predicate is null, or no element of the List
      * matches the predicate, -1 is returned.
+     * </p>
      *
      * @param <E>  the element type
      * @param list the List to search, may be null
@@ -288,8 +293,10 @@ public class ListUtils {
      * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
+     * </p>
      * <p>
      * The relevant text (slightly paraphrased as this is a static method) is:
+     * </p>
      * <blockquote>
      * Compares the two list objects for equality.  Returns
      * {@code true} if and only if both
@@ -301,9 +308,10 @@ public class ListUtils {
      * definition ensures that the equals method works properly across
      * different implementations of the {@code List} interface.
      * </blockquote>
-     *
+     * <p>
      * <b>Note:</b> The behavior of this method is undefined if the lists are
      * modified during the equals comparison.
+     * </p>
      *
      * @see java.util.List
      * @param list1  the first list, may be null
@@ -339,9 +347,10 @@ public class ListUtils {
      * When the index passed to the returned list's {@link List#get(int) get}
      * method is greater than the list's size, then the factory will be used
      * to create a new object and that object will be inserted at that index.
+     * </p>
      * <p>
      * For instance:
-     *
+     * </p>
      * <pre>
      * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
      *     public Date create() {
@@ -351,11 +360,12 @@ public class ListUtils {
      * List&lt;Date&gt; lazy = ListUtils.lazyList(new ArrayList&lt;Date&gt;(), factory);
      * Date date = lazy.get(3);
      * </pre>
-     *
+     * <p>
      * After the above code is executed, {@code date} will refer to
      * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to {@code null}.
+     * </p>
      *
      * @param <E> the element type
      * @param list  the list to make lazy, must not be null
@@ -373,20 +383,22 @@ public class ListUtils {
      * When the index passed to the returned list's {@link List#get(int) get}
      * method is greater than the list's size, then the transformer will be used
      * to create a new object and that object will be inserted at that index.
+     * </p>
      * <p>
      * For instance:
-     *
+     * </p>
      * <pre>
      * List&lt;Integer&gt; hours = Arrays.asList(7, 5, 8, 2);
      * Transformer&lt;Integer,Date&gt; transformer = input -&gt; LocalDateTime.now().withHour(hours.get(input));
      * List&lt;LocalDateTime&gt; lazy = ListUtils.lazyList(new ArrayList&lt;LocalDateTime&gt;(), transformer);
      * Date date = lazy.get(3);
      * </pre>
-     *
+     * <p>
      * After the above code is executed, {@code date} will refer to
      * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to {@code null}.
+     * </p>
      *
      * @param <E> the element type
      * @param list  the list to make lazy, must not be null
@@ -403,6 +415,7 @@ public class ListUtils {
      * <p>
      * This is a convenience method for using {@link #longestCommonSubsequence(List, List)}
      * with {@link CharSequence} instances.
+     * </p>
      *
      * @param charSequenceA  the first sequence
      * @param charSequenceB  the second sequence
@@ -471,8 +484,10 @@ public class ListUtils {
      * source list. The inner lists are sublist views of the original list,
      * produced on demand using {@link List#subList(int, int)}, and are subject
      * to all the usual caveats about modification as explained in that API.
+     * </p>
      * <p>
      * Adapted from https://github.com/google/guava
+     * </p>
      *
      * @param <T> the element type
      * @param list  the list to return consecutive sublists of
@@ -497,6 +512,7 @@ public class ListUtils {
      * Trying to add an invalid object results in an IllegalArgumentException.
      * It is important not to use the original list after invoking this method,
      * as it is a backdoor for adding invalid objects.
+     * </p>
      *
      * @param <E> the element type
      * @param list  the list to predicate, must not be null
@@ -522,6 +538,7 @@ public class ListUtils {
      * to the returned list. As a consequence, it is advised to use a collection type for
      * {@code remove} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
+     * </p>
      *
      * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
@@ -556,6 +573,7 @@ public class ListUtils {
      * to the returned list. As a consequence, it is advised to use a collection type for
      * {@code retain} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
+     * </p>
      *
      * @param <E>  the element type
      * @param collection  the collection whose contents are the target of the #retailAll operation
@@ -581,6 +599,7 @@ public class ListUtils {
      * predicate into an output list.
      * <p>
      * A {@code null} predicate matches no elements.
+     * </p>
      *
      * @param <E> the element type
      * @param inputCollection  the collection to get the input from, may not be null
@@ -601,6 +620,7 @@ public class ListUtils {
      * predicate into an output collection.
      * <p>
      * If the input predicate is {@code null}, the result is an empty list.
+     * </p>
      *
      * @param <E> the element type
      * @param inputCollection the collection to get the input from, may not be null
@@ -625,6 +645,7 @@ public class ListUtils {
      * occurrences of <Code>null</Code> and <Code>list2</Code> only
      * contains one occurrence, then the returned list will still contain
      * one occurrence.
+     * </p>
      *
      * @param <E> the element type
      * @param list1  the list to subtract from
@@ -662,7 +683,7 @@ public class ListUtils {
      * <p>
      * You must manually synchronize on the returned list's iterator to
      * avoid non-deterministic behavior:
-     *
+     * </p>
      * <pre>
      * List list = ListUtils.synchronizedList(myList);
      * synchronized (list) {
@@ -672,8 +693,9 @@ public class ListUtils {
      *     }
      * }
      * </pre>
-     *
+     * <p>
      * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
+     * </p>
      *
      * @param <E> the element type
      * @param list  the list to synchronize, must not be null
@@ -690,13 +712,16 @@ public class ListUtils {
      * This method returns a new list (decorating the specified list) that
      * will transform any new entries added to it.
      * Existing entries in the specified list will not be transformed.
+     * </p>
      * <p>
      * Each object is passed through the transformer as it is added to the
      * List. It is important not to use the original list after invoking this
      * method, as it is a backdoor for adding untransformed objects.
+     * </p>
      * <p>
      * Existing entries in the specified list will not be transformed.
      * If you want that behavior, see {@link TransformedList#transformedList}.
+     * </p>
      *
      * @param <E> the element type
      * @param list  the list to predicate, must not be null
@@ -731,6 +756,7 @@ public class ListUtils {
      * Returns an unmodifiable list backed by the given list.
      * <p>
      * This method uses the implementation in the decorators subpackage.
+     * </p>
      *
      * @param <E>  the element type
      * @param list  the list to make unmodifiable, must not be null

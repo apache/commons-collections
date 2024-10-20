@@ -27,9 +27,11 @@ package org.apache.commons.collections4;
  * }
  * // now we know coll is modifiable
  * </pre>
+ * <p>
  * Of course all this only works if you use the Unmodifiable classes defined
  * in this library. If you use the JDK unmodifiable class via {@code java.util Collections}
  * then the interface won't be there.
+ * </p>
  *
  * @since 3.0
  */

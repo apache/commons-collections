@@ -64,7 +64,9 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  * <li>NullIsException/NullIsFalse/NullIsTrue - check for null input
  * <li>Transformed - transforms the input before calling the predicate
  * </ul>
+ * <p>
  * All the supplied predicates are Serializable.
+ * </p>
  *
  * @since 3.0
  */
@@ -277,6 +279,7 @@ public class PredicateUtils {
      * For example, {@code PredicateUtils.invokerPredicate("isEmpty");}
      * will call the {@code isEmpty} method on the input object to
      * determine the predicate result.
+     * </p>
      *
      * @param <T>  the type that the predicate queries
      * @param methodName  the method name to call on the input object, may not be null
@@ -473,7 +476,6 @@ public class PredicateUtils {
         return OrPredicate.orPredicate(predicate1, predicate2);
     }
 
-    // Transformed
     /**
      * Creates a predicate that transforms the input object before passing it
      * to the predicate.

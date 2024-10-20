@@ -54,6 +54,7 @@ public class MultiSetUtils {
      * IllegalArgumentException. It is important not to use the original multiset
      * after invoking this method, as it is a backdoor for adding invalid
      * objects.
+     * </p>
      *
      * @param <E> the element type
      * @param multiset the multiset to predicate, must not be null
@@ -73,7 +74,7 @@ public class MultiSetUtils {
      * <p>
      * It is imperative that the user manually synchronize on the returned multiset
      * when iterating over it:
-     *
+     * </p>
      * <pre>
      * MultiSet multiset = MultiSetUtils.synchronizedMultiSet(new HashMultiSet());
      * ...

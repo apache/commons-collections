@@ -55,6 +55,7 @@ public class QueueUtils {
      * Trying to add an invalid object results in an IllegalArgumentException.
      * It is important not to use the original queue after invoking this method,
      * as it is a backdoor for adding invalid objects.
+     * </p>
      *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to predicate, must not be null
@@ -73,7 +74,7 @@ public class QueueUtils {
      * <p>
      * It is imperative that the user manually synchronize on the returned queue
      * when iterating over it:
-     *
+     * </p>
      * <pre>
      * Queue queue = QueueUtils.synchronizedQueue(new CircularFifoQueue());
      * ...
@@ -84,8 +85,9 @@ public class QueueUtils {
      *     }
      * }
      * </pre>
-     *
+     * <p>
      * Failure to follow this advice may result in non-deterministic behavior.
+     * </p>
      *
      * @param <E> the element type
      * @param queue the queue to synchronize, must not be null
@@ -103,9 +105,11 @@ public class QueueUtils {
      * Each object is passed through the transformer as it is added to the
      * Queue. It is important not to use the original queue after invoking this
      * method, as it is a backdoor for adding untransformed objects.
+     * </p>
      * <p>
      * Existing entries in the specified queue will not be transformed.
      * If you want that behavior, see {@link TransformedQueue#transformedQueue}.
+     * </p>
      *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to predicate, must not be null

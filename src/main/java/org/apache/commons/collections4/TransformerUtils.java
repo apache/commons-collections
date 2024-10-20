@@ -357,6 +357,7 @@ public class TransformerUtils {
      * is called if the input object equals the key. If there is no match, the
      * default transformer is called. The default transformer is set in the map
      * using a null key. If no default is set, null will be returned in a default case.
+     * </p>
      *
      * @param <I>  the input type
      * @param <O>  the output type
@@ -394,6 +395,7 @@ public class TransformerUtils {
      * null key. If no default transformer is set, null will be returned in a default
      * case. The ordering is that of the iterator() method on the entryset collection
      * of the map.
+     * </p>
      *
      * @param <I>  the input type
      * @param <O>  the output type

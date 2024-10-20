@@ -161,6 +161,7 @@ public class MultiMapUtils {
      * Null-safe check if the specified {@code MultiValuedMap} is empty.
      * <p>
      * If the provided map is null, returns true.
+     * </p>
      *
      * @param map  the map to check, may be null
      * @return true if the map is empty or null
@@ -200,13 +201,16 @@ public class MultiMapUtils {
      * specified map) that will transform any new entries added to it. Existing
      * entries in the specified map will not be transformed. If you want that
      * behavior, see {@link TransformedMultiValuedMap#transformedMap}.
+     * </p>
      * <p>
      * Each object is passed through the transformers as it is added to the Map.
      * It is important not to use the original map after invoking this method,
      * as it is a back door for adding untransformed objects.
+     * </p>
      * <p>
      * If there are any elements already in the map being decorated, they are
      * NOT transformed.
+     * </p>
      *
      * @param <K> the key type
      * @param <V> the value type

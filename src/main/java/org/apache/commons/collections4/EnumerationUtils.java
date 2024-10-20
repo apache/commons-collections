@@ -50,6 +50,7 @@ public class EnumerationUtils {
      * <p>
      * The Enumeration is advanced to {@code index} (or to the end, if
      * {@code index} exceeds the number of entries) as a side effect of this method.
+     * </p>
      *
      * @param e  the enumeration to get a value from
      * @param index  the index to get

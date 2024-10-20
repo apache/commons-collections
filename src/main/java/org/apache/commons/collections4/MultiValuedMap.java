@@ -231,8 +231,6 @@ public interface MultiValuedMap<K, V> {
      */
     boolean putAll(K key, Iterable<? extends V> values);
 
-    // Views
-
     /**
      * Copies all mappings from the specified map to this multivalued map
      * (optional operation).

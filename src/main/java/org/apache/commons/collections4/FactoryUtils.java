@@ -34,6 +34,7 @@ import org.apache.commons.collections4.functors.PrototypeFactory;
  * <p>
  * Since v4.1 only factories which are considered to be safe are
  * Serializable. Factories considered to be unsafe for serialization are:
+ * </p>
  * <ul>
  * <li>Prototype
  * <li>Instantiate

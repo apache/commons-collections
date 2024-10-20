@@ -48,6 +48,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      * <p>
      * An ordered map iterator is an efficient way of iterating over maps
      * in both directions.
+     * </p>
      *
      * @return a map iterator
      */

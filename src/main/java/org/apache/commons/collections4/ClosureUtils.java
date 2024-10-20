@@ -253,6 +253,7 @@ public class ClosureUtils {
      * closure is called. The default closure is set in the map with a
      * null key. The ordering is that of the iterator() method on the entryset
      * collection of the map.
+     * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
      *
@@ -275,6 +276,7 @@ public class ClosureUtils {
      * The closure at array location 0 is called if the predicate at array
      * location 0 returned true. Each predicate is evaluated
      * until one returns true.
+     * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
      *
@@ -299,6 +301,7 @@ public class ClosureUtils {
      * location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
      * closure is called.
+     * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
      *
@@ -325,6 +328,7 @@ public class ClosureUtils {
      * is called if the input object equals the key. If there is no match, the
      * default closure is called. The default closure is set in the map
      * using a null key.
+     * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
      *

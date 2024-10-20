@@ -84,6 +84,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it.
+     * </p>
      *
      * @param <T>  the element type
      * @param iterable  the iterable to wrap into a FluentIterable, may not be null
@@ -102,6 +103,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Creates a new FluentIterable of the single provided element.
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
+     * </p>
      *
      * @param <T>  the element type
      * @param singleton  the singleton element
@@ -115,6 +117,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Creates a new FluentIterable from the provided elements.
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
+     * </p>
      *
      * @param <T>  the element type
      * @param elements  the elements to be contained in the FluentIterable
@@ -147,6 +150,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * provided predicate.
      * <p>
      * A {@code null} or empty iterable returns true.
+     * </p>
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if all elements contained in this iterable match the predicate,
@@ -161,6 +165,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Checks if this iterable contains any element matching the provided predicate.
      * <p>
      * A {@code null} or empty iterable returns false.
+     * </p>
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if at least one element contained in this iterable matches the predicate,
@@ -211,6 +216,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * elements of the current and provided iterable in natural order.
      * <p>
      * Example: natural ordering
+     * </p>
      * <ul>
      *   <li>this contains elements [1, 3, 5, 7]
      *   <li>other contains elements [2, 4, 6, 8]
@@ -218,6 +224,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * The returned iterable will traverse the elements in the following
      * order: [1, 2, 3, 4, 5, 6, 7, 8]
+     * </p>
      *
      * @param other  the other iterable to collate, may not be null
      * @return a new iterable, collating this iterable with the other in natural order
@@ -234,6 +241,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * ordering defined by a comparator.
      * <p>
      * Example: descending order
+     * </p>
      * <ul>
      *   <li>this contains elements [7, 5, 3, 1]
      *   <li>other contains elements [8, 6, 4, 2]
@@ -241,6 +249,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * The returned iterable will traverse the elements in the following
      * order: [8, 7, 6, 5, 4, 3, 2, 1]
+     * </p>
      *
      * @param comparator  the comparator to define an ordering, may be null,
      *   in which case natural ordering will be used
@@ -282,10 +291,12 @@ public class FluentIterable<E> implements Iterable<E> {
      * to the originating iterables and/or iterators.
      * <p>
      * Calling this method is equivalent to:
+     * </p>
      * <pre>
      *   FluentIterable&lt;E&gt; someIterable = ...;
      *   FluentIterable.of(someIterable.toList());
      * </pre>
+     * </p>
      *
      * @return a new iterable with the same contents as this iterable
      */
@@ -416,6 +427,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * by traversing its iterator.
      * <p>
      * The returned list is guaranteed to be mutable.
+     * </p>
      *
      * @return a list of the iterable contents
      */

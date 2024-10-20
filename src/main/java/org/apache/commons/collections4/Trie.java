@@ -19,8 +19,7 @@ package org.apache.commons.collections4;
 import java.util.SortedMap;
 
 /**
- * Defines the interface for a prefix tree, an ordered tree data structure. For
- * more information, see <a href="https://en.wikipedia.org/wiki/Trie">Tries</a>.
+ * Defines the interface for a prefix tree, an ordered tree data structure. For more information, see <a href="https://en.wikipedia.org/wiki/Trie">Tries</a>.
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
@@ -29,19 +28,17 @@ import java.util.SortedMap;
 public interface Trie<K, V> extends IterableSortedMap<K, V> {
 
     /**
-     * Returns a view of this {@link Trie} of all elements that are prefixed
-     * by the given key.
+     * Returns a view of this {@link Trie} of all elements that are prefixed by the given key.
      * <p>
-     * In a {@link Trie} with fixed size keys, this is essentially a
-     * {@link #get(Object)} operation.
+     * In a {@link Trie} with fixed size keys, this is essentially a {@link #get(Object)} operation.
+     * </p>
      * <p>
-     * For example, if the {@link Trie} contains 'Anna', 'Anael',
-     * 'Analu', 'Andreas', 'Andrea', 'Andres', and 'Anatole', then
-     * a lookup of 'And' would return 'Andreas', 'Andrea', and 'Andres'.
+     * For example, if the {@link Trie} contains 'Anna', 'Anael', 'Analu', 'Andreas', 'Andrea', 'Andres', and 'Anatole', then a lookup of 'And' would return
+     * 'Andreas', 'Andrea', and 'Andres'.
+     * </p>
      *
-     * @param key  the key used in the search
-     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
-     *   key is prefixed by the search key
+     * @param key the key used in the search
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose key is prefixed by the search key
      */
     SortedMap<K, V> prefixMap(K key);
 

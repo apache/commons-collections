@@ -225,6 +225,7 @@ public class CollectionUtils {
      * @since 4.5.0
      */
     public static final int INDEX_NOT_FOUND = -1;
+
     /**
      * Default prefix used while converting an Iterator to its String representation.
      *
@@ -461,11 +462,9 @@ public class CollectionUtils {
      */
     public static <O> List<O> collate(final Iterable<? extends O> iterableA, final Iterable<? extends O> iterableB,
                                       final Comparator<? super O> comparator, final boolean includeDuplicates) {
-
         Objects.requireNonNull(iterableA, "iterableA");
         Objects.requireNonNull(iterableB, "iterableB");
         Objects.requireNonNull(comparator, "comparator");
-
         // if both Iterables are a Collection, we can estimate the size
         final int totalSize = iterableA instanceof Collection<?> && iterableB instanceof Collection<?> ?
                 Math.max(1, ((Collection<?>) iterableA).size() + ((Collection<?>) iterableB).size()) : 10;
@@ -475,7 +474,6 @@ public class CollectionUtils {
             return IteratorUtils.toList(iterator, totalSize);
         }
         final ArrayList<O> mergedList = new ArrayList<>(totalSize);
-
         O lastItem = null;
         while (iterator.hasNext()) {
             final O item = iterator.next();
@@ -484,7 +482,6 @@ public class CollectionUtils {
             }
             lastItem = item;
         }
-
         mergedList.trimToSize();
         return mergedList;
     }

@@ -54,6 +54,7 @@ public class SetUtils {
      * If the decorated sets change, this view will change as well. The contents
      * of this view can be transferred to another instance via the {@link #copyInto(Set)}
      * and {@link #toSet()} methods.
+     * </p>
      *
      * @param <E> the element type
      * @since 4.1

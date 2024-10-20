@@ -217,6 +217,7 @@ public class SplitMapUtils {
      * If {@code get} implements {@link IterableMap} directly, no conversion will take place.
      * If {@code get} implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise, an {@link Unmodifiable} {@link IterableMap} will be returned.
+     *
      * @param <K> the key type
      * @param <V> the value type
      * @param get to wrap, must not be null

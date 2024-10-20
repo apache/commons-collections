@@ -88,6 +88,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * Removes the last returned key from the underlying {@code Map} (optional operation).
      * <p>
      * This method can be called once per call to {@code next()}.
+     * </p>
      *
      * @throws UnsupportedOperationException if remove is not supported by the map
      * @throws IllegalStateException if {@code next()} has not yet been called

@@ -536,7 +536,6 @@ public class IteratorUtils {
         return new CollatingIterator<>(comp, iterators);
     }
 
-    // Collated
     /**
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in a collection of ordered {@link Iterator}s.
@@ -1070,7 +1069,6 @@ public class IteratorUtils {
         return new NodeListIterator(Objects.requireNonNull(nodeList, "nodeList"));
     }
 
-    // Object Graph
     /**
      * Gets an iterator that operates over an object graph.
      * <p>

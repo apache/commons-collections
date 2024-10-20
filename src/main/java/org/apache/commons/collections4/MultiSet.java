@@ -39,6 +39,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * The {@link MultiSet#entrySet()} method returns a view of the multiset whose elements
      * implement this interface.
+     * </p>
      *
      * @param <E>  the element type
      */
@@ -52,6 +53,7 @@ public interface MultiSet<E> extends Collection<E> {
          * <p>
          * More formally, two entries {@code e1} and {@code e2} represent
          * the same mapping if
+         * </p>
          * <pre>
          *     (e1.getElement()==null ? e2.getElement()==null
          *                            : e1.getElement().equals(e2.getElement())) &amp;&amp;
@@ -98,6 +100,7 @@ public interface MultiSet<E> extends Collection<E> {
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as 1.
+     * </p>
      *
      * @param object  the object to add
      * @return {@code true} always, as the size of the MultiSet is increased
@@ -112,6 +115,7 @@ public interface MultiSet<E> extends Collection<E> {
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise, add it to the
      * {@link #uniqueSet()} and report its count as {@code occurrences}.
+     * </p>
      *
      * @param object  the object to add
      * @param occurrences  the number of occurrences to add, may be zero,
@@ -137,6 +141,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * The returned set is backed by this multiset, so any change to either
      * is immediately reflected in the other.
+     * </p>
      *
      * @return the Set of MultiSet entries
      */
@@ -147,6 +152,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * This MultiSet equals another object if it is also a MultiSet
      * that contains the same number of occurrences of the same elements.
+     * </p>
      *
      * @param obj  the object to compare to
      * @return true if equal
@@ -202,6 +208,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * If the number of occurrences to remove is greater than the actual number of
      * occurrences in the multiset, the object will be removed from the multiset.
+     * </p>
      *
      * @param object  the object to remove
      * @param occurrences  the number of occurrences to remove, may be zero,
@@ -238,6 +245,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * If the provided count is zero, the object will be removed from the
      * {@link #uniqueSet()}.
+     * </p>
      *
      * @param object  the object to update
      * @param count  the number of occurrences of the object
@@ -259,11 +267,13 @@ public interface MultiSet<E> extends Collection<E> {
      * Returns a {@link Set} of unique elements in the MultiSet.
      * <p>
      * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * </p>
      * <p>
      * The returned set is backed by this multiset, so any change to either
      * is immediately reflected in the other. Only removal operations are
      * supported, in which case all occurrences of the element are removed
      * from the backing multiset.
+     * </p>
      *
      * @return the Set of unique MultiSet elements
      */
