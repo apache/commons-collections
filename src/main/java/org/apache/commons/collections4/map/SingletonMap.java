@@ -150,6 +150,8 @@ public class SingletonMap<K, V>
     /**
      * Values implementation for the SingletonMap.
      * This class is needed as values is a view that must update as the map updates.
+     *
+     * @param <V> the type of the values in this set.
      */
     static class SingletonValues<V> extends AbstractSet<V> implements Serializable {
         private static final long serialVersionUID = -3689524741863047872L;

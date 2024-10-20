@@ -36,6 +36,9 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
 
     /**
      * A basic implementation of {@link Entry}.
+     *
+     * @param <K> the type of the keys in this entry.
+     * @param <V> the type of the values in this entry.
      */
     abstract static class BasicEntry<K, V> implements Map.Entry<K, V>, Serializable {
 

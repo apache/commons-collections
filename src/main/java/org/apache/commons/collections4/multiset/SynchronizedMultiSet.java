@@ -29,13 +29,15 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * Iterators must be separately synchronized around the loop.
  * </p>
  *
- * @param <E> the type held in the multiset
+ * @param <E> the type held in the multiset.
  * @since 4.1
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {
 
     /**
      * Synchronized Set for the MultiSet class.
+     *
+     * @param <T> the type held in this Set.
      */
     static class SynchronizedSet<T> extends SynchronizedCollection<T> implements Set<T> {
         /** Serialization version */

@@ -668,6 +668,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * <p>
      * As a guide, all critical volatile reads and writes to the count field are marked in code comments.
      * </p>
+     *
+     * @param <K> the type of keys maintained by this Segment.
+     * @param <V> the type of mapped values.
      */
     private static final class Segment<K, V> extends ReentrantLock {
 
