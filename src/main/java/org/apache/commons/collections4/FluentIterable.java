@@ -296,7 +296,6 @@ public class FluentIterable<E> implements Iterable<E> {
      *   FluentIterable&lt;E&gt; someIterable = ...;
      *   FluentIterable.of(someIterable.toList());
      * </pre>
-     * </p>
      *
      * @return a new iterable with the same contents as this iterable
      */
