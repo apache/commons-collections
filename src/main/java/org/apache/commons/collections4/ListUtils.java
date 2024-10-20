@@ -184,7 +184,7 @@ public class ListUtils {
      * @param list The list.
      * @return the first element of a list.
      * @see List#get(int)
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <T> T getFirst(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(0);
@@ -200,7 +200,7 @@ public class ListUtils {
      * @param list The list.
      * @return the last element of a list.
      * @see List#get(int)
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <T> T getLast(final List<T> list) {
         return Objects.requireNonNull(list, "list").get(list.size() - 1);

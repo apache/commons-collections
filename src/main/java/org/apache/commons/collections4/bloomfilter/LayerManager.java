@@ -51,7 +51,7 @@ import java.util.function.Supplier;
  *
  *
  * @param <T> the {@link BloomFilter} type.
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtractor {
 

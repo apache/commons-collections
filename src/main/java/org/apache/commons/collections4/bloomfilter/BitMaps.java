@@ -22,7 +22,7 @@ package org.apache.commons.collections4.bloomfilter;
  * <p>The functions view an array of longs as a collection of bit maps each containing 64 bits. The bits are arranged
  * in memory as a little-endian long value. This matches the requirements of the BitMapExtractor interface.</p>
  *
- * @since 4.5.0
+ * @since 4.5.0-M2
  */
 public class BitMaps {
 

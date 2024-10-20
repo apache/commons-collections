@@ -23,7 +23,7 @@ package org.apache.commons.collections4.bloomfilter;
  * This is a functional interface whose functional method is {@code test(long,long)}.
  * </p>
  *
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 @FunctionalInterface
 public interface LongBiPredicate {

@@ -113,7 +113,7 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     /**
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     @Override
     public E pollFirst() {
@@ -121,7 +121,7 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     /**
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     @Override
     public E pollLast() {

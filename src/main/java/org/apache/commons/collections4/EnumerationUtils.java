@@ -38,7 +38,7 @@ public class EnumerationUtils {
      * @param <T> the element type
      * @param enumeration the enumeration to use, may not be null
      * @return a new, single use {@link Iterable}
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
         return new IteratorIterable<>(new EnumerationIterator<>(enumeration));

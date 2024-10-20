@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
  *
  * @param <T> The WrappedBloomFilter type.
  * @param <W> The <em>wrapped</em> BloomFilter type.
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public abstract class WrappedBloomFilter<T extends WrappedBloomFilter<T, W>, W extends BloomFilter<W>> implements BloomFilter<T> {
 

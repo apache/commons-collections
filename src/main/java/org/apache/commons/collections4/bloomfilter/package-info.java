@@ -149,6 +149,6 @@
  * <li><a href="https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60">Apache Cassandra's BloomFilter.</a></li>
  * </ol>
  *
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 package org.apache.commons.collections4.bloomfilter;

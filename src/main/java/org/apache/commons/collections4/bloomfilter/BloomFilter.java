@@ -27,7 +27,7 @@ import java.util.Objects;
  * @param <T> The BloomFilter type.
  * @see BitMapExtractor
  * @see IndexExtractor
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, BitMapExtractor {
 

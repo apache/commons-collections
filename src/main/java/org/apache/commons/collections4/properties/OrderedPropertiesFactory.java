@@ -21,7 +21,7 @@ package org.apache.commons.collections4.properties;
  * Creates and loads {@link OrderedProperties}.
  *
  * @see OrderedProperties
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public class OrderedPropertiesFactory extends AbstractPropertiesFactory<OrderedProperties> {
 

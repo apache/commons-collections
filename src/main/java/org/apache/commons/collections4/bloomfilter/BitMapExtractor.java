@@ -34,7 +34,7 @@ import java.util.function.LongPredicate;
  * classes where possible.</em>
  * </p>
  *
- * @since 4.5.0
+ * @since 4.5.0-M2
  */
 @FunctionalInterface
 public interface BitMapExtractor {

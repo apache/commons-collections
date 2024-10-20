@@ -51,7 +51,7 @@ import java.util.function.Predicate;
  * </ul>
  *
  * @param <T> The type of Bloom Filter that is used for the layers.
- * @since 4.5.0
+ * @since 4.5.0-M2
  */
 public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter<LayeredBloomFilter<T>>, BloomFilterExtractor {
 

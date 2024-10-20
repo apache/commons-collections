@@ -81,7 +81,7 @@ package org.apache.commons.collections4.bloomfilter;
  * @see <a href="https://hur.st/bloomfilter">Bloom Filter calculator</a>
  * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
  * [Wikipedia]</a>
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public final class Shape {
 

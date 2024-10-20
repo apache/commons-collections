@@ -22,7 +22,7 @@ import org.apache.commons.collections4.Predicate;
  * Abstract base class for predicates.
  *
  * @param <T> the type of the input to the predicate.
- * @since 4.5.0
+ * @since 4.5.0-M3
  */
 public abstract class AbstractPredicate<T> implements Predicate<T> {
 

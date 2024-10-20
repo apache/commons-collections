@@ -45,7 +45,7 @@ import java.util.stream.IntStream;
  *
  * @see Shape
  * @see CellExtractor
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public final class ArrayCountingBloomFilter implements CountingBloomFilter {
 

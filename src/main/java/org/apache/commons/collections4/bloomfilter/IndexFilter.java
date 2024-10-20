@@ -25,7 +25,7 @@ import java.util.function.IntPredicate;
  *
  * <p>This is conceptually a unique filter implemented as an {@link IntPredicate}.</p>
  *
- * @since 4.5.0
+ * @since 4.5.0-M1
  */
 public final class IndexFilter {
 

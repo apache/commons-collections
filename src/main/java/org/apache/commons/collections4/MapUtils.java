@@ -267,7 +267,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a boolean, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the boolean conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Boolean getBoolean(final Map<? super K, ?> map, final K key,
             final Function<K, Boolean> defaultFunction) {
@@ -327,7 +327,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a Boolean, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> boolean getBooleanValue(final Map<? super K, ?> map, final K key,
             final Function<K, Boolean> defaultFunction) {
@@ -381,7 +381,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Byte getByte(final Map<? super K, ?> map, final K key, final Function<K, Byte> defaultFunction) {
         return applyDefaultFunction(map, key, MapUtils::getByte, defaultFunction);
@@ -431,7 +431,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a byte, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> byte getByteValue(final Map<? super K, ?> map, final K key,
             final Function<K, Byte> defaultFunction) {
@@ -485,7 +485,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Double getDouble(final Map<? super K, ?> map, final K key,
             final Function<K, Double> defaultFunction) {
@@ -536,7 +536,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a double, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> double getDoubleValue(final Map<? super K, ?> map, final K key,
             final Function<K, Double> defaultFunction) {
@@ -590,7 +590,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Float getFloat(final Map<? super K, ?> map, final K key,
             final Function<K, Float> defaultFunction) {
@@ -641,7 +641,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a float, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> float getFloatValue(final Map<? super K, ?> map, final K key,
             final Function<K, Float> defaultFunction) {
@@ -680,7 +680,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Integer getInteger(final Map<? super K, ?> map, final K key,
             final Function<K, Integer> defaultFunction) {
@@ -730,7 +730,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as an int, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> int getIntValue(final Map<? super K, ?> map, final K key,
             final Function<K, Integer> defaultFunction) {
@@ -785,7 +785,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Long getLong(final Map<? super K, ?> map, final K key, final Function<K, Long> defaultFunction) {
         return applyDefaultFunction(map, key, MapUtils::getLong, defaultFunction);
@@ -834,7 +834,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a long, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> long getLongValue(final Map<? super K, ?> map, final K key,
             final Function<K, Long> defaultFunction) {
@@ -888,7 +888,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the map conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key,
             final Function<K, Map<?, ?>> defaultFunction) {
@@ -953,7 +953,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Number getNumber(final Map<? super K, ?> map, final K key,
             final Function<K, Number> defaultFunction) {
@@ -1043,7 +1043,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a number, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the number conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> Short getShort(final Map<? super K, ?> map, final K key,
             final Function<K, Short> defaultFunction) {
@@ -1093,7 +1093,7 @@ public class MapUtils {
      * @param defaultFunction produce the default value to return if the value is null or if the conversion fails
      * @return the value in the Map as a short, default value produced by the {@code defaultFunction} if null map
      *         input
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> short getShortValue(final Map<? super K, ?> map, final K key,
             final Function<K, Short> defaultFunction) {
@@ -1147,7 +1147,7 @@ public class MapUtils {
      * @param defaultFunction what to produce the default value if the value is null or if the conversion fails
      * @return the value in the map as a string, or defaultValue produced by the defaultFunction if the original value
      *         is null, the map is null or the string conversion fails
-     * @since 4.5.0
+     * @since 4.5.0-M1
      */
     public static <K> String getString(final Map<? super K, ?> map, final K key,
             final Function<K, String> defaultFunction) {
