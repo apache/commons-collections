@@ -35,7 +35,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
     private static final long serialVersionUID = -5596090919668315834L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      *
      * @param <T> the type that the predicate queries
      * @param transformer  the transformer to call

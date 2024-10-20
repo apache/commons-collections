@@ -78,6 +78,7 @@ public interface Bag<E> extends Collection<E> {
      * @param object  the object to add
      * @param nCopies  the number of copies to add
      * @return {@code true} if the object was not already in the {@code uniqueSet}
+     * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
     boolean add(E object, int nCopies);
 

@@ -20,17 +20,19 @@ import java.util.Arrays;
 
 /**
  * Provides functions to assist in IndexExtractor creation and manipulation.
+ *
  * @see IndexExtractor
  */
 final class IndexUtils {
 
     /**
-     * The maximum array size for the methods in this class.
+     * The maximum array size for the methods in this class: {@value}.
      */
     static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
      * Ensure the array can add an element at the specified index.
+     *
      * @param array the array to check.
      * @param index the index to add at.
      * @return the array or a newly allocated copy of the array.

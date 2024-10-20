@@ -54,6 +54,8 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.functors.InstanceofPredicate;
+import org.apache.commons.collections4.functors.UniquePredicate;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -1940,6 +1942,15 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(4, list.size());
         assertEquals(1, output1.size());
         assertEquals(2, output2.iterator().next());
+    }
+
+    @Test
+    public void testSelect_Iterable_Predicate_Collection_JiraCollections864() {
+        final UniquePredicate<Object> uniquePredicate0 = new UniquePredicate<>();
+        final LinkedList<InstanceofPredicate> linkedList0 = new LinkedList<>();
+        final Class<InstanceofPredicate> class0 = InstanceofPredicate.class;
+        final InstanceofPredicate instanceofPredicate0 = new InstanceofPredicate(class0);
+        CollectionUtils.select((Iterable<? extends InstanceofPredicate>) linkedList0, (Predicate<? super InstanceofPredicate>) uniquePredicate0, linkedList0);
     }
 
     @Test

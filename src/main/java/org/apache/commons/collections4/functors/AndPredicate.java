@@ -33,7 +33,7 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
     private static final long serialVersionUID = 4189014213763186912L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      *
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null

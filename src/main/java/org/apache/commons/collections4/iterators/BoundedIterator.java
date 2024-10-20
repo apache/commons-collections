@@ -27,10 +27,12 @@ import java.util.Objects;
  * The {@code offset} corresponds to the position of the first element to
  * be returned from the decorated iterator, and {@code max} is the maximum
  * number of elements to be returned at most.
+ * </p>
  * <p>
  * In case an offset parameter other than 0 is provided, the decorated
  * iterator is immediately advanced to this position, skipping all elements
  * before that position.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 4.1
@@ -55,6 +57,7 @@ public class BoundedIterator<E> implements Iterator<E> {
      * <p>
      * The iterator is immediately advanced until it reaches the position at {@code offset},
      * incurring O(n) time.
+     * </p>
      *
      * @param iterator  the iterator to be decorated
      * @param offset  the index of the first element of the decorated iterator to return
@@ -123,6 +126,7 @@ public class BoundedIterator<E> implements Iterator<E> {
      * to this position upon creation. A call to {@link #remove()} will still result in an
      * {@link IllegalStateException} if no explicit call to {@link #next()} has been made prior
      * to calling {@link #remove()}.
+     * </p>
      */
     @Override
     public void remove() {

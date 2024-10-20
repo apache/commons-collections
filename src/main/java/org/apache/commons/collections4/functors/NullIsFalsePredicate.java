@@ -33,7 +33,7 @@ public final class NullIsFalsePredicate<T> extends AbstractPredicate<T> implemen
     private static final long serialVersionUID = -2997501534564735525L;
 
     /**
-     * Factory to create the null false predicate.
+     * Creates the null false predicate.
      *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null

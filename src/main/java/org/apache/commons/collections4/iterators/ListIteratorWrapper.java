@@ -38,10 +38,13 @@ import org.apache.commons.collections4.ResettableListIterator;
  * This class allows a regular {@code Iterator} to behave as a
  * {@code ListIterator}. It achieves this by building a list internally
  * of as the underlying iterator is traversed.
+ * </p>
  * <p>
  * The optional operations of {@code ListIterator} are not supported for plain {@code Iterator}s.
+ * </p>
  * <p>
  * This class implements ResettableListIterator from Commons Collections 3.2.
+ * </p>
  *
  * @param <E> the type of elements in this iterator.
  * @since 2.1

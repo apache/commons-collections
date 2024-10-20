@@ -22,16 +22,17 @@ import java.util.function.LongPredicate;
 
 /**
  * Produces bit map longs for a Bloom filter.
- *
+ * <p>
  * Each bit map is a little-endian long value representing a block of bits of in a filter.
- *
- * <p>The returned array will have length {@code ceil(m / 64)} where {@code m} is the
- * number of bits in the filter and {@code ceil} is the ceiling function.
- * Bits 0-63 are in the first long. A value of 1 at a bit position indicates the bit
- * index is enabled.
- * </p><p><em>
- * The default implementations of the {@code makePredicate()} and {@code asBitMapArray} methods
- * are slow and should be reimplemented in the implementing classes where possible.</em></p>
+ * </p>
+ * <p>
+ * The returned array will have length {@code ceil(m / 64)} where {@code m} is the number of bits in the filter and {@code ceil} is the ceiling function. Bits
+ * 0-63 are in the first long. A value of 1 at a bit position indicates the bit index is enabled.
+ * </p>
+ * <p>
+ * <em>The default implementations of the {@code makePredicate()} and {@code asBitMapArray} methods are slow and should be reimplemented in the implementing
+ * classes where possible.</em>
+ * </p>
  *
  * @since 4.5.0
  */
@@ -40,6 +41,7 @@ public interface BitMapExtractor {
 
     /**
      * Creates a BitMapExtractor from an array of Long.
+     *
      * @param bitMaps the bit maps to return.
      * @return a BitMapExtractor.
      */
@@ -70,6 +72,7 @@ public interface BitMapExtractor {
 
     /**
      * Creates a BitMapExtractor from an IndexExtractor.
+     *
      * @param extractor the IndexExtractor that specifies the indexes of the bits to enable.
      * @param numberOfBits the number of bits in the Bloom filter.
      * @return A BitMapExtractor that produces the bit maps equivalent of the Indices from the extractor.
@@ -121,15 +124,15 @@ public interface BitMapExtractor {
     }
 
     /**
-     * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other
-     * BitMapExtractor to this extractor. If this extractor does not have as many bit maps it will provide 0 (zero)
-     * for all excess calls to the LongBiPredicate.
+     * Applies the {@code func} to each bit map pair in order. Will apply all of the bit maps from the other BitMapExtractor to this extractor. If this
+     * extractor does not have as many bit maps it will provide 0 (zero) for all excess calls to the LongBiPredicate.
      * <p>
-     * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations
-     * of BitMapExtractor that have local arrays reimplement this method.</em></p>
+     * <em>The default implementation of this method uses {@code asBitMapArray()}. It is recommended that implementations of BitMapExtractor that have local
+     * arrays reimplement this method.</em>
+     * </p>
      *
      * @param other The other BitMapExtractor that provides the y values in the (x,y) pair.
-     * @param func The function to apply.
+     * @param func  The function to apply.
      * @return A LongPredicate that tests this BitMapExtractor's bitmap values in order.
      */
     default boolean processBitMapPairs(final BitMapExtractor other, final LongBiPredicate func) {

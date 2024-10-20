@@ -34,7 +34,7 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
     private static final long serialVersionUID = 3243449850504576071L;
 
     /**
-     * Factory to create the null exception predicate.
+     * Creates the null exception predicate.
      *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null

@@ -24,6 +24,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * Provides basic behavior for decorating an ordered map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
+ * </p>
  *
  * @param <K> the type of keys
  * @param <V> the type of mapped values

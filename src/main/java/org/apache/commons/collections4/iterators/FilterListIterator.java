@@ -26,6 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * <p>
  * This iterator decorates the underlying iterator, only allowing through
  * those elements that match the specified {@link Predicate Predicate}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 2.0

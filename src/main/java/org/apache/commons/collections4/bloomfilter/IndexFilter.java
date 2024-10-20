@@ -28,6 +28,7 @@ import java.util.function.IntPredicate;
  * @since 4.5.0
  */
 public final class IndexFilter {
+
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
      * number has been seen. Suitable for Shapes that have few hash functions.
@@ -59,10 +60,10 @@ public final class IndexFilter {
             return true;
         }
     }
+
     /**
      * An IndexTracker implementation that uses an array of bit maps to track whether or not a
      * number has been seen.
-     * @since 4.5.0
      */
     static class BitMapTracker implements IntPredicate {
         private final long[] bits;
@@ -82,8 +83,10 @@ public final class IndexFilter {
             return retval;
         }
     }
+
     /**
      * Creates an instance optimized for the specified shape.
+     *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      * @return an IndexFilter optimized for the specified shape.
@@ -100,6 +103,7 @@ public final class IndexFilter {
 
     /**
      * Creates an instance optimized for the specified shape.
+     *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      */

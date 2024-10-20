@@ -65,14 +65,14 @@ public interface CellExtractor extends IndexExtractor {
     /**
      * Creates a CellExtractor from an IndexExtractor.
      *
-     * <p>Note the following properties:
+     * <p>Note the following properties:</p>
      * <ul>
      * <li>Each index returned from the IndexExtractor is assumed to have a cell value of 1.</li>
      * <li>The CellExtractor aggregates duplicate indices from the IndexExtractor.</li>
      * </ul>
      *
      * <p>A CellExtractor that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
-     * of indices including:
+     * of indices including:</p>
      * <pre>
      * [1, 1, 2, 2, 2, 3]
      * [1, 3, 1, 2, 2, 2]

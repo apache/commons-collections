@@ -23,9 +23,9 @@ import java.util.function.LongPredicate;
  * if the {@code ary} is exhausted, the subsequent calls to {@code test} are executed with a zero value.
  * If the calls to {@code test} do not exhaust the {@code ary} the {@code processRemaining} method can be called to
  * execute the @{code test} with a zero value for each remaining {@code idx} value.
- * @since 4.5.0
  */
 class CountingLongPredicate implements LongPredicate {
+
     private int idx;
     private final long[] ary;
     private final LongBiPredicate func;
@@ -34,6 +34,7 @@ class CountingLongPredicate implements LongPredicate {
      * Constructs an instance that will compare the elements in {@code ary} with the elements returned by {@code func}.
      * function is called as {@code func.test( idxValue, otherValue )}. If there are more {@code otherValue} values than
      * {@code idxValues} then {@code func} is called as {@code func.test( 0, otherValue )}.
+     *
      * @param ary The array of long values to compare.
      * @param func The function to apply to the pairs of long values.
      */

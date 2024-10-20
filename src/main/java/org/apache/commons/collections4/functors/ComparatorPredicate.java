@@ -113,7 +113,7 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
     private static final long serialVersionUID = -1863209236504077399L;
 
     /**
-     * Factory to create the comparator predicate
+     * Creates the comparator predicate
      *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to
@@ -126,7 +126,7 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
     }
 
     /**
-     * Factory to create the comparator predicate
+     * Creates the comparator predicate
      *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to

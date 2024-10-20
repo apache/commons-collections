@@ -24,13 +24,15 @@ public class BloomFilterExtractorFromLayeredBloomFilterTest extends AbstractBloo
     @Override
     protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {
         final Builder<SimpleBloomFilter> builder = LayerManager.<SimpleBloomFilter>builder();
-        if (!ArrayUtils.isEmpty(filters)) {
+        final BloomFilter bloomFilter0 = ArrayUtils.get(filters, 0);
+        final Shape shape0 = bloomFilter0 != null ? bloomFilter0.getShape() : null;
+        if (shape0 != null) {
             // Avoid an NPE in test code and let the domain classes decide what to do when there is no supplier set.
-            builder.setSupplier(() -> new SimpleBloomFilter(filters[0].getShape()));
+            builder.setSupplier(() -> new SimpleBloomFilter(shape0));
         }
         final LayerManager<SimpleBloomFilter> layerManager = builder.setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated())
                 .setCleanup(LayerManager.Cleanup.noCleanup()).get();
-        final LayeredBloomFilter underTest = new LayeredBloomFilter(filters[0].getShape(), layerManager);
+        final LayeredBloomFilter underTest = new LayeredBloomFilter(shape0, layerManager);
         for (final BloomFilter bf : filters) {
             underTest.merge(bf);
         }
