@@ -20,6 +20,9 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
  * JUnit tests.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 

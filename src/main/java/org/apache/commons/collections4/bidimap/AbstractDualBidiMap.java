@@ -588,7 +588,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Creates an empty map, initialized by {@code createMap}.
      * <p>
      * This constructor remains in place for deserialization.
-     * All other usage is deprecated in favour of
+     * All other usage is deprecated in favor of
      * {@link #AbstractDualBidiMap(Map, Map)}.
      */
     protected AbstractDualBidiMap() {

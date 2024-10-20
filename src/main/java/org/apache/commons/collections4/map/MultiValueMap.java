@@ -365,7 +365,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         return new LazyIteratorChain<Entry<K, V>>() {
             @Override
             protected Iterator<? extends Entry<K, V>> nextIterator(final int count) {
-                if ( ! keyIterator.hasNext() ) {
+                if (!keyIterator.hasNext()) {
                     return null;
                 }
                 final K key = keyIterator.next();
@@ -374,10 +374,12 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                     public K getKey() {
                         return key;
                     }
+
                     @Override
                     public V getValue() {
                         return input;
                     }
+
                     @Override
                     public V setValue(final V value) {
                         throw new UnsupportedOperationException();

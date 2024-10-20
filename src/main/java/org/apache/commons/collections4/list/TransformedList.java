@@ -62,9 +62,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         }
 
         @Override
-        public void set(E object) {
-            object = transform(object);
-            getListIterator().set(object);
+        public void set(final E object) {
+            getListIterator().set(transform(object));
         }
     }
 

@@ -59,10 +59,13 @@ import org.junit.jupiter.api.Test;
  * To use, extend this class and implement the {@link #makeObject} method and if
  * necessary override the {@link #makeFullMap()} method.
  * </p>
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
-    public class TestMultiValuedMapAsMap extends AbstractMapTest<K, Collection<V>> {
+    public class TestMultiValuedMapAsMap extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
 
         public TestMultiValuedMapAsMap() {
             super(StringUtils.EMPTY);
@@ -669,16 +672,16 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * Resets the {@link #map} and {@link #confirmed} fields to empty.
      */
     public void resetEmpty() {
-        this.map = makeObject();
-        this.confirmed = makeConfirmedMap();
+        map = makeObject();
+        confirmed = makeConfirmedMap();
     }
 
     /**
      * Resets the {@link #map} and {@link #confirmed} fields to full.
      */
     public void resetFull() {
-        this.map = makeFullMap();
-        this.confirmed = makeConfirmedMap();
+        map = makeFullMap();
+        confirmed = makeConfirmedMap();
         final K[] k = getSampleKeys();
         final V[] v = getSampleValues();
         for (int i = 0; i < k.length; i++) {
@@ -693,8 +696,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //        assertEquals(expected, actual);
 //    }
 
-    public void setConfirmed(final MultiValuedMap<K, V> map) {
-        this.confirmed = map;
+    public void setConfirmed(final MultiValuedMap<K, V> confirmed) {
+        this.confirmed = confirmed;
     }
 
     @Test
@@ -867,13 +870,13 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //    public void testIterator_Key() {
 //        final MultiValuedMap<K, V> map = makeFullMap();
 //        Iterator<V> it = map.iterator("k0");
-//        assertTrue( it.hasNext());
+//        assertTrue(it.hasNext());
 //        Set<V> values = new HashSet<V>();
 //        while (it.hasNext()) {
 //            values.add(it.next());
 //        }
-//        assertTrue( values.contains("v0_1"));
-//        assertTrue( values.contains("v1_1"));
+//        assertTrue(values.contains("v0_1"));
+//        assertTrue(values.contains("v1_1"));
 //        assertFalse(map.iterator("A").hasNext());
 //        assertFalse(map.iterator("A").hasNext());
 //        if (!isAddSupported()) {
@@ -881,7 +884,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //        }
 //        map.put((K) "A", (V) "AA");
 //        it = map.iterator("A");
-//        assertTrue( it.hasNext());
+//        assertTrue(it.hasNext());
 //        it.next();
 //        assertFalse(it.hasNext());
 //    }
@@ -931,10 +934,22 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeysBagIterator() {
+    public void testKeysBagIterator1() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<K> col = new ArrayList<>(map.keys());
         final Bag<K> bag = new HashBag<>(col);
+        final int maxK = getSampleKeySize();
+        for (int k = 0; k < maxK; k++) {
+            assertEquals(getSampleCountPerKey(), bag.getCount(makeKey(k)));
+        }
+        assertEquals(getSampleTotalValueCount(), bag.size());
+    }
+
+    @Test
+    public void testKeysBagIterator2() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        final Iterable<K> iterable = new ArrayList<>(map.keys());
+        final Bag<K> bag = new HashBag<>(iterable);
         final int maxK = getSampleKeySize();
         for (int k = 0; k < maxK; k++) {
             assertEquals(getSampleCountPerKey(), bag.getCount(makeKey(k)));

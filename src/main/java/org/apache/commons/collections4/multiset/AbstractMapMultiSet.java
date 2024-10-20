@@ -51,6 +51,9 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         /** The parent map */
         protected final AbstractMapMultiSet<E> parent;
 
+        /**
+         * The source Iterator.
+         */
         protected final Iterator<Map.Entry<E, MutableInteger>> decorated;
 
         /** The last returned entry */
@@ -61,12 +64,12 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
-         * @param iterator  the iterator to decorate
+         * @param decorated  the iterator to decorate
          * @param parent  the parent multiset
          */
-        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> iterator,
+        protected EntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> decorated,
                                    final AbstractMapMultiSet<E> parent) {
-            this.decorated = iterator;
+            this.decorated = decorated;
             this.parent = parent;
         }
 
@@ -164,6 +167,9 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      */
     protected static class MultiSetEntry<E> extends AbstractEntry<E> {
 
+        /**
+         * The parent entry.
+         */
         protected final Map.Entry<E, MutableInteger> parentEntry;
 
         /**

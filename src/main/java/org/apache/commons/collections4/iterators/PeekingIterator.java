@@ -26,6 +26,7 @@ import java.util.Objects;
  * The decorator supports the removal operation, but an {@link IllegalStateException}
  * will be thrown if {@link #remove()} is called directly after a call to
  * {@link #peek()} or {@link #element()}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 4.0
@@ -36,6 +37,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
      * If the iterator is already a {@link PeekingIterator} it is returned directly.
+     * </p>
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
@@ -139,12 +141,14 @@ public class PeekingIterator<E> implements Iterator<E> {
      * <p>
      * Note: this method does not throw a {@link NoSuchElementException} if the iterator
      * is already exhausted. If you want such a behavior, use {@link #element()} instead.
+     * </p>
      * <p>
      * The rationale behind this is to follow the {@link java.util.Queue} interface
      * which uses the same terminology.
      * <p>
      * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate
      * will <em>not</em> be tested if {@link #element()} or peek() has been called after the most recent invocation of {@link #next()}
+     * </p>
      *
      * @return the next element from the iterator
      */

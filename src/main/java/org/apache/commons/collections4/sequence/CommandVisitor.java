@@ -105,7 +105,7 @@ package org.apache.commons.collections4.sequence;
  *   }
  *
  *   public String toString() {
- *     StringBuffer buffer = new StringBuffer();
+ *     StringBuilder buffer = new StringBuilder();
  *     for (Iterator iter = v.iterator(); iter.hasNext();) {
  *       buffer.append(' ').append(iter.next());
  *     }

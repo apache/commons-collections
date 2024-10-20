@@ -40,7 +40,10 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * JUnit tests.
+ * Tests {@link Flat3Map}.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -94,6 +97,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
             Flat3MapTest.this.verify();
         }
     }
+
     private static final Integer ONE = Integer.valueOf(1);
     private static final Integer TWO = Integer.valueOf(2);
     private static final Integer THREE = Integer.valueOf(3);
@@ -209,17 +213,17 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Test
     public void testCollections261() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
+        m.put(Integer.valueOf(1), Integer.valueOf(1));
+        m.put(Integer.valueOf(0), Integer.valueOf(0));
+        assertEquals(Integer.valueOf(1), m.remove(Integer.valueOf(1)));
+        assertEquals(Integer.valueOf(0), m.remove(Integer.valueOf(0)));
 
-        m.put( Integer.valueOf(2), Integer.valueOf(2) );
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
+        m.put(Integer.valueOf(2), Integer.valueOf(2));
+        m.put(Integer.valueOf(1), Integer.valueOf(1));
+        m.put(Integer.valueOf(0), Integer.valueOf(0));
+        assertEquals(Integer.valueOf(2), m.remove(Integer.valueOf(2)));
+        assertEquals(Integer.valueOf(1), m.remove(Integer.valueOf(1)));
+        assertEquals(Integer.valueOf(0), m.remove(Integer.valueOf(0)));
     }
 
     @Test
@@ -856,16 +860,16 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final String string0 = m.toString();
         assertNotNull(string0);
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put(Integer.valueOf(1), Integer.valueOf(1));
         final String string1 = m.toString();
         assertNotNull(string1);
         assertNotSame(string0, string1);
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        m.put(Integer.valueOf(0), Integer.valueOf(0));
         final String string2 = m.toString();
         assertNotNull(string2);
         assertNotSame(string0, string2);
         assertNotSame(string1, string2);
-        m.put( Integer.valueOf(2), Integer.valueOf(2) );
+        m.put(Integer.valueOf(2), Integer.valueOf(2));
         final String string3 = m.toString();
         assertNotNull(string3);
         assertNotSame(string0, string3);

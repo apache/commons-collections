@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * A unit test to test the basic functions of {@link SkippingIterator}.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 

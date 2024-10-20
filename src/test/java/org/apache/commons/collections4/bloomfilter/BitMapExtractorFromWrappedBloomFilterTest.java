@@ -24,8 +24,8 @@ public class BitMapExtractorFromWrappedBloomFilterTest extends AbstractBitMapExt
     protected BitMapExtractor createEmptyExtractor() {
         return new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
             @Override
-            public BloomFilter copy() {
-                final BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+            public DefaultBloomFilterTest.SparseDefaultBloomFilter copy() {
+                final DefaultBloomFilterTest.SparseDefaultBloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
                 result.merge(getWrapped());
                 return result;
             }
@@ -35,10 +35,10 @@ public class BitMapExtractorFromWrappedBloomFilterTest extends AbstractBitMapExt
     @Override
     protected BitMapExtractor createExtractor() {
         final Hasher hasher = new IncrementingHasher(0, 1);
-        final BloomFilter bf = new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
+        final WrappedBloomFilter bf = new WrappedBloomFilter(new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape)) {
             @Override
-            public BloomFilter copy() {
-                final BloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
+            public DefaultBloomFilterTest.SparseDefaultBloomFilter copy() {
+                final DefaultBloomFilterTest.SparseDefaultBloomFilter result = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape);
                 result.merge(getWrapped());
                 return result;
             }

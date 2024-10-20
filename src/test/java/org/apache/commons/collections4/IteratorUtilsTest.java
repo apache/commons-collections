@@ -53,6 +53,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.IteratorChainTest;
 import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ZippingIterator;
@@ -435,7 +436,71 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testChainedIterator() {
+    public void testChainedIteratorArrayOfIterator() {
+        // String
+        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
+        iteratorChainTest.setUp();
+        // @formatter:off
+        final Iterator<String> iterator = IteratorUtils.chainedIterator(
+                iteratorChainTest.getList1().iterator(),
+                iteratorChainTest.getList2().iterator(),
+                iteratorChainTest.getList3().iterator());
+        // @formatter:on
+        assertEquals("One", iterator.next());
+        assertEquals("Two", iterator.next());
+        assertEquals("Three", iterator.next());
+        assertEquals("Four", iterator.next());
+        assertEquals("Five", iterator.next());
+        assertEquals("Six", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testChainedIteratorList() {
+        final IteratorChainTest iteratorChainTest = new IteratorChainTest();
+        iteratorChainTest.setUp();
+        final List<Iterator<String>> list = new ArrayList<>();
+        list.add(iteratorChainTest.getList1().iterator());
+        list.add(iteratorChainTest.getList2().iterator());
+        list.add(iteratorChainTest.getList3().iterator());
+        final List<String> expected = new ArrayList<>(iteratorChainTest.getList1());
+        expected.addAll(iteratorChainTest.getList2());
+        expected.addAll(iteratorChainTest.getList3());
+        final Iterator<String> iter = IteratorUtils.chainedIterator(list);
+        final List<String> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testChainedIteratorOfIterators() {
+        final List<List<Number>> lst = new ArrayList<>();
+        final List<Integer> iList = Arrays.asList(1, 3);
+        lst.add(Arrays.asList(3.14f, Math.sqrt(2.0)));
+        final Iterator<Iterator<Number>> toBeUnwound = new Iterator<Iterator<Number>>() {
+            List<List<Number>> lst = Arrays.asList(Arrays.asList(1, 3), Arrays.asList(3.14F, Math.sqrt(2.0)));
+            Iterator<List<Number>> lstIter = lst.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return lstIter.hasNext();
+            }
+
+            @Override
+            public Iterator<Number> next() {
+                return lstIter.next().iterator();
+            }
+        };
+
+        final List<Number> expected = Arrays.asList(1, 3, 3.14f, Math.sqrt(2.0));
+        final Iterator<Number> iter = IteratorUtils.chainedIterator(toBeUnwound);
+        final List<Number> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testChainedIteratorRawGenerics() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.chainedIterator(iterator) instanceof Iterator, "create instance fail");
@@ -750,12 +815,21 @@ public class IteratorUtilsTest {
         assertEquals(1, (int) IteratorUtils.get(iterator, 0));
         iterator = iterableA.iterator();
         assertEquals(2, (int) IteratorUtils.get(iterator, 1));
-
         // Iterator, non-existent entry
         final Iterator<Integer> finalIterator = iterator;
-        assertThrows(IndexOutOfBoundsException.class, () -> IteratorUtils.get(finalIterator, 10),
-                "Expecting IndexOutOfBoundsException.");
+        assertThrows(IndexOutOfBoundsException.class, () -> IteratorUtils.get(finalIterator, 10), "Expecting IndexOutOfBoundsException.");
+        assertFalse(iterator.hasNext());
+    }
 
+    @Test
+    public void testGetAtIndexFromIteratorDefault() throws Exception {
+        // Iterator, entry exists
+        Iterator<Integer> iterator = iterableA.iterator();
+        assertEquals(1, (int) IteratorUtils.get(iterator, 0, i -> 0));
+        iterator = iterableA.iterator();
+        assertEquals(2, (int) IteratorUtils.get(iterator, 1, i -> 0));
+        // Iterator, non-existent entry
+        assertEquals(111, (int) IteratorUtils.get(iterator, 10, i -> 111));
         assertFalse(iterator.hasNext());
     }
 

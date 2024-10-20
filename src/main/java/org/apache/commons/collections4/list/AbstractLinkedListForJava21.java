@@ -44,7 +44,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * (see COLLECTIONS-842 for details).
  *
  * @param <E> the type of elements in this list
- * @since 3.0
+ * @since 4.5.0-M2
  */
 public abstract class AbstractLinkedListForJava21<E> implements List<E> {
 

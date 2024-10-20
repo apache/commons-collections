@@ -29,22 +29,27 @@ import java.util.Queue;
  * method from the Iterator interface is called, the IteratorChain will delegate
  * to a single underlying Iterator. The IteratorChain will invoke the Iterators
  * in sequence until all Iterators are exhausted.
+ * </p>
  * <p>
  * Under many circumstances, linking Iterators together in this manner is more
  * efficient (and convenient) than reading out the contents of each Iterator
  * into a List and creating a new Iterator.
+ * </p>
  * <p>
  * Calling a method that adds new Iterator <i>after a method in the Iterator
  * interface has been called</i> will result in an UnsupportedOperationException.
+ * </p>
  * <p>
  * NOTE: As from version 3.0, the IteratorChain may contain no iterators. In
  * this case the class will function as an empty iterator.
+ * </p>
  * <p>
  * NOTE: As from version 4.0, the IteratorChain stores the iterators in a queue
  * and removes any reference to them as soon as they are not used anymore. Thus,
  * the methods {@code setIterator(Iterator)} and {@code getIterators()} have been
  * removed and {@link #size()} will return the number of remaining iterators in
  * the queue.
+ * </p>
  *
  * @param <E> the type of elements in this iterator.
  * @since 2.1
@@ -52,7 +57,7 @@ import java.util.Queue;
 public class IteratorChain<E> implements Iterator<E> {
 
     /** The chain of iterators */
-    private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<>();
+    private final Queue<Iterator<? extends E>> iteratorQueue = new LinkedList<>();
 
     /** The current iterator */
     private Iterator<? extends E> currentIterator;
@@ -74,6 +79,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some
      * iterators after using this constructor.
+     * </p>
      */
     public IteratorChain() {
     }
@@ -84,14 +90,15 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes a collection of iterators. The newly constructed
      * iterator will iterate through each one of the input iterators in turn.
+     * </p>
      *
-     * @param iteratorChain the collection of iterators, not null
+     * @param iteratorQueue the collection of iterators, not null
      * @throws NullPointerException if iterators collection is or contains null
      * @throws ClassCastException if iterators collection doesn't contain an
      * iterator
      */
-    public IteratorChain(final Collection<Iterator<? extends E>> iteratorChain) {
-        for (final Iterator<? extends E> iterator : iteratorChain) {
+    public IteratorChain(final Collection<? extends Iterator<? extends E>> iteratorQueue) {
+        for (final Iterator<? extends E> iterator : iteratorQueue) {
             addIterator(iterator);
         }
     }
@@ -102,9 +109,11 @@ public class IteratorChain<E> implements Iterator<E> {
      * This method takes one iterator. The newly constructed iterator will
      * iterate through that iterator. Thus calling this constructor on its own
      * will have no effect other than decorating the input iterator.
+     * </p>
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some more
      * iterators after using this constructor.
+     * </p>
      *
      * @param iterator the first child iterator in the IteratorChain, not null
      * @throws NullPointerException if the iterator is null
@@ -118,12 +127,13 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes an array of iterators. The newly constructed iterator
      * will iterate through each one of the input iterators in turn.
+     * </p>
      *
-     * @param iteratorChain the array of iterators, not null
+     * @param iteratorQueue the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
-    public IteratorChain(final Iterator<? extends E>... iteratorChain) {
-        for (final Iterator<? extends E> element : iteratorChain) {
+    public IteratorChain(final Iterator<? extends E>... iteratorQueue) {
+        for (final Iterator<? extends E> element : iteratorQueue) {
             addIterator(element);
         }
     }
@@ -133,6 +143,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes two iterators. The newly constructed iterator will
      * iterate through each one of the input iterators in turn.
+     * </p>
      *
      * @param first the first child iterator in the IteratorChain, not null
      * @param second the second child iterator in the IteratorChain, not null
@@ -152,7 +163,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        iteratorChain.add(Objects.requireNonNull(iterator, "iterator"));
+        iteratorQueue.add(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**
@@ -160,8 +171,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     private void checkLocked() {
         if (isLocked) {
-            throw new UnsupportedOperationException(
-                    "IteratorChain cannot be changed after the first use of a method from the Iterator interface");
+            throw new UnsupportedOperationException("IteratorChain cannot be changed after the first use of a method from the Iterator interface");
         }
     }
 
@@ -175,7 +185,6 @@ public class IteratorChain<E> implements Iterator<E> {
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-
         return currentIterator.hasNext();
     }
 
@@ -244,7 +253,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @return Iterator count
      */
     public int size() {
-        return iteratorChain.size();
+        return iteratorQueue.size();
     }
 
     /**
@@ -253,18 +262,17 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
-            if (iteratorChain.isEmpty()) {
+            if (iteratorQueue.isEmpty()) {
                 currentIterator = EmptyIterator.<E>emptyIterator();
             } else {
-                currentIterator = iteratorChain.remove();
+                currentIterator = iteratorQueue.remove();
             }
             // set last used iterator here, in case the user calls remove
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
-
-        while (!currentIterator.hasNext() && !iteratorChain.isEmpty()) {
-            currentIterator = iteratorChain.remove();
+        while (!currentIterator.hasNext() && !iteratorQueue.isEmpty()) {
+            currentIterator = iteratorQueue.remove();
         }
     }
 

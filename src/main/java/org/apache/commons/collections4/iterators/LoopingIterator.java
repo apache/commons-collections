@@ -29,9 +29,11 @@ import org.apache.commons.collections4.ResettableIterator;
  * The iterator will loop continuously around the provided elements, unless
  * there are no elements in the collection to begin with, or all the elements
  * have been {@link #remove removed}.
+ * </p>
  * <p>
  * Concurrent modifications are not directly supported, and for most collection
  * implementations will throw a ConcurrentModificationException.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.0
@@ -48,6 +50,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * <p>
      * There is no way to reset an Iterator instance without recreating it from
      * the original source, so the Collection must be passed in.
+     * </p>
      *
      * @param collection  the collection to wrap
      * @throws NullPointerException if the collection is null
@@ -62,6 +65,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * <p>
      * Returns false only if the collection originally had zero elements, or
      * all the elements have been {@link #remove removed}.
+     * </p>
      *
      * @return {@code true} if there are more elements
      */
@@ -74,6 +78,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * Returns the next object in the collection.
      * <p>
      * If at the end of the collection, return the first element.
+     * </p>
      *
      * @return the next object
      * @throws NoSuchElementException if there are no elements
@@ -94,13 +99,15 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * Removes the previously retrieved item from the underlying collection.
      * <p>
      * This feature is only supported if the underlying collection's
-     * {@link Collection#iterator iterator} method returns an implementation
+     * {@link Collection#iterator()} method returns an implementation
      * that supports it.
+     * </p>
      * <p>
      * This method can only be called after at least one {@link #next} method call.
      * After a removal, the remove method may not be called again until another
      * next has been performed. If the {@link #reset} is called, then remove may
      * not be called until {@link #next} is called again.
+     * </p>
      */
     @Override
     public void remove() {

@@ -28,9 +28,11 @@ import org.apache.commons.collections4.ResettableIterator;
  * that you have an object array, the
  * {@link org.apache.commons.collections4.iterators.ObjectArrayIterator ObjectArrayIterator}
  * class is a better choice, as it will perform better.
+ * </p>
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of
  * the iterator back to the start if required.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 1.0
@@ -105,22 +107,15 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @param type  the index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    protected void checkBound(final int bound, final int len, final String type ) {
+    protected void checkBound(final int bound, final int len, final String type) {
         if (bound > len) {
-            throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that " + type +
-              "s beyond the end of the array. "
-            );
+            throw new ArrayIndexOutOfBoundsException("Attempt to make an ArrayIterator that " + type + "s beyond the end of the array. ");
         }
         if (bound < 0) {
-            throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that " + type +
-              "s before the start of the array. "
-            );
+            throw new ArrayIndexOutOfBoundsException("Attempt to make an ArrayIterator that " + type + "s before the start of the array. ");
         }
     }
 
-    // Properties
     /**
      * Gets the array that this iterator is iterating over.
      *
@@ -137,7 +132,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @since 4.0
      */
     public int getEndIndex() {
-        return this.endIndex;
+        return endIndex;
     }
 
     /**
@@ -147,10 +142,9 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @since 4.0
      */
     public int getStartIndex() {
-        return this.startIndex;
+        return startIndex;
     }
 
-    // Iterator interface
     /**
      * Returns true if there are more elements to return from the array.
      *
@@ -192,7 +186,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public void reset() {
-        this.index = this.startIndex;
+        index = startIndex;
     }
 
 }

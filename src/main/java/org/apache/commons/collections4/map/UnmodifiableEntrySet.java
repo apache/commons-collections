@@ -52,7 +52,7 @@ public final class UnmodifiableEntrySet<K, V>
         }
 
         @Override
-        public V setValue(final V obj) {
+        public V setValue(final V value) {
             throw new UnsupportedOperationException();
         }
     }

@@ -24,6 +24,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * Provides basic behavior for decorating an ordered map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
+ * </p>
  *
  * @param <K> the type of keys
  * @param <V> the type of mapped values
@@ -97,8 +98,8 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
 
     /** {@inheritDoc} */
     @Override
-    public V setValue(final V obj) {
-        return iterator.setValue(obj);
+    public V setValue(final V value) {
+        return iterator.setValue(value);
     }
 
 }

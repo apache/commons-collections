@@ -161,7 +161,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
     public final void testCountingBloomFilterSpecificContains() {
         final BloomFilter bf = new SimpleBloomFilter(getTestShape());
         bf.merge(TestingHashers.FROM1);
-        final CountingBloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11( createEmptyFilter(getTestShape()));
+        final CountingBloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
         assertTrue(bf.contains(bf), "BF Should contain itself");
         assertTrue(bf2.contains(bf2), "BF2 Should contain itself");
@@ -342,8 +342,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         final CountingBloomFilter bf7 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BitMapExtractor bmp2 = BitMapExtractor.fromIndexExtractor(ip2, getTestShape().getNumberOfBits());
         assertThrows(IllegalArgumentException.class, () -> bf7.remove(bmp2));
-        assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(-1)));
-        assertThrows(IllegalArgumentException.class, () -> bf7.remove( new BadHasher(getTestShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf7.remove(new BadHasher(-1)));
+        assertThrows(IllegalArgumentException.class, () -> bf7.remove(new BadHasher(getTestShape().getNumberOfBits())));
     }
 
     /**
@@ -358,7 +358,7 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
         final CountingBloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
 
         assertTrue(bf1.subtract(bf2), "Subtract should work");
-        assertFalse(bf1.contains( TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape()))), "Should not contain bitHasher");
+        assertFalse(bf1.contains(TestingHashers.populateFromHashersFrom1AndFrom11(new SimpleBloomFilter(getTestShape()))), "Should not contain bitHasher");
         assertTrue(bf1.contains(TestingHashers.FROM1), "Should contain TestingHashers.from1");
 
         assertCounts(bf1, from1Counts);
@@ -375,8 +375,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
 
         assertCounts(bf3, new int[] {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0});
 
-        assertThrows(IllegalArgumentException.class, () -> bf3.remove( new BadHasher(-1)));
-        assertThrows(IllegalArgumentException.class, () -> bf3.remove( new BadHasher(getTestShape().getNumberOfBits())));
+        assertThrows(IllegalArgumentException.class, () -> bf3.remove(new BadHasher(-1)));
+        assertThrows(IllegalArgumentException.class, () -> bf3.remove(new BadHasher(getTestShape().getNumberOfBits())));
     }
 
     private void verifyMaxInsert(final CountingBloomFilter bf, final int from1, final int from11) {

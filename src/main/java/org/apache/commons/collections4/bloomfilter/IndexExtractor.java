@@ -35,6 +35,7 @@ public interface IndexExtractor {
 
     /**
      * Creates an IndexExtractor from a {@code BitMapExtractor}.
+     *
      * @param bitMapExtractor the {@code BitMapExtractor}
      * @return a new {@code IndexExtractor}.
      */
@@ -64,6 +65,7 @@ public interface IndexExtractor {
 
     /**
      * Creates an IndexExtractor from an array of integers.
+     *
      * @param values the index values
      * @return an IndexExtractor that uses the values.
      */

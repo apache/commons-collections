@@ -54,7 +54,7 @@ import java.util.Objects;
  * @see CellExtractor
  * @since 4.5.0
  */
-public interface CountingBloomFilter extends BloomFilter, CellExtractor {
+public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, CellExtractor {
 
     // Query Operations
 
@@ -75,21 +75,15 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     boolean add(CellExtractor other);
 
     /**
-     * Creates a new instance of the CountingBloomFilter with the same properties as the current one.
-     * @return a copy of this CountingBloomFilter
-     */
-    @Override
-    CountingBloomFilter copy();
-
-    /**
      * Returns the maximum allowable value for a cell count in this Counting filter.
+     *
      * @return the maximum allowable value for a cell count in this Counting filter.
      */
     int getMaxCell();
 
     /**
-     * Determines the maximum number of times the BitMapExtractor could have been merged into this
-     * counting filter.
+     * Determines the maximum number of times the BitMapExtractor could have been merged into this counting filter.
+     *
      * @param bitMapExtractor the BitMapExtractor to provide the indices.
      * @return the maximum number of times the BitMapExtractor could have been inserted.
      */
@@ -109,25 +103,26 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
     }
 
     /**
-     * Determines the maximum number of times the Bloom filter could have been merged
-     * into this counting filter.
+     * Determines the maximum number of times the Bloom filter could have been merged into this counting filter.
+     *
      * @param bloomFilter the Bloom filter the check for.
      * @return the maximum number of times the Bloom filter could have been inserted.
      */
-    default int getMaxInsert(final BloomFilter bloomFilter) {
+    default int getMaxInsert(final BloomFilter<?> bloomFilter) {
         return getMaxInsert((BitMapExtractor) bloomFilter);
     }
 
     /**
      * Determines the maximum number of times the Cell Extractor could have been added.
+     *
      * @param cellExtractor the extractor of cells.
      * @return the maximum number of times the CellExtractor could have been inserted.
      */
     int getMaxInsert(CellExtractor cellExtractor);
 
     /**
-     * Determines the maximum number of times the Hasher could have been merged into this
-     * counting filter.
+     * Determines the maximum number of times the Hasher could have been merged into this counting filter.
+     *
      * @param hasher the Hasher to provide the indices.
      * @return the maximum number of times the hasher could have been inserted.
      */
@@ -135,19 +130,18 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
         return getMaxInsert(hasher.indices(getShape()));
     }
 
-    // Modification Operations
-
     /**
-     * Determines the maximum number of times the IndexExtractor could have been merged
-     * into this counting filter.
-     * <p>To determine how many times an indexExtractor could have been added create a CellExtractor
-     * from the indexExtractor and check that</p>
+     * Determines the maximum number of times the IndexExtractor could have been merged into this counting filter.
+     * <p>
+     * To determine how many times an indexExtractor could have been added create a CellExtractor from the indexExtractor and check that
+     * </p>
+     *
      * @param indexExtractor the extractor to drive the count check.
      * @return the maximum number of times the IndexExtractor could have been inserted.
      * @see #getMaxInsert(CellExtractor)
      */
     default int getMaxInsert(final IndexExtractor indexExtractor) {
-        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()) );
+        return getMaxInsert(CellExtractor.from(indexExtractor.uniqueIndices()));
     }
 
     /**
@@ -204,7 +198,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #add(CellExtractor)
      */
     @Override
-    default boolean merge(final BloomFilter other) {
+    default boolean merge(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         return merge((IndexExtractor) other);
     }
@@ -288,7 +282,7 @@ public interface CountingBloomFilter extends BloomFilter, CellExtractor {
      * @see #isValid()
      * @see #subtract(CellExtractor)
      */
-    default boolean remove(final BloomFilter other) {
+    default boolean remove(final BloomFilter<?> other) {
         return remove((IndexExtractor) other);
     }
 

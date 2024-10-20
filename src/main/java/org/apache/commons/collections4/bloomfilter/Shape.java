@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * The definition of a Bloom filter shape.
  *
- * <p> This class contains the values for the filter configuration and is used to
+ * <p>This class contains the values for the filter configuration and is used to
  * convert a Hasher into a BloomFilter as well as verify that two Bloom filters are
  * compatible. (i.e. can be compared or merged)</p>
  *
@@ -93,7 +93,7 @@ public final class Shape {
     /**
      * ln(1 / 2^ln(2)). Used in calculating the number of bits. Approximately -0.480453013918201.
      *
-     * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)
+     * <p>ln(1 / 2^ln(2)) = ln(1) - ln(2^ln(2)) = -ln(2) * ln(2)</p>
      */
     private static final double DENOMINATOR = -LN_2 * LN_2;
 
@@ -121,11 +121,12 @@ public final class Shape {
     }
 
     /**
-     * Check the calculated probability is {@code < 1.0}.
+     * Checks the calculated probability is {@code < 1.0}.
      *
-     * <p>This function is used to verify that the dynamically calculated probability for the
-     * Shape is in the valid range 0 to 1 exclusive. This need only be performed once upon
-     * construction.
+     * <p>
+     * This function is used to verify that the dynamically calculated probability for the Shape is in the valid range 0 to 1 exclusive. This need only be
+     * performed once upon construction.
+     * </p>
      *
      * @param probability the probability
      * @throws IllegalArgumentException if the probability is {@code >= 1.0}.
@@ -133,7 +134,7 @@ public final class Shape {
     private static void checkCalculatedProbability(final double probability) {
         // We do not need to check for p <= 0.0 since we only allow positive values for
         // parameters and the closest we can come to exp(-kn/m) == 1 is
-        // exp(-1/Integer.MAX_INT) approx 0.9999999995343387 so Math.pow( x, y ) will
+        // exp(-1/Integer.MAX_INT) approx 0.9999999995343387 so Math.pow(x, y) will
         // always be 0<x<1 and y>0
         if (probability >= 1.0) {
             throw new IllegalArgumentException("Calculated probability is greater than or equal to 1: " + probability);
@@ -141,7 +142,7 @@ public final class Shape {
     }
 
     /**
-     * Check number of bits is strictly positive.
+     * Checks number of bits is strictly positive.
      *
      * @param numberOfBits the number of bits
      * @return the number of bits
@@ -155,7 +156,7 @@ public final class Shape {
     }
 
     /**
-     * Check number of hash functions is strictly positive.
+     * Checks number of hash functions is strictly positive.
      *
      * @param numberOfHashFunctions the number of hash functions
      * @return the number of hash functions
@@ -169,7 +170,7 @@ public final class Shape {
     }
 
     /**
-     * Check number of items is strictly positive.
+     * Checks number of items is strictly positive.
      *
      * @param numberOfItems the number of items
      * @return the number of items
@@ -183,7 +184,7 @@ public final class Shape {
     }
 
     /**
-     * Check the probability is in the range 0.0, exclusive, to 1.0, exclusive.
+     * Checks the probability is in the range 0.0, exclusive, to 1.0, exclusive.
      *
      * @param probability the probability
      * @throws IllegalArgumentException if the probability is not in the range {@code (0, 1)}
@@ -472,10 +473,12 @@ public final class Shape {
      * <p>This method assumes that bit maps are 64bits and indexes are 32bits. If the memory
      * necessary to store the cardinality as indexes is less than the estimated memory for bit maps,
      * the cardinality is determined to be {@code sparse}.</p>
+     *
      * @param cardinality the cardinality to check.
      * @return true if the cardinality is sparse within the shape.
      */
     public boolean isSparse(final int cardinality) {
+
         /*
          * Since the size of a bit map is a long and the size of an index is an int,
          * there can be 2 indexes for each bit map. In Bloom filters indexes are evenly
@@ -483,7 +486,7 @@ public final class Shape {
          * (number of indexes) is less than or equal to 2*number of bit maps the
          * cardinality is sparse within the shape.
          */
-        return cardinality <= BitMaps.numberOfBitMaps(getNumberOfBits()) * 2;
+        return cardinality <= BitMaps.numberOfBitMaps(this) * 2;
     }
 
     @Override

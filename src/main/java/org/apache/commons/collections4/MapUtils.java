@@ -70,9 +70,9 @@ import org.apache.commons.collections4.map.UnmodifiableSortedMap;
  * <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
  * <li>{@link #transformedMap(Map, Transformer, Transformer)}
  * <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}
- * <li>{@link #multiValueMap( Map )}
- * <li>{@link #multiValueMap( Map, Class )}
- * <li>{@link #multiValueMap( Map, Factory )}
+ * <li>{@link #multiValueMap(Map)}
+ * <li>{@link #multiValueMap(Map, Class)}
+ * <li>{@link #multiValueMap(Map, Factory)}
  * </ul>
  *
  * @since 1.0

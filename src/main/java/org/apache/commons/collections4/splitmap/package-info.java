@@ -19,7 +19,7 @@
  * Implements the "split map" concept. A split map is an object that implements
  * the {@link org.apache.commons.collections4.Put Put} and
  * {@link org.apache.commons.collections4.Get Get} interfaces,
- * with <i>differing</i> generic types. This is like a pre-generics
+ * with <em>differing</em> generic types. This is like a pre-generics
  * {@link java.util.Map Map} whose input key/value constraints are
  * different from its output key/value constraints.  While it would
  * be possible to declare a "split map" with matching input/output

@@ -35,7 +35,7 @@ import java.io.Serializable;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link Object} methods and contracts.
+ * Tests {@link Object}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject()} method.

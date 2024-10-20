@@ -50,7 +50,12 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return false;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 

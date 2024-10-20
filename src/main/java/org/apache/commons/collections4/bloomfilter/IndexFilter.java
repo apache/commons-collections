@@ -23,10 +23,12 @@ import java.util.function.IntPredicate;
  *
  * <p><em>If the index is negative the behavior is not defined.</em></p>
  *
- * <p>This is conceptually a unique filter implemented as an {@code IntPredicate}.</p>
+ * <p>This is conceptually a unique filter implemented as an {@link IntPredicate}.</p>
+ *
  * @since 4.5.0
  */
 public final class IndexFilter {
+
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
      * number has been seen. Suitable for Shapes that have few hash functions.
@@ -58,10 +60,10 @@ public final class IndexFilter {
             return true;
         }
     }
+
     /**
      * An IndexTracker implementation that uses an array of bit maps to track whether or not a
      * number has been seen.
-     * @since 4.5.0
      */
     static class BitMapTracker implements IntPredicate {
         private final long[] bits;
@@ -71,7 +73,7 @@ public final class IndexFilter {
          * @param shape The shape that is being generated.
          */
         BitMapTracker(final Shape shape) {
-            bits = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
+            bits = BitMaps.newBitMap(shape);
         }
 
         @Override
@@ -81,8 +83,10 @@ public final class IndexFilter {
             return retval;
         }
     }
+
     /**
      * Creates an instance optimized for the specified shape.
+     *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      * @return an IndexFilter optimized for the specified shape.
@@ -99,13 +103,14 @@ public final class IndexFilter {
 
     /**
      * Creates an instance optimized for the specified shape.
+     *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
      */
     private IndexFilter(final Shape shape, final IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
-        if (BitMaps.numberOfBitMaps(shape.getNumberOfBits()) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
+        if (BitMaps.numberOfBitMaps(shape) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
                 * Integer.BYTES) {
             this.tracker = new BitMapTracker(shape);
         } else {

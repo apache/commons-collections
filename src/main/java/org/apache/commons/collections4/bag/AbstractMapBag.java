@@ -25,6 +25,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
@@ -109,10 +110,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             canRemove = false;
         }
     }
+
     /**
      * Mutable integer class for storing the data.
      */
     protected static class MutableInteger {
+
         /** The value of this mutable. */
         protected int value;
 
@@ -137,8 +140,10 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             return value;
         }
     }
+
     /** The map to use to store the data */
     private transient Map<E, MutableInteger> map;
+
     /** The current total size of the bag */
     private int size;
 
@@ -161,7 +166,19 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param map the map to assign
      */
     protected AbstractMapBag(final Map<E, MutableInteger> map) {
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
+    }
+
+    /**
+     * Constructs a new instance that assigns the specified Map as the backing store. The map
+     * must be empty and non-null. The bag is filled from the iterable elements.
+     *
+     * @param map the map to assign.
+     * @param iterable The bag is filled from these iterable elements.
+     */
+    protected AbstractMapBag(final Map<E, MutableInteger> map, final Iterable<? extends E> iterable) {
+        this(map);
+        iterable.forEach(this::add);
     }
 
     /**

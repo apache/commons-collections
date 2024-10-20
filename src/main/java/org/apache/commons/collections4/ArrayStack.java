@@ -28,7 +28,7 @@ import java.util.EmptyStackException;
  * <p>
  * The removal order of an {@code ArrayStack} is based on insertion
  * order: The most recently added element is removed first.  The iteration
- * order is <i>not</i> the same as the removal order.  The iterator returns
+ * order is <em>not</em> the same as the removal order.  The iterator returns
  * elements from the bottom up.
  * </p>
  * <p>
@@ -72,6 +72,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      * <p>
      * This method exists for compatibility with {@link java.util.Stack}.
      * New users of this class should use {@code isEmpty} instead.
+     * </p>
      *
      * @return true if the stack is currently empty
      */

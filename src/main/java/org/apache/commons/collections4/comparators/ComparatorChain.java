@@ -38,13 +38,13 @@ import java.util.Objects;
  * </p>
  * <p>
  * Calling a method that adds new Comparators or changes the ascend/descend sort
- * <i>after compare(Object, Object) has been called</i> will result in an
- * UnsupportedOperationException. However, <i>take care</i> to not alter the
+ * <em>after compare(Object, Object) has been called</em> will result in an
+ * UnsupportedOperationException. However, <em>take care</em> to not alter the
  * underlying List of Comparators or the BitSet that defines the sort order.
  * </p>
  * <p>
  * Instances of ComparatorChain are not synchronized. The class is not
- * thread-safe at construction time, but it <i>is</i> thread-safe to perform
+ * thread-safe at construction time, but it <em>is</em> thread-safe to perform
  * multiple comparisons after all the setup operations are complete.
  * </p>
  *
@@ -115,10 +115,10 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Constructs a ComparatorChain from the Comparators in the
      * given List.  The sort order of each column will be
      * drawn from the given BitSet.  When determining the sort
-     * order for Comparator at index <i>i</i> in the List,
-     * the ComparatorChain will call BitSet.get(<i>i</i>).
-     * If that method returns <i>false</i>, the forward
-     * sort order is used; a return value of <i>true</i>
+     * order for Comparator at index <em>i</em> in the List,
+     * the ComparatorChain will call BitSet.get(<em>i</em>).
+     * If that method returns <em>false</em>, the forward
+     * sort order is used; a return value of <em>true</em>
      * indicates reverse sort order.
      *
      * @param list   List of Comparators.  NOTE: This constructor does not perform a
@@ -220,12 +220,12 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     * Returns {@code true} iff <i>that</i> Object is
+     * Returns {@code true} iff <em>that</em> Object is
      * a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns {@code true}
-     * iff {@code <i>object</i>.{@link Object#getClass() getClass()}}
+     * iff {@code <em>object</em>.{@link Object#getClass() getClass()}}
      * equals {@code this.getClass()}, and the underlying
      * comparators and order bits are equal.
      * Subclasses may want to override this behavior to remain consistent

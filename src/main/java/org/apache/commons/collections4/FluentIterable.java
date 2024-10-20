@@ -91,7 +91,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @throws NullPointerException if iterable is null
      */
     public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
-        IterableUtils.checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         if (iterable instanceof FluentIterable<?>) {
             return (FluentIterable<T>) iterable;
         }
@@ -131,7 +131,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Don't allow instances.
      */
     FluentIterable() {
-        this.iterable = this;
+        iterable = this;
     }
 
     /**

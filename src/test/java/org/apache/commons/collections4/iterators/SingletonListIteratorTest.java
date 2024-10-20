@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the SingletonListIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 

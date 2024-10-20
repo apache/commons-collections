@@ -233,7 +233,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         int i = 0;
         final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
         collatingIterator2.setComparator(new ComparableComparator<>());
-        for ( ; collatingIterator2.hasNext(); i++ ) {
+        for (; collatingIterator2.hasNext(); i++) {
             final Integer n = collatingIterator2.next();
             assertEquals((int) n, i + 1, "wrong order");
         }

@@ -67,14 +67,14 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
-     * Adds one copy of the specified object to the Bag.
+     * <em>(Change)</em> Adds one copy of the specified object to the Bag.
      * <p>
-     * Since this method always increases the size of the bag, it
-     * will always return {@code true}.
+     * Since this method always increases the size of the bag, it will always return {@code true}.
+     * </p>
      *
-     * @param object  the object to add
+     * @param object the object to add
      * @return {@code true}, always
+     * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
     @Override
     public boolean add(final E object) {
@@ -82,7 +82,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Adds {@code count} copies of the specified object to the Bag.
      * <p>
      * Since this method always increases the size of the bag, it
@@ -91,14 +91,13 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * @param object  the object to add
      * @param count  the number of copies to add
      * @return {@code true}, always
+     * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
     @Override
     public boolean add(final E object, final int count) {
         decorated().add(object, count);
         return true;
     }
-
-    // Collection interface
 
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
@@ -111,7 +110,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Returns {@code true} if the bag contains all elements in
      * the given collection, <b>not</b> respecting cardinality. That is,
      * if the given collection {@code coll} contains at least one of
@@ -140,11 +139,12 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Removes the first occurrence of the given object from the bag.
      * <p>
      * This will also remove the object from the {@link #uniqueSet()} if the
      * bag contains no occurrence anymore of the object after this operation.
+     * </p>
      *
      * @param object  the object to remove
      * @return {@code true} if this call changed the collection
@@ -155,9 +155,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Remove all elements represented in the given collection,
-     * <b>not</b> respecting cardinality. That is, remove <i>all</i>
+     * <b>not</b> respecting cardinality. That is, remove <em>all</em>
      * occurrences of every object contained in the given collection.
      *
      * @param coll  the collection to remove
@@ -178,9 +178,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     }
 
     /**
-     * <i>(Change)</i>
+     * <em>(Change)</em>
      * Remove any members of the bag that are not in the given collection,
-     * <i>not</i> respecting cardinality. That is, any object in the given
+     * <em>not</em> respecting cardinality. That is, any object in the given
      * collection {@code coll} will be retained in the bag with the same
      * number of copies prior to this operation. All other objects will be
      * completely removed from this bag.
@@ -190,6 +190,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * If it's not contained, it's removed from this bag. As a consequence,
      * it is advised to use a collection type for {@code coll} that provides
      * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
+     * </p>
      *
      * @param coll  the collection to retain
      * @return {@code true} if this call changed the collection
@@ -211,10 +212,8 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         return decorated().retainAll(null);
     }
 
-    // Bag interface
-
     /**
-     * Write the collection out using a custom routine.
+     * Writes the collection out using a custom routine.
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream

@@ -117,7 +117,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     }
 
     @Override
-    public void set(final E obj) {
+    public void set(final E ignored) {
         throw new UnsupportedOperationException("set() is not supported");
     }
 

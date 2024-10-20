@@ -20,6 +20,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.OrderedIterator;
 import org.apache.commons.collections4.OrderedMap;
@@ -77,6 +78,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class EntrySetIterator<K, V> extends LinkIterator<K, V> implements
             OrderedIterator<Map.Entry<K, V>>, ResettableIterator<Map.Entry<K, V>> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedMap.
+         */
         protected EntrySetIterator(final AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
@@ -100,6 +106,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class KeySetIterator<K> extends LinkIterator<K, Object> implements
             OrderedIterator<K>, ResettableIterator<K> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedMap.
+         */
         @SuppressWarnings("unchecked")
         protected KeySetIterator(final AbstractLinkedMap<K, ?> parent) {
             super((AbstractLinkedMap<K, Object>) parent);
@@ -157,31 +168,59 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
 
         /** The parent map */
         protected final AbstractLinkedMap<K, V> parent;
+
         /** The current (last returned) entry */
         protected LinkEntry<K, V> last;
+
         /** The next entry */
         protected LinkEntry<K, V> next;
+
         /** The modification count expected */
         protected int expectedModCount;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedMap.
+         */
         protected LinkIterator(final AbstractLinkedMap<K, V> parent) {
-            this.parent = parent;
+            this.parent = Objects.requireNonNull(parent);
             this.next = parent.header.after;
             this.expectedModCount = parent.modCount;
         }
 
+        /**
+         * Gets the current entry.
+         *
+         * @return the current entry.
+         */
         protected LinkEntry<K, V> currentEntry() {
             return last;
         }
 
+        /**
+         * Tests whether there is another entry.
+         *
+         * @return whether there is another entry.
+         */
         public boolean hasNext() {
             return next != parent.header;
         }
 
+        /**
+         * Tests whether there is a previous entry.
+         *
+         * @return whether there is a previous entry.
+         */
         public boolean hasPrevious() {
             return next.before != parent.header;
         }
 
+        /**
+         * Gets the next entry.
+         *
+         * @return the next entry.
+         */
         protected LinkEntry<K, V> nextEntry() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -194,6 +233,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             return last;
         }
 
+        /**
+         * Gets the previous entry.
+         *
+         * @return the previous entry.
+         */
         protected LinkEntry<K, V> previousEntry() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -207,6 +251,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             return last;
         }
 
+        /**
+         * Removes the current entry.
+         */
         public void remove() {
             if (last == null) {
                 throw new IllegalStateException(REMOVE_INVALID);
@@ -219,6 +266,9 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             expectedModCount = parent.modCount;
         }
 
+        /**
+         * Resets the state to the end.
+         */
         public void reset() {
             last = null;
             next = parent.header.after;
@@ -242,6 +292,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
             OrderedMapIterator<K, V>, ResettableIterator<K> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedMap.
+         */
         protected LinkMapIterator(final AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
@@ -292,6 +347,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
             OrderedIterator<V>, ResettableIterator<V> {
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedMap.
+         */
         @SuppressWarnings("unchecked")
         protected ValuesIterator(final AbstractLinkedMap<?, V> parent) {
             super((AbstractLinkedMap<Object, V>) parent);

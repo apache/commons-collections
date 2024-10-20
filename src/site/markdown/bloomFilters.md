@@ -16,10 +16,12 @@
 -->
  # Bloom filters
 
-Bloom filters were added to commons collections in version 4.5.
+Bloom filters classes and interfaces are available starting in 4.5.0.
 
 The documentation comprises four parts:
  * [An introduction](bloomFilters/intro.html) to Bloom filters.
  * The [Commons Collections implementations](bloomFilters/implementation.html).
  * [Unusual usage and advanced implementations](bloomFilters/advanced.html).
  * Using [Bloom filters for indexing](bloomFilters/multidimensional.html).
+ 
+Read the package [Javadoc](apidocs/org/apache/commons/collections4/bloomfilter/package-summary.html).

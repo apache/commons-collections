@@ -21,20 +21,22 @@ import java.util.Objects;
 /**
  * The interface that describes a Bloom filter.
  * <p>
- * <em>See implementation notes for BitMapExtractor and IndexExtractor.</em>
+ * <em>See implementation notes for {@link BitMapExtractor} and {@link IndexExtractor}.</em>
  * </p>
+ *
+ * @param <T> The BloomFilter type.
  * @see BitMapExtractor
  * @see IndexExtractor
  * @since 4.5.0
  */
-public interface BloomFilter extends IndexExtractor, BitMapExtractor {
+public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, BitMapExtractor {
 
     /**
-     * The sparse characteristic used to determine the best method for matching.
-     * <p>For `sparse` implementations
-     * the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations
-     * the {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier
-     * for the implementation to produce indexes of bit map blocks.</p>
+     * The sparse characteristic used to determine the best method for matching: {@value}.
+     * <p>
+     * For `sparse` implementations the {@code forEachIndex(IntConsumer consumer)} method is more efficient. For non `sparse` implementations the
+     * {@code forEachBitMap(LongConsumer consumer)} is more efficient. Implementers should determine if it is easier.
+     * </p>
      */
     int SPARSE = 0x1;
 
@@ -50,15 +52,17 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
     // Query Operations
 
     /**
-     * Returns the characteristics of the filter.
+     * Gets the characteristics of the filter.
      * <p>
      * Characteristics are defined as bits within the characteristics integer.
+     * </p>
+     *
      * @return the characteristics for this bloom filter.
      */
     int characteristics();
 
     /**
-     * Resets the filter to its initial, unpopulated state.
+     * Clears the filter to by resetting it to its initial, unpopulated state.
      */
     void clear();
 
@@ -84,7 +88,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @param other the other Bloom filter
      * @return true if all enabled bits in the other filter are enabled in this filter.
      */
-    default boolean contains(final BloomFilter other) {
+    default boolean contains(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         return (characteristics() & SPARSE) != 0 ? contains((IndexExtractor) other) : contains((BitMapExtractor) other);
     }
@@ -117,12 +121,11 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
     boolean contains(IndexExtractor indexExtractor);
 
     /**
-     * Creates a new instance of the BloomFilter with the same properties as the current one.
+     * Creates a new instance of this {@link BloomFilter} with the same properties as the current one.
      *
-     * @param <T> Type of BloomFilter.
-     * @return a copy of this BloomFilter
+     * @return a copy of this {@link BloomFilter}.
      */
-    <T extends BloomFilter> T copy();
+    T copy();
 
     // update operations
 
@@ -142,7 +145,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @see #estimateN()
      * @see Shape
      */
-    default int estimateIntersection(final BloomFilter other) {
+    default int estimateIntersection(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         final double eThis = getShape().estimateN(cardinality());
         final double eOther = getShape().estimateN(other.cardinality());
@@ -157,7 +160,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
         } else if (Double.isInfinite(eOther)) {
             estimate = Math.round(eThis);
         } else {
-            final BloomFilter union = this.copy();
+            final T union = this.copy();
             union.merge(other);
             final double eUnion = getShape().estimateN(union.cardinality());
             if (Double.isInfinite(eUnion)) {
@@ -220,11 +223,11 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @see #estimateN()
      * @see Shape
      */
-    default int estimateUnion(final BloomFilter other) {
+    default int estimateUnion(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
-        final BloomFilter cpy = this.copy();
-        cpy.merge(other);
-        return cpy.estimateN();
+        final T copy = this.copy();
+        copy.merge(other);
+        return copy.estimateN();
     }
 
     /**
@@ -290,7 +293,7 @@ public interface BloomFilter extends IndexExtractor, BitMapExtractor {
      * @param other The bloom filter to merge into this one.
      * @return true if the merge was successful
      */
-    default boolean merge(final BloomFilter other) {
+    default boolean merge(final BloomFilter<?> other) {
         return (characteristics() & SPARSE) != 0 ? merge((IndexExtractor) other) : merge((BitMapExtractor) other);
     }
 

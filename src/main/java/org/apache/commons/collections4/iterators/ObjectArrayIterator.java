@@ -25,9 +25,11 @@ import org.apache.commons.collections4.ResettableIterator;
  * <p>
  * This iterator does not support {@link #remove}, as the object array cannot be
  * structurally modified.
+ * </p>
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.0
@@ -92,9 +94,9 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
             throw new IllegalArgumentException("End index must not be less than start index");
         }
         this.array = array;
-        this.startIndex = start;
-        this.endIndex = end;
-        this.index = start;
+        startIndex = start;
+        endIndex = end;
+        index = start;
     }
 
     /**
@@ -103,7 +105,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the array this iterator iterates over
      */
     public E[] getArray() {
-        return this.array;
+        return array;
     }
 
     /**
@@ -112,7 +114,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the end index
      */
     public int getEndIndex() {
-        return this.endIndex;
+        return endIndex;
     }
 
     /**
@@ -121,7 +123,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @return the start index
      */
     public int getStartIndex() {
-        return this.startIndex;
+        return startIndex;
     }
 
     /**
@@ -131,7 +133,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public boolean hasNext() {
-        return this.index < this.endIndex;
+        return index < endIndex;
     }
 
     /**
@@ -146,7 +148,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return this.array[this.index++];
+        return array[index++];
     }
 
     /**
@@ -164,7 +166,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      */
     @Override
     public void reset() {
-        this.index = this.startIndex;
+        index = startIndex;
     }
 
 }

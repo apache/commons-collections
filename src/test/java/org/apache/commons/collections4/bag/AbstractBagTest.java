@@ -43,7 +43,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.
+ * Tests {@link org.apache.commons.collections4.Bag Bag}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.

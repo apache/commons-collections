@@ -16,14 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +34,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * A unit test to test the basic functions of {@link BoundedIterator}.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -140,7 +139,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     public void testNegativeMax() {
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new BoundedIterator<>(testList.iterator(), 3, -1));
-        assertThat(thrown.getMessage(), is(equalTo("Max parameter must not be negative.")));
+        assertEquals("Max parameter must not be negative.", thrown.getMessage());
     }
 
     /**
@@ -150,7 +149,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     public void testNegativeOffset() {
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new BoundedIterator<>(testList.iterator(), -1, 4));
-        assertThat(thrown.getMessage(), is(equalTo("Offset parameter must not be negative.")));
+        assertEquals("Offset parameter must not be negative.", thrown.getMessage());
     }
 
     /**
@@ -234,7 +233,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(iter.hasNext());
 
         final NoSuchElementException thrown = assertThrows(NoSuchElementException.class, () -> iter.next());
-        assertThat(thrown.getMessage(), is(nullValue()));
+        assertNull(thrown.getMessage());
 
         iter.remove();
         assertFalse(testListCopy.contains("f"));
@@ -242,7 +241,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         assertFalse(iter.hasNext());
 
         final NoSuchElementException thrown1 = assertThrows(NoSuchElementException.class, () -> iter.next());
-        assertThat(thrown1.getMessage(), is(nullValue()));
+        assertNull(thrown1.getMessage());
     }
 
     /**
@@ -292,7 +291,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         assertEquals("b", iter.next());
 
         final UnsupportedOperationException thrown = assertThrows(UnsupportedOperationException.class, () -> iter.remove());
-        assertThat(thrown.getMessage(), is(nullValue()));
+        assertNull(thrown.getMessage());
+
     }
 
     /**
@@ -305,7 +305,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> iter.remove());
-        assertThat(thrown.getMessage(), is(equalTo("remove() can not be called before calling next()")));
+        assertEquals("remove() can not be called before calling next()", thrown.getMessage());
     }
 
     /**

@@ -322,10 +322,20 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return (SortedBidiMap<V, K>) super.inverseBidiMap();
     }
 
+    /**
+     * Defaults to {@link #inverseBidiMap()}.
+     *
+     * @return Defaults to {@link #inverseBidiMap()}.
+     */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         return inverseBidiMap();
     }
 
+    /**
+     * Defaults to {@link #inverseBidiMap()}.
+     *
+     * @return Defaults to {@link #inverseBidiMap()}.
+     */
     public SortedBidiMap<V, K> inverseSortedBidiMap() {
         return inverseBidiMap();
     }
@@ -340,6 +350,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * <p>
      * This implementation copies the elements to an ArrayList in order to
      * provide the forward/backward behavior.
+     * </p>
      *
      * @return a new ordered map iterator
      */

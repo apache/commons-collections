@@ -34,6 +34,7 @@ import org.apache.commons.collections4.Transformer;
  */
 public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
+    @SuppressWarnings("rawtypes")
     private static final Transformer[] EMPTY_TRANSFORMER_ARRAY = {};
 
     /** Serial version UID */

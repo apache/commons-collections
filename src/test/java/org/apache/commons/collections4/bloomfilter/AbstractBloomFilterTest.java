@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,12 +32,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test standard methods in the {@link BloomFilter} interface.
+ * Tests standard methods in the {@link BloomFilter} interface.
  */
 public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     /**
-     * Testing class returns the value as the only value.
+     * Test fixture class returns the value as the only value.
      */
     public static class BadHasher implements Hasher {
 
@@ -72,7 +73,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Create an empty version of the BloomFilter implementation we are testing.
+     * Creates an empty version of the BloomFilter implementation we are testing.
      *
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
@@ -80,7 +81,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     protected abstract T createEmptyFilter(Shape shape);
 
     /**
-     * Create the BloomFilter implementation we are testing.
+     * Creates the BloomFilter implementation we are testing.
      *
      * @param shape the shape of the filter.
      * @param extractor A BitMap extractor to build the filter with.
@@ -93,7 +94,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Create the BloomFilter implementation we are testing.
+     * Creates the BloomFilter implementation we are testing.
      *
      * @param shape the shape of the filter.
      * @param hasher the hasher to use to create the filter.
@@ -106,7 +107,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Create the BloomFilter implementation we are testing.
+     * Creates the BloomFilter implementation we are testing.
      *
      * @param shape the shape of the filter.
      * @param extractor An Index extractor to build the filter with.
@@ -152,14 +153,14 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             idx[0]++;
             return true;
         });
-        assertEquals(BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        assertEquals(BitMaps.numberOfBitMaps(getTestShape()), idx[0]);
 
         idx[0] = 0;
         createEmptyFilter(getTestShape()).processBitMaps(i -> {
             idx[0]++;
             return true;
         });
-        assertEquals(BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits()), idx[0]);
+        assertEquals(BitMaps.numberOfBitMaps(getTestShape()), idx[0]);
     }
 
     @Test
@@ -168,7 +169,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     /**
-     * Test cardinality and isEmpty. Bloom filter must be able to accept multiple
+     * Tests cardinality and isEmpty. Bloom filter must be able to accept multiple
      * IndexExtractor merges until all the bits are populated.
      *
      * @param bf The Bloom filter to test.
@@ -192,6 +193,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
             assertFalse(bf.isEmpty(), "Wrong value at " + i);
         }
     }
+
     @Test
     public void testClear() {
         final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
@@ -235,6 +237,29 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
         assertFalse(bf1.contains(bf4));
         assertTrue(bf4.contains(bf1));
+    }
+
+    @Test
+    public void testCopy() {
+        testCopy(true);
+    }
+
+    protected void testCopy(final boolean assertClass) {
+        final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
+        assertNotEquals(0, bf1.cardinality());
+        final BloomFilter copy = bf1.copy();
+        assertNotSame(bf1, copy);
+        assertArrayEquals(bf1.asBitMapArray(), copy.asBitMapArray());
+        assertArrayEquals(bf1.asIndexArray(), copy.asIndexArray());
+        assertEquals(bf1.cardinality(), copy.cardinality());
+        assertEquals(bf1.characteristics(), copy.characteristics());
+        assertEquals(bf1.estimateN(), copy.estimateN());
+        if (assertClass) {
+            assertEquals(bf1.getClass(), copy.getClass());
+        }
+        assertEquals(bf1.getShape(), copy.getShape());
+        assertEquals(bf1.isEmpty(), copy.isEmpty());
+        assertEquals(bf1.isFull(), copy.isFull());
     }
 
     @Test
@@ -413,7 +438,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
 
     @Test
     public void testMergeWithBitMapExtractor() {
-        final int bitMapCount = BitMaps.numberOfBitMaps(getTestShape().getNumberOfBits());
+        final int bitMapCount = BitMaps.numberOfBitMaps(getTestShape());
         for (int i = 0; i < 5; i++) {
             final long[] values = new long[bitMapCount];
             for (final int idx : DefaultIndexExtractorTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits())) {

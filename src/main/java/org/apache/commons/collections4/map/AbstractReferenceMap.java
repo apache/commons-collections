@@ -69,7 +69,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * hard keys and soft values, providing a memory-sensitive cache.
  * </p>
  * <p>
- * This {@link Map} implementation does <i>not</i> allow null elements.
+ * This {@link Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a
  * {@code NullPointerException}.
  * </p>
@@ -329,17 +329,17 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Sets the value of the entry.
          *
-         * @param obj  the object to store
+         * @param value  the object to store
          * @return the previous value
          */
         @Override
         @SuppressWarnings("unchecked")
-        public V setValue(final V obj) {
+        public V setValue(final V value) {
             final V old = getValue();
             if (parent.valueType != ReferenceStrength.HARD) {
-                ((Reference<V>) value).clear();
+                ((Reference<V>) this.value).clear();
             }
-            value = toReference(parent.valueType, obj, hashCode);
+            this.value = toReference(parent.valueType, value, hashCode);
             return old;
         }
 
@@ -350,20 +350,21 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param <T> the type of the referenced object
          * @param type  HARD, SOFT or WEAK
          * @param referent  the object to refer to
-         * @param hash  the hash code of the <i>key</i> of the mapping;
+         * @param hash  the hash code of the <em>key</em> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
          * @return the reference to the object
          */
         protected <T> Object toReference(final ReferenceStrength type, final T referent, final int hash) {
-            if (type == ReferenceStrength.HARD) {
+            switch (type) {
+            case HARD:
                 return referent;
-            }
-            if (type == ReferenceStrength.SOFT) {
+            case SOFT:
                 return new SoftRef<>(hash, referent, parent.queue);
-            }
-            if (type == ReferenceStrength.WEAK) {
+            case WEAK:
                 return new WeakRef<>(hash, referent, parent.queue);
+            default:
+                break;
             }
             throw new Error();
         }
@@ -495,10 +496,24 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Reference type enum.
+     * Enumerates reference types.
      */
     public enum ReferenceStrength {
-        HARD(0), SOFT(1), WEAK(2);
+
+        /**
+         * Hard reference type.
+         */
+        HARD(0),
+
+        /**
+         * Soft reference type.
+         */
+        SOFT(1),
+
+        /**
+         * Weak reference type.
+         */
+        WEAK(2);
 
         /**
          * Resolve enum from int.
@@ -797,10 +812,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        this.keyType = ReferenceStrength.resolve(in.readInt());
-        this.valueType = ReferenceStrength.resolve(in.readInt());
-        this.purgeValues = in.readBoolean();
-        this.loadFactor = in.readFloat();
+        keyType = ReferenceStrength.resolve(in.readInt());
+        valueType = ReferenceStrength.resolve(in.readInt());
+        purgeValues = in.readBoolean();
+        loadFactor = in.readFloat();
         final int capacity = in.readInt();
         init();
         data = new HashEntry[capacity];
@@ -958,7 +973,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return true if keyType has the specified type
      */
     protected boolean isKeyType(final ReferenceStrength type) {
-        return this.keyType == type;
+        return keyType == type;
     }
 
     /**
@@ -967,7 +982,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return true if valueType has the specified type
      */
     protected boolean isValueType(final ReferenceStrength type) {
-        return this.valueType == type;
+        return valueType == type;
     }
 
     /**
@@ -1031,7 +1046,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
                 } else {
                     previous.next = entry.next;
                 }
-                this.size--;
+                size--;
                 refEntry.onPurge();
                 return;
             }

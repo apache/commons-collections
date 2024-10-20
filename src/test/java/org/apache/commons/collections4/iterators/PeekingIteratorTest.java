@@ -34,6 +34,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PeekingIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -55,9 +57,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         return PeekingIterator.peekingIterator(testList.iterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {

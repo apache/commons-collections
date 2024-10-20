@@ -44,6 +44,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for ReferenceMap.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -235,7 +238,12 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
-    public boolean isAllowNullValue() {
+    public boolean isAllowNullValueGet() {
+        return true;
+    }
+
+    @Override
+    public boolean isAllowNullValuePut() {
         return false;
     }
 

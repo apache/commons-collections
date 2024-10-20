@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -33,17 +35,14 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
  * <p>
- * <b>Note</b>: this util class has been designed for fail-fast argument checking.
+ * <b>Note</b>: This utility class has been designed with fail-fast argument checking.
  * </p>
  * <ul>
- * <li>
- * all decorator methods are <b>NOT</b> null-safe wrt the provided Iterable argument, i.e.
- * they will throw a {@link NullPointerException} if a null Iterable is passed as argument.
- * <li>
- * all other utility methods are null-safe wrt the provided Iterable argument, i.e. they will
- * treat a null Iterable the same way as an empty one. Other arguments which are null,
- * e.g. a {@link Predicate}, will result in a {@link NullPointerException}. Exception: passing
- * a null {@link Comparator} is equivalent to a Comparator with natural ordering.
+ * <li>All decorator methods are <em>not</em> null-safe for the provided Iterable argument; for example, they will throw a {@link NullPointerException} if a
+ * null Iterable is passed as argument.
+ * <li>All other utility methods are null-safe for the provided Iterable argument; for example, they will treat a null Iterable the same way as an empty one.
+ * For other arguments which are null, a {@link Predicate} will result in a {@link NullPointerException}. Exception: passing a null {@link Comparator} is
+ * equivalent to a Comparator with natural ordering.
  * </ul>
  *
  * @since 4.1
@@ -54,15 +53,15 @@ public class IterableUtils {
      * Inner class to distinguish unmodifiable instances.
      */
     private static final class UnmodifiableIterable<E> extends FluentIterable<E> {
-        private final Iterable<E> unmodifiable;
+        private final Iterable<E> iterable;
 
         UnmodifiableIterable(final Iterable<E> iterable) {
-            this.unmodifiable = iterable;
+            this.iterable = iterable;
         }
 
         @Override
         public Iterator<E> iterator() {
-            return IteratorUtils.unmodifiableIterator(unmodifiable.iterator());
+            return IteratorUtils.unmodifiableIterator(iterable.iterator());
         }
     }
 
@@ -93,7 +92,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> boundedIterable(final Iterable<E> iterable, final long maxSize) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         if (maxSize < 0) {
             throw new IllegalArgumentException("MaxSize parameter must not be negative.");
         }
@@ -222,23 +221,13 @@ public class IterableUtils {
     /**
      * Fail-fast check for null arguments.
      *
-     * @param iterable  the iterable to check
-     * @throws NullPointerException if iterable is null
-     */
-    static void checkNotNull(final Iterable<?> iterable) {
-        Objects.requireNonNull(iterable, "iterable");
-    }
-
-    /**
-     * Fail-fast check for null arguments.
-     *
      * @param iterables  the iterables to check
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {
         Objects.requireNonNull(iterables, "iterables");
         for (final Iterable<?> iterable : iterables) {
-            checkNotNull(iterable);
+            Objects.requireNonNull(iterable, "iterable");
         }
     }
 
@@ -356,6 +345,62 @@ public class IterableUtils {
     }
 
     /**
+     * Finds and returns the List of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> List<E> duplicateList(final Iterable<E> iterable) {
+        return new ArrayList<>(duplicateSequencedSet(iterable));
+    }
+
+    /**
+     * Finds and returns the sequenced Set of duplicate elements in the given collection.
+     * <p>
+     * Once we are on Java 21 and a new major version, the return type should be SequencedSet.
+     * </p>
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSequencedSet(final Iterable<E> iterable) {
+        return duplicateSet(iterable, new LinkedHashSet<>());
+    }
+
+    /**
+     * Finds and returns the set of duplicate elements in the given collection.
+     *
+     * @param <E> the type of elements in the collection.
+     * @param iterable the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     * @since 4.5.0-M3
+     */
+    public static <E> Set<E> duplicateSet(final Iterable<E> iterable) {
+        return duplicateSet(iterable, new HashSet<>());
+    }
+
+    /**
+     * Worker method for {@link #duplicateSet(Collection)} and friends.
+     *
+     * @param <C> the type of Collection.
+     * @param <E> the type of elements in the Collection.
+     * @param iterable the list to test, must not be null.
+     * @param duplicates the list to test, must not be null.
+     * @return the set of duplicate elements, may be empty.
+     */
+    static <C extends Collection<E>, E> C duplicateSet(final Iterable<E> iterable, final C duplicates) {
+        final Set<E> set = new HashSet<>();
+        for (final E e : iterable) {
+            (set.contains(e) ? duplicates : set).add(e);
+        }
+        return duplicates;
+    }
+
+    /**
      * Returns an immutable empty iterable if the argument is null,
      * or the argument itself otherwise.
      *
@@ -409,7 +454,7 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
                                                    final Predicate<? super E> predicate) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         Objects.requireNonNull(predicate, "predicate");
         return new FluentIterable<E>() {
             @Override
@@ -448,7 +493,7 @@ public class IterableUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
      * @return the first object
-     * @throws IndexOutOfBoundsException if the request  is invalid
+     * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2
      */
     public static <T> T first(final Iterable<T> iterable) {
@@ -572,7 +617,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> loopingIterable(final Iterable<E> iterable) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -818,7 +863,7 @@ public class IterableUtils {
      * @see ReverseListIterator
      */
     public static <E> Iterable<E> reversedIterable(final Iterable<E> iterable) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -864,7 +909,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> skippingIterable(final Iterable<E> iterable, final long elementsToSkip) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         if (elementsToSkip < 0) {
             throw new IllegalArgumentException("ElementsToSkip parameter must not be negative.");
         }
@@ -970,7 +1015,7 @@ public class IterableUtils {
      */
     public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
                                                          final Transformer<? super I, ? extends O> transformer) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         Objects.requireNonNull(transformer, "transformer");
         return new FluentIterable<O>() {
             @Override
@@ -994,7 +1039,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> uniqueIterable(final Iterable<E> iterable) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -1015,7 +1060,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> unmodifiableIterable(final Iterable<E> iterable) {
-        checkNotNull(iterable);
+        Objects.requireNonNull(iterable, "iterable");
         if (iterable instanceof UnmodifiableIterable<?>) {
             return iterable;
         }
@@ -1042,8 +1087,8 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> a,
                                                   final Iterable<? extends E> b) {
-        checkNotNull(a);
-        checkNotNull(b);
+        Objects.requireNonNull(a, "iterable");
+        Objects.requireNonNull(b, "iterable");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -1069,7 +1114,7 @@ public class IterableUtils {
      * @throws NullPointerException if either of the provided iterables is null
      */
     public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> first, final Iterable<? extends E>... others) {
-        checkNotNull(first);
+        Objects.requireNonNull(first, "iterable");
         checkNotNull(others);
         return new FluentIterable<E>() {
             @Override

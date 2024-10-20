@@ -33,7 +33,7 @@ public final class OrPredicate<T> extends AbstractPredicate<T> implements Predic
     private static final long serialVersionUID = -8791518325735182855L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      *
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null

@@ -14,19 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
 
-public class BloomFilteExtractorFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
+package org.apache.commons.collections4.map;
+
+/**
+ * Tests {@link ConcurrentReferenceHashMap}.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
+ */
+public class ConcurrentReferenceHashMapKWeakVWeakTest<K, V> extends AbstractConcurrentReferenceHashMapTest<K, V> {
 
     @Override
-    protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {
-        final Shape shape = filters[0].getShape();
-        final LayerManager layerManager = LayerManager.builder().setSupplier(() -> new SimpleBloomFilter(shape))
-                .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).setCleanup(LayerManager.Cleanup.noCleanup()).build();
-        final LayeredBloomFilter underTest = new LayeredBloomFilter(shape, layerManager);
-        for (final BloomFilter bf : filters) {
-            underTest.merge(bf);
-        }
-        return underTest;
+    public ConcurrentReferenceHashMap<K, V> makeObject() {
+        // @formatter:off
+        return ConcurrentReferenceHashMap.<K, V>builder()
+            .weakKeys()
+            .weakValues()
+            .get();
+        // @formatter:on
     }
+
 }

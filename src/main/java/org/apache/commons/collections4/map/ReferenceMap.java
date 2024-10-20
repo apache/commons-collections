@@ -47,7 +47,7 @@ import java.io.Serializable;
  * It differs in that keys and values in this class are compared using {@code equals()}.
  * </p>
  * <p>
- * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
+ * This {@link java.util.Map Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>

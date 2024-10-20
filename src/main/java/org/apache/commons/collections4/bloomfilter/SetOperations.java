@@ -27,7 +27,8 @@ public final class SetOperations {
 
     /**
      * Calculates the cardinality of the logical {@code AND} of the bit maps for the two filters.
-     * @param first the first BitMapExtractor.
+     *
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
      * @return the cardinality of the {@code AND} of the filters.
      */
@@ -36,8 +37,8 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of a BitMapExtractor. By necessity this method will visit each bit map
-     * created by the bitMapExtractor.
+     * Calculates the cardinality of a BitMapExtractor. By necessity this method will visit each bit map created by the bitMapExtractor.
+     *
      * @param bitMapExtractor the extractor to calculate the cardinality for.
      * @return the cardinality of the bit maps produced by the bitMapExtractor.
      */
@@ -51,11 +52,11 @@ public final class SetOperations {
     }
 
     /**
-     * Calculates the cardinality of the result of a LongBinaryOperator using the
-     * {@code BitMapExtractor.makePredicate} method.
-     * @param first the first BitMapExtractor
+     * Calculates the cardinality of the result of a LongBinaryOperator using the {@code BitMapExtractor.makePredicate} method.
+     *
+     * @param first  the first BitMapExtractor
      * @param second the second BitMapExtractor
-     * @param op a long binary operation on where x = {@code first} and y = {@code second} bitmap extractors.
+     * @param op     a long binary operation on where x = {@code first} and y = {@code second} bitmap extractors.
      * @return the calculated cardinality.
      */
     private static int cardinality(final BitMapExtractor first, final BitMapExtractor second, final LongBinaryOperator op) {
@@ -70,10 +71,11 @@ public final class SetOperations {
 
     /**
      * Calculates the Cosine distance between two BitMapExtractor.
+     * <p>
+     * Cosine distance is defined as {@code 1 - Cosine similarity}
+     * </p>
      *
-     * <p>Cosine distance is defined as {@code 1 - Cosine similarity}</p>
-     *
-     * @param first the first BitMapExtractor.
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
      * @return the jaccard distance.
      */
@@ -83,12 +85,14 @@ public final class SetOperations {
 
     /**
      * Calculates the Cosine similarity between two BitMapExtractors.
-     * <p> Also known as Orchini similarity and the Tucker coefficient of congruence or
-     * Ochiai similarity.</p>
+     * <p>
+     * Also known as Orchini similarity and the Tucker coefficient of congruence or Ochiai similarity.
+     * </p>
+     * <p>
+     * If either extractor is empty the result is 0 (zero)
+     * </p>
      *
-     * <p>If either extractor is empty the result is 0 (zero)</p>
-     *
-     * @param first the first BitMapExtractor.
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
      * @return the Cosine similarity.
      */
@@ -101,18 +105,21 @@ public final class SetOperations {
 
     /**
      * Calculates the Cosine similarity between two Bloom filters.
-     * <p> Also known as Orchini similarity and the Tucker coefficient of congruence or
-     * Ochiai similarity.</p>
+     * <p>
+     * Also known as Orchini similarity and the Tucker coefficient of congruence or Ochiai similarity.
+     * </p>
+     * <p>
+     * If either filter is empty (no enabled bits) the result is 0 (zero)
+     * </p>
+     * <p>
+     * This is a version of cosineSimilarity optimized for Bloom filters.
+     * </p>
      *
-     * <p>If either filter is empty (no enabled bits) the result is 0 (zero)</p>
-     *
-     * <p>This is a version of cosineSimilarity optimized for Bloom filters.</p>
-     *
-     * @param first the first Bloom filter.
+     * @param first  the first Bloom filter.
      * @param second the second Bloom filter.
      * @return the Cosine similarity.
      */
-    public static double cosineSimilarity(final BloomFilter first, final BloomFilter second) {
+    public static double cosineSimilarity(final BloomFilter<?> first, final BloomFilter<?> second) {
         final int numerator = andCardinality(first, second);
         // Given that the cardinality is an int then the product as a double will not
         // overflow, we can use one sqrt:
@@ -122,7 +129,7 @@ public final class SetOperations {
     /**
      * Calculates the Hamming distance between two BitMapExtractors.
      *
-     * @param first the first BitMapExtractor.
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
      * @return the Hamming distance.
      */
@@ -132,10 +139,11 @@ public final class SetOperations {
 
     /**
      * Calculates the Jaccard distance between two BitMapExtractor.
+     * <p>
+     * Jaccard distance is defined as {@code 1 - Jaccard similarity}
+     * </p>
      *
-     * <p>Jaccard distance is defined as {@code 1 - Jaccard similarity}</p>
-     *
-     * @param first the first BitMapExtractor.
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
      * @return the Jaccard distance.
      */
@@ -145,10 +153,11 @@ public final class SetOperations {
 
     /**
      * Calculates the Jaccard similarity between two BitMapExtractor.
+     * <p>
+     * Also known as Jaccard index, Intersection over Union, and Jaccard similarity coefficient
+     * </p>
      *
-     * <p>Also known as Jaccard index, Intersection over Union, and Jaccard similarity coefficient</p>
-     *
-     * @param first the first BitMapExtractor.
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
      * @return the Jaccard similarity.
      */
@@ -165,7 +174,8 @@ public final class SetOperations {
 
     /**
      * Calculates the cardinality of the logical {@code OR} of the bit maps for the two filters.
-     * @param first the first BitMapExtractor.
+     *
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
      * @return the cardinality of the {@code OR} of the filters.
      */
@@ -175,7 +185,8 @@ public final class SetOperations {
 
     /**
      * Calculates the cardinality of the logical {@code XOR} of the bit maps for the two filters.
-     * @param first the first BitMapExtractor.
+     *
+     * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
      * @return the cardinality of the {@code XOR} of the filters.
      */

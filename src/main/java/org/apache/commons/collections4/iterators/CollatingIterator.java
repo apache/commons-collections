@@ -34,6 +34,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * Given two ordered {@link Iterator} instances {@code A} and
  * {@code B}, the {@link #next} method on this iterator will return the
  * lesser of {@code A.next()} and {@code B.next()}.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 2.1
@@ -204,7 +205,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Clears the {@link #values} and {@link #valueSet} attributes at position
-     * <i>i</i>.
+     * <em>i</em>.
      */
     private void clear(final int i) {
         values.set(i, null);
@@ -321,21 +322,21 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Sets the {@link #values} and {@link #valueSet} attributes at position
-     * <i>i</i> to the next value of the {@link #iterators iterator} at position
-     * <i>i</i>, or clear them if the <i>i</i><sup>th</sup> iterator has no next
+     * <em>i</em> to the next value of the {@link #iterators iterator} at position
+     * <em>i</em>, or clear them if the <em>i</em><sup>th</sup> iterator has no next
      * value.
      *
      * @return {@code false} iff there was no value to set
      */
-    private boolean set(final int i) {
-        final Iterator<? extends E> it = iterators.get(i);
+    private boolean set(final int index) {
+        final Iterator<? extends E> it = iterators.get(index);
         if (it.hasNext()) {
-            values.set(i, it.next());
-            valueSet.set(i);
+            values.set(index, it.next());
+            valueSet.set(index);
             return true;
         }
-        values.set(i, null);
-        valueSet.clear(i);
+        values.set(index, null);
+        valueSet.clear(index);
         return false;
     }
 

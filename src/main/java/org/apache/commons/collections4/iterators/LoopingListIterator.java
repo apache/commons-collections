@@ -30,10 +30,12 @@ import org.apache.commons.collections4.ResettableListIterator;
  * The iterator will loop continuously around the provided list,
  * unless there are no elements in the collection to begin with, or
  * all of the elements have been {@link #remove removed}.
+ * </p>
  * <p>
  * Concurrent modifications are not directly supported, and for most
  * collection implementations will throw a
  * ConcurrentModificationException.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.2
@@ -51,6 +53,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * There is no way to reset a ListIterator instance without
      * recreating it from the original source, so the List must be
      * passed in and a reference to it held.
+     * </p>
      *
      * @param list the list to wrap
      * @throws NullPointerException if the list is null
@@ -66,10 +69,12 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * The element is inserted before the next element that would be
      * returned by {@link #next}, if any, and after the next element
      * that would be returned by {@link #previous}, if any.
+     * </p>
      * <p>
      * This feature is only supported if the underlying list's
      * {@link List#listIterator} method returns an implementation
      * that supports it.
+     * </p>
      *
      * @param obj  the element to insert
      * @throws UnsupportedOperationException if the add method is not
@@ -85,6 +90,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * <p>
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
+     * </p>
      *
      * @return {@code true} if there are more elements
      */
@@ -98,6 +104,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * <p>
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
+     * </p>
      *
      * @return {@code true} if there are more elements
      */
@@ -114,6 +121,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Returns the next object in the list.
      * <p>
      * If at the end of the list, returns the first element.
+     * </p>
      *
      * @return the object after the last element returned
      * @throws NoSuchElementException if there are no elements in the list
@@ -137,6 +145,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * As would be expected, if the iterator is at the physical end of
      * the underlying list, 0 is returned, signifying the beginning of
      * the list.
+     * </p>
      *
      * @return the index of the element that would be returned if next() were called
      * @throws NoSuchElementException if there are no elements in the list
@@ -158,6 +167,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * <p>
      * If at the beginning of the list, return the last element. Note
      * that in this case, traversal to find that element takes linear time.
+     * </p>
      *
      * @return the object before the last element returned
      * @throws NoSuchElementException if there are no elements in the list
@@ -186,6 +196,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * As would be expected, if at the iterator is at the physical
      * beginning of the underlying list, the list's size minus one is
      * returned, signifying the end of the list.
+     * </p>
      *
      * @return the index of the element that would be returned if previous() were called
      * @throws NoSuchElementException if there are no elements in the list
@@ -206,8 +217,9 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Removes the previously retrieved item from the underlying list.
      * <p>
      * This feature is only supported if the underlying list's
-     * {@link List#iterator iterator} method returns an implementation
+     * {@link List#iterator()} method returns an implementation
      * that supports it.
+     * </p>
      * <p>
      * This method can only be called after at least one {@link #next}
      * or {@link #previous} method call. After a removal, the remove
@@ -215,6 +227,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * {@link #previous} has been performed. If the {@link #reset} is
      * called, then remove may not be called until {@link #next} or
      * {@link #previous} is called again.
+     * </p>
      *
      * @throws UnsupportedOperationException if the remove method is
      * not supported by the iterator implementation of the underlying
@@ -240,6 +253,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * This feature is only supported if the underlying list's
      * {@link List#listIterator} method returns an implementation
      * that supports it.
+     * </p>
      *
      * @param obj  the element with which to replace the last element returned
      * @throws UnsupportedOperationException if the set method is not

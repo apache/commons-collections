@@ -30,8 +30,10 @@ import org.apache.commons.collections4.Transformer;
  * The iteration starts from a single root object.
  * It uses a {@code Transformer} to extract the iterators and elements.
  * Its main benefit is that no intermediate {@code List} is created.
+ * </p>
  * <p>
  * For example, consider an object graph:
+ * </p>
  * <pre>
  *                 |- Branch -- Leaf
  *                 |         \- Leaf
@@ -43,8 +45,10 @@ import org.apache.commons.collections4.Transformer;
  *         |- Tree |         /- Leaf
  *                 |- Branch -- Leaf
  *                 |- Branch -- Leaf</pre>
+ * <p>
  * The following {@code Transformer}, used in this class, will extract all
  * the Leaf objects without creating a combined intermediate list:
+ * </p>
  * <pre>
  * public Object transform(Object input) {
  *   if (input instanceof Forest) {
@@ -67,9 +71,11 @@ import org.apache.commons.collections4.Transformer;
  * either an iterator or an object. If the object is an Iterator, the next element
  * from that iterator is obtained and the process repeats. If the element is an object
  * it is returned.
+ * </p>
  * <p>
  * Under many circumstances, linking Iterators together in this manner is
  * more efficient (and convenient) than using nested for loops to extract a list.
+ * </p>
  *
  * @param <E> the type of elements returned by this iterator.
  * @since 3.1
@@ -118,6 +124,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * be used to iterate over nested iterators. That is to say that the iterator
      * passed in here contains other iterators, which may in turn contain further
      * iterators.
+     * </p>
      *
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
@@ -208,6 +215,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * This method calls remove() on the underlying Iterator, and it may
      * throw an UnsupportedOperationException if the underlying Iterator
      * does not support this method.
+     * </p>
      *
      * @throws UnsupportedOperationException
      *   if the remove operator is not supported by the underlying Iterator

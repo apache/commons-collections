@@ -19,8 +19,9 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * Represents a function that accepts a two long-valued argument and produces a binary result.
  * This is the long-consuming primitive specialization for {@code BiPredicate}.
- *
+ * <p>
  * This is a functional interface whose functional method is {@code test(long,long)}.
+ * </p>
  *
  * @since 4.5.0
  */
@@ -29,6 +30,7 @@ public interface LongBiPredicate {
 
     /**
      * A function that takes to long arguments and returns a boolean.
+     *
      * @param x the first long argument.
      * @param y the second long argument.
      * @return true or false.

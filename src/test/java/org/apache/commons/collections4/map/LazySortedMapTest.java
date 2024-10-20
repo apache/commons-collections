@@ -19,10 +19,10 @@ package org.apache.commons.collections4.map;
 import static org.apache.commons.collections4.map.LazySortedMap.lazySortedMap;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -39,6 +39,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link LazyMapTest} for exercising the
  * {@link LazySortedMap} implementation.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
@@ -68,6 +71,11 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @Override
     public boolean isAllowNullKey() {
         return false;
+    }
+
+    @Override
+    protected boolean isLazyMapTest() {
+        return true;
     }
 
     @Override
@@ -133,7 +141,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         final SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<>(), transformer);
-        assertTrue(map instanceof LazySortedMap);
+        assertInstanceOf(LazySortedMap.class, map);
         assertAll(
                 () -> assertThrows(NullPointerException.class, () -> lazySortedMap(new TreeMap<>(), (Transformer<Integer, Number>) null),
                         "Expecting NullPointerException for null transformer"),

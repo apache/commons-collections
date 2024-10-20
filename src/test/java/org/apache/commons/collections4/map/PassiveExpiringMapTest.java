@@ -35,8 +35,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * JUnit tests.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
-public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
+public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpiringMap<K, V>, K, V> {
 
     private static final class TestExpirationPolicy
         implements ExpirationPolicy<Integer, String> {
@@ -92,7 +95,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     @Override
-    public Map<K, V> makeObject() {
+    public PassiveExpiringMap<K, V> makeObject() {
         return new PassiveExpiringMap<>();
     }
 

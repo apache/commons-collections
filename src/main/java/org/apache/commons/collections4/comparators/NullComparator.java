@@ -134,12 +134,12 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
             return 0;
         }
         if (o1 == null) {
-            return this.nullsAreHigh ? 1 : -1;
+            return nullsAreHigh ? 1 : -1;
         }
         if (o2 == null) {
-            return this.nullsAreHigh ? -1 : 1;
+            return nullsAreHigh ? -1 : 1;
         }
-        return this.nonNullComparator.compare(o1, o2);
+        return nonNullComparator.compare(o1, o2);
     }
 
     /**
@@ -167,8 +167,8 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
 
         final NullComparator<?> other = (NullComparator<?>) obj;
 
-        return this.nullsAreHigh == other.nullsAreHigh &&
-                this.nonNullComparator.equals(other.nonNullComparator);
+        return nullsAreHigh == other.nullsAreHigh &&
+                nonNullComparator.equals(other.nonNullComparator);
     }
 
     /**

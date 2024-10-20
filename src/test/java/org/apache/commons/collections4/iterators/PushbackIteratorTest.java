@@ -31,6 +31,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the PushbackIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -52,9 +54,6 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         return PushbackIterator.pushbackIterator(testList.iterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {

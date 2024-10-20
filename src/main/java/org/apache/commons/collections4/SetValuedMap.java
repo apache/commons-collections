@@ -52,7 +52,7 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned set <i>may</i> be modifiable, but updates will not be
+     * The returned set <em>may</em> be modifiable, but updates will not be
      * propagated to this set-valued map. In case no mapping was stored for the
      * specified key, an empty, unmodifiable set will be returned.
      * </p>

@@ -51,20 +51,19 @@ limitations under the License.
     <module name="JavadocMethod">
       <property name="accessModifiers" value="protected" />
     </module>
+    <module name="MethodParamPad"/>
     <module name="ModifierOrder"/>
     <module name="RedundantModifier"/>
     <module name="UpperEll" />
     <module name="LeftCurly"/>
     <module name="NeedBraces"/>
+    <module name="ParenPad"/>
     <module name="RightCurly"/>
     <module name="GenericWhitespace"/>
     <module name="WhitespaceAfter"/>
     <module name="WhitespaceAround"/>
     <module name="NoWhitespaceBefore"/>
-    <module name="Indentation">
-      <!-- Indentation style recommended by Oracle -->
-      <property name="caseIndent" value="0"/>
-    </module>
+    <module name="NoWhitespaceBeforeCaseDefaultColon"/>
     <module name="ImportOrder">
       <property name="option" value="top"/>
       <property name="groups" value="java,javax,junit,org,com"/>

@@ -29,7 +29,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link Set} methods and contracts.
+ * Tests {@link Set}.
  * <p>
  * Since {@link Set} doesn't stipulate much new behavior that isn't already
  * found in {@link Collection}, this class basically just adds tests for

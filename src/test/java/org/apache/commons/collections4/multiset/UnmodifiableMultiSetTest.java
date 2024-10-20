@@ -96,8 +96,8 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     @Test
     public void testEntrySet() {
         final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        assertSame( unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
+        final MultiSet<E> unmodifiableMultiSet = UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        assertSame(unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
     }
 
     @Test

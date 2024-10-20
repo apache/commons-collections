@@ -33,7 +33,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     private static final long serialVersionUID = -6682656911025165584L;
 
     /**
-     * Factory to create the identity predicate.
+     * Creates the identity predicate.
      *
      * @param type  the type to check for, may not be null
      * @return the predicate

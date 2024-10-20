@@ -35,7 +35,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
     private static final long serialVersionUID = 862391807045468939L;
 
     /**
-     * Factory to create the transformer.
+     * Creates the transformer.
      * <p>
      * If the map is null, a transformer that always returns null is returned.
      *

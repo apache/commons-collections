@@ -28,8 +28,10 @@ import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
 /**
- * Extension of {@link AbstractMapTest} for exercising the
- * {@link UnmodifiableMap} implementation.
+ * Tests {@link UnmodifiableMap}.
+ *
+ * @param <K> the key type.
+ * @param <V> the value type.
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

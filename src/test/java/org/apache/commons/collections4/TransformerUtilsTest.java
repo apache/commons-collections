@@ -271,12 +271,10 @@ public class TransformerUtilsTest {
 
     @Test
     public void testStringValueTransformer() {
-        assertNotNull( "StringValueTransformer should NEVER return a null value.",
-            TransformerUtils.stringValueTransformer().transform(null));
-        assertEquals( "null",
-            TransformerUtils.stringValueTransformer().transform(null), "StringValueTransformer should return \"null\" when given a null argument.");
-        assertEquals( "6",
-            TransformerUtils.stringValueTransformer().transform(6), "StringValueTransformer should return toString value");
+        assertNotNull("StringValueTransformer should NEVER return a null value.", TransformerUtils.stringValueTransformer().transform(null));
+        assertEquals("null", TransformerUtils.stringValueTransformer().transform(null),
+                "StringValueTransformer should return \"null\" when given a null argument.");
+        assertEquals("6", TransformerUtils.stringValueTransformer().transform(6), "StringValueTransformer should return toString value");
     }
 
     @Test

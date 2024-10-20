@@ -62,50 +62,54 @@ public class CollectionUtils {
      */
     private static class CardinalityHelper<O> {
 
+        static boolean equals(final Collection<?> a, final Collection<?> b) {
+            return new HashBag<>(a).equals(new HashBag<>(b));
+        }
+
         /** Contains the cardinality for each object in collection A. */
-        final Map<O, Integer> cardinalityA;
+        final Bag<O> cardinalityA;
 
         /** Contains the cardinality for each object in collection B. */
-        final Map<O, Integer> cardinalityB;
+        final Bag<O> cardinalityB;
 
         /**
-         * Create a new CardinalityHelper for two collections.
+         * Creates a new CardinalityHelper for two collections.
+         *
          * @param a  the first collection
          * @param b  the second collection
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = getCardinalityMap(a);
-            cardinalityB = getCardinalityMap(b);
+            cardinalityA = new HashBag<>(a);
+            cardinalityB = new HashBag<>(b);
         }
 
         /**
-         * Returns the frequency of this object in collection A.
-         * @param obj  the object
+         * Gets the frequency of this object in collection A.
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection A
          */
-        public int freqA(final Object obj) {
-            return getFreq(obj, cardinalityA);
+        public int freqA(final Object key) {
+            return getFreq(key, cardinalityA);
         }
 
         /**
-         * Returns the frequency of this object in collection B.
-         * @param obj  the object
+         * Gets the frequency of this object in collection B.
+         *
+         * @param key the key whose associated frequency is to be returned.
          * @return the frequency of the object in collection B
          */
-        public int freqB(final Object obj) {
-            return getFreq(obj, cardinalityB);
+        public int freqB(final Object key) {
+            return getFreq(key, cardinalityB);
         }
 
-        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
-            final Integer count = freqMap.get(obj);
-            if (count != null) {
-                return count.intValue();
-            }
-            return 0;
+        private int getFreq(final Object key, final Bag<?> freqMap) {
+            return freqMap.getCount(key);
         }
 
         /**
-         * Returns the maximum frequency of an object.
+         * Gets the maximum frequency of an object.
+         *
          * @param obj  the object
          * @return the maximum frequency of the object
          */
@@ -114,7 +118,8 @@ public class CollectionUtils {
         }
 
         /**
-         * Returns the minimum frequency of an object.
+         * Gets the minimum frequency of an object.
+         *
          * @param obj  the object
          * @return the minimum frequency of the object
          */
@@ -350,7 +355,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the number of occurrences of <i>obj</i> in <i>coll</i>.
+     * Returns the number of occurrences of <em>obj</em> in <em>coll</em>.
      *
      * @param obj the object to find the cardinality of
      * @param collection the {@link Iterable} to search
@@ -591,7 +596,7 @@ public class CollectionUtils {
      * which is the same behavior as {@link Collection#containsAll(Collection)}.
      * <p>
      * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> has the same cardinality as
+     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> has the same cardinality as
      * the set of unique values from {@code coll2}. In case {@code coll2} is empty, {@code true}
      * will be returned.
      * </p>
@@ -642,7 +647,7 @@ public class CollectionUtils {
      * Returns {@code true} iff at least one element is in both collections.
      * <p>
      * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
+     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
      * @param coll1  the first collection, must not be null
@@ -675,7 +680,7 @@ public class CollectionUtils {
      * Returns {@code true} iff at least one element is in both collections.
      * <p>
      * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
+     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
      * @param <T> the type of object to lookup in {@code coll1}.
@@ -727,10 +732,10 @@ public class CollectionUtils {
      * Returns a {@link Collection} containing the exclusive disjunction
      * (symmetric difference) of the given {@link Iterable}s.
      * <p>
-     * The cardinality of each element <i>e</i> in the returned
+     * The cardinality of each element <em>e</em> in the returned
      * {@link Collection} will be equal to
-     * <code>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
-     * cardinality(<i>e</i>,<i>b</i>))</code>.
+     * <code>max(cardinality(<em>e</em>,<em>a</em>),cardinality(<em>e</em>,<em>b</em>)) - min(cardinality(<em>e</em>,<em>a</em>),
+     * cardinality(<em>e</em>,<em>b</em>))</code>.
      * </p>
      * <p>
      * This is equivalent to
@@ -1189,9 +1194,9 @@ public class CollectionUtils {
      * Returns {@code true} iff the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <i>e</i> in <i>a</i> is
-     * equal to the cardinality of <i>e</i> in <i>b</i>,
-     * for each element <i>e</i> in <i>a</i> or <i>b</i>.
+     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
+     * equal to the cardinality of <em>e</em> in <em>b</em>,
+     * for each element <em>e</em> in <em>a</em> or <em>b</em>.
      * </p>
      *
      * @param a  the first collection, must not be null
@@ -1200,30 +1205,16 @@ public class CollectionUtils {
      * @throws NullPointerException if either collection is null
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
-        Objects.requireNonNull(a, "a");
-        Objects.requireNonNull(b, "b");
-        if (a.size() != b.size()) {
-            return false;
-        }
-        final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
-        if (helper.cardinalityA.size() != helper.cardinalityB.size()) {
-            return false;
-        }
-        for (final Object obj : helper.cardinalityA.keySet()) {
-            if (helper.freqA(obj) != helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return CardinalityHelper.equals(a, b);
     }
 
     /**
      * Returns {@code true} iff the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <i>e</i> in <i>a</i> is
-     * equal to the cardinality of <i>e</i> in <i>b</i>,
-     * for each element <i>e</i> in <i>a</i> or <i>b</i>.
+     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
+     * equal to the cardinality of <em>e</em> in <em>b</em>,
+     * for each element <em>e</em> in <em>a</em> or <em>b</em>.
      * </p>
      * <p>
      * <b>Note:</b> from version 4.1 onwards this method requires the input
@@ -1303,24 +1294,24 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>,
-     * that is, iff the cardinality of <i>e</i> in <i>a</i> is less
-     * than or equal to the cardinality of <i>e</i> in <i>b</i>,
-     * for each element <i>e</i> in <i>a</i>, and there is at least one
-     * element <i>f</i> such that the cardinality of <i>f</i> in <i>b</i>
-     * is strictly greater than the cardinality of <i>f</i> in <i>a</i>.
+     * Returns {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>,
+     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less
+     * than or equal to the cardinality of <em>e</em> in <em>b</em>,
+     * for each element <em>e</em> in <em>a</em>, and there is at least one
+     * element <em>f</em> such that the cardinality of <em>f</em> in <em>b</em>
+     * is strictly greater than the cardinality of <em>f</em> in <em>a</em>.
      * <p>
      * The implementation assumes
      * </p>
      * <ul>
      *    <li>{@code a.size()} and {@code b.size()} represent the
-     *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
+     *    total cardinality of <em>a</em> and <em>b</em>, resp. </li>
      *    <li>{@code a.size() &lt; Integer.MAXVALUE}</li>
      * </ul>
      *
      * @param a  the first (sub?) collection, must not be null
      * @param b  the second (super?) collection, must not be null
-     * @return {@code true} iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>
+     * @return {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>
      * @throws NullPointerException if either collection is null
      * @see #isSubCollection
      * @see Collection#containsAll
@@ -1332,14 +1323,14 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <i>a</i> is a sub-collection of <i>b</i>,
-     * that is, iff the cardinality of <i>e</i> in <i>a</i> is less than or
-     * equal to the cardinality of <i>e</i> in <i>b</i>, for each element <i>e</i>
-     * in <i>a</i>.
+     * Returns {@code true} iff <em>a</em> is a sub-collection of <em>b</em>,
+     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less than or
+     * equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em>
+     * in <em>a</em>.
      *
      * @param a the first (sub?) collection, must not be null
      * @param b the second (super?) collection, must not be null
-     * @return {@code true} iff <i>a</i> is a sub-collection of <i>b</i>
+     * @return {@code true} iff <em>a</em> is a sub-collection of <em>b</em>
      * @throws NullPointerException if either collection is null
      * @see #isProperSubCollection
      * @see Collection#containsAll
@@ -1946,10 +1937,10 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new {@link Collection} containing {@code <i>a</i> - <i>b</i>}.
-     * The cardinality of each element <i>e</i> in the returned {@link Collection}
-     * will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality
-     * of <i>e</i> in <i>b</i>, or zero, whichever is greater.
+     * Returns a new {@link Collection} containing {@code <em>a</em> - <em>b</em>}.
+     * The cardinality of each element <em>e</em> in the returned {@link Collection}
+     * will be the cardinality of <em>e</em> in <em>a</em> minus the cardinality
+     * of <em>e</em> in <em>b</em>, or zero, whichever is greater.
      *
      * @param a  the collection to subtract from, must not be null
      * @param b  the collection to subtract, must not be null
@@ -1964,23 +1955,23 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new {@link Collection} containing <i>a</i> minus a subset of
-     * <i>b</i>.  Only the elements of <i>b</i> that satisfy the predicate
-     * condition, <i>p</i> are subtracted from <i>a</i>.
+     * Returns a new {@link Collection} containing <em>a</em> minus a subset of
+     * <em>b</em>.  Only the elements of <em>b</em> that satisfy the predicate
+     * condition, <em>p</em> are subtracted from <em>a</em>.
      *
      * <p>
-     * The cardinality of each element <i>e</i> in the returned {@link Collection}
-     * that satisfies the predicate condition will be the cardinality of <i>e</i> in <i>a</i>
-     * minus the cardinality of <i>e</i> in <i>b</i>, or zero, whichever is greater.
+     * The cardinality of each element <em>e</em> in the returned {@link Collection}
+     * that satisfies the predicate condition will be the cardinality of <em>e</em> in <em>a</em>
+     * minus the cardinality of <em>e</em> in <em>b</em>, or zero, whichever is greater.
      * </p>
      * <p>
-     * The cardinality of each element <i>e</i> in the returned {@link Collection} that does <b>not</b>
-     * satisfy the predicate condition will be equal to the cardinality of <i>e</i> in <i>a</i>.
+     * The cardinality of each element <em>e</em> in the returned {@link Collection} that does <b>not</b>
+     * satisfy the predicate condition will be equal to the cardinality of <em>e</em> in <em>a</em>.
      * </p>
      *
      * @param a  the collection to subtract from, must not be null
      * @param b  the collection to subtract, must not be null
-     * @param p  the condition used to determine which elements of <i>b</i> are
+     * @param p  the condition used to determine which elements of <em>b</em> are
      *        subtracted.
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.

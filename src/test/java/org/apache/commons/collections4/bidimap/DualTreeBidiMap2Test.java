@@ -37,7 +37,7 @@ import org.apache.commons.collections4.comparators.ReverseComparator;
 import org.junit.jupiter.api.Test;
 
 /**
- * JUnit tests.
+ * Tests {@link DualTreeBidiMap}.
  */
 @SuppressWarnings("boxing")
 public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
@@ -67,6 +67,12 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     public String[] ignoredTests() {
         final String recursiveTest = "DualTreeBidiMap2Test.bulkTestInverseMap.bulkTestInverseMap";
         return new String[] { recursiveTest };
+    }
+
+    @Override
+    public boolean isAllowNullValueGet() {
+        // TODO Is this a bug or a feature?
+        return true;
     }
 
     @Override

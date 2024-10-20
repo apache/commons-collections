@@ -24,6 +24,7 @@ import org.apache.commons.collections4.MapIterator;
  * Provides basic behavior for decorating a map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
+ * </p>
  *
  * @param <K> the type of keys
  * @param <V> the type of mapped values
@@ -85,8 +86,8 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
 
     /** {@inheritDoc} */
     @Override
-    public V setValue(final V obj) {
-        return iterator.setValue(obj);
+    public V setValue(final V value) {
+        return iterator.setValue(value);
     }
 
 }

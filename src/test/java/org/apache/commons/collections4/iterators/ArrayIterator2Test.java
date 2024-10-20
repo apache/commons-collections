@@ -29,6 +29,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the ArrayIterator with primitive type arrays.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 

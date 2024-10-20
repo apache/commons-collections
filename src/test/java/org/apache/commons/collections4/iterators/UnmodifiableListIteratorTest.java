@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the UnmodifiableListIterator.
+ *
+ * @param <E> the type of elements tested by this iterator.
  */
 public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
@@ -53,9 +55,6 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         return UnmodifiableListIterator.unmodifiableListIterator(testList.listIterator());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @BeforeEach
     protected void setUp() throws Exception {

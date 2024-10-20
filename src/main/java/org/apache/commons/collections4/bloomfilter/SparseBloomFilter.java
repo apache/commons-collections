@@ -24,9 +24,10 @@ import java.util.function.LongPredicate;
 /**
  * A bloom filter using a TreeSet of integers to track enabled bits. This is a standard
  * implementation and should work well for most low cardinality Bloom filters.
+ *
  * @since 4.5.0
  */
-public final class SparseBloomFilter implements BloomFilter {
+public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
 
     /**
      * The bitSet that defines this BloomFilter.
@@ -56,6 +57,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     /**
      * Adds the index to the indices.
+     *
      * @param idx the index to add.
      * @return {@code true} always
      */
@@ -66,7 +68,7 @@ public final class SparseBloomFilter implements BloomFilter {
 
     @Override
     public long[] asBitMapArray() {
-        final long[] result = new long[BitMaps.numberOfBitMaps(shape.getNumberOfBits())];
+        final long[] result = BitMaps.newBitMap(shape);
         for (final int i : indices) {
             BitMaps.set(result, i);
         }
@@ -98,6 +100,11 @@ public final class SparseBloomFilter implements BloomFilter {
         return indexExtractor.processIndices(indices::contains);
     }
 
+    /**
+     * Creates a new instance of this {@link SparseBloomFilter} with the same properties as the current one.
+     *
+     * @return a copy of this {@link SparseBloomFilter}.
+     */
     @Override
     public SparseBloomFilter copy() {
         return new SparseBloomFilter(this);
@@ -120,7 +127,7 @@ public final class SparseBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean merge(final BloomFilter other) {
+    public boolean merge(final BloomFilter<?> other) {
         Objects.requireNonNull(other, "other");
         final IndexExtractor indexExtractor = (other.characteristics() & SPARSE) != 0 ? (IndexExtractor) other : IndexExtractor.fromBitMapExtractor(other);
         merge(indexExtractor);
@@ -138,14 +145,14 @@ public final class SparseBloomFilter implements BloomFilter {
     public boolean merge(final IndexExtractor indexExtractor) {
         Objects.requireNonNull(indexExtractor, "indexExtractor");
         indexExtractor.processIndices(this::add);
-        if (!this.indices.isEmpty()) {
-            if (this.indices.last() >= shape.getNumberOfBits()) {
+        if (!indices.isEmpty()) {
+            if (indices.last() >= shape.getNumberOfBits()) {
                 throw new IllegalArgumentException(String.format("Value in list %s is greater than maximum value (%s)",
-                        this.indices.last(), shape.getNumberOfBits() - 1));
+                        indices.last(), shape.getNumberOfBits() - 1));
             }
-            if (this.indices.first() < 0) {
+            if (indices.first() < 0) {
                 throw new IllegalArgumentException(
-                        String.format("Value in list %s is less than 0", this.indices.first()));
+                        String.format("Value in list %s is less than 0", indices.first()));
             }
         }
         return true;
@@ -154,11 +161,11 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean processBitMaps(final LongPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        final int limit = BitMaps.numberOfBitMaps(shape.getNumberOfBits());
-        /*
-         * because our indices are always in order we can shorten the time necessary to
-         * create the longs for the consumer
-         */
+        final int limit = BitMaps.numberOfBitMaps(shape);
+        //
+        // because our indices are always in order we can shorten the time necessary to
+        // create the longs for the consumer
+        //
         // the currently constructed bitMap
         long bitMap = 0;
         // the bitmap we are working on
@@ -192,11 +199,6 @@ public final class SparseBloomFilter implements BloomFilter {
     @Override
     public boolean processIndices(final IntPredicate consumer) {
         Objects.requireNonNull(consumer, "consumer");
-        for (final int value : indices) {
-            if (!consumer.test(value)) {
-                return false;
-            }
-        }
-        return true;
+        return indices.stream().allMatch(consumer::test);
     }
 }

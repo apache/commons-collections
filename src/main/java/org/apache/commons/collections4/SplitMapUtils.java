@@ -70,7 +70,7 @@ public class SplitMapUtils {
             if (arg0 == this) {
                 return true;
             }
-            return arg0 instanceof WrappedGet && ((WrappedGet<?, ?>) arg0).get.equals(this.get);
+            return arg0 instanceof WrappedGet && ((WrappedGet<?, ?>) arg0).get.equals(get);
         }
 
         @Override
@@ -162,7 +162,7 @@ public class SplitMapUtils {
             if (obj == this) {
                 return true;
             }
-            return obj instanceof WrappedPut && ((WrappedPut<?, ?>) obj).put.equals(this.put);
+            return obj instanceof WrappedPut && ((WrappedPut<?, ?>) obj).put.equals(put);
         }
 
         @Override

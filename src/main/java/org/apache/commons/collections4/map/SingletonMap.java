@@ -38,7 +38,7 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * <p>
  * The single key/value pair is specified at creation.
  * The map is fixed size so any action that would change the size is disallowed.
- * However, the {@code put} or {@code setValue} methods can <i>change</i>
+ * However, the {@code put} or {@code setValue} methods can <em>change</em>
  * the value associated with the key.
  * </p>
  * <p>

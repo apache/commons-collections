@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -53,6 +54,8 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.functors.InstanceofPredicate;
+import org.apache.commons.collections4.functors.UniquePredicate;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -1612,7 +1615,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testPredicatedCollection() {
         final Predicate<Object> predicate = PredicateUtils.instanceofPredicate(Integer.class);
         final Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<>(), predicate);
-        assertTrue(collection instanceof PredicatedCollection, "returned object should be a PredicatedCollection");
+        assertInstanceOf(PredicatedCollection.class, collection, "returned object should be a PredicatedCollection");
     }
 
     @Test
@@ -1942,6 +1945,15 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void testSelect_Iterable_Predicate_Collection_JiraCollections864() {
+        final UniquePredicate<Object> uniquePredicate0 = new UniquePredicate<>();
+        final LinkedList<InstanceofPredicate> linkedList0 = new LinkedList<>();
+        final Class<InstanceofPredicate> class0 = InstanceofPredicate.class;
+        final InstanceofPredicate instanceofPredicate0 = new InstanceofPredicate(class0);
+        CollectionUtils.select((Iterable<? extends InstanceofPredicate>) linkedList0, (Predicate<? super InstanceofPredicate>) uniquePredicate0, linkedList0);
+    }
+
+    @Test
     public void testSelectRejected() {
         final List<Long> list = new ArrayList<>();
         list.add(1L);
@@ -2187,7 +2199,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
-        assertTrue(col instanceof SynchronizedCollection, "Returned object should be a SynchronizedCollection.");
+        assertInstanceOf(SynchronizedCollection.class, col, "Returned object should be a SynchronizedCollection.");
 
         assertThrows(NullPointerException.class, () -> CollectionUtils.synchronizedCollection(null),
                 "Expecting NullPointerException for null collection.");
@@ -2232,7 +2244,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testTransformedCollection() {
         final Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
         final Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<>(), transformer);
-        assertTrue(collection instanceof TransformedCollection, "returned object should be a TransformedCollection");
+        assertInstanceOf(TransformedCollection.class, collection, "returned object should be a TransformedCollection");
     }
 
     @Test
@@ -2296,7 +2308,7 @@ public class CollectionUtilsTest extends MockTestCase {
     @Deprecated
     public void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
-        assertTrue(col instanceof UnmodifiableCollection, "Returned object should be a UnmodifiableCollection.");
+        assertInstanceOf(UnmodifiableCollection.class, col, "Returned object should be a UnmodifiableCollection.");
 
         assertThrows(NullPointerException.class, () -> CollectionUtils.unmodifiableCollection(null),
                 "Expecting NullPointerException for null collection.");

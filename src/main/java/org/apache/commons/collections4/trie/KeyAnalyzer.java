@@ -46,10 +46,13 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
 
     /**
      * Returned by {@link #bitIndex(Object, int, int, Object, int, int)} if key and found key are equal.
-     * This is a very, very specific case and shouldn't happen on a regular basis.
+     * This is a very specific case and shouldn't happen on a regular basis.
      */
     public static final int EQUAL_BIT_KEY = -2;
 
+    /**
+     * Used to test a {@code bitIndex} in {@link #isOutOfBoundsIndex(int)}.
+     */
     public static final int OUT_OF_BOUNDS_BIT_KEY = -3;
 
     /**

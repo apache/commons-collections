@@ -38,10 +38,11 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
     private static final long serialVersionUID = 7429999530934647542L;
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the collection is size zero, the predicate always returns false.
      * If the collection is size one, then that predicate is returned.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
@@ -62,10 +63,11 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
     }
 
     /**
-     * Factory to create the predicate.
+     * Creates the predicate.
      * <p>
      * If the array is size zero, the predicate always returns false.
      * If the array is size one, then that predicate is returned.
+     * </p>
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null

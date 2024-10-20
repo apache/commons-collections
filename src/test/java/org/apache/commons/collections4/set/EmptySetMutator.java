@@ -32,8 +32,8 @@ final class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
 
     private final Set<E> contained;
 
-    EmptySetMutator(final Set<E> set) {
-        this.contained = set;
+    EmptySetMutator(final Set<E> contained) {
+        this.contained = contained;
     }
 
     @Override

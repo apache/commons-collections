@@ -33,9 +33,36 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Closure...) is now FunctorUtils.validate(Consumer...).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Predicate...) is now FunctorUtils.validate(java.util.function.Predicate...).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">[Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...).</action>
+    <action type="fix" dev="ggregory" due-to="Dávid Szigecsán. Gary Gregory">Increase test coverage for ListUtils #517.</action>
+    <action type="fix" dev="ggregory" due-to="Dávid Szigecsán">Use the Junit (Jupiter) API #518.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory, Alex Herbert">BloomFilterExtractor.flatten() should throw an exception instead of returning null.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory, Claude Warren">Improve WrappedBloomFilterTest. All tests now assert copy() the same way.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory,  Daniele" issue="COLLECTIONS-860">Javadoc CollectionBag.add* to throw ClassCastException.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in IteratorChain.IteratorChain(Collection).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in org.apache.commons.collections4.IteratorUtils.chainedIterator(Collection).</action>
     <!-- ADD -->
+    <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateSet(Collection).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateSequencedSet(Collection).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add HashBag.HashBag(Iterable).</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add TreeBag.TreeBag(Iterable).</action>
+    <action type="add" issue="COLLECTIONS-858" dev="ggregory" due-to="Alexey Pelykh, Alex Herbert, Gary Gregory">Add CartesianProductIterator #509.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add missing methods in AbstractMapTests.</action>
+    <action type="add" issue="COLLECTIONS-700" dev="ggregory" due-to="Gary Gregory">Add ConcurrentReferenceHashMap.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add commons.easymock.version to parameterize EasyMock version.</action>
+    <action type="add" issue="COLLECTIONS-869" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.collections4.IteratorUtils.chainedIterator(Iterator&lt;? extends Iterator&lt;? extends E&gt;&gt;).</action>
+
     <!-- UPDATE -->
-    <action issue="COLLECTIONS-857" type="update" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
+    <action type="update" issue="COLLECTIONS-857" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #516, #525, #535.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 77 #534, #545, #550 #555.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.hamcrest:hamcrest from 2.2 to 3.0 #522, #532.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump com.google.guava:guava-testlib from 33.2.1-jre to 33.3.1-jre #531, #549.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump MathJax from 2.7.2 to 2.7.9.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.easymock:easymock from 5.3.0 to 5.4.0 #521.</action>
+    <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-io:commons-io from 2.16.1 to 2.17.0 #544.</action>
   </release>
   <release version="4.5.0-M2" date="2024-06-15" description="This milestone release requires Java 8 and adds the package `org.apache.commons.collections4.bloomfilter`.">
      <!-- ADD -->
