@@ -219,7 +219,7 @@ public class FactoryUtilsTest {
      * serialization/deserialization process.
      */
     @Test
-    public void testSingletonPatternInSerialization() {
+    public void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
         final Object[] singletons = {
             ExceptionFactory.INSTANCE,
         };

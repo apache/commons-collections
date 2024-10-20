@@ -33,11 +33,14 @@ public final class TestUtils {
      * <p>
      * Effect of method call is the same as:
      * {@code assertSameAfterSerialization(null, o)}.
+     * </p>
      *
      * @param o object that will be tested.
+     * @throws IOException Thrown on test failure.
+     * @throws ClassNotFoundException Thrown on test failure.
      * @see #assertSameAfterSerialization(String, Object)
      */
-    public static void assertSameAfterSerialization(final Object o) {
+    public static void assertSameAfterSerialization(final Object o) throws IOException, ClassNotFoundException {
         assertSameAfterSerialization(null, o);
     }
 
@@ -49,31 +52,29 @@ public final class TestUtils {
      * <p>
      * This method is especially good for testing singleton pattern on classes
      * that support serialization.
+     * </p>
      *
      * @param msg the identifying message for the {@code AssertionError}.
      * @param o object that will be tested.
+     * @throws IOException Thrown on test failure.
+     * @throws ClassNotFoundException Thrown on test failure.
      * @see #assertSameAfterSerialization(Object)
      */
-    public static void assertSameAfterSerialization(final String msg, final Object o) {
-        try {
-            // write object to byte buffer
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(o);
-            oos.close();
+    public static void assertSameAfterSerialization(final String msg, final Object o) throws IOException, ClassNotFoundException {
+        // write object to byte buffer
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(o);
+        oos.close();
 
-            // read same object from byte buffer
-            final InputStream is = new ByteArrayInputStream(baos.toByteArray());
-            final ObjectInputStream ois = new ObjectInputStream(is);
-            final Object object = ois.readObject();
-            ois.close();
+        // read same object from byte buffer
+        final InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        final ObjectInputStream ois = new ObjectInputStream(is);
+        final Object object = ois.readObject();
+        ois.close();
 
-            // assert that original object and deserialized objects are the same
-            assertSame(o, object, msg);
-        } catch (final IOException | ClassNotFoundException e) {
-            // should never happen
-            throw new RuntimeException(e);
-        }
+        // assert that original object and deserialized objects are the same
+        assertSame(o, object, msg);
     }
 
     private TestUtils() {

@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -189,7 +190,7 @@ public class ClosureUtilsTest {
      * serialization/deserialization process.
      */
     @Test
-    public void testSingletonPatternInSerialization() {
+    public void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
         final Object[] singletons = {
             ExceptionClosure.INSTANCE,
             NOPClosure.INSTANCE,

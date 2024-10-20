@@ -169,17 +169,13 @@ public class BulkTest implements Cloneable {
     }
 
     /**
-     *  Creates a clone of this {@code BulkTest}.<P>
+     * Creates a clone of this {@code BulkTest}.
      *
-     *  @return  a clone of this {@code BulkTest}
+     * @return a clone of this {@code BulkTest}
      */
     @Override
-    public Object clone() {
-        try {
-            return super.clone();
-        } catch (final CloneNotSupportedException e) {
-            throw new Error(); // should never happen
-        }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**

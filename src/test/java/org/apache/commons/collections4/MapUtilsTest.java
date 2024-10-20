@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -129,19 +128,12 @@ public class MapUtilsTest {
         final Map<Integer, String> inner = new HashMap<>(2, 1);
         inner.put(2, "B");
         inner.put(3, "C");
-
         final Map<Integer, Object> outer = new HashMap<>(2, 1);
         outer.put(0, inner);
         outer.put(1, "A");
-
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-
-        try {
-            MapUtils.debugPrint(outPrint, "Print Map", outer);
-        } catch (final ClassCastException e) {
-            fail("No Casting should be occurring!");
-        }
+        MapUtils.debugPrint(outPrint, "Print Map", outer);
     }
 
     @Test

@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -565,7 +566,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
      * serialization/deserialization process.
      */
     @Test
-    public void testSingletonPatternInSerialization() {
+    public void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
         final Object[] singletons = {
             ExceptionPredicate.INSTANCE,
             FalsePredicate.INSTANCE,

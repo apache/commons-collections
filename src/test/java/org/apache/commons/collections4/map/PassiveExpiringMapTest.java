@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -191,13 +190,11 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
     }
 
     @Test
-    public void testExpiration() {
+    public void testExpiration() throws InterruptedException {
         validateExpiration(new PassiveExpiringMap<>(500), 500);
         validateExpiration(new PassiveExpiringMap<>(1000), 1000);
-        validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(500)), 500);
-        validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(1, TimeUnit.SECONDS)), 1000);
+        validateExpiration(new PassiveExpiringMap<>(new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(500)), 500);
+        validateExpiration(new PassiveExpiringMap<>(new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<>(1, TimeUnit.SECONDS)), 1000);
     }
 
     @Test
@@ -261,17 +258,10 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         assertNull(m.get("a"));
     }
 
-    private void validateExpiration(final Map<String, String> map, final long timeout) {
+    private void validateExpiration(final Map<String, String> map, final long timeout) throws InterruptedException {
         map.put("a", "b");
-
         assertNotNull(map.get("a"));
-
-        try {
-            Thread.sleep(2 * timeout);
-        } catch (final InterruptedException e) {
-            fail();
-        }
-
+        Thread.sleep(2 * timeout);
         assertNull(map.get("a"));
     }
 
