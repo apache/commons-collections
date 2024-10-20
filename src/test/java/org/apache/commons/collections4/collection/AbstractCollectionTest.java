@@ -825,9 +825,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
 
         resetFull();
+        final Iterator<E> iter = getCollection().iterator();
+        getCollection().clear();
         try {
-            final Iterator<E> iter = getCollection().iterator();
-            getCollection().clear();
             iter.next();
             fail("next after clear should raise ConcurrentModification");
         } catch (final ConcurrentModificationException | NoSuchElementException e) {
