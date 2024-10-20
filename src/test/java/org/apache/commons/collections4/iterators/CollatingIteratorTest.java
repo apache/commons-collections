@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -224,11 +225,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         final List<Integer> l2 = Arrays.asList(2, 4, 6);
 
         final CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());
-        try {
-            collatingIterator1.next();
-        } catch (final NullPointerException e) {
-            assertTrue(e.getMessage().startsWith("You must invoke setComparator"));
-        }
+        assertThrows(NullPointerException.class, collatingIterator1::next, "You must invoke setComparator");
 
         int i = 0;
         final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<>(null, l1.iterator(), l2.iterator());

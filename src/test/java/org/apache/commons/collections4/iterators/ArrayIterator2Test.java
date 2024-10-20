@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -85,10 +84,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
             iter.next();
         }
 
-        assertEquals(
-                count,
-                testArray.length - 2,
-                "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ");
+        assertEquals(count, testArray.length - 2, "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ");
         assertAll(
                 () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, -1),
                         "new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException"),
@@ -99,17 +95,11 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
                 () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, testArray.length + 1),
                         "new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException"),
                 () -> assertThrows(IllegalArgumentException.class, () -> makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2),
-                        "new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException")
-        );
+                        "new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException"));
 
-        try {
-            iter = makeArrayIterator(testArray, 1, 1);
-            // expected not to fail
-        } catch (final IllegalArgumentException iae) {
-            // MODIFIED: an iterator over a zero-length section of array
-            //  should be perfectly legal behavior
-            fail("new ArrayIterator(Object,1,1) should NOT throw an IllegalArgumentException");
-        }
+        iter = makeArrayIterator(testArray, 1, 1);
+        // MODIFIED: an iterator over a zero-length section of array
+        // should be perfectly legal behavior
     }
 
     @Test
@@ -118,17 +108,10 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         for (final int element : testArray) {
             final Integer testValue = Integer.valueOf(element);
             final Number iterValue = (Number) iter.next();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
         assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::next);
     }
 
 }

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
@@ -73,17 +74,10 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         assertTrue(iter.hasNext(), "Iterator has a first item");
-
         final E iterValue = iter.next();
         assertEquals(testValue, iterValue, "Iteration value is correct");
-
         assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::next);
     }
 
     @Test

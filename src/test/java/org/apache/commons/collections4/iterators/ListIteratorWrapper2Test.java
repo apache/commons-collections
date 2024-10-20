@@ -74,39 +74,22 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         final ListIterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
         assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
-
+        assertThrows(NoSuchElementException.class, iter::next);
         // now, read it backwards
         for (int i = testArray.length - 1; i > -1; --i) {
             final Object testValue = testArray[i];
             final E iterValue = iter.previous();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
-        try {
-            iter.previous();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
-
+        assertThrows(NoSuchElementException.class, iter::previous);
         // now, read it forwards again
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
     }
 
     @Test

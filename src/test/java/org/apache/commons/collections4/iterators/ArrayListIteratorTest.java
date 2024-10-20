@@ -62,30 +62,19 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
     @Test
     public void testListIterator() {
         final ListIterator<E> iter = makeObject();
-
         // TestArrayIterator#testIterator() has already tested the iterator forward,
         //  now we need to test it in reverse
-
         // fast-forward the iterator to the end...
         while (iter.hasNext()) {
             iter.next();
         }
-
         for (int x = testArray.length - 1; x >= 0; x--) {
             final Object testValue = testArray[x];
             final Object iterValue = iter.previous();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
         assertFalse(iter.hasPrevious(), "Iterator should now be empty");
-
-        try {
-            iter.previous();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
-
+        assertThrows(NoSuchElementException.class, iter::previous);
     }
 
     /**

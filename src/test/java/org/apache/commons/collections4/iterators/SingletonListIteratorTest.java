@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ListIterator;
@@ -105,17 +106,9 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
         assertEquals(1, iter.nextIndex(), "Iteration next index");
         assertEquals(0, iter.previousIndex(), "Iteration previous index");
 
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::next);
         iter.previous();
-        try {
-            iter.previous();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::previous);
     }
 
     @Test

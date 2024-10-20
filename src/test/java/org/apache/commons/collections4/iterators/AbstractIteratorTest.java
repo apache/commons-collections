@@ -16,11 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -132,11 +132,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         assertTrue(it.hasNext(), "hasNext() should return true for at least one element");
 
         // next() must not throw exception (ensure makeFullIterator is correct!)
-        try {
-            it.next();
-        } catch (final NoSuchElementException e) {
-            fail("Full iterators must have at least one element");
-        }
+        assertDoesNotThrow(it::next, "Full iterators must have at least one element");
 
         // iterate through
         while (it.hasNext()) {

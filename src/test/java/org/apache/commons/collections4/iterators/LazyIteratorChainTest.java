@@ -133,17 +133,10 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         final Iterator<String> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
         assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::next);
     }
 
     @Test

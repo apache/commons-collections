@@ -299,16 +299,12 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             assertThrows(UnsupportedOperationException.class, () -> it.remove());
             return;
         }
-
         it.remove();
         confirmed.remove(key);
         assertFalse(map.containsKey(key));
         verify();
-
-        try {
-            it.remove();  // second remove fails
-        } catch (final IllegalStateException ex) {
-        }
+        // second remove fails
+        assertThrows(NoSuchElementException.class, it::remove, "Full iterators must have at least one element");
         verify();
     }
 

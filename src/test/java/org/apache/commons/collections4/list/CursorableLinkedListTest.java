@@ -454,11 +454,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("3", it.next());
         it.remove();
         assertEquals("[4, 5]", list.toString());
-        try {
-            it.remove();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, it::remove);
         assertEquals("4", it.next());
         assertEquals("5", it.next());
         it.remove();
@@ -1124,11 +1120,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "5");
 
         final ListIterator<E> it = list.listIterator();
-        try {
-            it.remove();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, it::remove);
         assertEquals("1", it.next());
         assertEquals("2", it.next());
         assertEquals("[1, 2, 3, 4, 5]", list.toString());
@@ -1143,11 +1135,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals("3", it.next());
         it.remove();
         assertEquals("[4, 5]", list.toString());
-        try {
-            it.remove();
-        } catch (final IllegalStateException e) {
-            // expected
-        }
+        assertThrows(IllegalStateException.class, it::remove);
         assertEquals("4", it.next());
         assertEquals("5", it.next());
         it.remove();

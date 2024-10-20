@@ -77,17 +77,10 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final E iterValue = iter.next();
-
             assertEquals(testValue, iterValue, "Iteration value is correct");
         }
-
         assertFalse(iter.hasNext(), "Iterator should now be empty");
-
-        try {
-            iter.next();
-        } catch (final Exception e) {
-            assertEquals(e.getClass(), new NoSuchElementException().getClass(), "NoSuchElementException must be thrown");
-        }
+        assertThrows(NoSuchElementException.class, iter::next);
     }
 
     @Test
