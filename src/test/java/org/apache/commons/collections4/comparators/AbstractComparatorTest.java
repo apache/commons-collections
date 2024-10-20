@@ -121,34 +121,26 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
-
             // test to make sure the canonical form has been preserved
             try {
                 comparator = (Comparator<T>) readExternalFormFromDisk(getCanonicalComparatorName(makeObject()));
-            } catch (final FileNotFoundException exception) {
-
+            } catch (final FileNotFoundException e) {
                 final boolean autoCreateSerialized = false;
-
                 if (autoCreateSerialized) {
                     comparator = makeObject();
                     final String fileName = getCanonicalComparatorName(comparator);
                     writeExternalFormToDisk((Serializable) comparator, fileName);
-                    fail("Serialized form could not be found.  A serialized version "
-                            + "has now been written (and should be added to CVS): " + fileName);
+                    fail("Serialized form could not be found.  A serialized version " + "has now been written (and should be added to CVS): " + fileName);
                 } else {
-                    fail("The Serialized form could be located to test serialization "
-                            + "compatibility: " + exception.getMessage());
+                    fail("The Serialized form could be located to test serialization " + "compatibility: " + e.getMessage());
                 }
             }
-
             // make sure the canonical form produces the ordering we currently
             // expect
             final List<T> randomList = getComparableObjectsOrdered();
             reverseObjects(randomList);
             sortObjects(randomList, comparator);
-
             final List<T> orderedList = getComparableObjectsOrdered();
-
             assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
         }
     }
@@ -159,8 +151,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
-        assertInstanceOf(Serializable.class, comparator,
-                   "This comparator should be Serializable.");
+        assertInstanceOf(Serializable.class, comparator, "This comparator should be Serializable.");
     }
 
     /**
@@ -170,9 +161,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     public void testEmptyListSort() {
         final List<T> list = new LinkedList<>();
         sortObjects(list, makeObject());
-
         final List<T> list2 = new LinkedList<>();
-
         assertEquals(list2, list, "Comparator cannot sort empty lists");
     }
 
@@ -182,20 +171,16 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testRandomListSort() {
         final Comparator<T> comparator = makeObject();
-
         final List<T> randomList = getComparableObjectsOrdered();
         randomizeObjects(randomList);
         sortObjects(randomList, comparator);
-
         final List<T> orderedList = getComparableObjectsOrdered();
-
         /* debug
         Iterator i = randomList.iterator();
         while (i.hasNext()) {
             System.out.println(i.next());
         }
         */
-
         assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
     }
 
@@ -205,13 +190,10 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     @Test
     public void testReverseListSort() {
         final Comparator<T> comparator = makeObject();
-
         final List<T> randomList = getComparableObjectsOrdered();
         reverseObjects(randomList);
         sortObjects(randomList, comparator);
-
         final List<T> orderedList = getComparableObjectsOrdered();
-
         assertEquals(orderedList, randomList, "Comparator did not reorder the List correctly");
     }
 }
