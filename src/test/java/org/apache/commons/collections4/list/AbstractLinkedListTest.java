@@ -56,7 +56,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isAddSupported()) {
-            assertThrows(UnsupportedOperationException.class, () -> list.addFirst(null)); 
+            assertThrows(UnsupportedOperationException.class, () -> list.addFirst(null));
         }
         list.addFirst((E) "value1");
         list.addNodeAfter(list.getNode(0, false), (E) "value2");

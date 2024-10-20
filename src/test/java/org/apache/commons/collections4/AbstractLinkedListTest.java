@@ -32,9 +32,11 @@ import org.junit.jupiter.api.Test;
  * Tests base {@link java.util.LinkedList} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement the {@link #makeObject()} method.
+ * </p>
  * <p>
  * If your {@link LinkedList} fails one of these tests by design, you may still use this base set of cases. Simply override the test case (method) your
  * {@link List} fails.
+ * </p>
  */
 public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
 
