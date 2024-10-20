@@ -72,10 +72,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             TestBidiMapEntrySet.this.verify();
 
             if (!isSetValueSupported()) {
-                try {
-                    entry1.setValue(newValue1);
-                } catch (final UnsupportedOperationException ex) {
-                }
+                assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(newValue1));
                 return;
             }
 

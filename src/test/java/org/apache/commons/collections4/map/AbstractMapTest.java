@@ -280,10 +280,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
             verify();
 
             if (!isSetValueSupported()) {
-                try {
-                    entry1.setValue(newValue1);
-                } catch (final UnsupportedOperationException ex) {
-                }
+                assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(newValue1));
                 return;
             }
 

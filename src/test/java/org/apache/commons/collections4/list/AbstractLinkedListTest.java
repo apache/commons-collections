@@ -56,12 +56,8 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isAddSupported()) {
-            try {
-                list.addFirst(null);
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, () -> list.addFirst(null)); 
         }
-
         list.addFirst((E) "value1");
         list.addNodeAfter(list.getNode(0, false), (E) "value2");
         assertEquals("value1", list.getFirst());
@@ -110,10 +106,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isRemoveSupported()) {
-            try {
-                list.removeFirst();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, list::removeFirst);
         }
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
@@ -136,10 +129,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isRemoveSupported()) {
-            try {
-                list.removeLast();
-            } catch (final UnsupportedOperationException ex) {
-            }
+            assertThrows(UnsupportedOperationException.class, list::removeLast);
         }
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));

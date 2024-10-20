@@ -819,15 +819,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     @Test
     public void testListListIteratorByIndex() {
         resetFull();
-        try {
-            getCollection().listIterator(-1);
-        } catch (final IndexOutOfBoundsException ex) {
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> getCollection().listIterator(-1));
         resetFull();
-        try {
-            getCollection().listIterator(getCollection().size() + 1);
-        } catch (final IndexOutOfBoundsException ex) {
-        }
+        assertThrows(IndexOutOfBoundsException.class, () -> getCollection().listIterator(getCollection().size() + 1));
         resetFull();
         for (int i = 0; i <= getConfirmed().size(); i++) {
             forwardTest(getCollection().listIterator(i), i);
