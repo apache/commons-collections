@@ -41,6 +41,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in IteratorChain.IteratorChain(Collection).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix generics in org.apache.commons.collections4.IteratorUtils.chainedIterator(Collection).</action>
     <action type="fix" dev="ggregory" due-to="Benjamin Confino, Gary Gregory" issue="COLLECTIONS-856">Javadoc: Document interaction between peek and filter iterator #515.</action>
+    <action type="fix" dev="ggregory" due-to="Elia Bertolina, Gary Gregory" issue="COLLECTIONS-815">Javadoc: Update ClosureUtils Javadoc to match runtime.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
