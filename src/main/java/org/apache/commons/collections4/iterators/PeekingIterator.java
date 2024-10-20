@@ -23,8 +23,7 @@ import java.util.Objects;
 /**
  * Decorates an iterator to support one-element lookahead while iterating.
  * <p>
- * The decorator supports the removal operation, but an {@link IllegalStateException}
- * will be thrown if {@link #remove()} is called directly after a call to
+ * The decorator supports the removal operation, but an {@link IllegalStateException} will be thrown if {@link #remove()} is called directly after a call to
  * {@link #peek()} or {@link #element()}.
  * </p>
  *
@@ -39,8 +38,8 @@ public class PeekingIterator<E> implements Iterator<E> {
      * If the iterator is already a {@link PeekingIterator} it is returned directly.
      * </p>
      *
-     * @param <E>  the element type
-     * @param iterator  the iterator to decorate
+     * @param <E>      the element type
+     * @param iterator the iterator to decorate
      * @return a new peeking iterator
      * @throws NullPointerException if the iterator is null
      */
@@ -69,15 +68,18 @@ public class PeekingIterator<E> implements Iterator<E> {
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator the iterator to decorate
      */
     public PeekingIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
     }
 
     /**
-     * Returns the next element in iteration without advancing the underlying iterator.
-     * If the iterator is already exhausted, null will be returned.
+     * Returns the next element in iteration without advancing the underlying iterator. If the iterator is already exhausted, null will be returned.
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate will <em>not</em> be tested if
+     * element() or {@link #peek()} has been called after the most recent invocation of {@link #next()}
+     * </p>
      *
      * @return the next element from the iterator
      * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
@@ -112,6 +114,16 @@ public class PeekingIterator<E> implements Iterator<E> {
         return slotFilled || iterator.hasNext();
     }
 
+    /**
+     * Returns the next element in iteration.
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate will <em>not</em> be tested if
+     * {@link #element()} or {@link #peek()} has been called after the most recent invocation of {@link #next()}.
+     * </p>
+     *
+     * @return the next element from the iterator
+     * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}.
+     */
     @Override
     public E next() {
         if (!hasNext()) {
@@ -125,15 +137,17 @@ public class PeekingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Returns the next element in iteration without advancing the underlying iterator.
-     * If the iterator is already exhausted, null will be returned.
+     * Returns the next element in iteration without advancing the underlying iterator. If the iterator is already exhausted, null will be returned.
      * <p>
-     * Note: this method does not throw a {@link NoSuchElementException} if the iterator
-     * is already exhausted. If you want such a behavior, use {@link #element()} instead.
+     * Note: this method does not throw a {@link NoSuchElementException} if the iterator is already exhausted. If you want such a behavior, use
+     * {@link #element()} instead.
      * </p>
      * <p>
-     * The rationale behind this is to follow the {@link java.util.Queue} interface
-     * which uses the same terminology.
+     * The rationale behind this is to follow the {@link java.util.Queue} interface which uses the same terminology.
+     * </p>
+     * <p>
+     * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate will <em>not</em> be tested if
+     * {@link #element()} or peek() has been called after the most recent invocation of {@link #next()}.
      * </p>
      *
      * @return the next element from the iterator
@@ -146,8 +160,7 @@ public class PeekingIterator<E> implements Iterator<E> {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalStateException if {@link #peek()} or {@link #element()} has been called
-     *   prior to the call to {@link #remove()}
+     * @throws IllegalStateException if {@link #peek()} or {@link #element()} has been called prior to the call to {@link #remove()}.
      */
     @Override
     public void remove() {
