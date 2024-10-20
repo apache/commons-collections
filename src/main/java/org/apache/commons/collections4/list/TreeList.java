@@ -952,7 +952,9 @@ public class TreeList<E> extends AbstractList<E> {
      *
      * @param c  the collection to be added to this list
      * @return {@code true} if this list changed as a result of the call
-     * @throws NullPointerException {@inheritDoc}
+     * @throws NullPointerException if the specified collection contains a
+     *         null element and this collection does not permit null elements,
+     *         or if the specified collection is null
      */
     @Override
     public boolean addAll(final Collection<? extends E> c) {
