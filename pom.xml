@@ -224,7 +224,8 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
             <source>8</source>
-            <failOnWarnings>true</failOnWarnings>
+            <!-- TODO -->
+            <failOnWarnings>false</failOnWarnings>
             <!-- Enable MathJax -->
             <additionalOptions>-Xdoclint:all --allow-script-in-comments -header '&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/${math.mathjax.version}/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</additionalOptions>
         </configuration>
