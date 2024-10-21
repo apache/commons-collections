@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.apache.commons.collections4.functors.TruePredicate.truePredicate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,6 +30,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
+import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -160,7 +160,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter2 = Collections.<E>emptyList().iterator();
 
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter1);
-        filterIterator.setPredicate(truePredicate());
+        filterIterator.setPredicate(TruePredicate.truePredicate());
         // this iterator has elements
         assertTrue(filterIterator.hasNext());
 
@@ -178,7 +178,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter = Collections.singleton((E) null).iterator();
 
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter);
-        filterIterator.setPredicate(truePredicate());
+        filterIterator.setPredicate(TruePredicate.truePredicate());
         // this predicate matches
         assertTrue(filterIterator.hasNext());
 
