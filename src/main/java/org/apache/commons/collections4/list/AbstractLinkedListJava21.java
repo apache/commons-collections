@@ -44,9 +44,9 @@ import org.apache.commons.collections4.OrderedIterator;
  * (see COLLECTIONS-842 for details).
  *
  * @param <E> the type of elements in this list
- * @since 4.5.0-M2
+ * @since 4.5.0-M3
  */
-public abstract class AbstractLinkedListForJava21<E> implements List<E> {
+public abstract class AbstractLinkedListJava21<E> implements List<E> {
 
     /*
      * Implementation notes:
@@ -67,11 +67,11 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
     protected static class LinkedListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
 
         /** The parent list */
-        protected final AbstractLinkedListForJava21<E> parent;
+        protected final AbstractLinkedListJava21<E> parent;
 
         /**
          * The node that will be returned by {@link #next()}. If this is equal
-         * to {@link AbstractLinkedListForJava21#header} then there are no more values to return.
+         * to {@link AbstractLinkedListJava21#header} then there are no more values to return.
          */
         protected Node<E> next;
 
@@ -105,7 +105,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
          * @param fromIndex  the index to start at
          * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
          */
-        protected LinkedListIterator(final AbstractLinkedListForJava21<E> parent, final int fromIndex)
+        protected LinkedListIterator(final AbstractLinkedListJava21<E> parent, final int fromIndex)
                 throws IndexOutOfBoundsException {
             this.parent = parent;
             this.expectedModCount = parent.modCount;
@@ -221,13 +221,13 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
     }
 
     /**
-     * The sublist implementation for AbstractLinkedListForJava21.
+     * The sublist implementation for AbstractLinkedListJava21.
      *
      * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
         /** The main list */
-        AbstractLinkedListForJava21<E> parent;
+        AbstractLinkedListJava21<E> parent;
         /** Offset from the main list */
         int offset;
         /** Sublist size */
@@ -235,7 +235,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
         /** Sublist modCount */
         int expectedModCount;
 
-        protected LinkedSubList(final AbstractLinkedListForJava21<E> parent, final int fromIndex, final int toIndex) {
+        protected LinkedSubList(final AbstractLinkedListJava21<E> parent, final int fromIndex, final int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
             }
@@ -527,7 +527,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
      * If this constructor is used by a serializable subclass then the init()
      * method must be called.
      */
-    protected AbstractLinkedListForJava21() {
+    protected AbstractLinkedListJava21() {
     }
 
     /**
@@ -535,7 +535,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
      *
      * @param coll  the collection to copy
      */
-    protected AbstractLinkedListForJava21(final Collection<? extends E> coll) {
+    protected AbstractLinkedListJava21(final Collection<? extends E> coll) {
         init();
         addAll(coll);
     }
@@ -597,7 +597,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
      * {@code value} and inserts it after {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
-     * {@link #addNode(AbstractLinkedListForJava21.Node,AbstractLinkedListForJava21.Node)}.
+     * {@link #addNode(AbstractLinkedListJava21.Node,AbstractLinkedListJava21.Node)}.
      *
      * @param node  node to insert after
      * @param value  value of the newly added node
@@ -613,7 +613,7 @@ public abstract class AbstractLinkedListForJava21<E> implements List<E> {
      * {@code value} and inserts it before {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
-     * {@link #addNode(AbstractLinkedListForJava21.Node,AbstractLinkedListForJava21.Node)}.
+     * {@link #addNode(AbstractLinkedListJava21.Node,AbstractLinkedListJava21.Node)}.
      *
      * @param node  node to insert before
      * @param value  value of the newly added node

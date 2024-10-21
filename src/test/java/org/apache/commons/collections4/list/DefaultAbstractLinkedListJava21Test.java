@@ -28,12 +28,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case for {@link AbstractLinkedListForJava21}.
+ * Test case for {@link AbstractLinkedListJava21}.
  */
-public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<E> {
+public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> {
 
-    private static class DefaultAbstractLinkedListForJava21<E> extends AbstractLinkedListForJava21<E> {
-        DefaultAbstractLinkedListForJava21() {
+    private static class DefaultAbstractLinkedListJava21<E> extends AbstractLinkedListJava21<E> {
+        DefaultAbstractLinkedListJava21() {
             init();
         }
 
@@ -61,12 +61,12 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
         }
     }
 
-    public DefaultAbstractLinkedListForJava21Test() {
-        super(DefaultAbstractLinkedListForJava21Test.class.getSimpleName());
+    public DefaultAbstractLinkedListJava21Test() {
+        super(DefaultAbstractLinkedListJava21Test.class.getSimpleName());
     }
 
     protected void checkNodes() {
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
         for (int i = 0; i < list.size; i++) {
             assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
             if (i < list.size - 1) {
@@ -76,8 +76,8 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
     }
 
     @Override
-    public AbstractLinkedListForJava21<E> getCollection() {
-        return (AbstractLinkedListForJava21<E>) super.getCollection();
+    public AbstractLinkedListJava21<E> getCollection() {
+        return (AbstractLinkedListJava21<E>) super.getCollection();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
 
     @Override
     public List<E> makeObject() {
-        return new DefaultAbstractLinkedListForJava21<>();
+        return new DefaultAbstractLinkedListJava21<>();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
     @SuppressWarnings("unchecked")
     public void testAddNodeAfter() {
         resetEmpty();
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
         if (!isAddSupported()) {
             assertThrows(UnsupportedOperationException.class, () -> list.addFirst(null));
         }
@@ -130,7 +130,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
     @SuppressWarnings("unchecked")
     public void testGetNode() {
         resetEmpty();
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
         assertThrows(IndexOutOfBoundsException.class, () -> list.getNode(0, false), "Expecting IndexOutOfBoundsException.");
@@ -149,7 +149,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
     @SuppressWarnings("unchecked")
     public void testRemoveFirst() {
         resetEmpty();
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
         if (!isRemoveSupported()) {
             assertThrows(UnsupportedOperationException.class, list::removeFirst);
         }
@@ -171,7 +171,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
     @SuppressWarnings("unchecked")
     public void testRemoveLast() {
         resetEmpty();
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
         if (!isRemoveSupported()) {
             assertThrows(UnsupportedOperationException.class, list::removeLast);
         }
@@ -194,7 +194,7 @@ public class DefaultAbstractLinkedListForJava21Test<E> extends AbstractListTest<
         if (!isAddSupported() || !isRemoveSupported()) {
             return;
         }
-        final AbstractLinkedListForJava21<E> list = getCollection();
+        final AbstractLinkedListJava21<E> list = getCollection();
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
         list.removeNode(list.getNode(0, false));
