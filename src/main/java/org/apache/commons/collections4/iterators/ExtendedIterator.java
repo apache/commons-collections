@@ -26,18 +26,17 @@ import java.util.stream.Stream;
 
 
 /**
- * A ExtendedIterator is an Iterator wrapping around a plain
- * (or presented as plain) Iterator. The wrapping allows the usual
- * operations found on streams (filtering, concatenating, mapping) to be done on an Iterator derived
- * from some other source.  It also provides convenience methods for common operations.
+ * Extends Iterator functionality to include operations commonly found on streams (e.g. filtering, concatenating, mapping).
+ * It also provides convenience methods for common operations.
  * @param <T> The type of object returned from the iterator.
+ * @since 4.5.0-M3
  */
 public final class ExtendedIterator<T> implements Iterator<T> {
     /**
      * Set to <code>true</code> if this wrapping doesn't permit the use of
      * {@link #remove()}, otherwise removal is delegated to the base iterator.
      */
-    private final boolean removeDenied;
+    private final boolean throwOnRemove;
 
     /**
      * Creates an ExtendedIterator wrapped round <code>it</code>,
@@ -109,11 +108,11 @@ public final class ExtendedIterator<T> implements Iterator<T> {
     /**
      * Initialise this wrapping with the given base iterator and remove-control.
      * @param base the base iterator that this iterator wraps
-     * @param removeDenied true if .remove() must throw an exception
+     * @param throwOnRemove true if .remove() must throw an exception
      */
-    private ExtendedIterator(final Iterator<? extends T> base, final boolean removeDenied) {
+    private ExtendedIterator(final Iterator<? extends T> base, final boolean throwOnRemove) {
         this.base = base;
-        this.removeDenied = removeDenied;
+        this.throwOnRemove = throwOnRemove;
     }
 
     @Override
@@ -133,7 +132,7 @@ public final class ExtendedIterator<T> implements Iterator<T> {
 
     @Override
     public void remove() {
-        if (removeDenied) {
+        if (throwOnRemove) {
             throw new UnsupportedOperationException();
         }
         base.remove();
@@ -160,7 +159,7 @@ public final class ExtendedIterator<T> implements Iterator<T> {
             ((IteratorChain<T>) base).addIterator(other);
             return this;
         }
-        return new ExtendedIterator<T>(new IteratorChain<T>(this.base, other), this.removeDenied);
+        return new ExtendedIterator<T>(new IteratorChain<T>(this.base, other), this.throwOnRemove);
     }
 
     /**
@@ -170,7 +169,7 @@ public final class ExtendedIterator<T> implements Iterator<T> {
      * @return An iterator filtered by the predicate.
      */
     public ExtendedIterator<T> filter(final Predicate<T> predicate) {
-        return new ExtendedIterator<T>(new FilterIterator<>(this, predicate::test), this.removeDenied);
+        return new ExtendedIterator<T>(new FilterIterator<>(this, predicate::test), this.throwOnRemove);
     }
 
     /**
