@@ -39,11 +39,14 @@ import org.apache.commons.collections4.OrderedIterator;
  * Overridable methods are provided to change the storage node and to change how
  * nodes are added to and removed. Hopefully, all you need for unusual subclasses
  * is here.
+ * </p>
  * <p>
  * This is a copy of AbstractLinkedList, modified to be compatible with Java 21
  * (see COLLECTIONS-842 for details).
+ * </p>
  *
  * @param <E> the type of elements in this list
+ * @see AbstractLinkedList
  * @since 4.5.0-M3
  */
 public abstract class AbstractLinkedListJava21<E> implements List<E> {
@@ -235,6 +238,13 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /** Sublist modCount */
         int expectedModCount;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param parent The parent AbstractLinkedList.
+         * @param fromIndex An index greater or equal to 0 and less than {@code toIndex}.
+         * @param toIndex An index greater than {@code fromIndex}.
+         */
         protected LinkedSubList(final AbstractLinkedListJava21<E> parent, final int fromIndex, final int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
@@ -282,6 +292,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
             return true;
         }
 
+        /**
+         * Throws a {@link ConcurrentModificationException} if this instance fails its concurrency check.
+         */
         protected void checkModCount() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
@@ -318,6 +331,12 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
             return parent.createSubListListIterator(this, index);
         }
 
+        /**
+         * Throws an {@link IndexOutOfBoundsException} if the given indices are out of bounds.
+         *
+         * @param index lower index.
+         * @param beyond upper index.
+         */
         protected void rangeCheck(final int index, final int beyond) {
             if (index < 0 || index >= beyond) {
                 throw new IndexOutOfBoundsException("Index '" + index + "' out of bounds for size '" + size + "'");
@@ -364,6 +383,12 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /** The sub list */
         protected final LinkedSubList<E> sub;
 
+        /**
+         * Constructs a new instance.
+         *
+         * @param sub The sub-list.
+         * @param startIndex The starting index.
+         */
         protected LinkedSubListIterator(final LinkedSubList<E> sub, final int startIndex) {
             super(sub.parent, startIndex + sub.offset);
             this.sub = sub;
@@ -566,10 +591,16 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void addFirst(final E o) {
         addNodeAfter(header, o);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void addLast(final E o) {
         addNodeBefore(header, o);
     }
@@ -752,6 +783,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         return node.getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E getFirst() {
         final Node<E> node = header.next;
         if (node == header) {
@@ -760,6 +794,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         return node.getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E getLast() {
         final Node<E> node = header.previous;
         if (node == header) {
@@ -939,6 +976,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         modCount++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E removeFirst() {
         final Node<E> node = header.next;
         if (node == header) {
@@ -949,6 +989,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         return oldValue;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E removeLast() {
         final Node<E> node = header.previous;
         if (node == header) {
