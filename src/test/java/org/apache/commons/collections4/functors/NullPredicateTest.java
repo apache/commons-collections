@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.functors;
 
-import static org.apache.commons.collections4.functors.NullPredicate.nullPredicate;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.apache.commons.collections4.Predicate;
@@ -25,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public class NullPredicateTest extends AbstractPredicateTest {
     @Override
     protected Predicate<?> generatePredicate() {
-        return nullPredicate();
+        return NullPredicate.nullPredicate();
     }
 
     @Test
@@ -37,6 +36,6 @@ public class NullPredicateTest extends AbstractPredicateTest {
     @Test
     public void testNullPredicate() {
         assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
-        assertPredicateTrue(nullPredicate(), null);
+        assertPredicateTrue(NullPredicate.nullPredicate(), null);
     }
 }

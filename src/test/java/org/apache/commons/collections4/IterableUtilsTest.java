@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +39,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
+import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -302,10 +302,10 @@ public class IterableUtilsTest {
 
     @Test
     public void testFind() {
-        Predicate<Number> testPredicate = equalPredicate(4);
+        Predicate<Number> testPredicate = EqualPredicate.equalPredicate(4);
         Integer test = IterableUtils.find(iterableA, testPredicate);
         assertEquals(4, (int) test);
-        testPredicate = equalPredicate(45);
+        testPredicate = EqualPredicate.equalPredicate(45);
         test = IterableUtils.find(iterableA, testPredicate);
         assertNull(test);
         assertNull(IterableUtils.find(null, testPredicate));
@@ -457,10 +457,10 @@ public class IterableUtilsTest {
 
     @Test
     public void testIndexOf() {
-        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         int index = IterableUtils.indexOf(iterableA, testPredicate);
         assertEquals(6, index);
-        testPredicate = equalPredicate((Number) 45);
+        testPredicate = EqualPredicate.equalPredicate((Number) 45);
         index = IterableUtils.indexOf(iterableA, testPredicate);
         assertEquals(-1, index);
         assertEquals(-1, IterableUtils.indexOf(null, testPredicate));

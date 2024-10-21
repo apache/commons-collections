@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
-import static org.apache.commons.collections4.functors.TruePredicate.INSTANCE;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
@@ -46,6 +44,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.collections4.functors.EqualPredicate;
+import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyListIterator;
@@ -725,7 +725,7 @@ public class IteratorUtilsTest {
     public void testFilteredListIterator() {
         final List arrayList = new ArrayList();
         arrayList.add("test");
-        final Predicate predicate = INSTANCE;
+        final Predicate predicate = TruePredicate.INSTANCE;
         assertTrue(IteratorUtils.filteredListIterator(arrayList.listIterator(), predicate) instanceof ListIterator,
                 "create instance fail");
         assertAll(
@@ -736,10 +736,10 @@ public class IteratorUtilsTest {
 
     @Test
     public void testFind() {
-        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         Integer test = IteratorUtils.find(iterableA.iterator(), testPredicate);
         assertEquals(4, (int) test);
-        testPredicate = equalPredicate((Number) 45);
+        testPredicate = EqualPredicate.equalPredicate((Number) 45);
         test = IteratorUtils.find(iterableA.iterator(), testPredicate);
         assertNull(test);
         assertNull(IteratorUtils.find(null, testPredicate));
@@ -861,10 +861,10 @@ public class IteratorUtilsTest {
 
     @Test
     public void testIndexOf() {
-        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         int index = IteratorUtils.indexOf(iterableA.iterator(), testPredicate);
         assertEquals(6, index);
-        testPredicate = equalPredicate((Number) 45);
+        testPredicate = EqualPredicate.equalPredicate((Number) 45);
         index = IteratorUtils.indexOf(iterableA.iterator(), testPredicate);
         assertEquals(-1, index);
         assertEquals(-1, IteratorUtils.indexOf(null, testPredicate));

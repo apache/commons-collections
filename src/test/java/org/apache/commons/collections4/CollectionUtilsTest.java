@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,6 +53,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.InstanceofPredicate;
 import org.apache.commons.collections4.functors.UniquePredicate;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
@@ -250,10 +250,10 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     @Deprecated
     public void find() {
-        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         Integer test = CollectionUtils.find(collectionA, testPredicate);
         assertEquals(4, (int) test);
-        testPredicate = equalPredicate((Number) 45);
+        testPredicate = EqualPredicate.equalPredicate((Number) 45);
         test = CollectionUtils.find(collectionA, testPredicate);
         assertNull(test);
         assertNull(CollectionUtils.find(null, testPredicate));
