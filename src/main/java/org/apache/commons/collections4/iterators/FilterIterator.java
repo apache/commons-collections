@@ -18,8 +18,8 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
-import org.apache.commons.collections4.Predicate;
 
 /**
  * Decorates an {@link Iterator} using an optional predicate to filter elements.
