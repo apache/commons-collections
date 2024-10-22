@@ -61,7 +61,7 @@
     <action type="update" issue="COLLECTIONS-857" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514.</action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #516, #525, #535.</action>
-    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 77 #534, #545, #550 #555.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 78 #534, #545, #550 #555, #566.</action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump org.hamcrest:hamcrest from 2.2 to 3.0 #522, #532.</action>
     <action type="update" dev="ggregory" due-to="Dependabot, Gary Gregory">Bump com.google.guava:guava-testlib from 33.2.1-jre to 33.3.1-jre #531, #549.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump MathJax from 2.7.2 to 2.7.9.</action>
