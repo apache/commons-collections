@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.TruePredicate;
 
 /**
  * Decorates an {@link Iterator} using an optional predicate to filter elements.
@@ -37,7 +38,7 @@ public class FilterIterator<E> implements Iterator<E> {
     private Iterator<? extends E> iterator;
 
     /** The predicate to filter elements. */
-    private Predicate<? super E> predicate;
+    private Predicate<? super E> predicate = TruePredicate.truePredicate();
 
     /** The next object in the iteration. */
     private E nextObject;
@@ -67,11 +68,11 @@ public class FilterIterator<E> implements Iterator<E> {
      * given iterator and predicate.
      *
      * @param iterator  the iterator to use
-     * @param predicate  the predicate to use
+     * @param predicate  the predicate to use, null accepts all values.
      */
     public FilterIterator(final Iterator<? extends E> iterator, final Predicate<? super E> predicate) {
         this.iterator = iterator;
-        this.predicate = predicate;
+        this.predicate = safePredicate(predicate);
     }
 
     /**
@@ -140,6 +141,10 @@ public class FilterIterator<E> implements Iterator<E> {
         iterator.remove();
     }
 
+    private Predicate<? super E> safePredicate(final Predicate<? super E> predicate) {
+        return predicate != null ? predicate : TruePredicate.truePredicate();
+    }
+
     /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
@@ -169,12 +174,12 @@ public class FilterIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Sets the predicate this the iterator to use.
+     * Sets the predicate this the iterator to use where null accepts all values.
      *
-     * @param predicate  the predicate to use
+     * @param predicate  the predicate to use, null accepts all values.
      */
     public void setPredicate(final Predicate<? super E> predicate) {
-        this.predicate = predicate;
+        this.predicate = safePredicate(predicate);
         nextObject = null;
         nextObjectSet = false;
     }

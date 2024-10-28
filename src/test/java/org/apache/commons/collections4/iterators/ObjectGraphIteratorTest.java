@@ -148,6 +148,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     @Override
     public ObjectGraphIterator<Object> makeObject() {
+        setUp();
         return new ObjectGraphIterator<>(iteratorList.iterator());
     }
 

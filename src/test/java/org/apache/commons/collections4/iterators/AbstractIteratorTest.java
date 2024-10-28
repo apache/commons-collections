@@ -17,15 +17,19 @@
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.collections4.IteratorUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -115,6 +119,18 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         verify();
 
         assertNotNull(it.toString());
+    }
+
+    /**
+     * Tests {@link Iterator#forEachRemaining(java.util.function.Consumer)}.
+     */
+    @Test
+    public void testForEachRemaining() {
+        final List<E> expected = IteratorUtils.toList(makeObject());
+        final Iterator<E> it = makeObject();
+        final List<E> actual = new ArrayList<>();
+        it.forEachRemaining(actual::add);
+        assertEquals(expected, actual);
     }
 
     /**

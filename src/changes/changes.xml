@@ -44,6 +44,7 @@
     <action type="fix" dev="ggregory" due-to="Elia Bertolina, Gary Gregory" issue="COLLECTIONS-815">Javadoc: Update ClosureUtils Javadoc to match runtime.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-815">Javadoc: Update ClosureUtils Javadoc to match runtime.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-777">Migrate to JUnit 5.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix NullPointerException in FilterIterator.setNextObject().</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>
@@ -56,7 +57,8 @@
     <action type="add" issue="COLLECTIONS-700" dev="ggregory" due-to="Gary Gregory">Add ConcurrentReferenceHashMap.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add commons.easymock.version to parameterize EasyMock version.</action>
     <action type="add" issue="COLLECTIONS-869" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.collections4.IteratorUtils.chainedIterator(Iterator&lt;? extends Iterator&lt;? extends E&gt;&gt;).</action>
-    <action type="add" dev="ggregory" due-to="Peter De Maeyer" issue="COLLECTIONS-533">Add ArrayListValuedLinkedHashMap #560.</action> 
+    <action type="add" dev="ggregory" due-to="Peter De Maeyer" issue="COLLECTIONS-533">Add ArrayListValuedLinkedHashMap #560.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Add missing test AbstractIteratorTest.testForEachRemaining().</action> 
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 71 to 78 #534, #545, #550 #555, #566.</action>
     <action type="update" issue="COLLECTIONS-857" dev="ggregory" due-to="Claude Warren">Update bloom filter documentation #508.</action>

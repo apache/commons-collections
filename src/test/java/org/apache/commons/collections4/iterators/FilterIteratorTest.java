@@ -28,7 +28,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.lang3.ArrayUtils;
@@ -122,6 +124,34 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
+    public void testForEachRemainingAcceptAllCtor() {
+        final List<E> expected = IteratorUtils.toList(makeObject());
+        final FilterIterator<E> it = new FilterIterator<>(makeObject(), TruePredicate.truePredicate());
+        final List<E> actual = new ArrayList<>();
+        it.forEachRemaining(actual::add);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testForEachRemainingDefaultCtor() {
+        final List<E> expected = IteratorUtils.toList(makeObject());
+        final FilterIterator<E> it = new FilterIterator<>();
+        it.setIterator(expected.iterator());
+        final List<E> actual = new ArrayList<>();
+        it.forEachRemaining(actual::add);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testForEachRemainingRejectAllCtor() {
+        final List<E> expected = IteratorUtils.toList(makeObject());
+        final FilterIterator<E> it = new FilterIterator<>(makeObject(), FalsePredicate.falsePredicate());
+        final List<E> actual = new ArrayList<>();
+        it.forEachRemaining(actual::add);
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
             assertTrue(iterator.hasNext());
@@ -148,6 +178,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         verifyElementsInPredicate(new String[] { "b", "c" });
         verifyElementsInPredicate(new String[] { "a", "b", "c" });
     }
+
 
     /**
      * Test that when the iterator is changed, the hasNext method returns the
