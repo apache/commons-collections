@@ -45,10 +45,12 @@ import org.junit.jupiter.api.Test;
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
-    private String[] array;
+    private static final List<Integer> collectionInts = Arrays.asList(1, 2, 3, 4, 5, 6);
 
+    private String[] array;
     private List<E> list;
     private FilterIterator<E> iterator;
+
     /** Creates new TestFilterIterator */
     public FilterIteratorTest() {
         super(FilterIteratorTest.class.getSimpleName());
@@ -123,6 +125,22 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         iterator = null;
     }
 
+    /**
+     * Tests a predicate that accepts some but not all elements.
+     */
+    @Test
+    public void testConstructorPredicateFilterInts() {
+        final List<Integer> expected = Arrays.asList(2, 4, 6);
+        final Predicate<Integer> predicate = i -> i % 2 == 0;
+        final FilterIterator<Integer> filter = new FilterIterator<>(collectionInts.iterator(), predicate);
+        final List<Integer> actual = new ArrayList<>();
+        filter.forEachRemaining(actual::add);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests a predicate that accepts everything.
+     */
     @Test
     public void testForEachRemainingAcceptAllCtor() {
         final List<E> expected = IteratorUtils.toList(makeObject());
@@ -142,6 +160,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         assertEquals(expected, actual);
     }
 
+    /**
+     * Tests a predicate that rejects everything.
+     */
     @Test
     public void testForEachRemainingRejectAllCtor() {
         final List<E> expected = IteratorUtils.toList(makeObject());
@@ -167,6 +188,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         verifyNoMoreElements();
     }
 
+
     @Test
     public void testReturnValues() {
         verifyElementsInPredicate(ArrayUtils.EMPTY_STRING_ARRAY);
@@ -178,7 +200,6 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         verifyElementsInPredicate(new String[] { "b", "c" });
         verifyElementsInPredicate(new String[] { "a", "b", "c" });
     }
-
 
     /**
      * Test that when the iterator is changed, the hasNext method returns the
