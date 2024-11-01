@@ -58,9 +58,9 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add commons.easymock.version to parameterize EasyMock version.</action>
     <action type="add" issue="COLLECTIONS-869" dev="ggregory" due-to="Gary Gregory">Add org.apache.commons.collections4.IteratorUtils.chainedIterator(Iterator&lt;? extends Iterator&lt;? extends E&gt;&gt;).</action>
     <action type="add" dev="ggregory" due-to="Peter De Maeyer" issue="COLLECTIONS-533">Add ArrayListValuedLinkedHashMap #560.</action>
-    <action type="fix" dev="ggregory" due-to="Gary Gregory">Add missing test AbstractIteratorTest.testForEachRemaining().</action> 
-    <action type="fix" dev="ggregory" due-to="Gary Gregory, Claude Warren">Add FilterIterator.removeNext() #564.</action>
-    <action type="fix" issue="COLLECTIONS-870" dev="ggregory" due-to="Claude Warren, Gary Gregory">Added ExtendedIterator and tests #564.</action> 
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add missing test AbstractIteratorTest.testForEachRemaining().</action> 
+    <action type="add" dev="ggregory" due-to="Gary Gregory, Claude Warren">Add FilterIterator.removeNext() #564.</action>
+    <action type="add" issue="COLLECTIONS-870" dev="ggregory" due-to="Claude Warren, Gary Gregory">Add ExtendedIterator and tests #564.</action> 
     <action type="add" dev="ggregory" due-to="Gary Gregory">Refactor ExtendedIterator and FilterIterator with a new interface IteratorOperations.</action>
     <action type="add" issue="COLLECTIONS-871" dev="ggregory" due-to="Peter De Maeyer">Add LinkedHashSetValuedLinkedHashMap #565.</action>  
     <!-- UPDATE -->
