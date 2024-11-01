@@ -28,7 +28,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.IntFunction;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
@@ -1224,6 +1228,30 @@ public class IteratorUtils {
      */
     public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, final long offset) {
         return new SkippingIterator<>(iterator, offset);
+    }
+
+    /**
+     * Creates a stream on the given Iterable.
+     *
+     * @param <E> the type of elements in the Iterable.
+     * @param iterable the Iterable to stream or null.
+     * @return a new Stream or {@link Stream#empty()} if the Iterable is null.
+     * @since 4.5.0-M3
+     */
+    public static <E> Stream<E> stream(final Iterable<E> iterable) {
+        return iterable == null ? Stream.empty() : StreamSupport.stream(iterable.spliterator(), false);
+    }
+
+    /**
+     * Creates a stream on the given Iterator.
+     *
+     * @param <E> the type of elements in the Iterator.
+     * @param iterator the Iterator to stream or null.
+     * @return a new Stream or {@link Stream#empty()} if the Iterator is null.
+     * @since 4.5.0-M3
+     */
+    public static <E> Stream<E> stream(final Iterator<E> iterator) {
+        return iterator == null ? Stream.empty() : StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
     }
 
     /**

@@ -32,7 +32,7 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * @param <E> the type of elements returned by this iterator.
  * @since 1.0
  */
-public class FilterIterator<E> implements Iterator<E> {
+public class FilterIterator<E> implements IteratorOperations<E> {
 
     /** The iterator to be filtered. */
     private Iterator<? extends E> iterator;
@@ -139,18 +139,6 @@ public class FilterIterator<E> implements Iterator<E> {
             throw new IllegalStateException("remove() cannot be called");
         }
         iterator.remove();
-    }
-
-    /**
-     * Returns the next item and removes it from the iterator.
-     *
-     * @return the next item from the iterator.
-     * @since 4.5.0-M3
-     */
-    public E removeNext() {
-        final E result = next();
-        remove();
-        return result;
     }
 
     private Predicate<? super E> safePredicate(final Predicate<? super E> predicate) {

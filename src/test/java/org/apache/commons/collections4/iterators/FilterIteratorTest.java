@@ -16,17 +16,22 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
@@ -123,6 +128,38 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     @AfterEach
     public void tearDown() throws Exception {
         iterator = null;
+    }
+
+    @Test
+    public void testAddTo() {
+        final List<E> expected = new ArrayList<>(list);
+        expected.addAll(list);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
+        final List<E> actual = filterIterator.addTo(new ArrayList<>(list));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAddToCollection() {
+        final List<E> expected = new ArrayList<>(list);
+        expected.addAll(list);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
+        final List<E> actual = filterIterator.toCollection(() -> new ArrayList<>(list));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAddToEmpty() {
+        final FilterIterator<E> filterIterator = makeEmptyIterator();
+        final List<E> actual = filterIterator.addTo(new ArrayList<>(list));
+        assertEquals(list, actual);
+    }
+
+    @Test
+    public void testAddToEmptyToEmpty() {
+        final FilterIterator<E> filterIterator = makeEmptyIterator();
+        final List<E> actual = filterIterator.addTo(new ArrayList<>());
+        assertTrue(actual.isEmpty());
     }
 
     /**
@@ -252,6 +289,30 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         // this predicate doesn't match
         filterIterator.setPredicate(NotNullPredicate.notNullPredicate());
         assertFalse(filterIterator.hasNext());
+    }
+
+    @Test
+    public void testToCollectionAsDeque() {
+        final Deque<E> expected = new ArrayDeque<>(list);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
+        final Deque<E> actual = filterIterator.toCollection(ArrayDeque::new);
+        assertArrayEquals(expected.toArray(), actual.toArray());
+    }
+
+    @Test
+    public void testToList() {
+        final List<E> expected = new ArrayList<>(list);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
+        final List<E> actual = filterIterator.toList();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testToSet() {
+        final Set<E> expected = new HashSet<>(list);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
+        final Set<E> actual = filterIterator.toSet();
+        assertEquals(expected, actual);
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
