@@ -23,6 +23,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.apache.commons.collections4.IteratorUtils;
+
 /**
  * Extends Iterator functionality to include operations commonly found on streams (e.g. filtering, concatenating, mapping). It also provides convenience methods
  * for common operations.
@@ -87,14 +89,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
      * @return An iterator over the logical concatenation of the inner iterators.
      */
     public static <T> ExtendedIterator<T> flatten(final Iterator<Iterator<T>> iterators) {
-        return create(new LazyIteratorChain<T>() {
-
-            @Override
-            protected Iterator<? extends T> nextIterator(final int count) {
-                return iterators.hasNext() ? iterators.next() : null;
-            }
-
-        });
+        return create(IteratorUtils.chainedIterator(iterators));
     }
 
     /**
