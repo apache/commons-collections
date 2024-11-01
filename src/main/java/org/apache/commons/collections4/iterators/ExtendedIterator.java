@@ -123,7 +123,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
             ((IteratorChain<T>) base).addIterator(other);
             return this;
         }
-        return new ExtendedIterator<>(new IteratorChain<>(this.base, other), this.throwOnRemove);
+        return new ExtendedIterator<>(new IteratorChain<>(base, other), throwOnRemove);
     }
 
     /**
@@ -133,7 +133,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
      * @return An iterator filtered by the predicate.
      */
     public ExtendedIterator<T> filter(final Predicate<T> predicate) {
-        return new ExtendedIterator<>(new FilterIterator<>(this, predicate::test), this.throwOnRemove);
+        return new ExtendedIterator<>(new FilterIterator<>(this, predicate::test), throwOnRemove);
     }
 
     @Override
