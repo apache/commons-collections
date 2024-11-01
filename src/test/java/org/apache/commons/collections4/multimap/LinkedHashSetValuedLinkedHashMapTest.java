@@ -41,6 +41,11 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Override
+    public String getCompatibilityVersion() {
+        return "4.5"; // LinkedHashSetValuedLinkedHashMap was added in version 4.5
+    }
+
+    @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;
     }
@@ -58,30 +63,6 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     @Override
     public SetValuedMap<K, V> makeObject() {
         return new LinkedHashSetValuedLinkedHashMap<>();
-    }
-
-    @Override
-    public String getCompatibilityVersion() {
-        return "4.5"; // LinkedHashSetValuedLinkedHashMap was added in version 4.5
-    }
-
-    @Test
-    public void testLinkedHashSetValuedLinkedHashMap_2() {
-        final Map<K, V> map = new HashMap<>();
-        final SetValuedMap<K, V> map1;
-        final SetValuedMap<K, V> map2;
-
-        map.put((K) "A", (V) "W");
-        map.put((K) "B", (V) "X");
-        map.put((K) "C", (V) "F");
-        map1 = new LinkedHashSetValuedLinkedHashMap<>(map);
-        assertEquals(1, map1.get((K) "A").size());
-
-        map.remove("A");
-        map.remove("B");
-        map.remove("C");
-        map2 = new LinkedHashSetValuedLinkedHashMap<>(map);
-        assertEquals("{}", map2.toString());
     }
 
     @Test
@@ -117,6 +98,25 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
         map.remove("A");
         map3 = new LinkedHashSetValuedLinkedHashMap<>(map);
         assertEquals("{}", map3.toString());
+    }
+
+    @Test
+    public void testLinkedHashSetValuedLinkedHashMap_2() {
+        final Map<K, V> map = new HashMap<>();
+        final SetValuedMap<K, V> map1;
+        final SetValuedMap<K, V> map2;
+
+        map.put((K) "A", (V) "W");
+        map.put((K) "B", (V) "X");
+        map.put((K) "C", (V) "F");
+        map1 = new LinkedHashSetValuedLinkedHashMap<>(map);
+        assertEquals(1, map1.get((K) "A").size());
+
+        map.remove("A");
+        map.remove("B");
+        map.remove("C");
+        map2 = new LinkedHashSetValuedLinkedHashMap<>(map);
+        assertEquals("{}", map2.toString());
     }
 
     @Test

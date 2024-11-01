@@ -185,6 +185,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     /**
      * test that all tuples are provided to consumer
      */
+    @Override
     @Test
     public void testForEachRemaining() {
         final List<Character[]> resultsList = new ArrayList<>();

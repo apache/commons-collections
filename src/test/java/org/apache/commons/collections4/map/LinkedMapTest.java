@@ -153,7 +153,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(-1));
         resetFull();
-        LinkedMap<K, V> lm = getMap();
+        final LinkedMap<K, V> lm = getMap();
         assertThrows(IndexOutOfBoundsException.class, () -> lm.getValue(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> lm.getValue(lm.size()));
         int i = 0;
@@ -250,7 +250,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(-1));
         resetFull();
-        LinkedMap<K, V> lm = getMap();
+        final LinkedMap<K, V> lm = getMap();
         assertThrows(IndexOutOfBoundsException.class, () -> lm.remove(-1));
         assertThrows(IndexOutOfBoundsException.class, () -> lm.remove(lm.size()));
         final List<K> list = new ArrayList<>();

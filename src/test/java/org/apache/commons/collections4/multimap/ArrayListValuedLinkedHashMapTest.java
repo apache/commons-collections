@@ -195,7 +195,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
         map.put((K) Integer.valueOf(5), (V) "five");
         map.put((K) Integer.valueOf(1), (V) "one");
         map.put((K) Integer.valueOf(5), (V) "vijf"); // "vijf" = "five" in Dutch
-        MapIterator<K, V> mapIterator = map.mapIterator();
+        final MapIterator<K, V> mapIterator = map.mapIterator();
         assertEquals(5, mapIterator.next());
         assertEquals("five", mapIterator.getValue());
         assertEquals(5, mapIterator.next());
