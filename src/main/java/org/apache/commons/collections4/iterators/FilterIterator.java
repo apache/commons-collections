@@ -141,6 +141,18 @@ public class FilterIterator<E> implements Iterator<E> {
         iterator.remove();
     }
 
+    /**
+     * Returns the next item and removes it from the iterator.
+     *
+     * @return the next item from the iterator.
+     * @since 4.5.0-M3
+     */
+    public E removeNext() {
+        final E result = next();
+        remove();
+        return result;
+    }
+
     private Predicate<? super E> safePredicate(final Predicate<? super E> predicate) {
         return predicate != null ? predicate : TruePredicate.truePredicate();
     }

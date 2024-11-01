@@ -173,6 +173,22 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
+    public void testRemoveNext() {
+        final FilterIterator<E> iter = makeObject();
+        final E i = iter.removeNext();
+        assertFalse(list.contains(i));
+        final List<E> actual = new ArrayList<>();
+        iter.forEachRemaining(actual::add);
+        assertEquals(list, actual);
+    }
+
+    @Test
+    public void testRemoveNextEmpty() {
+        final FilterIterator<E> empty = makeEmptyIterator();
+        assertThrows(NoSuchElementException.class, empty::removeNext);
+    }
+
+    @Test
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
             assertTrue(iterator.hasNext());
@@ -187,7 +203,6 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         }
         verifyNoMoreElements();
     }
-
 
     @Test
     public void testReturnValues() {
