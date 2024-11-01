@@ -32,12 +32,12 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link HashSetValuedHashMap}.
+ * Tests {@link LinkedHashSetValuedLinkedHashMap}.
  */
-public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
+public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public HashSetValuedHashMapTest() {
-        super(HashSetValuedHashMapTest.class.getSimpleName());
+    public LinkedHashSetValuedLinkedHashMapTest() {
+        super(LinkedHashSetValuedLinkedHashMapTest.class.getSimpleName());
     }
 
     @Override
@@ -52,16 +52,21 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Override
     public MultiValuedMap<K, V> makeConfirmedMap() {
-        return new HashSetValuedHashMap<>();
+        return new LinkedHashSetValuedLinkedHashMap<>();
     }
 
     @Override
     public SetValuedMap<K, V> makeObject() {
-        return new HashSetValuedHashMap<>();
+        return new LinkedHashSetValuedLinkedHashMap<>();
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4.5"; // LinkedHashSetValuedLinkedHashMap was added in version 4.5
     }
 
     @Test
-    public void testHashSetValuedHashMap_2() {
+    public void testLinkedHashSetValuedLinkedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2;
@@ -69,19 +74,19 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         map.put((K) "A", (V) "W");
         map.put((K) "B", (V) "X");
         map.put((K) "C", (V) "F");
-        map1 = new HashSetValuedHashMap<>(map);
+        map1 = new LinkedHashSetValuedLinkedHashMap<>(map);
         assertEquals(1, map1.get((K) "A").size());
 
         map.remove("A");
         map.remove("B");
         map.remove("C");
-        map2 = new HashSetValuedHashMap<>(map);
+        map2 = new LinkedHashSetValuedLinkedHashMap<>(map);
         assertEquals("{}", map2.toString());
     }
 
     @Test
     public void testHashSetValueHashMap() {
-        final SetValuedMap<K, V> setMap = new HashSetValuedHashMap<>(4);
+        final SetValuedMap<K, V> setMap = new LinkedHashSetValuedLinkedHashMap<>(4);
         assertEquals(0, setMap.get((K) "whatever").size());
 
         final Set<V> set = setMap.get((K) "A");
@@ -101,7 +106,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         map.put((K) "A", (V) "W");
         map.put((K) "A", (V) "X");
         map.put((K) "A", (V) "F");
-        map1 = new HashSetValuedHashMap<>(map);
+        map1 = new LinkedHashSetValuedLinkedHashMap<>(map);
         assertEquals(3, map1.get((K) "A").size());
         map2.put((K) "A", (V) "X");
         map2.put((K) "A", (V) "F");
@@ -110,7 +115,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertEquals(map1.hashCode(), map2.hashCode());
 
         map.remove("A");
-        map3 = new HashSetValuedHashMap<>(map);
+        map3 = new LinkedHashSetValuedLinkedHashMap<>(map);
         assertEquals("{}", map3.toString());
     }
 
@@ -193,9 +198,9 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-//                "src/test/resources/org/apache/commons/collections4/data/test/HashSetValuedHashMap.emptyCollection.version4.1.obj");
+//                "src/test/resources/org/apache/commons/collections4/data/test/LinkedHashSetValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-//                "src/test/resources/org/apache/commons/collections4/data/test/HashSetValuedHashMap.fullCollection.version4.1.obj");
+//                "src/test/resources/org/apache/commons/collections4/data/test/LinkedHashSetValuedLinkedHashMap.fullCollection.version4.5.obj");
 //    }
 
 }
