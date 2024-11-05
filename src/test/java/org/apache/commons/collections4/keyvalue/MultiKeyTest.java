@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
 /**
- * Unit tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
+ * Tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
  */
 public class MultiKeyTest {
 
