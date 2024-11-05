@@ -167,7 +167,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
                 throw new IllegalArgumentException("The estimated N for the union of the filters is infinite");
             }
             // maximum estimate value using integer values is: 46144189292 thus
-            // eThis + eOther can not overflow the long value.
+            // eThis + eOther cannot overflow the long value.
             estimate = Math.round(eThis + eOther - eUnion);
             estimate = estimate < 0 ? 0 : estimate;
         }

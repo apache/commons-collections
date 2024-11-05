@@ -49,7 +49,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
         @Override
         public boolean test(final LayerManager<TimestampedBloomFilter<T>> layerManager) {
-            // can not use getTarget() as it causes recursion.
+            // cannot use getTarget() as it causes recursion.
             return layerManager.last().getTimestamp().plus(quanta).isBefore(Instant.now());
         }
     }

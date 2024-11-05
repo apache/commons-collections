@@ -48,7 +48,7 @@ public abstract class AbstractSerializableListDecorator<E> extends AbstractListD
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked")
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

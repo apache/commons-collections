@@ -29,7 +29,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * This implementation does not forward the hashCode and equals methods through
  * to the backing object, but relies on Object's implementation. This is
  * necessary as some Queue implementations, e.g. LinkedList, have a custom
- * equals implementation for which symmetry can not be preserved.
+ * equals implementation for which symmetry cannot be preserved.
  * See class Javadoc of AbstractCollectionDecorator for more information.
  * </p>
  *

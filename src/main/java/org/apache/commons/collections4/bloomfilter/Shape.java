@@ -116,7 +116,7 @@ public final class Shape {
         // Normally we would check that numberOfHashFunctions <= Integer.MAX_VALUE but
         // since numberOfBits is at most Integer.MAX_VALUE the numerator of
         // numberOfHashFunctions is ln(2) * Integer.MAX_VALUE = 646456992.9449 the
-        // value of k can not be above Integer.MAX_VALUE.
+        // value of k cannot be above Integer.MAX_VALUE.
         return (int) k;
     }
 
@@ -336,9 +336,9 @@ public final class Shape {
         // log 1-e^x = [log1, log0) = <0 with an effective lower limit of -53
         // numberOfBits/ (-numberOfHashFunctions / [-53,0) ) >0
         // ceil( >0 ) >= 1
-        // so we can not produce a negative value thus we don't check for it.
+        // so we cannot produce a negative value thus we don't check for it.
         //
-        // similarly we can not produce a number greater than numberOfBits so we
+        // similarly we cannot produce a number greater than numberOfBits so we
         // do not have to check for Integer.MAX_VALUE either.
 
         final Shape shape = new Shape(numberOfHashFunctions, numberOfBits);

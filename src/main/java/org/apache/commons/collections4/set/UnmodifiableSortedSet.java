@@ -103,7 +103,7 @@ public final class UnmodifiableSortedSet<E>
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

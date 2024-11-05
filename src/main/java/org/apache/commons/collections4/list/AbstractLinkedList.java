@@ -736,7 +736,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      *
      * @param inputStream  the stream to read the object from
      * @throws IOException  if any error occurs while reading from the stream
-     * @throws ClassNotFoundException  if a class read from the stream can not be loaded
+     * @throws ClassNotFoundException  if a class read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream inputStream) throws IOException, ClassNotFoundException {

@@ -290,7 +290,7 @@ public class LRUMap<K, V>
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @Override
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -414,7 +414,7 @@ public class LRUMap<K, V>
      *
      * @param in the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

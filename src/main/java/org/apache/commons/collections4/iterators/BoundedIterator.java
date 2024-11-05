@@ -131,7 +131,7 @@ public class BoundedIterator<E> implements Iterator<E> {
     @Override
     public void remove() {
         if (pos <= offset) {
-            throw new IllegalStateException("remove() can not be called before calling next()");
+            throw new IllegalStateException("remove() cannot be called before calling next()");
         }
         iterator.remove();
     }

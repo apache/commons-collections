@@ -353,7 +353,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      *
      * @param in  the input stream
      * @throws IOException if an I/O error occurs while writing to the output stream
-     * @throws ClassNotFoundException if the class of a serialized object can not be found
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
     @SuppressWarnings("unchecked")
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

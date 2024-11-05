@@ -130,7 +130,7 @@ public final class UnmodifiableSortedMap<K, V>
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
      */
     @SuppressWarnings("unchecked")

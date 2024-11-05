@@ -305,7 +305,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> iter.remove());
-        assertEquals("remove() can not be called before calling next()", thrown.getMessage());
+        assertEquals("remove() cannot be called before calling next()", thrown.getMessage());
     }
 
     /**

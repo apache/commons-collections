@@ -497,7 +497,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param in  the input stream
      * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if an object read from the stream can not be loaded
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 4.0
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect

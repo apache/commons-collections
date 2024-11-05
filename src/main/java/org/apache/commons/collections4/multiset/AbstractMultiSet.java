@@ -320,7 +320,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * Read the multiset in using a custom routine.
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
-     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
+     * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
      */
     protected void doReadObject(final ObjectInputStream in)
