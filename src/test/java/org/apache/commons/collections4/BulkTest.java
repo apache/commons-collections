@@ -17,113 +17,7 @@
 package org.apache.commons.collections4;
 
 /**
- * A {@code TestCase} that can define both simple and bulk test methods.
- * <p>
- * A <em>simple test method</em> is the type of test traditionally
- * supplied by {@code TestCase}.  To define a simple test, create a public
- * no-argument method whose name starts with "test".  You can specify
- * the name of simple test in the constructor of {@code BulkTest};
- * a subsequent call to {@code TestCase#run} will run that simple test.
- * <p>
- * A <em>bulk test method</em>, on the other hand, returns a new instance
- * of {@code BulkTest}, which can itself define new simple and bulk
- * test methods.  By using the {@code #makeSuite} method, you can
- * automatically create a hierarchical suite of tests and child bulk tests.
- * <p>
- * For instance, consider the following two classes:
- *
- * <Pre>
- *  public class SetTest extends BulkTest {
- *
- *      private Set set;
- *
- *      public SetTest(Set set) {
- *          this.set = set;
- *      }
- *
- *      @Test
- *      public void testContains() {
- *          boolean r = set.contains(set.iterator().next()));
- *          assertTrue("Set should contain first element, r);
- *      }
- *
- *      @Test
- *      public void testClear() {
- *          set.clear();
- *          assertTrue("Set should be empty after clear", set.isEmpty());
- *      }
- *  }
- *
- *
- *  public class HashMapTest extends BulkTest {
- *
- *      private Map makeFullMap() {
- *          HashMap result = new HashMap();
- *          result.put("1", "One");
- *          result.put("2", "Two");
- *          return result;
- *      }
- *
- *      @Test
- *      public void testClear() {
- *          Map map = makeFullMap();
- *          map.clear();
- *          assertTrue("Map empty after clear", map.isEmpty());
- *      }
- *
- *      public BulkTest bulkTestKeySet() {
- *          return new SetTest(makeFullMap().keySet());
- *      }
- *
- *      public BulkTest bulkTestEntrySet() {
- *          return new SetTest(makeFullMap().entrySet());
- *      }
- *  }
- *  </Pre>
- *
- *  In the above examples, {@code SetTest} defines two
- *  simple test methods and no bulk test methods; {@code HashMapTest}
- *  defines one simple test method and two bulk test methods.  When
- *  {@code makeSuite(HashMapTest.class).run} is executed,
- *  <em>five</em> simple test methods will be run, in this order:<P>
- *
- *  <Ol>
- *  <Li>HashMapTest.testClear()
- *  <Li>HashMapTest.bulkTestKeySet().testContains();
- *  <Li>HashMapTest.bulkTestKeySet().testClear();
- *  <Li>HashMapTest.bulkTestEntrySet().testContains();
- *  <Li>HashMapTest.bulkTestEntrySet().testClear();
- *  </Ol>
- *
- *  In the graphical junit test runners, the tests would be displayed in
- *  the following tree:<P>
- *
- *  <UL>
- *  <LI>HashMapTest</LI>
- *      <UL>
- *      <LI>testClear
- *      <LI>bulkTestKeySet
- *          <UL>
- *          <LI>testContains
- *          <LI>testClear
- *          </UL>
- *      <LI>bulkTestEntrySet
- *          <UL>
- *          <LI>testContains
- *          <LI>testClear
- *          </UL>
- *      </UL>
- *  </UL>
- *
- *  A subclass can override a superclass's bulk test by
- *  returning {@code null} from the bulk test method.  If you only
- *  want to override specific simple tests within a bulk test, use the
- *  {@code #ignoredTests} method.<P>
- *
- *  Note that if you want to use the bulk test methods, you <em>must</em>
- *  define your {@code suite()} method to use {@code #makeSuite}.
- *  The ordinary {@code TestSuite} constructor doesn't know how to
- *  interpret bulk test methods.
+ * This class is left over from the JUnit 3 implementation.
  */
 public class BulkTest implements Cloneable {
 
@@ -183,13 +77,6 @@ public class BulkTest implements Cloneable {
     }
 
     /**
-     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
-     */
-    public String getVerboseName() {
-        return verboseName;
-    }
-
-    /**
      *  Returns an array of test names to ignore.<P>
      *
      *  If a test that's defined by this {@code BulkTest} or
@@ -224,20 +111,6 @@ public class BulkTest implements Cloneable {
      */
     public String[] ignoredTests() {
         return null;
-    }
-
-    /**
-     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
-     */
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
-     * For Apache Commons BeanUtils until all components migrate to JUnit 5.
-     */
-    public void setVerboseName(final String verboseName) {
-        this.verboseName = verboseName;
     }
 
     /**
