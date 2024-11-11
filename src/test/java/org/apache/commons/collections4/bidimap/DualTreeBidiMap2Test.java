@@ -51,10 +51,6 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         }
     }
 
-    public DualTreeBidiMap2Test() {
-        super();
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.Test2";
