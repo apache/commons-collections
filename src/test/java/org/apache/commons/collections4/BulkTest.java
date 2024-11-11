@@ -21,21 +21,21 @@ package org.apache.commons.collections4;
  */
 public class BulkTest {
 
-    /** Path to test data resources */
+    /** Path to test data resources. */
     protected static final String TEST_DATA_PATH = "src/test/resources/org/apache/commons/collections4/data/test/";
 
-    /** Path to test properties resources */
+    /** Path to test properties resources. */
     public static final String TEST_PROPERTIES_PATH = "src/test/resources/org/apache/commons/collections4/properties/";
 
     /**
      * The full name of this bulk test instance.
      */
-    private String verboseName;
+    private final String verboseName;
 
     /**
-     * the name of the simple test method
+     * The name of the simple test method.
      */
-    private String name;
+    private final String name;
 
     /**
      * Constructs a new {@code BulkTest} instance that will run the specified simple test.
@@ -48,7 +48,7 @@ public class BulkTest {
     /**
      * Gets the name of the simple test method of this {@code BulkTest}.
      *
-     * @return the name of the simple test method of this {@code BulkTest}
+     * @return the name of the simple test method of this {@code BulkTest}.
      */
     public String getName() {
         return name;
@@ -57,7 +57,7 @@ public class BulkTest {
     /**
      * Gets the display name of this {@code BulkTest}.
      *
-     * @return the display name of this {@code BulkTest}
+     * @return the display name of this {@code BulkTest}.
      */
     @Override
     public String toString() {
