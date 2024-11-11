@@ -32,17 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    @Override
-    public String[] ignoredTests() {
-        final String pre = "StaticBucketMapTest.bulkTestMap";
-        final String post = ".testCollectionIteratorFailFast";
-        return new String[] {
-            pre + "EntrySet" + post,
-            pre + "KeySet" + post,
-            pre + "Values" + post
-        };
-    }
-
     /**
      * {@inheritDoc}
      */

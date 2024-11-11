@@ -46,11 +46,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
     }
 
     @Override
-    public String[] ignoredTests() {
-        return null;
-    }
-
-    @Override
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;

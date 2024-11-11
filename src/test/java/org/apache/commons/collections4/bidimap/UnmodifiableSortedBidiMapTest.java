@@ -37,12 +37,6 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
     }
 
     @Override
-    public String[] ignoredTests() {
-        // Override to prevent infinite recursion of tests.
-        return new String[] {"UnmodifiableSortedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
-    }
-
-    @Override
     public boolean isAllowNullKey() {
         return false;
     }

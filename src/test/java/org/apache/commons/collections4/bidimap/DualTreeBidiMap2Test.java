@@ -60,15 +60,6 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         return "4.Test2";
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    @Override
-    public String[] ignoredTests() {
-        final String recursiveTest = "DualTreeBidiMap2Test.bulkTestInverseMap.bulkTestInverseMap";
-        return new String[] { recursiveTest };
-    }
-
     @Override
     public boolean isAllowNullValueGet() {
         // TODO Is this a bug or a feature?

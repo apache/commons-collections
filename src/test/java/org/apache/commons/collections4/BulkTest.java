@@ -67,43 +67,6 @@ public class BulkTest {
     }
 
     /**
-     *  Returns an array of test names to ignore.<P>
-     *
-     *  If a test that's defined by this {@code BulkTest} or
-     *  by one of its bulk test methods has a name that's in the returned
-     *  array, then that simple test will not be executed.<P>
-     *
-     *  A test's name is formed by taking the class name of the
-     *  root {@code BulkTest}, eliminating the package name, then
-     *  appending the names of any bulk test methods that were invoked
-     *  to get to the simple test, and then appending the simple test
-     *  method name.  The method names are delimited by periods:
-     *
-     *  <pre>
-     *  HashMapTest.bulkTestEntrySet.testClear
-     *  </pre>
-     *
-     *  is the name of one of the simple tests defined in the sample classes
-     *  described above.  If the sample {@code HashMapTest} class
-     *  included this method:
-     *
-     *  <pre>
-     *  public String[] ignoredTests() {
-     *      return new String[] { "HashMapTest.bulkTestEntrySet.testClear" };
-     *  }
-     *  </pre>
-     *
-     *  then the entry set's clear method wouldn't be tested, but the key
-     *  set's clear method would.
-     *
-     *  @return an array of the names of tests to ignore, or null if
-     *   no tests should be ignored
-     */
-    public String[] ignoredTests() {
-        return null;
-    }
-
-    /**
      *  Returns the display name of this {@code BulkTest}.
      *
      *  @return the display name of this {@code BulkTest}

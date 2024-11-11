@@ -41,14 +41,6 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return AbstractCollectionTest.UNORDERED;
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    @Override
-    public String[] ignoredTests() {
-        return new String[] {"UnmodifiableBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
-    }
-
     @Override
     public boolean isPutAddSupported() {
         return false;

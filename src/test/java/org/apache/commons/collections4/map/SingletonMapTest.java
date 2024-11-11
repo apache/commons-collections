@@ -63,16 +63,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Override
-    public String[] ignoredTests() {
-        // the ridiculous map above still doesn't pass these tests
-        // but it's not relevant, so we ignore them
-        return new String[] {
-            "SingletonMapTest.bulkTestMapIterator.testEmptyMapIterator",
-            "SingletonMapTest.bulkTestOrderedMapIterator.testEmptyMapIterator",
-        };
-    }
-
-    @Override
     public boolean isPutAddSupported() {
         return false;
     }

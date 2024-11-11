@@ -38,14 +38,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         return "4";
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    @Override
-    public String[] ignoredTests() {
-        return null;
-    }
-
     @Override
     public boolean isPutAddSupported() {
         return false;

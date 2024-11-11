@@ -32,14 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    @Override
-    public String[] ignoredTests() {
-        return new String[] {"UnmodifiableOrderedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
-    }
-
     @Override
     public boolean isAllowNullKey() {
         return false;
