@@ -61,10 +61,6 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
         }
     }
 
-    public DefaultAbstractLinkedListJava21Test() {
-        super(DefaultAbstractLinkedListJava21Test.class.getSimpleName());
-    }
-
     protected void checkNodes() {
         final AbstractLinkedListJava21<E> list = getCollection();
         for (int i = 0; i < list.size; i++) {

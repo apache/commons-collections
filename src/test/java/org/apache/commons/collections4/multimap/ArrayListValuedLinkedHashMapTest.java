@@ -39,10 +39,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedLinkedHashMapTest() {
-        super(ArrayListValuedLinkedHashMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.5"; // ArrayListValuedLinkedHashMap has been added in version 4.5

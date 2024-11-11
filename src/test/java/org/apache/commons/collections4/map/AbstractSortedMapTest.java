@@ -43,7 +43,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         final K toKey;
 
         public TestHeadMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
-            super("SortedMap.HeadMap", main);
+            super(main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
@@ -99,7 +99,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         final K toKey;
 
         public TestSubMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
-            super("SortedMap.SubMap", main);
+            super(main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
@@ -162,7 +162,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         final K invalidKey;
 
         public TestTailMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
-            super("SortedMap.TailMap", main);
+            super(main);
             final Map<K, V> sm = main.makeFullMap();
             for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
@@ -219,8 +219,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         protected final List<V> subSortedValues = new ArrayList<>();
         protected final List<V> subSortedNewValues = new ArrayList<>();
 
-        public TestViewMap(final String name, final AbstractMapTest<SortedMap<K, V>, K, V> main) {
-            super(name);
+        public TestViewMap(final AbstractMapTest<SortedMap<K, V>, K, V> main) {
             this.main = main;
         }
 
@@ -333,15 +332,6 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             super.verify();
             main.verify();
         }
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test name
-     */
-    public AbstractSortedMapTest(final String testName) {
-        super(testName);
     }
 
     public BulkTest bulkTestHeadMap() {

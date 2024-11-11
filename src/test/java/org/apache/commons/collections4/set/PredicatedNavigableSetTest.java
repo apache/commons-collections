@@ -42,10 +42,6 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     protected Predicate<E> testPredicate =
         o -> o instanceof String && ((String) o).startsWith("A");
 
-    public PredicatedNavigableSetTest() {
-        super(PredicatedNavigableSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.1";

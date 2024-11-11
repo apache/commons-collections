@@ -46,10 +46,6 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public BoundedIteratorTest() {
-        super(BoundedIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return new BoundedIterator<>(Collections.<E>emptyList().iterator(), 0, 10);

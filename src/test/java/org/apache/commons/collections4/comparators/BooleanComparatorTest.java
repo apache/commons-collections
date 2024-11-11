@@ -37,10 +37,6 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
-    public BooleanComparatorTest() {
-        super(BooleanComparatorTest.class.getSimpleName());
-    }
-
     protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);
         if (trueFirst) {

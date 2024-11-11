@@ -33,10 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
-    public UnmodifiableTrieTest() {
-        super(UnmodifiableTrieTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

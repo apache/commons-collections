@@ -23,9 +23,6 @@ package org.apache.commons.collections4.iterators;
  */
 public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
-    public ArrayListIterator2Test() {
-    }
-
     public ArrayListIterator<E> makeArrayListIterator(final Object array) {
         return new ArrayListIterator<>(array);
     }

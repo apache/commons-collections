@@ -260,15 +260,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     private Collection<E> confirmed;
 
     /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractCollectionTest(final String testName) {
-        super(testName);
-    }
-
-    /**
      *  Specifies whether equal elements in the collection are, in fact,
      *  distinguishable with information not readily available.  That is, if a
      *  particular value is to be removed from the collection, then there is

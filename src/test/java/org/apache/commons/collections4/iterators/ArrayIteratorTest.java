@@ -36,10 +36,6 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ArrayIteratorTest() {
-        super(ArrayIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public ArrayIterator<E> makeEmptyIterator() {
         return new ArrayIterator<>(new Object[0]);

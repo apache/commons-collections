@@ -46,15 +46,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest<K> {
 
     /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractMapIteratorTest(final String testName) {
-        super(testName);
-    }
-
-    /**
      * The values to be used in the add and set tests.
      * Default is two strings.
      */

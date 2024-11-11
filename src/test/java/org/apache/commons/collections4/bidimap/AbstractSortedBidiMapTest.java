@@ -45,8 +45,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     protected List<V> sortedValues = new ArrayList<>();
     protected SortedSet<V> sortedNewValues = new TreeSet<>();
 
-    public AbstractSortedBidiMapTest(final String testName) {
-        super(testName);
+    public AbstractSortedBidiMapTest() {
         sortedKeys = getAsList(getSampleKeys());
         Collections.sort(sortedKeys);
         sortedKeys = Collections.unmodifiableList(sortedKeys);

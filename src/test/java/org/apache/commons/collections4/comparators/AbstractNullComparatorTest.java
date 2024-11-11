@@ -30,10 +30,6 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
      **/
     public static class TestNullComparator1 extends AbstractNullComparatorTest {
 
-        public TestNullComparator1(final String testName) {
-            super(testName);
-        }
-
         @Override
         public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "1";
@@ -72,10 +68,6 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
      **/
     public static class TestNullComparator2 extends AbstractNullComparatorTest {
 
-        public TestNullComparator2(final String testName) {
-            super(testName);
-        }
-
         @Override
         public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "2";
@@ -109,7 +101,4 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 
     }
 
-    public AbstractNullComparatorTest(final String testName) {
-        super(testName);
-    }
 }

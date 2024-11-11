@@ -37,9 +37,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<IterableMap<K, V>, K, V> {
 
     public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
-        public InnerTestMapIterator() {
-            super("InnerTestMapIterator");
-        }
 
         @Override
         public V[] addSetValues() {
@@ -90,15 +87,6 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
             super.verify();
             AbstractIterableMapTest.this.verify();
         }
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test name
-     */
-    public AbstractIterableMapTest(final String testName) {
-        super(testName);
     }
 
     public BulkTest bulkTestMapIterator() {

@@ -48,15 +48,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractQueueTest(final String testName) {
-        super(testName);
-    }
-
-    /**
      * Returns the {@link #collection} field cast to a {@link Queue}.
      *
      * @return the collection field as a Queue

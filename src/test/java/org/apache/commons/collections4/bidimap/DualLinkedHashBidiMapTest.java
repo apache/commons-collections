@@ -24,10 +24,6 @@ package org.apache.commons.collections4.bidimap;
  */
 public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public DualLinkedHashBidiMapTest() {
-        super(DualLinkedHashBidiMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

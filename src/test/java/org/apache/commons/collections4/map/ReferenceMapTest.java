@@ -83,10 +83,6 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     WeakReference<V> valueReference;
 
-    public ReferenceMapTest() {
-        super(ReferenceMapTest.class.getSimpleName());
-    }
-
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(

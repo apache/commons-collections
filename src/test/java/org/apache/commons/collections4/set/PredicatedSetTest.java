@@ -38,10 +38,6 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     protected Predicate<E> testPredicate =
         String.class::isInstance;
 
-    public PredicatedSetTest() {
-        super(PredicatedSetTest.class.getSimpleName());
-    }
-
     protected PredicatedSet<E> decorateSet(final Set<E> set, final Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
     }

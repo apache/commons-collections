@@ -43,11 +43,6 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1;
 
-    public ListIteratorWrapperTest() {
-        super(ListIteratorWrapperTest.class.getSimpleName());
-    }
-
-    @Override
     public ResettableListIterator<E> makeEmptyIterator() {
         final ArrayList<E> list = new ArrayList<>();
         return new ListIteratorWrapper<>(list.iterator());

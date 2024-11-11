@@ -36,10 +36,6 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
-    public PredicatedBagTest() {
-        super(PredicatedBagTest.class.getSimpleName());
-    }
-
     protected Bag<T> decorateBag(final HashBag<T> bag, final Predicate<T> predicate) {
         return PredicatedBag.predicatedBag(bag, predicate);
     }

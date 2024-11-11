@@ -24,10 +24,6 @@ import org.apache.commons.collections4.MultiSet;
  */
 public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public SynchronizedMultiSetTest() {
-        super(SynchronizedMultiSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.1";

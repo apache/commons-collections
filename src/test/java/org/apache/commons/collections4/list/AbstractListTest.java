@@ -39,7 +39,6 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -64,7 +63,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         private final AbstractListTest<E> outer;
 
         public BulkTestSubList(final AbstractListTest<E> outer) {
-            super(StringUtils.EMPTY);
             this.outer = outer;
         }
 
@@ -134,9 +132,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     public class TestListIterator extends AbstractListIteratorTest<E> {
-        public TestListIterator() {
-            super("TestListIterator");
-        }
 
         @Override
         public E addSetValue() {
@@ -169,15 +164,6 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         public boolean supportsSet() {
             return AbstractListTest.this.isSetSupported();
         }
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractListTest(final String testName) {
-        super(testName);
     }
 
     /**

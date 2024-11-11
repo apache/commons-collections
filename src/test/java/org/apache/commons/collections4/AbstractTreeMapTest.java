@@ -32,10 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<TreeMap<K, V>, K, V> {
 
-    public AbstractTreeMapTest(final String testName) {
-        super(testName);
-    }
-
     @Override
     public boolean isAllowNullKey() {
         return false;

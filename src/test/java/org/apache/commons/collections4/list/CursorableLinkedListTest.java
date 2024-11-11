@@ -44,9 +44,6 @@ import org.junit.jupiter.api.Test;
 public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     private CursorableLinkedList<E> list;
-    public CursorableLinkedListTest() {
-        super(CursorableLinkedListTest.class.getSimpleName());
-    }
 
     @Override
     public String getCompatibilityVersion() {

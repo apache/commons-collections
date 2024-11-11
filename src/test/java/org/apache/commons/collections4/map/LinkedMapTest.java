@@ -43,10 +43,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public class TestListView extends AbstractListTest<K> {
 
-        TestListView() {
-            super("TestListView");
-        }
-
         @Override
         public K[] getFullElements() {
             return getSampleKeys();
@@ -86,10 +82,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         public List<K> makeObject() {
             return LinkedMapTest.this.makeObject().asList();
         }
-    }
-
-    public LinkedMapTest() {
-        super(LinkedMapTest.class.getSimpleName());
     }
 
     public BulkTest bulkTestListView() {

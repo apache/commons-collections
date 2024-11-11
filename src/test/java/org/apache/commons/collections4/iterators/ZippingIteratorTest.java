@@ -32,25 +32,16 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
 
-    //------------------------------------------------------------ Conventional
-
     private ArrayList<Integer> evens;
-
-    //--------------------------------------------------------------- Lifecycle
 
     private ArrayList<Integer> odds;
     private ArrayList<Integer> fib;
-    public ZippingIteratorTest() {
-        super(ZippingIteratorTest.class.getSimpleName());
-    }
 
     @Override
     @SuppressWarnings("unchecked")
     public ZippingIterator<Integer> makeEmptyIterator() {
         return new ZippingIterator<>(IteratorUtils.<Integer>emptyIterator());
     }
-
-    //---------------------------------------------------- TestIterator Methods
 
     @Override
     public ZippingIterator<Integer> makeObject() {
@@ -78,8 +69,6 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
         fib.add(13);
         fib.add(21);
     }
-
-    //------------------------------------------------------------------- Tests
 
     @Test
     public void testIterateEven() {

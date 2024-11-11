@@ -94,10 +94,6 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     }
 
-    public NodeCachingLinkedListTest() {
-        super(NodeCachingLinkedListTest.class.getSimpleName());
-    }
-
     /**
      * {@inheritDoc}
      */

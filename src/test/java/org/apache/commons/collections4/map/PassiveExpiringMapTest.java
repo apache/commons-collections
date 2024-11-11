@@ -60,10 +60,6 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         }
     }
 
-    public PassiveExpiringMapTest() {
-        super(PassiveExpiringMapTest.class.getSimpleName());
-    }
-
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/data/test/PassiveExpiringMap.emptyCollection.version4.obj");

@@ -55,10 +55,6 @@ public abstract class AbstractOrderedBidiMapDecoratorTest<K, V>
         }
     }
 
-    public AbstractOrderedBidiMapDecoratorTest(final String testName) {
-        super(testName);
-    }
-
     @Override
     public boolean isAllowNullKey() {
         return false;

@@ -39,15 +39,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractComparatorTest(final String testName) {
-        super(testName);
-    }
-
     public String getCanonicalComparatorName(final Object object) {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);

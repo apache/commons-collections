@@ -49,7 +49,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.map.AbstractMapTest;
 import org.apache.commons.collections4.multiset.AbstractMultiSetTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -66,10 +65,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
     public class TestMultiValuedMapAsMap extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
-
-        public TestMultiValuedMapAsMap() {
-            super(StringUtils.EMPTY);
-        }
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -181,9 +176,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public class TestMultiValuedMapEntries extends AbstractCollectionTest<Entry<K, V>> {
-        public TestMultiValuedMapEntries() {
-            super(StringUtils.EMPTY);
-        }
 
         @SuppressWarnings("unchecked")
         @Override
@@ -257,10 +249,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     public class TestMultiValuedMapKeys extends AbstractMultiSetTest<K> {
 
-        public TestMultiValuedMapKeys() {
-            super(StringUtils.EMPTY);
-        }
-
         @Override
         public K[] getFullElements() {
             return getSampleKeys();
@@ -317,9 +305,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public class TestMultiValuedMapKeySet extends AbstractSetTest<K> {
-        public TestMultiValuedMapKeySet() {
-            super(StringUtils.EMPTY);
-        }
 
         @SuppressWarnings("unchecked")
         @Override
@@ -364,9 +349,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public class TestMultiValuedMapValues extends AbstractCollectionTest<V> {
-        public TestMultiValuedMapValues() {
-            super(StringUtils.EMPTY);
-        }
 
         @Override
         public V[] getFullElements() {
@@ -440,10 +422,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     /** MultiValuedHashMap created by reset(). */
     protected MultiValuedMap<K, V> confirmed;
-
-    public AbstractMultiValuedMapTest(final String testName) {
-        super(testName);
-    }
 
     protected void addSampleMappings(final MultiValuedMap<? super K, ? super V> map) {
         final K[] keys = getSampleKeys();

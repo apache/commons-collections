@@ -43,10 +43,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     protected Collection<E> two;
 
-    public CompositeCollectionTest() {
-        super(CompositeCollectionTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

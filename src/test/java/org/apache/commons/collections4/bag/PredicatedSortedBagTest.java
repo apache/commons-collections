@@ -37,10 +37,6 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
-    public PredicatedSortedBagTest() {
-        super(PredicatedSortedBagTest.class.getSimpleName());
-    }
-
     protected SortedBag<T> decorateBag(final SortedBag<T> bag, final Predicate<T> predicate) {
         return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
     }

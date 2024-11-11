@@ -25,10 +25,6 @@ import org.apache.commons.collections4.BidiMap;
  */
 public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
-    public TreeBidiMapTest() {
-        super(TreeBidiMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

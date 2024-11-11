@@ -37,10 +37,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformedListTest<E> extends AbstractListTest<E> {
 
-    public TransformedListTest() {
-        super(TransformedListTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

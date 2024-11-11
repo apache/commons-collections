@@ -40,10 +40,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     protected Predicate<E> testPredicate =
         String.class::isInstance;
 
-    public PredicatedListTest() {
-        super(PredicatedListTest.class.getSimpleName());
-    }
-
     protected List<E> decorateList(final List<E> list, final Predicate<E> predicate) {
         return PredicatedList.predicatedList(list, predicate);
     }

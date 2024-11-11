@@ -39,10 +39,6 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     private static final Integer TWO = Integer.valueOf(2);
     private static final String TEN = "10";
 
-    public SingletonMapTest() {
-        super(SingletonMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

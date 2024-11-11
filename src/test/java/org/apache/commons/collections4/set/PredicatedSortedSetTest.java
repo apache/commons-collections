@@ -42,10 +42,6 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected Predicate<E> testPredicate =
         o -> o instanceof String && ((String) o).startsWith("A");
 
-    public PredicatedSortedSetTest() {
-        super(PredicatedSortedSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

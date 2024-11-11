@@ -129,10 +129,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
-    public LRUMapTest() {
-        super(LRUMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

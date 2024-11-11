@@ -49,15 +49,6 @@ public abstract class AbstractObjectTest extends BulkTest {
     /** Current major release for Collections */
     public static final int COLLECTIONS_MAJOR_VERSION = 4;
 
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractObjectTest(final String testName) {
-        super(testName);
-    }
-
     protected String getCanonicalEmptyCollectionName(final Object object) {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);

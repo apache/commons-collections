@@ -45,10 +45,6 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         }
     }
 
-    public IndexedCollectionTest() {
-        super(IndexedCollectionTest.class.getSimpleName());
-    }
-
     protected Collection<String> decorateCollection(final Collection<String> collection) {
         return IndexedCollection.nonUniqueIndexedCollection(collection, new IntegerTransformer());
     }

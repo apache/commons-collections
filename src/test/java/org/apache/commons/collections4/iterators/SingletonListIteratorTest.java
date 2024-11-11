@@ -36,10 +36,6 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonListIteratorTest() {
-        super(SingletonListIteratorTest.class.getSimpleName());
-    }
-
     /**
      * Returns a SingletonListIterator from which
      * the element has already been removed.

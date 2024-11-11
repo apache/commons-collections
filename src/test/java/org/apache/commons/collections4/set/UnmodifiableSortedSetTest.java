@@ -38,10 +38,6 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set;
     protected ArrayList<E> array;
 
-    public UnmodifiableSortedSetTest() {
-        super(UnmodifiableSortedSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

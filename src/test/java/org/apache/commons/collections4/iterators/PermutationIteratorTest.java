@@ -41,10 +41,6 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     protected Character[] testArray = { 'A', 'B', 'C' };
     protected List<Character> testList;
 
-    public PermutationIteratorTest() {
-        super(PermutationIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public PermutationIterator<Character> makeEmptyIterator() {
         return new PermutationIterator<>(new ArrayList<>());

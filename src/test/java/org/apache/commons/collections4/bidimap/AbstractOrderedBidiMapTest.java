@@ -40,10 +40,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
 
     public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
 
-        public TestBidiOrderedMapIterator() {
-            super("TestBidiOrderedMapIterator");
-        }
-
         @Override
         public V[] addSetValues() {
             return getNewSampleValues();
@@ -89,13 +85,6 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             AbstractOrderedBidiMapTest.this.verify();
         }
 
-    }
-
-    public AbstractOrderedBidiMapTest() {
-    }
-
-    public AbstractOrderedBidiMapTest(final String testName) {
-        super(testName);
     }
 
     public BulkTest bulkTestOrderedMapIterator() {

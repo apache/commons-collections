@@ -52,7 +52,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     public DualTreeBidiMap2Test() {
-        super(DualTreeBidiMap2Test.class.getSimpleName());
+        super();
     }
 
     @Override

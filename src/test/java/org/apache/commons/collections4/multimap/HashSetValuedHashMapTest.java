@@ -36,10 +36,6 @@ import org.junit.jupiter.api.Test;
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public HashSetValuedHashMapTest() {
-        super(HashSetValuedHashMapTest.class.getSimpleName());
-    }
-
     @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;

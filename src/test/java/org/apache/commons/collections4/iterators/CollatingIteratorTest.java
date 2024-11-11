@@ -38,25 +38,16 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("boxing")
 public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
-    //------------------------------------------------------------ Conventional
-
     private Comparator<Integer> comparator;
-
-    //--------------------------------------------------------------- Lifecycle
 
     private ArrayList<Integer> evens;
     private ArrayList<Integer> odds;
     private ArrayList<Integer> fib;
-    public CollatingIteratorTest() {
-        super(CollatingIteratorTest.class.getSimpleName());
-    }
 
     @Override
     public CollatingIterator<Integer> makeEmptyIterator() {
         return new CollatingIterator<>(comparator);
     }
-
-    //---------------------------------------------------- TestIterator Methods
 
     @Override
     public CollatingIterator<Integer> makeObject() {
@@ -89,8 +80,6 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         fib.add(13);
         fib.add(21);
     }
-
-    //------------------------------------------------------------------- Tests
 
     @Test
     public void testGetSetComparator() {

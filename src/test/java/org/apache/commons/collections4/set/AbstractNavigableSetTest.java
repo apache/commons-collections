@@ -50,7 +50,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         private final boolean inclusive;
         @SuppressWarnings("unchecked")
         public TestNavigableSetSubSet(final int bound, final boolean head, final boolean inclusive) {
-            super("TestNavigableSetSubSet");
             if (head) {
                 this.type = TYPE_HEADSET;
                 this.inclusive = inclusive;
@@ -78,7 +77,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
         } //type
         @SuppressWarnings("unchecked")
         public TestNavigableSetSubSet(final int loBound, final int hiBound, final boolean inclusive) {
-            super("TestNavigableSetSubSet");
             this.type = TYPE_SUBSET;
             this.lowBound = loBound;
             this.highBound = hiBound;
@@ -175,15 +173,6 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
             return getSubSet(AbstractNavigableSetTest.this.makeObject());
         }
 
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param name  name for test
-     */
-    public AbstractNavigableSetTest(final String name) {
-        super(name);
     }
 
     /**

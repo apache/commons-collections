@@ -42,10 +42,6 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     private List<Character> symbols;
     private List<Character> emptyList;
 
-    public CartesianProductIteratorTest() {
-        super(CartesianProductIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public CartesianProductIterator<Character> makeEmptyIterator() {
         return new CartesianProductIterator<>();

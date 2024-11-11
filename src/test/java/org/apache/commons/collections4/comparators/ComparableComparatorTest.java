@@ -26,10 +26,6 @@ import java.util.List;
 @SuppressWarnings("boxing")
 public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ComparableComparatorTest() {
-        super(ComparableComparatorTest.class.getSimpleName());
-    }
-
     @Override
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<>();

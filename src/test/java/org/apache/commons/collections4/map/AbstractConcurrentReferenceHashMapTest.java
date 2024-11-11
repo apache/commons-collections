@@ -31,10 +31,6 @@ public abstract class AbstractConcurrentReferenceHashMapTest<K, V> extends Abstr
 
     protected static final EnumSet<Option> IDENTITY_COMPARISONS = EnumSet.of(Option.IDENTITY_COMPARISONS);
 
-    public AbstractConcurrentReferenceHashMapTest() {
-        super(AbstractConcurrentReferenceHashMapTest.class.getSimpleName());
-    }
-
     @Override
     public boolean isAllowNullKey() {
         return false;

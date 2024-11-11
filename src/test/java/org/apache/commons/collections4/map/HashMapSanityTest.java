@@ -27,10 +27,6 @@ import java.util.HashMap;
  */
 public class HashMapSanityTest<K, V> extends AbstractMapTest<HashMap<K, V>, K, V> {
 
-    public HashMapSanityTest() {
-        super(HashMapSanityTest.class.getSimpleName());
-    }
-
     /**
      * Don't test, just a sanity check for the test framework.
      */

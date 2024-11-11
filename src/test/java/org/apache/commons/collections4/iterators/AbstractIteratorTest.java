@@ -46,15 +46,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
     /**
-     * JUnit constructor.
-     *
-     * @param testName  the test class name
-     */
-    public AbstractIteratorTest(final String testName) {
-        super(testName);
-    }
-
-    /**
      * Implement this method to return an iterator over an empty collection.
      *
      * @return an empty iterator

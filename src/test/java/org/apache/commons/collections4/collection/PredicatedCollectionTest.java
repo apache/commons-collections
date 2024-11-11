@@ -39,10 +39,6 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     protected Predicate<E> testPredicate =
         String.class::isInstance;
 
-    public PredicatedCollectionTest() {
-        super(PredicatedCollectionTest.class.getSimpleName());
-    }
-
     protected Collection<E> decorateCollection(
                 final Collection<E> collection, final Predicate<E> predicate) {
         return PredicatedCollection.predicatedCollection(collection, predicate);

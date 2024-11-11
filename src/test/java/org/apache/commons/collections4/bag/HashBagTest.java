@@ -24,10 +24,6 @@ import org.apache.commons.collections4.Bag;
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 
-    public HashBagTest() {
-        super(HashBagTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

@@ -37,10 +37,6 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     protected UnmodifiableNavigableSet<E> set;
     protected ArrayList<E> array;
 
-    public UnmodifiableNavigableSetTest() {
-        super(UnmodifiableNavigableSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.1";

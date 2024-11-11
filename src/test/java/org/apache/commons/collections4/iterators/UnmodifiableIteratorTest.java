@@ -41,10 +41,6 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     protected String[] testArray = { "One", "Two", "Three" };
     protected List<E> testList;
 
-    public UnmodifiableIteratorTest() {
-        super(UnmodifiableIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return UnmodifiableIterator.unmodifiableIterator(Collections.<E>emptyList().iterator());

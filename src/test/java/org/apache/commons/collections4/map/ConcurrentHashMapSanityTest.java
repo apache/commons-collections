@@ -27,10 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<ConcurrentHashMap<K, V>, K, V> {
 
-    public ConcurrentHashMapSanityTest() {
-        super(ConcurrentHashMapSanityTest.class.getSimpleName());
-    }
-
     @Override
     public boolean isAllowNullKey() {
         return false;

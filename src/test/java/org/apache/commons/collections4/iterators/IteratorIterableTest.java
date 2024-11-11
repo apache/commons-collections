@@ -32,10 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class IteratorIterableTest extends BulkTest {
 
-    public IteratorIterableTest() {
-        super(IteratorIterableTest.class.getSimpleName());
-    }
-
     private Iterator<Integer> createIterator() {
         final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));

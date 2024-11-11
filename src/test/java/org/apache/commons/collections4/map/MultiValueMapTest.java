@@ -51,10 +51,6 @@ import org.junit.jupiter.api.Test;
 @Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
-    public MultiValueMapTest() {
-        super(MultiValueMapTest.class.getSimpleName());
-    }
-
     @SuppressWarnings("unchecked")
     private MultiValueMap<K, V> createTestMap() {
         return createTestMap(ArrayList.class);

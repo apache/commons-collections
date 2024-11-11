@@ -30,10 +30,6 @@ import org.junit.jupiter.api.Test;
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
-    public MapBackedSet2Test() {
-        super(MapBackedSet2Test.class.getSimpleName());
-    }
-
     @Override
     public Set<E> makeObject() {
         return MapBackedSet.mapBackedSet(new LinkedMap<>());

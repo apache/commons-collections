@@ -28,10 +28,6 @@ import org.junit.jupiter.api.Test;
  */
 public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
-    public SynchronizedQueueTest() {
-        super(SynchronizedQueueTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.2";

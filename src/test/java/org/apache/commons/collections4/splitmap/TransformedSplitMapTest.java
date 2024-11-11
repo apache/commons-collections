@@ -46,10 +46,6 @@ public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
-    public TransformedSplitMapTest() {
-        super(TransformedSplitMapTest.class.getSimpleName());
-    }
-
     @Test
     public void testEmptyMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map =

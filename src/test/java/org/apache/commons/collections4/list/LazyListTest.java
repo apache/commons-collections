@@ -33,10 +33,6 @@ import org.junit.jupiter.api.Test;
 
 public class LazyListTest extends AbstractObjectTest {
 
-    public LazyListTest() {
-        super(LazyListTest.class.getSimpleName());
-    }
-
     @Override
     public Object makeObject() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;

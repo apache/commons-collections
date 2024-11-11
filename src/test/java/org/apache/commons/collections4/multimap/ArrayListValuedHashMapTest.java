@@ -38,10 +38,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedHashMapTest() {
-        super(ArrayListValuedHashMapTest.class.getSimpleName());
-    }
-
     @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;

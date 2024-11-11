@@ -33,9 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
-    public ObjectArrayListIteratorTest() {
-    }
-
     public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
         return new ObjectArrayListIterator<>(array);
     }

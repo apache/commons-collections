@@ -43,10 +43,6 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
-    public PredicatedMapTest() {
-        super(PredicatedMapTest.class.getSimpleName());
-    }
-
     protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
         final Predicate<? super V> valuePredicate) {
         return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);

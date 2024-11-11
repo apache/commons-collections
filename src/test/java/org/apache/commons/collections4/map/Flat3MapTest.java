@@ -48,9 +48,6 @@ import org.junit.jupiter.api.Test;
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
-        public TestFlatMapIterator() {
-            super("TestFlatMapIterator");
-        }
 
         @Override
         public V[] addSetValues() {
@@ -105,10 +102,6 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     private static final String TWENTY = "20";
 
     private static final String THIRTY = "30";
-
-    public Flat3MapTest() {
-        super(Flat3MapTest.class.getSimpleName());
-    }
 
     @Override
     public BulkTest bulkTestMapIterator() {

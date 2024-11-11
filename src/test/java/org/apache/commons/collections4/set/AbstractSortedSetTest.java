@@ -49,7 +49,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         private final E[] otherElements;
         @SuppressWarnings("unchecked")
         public TestSortedSetSubSet(final int bound, final boolean head) {
-            super("TestSortedSetSubSet");
             if (head) {
                 //System.out.println("HEADSET");
                 this.type = TYPE_HEADSET;
@@ -83,7 +82,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         } //type
         @SuppressWarnings("unchecked")
         public TestSortedSetSubSet(final int loBound, final int hiBound) {
-            super("TestSortedSetSubSet");
             //System.out.println("SUBSET");
             this.type = TYPE_SUBSET;
             this.lowBound = loBound;
@@ -169,15 +167,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
             return getSubSet(AbstractSortedSetTest.this.makeObject());
         }
 
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param name  name for test
-     */
-    public AbstractSortedSetTest(final String name) {
-        super(name);
     }
 
     /**

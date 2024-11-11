@@ -26,10 +26,6 @@ import java.util.Collection;
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public SynchronizedCollectionTest() {
-        super(SynchronizedCollectionTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

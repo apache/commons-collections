@@ -57,10 +57,6 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected final Comparator<String> reverseStringComparator = new ReverseStringComparator();
 
-    public LazySortedMapTest() {
-        super(LazySortedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

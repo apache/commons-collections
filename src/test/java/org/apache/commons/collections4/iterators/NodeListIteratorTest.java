@@ -42,13 +42,6 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     // control, which constructor to use in makeObject() and makeEmptyIterator
     private boolean createIteratorWithStandardConstr = true;
 
-    /**
-     * Junit Constructor
-     */
-    public NodeListIteratorTest() {
-        super(NodeListIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public Iterator<Node> makeEmptyIterator() {
         final NodeList emptyNodeList = new NodeList() {

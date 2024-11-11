@@ -110,10 +110,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
 
-        public TestBidiMapIterator() {
-            super("TestBidiMapIterator");
-        }
-
         @Override
         public V[] addSetValues() {
             return getNewSampleValues();
@@ -238,14 +234,6 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         public BidiMap<V, K> makeObject() {
             return main.makeObject().inverseBidiMap();
         }
-    }
-
-    public AbstractBidiMapTest() {
-        super("Inverse");
-    }
-
-    public AbstractBidiMapTest(final String testName) {
-        super(testName);
     }
 
     public BulkTest bulkTestBidiMapIterator() {

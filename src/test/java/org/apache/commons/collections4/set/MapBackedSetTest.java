@@ -25,10 +25,6 @@ import org.apache.commons.collections4.map.HashedMap;
  */
 public class MapBackedSetTest<E> extends AbstractSetTest<E> {
 
-    public MapBackedSetTest() {
-        super(MapBackedSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

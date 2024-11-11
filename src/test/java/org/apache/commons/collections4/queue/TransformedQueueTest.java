@@ -36,10 +36,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
-    public TransformedQueueTest() {
-        super(TransformedQueueTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

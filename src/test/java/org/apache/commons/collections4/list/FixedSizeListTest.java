@@ -33,10 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
-    public FixedSizeListTest() {
-        super(FixedSizeListTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

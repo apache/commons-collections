@@ -43,10 +43,6 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public PeekingIteratorTest() {
-        super(PeekingIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return PeekingIterator.peekingIterator(Collections.<E>emptyList().iterator());

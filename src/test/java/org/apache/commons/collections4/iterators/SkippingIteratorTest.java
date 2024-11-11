@@ -45,10 +45,6 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private List<E> testList;
 
-    public SkippingIteratorTest() {
-        super(SkippingIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public Iterator<E> makeEmptyIterator() {
         return new SkippingIterator<>(Collections.<E>emptyList().iterator(), 0);

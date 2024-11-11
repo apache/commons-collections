@@ -39,10 +39,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
-    public UnmodifiableOrderedMapIteratorTest() {
-        super(UnmodifiableOrderedMapIteratorTest.class.getSimpleName());
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {

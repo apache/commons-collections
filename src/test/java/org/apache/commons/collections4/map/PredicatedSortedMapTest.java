@@ -57,10 +57,6 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 
-    public PredicatedSortedMapTest() {
-        super(PredicatedSortedMapTest.class.getSimpleName());
-    }
-
     protected SortedMap<K, V> decorateMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,
         final Predicate<? super V> valuePredicate) {
         return PredicatedSortedMap.predicatedSortedMap(map, keyPredicate, valuePredicate);

@@ -29,10 +29,6 @@ import org.junit.jupiter.api.Test;
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public HashedMapTest() {
-        super(HashedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

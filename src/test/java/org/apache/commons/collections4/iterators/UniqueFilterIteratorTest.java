@@ -41,10 +41,6 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1;
 
-    public UniqueFilterIteratorTest() {
-        super(UniqueFilterIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public UniqueFilterIterator<E> makeEmptyIterator() {
         final ArrayList<E> list = new ArrayList<>();

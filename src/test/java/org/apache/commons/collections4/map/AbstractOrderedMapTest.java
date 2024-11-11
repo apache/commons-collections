@@ -45,9 +45,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
-        public InnerTestOrderedMapIterator() {
-            super("InnerTestOrderedMapIterator");
-        }
 
         @Override
         public Map<K, V> getConfirmedMap() {
@@ -93,15 +90,6 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
             super.verify();
             AbstractOrderedMapTest.this.verify();
         }
-    }
-
-    /**
-     * JUnit constructor.
-     *
-     * @param testName the test name
-     */
-    public AbstractOrderedMapTest(final String testName) {
-        super(testName);
     }
 
     public BulkTest bulkTestOrderedMapIterator() {

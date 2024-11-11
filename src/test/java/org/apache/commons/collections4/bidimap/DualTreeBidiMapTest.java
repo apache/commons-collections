@@ -22,7 +22,7 @@ package org.apache.commons.collections4.bidimap;
 public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 
     public DualTreeBidiMapTest() {
-        super(DualTreeBidiMapTest.class.getSimpleName());
+        super();
     }
 
     /**

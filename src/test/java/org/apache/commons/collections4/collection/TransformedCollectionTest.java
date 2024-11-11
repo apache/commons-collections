@@ -54,10 +54,6 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
     public static final Transformer<Object, Object> TO_LOWER_CASE_TRANSFORMER = new ToLowerCase();
 
-    public TransformedCollectionTest() {
-        super(TransformedCollectionTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

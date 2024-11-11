@@ -28,10 +28,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
-    public AbstractLinkedListTest(final String testName) {
-        super(testName);
-    }
-
     protected void checkNodes() {
         final AbstractLinkedList<E> list = getCollection();
         for (int i = 0; i < list.size; i++) {

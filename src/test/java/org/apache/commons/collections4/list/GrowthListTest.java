@@ -33,10 +33,6 @@ import org.junit.jupiter.api.function.Executable;
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 
-    public GrowthListTest() {
-        super(GrowthListTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

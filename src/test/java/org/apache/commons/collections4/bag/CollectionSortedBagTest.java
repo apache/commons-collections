@@ -37,13 +37,6 @@ import org.junit.jupiter.api.Test;
  */
 public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
-    /**
-     * JUnit constructor.
-     */
-    public CollectionSortedBagTest() {
-        super(CollectionSortedBagTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

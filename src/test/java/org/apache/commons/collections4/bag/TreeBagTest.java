@@ -29,10 +29,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TreeBagTest() {
-        super(TreeBagTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

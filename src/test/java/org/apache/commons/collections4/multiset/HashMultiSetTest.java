@@ -24,10 +24,6 @@ import org.apache.commons.collections4.MultiSet;
  */
 public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
-    public HashMultiSetTest() {
-        super(HashMultiSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.1";

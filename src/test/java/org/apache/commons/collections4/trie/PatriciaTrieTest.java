@@ -46,10 +46,6 @@ import org.junit.jupiter.api.Test;
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
-    public PatriciaTrieTest() {
-        super(PatriciaTrieTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

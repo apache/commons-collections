@@ -49,7 +49,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -140,9 +139,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
     public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
-        public TestMapEntrySet() {
-            super("MapEntrySet");
-        }
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -327,9 +323,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     public class TestMapKeySet extends AbstractSetTest<K> {
-        public TestMapKeySet() {
-            super(StringUtils.EMPTY);
-        }
 
         @Override
         public K[] getFullElements() {
@@ -407,9 +400,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // are still equal to the confirmed's collection views.
 
     public class TestMapValues extends AbstractCollectionTest<V> {
-        public TestMapValues() {
-            super(StringUtils.EMPTY);
-        }
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -526,15 +516,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
     /** HashMap created by reset(). */
     protected Map<K, V> confirmed;
-
-    /**
-     * JUnit constructor.
-     *
-     * @param testName the test name
-     */
-    public AbstractMapTest(final String testName) {
-        super(testName);
-    }
 
     /**
      * Helper method to add all the mappings described by {@link #getSampleKeys()} and {@link #getSampleValues()}.

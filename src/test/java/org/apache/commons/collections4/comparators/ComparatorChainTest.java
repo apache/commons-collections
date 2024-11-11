@@ -93,10 +93,6 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         }
     }
 
-    public ComparatorChainTest() {
-        super(ComparatorChainTest.class.getSimpleName());
-    }
-
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ComparatorChain.version4.obj");
 //    }

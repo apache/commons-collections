@@ -35,10 +35,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TransformedSortedSetTest() {
-        super(TransformedSortedSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

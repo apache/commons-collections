@@ -35,10 +35,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public UnmodifiableSortedMapTest() {
-        super(UnmodifiableSortedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

@@ -34,10 +34,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableCollectionTest() {
-        super(UnmodifiableCollectionTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

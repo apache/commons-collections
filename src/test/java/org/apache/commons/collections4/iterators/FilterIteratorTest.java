@@ -56,11 +56,6 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     private List<E> list;
     private FilterIterator<E> iterator;
 
-    /** Creates new TestFilterIterator */
-    public FilterIteratorTest() {
-        super(FilterIteratorTest.class.getSimpleName());
-    }
-
     private void initIterator() {
         iterator = makeObject();
     }

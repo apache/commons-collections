@@ -32,10 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
-    public UnmodifiableMultiSetTest() {
-        super(UnmodifiableMultiSetTest.class.getSimpleName());
-    }
-
     @Override
     public MultiSet<E> getCollection() {
         return super.getCollection();

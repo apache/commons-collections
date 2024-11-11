@@ -26,10 +26,6 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 
-    public PatriciaTrie2Test() {
-        super(PatriciaTrie2Test.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

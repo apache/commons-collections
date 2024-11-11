@@ -44,10 +44,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public class TestKeyListView extends AbstractListTest<K> {
 
-        TestKeyListView() {
-            super("TestKeyListView");
-        }
-
         @Override
         public K[] getFullElements() {
             return getSampleKeys();
@@ -92,10 +88,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public class TestValueListView extends AbstractListTest<V> {
 
-        TestValueListView() {
-            super("TestValueListView");
-        }
-
         @Override
         public V[] getFullElements() {
             return getSampleValues();
@@ -136,10 +128,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             return ListOrderedMapTest.this.makeObject().valueList();
         }
 
-    }
-
-    public ListOrderedMapTest() {
-        super(ListOrderedMapTest.class.getSimpleName());
     }
 
     public BulkTest bulkTestKeyListView() {

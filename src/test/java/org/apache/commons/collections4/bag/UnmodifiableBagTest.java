@@ -33,10 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
-    public UnmodifiableBagTest() {
-        super(UnmodifiableBagTest.class.getSimpleName());
-    }
-
     @Override
     public Bag<E> getCollection() {
         return super.getCollection();

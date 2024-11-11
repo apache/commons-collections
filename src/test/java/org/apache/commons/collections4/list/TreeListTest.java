@@ -95,10 +95,6 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        benchmark(new NodeCachingLinkedList());
 //    }
 
-    public TreeListTest() {
-        super(TreeListTest.class.getSimpleName());
-    }
-
     @Override
     public TreeList<E> makeObject() {
         return new TreeList<>();

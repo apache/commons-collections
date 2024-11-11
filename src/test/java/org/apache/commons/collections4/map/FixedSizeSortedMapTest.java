@@ -28,10 +28,6 @@ import java.util.TreeMap;
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public FixedSizeSortedMapTest() {
-        super(FixedSizeSortedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

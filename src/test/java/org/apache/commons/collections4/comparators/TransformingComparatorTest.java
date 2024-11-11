@@ -32,18 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 
-    //
-    // Initialization and busywork
-    //
-
-    public TransformingComparatorTest() {
-        super(TransformingComparatorTest.class.getSimpleName());
-    }
-
-    //
-    // Set up and tear down
-    //
-
     @Override
     @SuppressWarnings("boxing") // OK in test code
     public List<Integer> getComparableObjectsOrdered() {
@@ -85,9 +73,5 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/TransformingComparator.version4.obj");
 //    }
-
-    //
-    // The tests
-    //
 
 }

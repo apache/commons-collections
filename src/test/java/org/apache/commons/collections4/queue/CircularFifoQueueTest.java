@@ -39,10 +39,6 @@ import org.junit.jupiter.api.Test;
  */
 public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
-    public CircularFifoQueueTest() {
-        super(CircularFifoQueueTest.class.getSimpleName());
-    }
-
     /**
      * {@inheritDoc}
      */

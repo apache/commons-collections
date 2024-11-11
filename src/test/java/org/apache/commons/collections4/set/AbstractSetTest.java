@@ -45,15 +45,6 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
 
     /**
-     * JUnit constructor.
-     *
-     * @param name  name for test
-     */
-    public AbstractSetTest(final String name) {
-        super(name);
-    }
-
-    /**
      * Gets the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.
      */
     @Override

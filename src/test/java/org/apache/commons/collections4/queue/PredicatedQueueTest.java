@@ -39,10 +39,6 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     protected Predicate<E> testPredicate = String.class::isInstance;
 
-    public PredicatedQueueTest() {
-        super(PredicatedQueueTest.class.getSimpleName());
-    }
-
     protected Queue<E> decorateCollection(final Queue<E> queue, final Predicate<E> predicate) {
         return PredicatedQueue.predicatedQueue(queue, predicate);
     }

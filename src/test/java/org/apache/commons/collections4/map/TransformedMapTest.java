@@ -40,10 +40,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public TransformedMapTest() {
-        super(TransformedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

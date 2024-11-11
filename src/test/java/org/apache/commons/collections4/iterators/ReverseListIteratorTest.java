@@ -40,10 +40,6 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
 
-    public ReverseListIteratorTest() {
-        super(ReverseListIteratorTest.class.getSimpleName());
-    }
-
     @Override
     public ListIterator<E> makeEmptyIterator() {
         return new ReverseListIterator<>(new ArrayList<>());

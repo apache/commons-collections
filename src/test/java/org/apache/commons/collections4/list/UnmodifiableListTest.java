@@ -37,10 +37,6 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
     protected ArrayList<E> array;
 
-    public UnmodifiableListTest() {
-        super(UnmodifiableListTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

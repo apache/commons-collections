@@ -126,14 +126,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         "Buenos Aires"
     };
 
-    //
-    // Set up and tear down
-    //
-
-    public FixedOrderComparatorTest() {
-        super(FixedOrderComparatorTest.class.getSimpleName());
-    }
-
     /** Shuffles the keys and asserts that the comparator sorts them back to
      * their original order.
      */

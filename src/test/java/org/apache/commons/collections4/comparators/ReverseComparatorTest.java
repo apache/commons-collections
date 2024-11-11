@@ -34,10 +34,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ReverseComparatorTest() {
-        super(ReverseComparatorTest.class.getSimpleName());
-    }
-
     @Override
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<>();

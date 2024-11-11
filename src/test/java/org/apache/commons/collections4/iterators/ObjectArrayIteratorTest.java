@@ -34,10 +34,6 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ObjectArrayIteratorTest() {
-        super(ObjectArrayIteratorTest.class.getSimpleName());
-    }
-
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeArrayIterator() {
         return new ObjectArrayIterator<>();

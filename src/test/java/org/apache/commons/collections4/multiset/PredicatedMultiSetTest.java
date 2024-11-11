@@ -36,10 +36,6 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
-    public PredicatedMultiSetTest() {
-        super(PredicatedMultiSetTest.class.getSimpleName());
-    }
-
     protected MultiSet<T> decorateMultiSet(final HashMultiSet<T> multiset, final Predicate<T> predicate) {
         return PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
     }

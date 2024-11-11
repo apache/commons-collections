@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 
     public UnmodifiableSortedBidiMapTest() {
-        super(UnmodifiableSortedBidiMapTest.class.getSimpleName());
+        super();
     }
 
     @Override

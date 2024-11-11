@@ -45,10 +45,6 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     protected List<String> list2;
     protected List<String> list3;
 
-    public IteratorChainTest() {
-        super(IteratorChainTest.class.getSimpleName());
-    }
-
     public List<String> getList1() {
         return list1;
     }

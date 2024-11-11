@@ -39,10 +39,6 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /** Used as a flag in MapMutator tests */
     private boolean pass;
 
-    public CompositeMapTest() {
-        super(CompositeMapTest.class.getSimpleName());
-    }
-
     @SuppressWarnings("unchecked")
     private Map<K, V> buildOne() {
         final HashMap<K, V> map = new HashMap<>();

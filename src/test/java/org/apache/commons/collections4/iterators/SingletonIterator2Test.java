@@ -37,10 +37,6 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonIterator2Test() {
-        super(SingletonIterator2Test.class.getSimpleName());
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeEmptyIterator() {

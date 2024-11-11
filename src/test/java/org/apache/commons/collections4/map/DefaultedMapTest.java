@@ -45,10 +45,6 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
     protected final Transformer<K, V> nullTransformer = TransformerUtils.<K, V>nullTransformer();
 
-    public DefaultedMapTest() {
-        super(DefaultedMapTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

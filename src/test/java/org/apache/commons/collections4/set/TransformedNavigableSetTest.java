@@ -35,10 +35,6 @@ import org.junit.jupiter.api.Test;
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
-    public TransformedNavigableSetTest() {
-        super(TransformedNavigableSetTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4.1";

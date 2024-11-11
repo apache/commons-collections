@@ -30,10 +30,6 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
-    public AbstractArrayListTest(final String testName) {
-        super(testName);
-    }
-
     /**
      * {@inheritDoc}
      */

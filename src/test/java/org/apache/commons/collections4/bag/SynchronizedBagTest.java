@@ -23,10 +23,6 @@ import org.apache.commons.collections4.Bag;
  */
 public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
-    public SynchronizedBagTest() {
-        super(SynchronizedBagTest.class.getSimpleName());
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";

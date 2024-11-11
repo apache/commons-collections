@@ -35,10 +35,6 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
-    public ArrayIterator2Test() {
-        super(ArrayIterator2Test.class.getSimpleName());
-    }
-
     public ArrayIterator<E> makeArrayIterator(final Object array) {
         return new ArrayIterator<>(array);
     }

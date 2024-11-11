@@ -61,10 +61,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     WeakReference<V> valueReference;
 
-    public ReferenceIdentityMapTest() {
-        super(ReferenceIdentityMapTest.class.getSimpleName());
-    }
-
     @SuppressWarnings("unchecked")
     private Map<K, V> buildRefMap() {
         final K key = (K) new Object();

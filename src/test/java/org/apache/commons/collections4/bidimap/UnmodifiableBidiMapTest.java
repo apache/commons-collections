@@ -36,10 +36,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public UnmodifiableBidiMapTest() {
-        super(UnmodifiableBidiMapTest.class.getSimpleName());
-    }
-
     @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;

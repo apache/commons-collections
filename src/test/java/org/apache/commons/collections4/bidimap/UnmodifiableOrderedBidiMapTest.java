@@ -32,10 +32,6 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
-    public UnmodifiableOrderedBidiMapTest() {
-        super(UnmodifiableOrderedBidiMapTest.class.getSimpleName());
-    }
-
     /**
      * Override to prevent infinite recursion of tests.
      */

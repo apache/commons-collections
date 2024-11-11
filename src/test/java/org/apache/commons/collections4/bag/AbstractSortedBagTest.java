@@ -29,10 +29,6 @@ import org.apache.commons.collections4.SortedBag;
  */
 public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
-    public AbstractSortedBagTest(final String testName) {
-        super(testName);
-    }
-
     /**
      * Returns the {@link #collection} field cast to a {@link SortedBag}.
      *

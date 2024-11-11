@@ -35,10 +35,6 @@ import org.junit.jupiter.api.Test;
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
-    public CompositeSetTest() {
-        super(CompositeSetTest.class.getSimpleName());
-    }
-
     @SuppressWarnings("unchecked")
     public Set<E> buildOne() {
         final HashSet<E> set = new HashSet<>();
