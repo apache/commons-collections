@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 /**
  * This class is left over from the JUnit 3 implementation.
  */
-public class BulkTest implements Cloneable {
+public class BulkTest {
 
     // Note:  BulkTest is Cloneable to make it easier to construct
     // BulkTest instances for simple test methods that are defined in
@@ -55,16 +55,6 @@ public class BulkTest implements Cloneable {
     public BulkTest() {
         this.name = getClass().getSimpleName();
         this.verboseName = getClass().getName();
-    }
-
-    /**
-     * Creates a clone of this {@code BulkTest}.
-     *
-     * @return a clone of this {@code BulkTest}
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 
     /**
