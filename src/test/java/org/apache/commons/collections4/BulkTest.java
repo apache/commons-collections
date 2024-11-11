@@ -21,14 +21,6 @@ package org.apache.commons.collections4;
  */
 public class BulkTest {
 
-    // Note:  BulkTest is Cloneable to make it easier to construct
-    // BulkTest instances for simple test methods that are defined in
-    // anonymous inner classes.  Basically we don't have to worry about
-    // finding weird constructors.  (And even if we found them, technically
-    // it'd be illegal for anyone but the outer class to invoke them).
-    // Given one BulkTest instance, we can just clone it and reset the
-    // method name for every simple test it defines.
-
     /** Path to test data resources */
     protected static final String TEST_DATA_PATH = "src/test/resources/org/apache/commons/collections4/data/test/";
 
@@ -36,21 +28,17 @@ public class BulkTest {
     public static final String TEST_PROPERTIES_PATH = "src/test/resources/org/apache/commons/collections4/properties/";
 
     /**
-     *  The full name of this bulk test instance.  This is the full name
-     *  that is compared to {@link #ignoredTests} to see if this
-     *  test should be ignored.  It's also displayed in the text runner
-     *  to ease debugging.
+     * The full name of this bulk test instance.
      */
     private String verboseName;
 
     /**
-     *  the name of the simple test method
+     * the name of the simple test method
      */
     private String name;
 
     /**
-     *  Constructs a new {@code BulkTest} instance that will run the
-     *  specified simple test.
+     * Constructs a new {@code BulkTest} instance that will run the specified simple test.
      */
     public BulkTest() {
         this.name = getClass().getSimpleName();
@@ -58,18 +46,18 @@ public class BulkTest {
     }
 
     /**
-     *  Returns the name of the simple test method of this {@code BulkTest}.
+     * Gets the name of the simple test method of this {@code BulkTest}.
      *
-     *  @return the name of the simple test method of this {@code BulkTest}
+     * @return the name of the simple test method of this {@code BulkTest}
      */
     public String getName() {
         return name;
     }
 
     /**
-     *  Returns the display name of this {@code BulkTest}.
+     * Gets the display name of this {@code BulkTest}.
      *
-     *  @return the display name of this {@code BulkTest}
+     * @return the display name of this {@code BulkTest}
      */
     @Override
     public String toString() {
