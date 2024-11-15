@@ -58,7 +58,7 @@ import org.junit.jupiter.api.Test;
  * and {@link #makeConfirmedFullCollection()} methods.
  * You might want to override some of the additional public methods as well:
  * <p>
- * <b>Element Population Methods</b>
+ * <strong>Element Population Methods</strong>
  * <p>
  * Override these if your collection restricts what kind of elements are
  * allowed (for instance, if {@code null} is not permitted):
@@ -67,7 +67,7 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #getOtherElements()}
  * </ul>
  * <p>
- * <b>Supported Operation Methods</b>
+ * <strong>Supported Operation Methods</strong>
  * <p>
  * Override these if your collection doesn't support certain operations:
  * <ul>
@@ -78,14 +78,14 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #isFailFastSupported()}
  * </ul>
  * <p>
- * <b>Indicate Collection Behaviour</b>
+ * <strong>Indicate Collection Behaviour</strong>
  * <p>
  * Override these if your collection makes specific behavior guarantees:
  * <ul>
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
  * <p>
- * <b>Fixture Methods</b>
+ * <strong>Fixture Methods</strong>
  * <p>
  * Fixtures are used to verify that the operation results in correct state
  * for the collection.  Basically, the operation is performed against your
@@ -131,7 +131,7 @@ import org.junit.jupiter.api.Test;
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>
  * <p>
- * <b>Other notes</b>
+ * <strong>Other notes</strong>
  * <p>
  * If your {@link Collection} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the

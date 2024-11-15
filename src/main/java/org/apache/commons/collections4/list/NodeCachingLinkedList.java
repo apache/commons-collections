@@ -36,7 +36,7 @@ import java.util.Collection;
  * using this class.
  * </p>
  * <p>
- * <b>Note that this implementation is not synchronized.</b>
+ * <strong>Note that this implementation is not synchronized.</strong>
  * </p>
  *
  * @param <E> the type of the elements in the list.

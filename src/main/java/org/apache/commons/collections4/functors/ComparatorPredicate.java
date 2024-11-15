@@ -67,7 +67,7 @@ import org.apache.commons.collections4.Predicate;
  * evaluation of a comparator result.</p>
  *
  * <pre>
- * ComparatorPredicate.comparatorPredicate(ONE, comparator,<b>ComparatorPredicate.Criterion.GREATER</b>).test(TWO);
+ * ComparatorPredicate.comparatorPredicate(ONE, comparator,<strong>ComparatorPredicate.Criterion.GREATER</strong>).test(TWO);
  * </pre>
  *
  * <p>The input variable TWO is compared to the stored variable ONE using the supplied {@code comparator}

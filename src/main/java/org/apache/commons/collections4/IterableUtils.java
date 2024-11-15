@@ -35,7 +35,7 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
  * <p>
- * <b>Note</b>: This utility class has been designed with fail-fast argument checking.
+ * <strong>Note</strong>: This utility class has been designed with fail-fast argument checking.
  * </p>
  * <ul>
  * <li>All decorator methods are <em>not</em> null-safe for the provided Iterable argument; for example, they will throw a {@link NullPointerException} if a
@@ -685,7 +685,7 @@ public class IterableUtils {
      *  R = collection of elements rejected by all predicates
      * </pre>
      * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
+     * <strong>Note</strong>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
      * </p>
      * <p>
@@ -818,7 +818,7 @@ public class IterableUtils {
      *  R = collection of elements rejected by all predicates
      * </pre>
      * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
+     * <strong>Note</strong>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
      * </p>
      * <p>

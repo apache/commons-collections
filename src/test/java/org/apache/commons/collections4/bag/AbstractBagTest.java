@@ -51,7 +51,7 @@ import org.junit.jupiter.api.Test;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your bag fails.
  * <p>
- * <b>Note:</b> The Bag interface does not conform to the Collection interface
+ * <strong>Note:</strong> The Bag interface does not conform to the Collection interface
  * so the generic collection tests from AbstractCollectionTest would normally fail.
  * As a work-around since 4.0, a CollectionBag decorator can be used
  * to make any Bag implementation comply to the Collection contract.

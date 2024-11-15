@@ -112,7 +112,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * <em>(Change)</em>
      * Returns {@code true} if the bag contains all elements in
-     * the given collection, <b>not</b> respecting cardinality. That is,
+     * the given collection, <strong>not</strong> respecting cardinality. That is,
      * if the given collection {@code coll} contains at least one of
      * every object contained in this object.
      *
@@ -157,7 +157,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * <em>(Change)</em>
      * Remove all elements represented in the given collection,
-     * <b>not</b> respecting cardinality. That is, remove <em>all</em>
+     * <strong>not</strong> respecting cardinality. That is, remove <em>all</em>
      * occurrences of every object contained in the given collection.
      *
      * @param coll  the collection to remove

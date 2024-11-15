@@ -194,7 +194,7 @@ public class MultiKey<K> implements Serializable {
     /**
      * Constructor taking an array of keys, optionally choosing whether to clone.
      * <p>
-     * <b>If the array is not cloned, then it must not be modified.</b>
+     * <strong>If the array is not cloned, then it must not be modified.</strong>
      * <p>
      * This method is public for performance reasons only, to avoid a clone.
      * The hash code is calculated once here in this method.

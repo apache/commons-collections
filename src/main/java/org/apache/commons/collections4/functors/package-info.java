@@ -23,7 +23,7 @@
  * {@link org.apache.commons.collections4.Factory Factory} interfaces.
  * These provide simple callbacks for processing with collections.
  * <p>
- * <b>WARNING:</b> from v4.1 onwards several unsafe classes in this package
+ * <strong>WARNING:</strong> from v4.1 onwards several unsafe classes in this package
  * will not be serializable anymore in order to prevent potential remote
  * code execution exploits.
  * <p>

@@ -37,7 +37,7 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the list of values associated with the specified key.
      * <p>
-     * This method will return an <b>empty</b> list if
+     * This method will return an <strong>empty</strong> list if
      * {@link #containsKey(Object)} returns {@code false}. Changes to the
      * returned list will update the underlying {@code ListValuedMap} and
      * vice-versa.

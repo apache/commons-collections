@@ -484,7 +484,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Sets the map being wrapped.
      * <p>
-     * <b>Note:</b> this method should only be used during deserialization
+     * <strong>Note:</strong> this method should only be used during deserialization
      * </p>
      *
      * @param map the map to wrap

@@ -49,7 +49,7 @@ import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 public class SetUtils {
 
     /**
-     * An unmodifiable <b>view</b> of a set that may be backed by other sets.
+     * An unmodifiable <strong>view</strong> of a set that may be backed by other sets.
      * <p>
      * If the decorated sets change, this view will change as well. The contents
      * of this view can be transferred to another instance via the {@link #copyInto(Set)}
@@ -109,7 +109,7 @@ public class SetUtils {
             UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
 
     /**
-     * Returns an unmodifiable <b>view</b> containing the difference of the given
+     * Returns an unmodifiable <strong>view</strong> containing the difference of the given
      * {@link Set}s, denoted by {@code a \ b} (or {@code a - b}).
      * <p>
      * The returned view contains all elements of {@code a} that are not a member
@@ -142,7 +142,7 @@ public class SetUtils {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the symmetric difference of the given
+     * Returns an unmodifiable <strong>view</strong> of the symmetric difference of the given
      * {@link Set}s.
      * <p>
      * The returned view contains all elements of {@code a} and {@code b} that are
@@ -261,7 +261,7 @@ public class SetUtils {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the intersection of the given {@link Set}s.
+     * Returns an unmodifiable <strong>view</strong> of the intersection of the given {@link Set}s.
      * <p>
      * The returned view contains all elements that are members of both input sets
      * ({@code a} and {@code b}).
@@ -548,7 +548,7 @@ public class SetUtils {
     // Set operations
 
     /**
-     * Returns an unmodifiable <b>view</b> of the union of the given {@link Set}s.
+     * Returns an unmodifiable <strong>view</strong> of the union of the given {@link Set}s.
      * <p>
      * The returned view contains all elements of {@code a} and {@code b}.
      *

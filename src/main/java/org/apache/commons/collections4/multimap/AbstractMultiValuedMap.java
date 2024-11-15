@@ -873,7 +873,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Sets the map being wrapped.
      * <p>
-     * <b>NOTE:</b> this method should only be used during deserialization
+     * <strong>NOTE:</strong> this method should only be used during deserialization
      *
      * @param map the map to wrap
      */
@@ -885,7 +885,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation does <b>not</b> cache the total size
+     * This implementation does <strong>not</strong> cache the total size
      * of the multivalued map, but rather calculates it by iterating
      * over the entries of the underlying map.
      */

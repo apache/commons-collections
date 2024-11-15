@@ -42,7 +42,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
      * that is functionally identical to the Comparator returned by
-     * java.util.Collections.<b>reverseOrder()</b>.
+     * java.util.Collections.<strong>reverseOrder()</strong>.
      *
      * @see java.util.Collections#reverseOrder()
      */

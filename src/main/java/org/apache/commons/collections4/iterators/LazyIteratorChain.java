@@ -95,7 +95,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     /**
      * Gets the next iterator after the previous one has been exhausted.
      * <p>
-     * This method <b>MUST</b> return null when there are no more iterators.
+     * This method <strong>MUST</strong> return null when there are no more iterators.
      * </p>
      *
      * @param count the number of time this method has been called (starts with 1)

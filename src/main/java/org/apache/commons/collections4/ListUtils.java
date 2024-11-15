@@ -309,7 +309,7 @@ public class ListUtils {
      * different implementations of the {@code List} interface.
      * </blockquote>
      * <p>
-     * <b>Note:</b> The behavior of this method is undefined if the lists are
+     * <strong>Note:</strong> The behavior of this method is undefined if the lists are
      * modified during the equals comparison.
      * </p>
      *
@@ -625,7 +625,7 @@ public class ListUtils {
      * @param <E> the element type
      * @param inputCollection the collection to get the input from, may not be null
      * @param predicate the predicate to use, may be null
-     * @return the elements <b>not</b> matching the predicate (new list)
+     * @return the elements <strong>not</strong> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
      *
      * @since 4.0

@@ -34,7 +34,7 @@ import java.util.EmptyStackException;
  * <p>
  * Unlike {@code Stack}, {@code ArrayStack} accepts null entries.
  * <p>
- * <b>Note:</b> From version 4.0 onwards, this class does not implement the
+ * <strong>Note:</strong> From version 4.0 onwards, this class does not implement the
  * removed {@code Buffer} interface anymore.
  * </p>
  *

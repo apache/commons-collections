@@ -1214,7 +1214,7 @@ public class CollectionUtils {
      * for each element <em>e</em> in <em>a</em> or <em>b</em>.
      * </p>
      * <p>
-     * <b>Note:</b> from version 4.1 onwards this method requires the input
+     * <strong>Note:</strong> from version 4.1 onwards this method requires the input
      * collections and equator to be of compatible type (using bounded wildcards).
      * Providing incompatible arguments (e.g. by casting to their rawtypes)
      * will result in a {@code ClassCastException} thrown at runtime.
@@ -1404,7 +1404,7 @@ public class CollectionUtils {
      * <p>
      * NOTE: the number of permutations of a given collection is equal to n!, where
      * n is the size of the collection. Thus, the resulting collection will become
-     * <b>very</b> large for collections &gt; 10 (e.g. 10! = 3628800, 15! = 1307674368000).
+     * <strong>very</strong> large for collections &gt; 10 (e.g. 10! = 3628800, 15! = 1307674368000).
      * </p>
      * <p>
      * For larger collections it is advised to use a {@link PermutationIterator} to
@@ -1792,7 +1792,7 @@ public class CollectionUtils {
      * @param <O>  the type of object the {@link Iterable} contains
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
-     * @return the elements <b>not</b> matching the predicate (new list)
+     * @return the elements <strong>not</strong> matching the predicate (new list)
      */
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
                                                    final Predicate<? super O> predicate) {
@@ -1962,7 +1962,7 @@ public class CollectionUtils {
      * minus the cardinality of <em>e</em> in <em>b</em>, or zero, whichever is greater.
      * </p>
      * <p>
-     * The cardinality of each element <em>e</em> in the returned {@link Collection} that does <b>not</b>
+     * The cardinality of each element <em>e</em> in the returned {@link Collection} that does <strong>not</strong>
      * satisfy the predicate condition will be equal to the cardinality of <em>e</em> in <em>a</em>.
      * </p>
      *

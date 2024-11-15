@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
  * On the other hand, if your map implementation is weird, you may have to override one or more of the other protected methods. They're described below.
  * </p>
  * <p>
- * <b>Entry Population Methods</b>
+ * <strong>Entry Population Methods</strong>
  * </p>
  * <p>
  * Override these methods if your map requires special entries:
@@ -76,7 +76,7 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #getOtherValues()}
  * </ul>
  *
- * <b>Indicate Map Behaviour</b>
+ * <strong>Indicate Map Behaviour</strong>
  * <p>
  * Override these if your map makes specific behavior guarantees:
  * </p>
@@ -84,7 +84,7 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #getIterationBehaviour()}</li>
  * </ul>
  *
- * <b>Supported Operation Methods</b>
+ * <strong>Supported Operation Methods</strong>
  * <p>
  * Override these methods if your map doesn't support certain operations:
  * </p>
@@ -100,7 +100,7 @@ import org.junit.jupiter.api.Test;
  * <li>{@link #isAllowNullValue()}
  * </ul>
  *
- * <b>Fixture Methods</b>
+ * <strong>Fixture Methods</strong>
  * <p>
  * For tests on modification operations (puts and removes), fixtures are used to verify that that operation results in correct state for the map and its
  * collection views. Basically, the modification is performed against your map implementation, and an identical modification is performed against a
@@ -125,7 +125,7 @@ import org.junit.jupiter.api.Test;
  * instance, TestDoubleOrderedMap would want override its {@link #verifyValues()} method to verify that the values are unique and in ascending order.
  * </p>
  *
- * <b>Other Notes</b>
+ * <strong>Other Notes</strong>
  * <p>
  * If your {@link Map} fails one of these tests by design, you may still use this base set of cases. Simply override the test case (method) your map fails
  * and/or the methods that define the assumptions used by the test cases. For example, if your map does not allow duplicate values, override

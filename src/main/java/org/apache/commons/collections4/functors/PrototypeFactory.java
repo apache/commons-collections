@@ -31,8 +31,8 @@ import org.apache.commons.collections4.FunctorException;
 /**
  * Factory implementation that creates a new instance each time based on a prototype.
  * <p>
- * <b>WARNING:</b> from v4.1 onwards {@link Factory} instances returned by
- * {@link #prototypeFactory(Object)} will <b>not</b> be serializable anymore in order
+ * <strong>WARNING:</strong> from v4.1 onwards {@link Factory} instances returned by
+ * {@link #prototypeFactory(Object)} will <strong>not</strong> be serializable anymore in order
  * to prevent potential remote code execution exploits. Please refer to
  * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
  * for more details.

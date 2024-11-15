@@ -25,7 +25,7 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation that executes a closure repeatedly until a condition is met,
  * like a do-while or while loop.
  * <p>
- * <b>WARNING:</b> from v4.1 onwards this class will <b>not</b> be serializable anymore
+ * <strong>WARNING:</strong> from v4.1 onwards this class will <strong>not</strong> be serializable anymore
  * in order to prevent potential remote code execution exploits. Please refer to
  * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
  * for more details.

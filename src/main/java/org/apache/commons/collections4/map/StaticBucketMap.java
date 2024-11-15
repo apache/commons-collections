@@ -407,7 +407,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *    });
      * </pre>
      * <p>
-     * <b>Implementation note:</b> This method requires a lot of time and a ton of stack space. Essentially a recursive algorithm is used to enter each bucket's
+     * <strong>Implementation note:</strong> This method requires a lot of time and a ton of stack space. Essentially a recursive algorithm is used to enter each bucket's
      * monitor. If you have twenty thousand buckets in your map, then the recursive method will be invoked twenty thousand times. You have been warned.
      * </p>
      *
@@ -660,7 +660,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     /**
      * Puts all the entries from the specified map into this map.
-     * This operation is <b>not atomic</b> and may have undesired effects.
+     * This operation is <strong>not atomic</strong> and may have undesired effects.
      *
      * @param map  the map of entries to add
      */

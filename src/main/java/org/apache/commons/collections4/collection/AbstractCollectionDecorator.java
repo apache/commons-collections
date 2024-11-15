@@ -153,7 +153,7 @@ public abstract class AbstractCollectionDecorator<E>
     /**
      * Sets the collection being decorated.
      * <p>
-     * <b>NOTE:</b> this method should only be used during deserialization
+     * <strong>NOTE:</strong> this method should only be used during deserialization
      *
      * @param collection  the decorated collection
      */
