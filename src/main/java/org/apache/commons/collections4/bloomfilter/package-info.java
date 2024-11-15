@@ -37,8 +37,8 @@
  *
  * <h3>BloomFilter</h3>
  *
- * <p>The Bloom filter architecture here is designed for speed of execution, so some methods like {@code merge}, {@code remove},
- * {@code add}, and {@code subtract} may throw exceptions. Once an exception is thrown the state of the Bloom filter is unknown.
+ * <p>The Bloom filter architecture here is designed for speed of execution, so some methods like {@link org.apache.commons.collections4.bloomfilter.CountingBloomFilter}'s
+ * {@code merge}, {@code remove}, {@code add}, and {@code subtract} may throw exceptions. Once an exception is thrown the state of the Bloom filter is unknown.
  * The choice to use not use atomic transactions was made to achieve maximum performance under correct usage.</p>
  *
  * <h4>Nomenclature</h4>
