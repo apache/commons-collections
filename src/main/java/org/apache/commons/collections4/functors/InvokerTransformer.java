@@ -14,14 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.functors;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Objects;
-
-import org.apache.commons.collections4.FunctorException;
-import org.apache.commons.collections4.Transformer;
+java.lang.reflect.InvocationTargetException;
+ java.lang.reflect.Method;
+ org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that creates a new object instance by reflection.
