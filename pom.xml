@@ -127,7 +127,7 @@
     <commons.jacoco.complexityRatio>0.78</commons.jacoco.complexityRatio>
     <doxia.module.markdown.version>1.12.0</doxia.module.markdown.version>
     <math.mathjax.version>2.7.9</math.mathjax.version>
-    <commons.easymock.version>5.4.0</commons.easymock.version>
+    <commons.easymock.version>5.5.0</commons.easymock.version>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
