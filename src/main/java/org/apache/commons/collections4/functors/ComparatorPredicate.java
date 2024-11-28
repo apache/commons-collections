@@ -177,7 +177,6 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      *
      * @see org.apache.commons.collections4.Predicate#test(Object)
      * @see java.util.Comparator#compare(Object first, Object second)
-     *
      * @param target  the target object to compare to
      * @return {@code true} if the comparison succeeds according to the selected criterion
      * @throws IllegalStateException if the criterion is invalid (really not possible)

@@ -27,7 +27,6 @@ import java.util.Objects;
  *
  * @param <I> the type of the iterator being decorated.
  * @param <O> the type of elements returned by this iterator.
- *
  * @since 4.0
  */
 public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator<O> {

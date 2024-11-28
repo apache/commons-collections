@@ -606,7 +606,6 @@ public class ListUtils {
      * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
      * @throws NullPointerException if the input list is null
-     *
      * @since 4.0
      * @see CollectionUtils#select(Iterable, Predicate)
      */
@@ -627,7 +626,6 @@ public class ListUtils {
      * @param predicate the predicate to use, may be null
      * @return the elements <strong>not</strong> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
-     *
      * @since 4.0
      * @see CollectionUtils#selectRejected(Iterable, Predicate)
      */

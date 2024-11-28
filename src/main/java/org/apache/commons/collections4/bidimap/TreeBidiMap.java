@@ -80,7 +80,6 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
- *
  * @since 3.0 (previously DoubleOrderedMap v2.0)
  */
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
@@ -871,7 +870,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Checks a key for validity (non-null and implements Comparable)
      *
      * @param key the key to be checked
-     *
      * @throws NullPointerException if key is null
      * @throws ClassCastException if key is not Comparable
      */
@@ -885,7 +883,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param key the key to be checked
      * @param value the value to be checked
-     *
      * @throws NullPointerException if key or value is null
      * @throws ClassCastException if key or value is not Comparable
      */
@@ -916,7 +913,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Checks a value for validity (non-null and implements Comparable)
      *
      * @param value the value to be checked
-     *
      * @throws NullPointerException if value is null
      * @throws ClassCastException if value is not Comparable
      */
@@ -929,7 +925,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param o1  the first object
      * @param o2  the second object
-     *
      * @return negative value if o1 &lt; o2; 0 if o1 == o2; positive
      *         value if o1 &gt; o2
      */
@@ -1653,7 +1648,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Inserts a node by its value.
      *
      * @param newNode the node to be inserted
-     *
      * @throws IllegalArgumentException if the node already exists
      *                                     in the value mapping
      */

@@ -478,7 +478,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Remove any members of the bag that are not in the given bag, respecting
      * cardinality.
      * @see #retainAll(Collection)
-     *
      * @param other the bag to retain
      * @return {@code true} if this call changed the collection
      */

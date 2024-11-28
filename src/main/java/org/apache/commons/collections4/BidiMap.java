@@ -40,7 +40,6 @@ import java.util.Set;
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
- *
  * @since 3.0
  */
 public interface BidiMap<K, V> extends IterableMap<K, V> {
@@ -57,7 +56,6 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *
      * @param value  the value to find the key for
      * @return the mapped key, or {@code null} if not found
-     *
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to
@@ -101,7 +99,6 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @param key  the key to store
      * @param value  the value to store
      * @return the previous value mapped to this key
-     *
      * @throws UnsupportedOperationException if the {@code put} method is not supported
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
@@ -126,7 +123,6 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *
      * @param value  the value to find the key-value pair for
      * @return the key that was removed, {@code null} if nothing removed
-     *
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to

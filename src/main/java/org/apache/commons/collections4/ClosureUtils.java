@@ -66,7 +66,6 @@ public class ClosureUtils {
      * The transformer's result will be ignored.
      *
      * @see org.apache.commons.collections4.functors.TransformerClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param transformer  the transformer to run each time in the closure, null means nop
      * @return the closure
@@ -80,7 +79,6 @@ public class ClosureUtils {
      * result into the next closure.
      *
      * @see org.apache.commons.collections4.functors.ChainedClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param closures  an array of closures to chain
      * @return the {@code chained} closure
@@ -97,7 +95,6 @@ public class ClosureUtils {
      * method on the collection.
      *
      * @see org.apache.commons.collections4.functors.ChainedClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the {@code chained} closure
@@ -113,7 +110,6 @@ public class ClosureUtils {
      * until the predicate returns false.
      *
      * @see org.apache.commons.collections4.functors.WhileClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param closure  the closure to call repeatedly, not null
      * @param predicate  the predicate to use as an end of loop test, not null
@@ -143,7 +139,6 @@ public class ClosureUtils {
      * A null closure or zero count returns the {@code NOPClosure}.
      *
      * @see org.apache.commons.collections4.functors.ForClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param count  the number of times to loop
      * @param closure  the closure to call repeatedly
@@ -158,7 +153,6 @@ public class ClosureUtils {
      * result of the specified predicate.
      *
      * @see org.apache.commons.collections4.functors.IfClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicate  the validating predicate
      * @param trueClosure  the closure called if the predicate is true
@@ -176,7 +170,6 @@ public class ClosureUtils {
      * on the specified predicate.
      *
      * @see org.apache.commons.collections4.functors.IfClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicate  the predicate to switch on
      * @param trueClosure  the closure called if the predicate is true
@@ -196,7 +189,6 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections4.functors.InvokerTransformer
      * @see org.apache.commons.collections4.functors.TransformerClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
      * @return the {@code invoker} closure
@@ -213,7 +205,6 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections4.functors.InvokerTransformer
      * @see org.apache.commons.collections4.functors.TransformerClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
      * @param paramTypes  the parameter types
@@ -233,7 +224,6 @@ public class ClosureUtils {
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections4.functors.NOPClosure
-     *
      * @param <E>  the type that the closure acts on
      * @return the closure
      */
@@ -254,7 +244,6 @@ public class ClosureUtils {
      * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
      * @return the {@code switch} closure
@@ -276,7 +265,6 @@ public class ClosureUtils {
      * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
@@ -301,7 +289,6 @@ public class ClosureUtils {
      * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
@@ -328,7 +315,6 @@ public class ClosureUtils {
      * </p>
      *
      * @see org.apache.commons.collections4.functors.SwitchClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param objectsAndClosures  a map of objects to closures
      * @return the closure
@@ -356,7 +342,6 @@ public class ClosureUtils {
      * predicate returns false.
      *
      * @see org.apache.commons.collections4.functors.WhileClosure
-     *
      * @param <E>  the type that the closure acts on
      * @param predicate  the predicate to use as an end of loop test, not null
      * @param closure  the closure to call repeatedly, not null

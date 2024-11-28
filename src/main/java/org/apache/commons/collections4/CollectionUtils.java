@@ -1412,7 +1412,6 @@ public class CollectionUtils {
      * </p>
      *
      * @see PermutationIterator
-     *
      * @param <E>  the element type
      * @param collection  the collection to create permutations for, must not be null
      * @return an unordered collection of all permutations of the input collection

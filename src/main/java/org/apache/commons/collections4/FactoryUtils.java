@@ -51,7 +51,6 @@ public class FactoryUtils {
      * use the prototype factory.
      *
      * @see org.apache.commons.collections4.functors.ConstantFactory
-     *
      * @param <T> the type that the factory creates
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the {@code constant} factory.
@@ -65,7 +64,6 @@ public class FactoryUtils {
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections4.functors.ExceptionFactory
-     *
      * @param <T> the type that the factory creates
      * @return the factory
      */
@@ -78,7 +76,6 @@ public class FactoryUtils {
      * a no-args constructor.
      *
      * @see org.apache.commons.collections4.functors.InstantiateFactory
-     *
      * @param <T> the type that the factory creates
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @return the {@code reflection} factory
@@ -93,7 +90,6 @@ public class FactoryUtils {
      * the arguments specified to this method.
      *
      * @see org.apache.commons.collections4.functors.InstantiateFactory
-     *
      * @param <T> the type that the factory creates
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @param paramTypes  parameter types for the constructor, can be null
@@ -132,7 +128,6 @@ public class FactoryUtils {
      * </ul>
      *
      * @see org.apache.commons.collections4.functors.PrototypeFactory
-     *
      * @param <T> the type that the factory creates
      * @param prototype  the object to clone each time in the factory
      * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if

@@ -86,7 +86,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
          * @param map  the CompositeMap which is being modified
          * @param composited  array of Maps in the CompositeMap being modified
          * @param mapToAdd  Mappings to be stored in this CompositeMap
-         *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
          *            prevents it from being stored in this map.
@@ -442,7 +441,6 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * specified map is modified while the operation is in progress.
      *
      * @param map Mappings to be stored in this map.
-     *
      * @throws UnsupportedOperationException if the {@code putAll} method is
      *         not supported by this map.
      *

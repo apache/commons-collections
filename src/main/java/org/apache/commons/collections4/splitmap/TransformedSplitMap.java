@@ -62,7 +62,6 @@ import org.apache.commons.collections4.map.LinkedMap;
  * @param <U> the type of the values to put in this map
  * @param <V> the type of the values to get in this map
  * @since 4.0
- *
  * @see org.apache.commons.collections4.SplitMapUtils#readableMap(org.apache.commons.collections4.Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)
  */

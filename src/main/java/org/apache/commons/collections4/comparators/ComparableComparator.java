@@ -38,7 +38,6 @@ import java.util.Comparator;
  * </p>
  *
  * @param <E> the type of objects compared by this comparator
- *
  * @since 2.0
  * @see java.util.Collections#reverseOrder()
  */

@@ -33,9 +33,7 @@ import org.apache.commons.collections4.Transformer;
  *
  * @param <I> the type of the input to the function
  * @param <O> the type of the result of the function
- *
  * @since 2.1
- *
  * @see org.apache.commons.collections4.Transformer
  * @see org.apache.commons.collections4.comparators.ComparableComparator
  */

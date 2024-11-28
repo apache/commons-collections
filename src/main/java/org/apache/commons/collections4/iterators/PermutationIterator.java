@@ -40,7 +40,6 @@ import java.util.Objects;
  * </p>
  *
  * @param <E>  the type of the objects being permuted
- *
  * @since 4.0
  */
 public class PermutationIterator<E> implements Iterator<List<E>> {

@@ -39,7 +39,6 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
- *
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since 3.0
