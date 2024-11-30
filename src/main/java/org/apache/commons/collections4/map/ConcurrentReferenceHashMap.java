@@ -698,8 +698,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         private transient int modCount;
 
         /**
-         * The table is rehashed when its size exceeds this threshold. (The value of this field is always <tt>(int)(capacity *
-         * loadFactor)</tt>.)
+         * The table is rehashed when its size exceeds this threshold. (The value of this field is always <code>(int)(capacity *
+         * loadFactor)</code>.)
          */
         private transient int threshold;
 
