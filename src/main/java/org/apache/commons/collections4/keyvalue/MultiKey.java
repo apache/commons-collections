@@ -57,6 +57,7 @@ public class MultiKey<K> implements Serializable {
         return (Class<? extends T>) (value == null ? Object.class : value.getClass());
     }
 
+    @SafeVarargs
     private static <T> Class<? extends T> getComponentType(final T... values) {
         @SuppressWarnings("unchecked")
         final Class<? extends T> rootClass = (Class<? extends T>) Object.class;
