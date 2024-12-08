@@ -52,7 +52,10 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     @Test
     public void testObjectFactoryUsesEqualsForTest() throws Exception {
         final Predicate<EqualsTestObject> predicate = EqualPredicate.equalPredicate(FALSE_OBJECT);
-        assertPredicateFalse(predicate, FALSE_OBJECT);
+        assertPredicateFalse(predicate, null);
+        assertPredicateFalse(predicate, TRUE_OBJECT); // different object
+        assertPredicateTrue(predicate, FALSE_OBJECT); // the same object
+        assertPredicateFalse(predicate, new EqualsTestObject(false)); // different object but always returns false from equals()
         assertPredicateTrue(EqualPredicate.equalPredicate(TRUE_OBJECT), TRUE_OBJECT);
     }
 
