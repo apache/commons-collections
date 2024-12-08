@@ -122,8 +122,9 @@ public class MultiKey<K> implements Serializable {
     /**
      * Constructor taking two keys.
      * <p>
-     * The keys should be immutable
+     * The keys should be immutable.
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -137,6 +138,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -149,8 +151,9 @@ public class MultiKey<K> implements Serializable {
     /**
      * Constructor taking four keys.
      * <p>
-     * The keys should be immutable
+     * The keys should be immutable.
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -164,8 +167,9 @@ public class MultiKey<K> implements Serializable {
     /**
      * Constructor taking five keys.
      * <p>
-     * The keys should be immutable
+     * The keys should be immutable.
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -180,10 +184,12 @@ public class MultiKey<K> implements Serializable {
     /**
      * Constructor taking an array of keys which is cloned.
      * <p>
-     * The keys should be immutable
+     * The keys should be immutable.
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      * <p>
      * This is equivalent to {@code new MultiKey(keys, true)}.
+     * </p>
      *
      * @param keys  the array of keys, not null
      * @throws NullPointerException if the key array is null
@@ -196,11 +202,13 @@ public class MultiKey<K> implements Serializable {
      * Constructor taking an array of keys, optionally choosing whether to clone.
      * <p>
      * <strong>If the array is not cloned, then it must not be modified.</strong>
+     * </p>
      * <p>
      * This method is public for performance reasons only, to avoid a clone.
      * The hash code is calculated once here in this method.
      * Therefore, changing the array passed in would not change the hash code but
      * would change the equals method, which is a bug.
+     * </p>
      * <p>
      * This is the only fully safe usage of this constructor, as the object array
      * is never made available in a variable:
@@ -208,8 +216,9 @@ public class MultiKey<K> implements Serializable {
      * new MultiKey(new Object[] {...}, false);
      * </pre>
      * <p>
-     * The keys should be immutable
+     * The keys should be immutable.
      * If they are not then they must not be changed after adding to the MultiKey.
+     * </p>
      *
      * @param keys  the array of keys, not null
      * @param makeClone  true to clone the array, false to assign it
@@ -241,6 +250,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * To be equal, the other object must be a {@code MultiKey} with the
      * same number of keys which are also equal.
+     * </p>
      *
      * @param other  the other object to compare to
      * @return true if equal
@@ -262,6 +272,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The key should be immutable.
      * If it is not then it must not be changed.
+     * </p>
      *
      * @param index  the index to retrieve
      * @return the key at the index
@@ -277,6 +288,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed.
+     * </p>
      *
      * @return the individual keys
      */
@@ -291,6 +303,7 @@ public class MultiKey<K> implements Serializable {
      * change their hash codes once created (note that this is the same
      * constraint that would be used if the individual keys elements were
      * themselves {@link java.util.Map Map} keys).
+     * </p>
      *
      * @return the hash code
      */
