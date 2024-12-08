@@ -361,9 +361,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
             if (!(o instanceof Map.Entry)) {
                 return false;
             }
-            final Entry<?, ?> e = (Entry<?, ?>) o;
-            final V v = ConcurrentReferenceHashMap.this.get(e.getKey());
-            return v != null && v.equals(e.getValue());
+            final V v = ConcurrentReferenceHashMap.this.get(((Entry<?, ?>) o).getKey());
+            return Objects.equals(v, ((Entry<?, ?>) o).getValue());
         }
 
         @Override
@@ -822,7 +821,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
                         } else {
                             v = e.dereferenceValue(opaque);
                         }
-                        if (value.equals(v)) {
+                        if (Objects.equals(value, v)) {
                             return true;
                         }
                     }
@@ -864,7 +863,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         }
 
         private boolean keyEq(final Object src, final Object dest) {
-            return identityComparisons ? src == dest : src.equals(dest);
+            return identityComparisons ? src == dest : Objects.equals(src, dest);
         }
 
         HashEntry<K, V> newHashEntry(final K key, final int hash, final HashEntry<K, V> next, final V value) {
@@ -1093,7 +1092,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
                 e = e.next;
             }
             boolean replaced = false;
-            if (e != null && oldValue.equals(e.value())) {
+            if (e != null && Objects.equals(oldValue, e.value())) {
                 replaced = true;
                 e.setValue(newValue, valueType, refQueue);
             }
@@ -1113,7 +1112,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     private static class SimpleEntry<K, V> implements Entry<K, V> {
 
         private static boolean eq(final Object o1, final Object o2) {
-            return o1 == null ? o2 == null : o1.equals(o2);
+            return Objects.equals(o1, o2);
         }
 
         private final K key;

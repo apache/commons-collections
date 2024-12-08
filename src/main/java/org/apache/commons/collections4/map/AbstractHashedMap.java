@@ -28,6 +28,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -196,8 +197,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             }
             final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
             return
-                (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
-                (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+                Objects.equals(getKey(), other.getKey()) &&
+                Objects.equals(getValue(), other.getValue());
         }
 
         @Override
@@ -1244,7 +1245,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return true if equal
      */
     protected boolean isEqualKey(final Object key1, final Object key2) {
-        return key1 == key2 || key1.equals(key2);
+        return Objects.equals(key1, key2);
     }
 
     /**
@@ -1257,7 +1258,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value1, final Object value2) {
-        return value1 == value2 || value1.equals(value2);
+        return Objects.equals(value1, value2);
     }
 
     /**

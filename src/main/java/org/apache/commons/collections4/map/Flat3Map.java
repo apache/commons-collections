@@ -194,10 +194,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 return false;
             }
             final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
-            final Object key = getKey();
-            final Object value = getValue();
-            return (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
-                   (value == null ? other.getValue() == null : value.equals(other.getValue()));
+            return Objects.equals(getKey(), other.getKey()) &&
+                   Objects.equals(getValue(), other.getValue());
         }
 
         @Override

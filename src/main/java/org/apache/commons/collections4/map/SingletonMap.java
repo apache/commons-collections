@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.BoundedMap;
@@ -399,7 +400,7 @@ public class SingletonMap<K, V>
      * @return true if equal
      */
     protected boolean isEqualKey(final Object key) {
-        return key == null ? getKey() == null : key.equals(getKey());
+        return Objects.equals(key, getKey());
     }
 
     /**
@@ -409,7 +410,7 @@ public class SingletonMap<K, V>
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value) {
-        return value == null ? getValue() == null : value.equals(getValue());
+        return Objects.equals(value, getValue());
     }
 
     // BoundedMap

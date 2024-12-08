@@ -283,8 +283,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             }
 
             final Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
-            return (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
-                (value == null ? e2.getValue() == null : value.equals(e2.getValue()));
+            return Objects.equals(key, e2.getKey()) &&
+                   Objects.equals(value, e2.getValue());
         }
 
         @Override

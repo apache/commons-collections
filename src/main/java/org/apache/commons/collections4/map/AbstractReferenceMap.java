@@ -971,7 +971,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @SuppressWarnings("unchecked")
     protected boolean isEqualKey(final Object key1, Object key2) {
         key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<K>) key2).get();
-        return key1 == key2 || key1.equals(key2);
+        return Objects.equals(key1, key2);
     }
 
     /**
