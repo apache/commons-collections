@@ -181,7 +181,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             final Object key = entry.getKey();
             if (parent.containsKey(key)) {
                 final V value = parent.normalMap.get(key);
-                if (value == null ? entry.getValue() == null : value.equals(entry.getValue())) {
+                if (Objects.equals(value, entry.getValue())) {
                     parent.normalMap.remove(key);
                     parent.reverseMap.remove(value);
                     return true;

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
@@ -91,8 +92,8 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
 
         final DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
         return
-            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
-            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+            Objects.equals(getKey(), other.getKey()) &&
+            Objects.equals(getValue(), other.getValue());
     }
 
     /**

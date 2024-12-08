@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Abstract Pair class to assist with creating correct
@@ -55,9 +56,8 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
             return false;
         }
         final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
-        return
-            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
-            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+        return Objects.equals(getKey(), other.getKey()) &&
+               Objects.equals(getValue(), other.getValue());
     }
 
     /**

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.keyvalue;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
@@ -71,10 +72,9 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
             return false;
         }
         final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
-        final Object value = getValue();
         return
-            (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
-            (value == null ? other.getValue() == null : value.equals(other.getValue()));
+            Objects.equals(key, other.getKey()) &&
+            Objects.equals(getValue(), other.getValue());
     }
 
     /**

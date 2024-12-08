@@ -231,7 +231,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             final Object value = entry.getValue();
             final Node<K, V> node = lookupKey(entry.getKey());
-            return node != null && node.getValue().equals(value);
+            return node != null && Objects.equals(node.getValue(), value);
         }
 
         @Override
@@ -247,7 +247,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             final Object value = entry.getValue();
             final Node<K, V> node = lookupKey(entry.getKey());
-            if (node != null && node.getValue().equals(value)) {
+            if (node != null && Objects.equals(node.getValue(), value)) {
                 doRedBlackDelete(node);
                 return true;
             }
@@ -424,7 +424,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             final Object value = entry.getValue();
             final Node<K, V> node = lookupValue(entry.getKey());
-            return node != null && node.getKey().equals(value);
+            return node != null && Objects.equals(node.getKey(), value);
         }
 
         @Override
@@ -440,7 +440,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             final Object value = entry.getValue();
             final Node<K, V> node = lookupValue(entry.getKey());
-            if (node != null && node.getKey().equals(value)) {
+            if (node != null && Objects.equals(node.getKey(), value)) {
                 doRedBlackDelete(node);
                 return true;
             }
@@ -605,7 +605,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 return false;
             }
             final Map.Entry<?, ?> e = (Map.Entry<?, ?>) obj;
-            return getKey().equals(e.getKey()) && getValue().equals(e.getValue());
+            return Objects.equals(getKey(), e.getKey()) && Objects.equals(getValue(), e.getValue());
         }
 
         private Object getData(final DataElement dataElement) {

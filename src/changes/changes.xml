@@ -45,6 +45,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-815">Javadoc: Update ClosureUtils Javadoc to match runtime.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-777">Migrate to JUnit 5.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix NullPointerException in FilterIterator.setNextObject().</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">EqualPredicate.test(Object) should return true if the parameter is the same object as given the constructor.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">LayerManager.Builder implements Supplier.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory, hemanth0525">Add CollectionUtils.duplicateList(Collection).</action>

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -92,7 +93,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
             return false;
         }
         final Object otherConstant = ((ConstantTransformer<?, ?>) obj).getConstant();
-        return otherConstant == getConstant() || otherConstant != null && otherConstant.equals(getConstant());
+        return Objects.equals(otherConstant, getConstant());
     }
 
     /**
