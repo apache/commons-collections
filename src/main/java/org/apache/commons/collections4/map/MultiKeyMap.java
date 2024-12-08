@@ -460,8 +460,8 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         final MultiKey<? extends K> multi = entry.getKey();
         return
             multi.size() == 2 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1)));
+            Objects.equals(key1, multi.getKey(0)) &&
+            Objects.equals(key2, multi.getKey(1));
     }
 
     /**
@@ -478,9 +478,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         final MultiKey<? extends K> multi = entry.getKey();
         return
             multi.size() == 3 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
-            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2)));
+            Objects.equals(key1, multi.getKey(0)) &&
+            Objects.equals(key2, multi.getKey(1)) &&
+            Objects.equals(key3, multi.getKey(2));
     }
 
     /**
@@ -498,10 +498,10 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         final MultiKey<? extends K> multi = entry.getKey();
         return
             multi.size() == 4 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
-            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2))) &&
-            (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3)));
+            Objects.equals(key1, multi.getKey(0)) &&
+            Objects.equals(key2, multi.getKey(1)) &&
+            Objects.equals(key3, multi.getKey(2)) &&
+            Objects.equals(key4, multi.getKey(3));
     }
 
     /**
@@ -520,11 +520,11 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         final MultiKey<? extends K> multi = entry.getKey();
         return
             multi.size() == 5 &&
-            (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1))) &&
-            (key3 == multi.getKey(2) || key3 != null && key3.equals(multi.getKey(2))) &&
-            (key4 == multi.getKey(3) || key4 != null && key4.equals(multi.getKey(3))) &&
-            (key5 == multi.getKey(4) || key5 != null && key5.equals(multi.getKey(4)));
+            Objects.equals(key1, multi.getKey(0)) &&
+            Objects.equals(key2, multi.getKey(1)) &&
+            Objects.equals(key3, multi.getKey(2)) &&
+            Objects.equals(key4, multi.getKey(3)) &&
+            Objects.equals(key5, multi.getKey(4));
     }
 
     @Override
@@ -695,7 +695,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         while (it.hasNext()) {
             final MultiKey<? extends K> multi = it.next();
             if (multi.size() >= 1 &&
-                (key1 == null ? multi.getKey(0) == null : key1.equals(multi.getKey(0)))) {
+                Objects.equals(key1, multi.getKey(0))) {
                 it.remove();
                 modified = true;
             }
@@ -720,8 +720,8 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         while (it.hasNext()) {
             final MultiKey<? extends K> multi = it.next();
             if (multi.size() >= 2 &&
-                (key1 == null ? multi.getKey(0) == null : key1.equals(multi.getKey(0))) &&
-                (key2 == null ? multi.getKey(1) == null : key2.equals(multi.getKey(1)))) {
+                Objects.equals(key1, multi.getKey(0)) &&
+                Objects.equals(key2, multi.getKey(1))) {
                 it.remove();
                 modified = true;
             }
@@ -747,9 +747,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         while (it.hasNext()) {
             final MultiKey<? extends K> multi = it.next();
             if (multi.size() >= 3 &&
-                (key1 == null ? multi.getKey(0) == null : key1.equals(multi.getKey(0))) &&
-                (key2 == null ? multi.getKey(1) == null : key2.equals(multi.getKey(1))) &&
-                (key3 == null ? multi.getKey(2) == null : key3.equals(multi.getKey(2)))) {
+                Objects.equals(key1, multi.getKey(0)) &&
+                Objects.equals(key2, multi.getKey(1)) &&
+                Objects.equals(key3, multi.getKey(2))) {
                 it.remove();
                 modified = true;
             }
@@ -776,10 +776,10 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         while (it.hasNext()) {
             final MultiKey<? extends K> multi = it.next();
             if (multi.size() >= 4 &&
-                (key1 == null ? multi.getKey(0) == null : key1.equals(multi.getKey(0))) &&
-                (key2 == null ? multi.getKey(1) == null : key2.equals(multi.getKey(1))) &&
-                (key3 == null ? multi.getKey(2) == null : key3.equals(multi.getKey(2))) &&
-                (key4 == null ? multi.getKey(3) == null : key4.equals(multi.getKey(3)))) {
+                Objects.equals(key1, multi.getKey(0)) &&
+                Objects.equals(key2, multi.getKey(1)) &&
+                Objects.equals(key3, multi.getKey(2)) &&
+                Objects.equals(key4, multi.getKey(3))) {
                 it.remove();
                 modified = true;
             }
