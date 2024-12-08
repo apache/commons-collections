@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.keyvalue.MultiKey;
@@ -134,6 +135,32 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final Map<MultiKey<? extends K>, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get(new MultiKey<>((K) I1, (K) I2)), cloned.get(new MultiKey<>((K) I1, (K) I2)));
+    }
+
+    /**
+     * Tests COMPRESS-872
+     * <p>
+     * Claim:
+     * </p>
+     * <ol>
+     * <li>Create a MultiKeyMap, with key(s) of a type (class/record) which has some fields.
+     * <li>Use multiKeyMap.put(T... keys, V value), to create an entry in the Map, to map the keys to a value
+     * <li>Use multiKeyMap.get(T... keys), to verify that the mapping exists and returns the expected value.
+     * <li>Modify/alter any of the objects used as a key. It is enough to change the value of any member field of any of the objects.
+     * <li>Use multiKeyMap.get(T... keys) again, however, now there is no mapping for these keys!
+     * <li>Use multiKeyMap.get(T... keys) with the new modified/altered objects, and it will return the expected value
+     * </ol>
+     */
+    @Test
+    public void testCompress872() {
+        final AtomicReference<String> k1 = new AtomicReference<>("K1v1");
+        final AtomicReference<String> k2 = new AtomicReference<>("K2v1");
+        final MultiKeyMap<AtomicReference<String>, String> map = (MultiKeyMap<AtomicReference<String>, String>) makeObject();
+        assertNull(map.put(k1, k2, "V"));
+        assertEquals("V", map.get(k1, k2));
+        k1.set("K1v2");
+        assertEquals("V", map.get(k1, k2));
+        assertEquals("V", map.get(k1, k2));
     }
 
     @Test
@@ -437,6 +464,17 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         }
     }
 
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "src/test/resources/data/test/MultiKeyMap.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "src/test/resources/data/test/MultiKeyMap.fullCollection.version4.obj");
+//    }
+
     @Test
     public void testMultiKeyRemoveAll4() {
         resetFull();
@@ -450,17 +488,6 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
             assertFalse(I1.equals(key.getKey(0)) && I1.equals(key.getKey(1)) && I2.equals(key.getKey(2)) && key.size() >= 4 && I3.equals(key.getKey(3)));
         }
     }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/MultiKeyMap.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/MultiKeyMap.fullCollection.version4.obj");
-//    }
 
     @Test
     @SuppressWarnings("unchecked")
@@ -480,4 +507,5 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
         assertThrows(NullPointerException.class, () -> map.put(null, (V) new Object()));
     }
+
 }
