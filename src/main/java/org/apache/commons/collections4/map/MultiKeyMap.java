@@ -533,7 +533,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Stores the value against the specified multi-key.
+     * Associates the specified value with the specified keys in this map.
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -560,7 +560,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Stores the value against the specified multi-key.
+     * Associates the specified value with the specified keys in this map.
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -586,7 +586,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Stores the value against the specified multi-key.
+     * Associates the specified value with the specified keys in this map.
      *
      * @param key1  the first key
      * @param key2  the second key
@@ -611,7 +611,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     /**
-     * Stores the value against the specified multi-key.
+     * Associates the specified value with the specified keys in this map.
      *
      * @param key1  the first key
      * @param key2  the second key
