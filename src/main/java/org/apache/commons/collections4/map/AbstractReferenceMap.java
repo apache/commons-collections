@@ -430,9 +430,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing keys
             final List<K> list = new ArrayList<>(size());
-            for (final K key : this) {
-                list.add(key);
-            }
+            forEach(list::add);
             return list.toArray(arr);
         }
     }
