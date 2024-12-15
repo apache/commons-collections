@@ -1611,11 +1611,11 @@ public class MapUtils {
     /**
      * Puts all the keys and values from the specified array into the map.
      * <p>
-     * This method is an alternative to the {@link java.util.Map#putAll(java.util.Map)} method and constructors. It
+     * This method is an alternative to the {@link Map#putAll(java.util.Map)} method and constructors. It
      * allows you to build a map from an object array of various possible styles.
      * </p>
      * <p>
-     * If the first entry in the object array implements {@link java.util.Map.Entry} or {@link KeyValue} then the key
+     * If the first entry in the object array implements {@link Map.Entry} or {@link KeyValue} then the key
      * and value are added from that object. If the first entry in the object array is an object array itself, then it
      * is assumed that index 0 in the sub-array is the key and index 1 is the value. Otherwise, the array is treated as
      * keys and values in alternate indices.
