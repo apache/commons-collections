@@ -17,10 +17,11 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 /**
- * The "read" subset of the {@link java.util.Map} interface.
+ * The "read" subset of the {@link Map} interface.
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
@@ -34,7 +35,7 @@ public interface Get<K, V> {
      *
      * @param key key whose presence in this map is to be tested
      * @return {@code true} if this map contains a mapping for the specified key
-     * @see java.util.Map#containsKey(Object)
+     * @see Map#containsKey(Object)
      */
     boolean containsKey(Object key);
 
@@ -43,7 +44,7 @@ public interface Get<K, V> {
      *
      * @param value value whose presence in this map is to be tested
      * @return {@code true} if this map maps one or more keys to the specified value
-     * @see java.util.Map#containsValue(Object)
+     * @see Map#containsValue(Object)
      */
     boolean containsValue(Object value);
 
@@ -51,16 +52,16 @@ public interface Get<K, V> {
      * Gets a set view of the mappings contained in this map.
      *
      * @return a set view of the mappings contained in this map.
-     * @see java.util.Map#entrySet()
+     * @see Map#entrySet()
      */
-    Set<java.util.Map.Entry<K, V>> entrySet();
+    Set<Map.Entry<K, V>> entrySet();
 
     /**
      * Gets a value at a given key.
      *
      * @param key the key whose associated value is to be returned
      * @return the value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key
-     * @see java.util.Map#get(Object)
+     * @see Map#get(Object)
      */
     V get(Object key);
 
@@ -68,7 +69,7 @@ public interface Get<K, V> {
      * Tests whether this instance contains any key-value mappings.
      *
      * @return {@code true} if this map contains no key-value mappings
-     * @see java.util.Map#isEmpty()
+     * @see Map#isEmpty()
      */
     boolean isEmpty();
 
@@ -76,7 +77,7 @@ public interface Get<K, V> {
      * Gets a view of the keys contained in this map.
      *
      * @return a set view of the keys contained in this map
-     * @see java.util.Map#keySet()
+     * @see Map#keySet()
      */
     Set<K> keySet();
 
@@ -85,7 +86,7 @@ public interface Get<K, V> {
      *
      * @param key key whose mapping is to be removed from the map
      * @return the previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}.
-     * @see java.util.Map#remove(Object)
+     * @see Map#remove(Object)
      */
     V remove(Object key);
 
@@ -93,7 +94,7 @@ public interface Get<K, V> {
      * Gets the number of key-value mappings in this map.
      *
      * @return the number of key-value mappings in this map.
-     * @see java.util.Map#size()
+     * @see Map#size()
      */
     int size();
 
@@ -101,7 +102,7 @@ public interface Get<K, V> {
      * Gets a a collection view of the values contained in this map.
      *
      * @return a collection view of the values contained in this map.
-     * @see java.util.Map#values()
+     * @see Map#values()
      */
     Collection<V> values();
 
