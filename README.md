@@ -45,7 +45,7 @@ Apache Commons Collections
 
 [![Java CI](https://github.com/apache/commons-collections/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/org.apache.commons/commons-collections4?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.commons/commons-collections4)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0-M2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0-M2)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0-M3.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0-M3)
 [![CodeQL](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
 
@@ -62,20 +62,20 @@ Getting the latest release
 --------------------------
 You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections/download_collections.cgi).
 
-Alternatively, you can pull it from  the central Maven repositories:
+Alternatively, you can pull it from the central Maven repositories:
 
 ```xml
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0-M2</version>
+  <version>4.5.0-M3</version>
 </dependency>
 ```
 
 Building
 --------
 
-Building requires a Java JDK and [Apache Maven](https://maven.apache.org/). 
+Building requires a Java JDK and [Apache Maven](https://maven.apache.org/).
 The required Java version is found in the `pom.xml` as the `maven.compiler.source` property.
 
 From a command shell, run `mvn` without arguments to invoke the default Maven goal to run all tests and checks.

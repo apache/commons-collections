@@ -22,7 +22,7 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5.0-M3" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+  <release version="4.5.0-M3" date="2024-12-15" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
     <action issue="COLLECTIONS-857" type="fix" dev="ggregory" due-to="Claude Warren">Complete bloom filter documentation #507.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Package private AbstractEmptyIterator implements ResettableIterator so subclasses don't.</action>

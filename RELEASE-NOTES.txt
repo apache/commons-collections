@@ -1,3 +1,83 @@
+Apache Commons Collections 4.5.0-M3 RELEASE NOTES
+-------------------------------------------------
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+Changes in this version
+-----------------------
+
+New features
+------------
+
+* LayerManager.Builder implements Supplier. Thanks to Gary Gregory. 
+* Add CollectionUtils.duplicateList(Collection). Thanks to Gary Gregory, hemanth0525. 
+* Add CollectionUtils.duplicateSet(Collection). Thanks to Gary Gregory, hemanth0525. 
+* Add CollectionUtils.duplicateSequencedSet(Collection). Thanks to Gary Gregory, hemanth0525. 
+* Add HashBag.HashBag(Iterable). Thanks to Gary Gregory. 
+* Add TreeBag.TreeBag(Iterable). Thanks to Gary Gregory. 
+* COLLECTIONS-858:  Add CartesianProductIterator #509. Thanks to Alexey Pelykh, Alex Herbert, Gary Gregory. 
+* Add missing methods in AbstractMapTests. Thanks to Gary Gregory. 
+* COLLECTIONS-700:  Add ConcurrentReferenceHashMap. Thanks to Gary Gregory. 
+* Add commons.easymock.version to parameterize EasyMock version. Thanks to Gary Gregory. 
+* COLLECTIONS-869:  Add org.apache.commons.collections4.IteratorUtils.chainedIterator(Iterator<? extends Iterator<? extends E>>). Thanks to Gary Gregory. 
+* COLLECTIONS-533:  Add ArrayListValuedLinkedHashMap #560. Thanks to Peter De Maeyer. 
+* Add missing test AbstractIteratorTest.testForEachRemaining(). Thanks to Gary Gregory. 
+* Add FilterIterator.removeNext() #564. Thanks to Gary Gregory, Claude Warren. 
+* COLLECTIONS-870:  Add ExtendedIterator and tests #564. Thanks to Claude Warren, Gary Gregory. 
+* Refactor ExtendedIterator and FilterIterator with a new interface IteratorOperations. Thanks to Gary Gregory. 
+* COLLECTIONS-871:  Add LinkedHashSetValuedLinkedHashMap #565. Thanks to Peter De Maeyer. 
+
+Fixed Bugs
+----------
+
+* COLLECTIONS-857:  Complete bloom filter documentation #507. Thanks to Claude Warren. 
+* Package private AbstractEmptyIterator implements ResettableIterator so subclasses don't. Thanks to Gary Gregory. 
+* Deprecate AbstractEmptyIterator.add(E) without replacement. Thanks to Gary Gregory. 
+* Add missing Javadocs. Thanks to Gary Gregory. 
+* PatriciaTrie constructor reuse the stateless singleton StringKeyAnalyzer.INSTANCE. Thanks to Gary Gregory. 
+* Deprecate StringKeyAnalyzer.StringKeyAnalyzer() in favor of StringKeyAnalyzer.INSTANCE. Thanks to Gary Gregory. 
+* [Functional] FunctorUtils.validate(Closure...) is now FunctorUtils.validate(Consumer...). Thanks to Gary Gregory. 
+* [Functional] FunctorUtils.validate(Predicate...) is now FunctorUtils.validate(java.util.function.Predicate...). Thanks to Gary Gregory. 
+* [Functional] FunctorUtils.validate(Transformer...) is now FunctorUtils.validate(Function...). Thanks to Gary Gregory. 
+* Increase test coverage for ListUtils #517. Thanks to Dávid Szigecsán. Gary Gregory. 
+* Use the Junit (Jupiter) API #518. Thanks to Dávid Szigecsán. 
+* BloomFilterExtractor.flatten() should throw an exception instead of returning null. Thanks to Gary Gregory, Alex Herbert. 
+* Improve WrappedBloomFilterTest. All tests now assert copy() the same way. Thanks to Gary Gregory, Claude Warren. 
+* COLLECTIONS-860:  Javadoc CollectionBag.add* to throw ClassCastException. Thanks to Gary Gregory,  Daniele. 
+* Fix generics in IteratorChain.IteratorChain(Collection). Thanks to Gary Gregory. 
+* Fix generics in org.apache.commons.collections4.IteratorUtils.chainedIterator(Collection). Thanks to Gary Gregory. 
+* COLLECTIONS-856:  Javadoc: Document interaction between peek and filter iterator #515. Thanks to Benjamin Confino, Gary Gregory. 
+* COLLECTIONS-815:  Javadoc: Update ClosureUtils Javadoc to match runtime. Thanks to Elia Bertolina, Gary Gregory. 
+* COLLECTIONS-815:  Javadoc: Update ClosureUtils Javadoc to match runtime. Thanks to Gary Gregory. 
+* COLLECTIONS-777:  Migrate to JUnit 5. Thanks to Gary Gregory. 
+* Fix NullPointerException in FilterIterator.setNextObject(). Thanks to Gary Gregory. 
+* EqualPredicate.test(Object) should return true if the parameter is the same object as given the constructor. Thanks to Gary Gregory. 
+
+Changes
+-------
+
+* Bump org.apache.commons:commons-parent from 71 to 78 #534, #545, #550 #555, #566. Thanks to Gary Gregory. 
+* COLLECTIONS-857:  Update bloom filter documentation #508. Thanks to Claude Warren. 
+* Bump commons-codec:commons-codec from 1.17.0 to 1.17.1 #514. Thanks to Dependabot, Gary Gregory. 
+* Bump org.apache.commons:commons-lang3 from 3.14.0 to 3.17.0 #516, #525, #535. Thanks to Dependabot, Gary Gregory. 
+* Bump org.hamcrest:hamcrest from 2.2 to 3.0 #522, #532. Thanks to Dependabot, Gary Gregory. 
+* Bump com.google.guava:guava-testlib from 33.2.1-jre to 33.3.1-jre #531, #549. Thanks to Dependabot, Gary Gregory. 
+* Bump MathJax from 2.7.2 to 2.7.9. Thanks to Gary Gregory. 
+* [test] Bump org.easymock:easymock from 5.3.0 to 5.5.0 #521, #576. Thanks to Dependabot, Gary Gregory. 
+* [test] Bump commons-io:commons-io from 2.16.1 to 2.18.0 #544, #575. Thanks to Dependabot, Gary Gregory. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+https://commons.apache.org/proper/commons-collections/
+
+Download page: https://commons.apache.org/proper/commons-collections/download_collections.cgi
+
+-----------------------------------------------------------------------------
+
 Apache Commons Collections 4.5.0-M2 RELEASE NOTES
 -------------------------------------------------
 
