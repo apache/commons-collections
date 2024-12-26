@@ -31,7 +31,6 @@ import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 /**
  * Test class for {@link CartesianProductIterator}.
  */

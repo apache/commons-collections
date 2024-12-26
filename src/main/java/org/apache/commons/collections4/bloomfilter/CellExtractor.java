@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.TreeMap;
 import java.util.function.IntPredicate;
 
-
 /**
  * Some Bloom filter implementations use a count rather than a bit flag. The term {@code Cell} is used to
  * refer to these counts and their associated index.  This class is the equivalent of the index extractor except

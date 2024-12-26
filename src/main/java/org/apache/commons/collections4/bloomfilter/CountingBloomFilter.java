@@ -330,7 +330,6 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
         }
     }
 
-
     /**
      * Adds the specified CellExtractor to this Bloom filter.
      *

@@ -61,7 +61,6 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             assertFalse(comparator.equals(null));
         }
 
-
         @Test
         void expectFalseWhenFixedOrderComparatorIsComparedWithOtherObject() {
             final FixedOrderComparator<Integer> comparator = new FixedOrderComparator<>();
