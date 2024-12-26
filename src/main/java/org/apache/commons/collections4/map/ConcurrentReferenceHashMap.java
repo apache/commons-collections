@@ -1303,9 +1303,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          */
         @Override
         public V setValue(final V value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
+            Objects.requireNonNull(value, "value");
             final V v = super.setValue(value);
             ConcurrentReferenceHashMap.this.put(getKey(), value);
             return v;
@@ -1553,9 +1551,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public boolean containsValue(final Object value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(value, "value");
         // See explanation of modCount use above
         final Segment<K, V>[] segments = this.segments;
         final int[] mc = new int[segments.length];
@@ -1715,9 +1711,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V put(final K key, final V value) {
-        if (key == null || value == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(key, "key");
+        Objects.requireNonNull(value, "value");
         final int hash = hashOf(key);
         return segmentFor(hash).put(key, hash, value, null, false);
     }
@@ -1743,9 +1738,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V putIfAbsent(final K key, final V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(value, "value");
         final int hash = hashOf(key);
         return segmentFor(hash).put(key, hash, value, null, true);
     }
@@ -1785,9 +1778,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V replace(final K key, final V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(value, "value");
         final int hash = hashOf(key);
         return segmentFor(hash).replace(key, hash, value);
     }
@@ -1799,9 +1790,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public boolean replace(final K key, final V oldValue, final V newValue) {
-        if (oldValue == null || newValue == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(oldValue, "oldValue");
+        Objects.requireNonNull(newValue, "newValue");
         final int hash = hashOf(key);
         return segmentFor(hash).replace(key, hash, oldValue, newValue);
     }
