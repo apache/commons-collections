@@ -168,7 +168,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Helper class for set-related operations, e.g. union, subtract, intersection.
+     * Helper class for set-related operations, for example union, subtract, intersection.
      * @param <O>  the element type
      */
     private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
@@ -1216,7 +1216,7 @@ public class CollectionUtils {
      * <p>
      * <strong>Note:</strong> from version 4.1 onwards this method requires the input
      * collections and equator to be of compatible type (using bounded wildcards).
-     * Providing incompatible arguments (e.g. by casting to their rawtypes)
+     * Providing incompatible arguments (for example by casting to their rawtypes)
      * will result in a {@code ClassCastException} thrown at runtime.
      * </p>
      *
@@ -1404,7 +1404,7 @@ public class CollectionUtils {
      * <p>
      * NOTE: the number of permutations of a given collection is equal to n!, where
      * n is the size of the collection. Thus, the resulting collection will become
-     * <strong>very</strong> large for collections &gt; 10 (e.g. 10! = 3628800, 15! = 1307674368000).
+     * <strong>very</strong> large for collections &gt; 10 (for example 10! = 3628800, 15! = 1307674368000).
      * </p>
      * <p>
      * For larger collections it is advised to use a {@link PermutationIterator} to
@@ -1462,7 +1462,7 @@ public class CollectionUtils {
      * This implementation iterates over {@code collection}, checking each element in
      * turn to see if it's contained in {@code remove}. If it's not contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code remove} that provides a fast (e.g. O(1)) implementation of
+     * {@code remove} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      * </p>
      *
@@ -1600,7 +1600,7 @@ public class CollectionUtils {
      * This implementation iterates over {@code collection}, checking each element in
      * turn to see if it's contained in {@code retain}. If it's contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code retain} that provides a fast (e.g. O(1)) implementation of
+     * {@code retain} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      * </p>
      *

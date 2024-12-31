@@ -950,7 +950,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * This implementation iterates over the elements of this list, checking each element in
      * turn to see if it's contained in {@code coll}. If it's contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
-     * {@code coll} that provides a fast (e.g. O(1)) implementation of
+     * {@code coll} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
     @Override
@@ -1022,7 +1022,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * This implementation iterates over the elements of this list, checking each element in
      * turn to see if it's contained in {@code coll}. If it's not contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
-     * {@code coll} that provides a fast (e.g. O(1)) implementation of
+     * {@code coll} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
     @Override

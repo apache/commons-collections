@@ -172,7 +172,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Override this method if a subclass is testing an object
      * that cannot serialize an "empty" Collection.
-     * (e.g. Comparators have no contents)
+     * (for example Comparators have no contents)
      *
      * @return true
      */
@@ -183,7 +183,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Override this method if a subclass is testing an object
      * that cannot serialize a "full" Collection.
-     * (e.g. Comparators have no contents)
+     * (for example Comparators have no contents)
      *
      * @return true
      */

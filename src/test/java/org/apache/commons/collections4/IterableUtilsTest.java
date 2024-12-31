@@ -399,7 +399,7 @@ public class IterableUtilsTest {
 
         // Ensure that generic bounds accept valid parameters, but return
         // expected results
-        // e.g. no longs in the "int" Iterable<Number>, and vice versa.
+        // for example no longs in the "int" Iterable<Number>, and vice versa.
         final Iterable<Number> iterableIntAsNumber = Arrays.<Number>asList(1, 2, 3, 4, 5);
         final Iterable<Number> iterableLongAsNumber = Arrays.<Number>asList(1L, 2L, 3L, 4L, 5L);
         assertEquals(0, IterableUtils.frequency(iterableIntAsNumber, 2L));

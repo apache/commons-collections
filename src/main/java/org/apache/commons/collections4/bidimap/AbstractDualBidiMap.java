@@ -109,7 +109,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            // store value as remove may change the entry in the decorator (e.g. TreeMap)
+            // store value as remove may change the entry in the decorator (for example TreeMap)
             final V value = last.getValue();
             iterator.remove();
             parent.reverseMap.remove(value);
@@ -230,7 +230,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            // store value as remove may change the entry in the decorator (e.g. TreeMap)
+            // store value as remove may change the entry in the decorator (for example TreeMap)
             final Object value = last.getValue();
             super.remove();
             parent.reverseMap.remove(value);
@@ -527,7 +527,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * This implementation iterates over the elements of this bidi map, checking each element in
          * turn to see if it's contained in {@code coll}. If it's not contained, it's removed
          * from this bidi map. As a consequence, it is advised to use a collection type for
-         * {@code coll} that provides a fast (e.g. O(1)) implementation of
+         * {@code coll} that provides a fast (for example O(1)) implementation of
          * {@link Collection#contains(Object)}.
          */
         @Override

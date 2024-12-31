@@ -21,7 +21,7 @@ import java.io.Serializable;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Abstract base class for quantification predicates, e.g. All, Any, None.
+ * Abstract base class for quantification predicates, for example All, Any, None.
  *
  * @param <T> the type of the input to the predicate.
  * @since 4.0

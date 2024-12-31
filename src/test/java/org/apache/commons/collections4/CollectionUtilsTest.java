@@ -147,7 +147,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // Ensure that generic bounds accept valid parameters, but return
         // expected results
-        // e.g. no longs in the "int" Iterable<Number>, and vice versa.
+        // for example no longs in the "int" Iterable<Number>, and vice versa.
         assertEquals(0, CollectionUtils.cardinality(2L, iterableA2));
         assertEquals(0, CollectionUtils.cardinality(2, iterableB2));
 
@@ -1048,7 +1048,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     /**
-     * Tests that {@link List}s are handled correctly - e.g. using
+     * Tests that {@link List}s are handled correctly - for example using
      * {@link List#get(int)}.
      */
     @Test

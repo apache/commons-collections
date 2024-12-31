@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 import org.apache.commons.collections4.IteratorUtils;
 
 /**
- * Extends Iterator functionality to include operations commonly found on streams (e.g. filtering, concatenating, mapping). It also provides convenience methods
+ * Extends Iterator functionality to include operations commonly found on streams (for example filtering, concatenating, mapping). It also provides convenience methods
  * for common operations.
  *
  * @param <T> The type of object returned from the iterator.

@@ -66,10 +66,10 @@ public abstract class AbstractIndexExtractorTest {
     private static final IntPredicate TRUE_PREDICATE = i -> true;
 
     private static final IntPredicate FALSE_PREDICATE = i -> false;
-    /** Flag to indicate the indices are ordered, e.g. from {@link IndexExtractor#processIndices(IntPredicate)}. */
+    /** Flag to indicate the indices are ordered, for example from {@link IndexExtractor#processIndices(IntPredicate)}. */
     protected static final int ORDERED = 0x1;
 
-    /** Flag to indicate the indices are distinct, e.g. from {@link IndexExtractor#processIndices(IntPredicate)}. */
+    /** Flag to indicate the indices are distinct, for example from {@link IndexExtractor#processIndices(IntPredicate)}. */
     protected static final int DISTINCT = 0x2;
 
     /**

@@ -35,11 +35,11 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  * </p>
  * <ul>
  *   <li>fluent methods which return a new {@code FluentIterable} instance,
- *       providing a view of the original iterable (e.g. filter(Predicate));
+ *       providing a view of the original iterable (for example filter(Predicate));
  *   <li>conversion methods which copy the FluentIterable's contents into a
- *       new collection or array (e.g. toList());
+ *       new collection or array (for example toList());
  *   <li>utility methods which answer questions about the FluentIterable's
- *       contents (e.g. size(), anyMatch(Predicate)).
+ *       contents (for example size(), anyMatch(Predicate)).
  *   <li>
  * </ul>
  * <p>

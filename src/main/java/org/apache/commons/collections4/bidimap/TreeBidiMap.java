@@ -54,7 +54,7 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * </p>
  * <p>
  * While that goal could be accomplished by taking a pair of TreeMaps
- * and redirecting requests to the appropriate TreeMap (e.g.,
+ * and redirecting requests to the appropriate TreeMap (for example,
  * containsKey would be directed to the TreeMap that maps values to
  * keys, containsValue would be directed to the TreeMap that maps keys
  * to values), there are problems with that implementation.

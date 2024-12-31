@@ -1945,7 +1945,7 @@ public class MapUtils {
      * given map with nice line breaks. If the debug flag is true, it additionally prints the type of the object value.
      * If the contents of a map include the map itself, then the text <em>(this Map)</em> is printed out. If the
      * contents include a parent container of the map, the text <em>(ancestor[i] Map)</em> is printed, where it actually
-     * indicates the number of levels which must be traversed in the sequential list of ancestors (e.g. father,
+     * indicates the number of levels which must be traversed in the sequential list of ancestors (for example father,
      * grandfather, great-grandfather, etc.).
      *
      * @param out the stream to print to

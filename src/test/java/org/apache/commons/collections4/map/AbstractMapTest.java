@@ -2538,7 +2538,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         assertEquals(empty, getMap().isEmpty(), "Map should be empty if HashMap is");
         assertEquals(getConfirmed().hashCode(), getMap().hashCode(), "hashCodes should be the same");
         // changing the order of the assertion below fails for LRUMap because confirmed is
-        // another collection (e.g. treemap) and confirmed.equals() creates a normal iterator (not
+        // another collection (for example treemap) and confirmed.equals() creates a normal iterator (not
         // #mapIterator()), which modifies the parent expected modCount of the map object, causing
         // concurrent modification exceptions.
         // Because of this we have assertEquals(map, confirmed), and not the other way around.

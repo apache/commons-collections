@@ -536,7 +536,7 @@ public class ListUtils {
      * This implementation iterates over {@code collection}, checking each element in
      * turn to see if it's contained in {@code remove}. If it's not contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code remove} that provides a fast (e.g. O(1)) implementation of
+     * {@code remove} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      * </p>
      *
@@ -571,7 +571,7 @@ public class ListUtils {
      * This implementation iterates over {@code collection}, checking each element in
      * turn to see if it's contained in {@code retain}. If it's contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code retain} that provides a fast (e.g. O(1)) implementation of
+     * {@code retain} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
      * </p>
      *

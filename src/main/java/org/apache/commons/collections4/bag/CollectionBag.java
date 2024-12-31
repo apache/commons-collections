@@ -189,7 +189,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * each element in turn to see if it's contained in {@code coll}.
      * If it's not contained, it's removed from this bag. As a consequence,
      * it is advised to use a collection type for {@code coll} that provides
-     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
+     * a fast (for example O(1)) implementation of {@link Collection#contains(Object)}.
      * </p>
      *
      * @param coll  the collection to retain

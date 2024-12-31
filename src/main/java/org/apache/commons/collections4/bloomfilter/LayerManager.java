@@ -160,7 +160,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
 
         /**
          * Removes the last added target if it is empty.  Useful as the first in a chain
-         * of cleanup consumers.  (e.g. {@code Cleanup.removeEmptyTarget.andThen( otherConsumer )})
+         * of cleanup consumers.  (for example {@code Cleanup.removeEmptyTarget.andThen( otherConsumer )})
          *
          * @param <T> Type of BloomFilter.
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
