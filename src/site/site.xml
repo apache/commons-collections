@@ -53,7 +53,7 @@
         </menu>
 
         <menu name="Development">
-            <item name="History" href="/changes-report.html" />
+            <item name="History" href="/changes.html" />
             <item name="Mailing Lists" href="/mail-lists.html" />
             <item name="Issue Tracking" href="/issue-tracking.html" />
             <item name="Team" href="/team.html" />
