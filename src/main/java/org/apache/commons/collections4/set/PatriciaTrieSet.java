@@ -54,7 +54,10 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
 
     @Override
     public boolean contains(Object o) {
-        return trie.containsKey(o);
+        if (o instanceof String)
+            return trie.containsKey(o);
+
+        return false;
     }
 
     @Override
@@ -95,7 +98,6 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
      * @throws IOException            if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
-    @SuppressWarnings("unchecked")
     private void readObject(java.io.ObjectInputStream s)
             throws IOException, ClassNotFoundException {
         s.readFields();
