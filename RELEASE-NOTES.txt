@@ -327,7 +327,7 @@ patches, or suggestions for improvement, see the Apache Commons Collections webs
 
 https://commons.apache.org/proper/commons-collections/
 
-Download page: https://commons.apache.org/proper/commons-collections/download_pool.cgi
+Download page: https://commons.apache.org/proper/commons-collections/download_collections.cgi
 
 -----------------------------------------------------------------------------
 
