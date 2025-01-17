@@ -1,13 +1,34 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.commons.collections4.set;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.HashSet;
+import java.util.SortedSet;
 
 import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.SortedSet;
 
 public class PatriciaTrieSetTest {
 
@@ -226,5 +247,52 @@ public class PatriciaTrieSetTest {
     @Test
     public void comparatorShouReturnSetComparator() {
         Assertions.assertEquals(StringKeyAnalyzer.INSTANCE, patriciaTrieSet.comparator());
+    }
+
+    @Test
+    public void prefixMapShouldCorrectlyWorkWihChineseCharacter() {
+        // COLLECTIONS-525
+        final PatriciaTrieSet set = new PatriciaTrieSet();
+        set.add("点评");
+        set.add("书评");
+        assertTrue(set.prefixSet("点").contains("点评"));
+        assertEquals("点评", set.prefixSet("点").first());
+        assertFalse(set.prefixSet("点").isEmpty());
+        assertEquals(1, set.prefixSet("点").size());
+        assertEquals(1, set.prefixSet("点评").size());
+
+        set.clear();
+        set.add("点评");
+        set.add("点版");
+        assertEquals(2, set.prefixSet("点").size());
+        assertEquals(2, set.prefixSet("点").size());
+    }
+
+    @Test
+    public void setShouldCorrectlyWorkWithMixedCharacters() {
+        final PatriciaTrieSet set = new PatriciaTrieSet();
+        set.add("书评");
+        set.add("书点");
+        set.add("Al");
+        set.add("Alberto");
+        set.add("Йод");
+        set.add("Йододефицит");
+
+
+        SortedSet<String> subset = set.prefixSet("Al");
+        assertEquals(2, subset.size());
+        assertEquals("Al", subset.first());
+        assertEquals("Alberto", subset.last());
+
+        subset = set.prefixSet("Йод");
+        assertEquals(2, subset.size());
+        assertEquals("Йод", subset.first());
+        assertEquals("Йододефицит", subset.last());
+
+        subset = set.prefixSet("书");
+
+        assertEquals(2, subset.size());
+        assertEquals("书点", subset.first());
+        assertEquals("书评", subset.last());
     }
 }
