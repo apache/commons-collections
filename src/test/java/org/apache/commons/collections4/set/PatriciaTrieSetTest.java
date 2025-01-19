@@ -47,6 +47,8 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Albe");
 
         Assertions.assertEquals(2, patriciaTrieSet.size());
+        Assertions.assertTrue(patriciaTrieSet.contains("Alberto"));
+        Assertions.assertTrue(patriciaTrieSet.contains("Albe"));
     }
 
     @Test

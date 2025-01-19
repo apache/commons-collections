@@ -21,8 +21,8 @@ import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.SortedMap;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 
@@ -38,7 +38,6 @@ import org.apache.commons.collections4.trie.PatriciaTrie;
  * <p>
  * This class is Serializable and Cloneable.
  * </p>
- *
  */
 public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<String>, Serializable {
 
@@ -127,7 +126,7 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
 
     @Override
     public SortedSet<String> prefixSet(String key) {
-        return new TreeSet<>(trie.prefixMap(key).keySet());
+        return new RangePatriciaTrieSortedSet(trie.prefixMap(key));
     }
 
     @Override
@@ -137,17 +136,17 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
 
     @Override
     public SortedSet<String> subSet(String fromElement, String toElement) {
-        return new TreeSet<>(trie.subMap(fromElement, toElement).keySet());
+        return new RangePatriciaTrieSortedSet(trie.subMap(fromElement, toElement));
     }
 
     @Override
     public SortedSet<String> headSet(String toElement) {
-        return new TreeSet<>(trie.headMap(toElement).keySet());
+        return new RangePatriciaTrieSortedSet(trie.headMap(toElement));
     }
 
     @Override
     public SortedSet<String> tailSet(String fromElement) {
-        return new TreeSet<>(trie.tailMap(fromElement).keySet());
+        return new RangePatriciaTrieSortedSet(trie.tailMap(fromElement));
     }
 
     @Override
@@ -160,4 +159,81 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
         return trie.lastKey();
     }
 
+    static class RangePatriciaTrieSortedSet extends AbstractSet<String> implements SortedSet<String> {
+
+        protected SortedMap<String, Object> delegate;
+
+        RangePatriciaTrieSortedSet(SortedMap<String, Object> del) {
+            delegate = del;
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return delegate.keySet().iterator();
+        }
+
+        @Override
+        public int size() {
+            return delegate.size();
+        }
+
+        @Override
+        public boolean contains(Object key) {
+            if (key instanceof String) {
+                return delegate.containsKey(key);
+            }
+
+            return false;
+        }
+
+        @Override
+        public Comparator<? super String> comparator() {
+            return delegate.comparator();
+        }
+
+        @Override
+        public SortedSet<String> subSet(String fromElement, String toElement) {
+            return new RangePatriciaTrieSortedSet(delegate.subMap(fromElement, toElement));
+        }
+
+        @Override
+        public SortedSet<String> headSet(String toElement) {
+            return new RangePatriciaTrieSortedSet(delegate.headMap(toElement));
+        }
+
+        @Override
+        public SortedSet<String> tailSet(String fromElement) {
+            return new RangePatriciaTrieSortedSet(delegate.tailMap(fromElement));
+        }
+
+        @Override
+        public String first() {
+            return delegate.firstKey();
+        }
+
+        @Override
+        public String last() {
+            return delegate.lastKey();
+        }
+
+        @Override
+        public boolean add(String value) {
+            return delegate.put(value, PRESENT) != null;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return delegate.remove(o) == PRESENT;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return delegate.isEmpty();
+        }
+
+        @Override
+        public void clear() {
+            delegate.clear();
+        }
+    }
 }
