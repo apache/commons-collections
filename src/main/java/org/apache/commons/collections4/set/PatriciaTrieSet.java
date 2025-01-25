@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.Spliterator;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 
@@ -170,6 +171,11 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
         @Override
         public Iterator<String> iterator() {
             return delegate.keySet().iterator();
+        }
+
+        @Override
+        public Spliterator<String> spliterator() {
+            return delegate.keySet().spliterator();
         }
 
         @Override
