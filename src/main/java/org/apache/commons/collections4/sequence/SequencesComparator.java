@@ -255,7 +255,7 @@ public class SequencesComparator<T> {
      */
     private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2) {
         // Myers Algorithm
-        // Initialisations
+        // Initializations
         final int m = end1 - start1;
         final int n = end2 - start2;
         if (m == 0 || n == 0) {
