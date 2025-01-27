@@ -166,11 +166,11 @@ The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</
 </tr>
 <tr>
 <td><a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/map/Flat3Map.html">Flat3Map</a></td>
-<td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
+<td>This map is optimized to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
 </tr>
 <tr>
 <td><a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/map/StaticBucketMap.html">StaticBucketMap</a></td>
-<td>This map is optimised to work well in a heavily loaded multithreaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multithreaded environment.</td>
+<td>This map is optimized to work well in a heavily loaded multithreaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multithreaded environment.</td>
 </tr>
 </table>
 </div>
