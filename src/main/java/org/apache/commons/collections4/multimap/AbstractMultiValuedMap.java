@@ -576,7 +576,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     private transient Map<K, Collection<V>> map;
 
     /**
-     * Constructor needed for subclass serialisation.
+     * Constructor needed for subclass serialization.
      */
     protected AbstractMultiValuedMap() {
     }

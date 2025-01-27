@@ -66,7 +66,7 @@ import org.apache.commons.collections4.BoundedMap;
 public class LRUMap<K, V>
         extends AbstractLinkedMap<K, V> implements BoundedMap<K, V>, Serializable, Cloneable {
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = -612114643488955218L;
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;

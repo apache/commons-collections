@@ -779,7 +779,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testSerialisation0() throws Exception {
+    public void testSerialization0() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(bout);
@@ -796,7 +796,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialisation2() throws Exception {
+    public void testSerialization2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -820,7 +820,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialisation4() throws Exception {
+    public void testSerialization4() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
