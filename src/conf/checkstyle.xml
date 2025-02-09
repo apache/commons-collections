@@ -49,6 +49,7 @@ limitations under the License.
     <property name="file" value="${checkstyle.suppressions.file}"/>
   </module>
   <module name="TreeWalker">
+    <module name="ArrayTypeStyle" />
     <module name="AvoidStarImport"/>
     <module name="ExplicitInitializationCheck" />
     <module name="GenericWhitespace"/>
