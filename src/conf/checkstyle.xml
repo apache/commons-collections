@@ -81,9 +81,10 @@ limitations under the License.
     <module name="NoWhitespaceBeforeCaseDefaultColon"/>
     <module name="NeedBraces"/>
     <module name="ParenPad"/>
+    <module name="RedundantImport" />
     <module name="RedundantModifier"/>
     <module name="RightCurly"/>
-    <module name="RedundantImport"/>
+    <module name="SimplifyBooleanExpression" />
     <module name="TypecastParenPad" />    
     <module name="UpperEll" />
     <module name="UnusedImports"/>
