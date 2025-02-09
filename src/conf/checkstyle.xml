@@ -23,54 +23,20 @@ limitations under the License.
 <!-- Apache Commons Collections customization of default Checkstyle behavior -->
 <module name="Checker">
   <property name="localeLanguage" value="en"/>
+  <module name="FileTabCharacter">
+    <property name="fileExtensions" value="java,xml"/>
+  </module>
+  <module name="Header">
+    <property name="headerFile" value="${checkstyle.header.file}"/>
+  </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile">
     <property name="lineSeparator" value="lf" />
-  </module>
-  <module name="FileTabCharacter">
-    <property name="fileExtensions" value="java,xml"/>
   </module>
   <module name="RegexpSingleline">
     <!-- \s matches whitespace character, $ matches end of line. -->
     <property name="format" value="\s+$"/>
     <property name="message" value="Line has trailing spaces."/>
-  </module>
-  <module name="SuppressionFilter">
-    <property name="file" value="${checkstyle.suppressions.file}"/>
-  </module>
-  <module name="Header">
-    <property name="headerFile" value="${checkstyle.header.file}"/>
-  </module>
-  <module name="TreeWalker">
-    <module name="ExplicitInitializationCheck" />
-    <module name="AvoidStarImport"/>
-    <module name="IllegalImport"/>
-    <module name="RedundantImport"/>
-    <module name="UnusedImports"/>
-    <module name="NeedBraces"/>
-    <module name="JavadocMethod">
-      <property name="accessModifiers" value="protected" />
-    </module>
-    <module name="MethodParamPad"/>
-    <module name="ModifierOrder"/>
-    <module name="RedundantModifier"/>
-    <module name="UpperEll" />
-    <module name="LeftCurly"/>
-    <module name="NeedBraces"/>
-    <module name="ParenPad"/>
-    <module name="RightCurly"/>
-    <module name="GenericWhitespace"/>
-    <module name="WhitespaceAfter"/>
-    <module name="WhitespaceAround"/>
-    <module name="NoWhitespaceBefore"/>
-    <module name="NoWhitespaceBeforeCaseDefaultColon"/>
-    <module name="ImportOrder">
-      <property name="option" value="top"/>
-      <property name="groups" value="java,javax,junit,org,com"/>
-      <property name="ordered" value="true"/>
-      <property name="separated" value="true"/>
-    </module>
-    <module name="TypecastParenPad" />    
   </module>
   <!-- @author tags are deprecated -->
   <module name="RegexpSingleline">
@@ -78,5 +44,39 @@ limitations under the License.
     <property name="message" value="Deprecated @author tag" />
     <property name="fileExtensions" value="java" />
     <property name="severity" value="warning" />
+  </module>
+  <module name="SuppressionFilter">
+    <property name="file" value="${checkstyle.suppressions.file}"/>
+  </module>
+  <module name="TreeWalker">
+    <module name="AvoidStarImport"/>
+    <module name="ExplicitInitializationCheck" />
+    <module name="GenericWhitespace"/>
+    <module name="IllegalImport"/>
+    <module name="ImportOrder">
+      <property name="option" value="top"/>
+      <property name="groups" value="java,javax,junit,org,com"/>
+      <property name="ordered" value="true"/>
+      <property name="separated" value="true"/>
+    </module>
+    <module name="JavadocMethod">
+      <property name="accessModifiers" value="protected" />
+    </module>
+    <module name="LeftCurly"/>
+    <module name="MethodParamPad"/>
+    <module name="ModifierOrder"/>
+    <module name="NeedBraces"/>
+    <module name="NoWhitespaceBefore"/>
+    <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+    <module name="NeedBraces"/>
+    <module name="ParenPad"/>
+    <module name="RedundantModifier"/>
+    <module name="RightCurly"/>
+    <module name="RedundantImport"/>
+    <module name="TypecastParenPad" />    
+    <module name="UpperEll" />
+    <module name="UnusedImports"/>
+    <module name="WhitespaceAfter"/>
+    <module name="WhitespaceAround"/>
   </module>
 </module>
