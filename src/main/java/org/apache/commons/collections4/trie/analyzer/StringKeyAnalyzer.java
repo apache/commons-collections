@@ -75,7 +75,8 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         // Look at each character, and if they're different
         // then figure out which bit makes the difference
         // and return it.
-        char k = 0, f = 0;
+        char k = 0;
+        char f = 0;
         for (int i = 0; i < length; i++) {
             final int index1 = beginIndex1 + i;
             final int index2 = beginIndex2 + i;

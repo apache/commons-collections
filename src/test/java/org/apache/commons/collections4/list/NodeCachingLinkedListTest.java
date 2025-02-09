@@ -35,11 +35,9 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         final int loopCount = 4000000;
 
-        long startTime, endTime;
-
         System.out.println("Testing relative execution time of commonly-used methods...");
 
-        startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         for (int x = loopCount; x > 0; x--) {
             // unrolled a few times to minimize effect of loop
             ll.addFirst(o1);
@@ -63,7 +61,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
             ll.add(o1);
             ll.remove(0);
         }
-        endTime = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
         System.out.println("Time with LinkedList: " + (endTime - startTime) + " ms");
 
         startTime = System.currentTimeMillis();

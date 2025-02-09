@@ -88,7 +88,8 @@ public class MapPerformance {
     }
 
     private static void test(final Map<String, String> map, final String name) {
-        long startMillis = 0, endMillis = 0;
+        long startMillis = 0;
+        long endMillis = 0;
 //        int total = 0;
         startMillis = System.currentTimeMillis();
         for (int i = RUNS; i > 0; i--) {
