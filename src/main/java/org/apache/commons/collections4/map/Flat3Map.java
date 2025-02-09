@@ -980,10 +980,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         // add new mapping
         switch (size) {
-        default:
-            convertToMap();
-            delegateMap.put(key, value);
-            return null;
         case 2:
             hash3 = key == null ? 0 : key.hashCode();
             key3 = key;
@@ -999,6 +995,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             key1 = key;
             value1 = value;
             break;
+        default:
+            convertToMap();
+            delegateMap.put(key, value);
+            return null;
         }
         size++;
         return null;
