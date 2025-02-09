@@ -416,7 +416,7 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getByteValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
         assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> ((byte) 100)), 0);
+        assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> (byte) 100), 0);
         assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getByte(in, "key", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
