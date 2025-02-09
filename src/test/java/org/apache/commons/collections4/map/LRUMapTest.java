@@ -116,6 +116,12 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         @Override
+        public boolean equals(Object o) {
+            // Pairs with equals()
+            return super.equals(o);
+        }
+
+        @Override
         public int hashCode() {
             // always return the same hash code
             // that way, it will end up in the same bucket

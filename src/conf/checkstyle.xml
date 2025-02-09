@@ -56,6 +56,7 @@ limitations under the License.
     <module name="EmptyBlock">
       <property name="option" value="text" />
     </module>
+    <module name="EqualsHashCode" />
     <module name="ExplicitInitialization" />
     <module name="GenericWhitespace"/>
     <module name="IllegalImport"/>

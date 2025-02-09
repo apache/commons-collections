@@ -44,6 +44,12 @@ public class ArrayUtilsTest {
             public boolean equals(final Object o) {
                 return true;
             }
+
+            @Override
+            public int hashCode() {
+                // Pairs with equals()
+                return super.hashCode();
+            }
         }
         class LANG1261ChildObject extends LANG1261ParentObject {
         }
