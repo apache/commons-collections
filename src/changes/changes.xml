@@ -27,7 +27,7 @@
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.17.1 to 1.18.0 #591.</action>
-    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 78 to 79.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 78 to 81 #2296.</action>
   </release>
   <release version="4.5.0-M3" date="2024-12-15" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
