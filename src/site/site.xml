@@ -23,7 +23,7 @@
     <image src="/images/logo.png"/>
   </bannerRight>
   <body>
-    <head>&lt;script type="text/javascript" id="MathJax-script" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;
+    <head>&lt;script type="text/javascript" id="MathJax-script" async="async" src="https://commons.apache.org/js/mathjax/tex-mml-chtml.js"&gt;&lt;/script&gt;
         &lt;style&gt;
             .footnotes ol li p {
             display: inline;
