@@ -33,14 +33,21 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -651,6 +658,107 @@ public class IterableUtilsTest {
                     fail("not supposed to reach here");
                     return StringUtils.EMPTY;
                 }, StringUtils.EMPTY, "(", null), "expecting NullPointerException"));
+    }
+
+    static final class MockMongoAlertQueryService {
+
+        public Iterable<Map<String, Object>> query(String table) {
+            switch (table) {
+                case "alerts_tenant_1": {
+                    LinkedHashMap<String, Object> map1 = new LinkedHashMap<>();
+                    map1.put("uuId", "alert-23132158");
+                    map1.put("property1", "xxxxxx");
+                    map1.put("property2", "xxxxxx");
+                    map1.put("property3", "xxxxxx");
+                    LinkedHashMap<String, Object> map2 = new LinkedHashMap<>();
+                    map2.put("uuId", "alert-23132159");
+                    map2.put("property1", "xxxxxx");
+                    map2.put("property2", "xxxxxx");
+                    map2.put("property3", "xxxxxx");
+                    return Arrays.asList(
+                            map1,
+                            map2
+                    );
+                }
+                case "alerts_tenant_2": {
+                    return new HashSet<>();
+                }
+                case "alerts_tenant_3": {
+                    LinkedHashMap<String, Object> map1 = new LinkedHashMap<>();
+                    map1.put("uuId", "alert-23154789");
+                    map1.put("property1", "xxxxxx");
+                    map1.put("property2", "xxxxxx");
+                    map1.put("property3", "xxxxxx");
+                    LinkedHashMap<String, Object> map2 = new LinkedHashMap<>();
+                    map2.put("uuId", "alert-32651147");
+                    map2.put("property1", "xxxxxx");
+                    map2.put("property2", "xxxxxx");
+                    map2.put("property3", "xxxxxx");
+                    LinkedHashMap<String, Object> map3 = new LinkedHashMap<>();
+                    map3.put("uuId", "alert-34321523");
+                    map3.put("property1", "xxxxxx");
+                    map3.put("property2", "xxxxxx");
+                    map3.put("property3", "xxxxxx");
+                    return Arrays.asList(
+                            map1,
+                            map2,
+                            map3
+                    );
+                }
+                default:
+                    return new ArrayList<>();
+            }
+
+        }
+
+    }
+
+    @Test
+    public void testChainedIterable() {
+        MockMongoAlertQueryService mockMongoAlertQueryService = new MockMongoAlertQueryService();
+        List<Supplier<Iterable<Map<String, Object>>>> suppliers =
+                Arrays.asList(
+                        "alerts_tenant_1",
+                        "alerts_tenant_2",
+                        "alerts_tenant_3",
+                        "alerts_tenant_4",
+                        "alerts_tenant_5"
+                ).stream().map(
+                        new Function<String, Supplier<Iterable<Map<String, Object>>>>() {
+                            @Override
+                            public Supplier<Iterable<Map<String, Object>>> apply(String tableName) {
+                                return () -> mockMongoAlertQueryService.query(
+                                        tableName
+                                );
+                            }
+                        }
+                ).collect(
+                        Collectors.toList()
+                );
+        Iterable<Map<String, Object>> totalAlertsIterable
+                = IterableUtils.chainedIterable(
+                suppliers.toArray(new Supplier[0])
+        );
+        ArrayList<Object> resultUuids = new ArrayList<>(0);
+        totalAlertsIterable.forEach(
+                new Consumer<Map<String, Object>>() {
+                    @Override
+                    public void accept(Map<String, Object> stringObjectMap) {
+                        resultUuids.add(stringObjectMap.get("uuId"));
+                    }
+                }
+        );
+        Assertions.assertArrayEquals(
+                new Object[]{
+                        "alert-23132158",
+                        "alert-23132159",
+                        "alert-23154789",
+                        "alert-32651147",
+                        "alert-34321523"
+                },
+                resultUuids.toArray(new Object[0])
+        );
+
     }
 
 }
