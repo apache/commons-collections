@@ -44,7 +44,7 @@ final class ArrayUtils {
      * The method returns {@code false} if a {@code null} array is passed in.
      * </p>
      *
-     * @param array        the array to search through
+     * @param array        the array to search
      * @param objectToFind the object to find
      * @return {@code true} if the array contains the object
      */
@@ -63,7 +63,7 @@ final class ArrayUtils {
      * A negative startIndex is treated as zero. A startIndex larger than the array length will return {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}).
      * </p>
      *
-     * @param array        the array to search through for the object, may be {@code null}
+     * @param array        the array to search for the object, may be {@code null}
      * @param objectToFind the object to find, may be {@code null}
      * @param startIndex   the index to start searching at
      * @return the index of the object within the array starting at the index, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
@@ -100,7 +100,7 @@ final class ArrayUtils {
      * This method returns {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) for a {@code null} input array.
      * </p>
      *
-     * @param array        the array to search through for the object, may be {@code null}
+     * @param array        the array to search for the object, may be {@code null}
      * @param objectToFind the object to find, may be {@code null}
      * @return the index of the object within the array, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
