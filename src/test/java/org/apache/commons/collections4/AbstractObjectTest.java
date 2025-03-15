@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +30,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
@@ -141,7 +142,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws ClassNotFoundException
      */
     protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
-        try (FileInputStream stream = new FileInputStream(path)) {
+        try (InputStream stream = Files.newInputStream(Paths.get(path))) {
             return readExternalFormFromStream(stream);
         }
     }
