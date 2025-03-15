@@ -24,6 +24,8 @@
   <body>
   <release version="4.5.0-M4" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(File) to use NIO.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(String) to use NIO.</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.17.1 to 1.18.0 #591.</action>
