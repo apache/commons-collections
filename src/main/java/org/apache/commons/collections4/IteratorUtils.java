@@ -23,11 +23,13 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.IntFunction;
@@ -115,6 +117,14 @@ public class IteratorUtils {
      * to its String representation.
      */
     private static final String DEFAULT_TOSTRING_DELIMITER = ", ";
+
+    private static <E, C extends Collection<E>> C addAll(final Iterator<? extends E> iterator, final C list) {
+        Objects.requireNonNull(iterator, "iterator");
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list;
+    }
 
     /**
      * Gets an iterator over an object array.
@@ -1325,15 +1335,10 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the size is less than 1
      */
     public static <E> List<E> toList(final Iterator<? extends E> iterator, final int estimatedSize) {
-        Objects.requireNonNull(iterator, "iterator");
         if (estimatedSize < 1) {
             throw new IllegalArgumentException("Estimated size must be greater than 0");
         }
-        final List<E> list = new ArrayList<>(estimatedSize);
-        while (iterator.hasNext()) {
-            list.add(iterator.next());
-        }
-        return list;
+        return addAll(iterator, new ArrayList<>(estimatedSize));
     }
 
     /**
@@ -1351,6 +1356,45 @@ public class IteratorUtils {
     public static <E> ListIterator<E> toListIterator(final Iterator<? extends E> iterator) {
         Objects.requireNonNull(iterator, "iterator");
         return new ListIteratorWrapper<>(iterator);
+    }
+
+    /**
+     * Gets a set based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, a HashSet of its values is
+     * created. At the end, the set is returned.
+     * </p>
+     *
+     * @param <E> the element type
+     * @param iterator  the iterator to use, not null
+     * @return a set of the iterator contents
+     * @throws NullPointerException if iterator parameter is null
+     * @since 4.5.0-M4
+     */
+    public static <E> Set<E> toSet(final Iterator<? extends E> iterator) {
+        return toSet(iterator, 10);
+    }
+
+    /**
+     * Gets a set based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, a HashSet of its values is
+     * created. At the end, the set is returned.
+     * </p>
+     *
+     * @param <E> the element type
+     * @param iterator  the iterator to use, not null
+     * @param estimatedSize  the initial size of the HashSet
+     * @return a list of the iterator contents
+     * @throws NullPointerException if iterator parameter is null
+     * @throws IllegalArgumentException if the size is less than 1
+     * @since 4.5.0-M4
+     */
+    public static <E> Set<E> toSet(final Iterator<? extends E> iterator, final int estimatedSize) {
+        if (estimatedSize < 1) {
+            throw new IllegalArgumentException("Estimated size must be greater than 0");
+        }
+        return addAll(iterator, new HashSet<>(estimatedSize));
     }
 
     /**

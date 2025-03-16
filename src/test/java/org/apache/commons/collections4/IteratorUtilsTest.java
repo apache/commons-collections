@@ -35,6 +35,7 @@ import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -1021,6 +1022,18 @@ public class IteratorUtilsTest {
                 () -> assertThrows(IllegalArgumentException.class, () -> IteratorUtils.toList(list.iterator(), -1),
                         "Expecting IllegalArgumentException")
         );
+    }
+
+    @Test
+    public void testToSet() {
+        final Set<Object> set = new HashSet<>();
+        set.add(Integer.valueOf(1));
+        set.add("Two");
+        set.add(null);
+        final Set<Object> result = IteratorUtils.toSet(set.iterator());
+        assertEquals(set, result);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.toSet(null, 10), "Expecting NullPointerException");
+        assertThrows(IllegalArgumentException.class, () -> IteratorUtils.toSet(set.iterator(), -1), "Expecting IllegalArgumentException");
     }
 
     @Test
