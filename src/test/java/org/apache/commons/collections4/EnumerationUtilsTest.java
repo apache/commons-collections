@@ -23,9 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -122,6 +124,37 @@ public class EnumerationUtilsTest {
         assertEquals(expectedList1, expectedList2);
         assertEquals(expectedList1, actualList);
         assertEquals(expectedList2, actualList);
+    }
+
+    @Test
+    public void testToSetWithHashtable() {
+        final Hashtable<String, Integer> expected = new Hashtable<>();
+        expected.put("one", Integer.valueOf(1));
+        expected.put("two", Integer.valueOf(2));
+        expected.put("three", Integer.valueOf(3));
+        // validate elements.
+        final Set<Integer> actualEltSet = EnumerationUtils.toSet(expected.elements());
+        assertEquals(expected.size(), actualEltSet.size());
+        assertTrue(actualEltSet.contains(Integer.valueOf(1)));
+        assertTrue(actualEltSet.contains(Integer.valueOf(2)));
+        assertTrue(actualEltSet.contains(Integer.valueOf(3)));
+        final Set<Integer> expectedEltList = new HashSet<>();
+        expectedEltList.add(Integer.valueOf(1));
+        expectedEltList.add(Integer.valueOf(2));
+        expectedEltList.add(Integer.valueOf(3));
+        assertTrue(actualEltSet.containsAll(expectedEltList));
+
+        // validate keys.
+        final Set<String> actualKeySet = EnumerationUtils.toSet(expected.keys());
+        assertEquals(expected.size(), actualEltSet.size());
+        assertTrue(actualKeySet.contains("one"));
+        assertTrue(actualKeySet.contains("two"));
+        assertTrue(actualKeySet.contains("three"));
+        final Set<String> expectedKeySet = new HashSet<>();
+        expectedKeySet.add("one");
+        expectedKeySet.add("two");
+        expectedKeySet.add("three");
+        assertTrue(actualKeySet.containsAll(expectedKeySet));
     }
 
 }

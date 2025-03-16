@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.collections4.iterators.EnumerationIterator;
@@ -101,6 +102,22 @@ public class EnumerationUtils {
             result.add(stringTokenizer.nextToken());
         }
         return result;
+    }
+
+    /**
+     * Creates a set based on an enumeration.
+     *
+     * <p>As the enumeration is traversed, an HashSet of its values is
+     * created. The new set is returned.</p>
+     *
+     * @param <E> the element type
+     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
+     * @return a set containing all elements of the given enumeration.
+     * @throws NullPointerException if the enumeration parameter is {@code null}.
+     * @since 4.5.0-M4
+     */
+    public static <E> Set<E> toSet(final Enumeration<? extends E> enumeration) {
+        return IteratorUtils.toSet(new EnumerationIterator<>(enumeration));
     }
 
     /**
