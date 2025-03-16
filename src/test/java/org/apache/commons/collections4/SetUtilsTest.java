@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -73,12 +72,9 @@ public class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.difference(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.difference(setA, null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.difference(null, setA),
-                        "Expecting NullPointerException")
-        );
+
+        assertThrows(NullPointerException.class, () -> SetUtils.difference(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.difference(null, setA));
     }
 
     @Test
@@ -95,12 +91,9 @@ public class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.disjunction(setA, null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.disjunction(null, setA),
-                        "Expecting NullPointerException")
-        );
+
+        assertThrows(NullPointerException.class, () -> SetUtils.disjunction(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.disjunction(null, setA));
     }
 
     @Test
@@ -182,12 +175,9 @@ public class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
         assertEquals(SetUtils.<Integer>emptySet(), set2);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.intersection(setA, null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.intersection(null, setA),
-                        "Expecting NullPointerException")
-        );
+
+        assertThrows(NullPointerException.class, () -> SetUtils.intersection(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.intersection(null, setA));
     }
 
     @Test
@@ -212,12 +202,8 @@ public class SetUtilsTest {
         final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertInstanceOf(PredicatedSet.class, set, "returned object should be a PredicatedSet");
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(new HashSet<>(), null),
-                        "Expecting NullPointerException for null predicate."),
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(null, predicate),
-                        "Expecting NullPointerException for null set.")
-        );
+        assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(new HashSet<>(), null), "Expecting NullPointerException for null predicate.");
+        assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(null, predicate), "Expecting NullPointerException for null set.");
     }
 
     @Test
@@ -226,15 +212,10 @@ public class SetUtilsTest {
         assertEquals(7, set.size());
         assertTrue(set.containsAll(setA));
         assertTrue(set.containsAll(setB));
-
         final Set<Integer> set2 = SetUtils.union(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA),
-                        "Expecting NullPointerException")
-        );
+        assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA));
     }
 
     @Test

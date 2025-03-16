@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -248,12 +247,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
 
         final ListOrderedMap<K, V> finalLom = lom;
-        assertAll(
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(1, (K) "testInsert1", (V) "testInsert1v"),
-                        "should not be able to insert at pos 1 in empty Map"),
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(-1, (K) "testInsert-1", (V) "testInsert-1v"),
-                        "should not be able to insert at pos -1 in empty Map"));
 
+        assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(1, (K) "testInsert1", (V) "testInsert1v"),
+                "should not be able to insert at pos 1 in empty Map");
+        assertThrows(IndexOutOfBoundsException.class, () -> finalLom.put(-1, (K) "testInsert-1", (V) "testInsert-1v"),
+                "should not be able to insert at pos -1 in empty Map");
         // put where key doesn't exist
         lom.put(0, (K) "testInsert1", (V) "testInsert1v");
         assertEquals("testInsert1v", lom.getValue(0));

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.list;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -536,12 +535,9 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(list.add((E) "B"));
         assertEquals("A", list.get(0));
         assertEquals("B", list.get(1));
-        assertAll(
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1),
-                        "shouldn't get here"),
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> list.get(2),
-                        "shouldn't get here")
-        );
+
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(2));
     }
 
     @Test

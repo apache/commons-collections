@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -93,18 +92,15 @@ public class ClosureUtilsTest {
 
         assertSame(NOPClosure.INSTANCE, ClosureUtils.<Object>chainedClosure());
         assertSame(NOPClosure.INSTANCE, ClosureUtils.<Object>chainedClosure(Collections.<Closure<Object>>emptyList()));
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(null, null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Closure[]) null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure(null, null)),
-                () -> {
-                    final Collection<Closure<Object>> finalColl = new ArrayList<>();
-                    finalColl.add(null);
-                    finalColl.add(null);
-                    assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(finalColl));
-                }
-        );
+
+        assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(null, null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Closure[]) null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<Object>chainedClosure(null, null));
+        final Collection<Closure<Object>> finalColl = new ArrayList<>();
+        finalColl.add(null);
+        finalColl.add(null);
+        assertThrows(NullPointerException.class, () -> ClosureUtils.chainedClosure(finalColl));
     }
 
     @Test
@@ -124,10 +120,9 @@ public class ClosureUtilsTest {
     public void testExceptionClosure() {
         assertNotNull(ClosureUtils.exceptionClosure());
         assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
-        assertAll(
-                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(null)),
-                () -> assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(cString))
-        );
+
+        assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(null));
+        assertThrows(FunctorException.class, () -> ClosureUtils.exceptionClosure().execute(cString));
     }
 
     @Test
@@ -268,15 +263,13 @@ public class ClosureUtilsTest {
         map.clear();
         map.put(null, null);
         assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchClosure(map));
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.switchClosure(null, null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure((Predicate<String>[]) null, (Closure<String>[]) null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure((Map<Predicate<String>, Closure<String>>) null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure(new Predicate[2], new Closure[2])),
-                () -> assertThrows(IllegalArgumentException.class, () -> ClosureUtils.<String>switchClosure(
-                        new Predicate[]{TruePredicate.<String>truePredicate()},
-                        new Closure[]{a, b}))
-        );
+
+        assertThrows(NullPointerException.class, () -> ClosureUtils.switchClosure(null, null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure((Predicate<String>[]) null, (Closure<String>[]) null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure((Map<Predicate<String>, Closure<String>>) null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.<String>switchClosure(new Predicate[2], new Closure[2]));
+        assertThrows(IllegalArgumentException.class,
+                () -> ClosureUtils.<String>switchClosure(new Predicate[] { TruePredicate.<String>truePredicate() }, new Closure[] { a, b }));
     }
 
     @Test
@@ -337,11 +330,10 @@ public class ClosureUtilsTest {
         cmd = new MockClosure<>();
         ClosureUtils.whileClosure(PredicateUtils.uniquePredicate(), cmd).execute(null);
         assertEquals(1, cmd.count);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, ClosureUtils.nopClosure())),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null)),
-                () -> assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, null))
-        );
+
+        assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, ClosureUtils.nopClosure()));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null));
+        assertThrows(NullPointerException.class, () -> ClosureUtils.whileClosure(null, null));
     }
 
 }

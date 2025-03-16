@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -731,22 +730,16 @@ public class MapUtilsTest {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertInstanceOf(LazyMap.class, map);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null),
-                        "Expecting NullPointerException for null factory"),
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, factory),
-                        "Expecting NullPointerException for null map")
-        );
-
+        assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null),
+                "Expecting NullPointerException for null factory");
+        assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, factory), "Expecting NullPointerException for null map");
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
         map = MapUtils.lazyMap(new HashMap<>(), transformer);
         assertInstanceOf(LazyMap.class, map);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null),
-                        "Expecting NullPointerException for null transformer"),
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, transformer),
-                        "Expecting NullPointerException for null map")
-        );
+        assertThrows(NullPointerException.class, () -> MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null),
+                "Expecting NullPointerException for null transformer");
+        assertThrows(NullPointerException.class, () -> MapUtils.lazyMap((Map<Object, Object>) null, transformer),
+                "Expecting NullPointerException for null map");
     }
 
     @Test
@@ -877,11 +870,9 @@ public class MapUtilsTest {
 
     @Test
     public void testPutAll_Map_array() {
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, null)),
-                () -> assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]))
-        );
 
+        assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, null));
+        assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]));
         Map<String, String> test = MapUtils.putAll(new HashMap<>(), org.apache.commons.lang3.ArrayUtils.EMPTY_STRING_ARRAY);
         assertEquals(0, test.size());
 
@@ -898,24 +889,13 @@ public class MapUtilsTest {
         assertTrue(test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-        assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
-                        {"RED", "#FF0000"},
-                    null,
-                        {"BLUE", "#0000FF"}
-                })),
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
-                        {"RED", "#FF0000"},
-                        {"GREEN"},
-                        {"BLUE", "#0000FF"}
-                })),
-                () -> assertThrows(IllegalArgumentException.class, () -> MapUtils.putAll(new HashMap<>(), new String[][]{
-                        {"RED", "#FF0000"},
-                        {},
-                        {"BLUE", "#0000FF"}
-                }))
-        );
 
+        assertThrows(IllegalArgumentException.class,
+                () -> MapUtils.putAll(new HashMap<>(), new String[][] { { "RED", "#FF0000" }, null, { "BLUE", "#0000FF" } }));
+        assertThrows(IllegalArgumentException.class,
+                () -> MapUtils.putAll(new HashMap<>(), new String[][] { { "RED", "#FF0000" }, { "GREEN" }, { "BLUE", "#0000FF" } }));
+        assertThrows(IllegalArgumentException.class,
+                () -> MapUtils.putAll(new HashMap<>(), new String[][] { { "RED", "#FF0000" }, {}, { "BLUE", "#0000FF" } }));
         // flat array
         test = MapUtils.putAll(new HashMap<>(), new String[] {
             "RED", "#FF0000",

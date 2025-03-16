@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -90,10 +89,8 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     public void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
         assertFalse(chain.hasNext());
-        assertAll(
-                () -> assertThrows(NoSuchElementException.class, () -> chain.next()),
-                () -> assertThrows(IllegalStateException.class, () -> chain.remove())
-        );
+        assertThrows(NoSuchElementException.class, () -> chain.next());
+        assertThrows(IllegalStateException.class, () -> chain.remove());
     }
 
     @Test

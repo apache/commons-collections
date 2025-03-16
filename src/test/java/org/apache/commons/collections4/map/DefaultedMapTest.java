@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,18 +57,11 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Test
     public void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Factory<V>) null),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer),
-                        "Expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Transformer<K, V>) null),
-                        "Expecting NullPointerException")
-        );
+        assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"));
+        assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory));
+        assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Factory<V>) null));
+        assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer));
+        assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(base, (Transformer<K, V>) null));
     }
 
     @Test

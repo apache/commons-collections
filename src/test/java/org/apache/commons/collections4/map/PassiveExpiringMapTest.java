@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -108,23 +107,18 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
 
     @Test
     public void testConstructors() {
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> {
-                    final Map<String, String> map = null;
-                    new PassiveExpiringMap<>(map);
-                },
-                        "constructor - exception should have been thrown."),
-                () -> assertThrows(NullPointerException.class, () -> {
-                    final ExpirationPolicy<String, String> policy = null;
-                    new PassiveExpiringMap<>(policy);
-                },
-                        "constructor - exception should have been thrown."),
-                () -> assertThrows(NullPointerException.class, () -> {
-                    final TimeUnit unit = null;
-                    new PassiveExpiringMap<String, String>(10L, unit);
-                },
-                        "constructor - exception should have been thrown.")
-        );
+        assertThrows(NullPointerException.class, () -> {
+            final Map<String, String> map = null;
+            new PassiveExpiringMap<>(map);
+        });
+        assertThrows(NullPointerException.class, () -> {
+            final ExpirationPolicy<String, String> policy = null;
+            new PassiveExpiringMap<>(policy);
+        });
+        assertThrows(NullPointerException.class, () -> {
+            final TimeUnit unit = null;
+            new PassiveExpiringMap<String, String>(10L, unit);
+        });
     }
 
     @Test

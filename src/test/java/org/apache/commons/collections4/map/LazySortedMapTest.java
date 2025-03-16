@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -130,11 +129,10 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         final SortedMap<Integer, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), transformer);
         assertInstanceOf(LazySortedMap.class, map);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> LazySortedMap.lazySortedMap(new TreeMap<>(), (Transformer<Integer, Number>) null),
-                        "Expecting NullPointerException for null transformer"),
-                () -> assertThrows(NullPointerException.class, () -> LazySortedMap.lazySortedMap((SortedMap<Integer, Number>) null, transformer),
-                        "Expecting NullPointerException for null map"));
+        assertThrows(NullPointerException.class, () -> LazySortedMap.lazySortedMap(new TreeMap<>(), (Transformer<Integer, Number>) null),
+                "Expecting NullPointerException for null transformer");
+        assertThrows(NullPointerException.class, () -> LazySortedMap.lazySortedMap((SortedMap<Integer, Number>) null, transformer),
+                "Expecting NullPointerException for null map");
     }
 
 //    public void testCreate() throws Exception {
