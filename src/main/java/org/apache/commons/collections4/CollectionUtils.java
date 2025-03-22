@@ -762,9 +762,9 @@ public class CollectionUtils {
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
      *
      * @see #EMPTY_COLLECTION
-     * @since 4.0
      * @param <T> the element type
      * @return immutable empty collection
+     * @since 4.0
      */
     @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
     public static <T> Collection<T> emptyCollection() {
