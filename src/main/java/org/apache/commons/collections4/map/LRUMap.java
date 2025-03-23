@@ -360,7 +360,7 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Whether this LRUMap will scan until a removable entry is found when the
+     * Tests whether this LRUMap will scan until a removable entry is found when the
      * map is full.
      *
      * @return true if this map scans

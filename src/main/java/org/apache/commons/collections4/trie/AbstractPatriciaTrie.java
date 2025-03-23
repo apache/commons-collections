@@ -164,12 +164,16 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Whether or not the {@link #getFromKey()} is in the range.
+         * Tests whether or not the {@link #getFromKey()} is in the range.
+         *
+         * @return whether or not the {@link #getFromKey()} is in the range.
          */
         protected abstract boolean isFromInclusive();
 
         /**
-         * Whether or not the {@link #getToKey()} is in the range.
+         * Tests whether or not the {@link #getToKey()} is in the range.
+         *
+         * @return whether or not the {@link #getToKey()} is in the range.
          */
         protected abstract boolean isToInclusive();
 
@@ -1013,9 +1017,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Whether the entry is storing a key.
-         * Only the root can potentially be empty, all other
-         * nodes must have a key.
+         * Tests whether the entry is storing a key. Only the root can potentially be empty, all other nodes must have a key.
          *
          * @return Whether the entry is storing a key
          */
@@ -1024,7 +1026,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Whether the left or right child is a loopback.
+         * Tests whether the left or right child is a loopback.
          *
          * @return Whether the left or right child is a loopback.
          */

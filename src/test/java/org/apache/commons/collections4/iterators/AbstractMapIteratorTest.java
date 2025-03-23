@@ -71,7 +71,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     public abstract Map<K, V> getMap();
 
     /**
-     * Whether the get operation on the map structurally modifies the map,
+     * Tests whether the get operation on the map structurally modifies the map,
      * such as with LRUMap. Default is false.
      *
      * @return true if the get method structurally modifies the map
