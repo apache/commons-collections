@@ -135,7 +135,7 @@
       Fix flaky UnmodifiableMultiValuedMapTest.
     </action>
     <action issue="COLLECTIONS-764" dev="kinow" type="fix" due-to="XenoAmess">
-      Refine javadoc and fix typos.
+      Refine Javadoc and fix typos.
     </action>
     <action issue="COLLECTIONS-765" dev="kinow" type="fix" due-to="Tobias Kiecker">
       Update Javadoc of ListIteratorWrapper#remove.
@@ -694,7 +694,7 @@
       Changed return type of "ListOrderedSet#remove(int)" from Object to the generic type parameter.
     </action>
     <action issue="COLLECTIONS-555" dev="tn" type="fix" due-to="M Kim">
-      Added clarification to javadoc of "TreeBag#add(Object)" wrt null arguments.
+      Added clarification to Javadoc of "TreeBag#add(Object)" wrt null arguments.
     </action>
     <action issue="COLLECTIONS-427" dev="tn" type="add" due-to="Gonçalo Marques">
       Added "toString(...)" methods to newly created "IterableUtils" and existing "IteratorUtils"
@@ -702,11 +702,11 @@
     </action>
     <action issue="COLLECTIONS-427" dev="tn" type="fix">
       Reverted performance improvement for "SetUniqueList#retainAll(Collection)"
-      introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead.
+      introduced in 4.0. Added clarifying Javadoc wrt runtime complexity instead.
     </action>
     <action issue="COLLECTIONS-426" dev="tn" type="fix">
       Reverted performance improvement for "ListOrderedSet#retainAll(Collection)"
-      introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead.
+      introduced in 4.0. Added clarifying Javadoc wrt runtime complexity instead.
     </action>
     <action issue="COLLECTIONS-530" dev="tn" type="fix" due-to="Erik">
       Added a Builder for "PredicatedCollection". Elements added to the builder
@@ -724,7 +724,7 @@
     </action>
     <action issue="COLLECTIONS-542" dev="tn" type="fix">
       "AbstractHashedMap" still inherits from "AbstractMap", contrary to what
-      the class javadoc stated. The inheritance will now be removed in v5.0.
+      the class Javadoc stated. The inheritance will now be removed in v5.0.
     </action>
     <action issue="COLLECTIONS-539" dev="tn" type="add" due-to="Guram Savinov">
       Changed scope of "CircularFifoQueue#isAtFullCapacity()" to public.
@@ -749,7 +749,7 @@
       Improved check for null input in "MapUtils#putAll(Map, Object[])".
     </action>
     <action issue="COLLECTIONS-534" dev="tn" type="fix" due-to="Oswaldo Olivo">
-      Added clarifying javadoc wrt runtime complexity of "CollectionBag#retainAll".
+      Added clarifying Javadoc wrt runtime complexity of "CollectionBag#retainAll".
     </action>
     <action issue="COLLECTIONS-529" dev="tn" type="add" due-to="Alexander Muthmann, Dipanjan Laha">
       Added methods "removeAll(...)" and "retainAll(...)" to "CollectionUtils" that perform
@@ -764,12 +764,12 @@
       Removed unneeded private method in "PassiveExpiringMap".
     </action>
     <action issue="COLLECTIONS-516" dev="tn" type="fix" due-to="Cyrille Artho">
-      Added clarification to the javadoc of "MapUtils#toProperties(Map)" in case
+      Added clarification to the Javadoc of "MapUtils#toProperties(Map)" in case
       of null keys/values.
     </action>
     <action issue="COLLECTIONS-524" dev="tn" type="fix" due-to="J Goodfellow">
       "ListOrderedSet#listOrderedSet(List)" did not remove duplicates from the
-      input list as advertised in the javadoc.
+      input list as advertised in the Javadoc.
     </action>
     <action issue="COLLECTIONS-521" dev="tn" type="fix" due-to="Maxime Nay">
       "MultiKeyMap" was throwing a "NullPointerException" for various operations
@@ -786,13 +786,13 @@
       Fix compilation errors when using source level 1.8 and a recent java 8 compiler.
     </action>
     <action issue="COLLECTIONS-509" dev="tn" type="fix">
-      Clarified javadoc of "CollectionBag" wrt changes from the original Bag interface.
+      Clarified Javadoc of "CollectionBag" wrt changes from the original Bag interface.
     </action>
     <action issue="COLLECTIONS-507" dev="tn" type="fix" due-to="Gerson">
       Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)".
     </action>
     <action issue="COLLECTIONS-506" dev="tn" type="fix" due-to="Anthony Communier">
-      Added javadoc clarification to class "CollectionUtils" that input objects which
+      Added Javadoc clarification to class "CollectionUtils" that input objects which
       override "Object#equals(Object)" must also maintain the general contract of
       "Object#hashCode()" as various utility methods take advantage of sets/maps/bags.
     </action>
@@ -910,7 +910,7 @@ features, this release includes numerous bug fixes.
       Added "PeekingIterator" decorator to support one-element lookahead during iteration.
     </action>
     <action issue="COLLECTIONS-461" dev="tn" type="fix" due-to="Matt Benson, sebb">
-      Added additional clarification to javadoc of interface "Put" wrt return type of
+      Added additional clarification to Javadoc of interface "Put" wrt return type of
       "put(Object, Object)" method.
     </action>
     <action issue="COLLECTIONS-460" dev="tn" type="update">
@@ -1005,16 +1005,16 @@ features, this release includes numerous bug fixes.
       to generate unordered permutations of a collection.
     </action>
     <action issue="COLLECTIONS-421" dev="tn" type="fix" due-to="Benedikt Ritter">
-      Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()".
+      Update Javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()".
     </action>
     <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
+      Added clarifying Javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
     </action>
     <action issue="COLLECTIONS-417" dev="tn" type="fix" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll".
+      Added clarifying Javadoc wrt runtime complexity of "AbstractLinkedList#retainAll".
     </action>
     <action issue="COLLECTIONS-415" dev="tn" type="fix" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll".
+      Added clarifying Javadoc wrt runtime complexity of "AbstractLinkedList#removeAll".
     </action>
     <action issue="COLLECTIONS-414" dev="tn" type="fix">
       Fixed several compilation issues with older Java 1.6 compilers.
@@ -1064,16 +1064,16 @@ features, this release includes numerous bug fixes.
       Added "ListUtils#partition" method to split a List into consecutive sublists.
     </action>
     <action issue="COLLECTIONS-391" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Fixed javadoc for "MapUtils#toProperties(Map)".
+      Fixed Javadoc for "MapUtils#toProperties(Map)".
     </action>
     <action issue="COLLECTIONS-389" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Clarified javadoc for "TransformerUtils#mapTransformer" for null input.
+      Clarified Javadoc for "TransformerUtils#mapTransformer" for null input.
     </action>
     <action issue="COLLECTIONS-388" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Clarified javadoc for "FactoryUtils#prototypeFactory" for null input.
+      Clarified Javadoc for "FactoryUtils#prototypeFactory" for null input.
     </action>
     <action issue="COLLECTIONS-384" dev="ggregory" type="fix" due-to="Shin Hwei Tan">
-      Fixed inconsistent javadoc for "MapUtils#synchronizedMap(Map)".
+      Fixed inconsistent Javadoc for "MapUtils#synchronizedMap(Map)".
     </action>
     <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
       Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
@@ -1088,7 +1088,7 @@ features, this release includes numerous bug fixes.
       Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()".
     </action>
     <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Fixed javadoc for several methods wrt expected NullPointerExceptions.
+      Fixed Javadoc for several methods wrt expected NullPointerExceptions.
     </action>
     <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
       Added method "ListUtils#defaultIfNull(List, List)".
@@ -1128,7 +1128,7 @@ features, this release includes numerous bug fixes.
       Removed debug output in "MapUtils#getNumber(Map)".
     </action>
     <action issue="COLLECTIONS-348" dev="brentworden" type="fix" due-to="Paul Benedict">
-      Fixed javadoc for all "transformedXXX(XXX)" methods in the respective Utils classes
+      Fixed Javadoc for all "transformedXXX(XXX)" methods in the respective Utils classes
       to clarify that existing objects in the list are not transformed.
     </action>
     <action issue="COLLECTIONS-343" dev="mbenson" type="fix" due-to="Goran Hacek">
@@ -1150,11 +1150,11 @@ features, this release includes numerous bug fixes.
       Synchronized access to lock in "StaticBucketMap#size()".
     </action>
     <action issue="COLLECTIONS-332" dev="jochen" type="fix" due-to="Tom Parker">
-      Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and
+      Added clarification to Javadoc of "ListOrderedMap" that "IdentityMap" and
       "CaseInsensitiveMap" are not supported.
     </action>
     <action issue="COLLECTIONS-331" dev="jochen" type="fix" due-to="Michael Krkoska">
-      Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
+      Improve Javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
     </action>
     <action issue="COLLECTIONS-330" dev="mbenson" type="fix" due-to="Joerg Schaible">
@@ -1188,7 +1188,7 @@ features, this release includes numerous bug fixes.
       Use a private method to populate the object in "AbstractHashedMap(Map)".
     </action>
     <action issue="COLLECTIONS-316" dev="bayard" type="fix" due-to="ori">
-      Fixed javadoc of "LRUMap" wrt to the maxSize parameter of the constructor.
+      Fixed Javadoc of "LRUMap" wrt to the maxSize parameter of the constructor.
     </action>
     <action issue="COLLECTIONS-313" dev="brentworden" type="add" due-to="David J. M. Karlsen">
       Added new abstract class "CatchAndRethrowClosure" that re-throws any checked exception
@@ -1213,7 +1213,7 @@ features, this release includes numerous bug fixes.
       "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
     </action>
     <action issue="COLLECTIONS-303" dev="bayard" type="fix" due-to="Emmanuel Bourg">
-      Improved javadoc for "Unmodifiable*" classes wrt behavior when the user tries
+      Improved Javadoc for "Unmodifiable*" classes wrt behavior when the user tries
       to modify the collection.
     </action>
     <action issue="COLLECTIONS-298" dev="bayard" type="update" due-to="Benjamin Bentmann">
@@ -1234,7 +1234,7 @@ features, this release includes numerous bug fixes.
       Added method "CollatingIterator#getIteratorIndex()".
     </action>
     <action issue="COLLECTIONS-256,COLLECTIONS-288" dev="bayard" type="fix" due-to="Paul Benedict">
-      Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects
+      Fixed Javadoc for "ListUtils#transformedList(List)" to clarify that existing objects
       in the list are not transformed.
     </action>
     <action issue="COLLECTIONS-286" dev="mbenson" type="add" due-to="Geoffrey De Smet">
@@ -1265,7 +1265,7 @@ features, this release includes numerous bug fixes.
       as input.
     </action>
     <action issue="COLLECTIONS-262" dev="bayard" type="fix" due-to="Lisen Mu">
-      Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
+      Fixed Javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
     </action>
     <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
       "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
@@ -1299,7 +1299,7 @@ features, this release includes numerous bug fixes.
     </action>
     <action issue="COLLECTIONS-237" dev="tn" type="add" due-to="Nils Kaiser, Alan Mehlo">
       Added method "MultiValueMap#iterator()" to return a flattened version of
-      "entrySet().iterator()". Clarified javadoc for "entrySet()" that the returned Entry
+      "entrySet().iterator()". Clarified Javadoc for "entrySet()" that the returned Entry
       objects are unflattened, i.e. the Entry object for a given key contains all values
       mapped to this key.
     </action>
