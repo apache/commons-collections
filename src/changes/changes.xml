@@ -222,7 +222,7 @@
       Migrate Map tests to JUnit 5 assertions #391.
     </action>
     <action issue="COLLECTIONS-835" type="fix" dev="kinow" due-to="Marc Wrobel">
-      Fix links in javadoc and documentations #325.
+      Fix links in Javadoc and documentations #325.
     </action>
     <action type="fix" dev="aherbert" due-to="Partha Protim Paul">
       Correct test of Collection toArray(Object[]) vs toArray() to optionally ignore array order.
