@@ -588,11 +588,11 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff all elements of {@code coll2} are also contained
+     * Returns {@code true} if all elements of {@code coll2} are also contained
      * in {@code coll1}. The cardinality of values in {@code coll2} is not taken into account,
      * which is the same behavior as {@link Collection#containsAll(Collection)}.
      * <p>
-     * In other words, this method returns {@code true} iff the
+     * In other words, this method returns {@code true} if the
      * {@link #intersection} of <em>coll1</em> and <em>coll2</em> has the same cardinality as
      * the set of unique values from {@code coll2}. In case {@code coll2} is empty, {@code true}
      * will be returned.
@@ -607,7 +607,7 @@ public class CollectionUtils {
      *
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
-     * @return {@code true} iff the intersection of the collections has the same cardinality
+     * @return {@code true} if the intersection of the collections has the same cardinality
      *   as the set of unique elements from the second collection
      * @throws NullPointerException if coll1 or coll2 is null
      * @since 4.0
@@ -641,15 +641,15 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff at least one element is in both collections.
+     * Returns {@code true} if at least one element is in both collections.
      * <p>
-     * In other words, this method returns {@code true} iff the
+     * In other words, this method returns {@code true} if the
      * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
-     * @return {@code true} iff the intersection of the collections is non-empty
+     * @return {@code true} if the intersection of the collections is non-empty
      * @throws NullPointerException if coll1 or coll2 is null
      * @since 2.1
      * @see #intersection
@@ -674,16 +674,16 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff at least one element is in both collections.
+     * Returns {@code true} if at least one element is in both collections.
      * <p>
-     * In other words, this method returns {@code true} iff the
+     * In other words, this method returns {@code true} if the
      * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
      * @param <T> the type of object to lookup in {@code coll1}.
      * @param coll1  the first collection, must not be {@code null}.
      * @param coll2  the second collection, must not be {@code null}.
-     * @return {@code true} iff the intersection of the collections is non-empty.
+     * @return {@code true} if the intersection of the collections is non-empty.
      * @throws NullPointerException if coll1 or coll2 is {@code null}.
      * @since 4.2
      * @see #intersection
@@ -1188,17 +1188,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff the given {@link Collection}s contain
+     * Returns {@code true} if the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
+     * That is, if the cardinality of <em>e</em> in <em>a</em> is
      * equal to the cardinality of <em>e</em> in <em>b</em>,
      * for each element <em>e</em> in <em>a</em> or <em>b</em>.
      * </p>
      *
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
-     * @return {@code true} iff the collections contain the same elements with the same cardinalities.
+     * @return {@code true} if the collections contain the same elements with the same cardinalities.
      * @throws NullPointerException if either collection is null
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
@@ -1206,10 +1206,10 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff the given {@link Collection}s contain
+     * Returns {@code true} if the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
+     * That is, if the cardinality of <em>e</em> in <em>a</em> is
      * equal to the cardinality of <em>e</em> in <em>b</em>,
      * for each element <em>e</em> in <em>a</em> or <em>b</em>.
      * </p>
@@ -1224,7 +1224,7 @@ public class CollectionUtils {
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
      * @param equator  the Equator used for testing equality
-     * @return {@code true} iff the collections contain the same elements with the same cardinalities.
+     * @return {@code true} if the collections contain the same elements with the same cardinalities.
      * @throws NullPointerException if either collection or equator is null
      * @since 4.0
      */
@@ -1291,8 +1291,8 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>,
-     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less
+     * Returns {@code true} if <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>,
+     * that is, if the cardinality of <em>e</em> in <em>a</em> is less
      * than or equal to the cardinality of <em>e</em> in <em>b</em>,
      * for each element <em>e</em> in <em>a</em>, and there is at least one
      * element <em>f</em> such that the cardinality of <em>f</em> in <em>b</em>
@@ -1308,7 +1308,7 @@ public class CollectionUtils {
      *
      * @param a  the first (sub?) collection, must not be null
      * @param b  the second (super?) collection, must not be null
-     * @return {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>
+     * @return {@code true} if <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>
      * @throws NullPointerException if either collection is null
      * @see #isSubCollection
      * @see Collection#containsAll
@@ -1320,14 +1320,14 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <em>a</em> is a sub-collection of <em>b</em>,
-     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less than or
+     * Returns {@code true} if <em>a</em> is a sub-collection of <em>b</em>,
+     * that is, if the cardinality of <em>e</em> in <em>a</em> is less than or
      * equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em>
      * in <em>a</em>.
      *
      * @param a the first (sub?) collection, must not be null
      * @param b the second (super?) collection, must not be null
-     * @return {@code true} iff <em>a</em> is a sub-collection of <em>b</em>
+     * @return {@code true} if <em>a</em> is a sub-collection of <em>b</em>
      * @throws NullPointerException if either collection is null
      * @see #isProperSubCollection
      * @see Collection#containsAll
