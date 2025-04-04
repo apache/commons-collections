@@ -382,7 +382,7 @@
         <jdk>[24,)</jdk>
       </activation>
       <properties>
-        <commons.jacoco.version>0.8.13-SNAPSHOT</commons.jacoco.version>
+        <commons.jacoco.version>0.8.13</commons.jacoco.version>
       </properties>
       <pluginRepositories>
         <pluginRepository>
