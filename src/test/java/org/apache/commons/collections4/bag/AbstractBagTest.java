@@ -641,7 +641,9 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag.add((T) "B");
         bag.add((T) "C");
         final Object[] array = bag.toArray();
-        int a = 0, b = 0, c = 0;
+        int a = 0;
+        int b = 0;
+        int c = 0;
         for (final Object element : array) {
             a += element.equals("A") ? 1 : 0;
             b += element.equals("B") ? 1 : 0;
@@ -666,7 +668,9 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         bag.add((T) "B");
         bag.add((T) "C");
         final String[] array = bag.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-        int a = 0, b = 0, c = 0;
+        int a = 0;
+        int b = 0;
+        int c = 0;
         for (final String element : array) {
             a += element.equals("A") ? 1 : 0;
             b += element.equals("B") ? 1 : 0;

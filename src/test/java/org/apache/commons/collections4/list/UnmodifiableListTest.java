@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.list;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -107,28 +106,16 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
     @SuppressWarnings("unchecked")
     protected void verifyUnmodifiable(final List<E> list) {
-        assertAll(
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.add(0, (E) Integer.valueOf(0)),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.add((E) Integer.valueOf(0)),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.addAll(0, array),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.addAll(array),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.clear(),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.remove(0),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.remove(Integer.valueOf(0)),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.removeAll(array),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.retainAll(array),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> list.set(0, (E) Integer.valueOf(0)),
-                        "Expecting UnsupportedOperationException.")
-        );
+        assertThrows(UnsupportedOperationException.class, () -> list.add(0, (E) Integer.valueOf(0)));
+        assertThrows(UnsupportedOperationException.class, () -> list.add((E) Integer.valueOf(0)));
+        assertThrows(UnsupportedOperationException.class, () -> list.addAll(0, array));
+        assertThrows(UnsupportedOperationException.class, () -> list.addAll(array));
+        assertThrows(UnsupportedOperationException.class, () -> list.clear());
+        assertThrows(UnsupportedOperationException.class, () -> list.remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> list.remove(Integer.valueOf(0)));
+        assertThrows(UnsupportedOperationException.class, () -> list.removeAll(array));
+        assertThrows(UnsupportedOperationException.class, () -> list.retainAll(array));
+        assertThrows(UnsupportedOperationException.class, () -> list.set(0, (E) Integer.valueOf(0)));
     }
 
 //    public void testCreate() throws Exception {

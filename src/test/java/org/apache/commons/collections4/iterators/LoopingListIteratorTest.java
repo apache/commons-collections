@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -147,10 +146,8 @@ public class LoopingListIteratorTest {
         final LoopingListIterator<Object> loop = new LoopingListIterator<>(list);
         assertFalse(loop.hasNext());
         assertFalse(loop.hasPrevious());
-        assertAll(
-                () -> assertThrows(NoSuchElementException.class, () -> loop.next()),
-                () -> assertThrows(NoSuchElementException.class, () -> loop.previous())
-        );
+        assertThrows(NoSuchElementException.class, () -> loop.next());
+        assertThrows(NoSuchElementException.class, () -> loop.previous());
     }
 
     /**

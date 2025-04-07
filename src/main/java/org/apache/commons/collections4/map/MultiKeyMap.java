@@ -88,7 +88,7 @@ import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>
         implements Serializable, Cloneable {
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = -1788199231038721040L;
 
     /**

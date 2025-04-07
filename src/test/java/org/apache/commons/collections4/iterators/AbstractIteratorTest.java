@@ -61,7 +61,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     public abstract Iterator<E> makeObject();
 
     /**
-     * Whether or not we are testing an iterator that can be empty.
+     * Tests whether or not we are testing an iterator that can be empty.
      * Default is true.
      *
      * @return true if Iterator can be empty
@@ -71,7 +71,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Whether or not we are testing an iterator that can contain elements.
+     * Tests whether or not we are testing an iterator that can contain elements.
      * Default is true.
      *
      * @return true if Iterator can be full
@@ -81,7 +81,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     }
 
     /**
-     * Whether or not we are testing an iterator that supports remove().
+     * Tests whether or not we are testing an iterator that supports remove().
      * Default is true.
      *
      * @return true if Iterator supports remove

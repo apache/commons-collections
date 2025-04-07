@@ -79,7 +79,7 @@ public class IdentityMap<K, V>
         }
     }
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = 2028493495224302329L;
 
     /**

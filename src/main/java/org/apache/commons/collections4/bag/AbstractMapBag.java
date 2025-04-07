@@ -154,7 +154,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     private transient Set<E> uniqueSet;
 
     /**
-     * Constructor needed for subclass serialisation.
+     * Constructor needed for subclass serialization.
      */
     protected AbstractMapBag() {
     }

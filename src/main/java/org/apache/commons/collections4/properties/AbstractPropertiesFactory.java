@@ -18,7 +18,6 @@
 package org.apache.commons.collections4.properties;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,9 +99,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      *                                  the file.
      */
     public T load(final File file) throws FileNotFoundException, IOException {
-        try (FileInputStream inputStream = new FileInputStream(file)) {
-            return load(inputStream, PropertyFormat.toPropertyFormat(file.getName()));
-        }
+        return load(file.toPath());
     }
 
     /**
@@ -182,9 +179,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
     public T load(final String name) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(name)) {
-            return load(inputStream, PropertyFormat.toPropertyFormat(name));
-        }
+        return load(Paths.get(name));
     }
 
     /**

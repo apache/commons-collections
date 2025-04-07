@@ -15,11 +15,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<document>
-
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 https://maven.apache.org/xsd/xdoc-2.0.xsd">
  <properties>
   <title>Choosing a collection</title>
-  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+  <author email="dev@commons.apache.org">Apache Commons Team</author>
  </properties>
 
  <body>
@@ -30,7 +31,7 @@
 Commons-Collections and the Java Collections Framework provide a wide variety of collections to choose from. This choice can be bewildering, so this document seeks to help you choose.
 </p>
 
-<script>
+<script type="javascript">
 <![CDATA[
 function showHide(showObj,hideObj) {
  if (document.getElementById) { // DOM3 = IE5, NS6
@@ -90,6 +91,7 @@ For example you could convert a country code to text <i>but not</i> text to coun
 
 <p>
 The <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/BidiMap.html">BidiMap</a> interface and implementations in Commons Collections allow you to lookup data in both directions. There are three implementations:
+</p>
 <table>
 <tr>
 <td><a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/bidimap/DualHashBidiMap.html">DualHashBidiMap</a></td>
@@ -104,7 +106,6 @@ The <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-
 <td>Dedicated implementation that requires keys and values to implement <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This is an efficient implementation using a data structure that avoids duplicating data. The keys and values are held and viewed in sorted order, and the class implements the <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/OrderedBidiMap.html">OrderedBidiMap</a> interface.</td>
 </tr>
 </table>
-</p>
 </div>
 
 <!-- ========================================================================= -->
@@ -113,6 +114,7 @@ The <a href="https://commons.apache.org/proper/commons-collections/javadocs/api-
 
 <p>
 The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a> interface and implementations in both the JDK and Commons Collections allow you to lookup data from a key to a value. This is one of the most powerful interfaces in the JDK, however it is very difficult to implement. These are the available implementations:
+</p>
 <table>
 <tr>
 <td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a> (JDK)</td>
@@ -164,14 +166,13 @@ The <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</
 </tr>
 <tr>
 <td><a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/map/Flat3Map.html">Flat3Map</a></td>
-<td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
+<td>This map is optimized to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
 </tr>
 <tr>
 <td><a href="https://commons.apache.org/proper/commons-collections/javadocs/api-4.4/org/apache/commons/collections4/map/StaticBucketMap.html">StaticBucketMap</a></td>
-<td>This map is optimised to work well in a heavily loaded multithreaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multithreaded environment.</td>
+<td>This map is optimized to work well in a heavily loaded multithreaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multithreaded environment.</td>
 </tr>
 </table>
-</p>
 </div>
 
 </div>

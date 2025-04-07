@@ -28,19 +28,20 @@
      See also the {@code java.util} package for the standard Java collections.
   </p>
      
-  <h4>Main features</h4>
+  <h1>Main features</h1>
   <p>
      Commons-Collections defines a number of key interfaces:
   </p>
-  <table border="1" cellspacing="0" cellpadding="3">
-  <tr bgcolor="#CCCCFF" class="TableHeadingColor">
+  <table border="1">
+  <caption>Interfaces</caption> 
+  <tr class="TableHeadingColor">
     <th>Interface</th><th>Description</th>
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.Bag}
+      {@link org.apache.commons.collections4.Bag}
     </td>
-    <td valign="top">
+    <td>
       A new {@code Collection} subinterface that stores each object together
       with the number of occurrences. Methods are provided to get the number of
       occurrences, and to add and remove a certain number of that object.
@@ -48,57 +49,50 @@
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.Buffer}
+      {@link org.apache.commons.collections4.BidiMap}
     </td>
-    <td valign="top">
-      A new {@code Collection} subinterface that allows objects to be removed
-      in some well-defined order. Methods enable the next item to be peeked and removed.
-    </td>
-  </tr>
-  <tr>
     <td>
-      {@link org.apache.commons.collections.BidiMap}
-    </td>
-    <td valign="top">
       A new {@code Map} subinterface that allows lookup from key to value and
       from value to key with equal ease.
     </td>
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.OrderedMap}
+      {@link org.apache.commons.collections4.OrderedMap}
     </td>
-    <td valign="top">
+    <td>
       A new {@code Map} subinterface that is used when a map has an order, but is
       not sorted. Methods enable bidirectional iteration through the map.
     </td>
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.MapIterator}
+      {@link org.apache.commons.collections4.MapIterator}
     </td>
-    <td valign="top">
+    <td>
       A new {@code Iterator} subinterface specially designed for maps. This iterator
       avoids the need for entrySet iteration of a map, and is simpler to use.
     </td>
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.ResettableIterator}
+      {@link org.apache.commons.collections4.ResettableIterator}
     </td>
-    <td valign="top">
+    <td>
       A new {@code Iterator} subinterface that allows the iteration to be reset back
       to the start. Many iterators in this library have this functionality.
     </td>
   </tr>
   <tr>
     <td>
-      {@link org.apache.commons.collections.Closure}<br />
-      {@link org.apache.commons.collections.Predicate}<br />
-      {@link org.apache.commons.collections.Transformer}<br />
-      {@link org.apache.commons.collections.Factory}<br />
+      <ul>
+        <li>{@link org.apache.commons.collections4.Closure}</li>
+        <li>{@link org.apache.commons.collections4.Predicate}</li>
+        <li>{@link org.apache.commons.collections4.Transformer}</li>
+        <li>{@link org.apache.commons.collections4.Factory}</li>
+      </ul>
     </td>
-    <td valign="top">
+    <td>
       A group of <i>functor</i> interfaces that provide plugin behavior to various
       collections and utilities.
     </td>

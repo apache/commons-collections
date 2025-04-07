@@ -33,6 +33,11 @@ public class EqualPredicateTest extends AbstractPredicateTest {
         public boolean equals(final Object obj) {
             return b;
         }
+
+        @Override
+        public int hashCode() {
+            return Boolean.hashCode(b);
+        }
     }
 
     private static final EqualsTestObject FALSE_OBJECT = new EqualsTestObject(false);

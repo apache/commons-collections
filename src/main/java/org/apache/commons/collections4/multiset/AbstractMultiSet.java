@@ -240,7 +240,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     private transient Set<Entry<E>> entrySet;
 
     /**
-     * Constructor needed for subclass serialisation.
+     * Constructor needed for subclass serialization.
      */
     protected AbstractMultiSet() {
     }

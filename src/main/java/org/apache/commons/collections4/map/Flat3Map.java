@@ -44,7 +44,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * It also has good garbage collection characteristics.
  * </p>
  * <ul>
- * <li>Optimised for operation at size 3 or less.
+ * <li>Optimized for operation at size 3 or less.
  * <li>Still works well once size 3 exceeded.
  * <li>Gets at size 3 or less are about 0-10% faster than HashMap,
  * <li>Puts at size 3 or less are over 4 times faster than HashMap.
@@ -980,10 +980,6 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         // add new mapping
         switch (size) {
-        default:
-            convertToMap();
-            delegateMap.put(key, value);
-            return null;
         case 2:
             hash3 = key == null ? 0 : key.hashCode();
             key3 = key;
@@ -999,6 +995,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             key1 = key;
             value1 = value;
             break;
+        default:
+            convertToMap();
+            delegateMap.put(key, value);
+            return null;
         }
         size++;
         return null;

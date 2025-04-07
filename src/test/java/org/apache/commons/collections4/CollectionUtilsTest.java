@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -890,27 +889,17 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testExtractSingleton() {
-        assertAll(
-                () -> {
-                    final ArrayList<String> collNull = null;
-                    assertThrows(NullPointerException.class, () -> CollectionUtils.extractSingleton(collNull),
-                            "expected NullPointerException from extractSingleton(null)");
-                },
-                () -> {
-                    final ArrayList<String> collEmpty = new ArrayList<>();
-                    assertThrows(IllegalArgumentException.class, () -> CollectionUtils.extractSingleton(collEmpty),
-                            "expected IllegalArgumentException from extractSingleton(empty)");
-                },
-                () -> {
-                    final ArrayList<String> coll = new ArrayList<>();
-                    coll.add("foo");
-                    assertEquals("foo", CollectionUtils.extractSingleton(coll));
-                    coll.add("bar");
-
-                    assertThrows(IllegalArgumentException.class, () -> CollectionUtils.extractSingleton(coll),
-                            "expected IllegalArgumentException from extractSingleton(size == 2)");
-                }
-        );
+        final ArrayList<String> collNull = null;
+        assertThrows(NullPointerException.class, () -> CollectionUtils.extractSingleton(collNull), "expected NullPointerException from extractSingleton(null)");
+        final ArrayList<String> collEmpty = new ArrayList<>();
+        assertThrows(IllegalArgumentException.class, () -> CollectionUtils.extractSingleton(collEmpty),
+                "expected IllegalArgumentException from extractSingleton(empty)");
+        final ArrayList<String> coll = new ArrayList<>();
+        coll.add("foo");
+        assertEquals("foo", CollectionUtils.extractSingleton(coll));
+        coll.add("bar");
+        assertThrows(IllegalArgumentException.class, () -> CollectionUtils.extractSingleton(coll),
+                "expected IllegalArgumentException from extractSingleton(size == 2)");
     }
 
     //Up to here
@@ -966,12 +955,12 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testGet() {
-        assertEquals(2, CollectionUtils.get((Object) collectionA, 2));
-        assertEquals(2, CollectionUtils.get((Object) collectionA.iterator(), 2));
+        assertEquals(2, CollectionUtils.get(collectionA, 2));
+        assertEquals(2, CollectionUtils.get(collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
         // Test assumes a defined iteration order so convert to a LinkedHashMap
         final Map<Integer, Integer> linkedMap = new LinkedHashMap<>(map);
-        assertEquals(linkedMap.entrySet().iterator().next(), CollectionUtils.get((Object) linkedMap, 0));
+        assertEquals(linkedMap.entrySet().iterator().next(), CollectionUtils.get(linkedMap, 0));
     }
 
     @Test
@@ -1017,19 +1006,13 @@ public class CollectionUtilsTest extends MockTestCase {
         final Map<String, String> expected = new HashMap<>();
         expected.put("zeroKey", "zero");
         expected.put("oneKey", "one");
-
         Map.Entry<String, String> entry = CollectionUtils.get(expected, 0);
         assertTrue(entry.toString().equals("zeroKey=zero") || entry.toString().equals("oneKey=one"));
         entry = CollectionUtils.get(expected, 1);
         assertTrue(entry.toString().equals("zeroKey=zero") || entry.toString().equals("oneKey=one"));
-
         // Map index out of range
-        assertAll(
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, 2),
-                        "Expecting IndexOutOfBoundsException."),
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, -2),
-                        "Expecting IndexOutOfBoundsException.")
-        );
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, 2));
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, -2));
     }
 
     @Test
@@ -1071,14 +1054,9 @@ public class CollectionUtilsTest extends MockTestCase {
         final Map<String, String> expected = new LinkedHashMap<>();
         expected.put("zeroKey", "zero");
         expected.put("oneKey", "one");
-
         // Map index out of range
-        assertAll(
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, 2),
-                        "Expecting IndexOutOfBoundsException."),
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, -2),
-                        "Expecting IndexOutOfBoundsException.")
-        );
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, 2));
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(expected, -2));
     }
 
     @Test
@@ -1138,20 +1116,20 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void testGetIterator() {
         final Iterator<Integer> it = collectionA.iterator();
-        assertEquals(Integer.valueOf(2), CollectionUtils.get((Object) it, 2));
+        assertEquals(Integer.valueOf(2), CollectionUtils.get(it, 2));
         assertTrue(it.hasNext());
-        assertEquals(Integer.valueOf(4), CollectionUtils.get((Object) it, 6));
+        assertEquals(Integer.valueOf(4), CollectionUtils.get(it, 6));
         assertFalse(it.hasNext());
     }
 
     @Test
     public void testGetNegative() {
-        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get((Object) collectionA, -3));
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(collectionA, -3));
     }
 
     @Test
     public void testGetPositiveOutOfBounds() {
-        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get((Object) collectionA.iterator(), 30));
+        assertThrows(IndexOutOfBoundsException.class, () -> CollectionUtils.get(collectionA.iterator(), 30));
     }
 
     @Test
@@ -1708,12 +1686,9 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(remove.contains("AA"));
         assertTrue(remove.contains("CX"));
         assertTrue(remove.contains("XZ"));
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator()),
-                        "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> CollectionUtils.removeAll(base, remove, null),
-                        "expecting NullPointerException")
-        );
+
+        assertThrows(NullPointerException.class, () -> CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator()));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.removeAll(base, remove, null));
     }
 
     @Test
@@ -1904,12 +1879,9 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(retain.contains("AA"));
         assertTrue(retain.contains("CX"));
         assertTrue(retain.contains("XZ"));
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> CollectionUtils.retainAll(null, null, null),
-                        "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> CollectionUtils.retainAll(base, retain, null),
-                        "expecting NullPointerException")
-        );
+
+        assertThrows(NullPointerException.class, () -> CollectionUtils.retainAll(null, null, null));
+        assertThrows(NullPointerException.class, () -> CollectionUtils.retainAll(base, retain, null));
     }
 
     @Test

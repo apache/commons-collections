@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.comparators;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -76,13 +75,11 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, null), "Expected NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.TRUE, null), "Expected NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> comp.compare(Boolean.FALSE, null), "Expected NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.TRUE), "Expected NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.FALSE), "Expected NullPointerException")
-        );
+        assertThrows(NullPointerException.class, () -> comp.compare(null, null));
+        assertThrows(NullPointerException.class, () -> comp.compare(Boolean.TRUE, null));
+        assertThrows(NullPointerException.class, () -> comp.compare(Boolean.FALSE, null));
+        assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.TRUE));
+        assertThrows(NullPointerException.class, () -> comp.compare(null, Boolean.FALSE));
     }
 
     protected void orderIndependentTests(final BooleanComparator comp) {

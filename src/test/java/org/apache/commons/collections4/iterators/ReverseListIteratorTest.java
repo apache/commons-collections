@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,20 +56,14 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     @Override
     public void testEmptyListIteratorIsIndeedEmpty() {
         final ListIterator<E> it = makeEmptyIterator();
-
         assertFalse(it.hasNext());
-        assertEquals(-1, it.nextIndex());  // reversed index
+        assertEquals(-1, it.nextIndex()); // reversed index
         assertFalse(it.hasPrevious());
-        assertEquals(0, it.previousIndex());  // reversed index
-
-        assertAll(
-                // next() should throw a NoSuchElementException
-                () -> assertThrows(NoSuchElementException.class, () -> it.next(),
-                        "NoSuchElementException must be thrown from empty ListIterator"),
-                // previous() should throw a NoSuchElementException
-                () -> assertThrows(NoSuchElementException.class, () -> it.previous(),
-                        "NoSuchElementException must be thrown from empty ListIterator")
-        );
+        assertEquals(0, it.previousIndex()); // reversed index
+        // next() should throw a NoSuchElementException
+        assertThrows(NoSuchElementException.class, () -> it.next(), "NoSuchElementException must be thrown from empty ListIterator");
+        // previous() should throw a NoSuchElementException
+        assertThrows(NoSuchElementException.class, () -> it.previous(), "NoSuchElementException must be thrown from empty ListIterator");
     }
 
     @Test

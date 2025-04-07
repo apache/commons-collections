@@ -681,10 +681,10 @@ public class CollectionUtils {
      * </p>
      *
      * @param <T> the type of object to lookup in {@code coll1}.
-     * @param coll1  the first collection, must not be null
-     * @param coll2  the second collection, must not be null
-     * @return {@code true} iff the intersection of the collections is non-empty
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @param coll1  the first collection, must not be {@code null}.
+     * @param coll2  the second collection, must not be {@code null}.
+     * @return {@code true} iff the intersection of the collections is non-empty.
+     * @throws NullPointerException if coll1 or coll2 is {@code null}.
      * @since 4.2
      * @see #intersection
      */
@@ -762,9 +762,9 @@ public class CollectionUtils {
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
      *
      * @see #EMPTY_COLLECTION
-     * @since 4.0
      * @param <T> the element type
      * @return immutable empty collection
+     * @since 4.0
      */
     @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
     public static <T> Collection<T> emptyCollection() {

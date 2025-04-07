@@ -175,7 +175,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         }
     }
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = 9077234323521161066L;
 
     /**

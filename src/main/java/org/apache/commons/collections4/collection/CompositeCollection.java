@@ -224,7 +224,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     }
 
     /**
-     * Removes all of the elements from this collection .
+     * Removes all of the elements from this collection.
      * <p>
      * This implementation calls {@code clear()} on each collection.
      * </p>

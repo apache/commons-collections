@@ -276,7 +276,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     private transient int modCount;
 
     /**
-     * Constructor needed for subclass serialisation.
+     * Constructor needed for subclass serialization.
      */
     protected AbstractMapMultiSet() {
     }

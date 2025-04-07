@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -107,7 +107,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
         // Can't tell what we are reading
         Assumptions.assumeFalse(isXmlTest(fileExtension));
         //
-        try (FileInputStream inputStream = new FileInputStream(getPathString(fileExtension))) {
+        try (InputStream inputStream = Files.newInputStream(Paths.get(getPathString(fileExtension)))) {
             assertContents(factory.load(inputStream));
         }
     }

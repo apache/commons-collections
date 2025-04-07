@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.set;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -104,20 +103,12 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void verifyUnmodifiable(final Set<E> set) {
-        assertAll(
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<>()),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.clear(),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.remove("x"),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.removeAll(array),
-                        "Expecting UnsupportedOperationException."),
-                () -> assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array),
-                        "Expecting UnsupportedOperationException.")
-        );
+        assertThrows(UnsupportedOperationException.class, () -> set.add((E) "value"));
+        assertThrows(UnsupportedOperationException.class, () -> set.addAll(new TreeSet<>()));
+        assertThrows(UnsupportedOperationException.class, () -> set.clear());
+        assertThrows(UnsupportedOperationException.class, () -> set.remove("x"));
+        assertThrows(UnsupportedOperationException.class, () -> set.removeAll(array));
+        assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array));
     }
 
 //    public void testCreate() throws Exception {

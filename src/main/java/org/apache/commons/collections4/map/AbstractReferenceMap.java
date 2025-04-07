@@ -105,8 +105,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         // These Object fields provide hard references to the
         // current and next entry; this assures that if hasNext()
         // returns true, next() will actually return a valid element.
-        K currentKey, nextKey;
-        V currentValue, nextValue;
+        K currentKey;
+        K nextKey;
+        V currentValue;
+        V nextValue;
 
         int expectedModCount;
 

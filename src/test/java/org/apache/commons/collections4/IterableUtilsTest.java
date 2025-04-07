@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -147,10 +146,8 @@ public class IterableUtilsTest {
     public void testCountMatches() {
         assertEquals(4, IterableUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, IterableUtils.countMatches(null, EQUALS_TWO));
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(iterableA, null)),
-                        "predicate must not be null"),
-                () -> assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(null, null)), "predicate must not be null"));
+        assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(iterableA, null)), "predicate must not be null");
+        assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(null, null)), "predicate must not be null");
     }
 
     @Test
@@ -636,21 +633,19 @@ public class IterableUtilsTest {
             return StringUtils.EMPTY;
         }, StringUtils.EMPTY, "(", ")");
         assertEquals("()", result);
-        assertAll(
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), null, StringUtils.EMPTY, "(", ")"),
-                        "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
-                    fail("not supposed to reach here");
-                    return StringUtils.EMPTY;
-                }, null, "(", ")"), "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
-                    fail("not supposed to reach here");
-                    return StringUtils.EMPTY;
-                }, StringUtils.EMPTY, null, ")"), "expecting NullPointerException"),
-                () -> assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
-                    fail("not supposed to reach here");
-                    return StringUtils.EMPTY;
-                }, StringUtils.EMPTY, "(", null), "expecting NullPointerException"));
+        assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), null, StringUtils.EMPTY, "(", ")"));
+        assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
+            fail("not supposed to reach here");
+            return StringUtils.EMPTY;
+        }, null, "(", ")"));
+        assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
+            fail("not supposed to reach here");
+            return StringUtils.EMPTY;
+        }, StringUtils.EMPTY, null, ")"));
+        assertThrows(NullPointerException.class, () -> IterableUtils.toString(new ArrayList<>(), input -> {
+            fail("not supposed to reach here");
+            return StringUtils.EMPTY;
+        }, StringUtils.EMPTY, "(", null));
     }
 
 }

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -113,6 +112,12 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         SingleHashCode(final String code) {
             this.code = code;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            // Pairs with equals()
+            return super.equals(o);
         }
 
         @Override
@@ -297,20 +302,12 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     public void testCtors() {
-        assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(0),
-                        "maxSize must be positive"),
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(-1, 12, 0.75f, false),
-                        "maxSize must be positive"),
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1),
-                        "initialSize must not be negative"),
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12),
-                        "initialSize must not be larger than maxSize"),
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1, 0.75f, false),
-                        "initialSize must not be negative"),
-                () -> assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12, 0.75f, false),
-                        "initialSize must not be larger than maxSize")
-        );
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(0), "maxSize must be positive");
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(-1, 12, 0.75f, false), "maxSize must be positive");
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1), "initialSize must not be negative");
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12), "initialSize must not be larger than maxSize");
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1, 0.75f, false), "initialSize must not be negative");
+        assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12, 0.75f, false), "initialSize must not be larger than maxSize");
     }
 
     @Test
@@ -413,19 +410,15 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final SingleHashCode one = new SingleHashCode("1");
         final SingleHashCode two = new SingleHashCode("2");
         final SingleHashCode three = new SingleHashCode("3");
-
         final LRUMap<K, V> map = new LRUMap<>(3, 1.0f);
         map.put((K) one, (V) "A");
         map.put((K) two, (V) "B");
         map.put((K) three, (V) "C");
-
         assertEquals(one, map.getEntry(0).key);
         assertEquals(two, map.getEntry(1).key);
         assertEquals(three, map.getEntry(2).key);
-        assertAll(
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> map.getEntry(-1)),
-                () -> assertThrows(IndexOutOfBoundsException.class, () -> map.getEntry(3))
-        );
+        assertThrows(IndexOutOfBoundsException.class, () -> map.getEntry(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> map.getEntry(3));
     }
 
     @Test

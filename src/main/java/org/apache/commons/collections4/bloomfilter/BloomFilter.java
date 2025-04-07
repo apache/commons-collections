@@ -243,7 +243,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * {@code cardinality() == 0}.
      *
      * <p>
-     * <em>Note: This method is optimised for non-sparse filters.</em> Implementers
+     * <em>Note: This method is optimized for non-sparse filters.</em> Implementers
      * are encouraged to implement faster checks if possible.
      * </p>
      *

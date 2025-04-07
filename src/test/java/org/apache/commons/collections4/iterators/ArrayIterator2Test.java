@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -81,18 +80,16 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         }
 
         assertEquals(count, testArray.length - 2, "the count should be right using ArrayIterator(Object,1," + (testArray.length - 1) + ") ");
-        assertAll(
-                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, -1),
-                        "new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException"),
-                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, testArray.length + 1),
-                        "new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException"),
-                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, -1),
-                        "new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException"),
-                () -> assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, testArray.length + 1),
-                        "new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException"),
-                () -> assertThrows(IllegalArgumentException.class, () -> makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2),
-                        "new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException"));
-
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, -1),
+                "new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException");
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, testArray.length + 1),
+                "new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException");
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, -1),
+                "new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException");
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> makeArrayIterator(testArray, 0, testArray.length + 1),
+                "new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException");
+        assertThrows(IllegalArgumentException.class, () -> makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2),
+                "new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException");
         iter = makeArrayIterator(testArray, 1, 1);
         // MODIFIED: an iterator over a zero-length section of array
         // should be perfectly legal behavior

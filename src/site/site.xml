@@ -15,15 +15,15 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<project name="Collections">
-    <bannerRight>
-        <name>Commons Collections</name>
-        <src>/images/logo.png</src>
-        <href>/index.html</href>
-    </bannerRight>
-
-    <body>
-        <head>&lt;script type="text/javascript" id="MathJax-script" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;
+<site xmlns="http://maven.apache.org/SITE/2.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 http://maven.apache.org/xsd/site-2.0.0.xsd"
+  name="Apache Commons Collections">
+  <bannerRight name="Commons Collections" href="/index.html">
+    <image src="/images/logo.png"/>
+  </bannerRight>
+  <body>
+    <head>&lt;script type="text/javascript" id="MathJax-script" async="async" src="https://commons.apache.org/js/mathjax/tex-mml-chtml.js"&gt;&lt;/script&gt;
         &lt;style&gt;
             .footnotes ol li p {
             display: inline;
@@ -42,23 +42,25 @@
             }
 
             &lt;/style&gt;
-        </head>
-        <menu name="Commons Collections">
-            <item name="Overview" href="/index.html" />
-            <item name="Download" href="/download_collections.cgi" />
-            <item name="User Guide" href="/userguide.html" />
-            <item name="Javadoc" href="/apidocs/index.html" />
-            <item name="Javadoc Archive"
-                href="https://javadoc.io/doc/org.apache.commons/commons-collections4/latest/index.html" />
-        </menu>
-
-        <menu name="Development">
-            <item name="History" href="/changes.html" />
-            <item name="Mailing Lists" href="/mail-lists.html" />
-            <item name="Issue Tracking" href="/issue-tracking.html" />
-            <item name="Team" href="/team.html" />
-            <item name="Source" href="/scm.html" />
-        </menu>
-    </body>
-
-</project>
+    </head>
+    <menu name="Commons Collections">
+      <!-- Start: For all components. -->
+      <item name="About" href="index.html" />
+      <item name="Asking Questions" href="/mail-lists.html" />
+      <item name="Release History" href="/changes.html" />
+      <item name="Issue Tracking" href="/issue-management.html" />
+      <item name="Dependency Management" href="/dependency-info.html" />
+      <item name="Sources" href="/scm.html" />
+      <item name="Security" href="security.html" />
+      <item name="License" href="https://www.apache.org/licenses/LICENSE-2.0" />
+      <item name="Code of Conduct" href="https://www.apache.org/foundation/policies/conduct.html" />
+      <item name="Download" href="/download_collections.cgi" />
+      <item name="Javadoc">
+        <item name="Javadoc Current" href="apidocs/index.html" />
+        <item name="Javadoc Archive" href="https://javadoc.io/doc/org.apache.commons/commons-collections4" />
+      </item>
+      <!-- End: For all components. -->
+      <item name="Users guide" href="/userguide.html"/>
+    </menu>
+  </body>
+</site>

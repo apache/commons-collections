@@ -15,10 +15,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<document>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 https://maven.apache.org/xsd/xdoc-2.0.xsd">
  <properties>
   <title>Release notes for version 3.2</title>
-  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+  <author email="dev@commons.apache.org">Apache Commons Team</author>
  </properties>
 <body>
 
@@ -45,8 +47,10 @@ This release is fully source and binary compatible with 3.1.
 Please check the bug fixes to ensure you weren't relying on the behavior of a bug.
 </p>
 <p>
-There are two new <i>deprecations</i>:<br />
-BeanMap is now deprecated and will be removed in 4.0.
+There are two new <i>deprecations</i>:
+</p>
+<p>
+BeanMap is deprecated and will be removed in 4.0.
 The class is now available in commons-beanutils (full jar version).
 This change was made to ensure that all bean related collections were in one place (i.e. beanutils).
 If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.

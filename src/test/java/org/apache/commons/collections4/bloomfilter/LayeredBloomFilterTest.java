@@ -235,7 +235,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         final LayerManager<NumberedBloomFilter> layerManager = LayerManager.<NumberedBloomFilter>builder()
                 .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
                 .setExtendCheck(ExtendCheck.neverAdvance())
-                .setCleanup(ll -> ll.removeIf(f -> (f.value-- == 0))).get();
+                .setCleanup(ll -> ll.removeIf(f -> f.value-- == 0)).get();
         final LayeredBloomFilter<NumberedBloomFilter> underTest = new LayeredBloomFilter<>(getTestShape(), layerManager);
         assertEquals(1, underTest.getDepth());
         underTest.merge(TestingHashers.randomHasher());

@@ -814,7 +814,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
                 for (int i = 0; i < len; i++) {
                     for (HashEntry<K, V> e = tab[i]; e != null; e = e.next) {
                         final Object opaque = e.valueRef;
-                        V v;
+                        final V v;
                         if (opaque == null) {
                             // recheck
                             v = readValueUnderLock(e);
@@ -901,7 +901,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
             while (e != null && (e.hash != hash || !keyEq(key, e.key()))) {
                 e = e.next;
             }
-            V resultValue;
+            final V resultValue;
             if (e != null) {
                 resultValue = e.value();
                 if (!onlyIfAbsent) {

@@ -66,7 +66,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     public abstract ListIterator<E> makeObject();
 
     /**
-     * Whether or not we are testing an iterator that supports add().
+     * Tests whether or not we are testing an iterator that supports add().
      * Default is true.
      *
      * @return true if Iterator supports add
@@ -76,7 +76,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     /**
-     * Whether or not we are testing an iterator that supports set().
+     * Tests whether or not we are testing an iterator that supports set().
      * Default is true.
      *
      * @return true if Iterator supports set

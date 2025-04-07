@@ -73,7 +73,7 @@ import java.util.Map;
  */
 public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = -7074655917369299456L;
 
     /**

@@ -49,7 +49,7 @@ import java.util.Objects;
 public class MultiKey<K> implements Serializable {
     // This class could implement List, but that would confuse its purpose
 
-    /** Serialisation version */
+    /** Serialization version */
     private static final long serialVersionUID = 4465448607415788805L;
 
     @SuppressWarnings("unchecked")
