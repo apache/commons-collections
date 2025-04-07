@@ -82,7 +82,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Alberto");
         patriciaTrieSet.add("Albe");
 
-        HashSet<String> set = new HashSet<>(2);
+        final HashSet<String> set = new HashSet<>(2);
         set.add("Alberto");
         set.add("Albe");
 
@@ -136,8 +136,8 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Al");
         patriciaTrieSet.add("A");
 
-        byte[] serializedBytes = SerializationUtils.serialize(patriciaTrieSet);
-        PatriciaTrieSet expected = SerializationUtils.deserialize(serializedBytes);
+        final byte[] serializedBytes = SerializationUtils.serialize(patriciaTrieSet);
+        final PatriciaTrieSet expected = SerializationUtils.deserialize(serializedBytes);
 
         Assertions.assertEquals(4, expected.size());
         Assertions.assertTrue(patriciaTrieSet.contains("A"));
@@ -148,8 +148,8 @@ public class PatriciaTrieSetTest {
 
     @Test
     public void serializeShouldSerializeAndDeserializedCorrectlyEmptyObject() {
-        byte[] serializedBytes = SerializationUtils.serialize(patriciaTrieSet);
-        PatriciaTrieSet expected = SerializationUtils.deserialize(serializedBytes);
+        final byte[] serializedBytes = SerializationUtils.serialize(patriciaTrieSet);
+        final PatriciaTrieSet expected = SerializationUtils.deserialize(serializedBytes);
 
         Assertions.assertEquals(0, expected.size());
     }
@@ -162,7 +162,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Al");
         patriciaTrieSet.add("A");
 
-        SortedSet<String> set = patriciaTrieSet.prefixSet("Bb");
+        final SortedSet<String> set = patriciaTrieSet.prefixSet("Bb");
         Assertions.assertEquals(2, set.size());
 
         Assertions.assertEquals("Bb", set.first());
@@ -177,10 +177,10 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Al");
         patriciaTrieSet.add("A");
 
-        SortedSet<String> set = patriciaTrieSet.subSet("Al", "Bbe");
+        final SortedSet<String> set = patriciaTrieSet.subSet("Al", "Bbe");
         Assertions.assertEquals(3, set.size());
 
-        String[] array = new String[3];
+        final String[] array = new String[3];
         set.toArray(array);
 
         Assertions.assertEquals("Al", array[0]);
@@ -196,10 +196,10 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Al");
         patriciaTrieSet.add("A");
 
-        SortedSet<String> set = patriciaTrieSet.headSet("Bbe");
+        final SortedSet<String> set = patriciaTrieSet.headSet("Bbe");
         Assertions.assertEquals(4, set.size());
 
-        String[] array = new String[4];
+        final String[] array = new String[4];
         set.toArray(array);
 
         Assertions.assertEquals("A", array[0]);
@@ -216,10 +216,10 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Al");
         patriciaTrieSet.add("Z");
 
-        SortedSet<String> set = patriciaTrieSet.tailSet("Bbe");
+        final SortedSet<String> set = patriciaTrieSet.tailSet("Bbe");
         Assertions.assertEquals(2, set.size());
 
-        String[] array = new String[2];
+        final String[] array = new String[2];
         set.toArray(array);
 
         Assertions.assertEquals("Bbe", array[0]);
@@ -314,11 +314,11 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
 
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[3];
+        final String[] actual = new String[3];
         int idx = 0;
 
         for (String s : subSet) {
@@ -338,9 +338,9 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
 
-        Spliterator<String> spliterator = subSet.spliterator();
+        final Spliterator<String> spliterator = subSet.spliterator();
         Assertions.assertEquals(Spliterator.DISTINCT | Spliterator.SIZED | Spliterator.SUBSIZED, spliterator.characteristics());
         Assertions.assertEquals(3, spliterator.getExactSizeIfKnown());
     }
@@ -352,7 +352,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("W");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
         Assertions.assertEquals(3, subSet.size());
     }
 
@@ -363,7 +363,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("W");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
         Assertions.assertTrue(subSet.contains("Albert"));
     }
 
@@ -374,7 +374,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("W");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
         Assertions.assertFalse(subSet.contains("Wirz"));
         Assertions.assertFalse(subSet.contains(new Object()));
     }
@@ -386,7 +386,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wirz");
         patriciaTrieSet.add("W");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wirz");
         Assertions.assertEquals(StringKeyAnalyzer.INSTANCE, subSet.comparator());
     }
 
@@ -398,11 +398,11 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("W");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.subSet("Albert", "Wirz");
+        final SortedSet<String> subSet = patriciaTrieSet.subSet("Albert", "Wirz");
 
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[3];
+        final String[] actual = new String[3];
         int idx = 0;
 
         for (String s : subSet) {
@@ -429,7 +429,7 @@ public class PatriciaTrieSetTest {
 
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[2];
+        final String[] actual = new String[2];
         int idx = 0;
 
         for (String s : subSet) {
@@ -450,10 +450,10 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wl");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Wl");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Wl");
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[5];
+        final String[] actual = new String[5];
         int idx = 0;
 
         for (String s : subSet) {
@@ -482,7 +482,7 @@ public class PatriciaTrieSetTest {
         subSet = subSet.headSet("Alberto");
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[2];
+        final String[] actual = new String[2];
         int idx = 0;
 
         for (String s : subSet) {
@@ -503,10 +503,10 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wl");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.tailSet("Alberto");
+        final SortedSet<String> subSet = patriciaTrieSet.tailSet("Alberto");
         Assertions.assertNotNull(subSet);
 
-        String[] actual = new String[4];
+        final String[] actual = new String[4];
         int idx = 0;
 
         for (String s : subSet) {
@@ -533,7 +533,7 @@ public class PatriciaTrieSetTest {
         Assertions.assertNotNull(subSet);
         subSet = subSet.tailSet("Wirz");
 
-        String[] actual = new String[2];
+        final String[] actual = new String[2];
         int idx = 0;
 
         for (String s : subSet) {
@@ -588,7 +588,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wl");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Alberto");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Alberto");
         subSet.add("Albert");
 
         Assertions.assertEquals(2, subSet.size());
@@ -609,7 +609,7 @@ public class PatriciaTrieSetTest {
         patriciaTrieSet.add("Wl");
         patriciaTrieSet.add("Al");
 
-        SortedSet<String> subSet = patriciaTrieSet.headSet("Alberto");
+        final SortedSet<String> subSet = patriciaTrieSet.headSet("Alberto");
         subSet.remove("Al");
 
         Assertions.assertEquals(1, subSet.size());

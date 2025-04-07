@@ -48,6 +48,9 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
     static final Object PRESENT = new Object();
     transient PatriciaTrie<Object> trie;
 
+    /**
+     * Create new Patricia Set with PatriciaTrie under the hood using StringKeyAnalyzer
+     */
     public PatriciaTrieSet() {
         trie = new PatriciaTrie<>();
     }
@@ -117,7 +120,7 @@ public class PatriciaTrieSet extends AbstractSet<String> implements TrieSet<Stri
     private void readObject(java.io.ObjectInputStream s)
             throws IOException, ClassNotFoundException {
         s.readFields();
-        int size = s.readInt();
+        final int size = s.readInt();
         this.trie = new PatriciaTrie<>();
 
         for (int i = 0; i < size; i++) {
