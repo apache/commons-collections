@@ -14,8 +14,10 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-${project.name} ${version} RELEASE NOTES
-----------------------------------------
+${project.name} ${version} Release Notes
+------------------------------------------------
+
+The ${developmentTeam} is pleased to announce the release of ${project.name} ${version}.
 
 $introduction.replaceAll("(?<!\015)\012", "
 ")
