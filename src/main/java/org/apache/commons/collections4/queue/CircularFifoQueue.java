@@ -174,7 +174,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     }
 
     /**
-     * Returns the element at the specified position in this queue.
+     * Gets the element at the specified position in this queue.
      *
      * @param index the position of the element in the queue
      * @return the element at position {@code index}

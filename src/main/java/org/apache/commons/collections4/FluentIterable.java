@@ -326,7 +326,7 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Returns the element at the provided position in this iterable.
+     * Gets the element at the provided position in this iterable.
      * In order to return the element, an iterator needs to be traversed
      * up to the requested position.
      *

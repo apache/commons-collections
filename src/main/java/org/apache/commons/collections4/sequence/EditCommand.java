@@ -72,7 +72,7 @@ public abstract class EditCommand<T> {
     public abstract void accept(CommandVisitor<T> visitor);
 
     /**
-     * Returns the object associated with this command.
+     * Gets the object associated with this command.
      *
      * @return the object on which the command is applied
      */

@@ -49,7 +49,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     }
 
     /**
-     * Returns the underlying iterator.
+     * Gets the underlying iterator.
      *
      * @return the underlying iterator
      */

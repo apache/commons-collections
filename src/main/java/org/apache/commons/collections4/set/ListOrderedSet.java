@@ -110,9 +110,11 @@ public class ListOrderedSet<E>
      * Factory method to create an ordered set using the supplied list to retain order.
      * <p>
      * A {@code HashSet} is used for the set behavior.
+     * </p>
      * <p>
      * NOTE: If the list contains duplicates, the duplicates are removed,
      * altering the specified list.
+     * </p>
      *
      * @param <E> the element type
      * @param list the list to decorate, must not be null
@@ -132,6 +134,7 @@ public class ListOrderedSet<E>
      * Factory method to create an ordered set.
      * <p>
      * An {@code ArrayList} is used to retain order.
+     * </p>
      *
      * @param <E> the element type
      * @param set the set to decorate, must not be null
@@ -147,6 +150,7 @@ public class ListOrderedSet<E>
      * Factory method to create an ordered set specifying the list and set to use.
      * <p>
      * The list and set must both be empty.
+     * </p>
      *
      * @param <E> the element type
      * @param set the set to decorate, must be empty and not null
@@ -195,6 +199,7 @@ public class ListOrderedSet<E>
      * use.
      * <p>
      * The set and list must both be correctly initialized to the same elements.
+     * </p>
      *
      * @param set the set to decorate, must not be null
      * @param list the list to decorate, must not be null
@@ -286,7 +291,7 @@ public class ListOrderedSet<E>
     }
 
     /**
-     * Returns the element at the specified position in this ordered set.
+     * Gets the element at the specified position in this ordered set.
      *
      * @param index the position of the element in the ordered {@link Set}.
      * @return the element at position {@code index}
@@ -369,6 +374,7 @@ public class ListOrderedSet<E>
      * If it's not contained, it's removed from this set. As a consequence,
      * it is advised to use a collection type for {@code coll} that provides
      * a fast (for example O(1)) implementation of {@link Collection#contains(Object)}.
+     * </p>
      */
     @Override
     public boolean retainAll(final Collection<?> coll) {

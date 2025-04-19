@@ -75,7 +75,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     boolean add(CellExtractor other);
 
     /**
-     * Returns the maximum allowable value for a cell count in this Counting filter.
+     * Gets the maximum allowable value for a cell count in this Counting filter.
      *
      * @return the maximum allowable value for a cell count in this Counting filter.
      */

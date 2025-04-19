@@ -324,7 +324,8 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Read the multiset in using a custom routine.
+     * Reads the multiset in using a custom routine.
+     *
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
@@ -342,7 +343,8 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Write the multiset out using a custom routine.
+     * Writes the multiset out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -388,7 +390,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Returns the number of occurrence of the given element in this multiset by
+     * Gets the number of occurrence of the given element in this multiset by
      * iterating over its entrySet.
      *
      * @param object the object to search for

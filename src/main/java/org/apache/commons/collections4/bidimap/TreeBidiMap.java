@@ -1530,7 +1530,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * Returns the key to which this map maps the specified value.
+     * Gets the key to which this map maps the specified value.
      * Returns null if the map contains no mapping for this value.
      * <p>
      * The value must implement {@code Comparable}.

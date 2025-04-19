@@ -61,7 +61,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Returns a BooleanComparator instance that sorts
+     * Gets a BooleanComparator instance that sorts
      * {@code false} values before {@code true} values.
      * <p>
      * Clients are encouraged to use the value returned from
@@ -78,7 +78,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Returns a BooleanComparator instance that sorts
+     * Gets a BooleanComparator instance that sorts
      * {@code true} values before {@code false} values.
      * <p>
      * Clients are encouraged to use the value returned from

@@ -98,12 +98,12 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Returns the FROM Key.
+         * Gets the FROM Key.
          */
         protected abstract K getFromKey();
 
         /**
-         * Returns the TO Key.
+         * Gets the TO Key.
          */
         protected abstract K getToKey();
 
@@ -1545,7 +1545,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the entry associated with the specified key in the
+     * Gets the entry associated with the specified key in the
      * PatriciaTrieBase.  Returns null if the map contains no mapping
      * for this key.
      * <p>
@@ -1563,7 +1563,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the nearest entry for a given key.  This is useful
+     * Gets the nearest entry for a given key.  This is useful
      * for finding knowing if a given key exists (and finding the value
      * for it), or for inserting the key.
      *
@@ -1589,7 +1589,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
+     * Gets a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
      * <p>
      * The view that this returns is optimized to have a very efficient

@@ -104,7 +104,7 @@ public interface Bag<E> extends Collection<E> {
     boolean containsAll(Collection<?> coll);
 
     /**
-     * Returns the number of occurrences (cardinality) of the given
+     * Gets the number of occurrences (cardinality) of the given
      * object currently in the bag. If the object does not exist in the
      * bag, return 0.
      *

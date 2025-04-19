@@ -547,7 +547,7 @@ public class IterableUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
+     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.

@@ -1624,7 +1624,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     }
 
     /**
-     * Returns the value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key.
+     * Gets the value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key.
      * <p>
      * If this map contains a mapping from a key {@code k} to a value {@code v} such that {@code key.equals(k)}, then this method returns {@code v}; otherwise
      * it returns {@code null}. (There can be at most one such mapping.)

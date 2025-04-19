@@ -965,7 +965,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
+     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
@@ -985,7 +985,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in {@link Iterator}, throwing
+     * Gets the {@code index}-th value in {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * The Iterator is advanced to {@code index} (or to the end, if
@@ -1008,7 +1008,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet},
+     * Gets the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet},
      * throwing {@code IndexOutOfBoundsException} if there is no such element.
      *
      * @param <K>  the key type in the {@link Map}
@@ -1025,7 +1025,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in {@code object}, throwing
+     * Gets the {@code index}-th value in {@code object}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element or
      * {@code IllegalArgumentException} if {@code object} is not an
      * instance of one of the supported types.
@@ -1091,7 +1091,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a {@link Map} mapping each unique element in the given
+     * Gets a {@link Map} mapping each unique element in the given
      * {@link Collection} to an {@link Integer} representing the number
      * of occurrences of that element in the {@link Collection}.
      * <p>

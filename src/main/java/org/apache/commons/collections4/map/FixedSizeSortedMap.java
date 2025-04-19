@@ -179,7 +179,7 @@ public class FixedSizeSortedMap<K, V>
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Writes the map out using a custom routine.
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream

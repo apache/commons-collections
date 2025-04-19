@@ -222,7 +222,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Returns the index of the iterator that returned the last element.
+     * Gets the index of the iterator that returned the last element.
      *
      * @return the index of the iterator that returned the last element
      * @throws IllegalStateException if there is no last returned element

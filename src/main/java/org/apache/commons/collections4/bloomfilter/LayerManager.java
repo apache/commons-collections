@@ -385,7 +385,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     }
 
     /**
-     * Returns the number of filters in the LayerManager.  In the default LayerManager implementation
+     * Gets the number of filters in the LayerManager.  In the default LayerManager implementation
      * there is always at least one layer.
      *
      * @return the current depth.
@@ -395,7 +395,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     }
 
     /**
-     * Returns the current target filter. If a new filter should be created based on
+     * Gets the current target filter. If a new filter should be created based on
      * {@code extendCheck} it will be created before this method returns.
      *
      * @return the current target filter after any extension.

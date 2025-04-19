@@ -297,7 +297,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Locate the element with the given index relative to the
+         * Gets the element with the given index relative to the
          * offset of the parent of this node.
          */
         AVLNode<E> get(final int index) {
@@ -315,7 +315,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Returns the height of the node or -1 if the node is null.
+         * Gets the height of the node or -1 if the node is null.
          */
         private int getHeight(final AVLNode<E> node) {
             return node == null ? -1 : node.height;
@@ -362,7 +362,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Locate the index that contains the specified object.
+         * Finds the index that contains the specified object.
          */
         int indexOf(final Object object, final int index) {
             if (getLeftSubTree() != null) {

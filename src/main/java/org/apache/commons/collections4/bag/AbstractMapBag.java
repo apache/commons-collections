@@ -283,7 +283,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Reads the map in using a custom routine.
+     *
      * @param map the map to use
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
@@ -304,7 +305,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Writes the map out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -344,7 +346,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Returns the number of occurrence of the given element in this bag by
+     * Gets the number of occurrence of the given element in this bag by
      * looking up its count in the underlying map.
      *
      * @param object the object to search for

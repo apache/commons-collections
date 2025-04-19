@@ -67,14 +67,14 @@ public interface MultiSet<E> extends Collection<E> {
         boolean equals(Object o);
 
         /**
-         * Returns the number of occurrences for the element of this entry.
+         * Gets the number of occurrences for the element of this entry.
          *
          * @return the number of occurrences of the element
          */
         int getCount();
 
         /**
-         * Returns the element corresponding to this entry.
+         * Gets the element corresponding to this entry.
          *
          * @return the element corresponding to this entry
          */
@@ -161,7 +161,7 @@ public interface MultiSet<E> extends Collection<E> {
     boolean equals(Object obj);
 
     /**
-     * Returns the number of occurrences of the given object currently
+     * Gets the number of occurrences of the given object currently
      * in the MultiSet. If the object does not exist in the multiset,
      * return 0.
      *

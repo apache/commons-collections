@@ -345,7 +345,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Read the multiset in using a custom routine.
+     * Reads the multiset in using a custom routine.
+     *
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
@@ -365,7 +366,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Write the multiset out using a custom routine.
+     * Writes the multiset out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -399,7 +401,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Returns the number of occurrence of the given element in this multiset by
+     * Gets the number of occurrence of the given element in this multiset by
      * looking up its count in the underlying map.
      *
      * @param object the object to search for
@@ -415,7 +417,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Utility method for implementations to access the map that backs this multiset.
+     * Gets the map that backs this multiset.
      * Not intended for interactive use outside of subclasses.
      *
      * @return the map being used by the MultiSet

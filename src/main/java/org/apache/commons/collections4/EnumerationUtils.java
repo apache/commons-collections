@@ -46,7 +46,7 @@ public class EnumerationUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in the {@link Enumeration}, throwing
+     * Gets the {@code index}-th value in the {@link Enumeration}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * The Enumeration is advanced to {@code index} (or to the end, if

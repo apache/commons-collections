@@ -126,7 +126,7 @@ public interface MultiValuedMap<K, V> {
     // Modification operations
 
     /**
-     * Returns a view collection of the values associated with the specified key.
+     * Gets a view collection of the values associated with the specified key.
      * <p>
      * This method will return an <strong>empty</strong> collection if {@link #containsKey(Object)}
      * returns {@code false}. Changes to the returned collection will update the underlying

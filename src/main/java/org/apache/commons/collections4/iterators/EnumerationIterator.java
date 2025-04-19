@@ -68,9 +68,8 @@ public class EnumerationIterator<E> implements Iterator<E> {
         this.last = null;
     }
 
-    // Properties
     /**
-     * Returns the underlying enumeration.
+     * Gets the underlying enumeration.
      *
      * @return the underlying enumeration
      */

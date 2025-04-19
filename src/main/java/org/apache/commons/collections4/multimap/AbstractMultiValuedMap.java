@@ -626,7 +626,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     protected abstract Collection<V> createCollection();
 
     /**
-     * Read the map in using a custom routine.
+     * Reads the map in using a custom routine.
+     *
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
@@ -649,7 +650,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Writes the map out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
