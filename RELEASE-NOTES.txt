@@ -1,3 +1,47 @@
+Apache Commons Collections 4.5.0 Release Notes
+----------------------------------------------
+
+The Apache Commons Collections team is pleased to announce the release of Apache Commons Collections 4.5.0.
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+Changes in this version
+-----------------------
+
+New features
+------------
+
+* Add IteratorUtils.toSet(Iterator). Thanks to Gary Gregory. 
+* Add IteratorUtils.toSet(Iterator, int). Thanks to Gary Gregory. 
+* Add EnumerationUtils.toSet(Enumeration). Thanks to Gary Gregory. 
+* COLLECTIONS-693:  Please add OWASP Dependency Check to the build. Thanks to Gary Gregory. 
+
+Fixed Bugs
+----------
+
+* Refactor AbstractPropertiesFactory.load(File) to use NIO. Thanks to Gary Gregory. 
+* Refactor AbstractPropertiesFactory.load(String) to use NIO. Thanks to Gary Gregory. 
+
+Changes
+-------
+
+* Bump commons-codec:commons-codec from 1.17.1 to 1.18.0 #591. Thanks to Gary Gregory. 
+* Bump org.apache.commons:commons-parent from 78 to 81 #2296. Thanks to Gary Gregory, Dependabot. 
+* Bump commons.jacoco.version from 0.8.13-SNAPSHOT to 0.13.0. Thanks to Gary Gregory. 
+* [test] Bump commons-io:commons-io from 2.18.0 to 2.19.0. Thanks to Gary Gregory. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+https://commons.apache.org/proper/commons-collections/
+
+Download page: https://commons.apache.org/proper/commons-collections/download_collections.cgi
+
+-----------------------------------------------------------------------------
+
 Apache Commons Collections 4.5.0-M3 RELEASE NOTES
 -------------------------------------------------
 

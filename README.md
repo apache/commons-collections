@@ -6,7 +6,7 @@
  (the "License"); you may not use this file except in compliance with
  the License.  You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+      https://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +45,7 @@ Apache Commons Collections
 
 [![Java CI](https://github.com/apache/commons-collections/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/org.apache.commons/commons-collections4?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.commons/commons-collections4)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0-M3.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0-M3)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0)
 [![CodeQL](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
 
@@ -68,7 +68,7 @@ Alternatively, you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0-M3</version>
+  <version>4.5.0</version>
 </dependency>
 ```
 

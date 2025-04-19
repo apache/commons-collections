@@ -22,7 +22,7 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5.0-M4" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+  <release version="4.5.0" date="2025-04-19" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(File) to use NIO.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(String) to use NIO.</action>

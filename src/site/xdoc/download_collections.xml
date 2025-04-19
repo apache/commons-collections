@@ -115,32 +115,32 @@ limitations under the License.
       </p>
     </subsection>
     </section>
-    <section name="Apache Commons Collections 4.5.0-M3 (Requires Java 8 or above)">
+    <section name="Apache Commons Collections 4.5.0 (Requires Java 8 or above)">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.tar.gz">commons-collections4-4.5.0-M3-bin.tar.gz</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/binaries/commons-collections4-4.5.0-bin.tar.gz">commons-collections4-4.5.0-bin.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-bin.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.zip">commons-collections4-4.5.0-M3-bin.zip</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.zip.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-M3-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/binaries/commons-collections4-4.5.0-bin.zip">commons-collections4-4.5.0-bin.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-bin.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/binaries/commons-collections4-4.5.0-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections4-4.5.0-M3-src.tar.gz">commons-collections4-4.5.0-M3-src.tar.gz</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-M3-src.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-M3-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/source/commons-collections4-4.5.0-src.tar.gz">commons-collections4-4.5.0-src.tar.gz</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections4-4.5.0-M3-src.zip">commons-collections4-4.5.0-M3-src.zip</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-M3-src.zip.sha512">sha512</a></td>
-              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-M3-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/source/commons-collections4-4.5.0-src.zip">commons-collections4-4.5.0-src.zip</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-src.zip.sha512">sha512</a></td>
+              <td><a href="https://downloads.apache.org/commons/collections/source/commons-collections4-4.5.0-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
