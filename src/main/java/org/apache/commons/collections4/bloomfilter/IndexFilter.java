@@ -110,8 +110,7 @@ public final class IndexFilter {
     private IndexFilter(final Shape shape, final IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
-        if (BitMaps.numberOfBitMaps(shape) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
-                * Integer.BYTES) {
+        if (BitMaps.numberOfBitMaps(shape) * Long.BYTES < (long) shape.getNumberOfHashFunctions() * Integer.BYTES) {
             this.tracker = new BitMapTracker(shape);
         } else {
             this.tracker = new ArrayTracker(shape);
@@ -134,7 +133,7 @@ public final class IndexFilter {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
         }
         if (tracker.test(number)) {
-            return  consumer.test(number);
+            return consumer.test(number);
         }
         return true;
     }
