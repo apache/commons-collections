@@ -62,13 +62,13 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
+            return main.makeFullMap().headMap(toKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).headMap(toKey);
+            return main.makeObject().headMap(toKey);
         }
 
         @Test
@@ -125,13 +125,13 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
+            return main.makeFullMap().subMap(fromKey, toKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).subMap(fromKey, toKey);
+            return main.makeObject().subMap(fromKey, toKey);
         }
 
         @Test
@@ -182,13 +182,13 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
+            return main.makeFullMap().tailMap(fromKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).tailMap(fromKey);
+            return main.makeObject().tailMap(fromKey);
         }
 
         @Test
@@ -359,7 +359,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
      */
     @Override
     public SortedMap<K, V> getMap() {
-        return (SortedMap<K, V>) super.getMap();
+        return super.getMap();
     }
 
     /**
@@ -387,7 +387,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
      */
     @Override
     public SortedMap<K, V> makeFullMap() {
-        return (SortedMap<K, V>) super.makeFullMap();
+        return super.makeFullMap();
     }
 
     /**
