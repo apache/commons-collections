@@ -62,6 +62,13 @@ public class SetUtils {
     public abstract static class SetView<E> extends AbstractSet<E> {
 
         /**
+         * Constructs a new instance.
+         */
+        public SetView() {
+            // empty
+        }
+
+        /**
          * Copies the contents of this view into the provided set.
          *
          * @param <S> the set type

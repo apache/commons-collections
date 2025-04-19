@@ -46,6 +46,13 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     protected abstract static class AbstractEntry<E> implements Entry<E> {
 
+        /**
+         * Constructs a new instance.
+         */
+        public AbstractEntry() {
+            // empty
+        }
+
         @Override
         public boolean equals(final Object object) {
             if (object instanceof Entry) {
@@ -240,7 +247,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     private transient Set<Entry<E>> entrySet;
 
     /**
-     * Constructor needed for subclass serialization.
+     * Constructs a new instance subclasses.
      */
     protected AbstractMultiSet() {
     }

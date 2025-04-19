@@ -156,6 +156,13 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         private Map<? extends K, ? extends V> sourceMap = (Map<? extends K, ? extends V>) DEFAULT_SOURCE_MAP;
 
         /**
+         * Constructs a new instances of {@link ConcurrentReferenceHashMap}.
+         */
+        public Builder() {
+            // empty
+        }
+
+        /**
          * Builds a new {@link ConcurrentReferenceHashMap}.
          * <p>
          * By default, keys are weak, and values are strong.

@@ -48,6 +48,13 @@ public class OrderedProperties extends Properties {
      */
     private final LinkedHashSet<Object> orderedKeys = new LinkedHashSet<>();
 
+    /**
+     * Constructs a new instance.
+     */
+    public OrderedProperties() {
+        // empty
+    }
+
     @Override
     public synchronized void clear() {
         orderedKeys.clear();

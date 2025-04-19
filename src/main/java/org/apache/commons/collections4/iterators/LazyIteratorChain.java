@@ -68,6 +68,13 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> lastUsedIterator;
 
     /**
+     * Constructs a new instance.
+     */
+    public LazyIteratorChain() {
+        // empty
+    }
+
+    /**
      * Return true if any Iterator in the chain has a remaining element.
      *
      * @return true if elements remain

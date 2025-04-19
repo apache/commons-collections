@@ -85,6 +85,13 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     }
 
     /**
+     * Constructs a new instance.
+     */
+    public KeyAnalyzer() {
+        // empty
+    }
+
+    /**
      * Returns the n-th different bit between key and other. This starts the comparison in
      * key at 'offsetInBits' and goes for 'lengthInBits' bits, and compares to the other key starting
      * at 'otherOffsetInBits' and going for 'otherLengthInBits' bits.

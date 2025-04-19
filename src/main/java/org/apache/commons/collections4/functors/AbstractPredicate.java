@@ -26,6 +26,13 @@ import org.apache.commons.collections4.Predicate;
  */
 public abstract class AbstractPredicate<T> implements Predicate<T> {
 
+    /**
+     * Constructs a new instance.
+     */
+    public AbstractPredicate() {
+        // empty
+    }
+
     @Override
     public boolean evaluate(final T object) {
         return test(object);

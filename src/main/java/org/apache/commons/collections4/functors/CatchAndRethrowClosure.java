@@ -49,6 +49,13 @@ import org.apache.commons.collections4.FunctorException;
 public abstract class CatchAndRethrowClosure<T> implements Closure<T> {
 
     /**
+     * Constructs a new instance.
+     */
+    public CatchAndRethrowClosure() {
+        // empty
+    }
+
+    /**
      * Execute this closure on the specified input object.
      *
      * @param input the input to execute on
