@@ -42,6 +42,13 @@ public class SortedProperties extends Properties {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructs a new instance.
+     */
+    public SortedProperties() {
+        // empty
+    }
+
     @Override
     public Set<Map.Entry<Object, Object>> entrySet() {
         final Stream<SimpleEntry<Object, Object>> stream = sortedKeys().map(k -> new AbstractMap.SimpleEntry<>(k, getProperty(k)));
