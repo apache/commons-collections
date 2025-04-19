@@ -1210,13 +1210,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (deletedNode.getLeft(dataElement) != null && deletedNode.getRight(dataElement) != null) {
                 swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
-
-            final Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ?
-                    deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
-
+            final Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ? deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
             if (replacement != null) {
                 replacement.setParent(deletedNode.getParent(dataElement), dataElement);
-
                 if (deletedNode.getParent(dataElement) == null) {
                     rootNode[dataElement.ordinal()] = replacement;
                 } else if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
@@ -1224,37 +1220,28 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 } else {
                     deletedNode.getParent(dataElement).setRight(replacement, dataElement);
                 }
-
                 deletedNode.setLeft(null, dataElement);
                 deletedNode.setRight(null, dataElement);
                 deletedNode.setParent(null, dataElement);
-
                 if (isBlack(deletedNode, dataElement)) {
                     doRedBlackDeleteFixup(replacement, dataElement);
                 }
-            } else {
-
+            } else if (deletedNode.getParent(dataElement) == null) {
                 // replacement is null
-                if (deletedNode.getParent(dataElement) == null) {
-
-                    // empty tree
-                    rootNode[dataElement.ordinal()] = null;
-                } else {
-
-                    // deleted node had no children
-                    if (isBlack(deletedNode, dataElement)) {
-                        doRedBlackDeleteFixup(deletedNode, dataElement);
+                // empty tree
+                rootNode[dataElement.ordinal()] = null;
+            } else {
+                // deleted node had no children
+                if (isBlack(deletedNode, dataElement)) {
+                    doRedBlackDeleteFixup(deletedNode, dataElement);
+                }
+                if (deletedNode.getParent(dataElement) != null) {
+                    if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
+                        deletedNode.getParent(dataElement).setLeft(null, dataElement);
+                    } else {
+                        deletedNode.getParent(dataElement).setRight(null, dataElement);
                     }
-
-                    if (deletedNode.getParent(dataElement) != null) {
-                        if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
-                            deletedNode.getParent(dataElement).setLeft(null, dataElement);
-                        } else {
-                            deletedNode.getParent(dataElement).setRight(null, dataElement);
-                        }
-
-                        deletedNode.setParent(null, dataElement);
-                    }
+                    deletedNode.setParent(null, dataElement);
                 }
             }
         }
