@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -70,12 +71,7 @@ public interface BloomFilterExtractor {
 
             @Override
             public boolean processBloomFilters(final Predicate<BloomFilter> predicate) {
-                for (final BloomFilter filter : filters) {
-                    if (!predicate.test(filter)) {
-                        return false;
-                    }
-                }
-                return true;
+                return Arrays.stream(filters).allMatch(predicate);
             }
         };
     }
