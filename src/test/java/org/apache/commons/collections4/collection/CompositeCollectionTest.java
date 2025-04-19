@@ -380,7 +380,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "2");
         two.add((E) "1");
         // need separate list to remove, as otherwise one clears itself
-        final Predicate<E> predicate = e -> "1".equals(e);
+        final Predicate<E> predicate = "1"::equals;
         c.addComposited(one, two);
         c.removeIf(predicate);
         assertFalse(c.contains("1"));
