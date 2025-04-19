@@ -23,7 +23,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0-M4-SNAPSHOT</version>
+  <version>4.5.0-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
   <inceptionYear>2001</inceptionYear>
   <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
@@ -103,8 +103,8 @@
     <commons.componentid>collections</commons.componentid>
     <commons.module.name>org.apache.commons.collections4</commons.module.name>
     <!-- Current 4.x release series -->
-    <commons.release.version>4.5.0-M3</commons.release.version>
-    <commons.release.next>4.5.0-M4</commons.release.next>
+    <commons.release.version>4.5.0</commons.release.version>
+    <commons.release.next>4.5.1</commons.release.next>
     <commons.release.desc>(Requires Java 8 or above)</commons.release.desc>
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
