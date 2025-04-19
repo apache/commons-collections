@@ -445,11 +445,6 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      */
     @Override
     public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
-        for (final T bf : filters) {
-            if (!bloomFilterPredicate.test(bf)) {
-                return false;
-            }
-        }
-        return true;
+        return filters.stream().allMatch(bloomFilterPredicate);
     }
 }
