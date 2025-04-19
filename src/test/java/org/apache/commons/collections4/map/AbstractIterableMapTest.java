@@ -98,7 +98,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
      */
     @Override
     public IterableMap<K, V> getMap() {
-        return (IterableMap<K, V>) super.getMap();
+        return super.getMap();
     }
 
     /**
@@ -106,7 +106,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
      */
     @Override
     public IterableMap<K, V> makeFullMap() {
-        return (IterableMap<K, V>) super.makeFullMap();
+        return super.makeFullMap();
     }
 
     /**
