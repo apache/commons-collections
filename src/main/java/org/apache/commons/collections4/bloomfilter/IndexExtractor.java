@@ -103,7 +103,7 @@ public interface IndexExtractor {
      * @return An int array of the data.
      */
     default int[] asIndexArray() {
-        class Indices {
+        final class Indices {
             private int[] data = new int[32];
             private int size;
 
