@@ -29,6 +29,13 @@ import org.apache.commons.collections4.MapIterator;
 public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {
 
     /**
+     * Constructs a new instance for subclasses.
+     */
+    public AbstractIterableMap() {
+        // empty
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
