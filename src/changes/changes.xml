@@ -30,6 +30,7 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add IteratorUtils.toSet(Iterator).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add IteratorUtils.toSet(Iterator, int).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add EnumerationUtils.toSet(Enumeration).</action>
+    <action type="add" issue="COLLECTIONS-693" dev="ggregory" due-to="Gary Gregory">Please add OWASP Dependency Check to the build.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.17.1 to 1.18.0 #591.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 78 to 81 #2296.</action>
