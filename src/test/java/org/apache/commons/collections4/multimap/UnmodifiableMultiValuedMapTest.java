@@ -54,7 +54,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         final int cpk = getSampleCountPerKey();
         for (int k = 0; k < maxK; k++) {
             final K key = makeKey(k);
-            final Collection<V> collection = map.get((K) key);
+            final Collection<V> collection = map.get(key);
             assertEquals(cpk, collection.size());
             final String toString = collection.toString();
             final List<V> expected = new ArrayList<>(cpk);
