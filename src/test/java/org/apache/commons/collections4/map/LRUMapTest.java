@@ -115,7 +115,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             // Pairs with equals()
             return super.equals(o);
         }
