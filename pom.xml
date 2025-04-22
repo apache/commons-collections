@@ -23,7 +23,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0</version>
+  <version>4.5.1-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
   <inceptionYear>2001</inceptionYear>
   <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
@@ -117,7 +117,7 @@
     <commons.bc.version>4.4</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
     <!-- project.build.outputTimestamp is managed by Maven plugins, see https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-    <project.build.outputTimestamp>2025-04-19T13:48:38Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-04-22T19:14:37Z</project.build.outputTimestamp>
     <!-- MathJax configuration. See the maven-javadoc-plugin plugin. -->
     <mathjax.url>https://commons.apache.org/js/mathjax/tex-mml-chtml.js</mathjax.url>
     <!-- JaCoCo: Don't make code coverage worse than: -->
