@@ -118,7 +118,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     public abstract Object makeObject();
 
     /**
-     * Read a Serialized or Externalized Object from bytes.
+     * Reads a Serialized or Externalized Object from bytes.
      * Useful for verifying serialization in memory.
      *
      * @param b byte array containing a serialized Object
