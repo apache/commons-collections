@@ -368,7 +368,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             default:
                 break;
             }
-            throw new Error();
+            throw new IllegalArgumentException(type.toString());
         }
     }
 
