@@ -32,9 +32,9 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of results supplied by this supplier.
  * @since 2.1
- * @deprecated Use {@link Supplier}.
+ * This will be deprecated in 5.0 in favor of {@link Supplier}.
  */
-@Deprecated
+//@Deprecated
 public interface Factory<T> extends Supplier<T> {
 
     /**

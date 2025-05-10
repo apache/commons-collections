@@ -32,9 +32,9 @@ package org.apache.commons.collections4;
  *
  * @param <T> the type of the input to the predicate.
  * @since 1.0
- * @deprecated Use {@link java.util.function.Predicate}.
+ * This will be deprecated in 5.0 in favor of {@link java.util.function.Predicate}.
  */
-@Deprecated
+//@Deprecated
 public interface Predicate<T> extends java.util.function.Predicate<T> {
 
     /**
