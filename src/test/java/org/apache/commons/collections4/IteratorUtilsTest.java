@@ -968,18 +968,6 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testToSet() {
-        final Set<Object> set = new HashSet<>();
-        set.add(Integer.valueOf(1));
-        set.add("Two");
-        set.add(null);
-        final Set<Object> result = IteratorUtils.toSet(set.iterator());
-        assertEquals(set, result);
-        assertThrows(NullPointerException.class, () -> IteratorUtils.toSet(null, 10));
-        assertThrows(IllegalArgumentException.class, () -> IteratorUtils.toSet(set.iterator(), -1));
-    }
-
-    @Test
     public void testToListIterator() {
         final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
@@ -998,6 +986,18 @@ public class IteratorUtilsTest {
     @Test
     public void testToListIteratorNull() {
         assertThrows(NullPointerException.class, () -> IteratorUtils.toListIterator(null));
+    }
+
+    @Test
+    public void testToSet() {
+        final Set<Object> set = new HashSet<>();
+        set.add(Integer.valueOf(1));
+        set.add("Two");
+        set.add(null);
+        final Set<Object> result = IteratorUtils.toSet(set.iterator());
+        assertEquals(set, result);
+        assertThrows(NullPointerException.class, () -> IteratorUtils.toSet(null, 10));
+        assertThrows(IllegalArgumentException.class, () -> IteratorUtils.toSet(set.iterator(), -1));
     }
 
     @Test

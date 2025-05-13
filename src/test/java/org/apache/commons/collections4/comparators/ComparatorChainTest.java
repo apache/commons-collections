@@ -83,13 +83,13 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
             return getColumn(0) == row.getColumn(0) && getColumn(1) == row.getColumn(1) && getColumn(2) == row.getColumn(2);
         }
 
+        public int getColumn(final int colIndex) {
+            return cols[colIndex];
+        }
+
         @Override
         public int hashCode() {
             return Arrays.hashCode(cols);
-        }
-
-        public int getColumn(final int colIndex) {
-            return cols[colIndex];
         }
 
         @Override
