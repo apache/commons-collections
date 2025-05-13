@@ -33,6 +33,7 @@
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 83 #612.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.4.8-jre.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM).</action>
   </release>
   <release version="4.5.0" date="2025-04-19" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->

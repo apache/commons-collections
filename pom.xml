@@ -130,8 +130,6 @@
     <commons.jacoco.complexityRatio>0.78</commons.jacoco.complexityRatio>
     <doxia.module.markdown.version>2.0.0</doxia.module.markdown.version>
     <commons.easymock.version>5.5.0</commons.easymock.version>
-    <!-- PMD 7.9.0 throws java.io.IOException: Stream closed probably because PMD is shadding ASM. -->
-    <commons.pmd-impl.version>7.8.0</commons.pmd-impl.version>
   </properties>
   <build>
     <defaultGoal>clean verify apache-rat:check pmd:check checkstyle:check japicmp:cmp javadoc:javadoc</defaultGoal>
