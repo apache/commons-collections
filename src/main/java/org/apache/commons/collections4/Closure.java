@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Defines a functor interface implemented by classes that do something.
@@ -31,9 +32,9 @@ import java.util.function.Consumer;
  *
  * @param <T> the type of the input to the operation.
  * @since 1.0
- * @deprecated Use {@link Consumer}.
+ * This will be deprecated in 5.0 in favor of {@link Supplier}.
  */
-@Deprecated
+//@Deprecated
 public interface Closure<T> extends Consumer<T> {
 
     @Override

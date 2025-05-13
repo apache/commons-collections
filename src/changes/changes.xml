@@ -28,6 +28,7 @@
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Factory; this will be deprecated in 5.0 in favor of java.util.function.Supplier.</action>
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Predicate; this will be deprecated in 5.0 in favor of java.util.function.Predicate.</action>
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Transformer; this will be deprecated in 5.0 in favor of java.util.function.Function.</action>
+    <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Closure; this will be deprecated in 5.0 in favor of java.util.function.Consumer.</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 83 #612.</action>
