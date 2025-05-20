@@ -499,6 +499,8 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getLongValue(in, "key"), 0);
         assertEquals(1, MapUtils.getLongValue(in, "noKey", 1L), 0);
         assertEquals(1, MapUtils.getLongValue(in, "noKey", key -> 1L), 0);
+        assertEquals(Long.MIN_VALUE, MapUtils.getLongValue(in, "noKey", key -> Long.MIN_VALUE), 0);
+        assertEquals(Long.MAX_VALUE, MapUtils.getLongValue(in, "noKey", key -> Long.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getLongValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getLong(in, "key", 0L), 0);
         assertEquals(1, MapUtils.getLong(in, "noKey", 1L), 0);

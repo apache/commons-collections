@@ -838,7 +838,7 @@ public class MapUtils {
      */
     public static <K> long getLongValue(final Map<? super K, ?> map, final K key,
             final Function<K, Long> defaultFunction) {
-        return applyDefaultFunction(map, key, MapUtils::getLong, defaultFunction, 0L).byteValue();
+        return applyDefaultFunction(map, key, MapUtils::getLong, defaultFunction, 0L).longValue();
     }
 
     /**
