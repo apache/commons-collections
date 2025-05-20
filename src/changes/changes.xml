@@ -32,7 +32,7 @@
     <action type="fix" dev="ggregory" due-to="Sebastian Götz, Gary Gregory" issue="COLLECTIONS-874">MapUtils.getLongValue(Map, K, Function) returns a byte instead of a long.</action>
     <!-- ADD -->
     <!-- UPDATE -->
-    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 83 #612.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 84 #612.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.4.8-jre.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM).</action>
   </release>
