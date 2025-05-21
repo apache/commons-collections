@@ -71,19 +71,6 @@ The <a href="scm.html">source repository</a> can be
 </p>
 </section>
 <!-- ================================================== -->
-<section name="Releases">
-<p>
-The latest version is available:
-<a href="https://commons.apache.org/collections/download_collections.cgi">Download now!</a>
-</p>
-<p>
-  This requires Java 8 or later, see also the <a href="/changes.html">release notes</a>.
-</p>
-<p>
-For previous releases, see the <a href="https://archive.apache.org/dist/commons/collections/">Apache Archive</a>
-</p>
-</section>
-<!-- ================================================== -->
 <section name="Support">
 <p>
 The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
