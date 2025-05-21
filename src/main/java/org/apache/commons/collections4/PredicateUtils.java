@@ -73,7 +73,7 @@ import org.apache.commons.collections4.functors.UniquePredicate;
 public class PredicateUtils {
 
     /**
-     * Create a new Predicate that returns true only if all of the specified
+     * Creates a new Predicate that returns true only if all of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns true.
      *
@@ -89,7 +89,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true only if all of the specified
+     * Creates a new Predicate that returns true only if all of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns true.
      *
@@ -105,7 +105,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true only if both of the specified
+     * Creates a new Predicate that returns true only if both of the specified
      * predicates are true.
      *
      * @param <T>  the type that the predicate queries
@@ -121,7 +121,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if any of the specified
+     * Creates a new Predicate that returns true if any of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns false.
      *
@@ -137,7 +137,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if any of the specified
+     * Creates a new Predicate that returns true if any of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns false.
      *
@@ -153,7 +153,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that wraps a Transformer. The Transformer must
+     * Creates a new Predicate that wraps a Transformer. The Transformer must
      * return either {@link Boolean#TRUE} or {@link Boolean#FALSE} otherwise a
      * PredicateException will be thrown.
      *
@@ -168,7 +168,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if one, but not both, of the
+     * Creates a new Predicate that returns true if one, but not both, of the
      * specified predicates are true. XOR
      *
      * @param <T>  the type that the predicate queries
@@ -298,7 +298,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if neither of the specified
+     * Creates a new Predicate that returns true if neither of the specified
      * predicates are true.
      *
      * @param <T>  the type that the predicate queries
@@ -316,7 +316,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if none of the specified
+     * Creates a new Predicate that returns true if none of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns true.
      *
@@ -332,7 +332,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if none of the specified
+     * Creates a new Predicate that returns true if none of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns true.
      *
@@ -359,7 +359,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if the specified predicate
+     * Creates a new Predicate that returns true if the specified predicate
      * returns false and vice versa.
      *
      * @param <T>  the type that the predicate queries
@@ -429,7 +429,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if only one of the specified
+     * Creates a new Predicate that returns true if only one of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns false.
      *
@@ -445,7 +445,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if only one of the specified
+     * Creates a new Predicate that returns true if only one of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns false.
      *
@@ -461,7 +461,7 @@ public class PredicateUtils {
     }
 
     /**
-     * Create a new Predicate that returns true if either of the specified
+     * Creates a new Predicate that returns true if either of the specified
      * predicates are true.
      *
      * @param <T>  the type that the predicate queries
