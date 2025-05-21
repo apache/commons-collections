@@ -139,7 +139,7 @@ final class FunctorUtils {
      * @param consumers  the consumers to validate.
      */
     static void validate(final Consumer<?>... consumers) {
-        Objects.requireNonNull(consumers, "closures");
+        Objects.requireNonNull(consumers, "consumers");
         for (int i = 0; i < consumers.length; i++) {
             if (consumers[i] == null) {
                 throw new NullPointerException("closures[" + i + "]");
