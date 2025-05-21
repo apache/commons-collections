@@ -30,6 +30,13 @@ import org.apache.commons.collections4.Predicate;
  */
 final class FunctorUtils {
 
+    /**
+     * Clones the given array or returns null on null input.
+     *
+     * @param <T> The array type.
+     * @param array The array to clone.
+     * @return The cloned array or null.
+     */
     private static <T> T[] clone(final T... array) {
         return array != null ? array.clone() : null;
     }
