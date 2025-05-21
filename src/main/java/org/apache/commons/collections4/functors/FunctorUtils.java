@@ -30,6 +30,10 @@ import org.apache.commons.collections4.Predicate;
  */
 final class FunctorUtils {
 
+    private static <T> T[] clone(final T... array) {
+        return array != null ? array.clone() : null;
+    }
+
     /**
      * A very simple method that coerces Predicate<? super T> to Predicate<T>.
      * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
@@ -75,10 +79,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends Consumer<?>> T[] copy(final T... consumers) {
-        if (consumers == null) {
-            return null;
-        }
-        return consumers.clone();
+        return clone(consumers);
     }
 
     /**
@@ -91,10 +92,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends java.util.function.Predicate<?>> T[] copy(final T... predicates) {
-        if (predicates == null) {
-            return null;
-        }
-        return predicates.clone();
+        return clone(predicates);
     }
 
     /**
@@ -105,10 +103,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends Function<?, ?>> T[] copy(final T... transformers) {
-        if (transformers == null) {
-            return null;
-        }
-        return transformers.clone();
+        return clone(transformers);
     }
 
     /**
