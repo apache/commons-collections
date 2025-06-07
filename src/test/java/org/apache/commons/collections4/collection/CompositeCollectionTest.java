@@ -144,7 +144,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings({ "unchecked", "serial" })
-    public void testAddAllMutator() {
+    void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
             private static final long serialVersionUID = 1L;
@@ -183,7 +183,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddAllToCollection() {
+    void testAddAllToCollection() {
         setUpTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -195,7 +195,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings({ "unchecked", "serial" })
-    public void testAddMutator() {
+    void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
             private static final long serialVersionUID = 1L;
@@ -257,7 +257,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClear() {
+    void testClear() {
         setUpTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -270,7 +270,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testContainsAll() {
+    void testContainsAll() {
         setUpTest();
         one.add((E) "1");
         two.add((E) "1");
@@ -281,7 +281,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIsEmpty() {
+    void testIsEmpty() {
         setUpTest();
         assertTrue(c.isEmpty());
         final HashSet<E> empty = new HashSet<>();
@@ -293,7 +293,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIterator() {
+    void testIterator() {
         setUpTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -311,7 +311,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultipleCollectionsSize() {
+    void testMultipleCollectionsSize() {
         setUpTest();
         final HashSet<E> set = new HashSet<>();
         set.add((E) "a");
@@ -325,7 +325,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemove() {
+    void testRemove() {
         setUpMutatorTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -339,7 +339,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveAll() {
+    void testRemoveAll() {
         setUpMutatorTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -359,7 +359,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveComposited() {
+    void testRemoveComposited() {
         setUpMutatorTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -374,7 +374,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveIf() {
+    void testRemoveIf() {
         setUpMutatorTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -394,7 +394,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRetainAll() {
+    void testRetainAll() {
         setUpTest();
         one.add((E) "1");
         one.add((E) "2");
@@ -414,7 +414,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSize() {
+    void testSize() {
         setUpTest();
         final HashSet<E> set = new HashSet<>();
         set.add((E) "a");
@@ -425,7 +425,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToCollection() {
+    void testToCollection() {
         setUpTest();
         one.add((E) "1");
         two.add((E) "2");
@@ -451,7 +451,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         verify();
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CompositeCollection.emptyCollection.version4.obj");
 //        resetFull();

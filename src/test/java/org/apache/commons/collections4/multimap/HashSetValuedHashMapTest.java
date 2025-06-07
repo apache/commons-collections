@@ -112,7 +112,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapAdd() {
+    void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -148,7 +148,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemove() {
+    void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -169,7 +169,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemoveViaIterator() {
+    void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -187,7 +187,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertFalse(setMap.containsKey("A"));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/HashSetValuedHashMap.emptyCollection.version4.1.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

@@ -121,7 +121,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         assertTrue(collection.remove(Integer.valueOf((String) elements[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedCollection.emptyCollection.version4.obj");
 //        resetFull();

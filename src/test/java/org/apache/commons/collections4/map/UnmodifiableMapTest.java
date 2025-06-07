@@ -81,7 +81,7 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

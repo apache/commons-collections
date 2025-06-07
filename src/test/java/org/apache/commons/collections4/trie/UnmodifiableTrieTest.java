@@ -79,7 +79,7 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

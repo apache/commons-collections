@@ -67,7 +67,7 @@ public class ClosureUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testChainedClosure() {
+    void testChainedClosure() {
         MockClosure<Object> a = new MockClosure<>();
         MockClosure<Object> b = new MockClosure<>();
         ClosureUtils.chainedClosure(a, b).accept(null);
@@ -201,7 +201,7 @@ public class ClosureUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSwitchClosure() {
+    void testSwitchClosure() {
         final MockClosure<String> a = new MockClosure<>();
         final MockClosure<String> b = new MockClosure<>();
         ClosureUtils.<String>switchClosure(

@@ -90,7 +90,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
         verifyUnmodifiable(set.headSet((E) Integer.valueOf(1)));
@@ -111,7 +111,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableSortedSet.emptyCollection.version4.obj");
 //        resetFull();

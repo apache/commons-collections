@@ -263,7 +263,7 @@ public class ListUtilsTest {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testLongestCommonSubsequence() {
+    void testLongestCommonSubsequence() {
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence((List<?>) null, null), "failed to check for null argument");
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(Arrays.asList('A'), null), "failed to check for null argument");
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(null, Arrays.asList('A')), "failed to check for null argument");
@@ -317,7 +317,7 @@ public class ListUtilsTest {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testPartition() {
+    void testPartition() {
         final List<Integer> strings = new ArrayList<>();
         for (int i = 0; i <= 6; i++) {
             strings.add(i);
@@ -392,7 +392,7 @@ public class ListUtilsTest {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testSelect() {
+    void testSelect() {
         final List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
@@ -410,7 +410,7 @@ public class ListUtilsTest {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testSelectRejected() {
+    void testSelectRejected() {
         final List<Long> list = new ArrayList<>();
         list.add(1L);
         list.add(2L);

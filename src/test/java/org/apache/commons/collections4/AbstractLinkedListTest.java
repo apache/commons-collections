@@ -83,7 +83,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testLinkedListAddFirst() {
+    void testLinkedListAddFirst() {
         if (!isAddSupported()) {
             return;
         }
@@ -105,7 +105,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testLinkedListAddLast() {
+    void testLinkedListAddLast() {
         if (!isAddSupported()) {
             return;
         }

@@ -44,7 +44,7 @@ public class LayerManagerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {4, 10, 2, 1})
-    public void testAdvanceOnCount(final int breakAt) {
+    void testAdvanceOnCount(final int breakAt) {
         final Predicate<LayerManager<SimpleBloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnCount(breakAt);
         final LayerManager<SimpleBloomFilter> layerManager = testingBuilder().get();
         for (int i = 0; i < breakAt - 1; i++) {
@@ -206,7 +206,7 @@ public class LayerManagerTest {
 
     @ParameterizedTest
     @ValueSource(ints = {5, 100, 2, 1})
-    public void testOnMaxSize(final int maxSize) {
+    void testOnMaxSize(final int maxSize) {
         final Consumer<Deque<SimpleBloomFilter>> underTest = LayerManager.Cleanup.onMaxSize(maxSize);
         final LinkedList<SimpleBloomFilter> list = new LinkedList<>();
         for (int i = 0; i < maxSize; i++) {

@@ -53,7 +53,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
+    void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -74,7 +74,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
+    void testFactory_decorateTransform() {
         final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -143,7 +143,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

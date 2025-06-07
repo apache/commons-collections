@@ -129,7 +129,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final MultiKeyMap<K, V> map = new MultiKeyMap<>();
         map.put(new MultiKey<>((K) I1, (K) I2), (V) "1-2");
         final Map<MultiKey<? extends K>, V> cloned = map.clone();
@@ -165,7 +165,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLRUMultiKeyMap() {
+    void testLRUMultiKeyMap() {
         final MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<>(2));
         map.put((K) I1, (K) I2, (V) "1-2");
         map.put((K) I1, (K) I3, (V) "1-1");
@@ -464,7 +464,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -491,7 +491,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         resetFull();
         assertNull(map.get(null));
         assertFalse(map.containsKey(null));

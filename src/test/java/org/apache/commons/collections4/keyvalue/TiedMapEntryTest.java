@@ -52,7 +52,7 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValue() {
+    void testSetValue() {
         final Map<K, V> map = new HashMap<>();
         map.put((K) "A", (V) "a");
         map.put((K) "B", (V) "b");

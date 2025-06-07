@@ -89,7 +89,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.size());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

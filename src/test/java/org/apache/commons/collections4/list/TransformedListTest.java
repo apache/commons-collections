@@ -92,7 +92,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedList() {
+    void testTransformedList() {
         final List<E> list = TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, list.size());
         final E[] els = (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
@@ -155,7 +155,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertTrue(list.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedList.emptyCollection.version4.obj");
 //        resetFull();

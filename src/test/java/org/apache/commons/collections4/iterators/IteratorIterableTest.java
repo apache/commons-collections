@@ -42,7 +42,7 @@ public class IteratorIterableTest extends BulkTest {
 
     @Test
     @SuppressWarnings("unused")
-    public void testIterator() {
+    void testIterator() {
         final Iterator<Integer> iter = createIterator();
         final Iterable<Number> iterable = new IteratorIterable<>(iter);
 

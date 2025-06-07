@@ -75,7 +75,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGet() {
+    void testGet() {
         final Queue<E> queue = makeTestQueue();
 
         assertNull(queue.peek());
@@ -88,14 +88,14 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemove() {
+    void testRemove() {
         final Queue<E> queue = makeTestQueue();
         queue.add((E) "one");
         assertEquals("one", queue.poll(), "Queue get");
         assertNull(queue.peek());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedQueue.emptyCollection.version4.obj");
 //        resetFull();

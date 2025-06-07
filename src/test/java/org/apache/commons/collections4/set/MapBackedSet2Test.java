@@ -57,7 +57,7 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testOrdering() {
+    void testOrdering() {
         final Set<E> set = setupSet();
         Iterator<E> it = set.iterator();
 

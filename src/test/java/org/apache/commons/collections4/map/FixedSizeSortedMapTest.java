@@ -61,7 +61,7 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

@@ -81,7 +81,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -144,7 +144,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -201,7 +201,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -295,19 +295,19 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         public boolean isTestSerialization() {
             return false;
         }
-//        public void testSimpleSerialization() throws Exception {
+//        void testSimpleSerialization() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testSimpleSerialization();
 //        }
-//        public void testSerializeDeserializeThenCompare() throws Exception {
+//        void testSerializeDeserializeThenCompare() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testSerializeDeserializeThenCompare();
 //        }
-//        public void testEmptyMapCompatibility() throws Exception {
+//        void testEmptyMapCompatibility() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testEmptyMapCompatibility();
 //        }
-//        public void testFullMapCompatibility() throws Exception {
+//        void testFullMapCompatibility() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testFullMapCompatibility();
 //        }

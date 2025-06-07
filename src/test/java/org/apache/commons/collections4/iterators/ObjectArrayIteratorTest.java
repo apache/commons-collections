@@ -86,7 +86,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testReset() {
+    void testReset() {
         final ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);
         it.next();
         it.reset();

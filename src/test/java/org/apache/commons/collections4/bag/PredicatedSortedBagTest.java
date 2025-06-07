@@ -71,7 +71,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSortOrder() {
+    void testSortOrder() {
         final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         final String one = "one";
         final String two = "two";
@@ -85,7 +85,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertNull(c, "natural order, so comparator should be null");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/PredicatedSortedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

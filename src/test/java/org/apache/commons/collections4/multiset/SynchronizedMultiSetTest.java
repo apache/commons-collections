@@ -39,7 +39,7 @@ public class SynchronizedMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return SynchronizedMultiSet.synchronizedMultiSet(new HashMultiSet<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        MultiSet<T> multiset = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/SynchronizedMultiSet.emptyCollection.version4.1.obj");
 //        multiset = makeFullCollection();

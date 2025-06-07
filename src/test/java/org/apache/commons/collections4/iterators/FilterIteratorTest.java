@@ -229,7 +229,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unused")
-    public void testRepeatedNext() {
+    void testRepeatedNext() {
         for (final String element : array) {
             iterator.next();
         }
@@ -254,7 +254,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetIterator() {
+    void testSetIterator() {
         final Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
         final Iterator<E> iter2 = Collections.<E>emptyList().iterator();
 

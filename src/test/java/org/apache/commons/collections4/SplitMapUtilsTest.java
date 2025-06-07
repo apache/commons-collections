@@ -127,7 +127,7 @@ public class SplitMapUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testWritableMap() {
+    void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
         attemptGetOperation(() -> map.get(null));
         attemptGetOperation(map::entrySet);

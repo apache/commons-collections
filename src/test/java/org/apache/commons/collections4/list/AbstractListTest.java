@@ -379,7 +379,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         List list = makeEmptyList();
@@ -400,7 +400,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyListSerialization() throws IOException, ClassNotFoundException {
+    void testEmptyListSerialization() throws IOException, ClassNotFoundException {
         final List<E> list = makeObject();
         if (!(list instanceof Serializable && isTestSerialization())) {
             return;
@@ -419,7 +419,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullListCompatibility() throws IOException, ClassNotFoundException {
+    void testFullListCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         List list = makeFullList();
@@ -443,7 +443,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullListSerialization() throws IOException, ClassNotFoundException {
+    void testFullListSerialization() throws IOException, ClassNotFoundException {
         final List<E> list = makeFullCollection();
         final int size = getFullElements().length;
         if (!(list instanceof Serializable && isTestSerialization())) {

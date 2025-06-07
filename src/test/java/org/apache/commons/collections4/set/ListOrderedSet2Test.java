@@ -59,7 +59,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddIndexed() {
+    void testListAddIndexed() {
         final ListOrderedSet<E> set = makeObject();
         set.add((E) ZERO);
         set.add((E) TWO);
@@ -98,7 +98,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddRemove() {
+    void testListAddRemove() {
         final ListOrderedSet<E> set = makeObject();
         final List<E> view = set.asList();
         set.add((E) ZERO);
@@ -129,7 +129,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testOrdering() {
+    void testOrdering() {
         final ListOrderedSet<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
@@ -161,7 +161,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/ListOrderedSet.emptyCollection.version3.1.obj");
 //        resetFull();

@@ -48,7 +48,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
+    void testFactory_Decorate() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -69,7 +69,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
+    void testFactory_decorateTransform() {
         final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -101,7 +101,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testKeyTransformedMap() {
+    void testKeyTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
@@ -126,7 +126,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testValueTransformedMap() {
+    void testValueTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
@@ -144,7 +144,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertTrue(map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/data/test/TransformedMultiValuedMap.emptyCollection.version4.1.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

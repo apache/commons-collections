@@ -72,7 +72,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedSet() {
+    void testTransformedSet() {
         final Set<E> set = TransformedSet.transformingSet(new HashSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
@@ -105,7 +105,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSet.emptyCollection.version4.obj");
 //        resetFull();

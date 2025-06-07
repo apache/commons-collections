@@ -62,7 +62,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         return FixedSizeList.fixedSizeList(list);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.emptyCollection.version4.obj");
 //        resetFull();

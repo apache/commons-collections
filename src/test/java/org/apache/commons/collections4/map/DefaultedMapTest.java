@@ -84,7 +84,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet2() {
+    void testMapGet2() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, (V) "NULL");
 
@@ -104,7 +104,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet3() {
+    void testMapGet3() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, ConstantFactory.constantFactory((V) "NULL"));
 
@@ -124,7 +124,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet4() {
+    void testMapGet4() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, (Transformer<K, V>) input -> {
             if (input instanceof String) {
@@ -149,7 +149,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

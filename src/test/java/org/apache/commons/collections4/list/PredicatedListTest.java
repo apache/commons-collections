@@ -66,7 +66,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final List<E> list = makeTestList();
         final Integer i = Integer.valueOf(3);
 
@@ -78,7 +78,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final List<E> list = makeTestList();
         final List<E> elements = new ArrayList<>();
         elements.add((E) "one");
@@ -97,7 +97,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalSet() {
+    void testIllegalSet() {
         final List<E> list = makeTestList();
         assertThrows(IllegalArgumentException.class, () -> list.set(0, (E) Integer.valueOf(3)),
                 "Integer should fail string predicate.");
@@ -105,7 +105,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLegalAddAll() {
+    void testLegalAddAll() {
         final List<E> list = makeTestList();
         list.add((E) "zero");
         final List<E> elements = new ArrayList<>();
@@ -142,7 +142,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertEquals(list.size(), subList.size());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedList.emptyCollection.version4.obj");
 //        resetFull();

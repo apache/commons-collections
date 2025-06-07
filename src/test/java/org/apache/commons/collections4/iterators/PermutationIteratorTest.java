@@ -97,7 +97,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      */
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testPermutationExhaustivity() {
+    void testPermutationExhaustivity() {
         final List<Character> perm1 = new ArrayList<>();
         final List<Character> perm2 = new ArrayList<>();
         final List<Character> perm3 = new ArrayList<>();
@@ -145,7 +145,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testPermutationResultSize() {
+    void testPermutationResultSize() {
         int factorial = 1;
         for (int i = 0; i < 8; i++, factorial *= i) {
             final List<Integer> list = new ArrayList<>();

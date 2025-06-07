@@ -141,7 +141,7 @@ public class TransformedSplitMapTest extends BulkTest {
         assertEquals(--sz2, map2.size());
     }
 
-//    public void testCreate() throws IOException {
+//    void testCreate() throws IOException {
 //        TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
 //                new HashMap<String, String>(),
 //                NOPTransformer.<String>nopTransformer(),

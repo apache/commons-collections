@@ -47,7 +47,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSearch() {
+    void testSearch() {
         final ArrayList<E> list = makeObject();
         list.add((E) "First Item");
         list.add((E) "Last Item");

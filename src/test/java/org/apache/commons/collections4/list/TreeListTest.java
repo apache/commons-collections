@@ -102,7 +102,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddMultiple() {
+    void testAddMultiple() {
         final List<E> l = makeObject();
         l.add((E) "hugo");
         l.add((E) "erna");
@@ -172,7 +172,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIndexOf() {
+    void testIndexOf() {
         final List<E> l = makeObject();
         l.add((E) "0");
         l.add((E) "1");
@@ -202,7 +202,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals(0, l.indexOf("3"));
     }
 
-//    public void testCheck() {
+//    void testCheck() {
 //        List l = makeEmptyList();
 //        l.add("A1");
 //        l.add("A2");
@@ -214,7 +214,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInsertBefore() {
+    void testInsertBefore() {
         final List<E> l = makeObject();
         l.add((E) "erna");
         l.add(0, (E) "hugo");
@@ -224,7 +224,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testIterationOrder() {
+    void testIterationOrder() {
         // COLLECTIONS-433:
         // ensure that the iteration order of elements is correct
         // when initializing the TreeList with another collection
@@ -251,7 +251,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testIterationOrderAfterAddAll() {
+    void testIterationOrderAfterAddAll() {
         // COLLECTIONS-433:
         // ensure that the iteration order of elements is correct
         // when calling addAll on the TreeList
@@ -288,7 +288,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemove() {
+    void testRemove() {
         final List<E> l = makeObject();
         l.add((E) "hugo");
         l.add((E) "erna");

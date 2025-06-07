@@ -113,7 +113,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSinglePeek() {
+    void testSinglePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.element());

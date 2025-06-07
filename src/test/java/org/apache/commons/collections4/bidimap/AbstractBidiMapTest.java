@@ -500,7 +500,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     // BidiPut
     @Test
     @SuppressWarnings("unchecked")
-    public void testBidiPut() {
+    void testBidiPut() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }

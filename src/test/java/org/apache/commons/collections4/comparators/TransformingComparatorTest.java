@@ -70,7 +70,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
                 "Contract failed: equals-hashCode");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/TransformingComparator.version4.obj");
 //    }
 

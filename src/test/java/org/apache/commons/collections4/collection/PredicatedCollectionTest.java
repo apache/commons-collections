@@ -82,7 +82,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final Collection<E> c = makeTestCollection();
         final Integer i = 3;
 
@@ -93,7 +93,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final Collection<E> c = makeTestCollection();
         final List<E> elements = new ArrayList<>();
         elements.add((E) "one");
@@ -109,7 +109,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         assertFalse(c.contains("four"), "Collection shouldn't contain illegal element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedCollection.emptyCollection.version4.obj");
 //        resetFull();

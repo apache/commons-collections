@@ -47,7 +47,7 @@ public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
         return new ComparableComparator<>();
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ComparableComparator.version4.obj");
 //    }
 

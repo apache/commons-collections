@@ -110,7 +110,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
         return new NodeCachingLinkedList<>();
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(),
 //           "src/test/resources/data/test/NodeCachingLinkedList.emptyCollection.version4.obj");
@@ -121,7 +121,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testShrinkCache() {
+    void testShrinkCache() {
         if (!isRemoveSupported() || !isAddSupported()) {
             return;
         }

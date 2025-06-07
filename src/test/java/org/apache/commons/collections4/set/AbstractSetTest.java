@@ -118,7 +118,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetEquals() {
+    void testSetEquals() {
         resetEmpty();
         assertEquals(getCollection(), getConfirmed(), "Empty sets should be equal");
         verify();

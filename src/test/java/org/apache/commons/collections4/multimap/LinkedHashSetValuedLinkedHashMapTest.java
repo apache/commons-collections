@@ -117,7 +117,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapAdd() {
+    void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -153,7 +153,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemove() {
+    void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -174,7 +174,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemoveViaIterator() {
+    void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -192,7 +192,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
         assertFalse(setMap.containsKey("A"));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/LinkedHashSetValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

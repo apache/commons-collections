@@ -1535,7 +1535,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     @Deprecated
-    public void testMatchesAll() {
+    void testMatchesAll() {
         assertFalse(CollectionUtils.matchesAll(null, null));
         assertFalse(CollectionUtils.matchesAll(collectionA, null));
 
@@ -2169,7 +2169,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     @Deprecated
-    public void testSynchronizedCollection() {
+    void testSynchronizedCollection() {
         final Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<>());
         assertInstanceOf(SynchronizedCollection.class, col, "Returned object should be a SynchronizedCollection.");
 
@@ -2278,7 +2278,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     @Deprecated
-    public void testUnmodifiableCollection() {
+    void testUnmodifiableCollection() {
         final Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<>());
         assertInstanceOf(UnmodifiableCollection.class, col, "Returned object should be a UnmodifiableCollection.");
 

@@ -77,7 +77,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final NavigableSet<E> set = makeTestSet();
         final String testString = "B";
         assertThrows(IllegalArgumentException.class, () -> set.add((E) testString),
@@ -87,7 +87,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final NavigableSet<E> set = makeTestSet();
         final Set<E> elements = new TreeSet<>();
         elements.add((E) "Aone");
@@ -102,7 +102,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
         assertFalse(set.contains("Afour"), "Set shouldn't contain illegal element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedNavigableSet.emptyCollection.version4.1.obj");
 //        resetFull();

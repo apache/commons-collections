@@ -101,7 +101,7 @@ public class ShapeTest {
         "13, 124",
         "13, 224",
     })
-    public void testEqualsAndHashCode(final int k, final int m) {
+    void testEqualsAndHashCode(final int k, final int m) {
         final Shape shape1 = Shape.fromKM(k, m);
         assertEquals(shape1, shape1);
         assertEquals(Arrays.hashCode(new int[] {m, k}), shape1.hashCode(),

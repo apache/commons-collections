@@ -83,7 +83,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return "4";
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -237,7 +237,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testBasics() {
+    void testBasics() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
         assertEquals(0, map.size());
 
@@ -271,7 +271,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testHashEntry() {
+    void testHashEntry() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
 
         map.put((K) I1A, (V) I2A);
@@ -289,7 +289,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         resetFull();
         assertNull(getMap().get(null));
         assertFalse(getMap().containsKey(null));

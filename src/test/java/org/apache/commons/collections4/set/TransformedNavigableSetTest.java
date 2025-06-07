@@ -57,7 +57,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedSet() {
+    void testTransformedSet() {
         final NavigableSet<E> set = TransformedNavigableSet.transformingNavigableSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
@@ -86,7 +86,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedNavigableSet.emptyCollection.version4.1.obj");
 //        resetFull();

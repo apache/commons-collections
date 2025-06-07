@@ -160,7 +160,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertInstanceOf(KeyValue.class, map);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

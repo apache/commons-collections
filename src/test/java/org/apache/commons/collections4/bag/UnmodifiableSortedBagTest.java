@@ -84,7 +84,7 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        SortedBag<E> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/UnmodifiableSortedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

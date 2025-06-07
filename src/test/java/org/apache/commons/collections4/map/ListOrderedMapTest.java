@@ -242,7 +242,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPut_intObjectObject() {
+    void testPut_intObjectObject() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
 
@@ -385,7 +385,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutAllWithIndexBug441() {
+    void testPutAllWithIndexBug441() {
         // see COLLECTIONS-441
         resetEmpty();
         final ListOrderedMap<K, V> lom = getMap();
@@ -432,7 +432,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValueByIndex() {
+    void testSetValueByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().setValue(0, (V) StringUtils.EMPTY));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().setValue(-1, (V) StringUtils.EMPTY));
@@ -468,7 +468,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -481,7 +481,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testValueList_setByIndex() {
+    void testValueList_setByIndex() {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
         for (int i = 0; i < lom.size(); i++) {

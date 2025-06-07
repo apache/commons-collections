@@ -59,7 +59,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
                 true));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/BooleanComparator.version4.obj");
 //    }
 

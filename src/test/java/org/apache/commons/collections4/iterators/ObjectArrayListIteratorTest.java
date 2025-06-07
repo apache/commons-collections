@@ -76,7 +76,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testListIteratorSet() {
+    void testListIteratorSet() {
         final String[] testData = { "a", "b", "c" };
 
         final String[] result = { "0", "1", "2" };

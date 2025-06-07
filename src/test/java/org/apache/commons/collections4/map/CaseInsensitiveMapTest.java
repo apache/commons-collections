@@ -48,7 +48,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCaseInsensitive() {
+    void testCaseInsensitive() {
         final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");
@@ -60,7 +60,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
         map.put((K) "1", (V) "1");
         final CaseInsensitiveMap<K, V> cloned = map.clone();
@@ -106,7 +106,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.emptyCollection.version4.obj");
 //        resetFull();
@@ -115,7 +115,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");

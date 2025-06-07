@@ -135,7 +135,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
                 "Expecting NullPointerException for null map");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

@@ -57,7 +57,7 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return FixedSizeMap.fixedSizeMap(new HashMap<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

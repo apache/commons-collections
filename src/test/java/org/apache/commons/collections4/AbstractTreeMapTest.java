@@ -52,7 +52,7 @@ public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<TreeMap<
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSearch() {
+    void testSearch() {
         final TreeMap<K, V> map = makeObject();
         map.put((K) "first", (V) "First Item");
         map.put((K) "second", (V) "Second Item");

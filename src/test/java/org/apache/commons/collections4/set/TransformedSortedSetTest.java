@@ -55,7 +55,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedSet() {
+    void testTransformedSet() {
         final SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
@@ -83,7 +83,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.emptyCollection.version4.obj");
 //        resetFull();

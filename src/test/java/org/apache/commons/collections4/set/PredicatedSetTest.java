@@ -75,7 +75,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final Set<E> set = makeTestSet();
         final Integer i = Integer.valueOf(3);
         assertThrows(IllegalArgumentException.class, () -> set.add((E) i),
@@ -85,7 +85,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final Set<E> set = makeTestSet();
         final Set<E> elements = new HashSet<>();
         elements.add((E) "one");
@@ -100,7 +100,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         assertFalse(set.contains("four"), "Set shouldn't contain illegal element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedSet.emptyCollection.version4.obj");
 //        resetFull();

@@ -168,7 +168,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         return Arrays.asList(topCities);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/FixedOrderComparator.version4.obj");
 //    }
 

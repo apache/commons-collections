@@ -65,7 +65,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
         "5, 67868",
         "75, 10"
     })
-    public void testHashing(final int k, final int m) {
+    void testHashing(final int k, final int m) {
         final int[] count = {0};
         final Hasher hasher = createHasher();
         hasher.indices(Shape.fromKM(k, m)).processIndices(i -> {

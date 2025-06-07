@@ -116,7 +116,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        MultiSet<E> multiset = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/UnmodifiableMultiSet.emptyCollection.version4.1.obj");
 //        multiset = makeFullCollection();

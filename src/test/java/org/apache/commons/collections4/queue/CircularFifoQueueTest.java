@@ -114,7 +114,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testCircularFifoQueueCircular() {
+    void testCircularFifoQueueCircular() {
         final List<E> list = new ArrayList<>();
         list.add((E) "A");
         list.add((E) "B");
@@ -227,7 +227,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError1() throws Exception {
+    void testRemoveError1() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -247,7 +247,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError2() throws Exception {
+    void testRemoveError2() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -269,7 +269,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError3() throws Exception {
+    void testRemoveError3() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -293,7 +293,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError4() throws Exception {
+    void testRemoveError4() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -312,7 +312,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError5() throws Exception {
+    void testRemoveError5() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -331,7 +331,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError6() throws Exception {
+    void testRemoveError6() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -350,7 +350,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError7() throws Exception {
+    void testRemoveError7() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -369,7 +369,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError8() throws Exception {
+    void testRemoveError8() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -389,7 +389,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveError9() throws Exception {
+    void testRemoveError9() throws Exception {
         // based on bug 33071
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>(5);
         fifo.add((E) "1");
@@ -409,7 +409,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRepeatedSerialization() throws Exception {
+    void testRepeatedSerialization() throws Exception {
         // bug 31433
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
         b.add((E) "a");
@@ -444,7 +444,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertTrue(b3.contains("c"));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CircularFifoQueue.emptyCollection.version4.obj");
 //        resetFull();

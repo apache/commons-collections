@@ -79,7 +79,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testListIteratorSet() {
+    void testListIteratorSet() {
         final String[] testData = { "a", "b", "c" };
 
         final String[] result = { "0", "1", "2" };

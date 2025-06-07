@@ -60,7 +60,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAdd() {
+    void testAdd() {
         assertEquals("[]", list.toString());
         assertTrue(list.add((E) Integer.valueOf(1)));
         assertEquals("[1]", list.toString());
@@ -92,7 +92,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClear() {
+    void testClear() {
         assertEquals(0, list.size());
         assertTrue(list.isEmpty());
         list.clear();
@@ -129,7 +129,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testContains() {
+    void testContains() {
         assertFalse(list.contains("A"));
         assertTrue(list.add((E) "A"));
         assertTrue(list.contains("A"));
@@ -145,7 +145,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testContainsAll() {
+    void testContainsAll() {
         assertTrue(list.containsAll(list));
         final java.util.List<E> list2 = new java.util.LinkedList<>();
         assertTrue(list.containsAll(list2));
@@ -167,7 +167,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorAdd() {
+    void testCursorAdd() {
         final CursorableLinkedList.Cursor<E> it = list.cursor();
         it.add((E) "1");
         assertEquals("[1]", list.toString());
@@ -187,7 +187,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorConcurrentModification() {
+    void testCursorConcurrentModification() {
         // this test verifies that cursors remain valid when the list
         // is modified via other means.
         list.add((E) "1");
@@ -248,7 +248,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNavigation() {
+    void testCursorNavigation() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -304,7 +304,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNextIndexAddAfter() {
+    void testCursorNextIndexAddAfter() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -322,7 +322,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNextIndexAddBefore() {
+    void testCursorNextIndexAddBefore() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -339,7 +339,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNextIndexAddNext() {
+    void testCursorNextIndexAddNext() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -357,7 +357,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNextIndexFirst() {
+    void testCursorNextIndexFirst() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -375,7 +375,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorNextIndexMid() {
+    void testCursorNextIndexMid() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -397,7 +397,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorRemove() {
+    void testCursorRemove() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -435,7 +435,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCursorSet() {
+    void testCursorSet() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -461,7 +461,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         assertEquals(list, list);
         assertEquals(list.hashCode(), list.hashCode());
         list.add((E) "A");
@@ -526,7 +526,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGet() {
+    void testGet() {
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(0),
                 "shouldn't get here");
 
@@ -542,7 +542,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIndexOf() {
+    void testIndexOf() {
         assertEquals(-1, list.indexOf("A"));
         assertEquals(-1, list.lastIndexOf("A"));
         list.add((E) "A");
@@ -564,7 +564,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextAddIndex1ByList() {
+    void testInternalState_CursorNextAddIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -588,7 +588,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextAddByIterator() {
+    void testInternalState_CursorNextNextAddByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -612,7 +612,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextAddIndex1ByList() {
+    void testInternalState_CursorNextNextAddIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -636,7 +636,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextNextRemoveIndex1ByList() {
+    void testInternalState_CursorNextNextNextRemoveIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -663,7 +663,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextPreviousAddByIterator() {
+    void testInternalState_CursorNextNextPreviousAddByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -687,7 +687,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextPreviousAddIndex1ByList() {
+    void testInternalState_CursorNextNextPreviousAddIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -713,7 +713,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextPreviousRemoveByIterator() {
+    void testInternalState_CursorNextNextPreviousRemoveByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -738,7 +738,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextPreviousRemoveIndex1ByList() {
+    void testInternalState_CursorNextNextPreviousRemoveIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -765,7 +765,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextPreviousSetByIterator() {
+    void testInternalState_CursorNextNextPreviousSetByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -791,7 +791,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextRemoveByIterator() {
+    void testInternalState_CursorNextNextRemoveByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -815,7 +815,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextRemoveByListSetByIterator() {
+    void testInternalState_CursorNextNextRemoveByListSetByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -837,7 +837,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextRemoveIndex1ByList() {
+    void testInternalState_CursorNextNextRemoveIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -863,7 +863,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextNextSetByIterator() {
+    void testInternalState_CursorNextNextSetByIterator() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -888,7 +888,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testInternalState_CursorNextRemoveIndex1ByList() {
+    void testInternalState_CursorNextRemoveIndex1ByList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -913,7 +913,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIsEmpty() {
+    void testIsEmpty() {
         assertTrue(list.isEmpty());
         list.add((E) "element");
         assertFalse(list.isEmpty());
@@ -927,7 +927,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIterator() {
+    void testIterator() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -992,7 +992,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListIteratorNavigation() {
+    void testListIteratorNavigation() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1077,7 +1077,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListIteratorRemove() {
+    void testListIteratorRemove() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1113,7 +1113,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     @Test
     @Override
     @SuppressWarnings("unchecked")
-    public void testListIteratorSet() {
+    void testListIteratorSet() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1138,7 +1138,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLongSerialization() throws Exception {
+    void testLongSerialization() throws Exception {
         // recursive serialization will cause a stack
         // overflow exception with long lists
         for (int i = 0; i < 10000; i++) {
@@ -1162,7 +1162,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemove() {
+    void testRemove() {
         list.add((E) "1");
         list.add((E) "1");
         list.add((E) "2");
@@ -1200,7 +1200,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveAll() {
+    void testRemoveAll() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1221,7 +1221,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveByIndex() {
+    void testRemoveByIndex() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1242,7 +1242,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRetainAll() {
+    void testRetainAll() {
         list.add((E) "1");
         list.add((E) "1");
         list.add((E) "2");
@@ -1268,7 +1268,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialization() throws Exception {
+    void testSerialization() throws Exception {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1292,7 +1292,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerializationWithOpenCursor() throws Exception {
+    void testSerializationWithOpenCursor() throws Exception {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1315,7 +1315,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSet() {
+    void testSet() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1336,7 +1336,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubList() {
+    void testSubList() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1354,7 +1354,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddBegin() {
+    void testSubListAddBegin() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1372,7 +1372,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddEnd() {
+    void testSubListAddEnd() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1390,7 +1390,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddMiddle() {
+    void testSubListAddMiddle() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1408,7 +1408,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListRemove() {
+    void testSubListRemove() {
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
@@ -1431,7 +1431,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToArray() {
+    void testToArray() {
         list.add((E) "1");
         list.add((E) "2");
         list.add((E) "3");
@@ -1474,7 +1474,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals(5, elts4b.length);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CursorableLinkedList.emptyCollection.version4.obj");
 //        resetFull();

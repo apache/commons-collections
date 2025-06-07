@@ -103,7 +103,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testDuplicates() {
+    void testDuplicates() {
         final List<E> list = new ArrayList<>(10);
         list.add((E) Integer.valueOf(1));
         list.add((E) Integer.valueOf(2));
@@ -123,7 +123,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddIndexed() {
+    void testListAddIndexed() {
         final ListOrderedSet<E> set = makeObject();
         set.add((E) ZERO);
         set.add((E) TWO);
@@ -162,7 +162,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddRemove() {
+    void testListAddRemove() {
         final ListOrderedSet<E> set = makeObject();
         final List<E> view = set.asList();
         set.add((E) ZERO);
@@ -193,7 +193,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListAddReplacing() {
+    void testListAddReplacing() {
         final ListOrderedSet<E> set = makeObject();
         final A a = new A();
         final B b = new B();
@@ -209,7 +209,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testOrdering() {
+    void testOrdering() {
         final ListOrderedSet<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
@@ -245,7 +245,7 @@ public class ListOrderedSetTest<E>
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRetainAll() {
+    void testRetainAll() {
         final List<E> list = new ArrayList<>(10);
         final Set<E> set = new HashSet<>(10);
         final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(set, list);
@@ -268,7 +268,7 @@ public class ListOrderedSetTest<E>
         assertEquals(Integer.valueOf(0), orderedSet.get(4));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/ListOrderedSet.emptyCollection.version4.obj");
 //        resetFull();

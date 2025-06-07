@@ -136,7 +136,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone2() {
+    void testClone2() {
         final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
@@ -168,7 +168,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone4() {
+    void testClone4() {
         final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
@@ -281,7 +281,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue1() throws Exception {
+    void testEntryIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -301,7 +301,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue2() throws Exception {
+    void testEntryIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -322,7 +322,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue3() throws Exception {
+    void testEntryIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -352,7 +352,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEquals1() {
+    void testEquals1() {
         final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
@@ -362,7 +362,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map1.equals(map2));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -375,7 +375,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEquals2() {
+    void testEquals2() {
         final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
@@ -420,7 +420,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue1() throws Exception {
+    void testMapIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -440,7 +440,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue2() throws Exception {
+    void testMapIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -461,7 +461,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue3() throws Exception {
+    void testMapIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -796,7 +796,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialization2() throws Exception {
+    void testSerialization2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -820,7 +820,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialization4() throws Exception {
+    void testSerialization4() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);

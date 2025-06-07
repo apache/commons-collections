@@ -101,7 +101,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapAdd() {
+    void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         assertTrue(listMap.get((K) "whatever") instanceof List);
         final List<V> list = listMap.get((K) "A");
@@ -112,7 +112,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapAddViaListIterator() {
+    void testListValuedMapAddViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
         final ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         assertFalse(listIt.hasNext());
@@ -148,7 +148,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapRemove() {
+    void testListValuedMapRemove() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
@@ -166,7 +166,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapRemoveViaListIterator() {
+    void testListValuedMapRemoveViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
         ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         listIt.add((V) "b1");
@@ -281,7 +281,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
 //    @Test
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

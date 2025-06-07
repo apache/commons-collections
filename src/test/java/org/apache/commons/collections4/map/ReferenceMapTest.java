@@ -83,7 +83,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     WeakReference<V> valueReference;
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -329,7 +329,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         resetFull();
         assertNull(map.get(null));
         assertFalse(map.containsKey(null));

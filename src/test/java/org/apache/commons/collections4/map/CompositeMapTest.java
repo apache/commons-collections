@@ -75,7 +75,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddComposited() {
+    void testAddComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
@@ -95,7 +95,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPut() {
+    void testPut() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(), new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
 
@@ -147,7 +147,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveComposited() {
+    void testRemoveComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
@@ -165,7 +165,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveFromComposited() {
+    void testRemoveFromComposited() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
@@ -180,7 +180,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveFromUnderlying() {
+    void testRemoveFromUnderlying() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
@@ -218,7 +218,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(pass);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CompositeMap.emptyCollection.version4.obj");
 //        resetFull();

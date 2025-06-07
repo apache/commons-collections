@@ -47,7 +47,7 @@ public class MultiMapUtilsTest {
 
     @Test
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void testEmptyUnmodifiableMultiValuedMap() {
+    void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
         assertTrue(map.isEmpty());
 

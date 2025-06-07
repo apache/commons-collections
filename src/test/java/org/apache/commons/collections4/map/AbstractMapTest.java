@@ -1017,7 +1017,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntrySetContains3() {
+    void testEntrySetContains3() {
         resetFull();
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final Map.Entry<K, V> entry = entrySet.iterator().next();
@@ -1079,7 +1079,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntrySetRemove3() {
+    void testEntrySetRemove3() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -2380,7 +2380,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testValuesIteratorRemoveChangesMap() {
+    void testValuesIteratorRemoveChangesMap() {
         resetFull();
         final List<V> sampleValuesAsList = Arrays.asList(getSampleValues());
         final Map<V, Integer> cardinality = CollectionUtils.getCardinalityMap(sampleValuesAsList);

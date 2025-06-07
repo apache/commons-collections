@@ -38,7 +38,7 @@ public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
         return SynchronizedBag.synchronizedBag(new HashBag<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/SynchronizedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

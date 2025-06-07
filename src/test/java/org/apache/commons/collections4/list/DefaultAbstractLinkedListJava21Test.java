@@ -93,7 +93,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddNodeAfter() {
+    void testAddNodeAfter() {
         resetEmpty();
         final AbstractLinkedListJava21<E> list = getCollection();
         if (!isAddSupported()) {
@@ -124,7 +124,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetNode() {
+    void testGetNode() {
         resetEmpty();
         final AbstractLinkedListJava21<E> list = getCollection();
         // get marker
@@ -143,7 +143,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveFirst() {
+    void testRemoveFirst() {
         resetEmpty();
         final AbstractLinkedListJava21<E> list = getCollection();
         if (!isRemoveSupported()) {
@@ -165,7 +165,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveLast() {
+    void testRemoveLast() {
         resetEmpty();
         final AbstractLinkedListJava21<E> list = getCollection();
         if (!isRemoveSupported()) {
@@ -185,7 +185,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveNode() {
+    void testRemoveNode() {
         resetEmpty();
         if (!isAddSupported() || !isRemoveSupported()) {
             return;
@@ -212,7 +212,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubList() {
+    void testSubList() {
         final List<E> list = makeObject();
         list.add((E) "A");
         list.add((E) "B");
@@ -231,7 +231,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddBegin() {
+    void testSubListAddBegin() {
         final List<E> list = makeObject();
         list.add((E) "A");
         list.add((E) "B");
@@ -250,7 +250,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddEnd() {
+    void testSubListAddEnd() {
         final List<E> list = makeObject();
         list.add((E) "A");
         list.add((E) "B");
@@ -269,7 +269,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListAddMiddle() {
+    void testSubListAddMiddle() {
         final List<E> list = makeObject();
         list.add((E) "A");
         list.add((E) "B");
@@ -288,7 +288,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSubListRemove() {
+    void testSubListRemove() {
         final List<E> list = makeObject();
         list.add((E) "A");
         list.add((E) "B");

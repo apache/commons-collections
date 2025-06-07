@@ -98,7 +98,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ComparatorChain.version4.obj");
 //    }
 

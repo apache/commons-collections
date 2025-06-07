@@ -52,7 +52,7 @@ public class TransformerUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testChainedTransformer() {
+    void testChainedTransformer() {
         final Transformer<Object, Object> a = TransformerUtils.<Object, Object>constantTransformer("A");
         final Transformer<Object, Object> b = TransformerUtils.constantTransformer((Object) "B");
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).apply(null));
@@ -194,7 +194,7 @@ public class TransformerUtilsTest {
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testMapTransformer() {
+    void testMapTransformer() {
         final Map<Object, Integer> map = new HashMap<>();
         map.put(null, 0);
         map.put(cObject, 1);
@@ -286,7 +286,7 @@ public class TransformerUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSwitchTransformer() {
+    void testSwitchTransformer() {
         final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
         final Transformer<String, String> b = TransformerUtils.constantTransformer("B");
         final Transformer<String, String> c = TransformerUtils.constantTransformer("C");

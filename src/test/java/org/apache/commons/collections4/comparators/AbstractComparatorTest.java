@@ -109,7 +109,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
+    void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
             // test to make sure the canonical form has been preserved

@@ -64,7 +64,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntrySet() {
+    void testEntrySet() {
         Map<K, V> map = makeTestMap();
         assertNotNull(map.entrySet(), "returned entryset should not be null");
         map = decorateMap(new HashMap<>(), null, null);
@@ -75,7 +75,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPut() {
+    void testPut() {
         final Map<K, V> map = makeTestMap();
         assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)),
                 "Illegal value should raise IllegalArgument");
@@ -108,7 +108,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         entry.setValue((V) "x");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

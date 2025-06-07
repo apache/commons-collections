@@ -43,7 +43,7 @@ public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloom
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 34})
-    public void testCharacteristics(final int characteristics) {
+    void testCharacteristics(final int characteristics) {
         final Shape shape = getTestShape();
         final BloomFilter inner = new DefaultBloomFilterTest.SparseDefaultBloomFilter(shape) {
             @Override

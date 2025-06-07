@@ -43,7 +43,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedBag() {
+    void testTransformedBag() {
         final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
@@ -73,7 +73,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertTrue(bag.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TransformedSortedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

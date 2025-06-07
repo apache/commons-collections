@@ -89,7 +89,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
         verifyUnmodifiable(set.descendingSet());
@@ -123,7 +123,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableNavigableSet.emptyCollection.version4.1.obj");
 //        resetFull();

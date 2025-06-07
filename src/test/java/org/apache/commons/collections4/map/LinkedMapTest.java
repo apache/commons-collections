@@ -116,7 +116,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final LinkedMap<K, V> map = new LinkedMap<>(10);
         map.put((K) "1", (V) "1");
         final Map<K, V> cloned = map.clone();
@@ -229,7 +229,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[2], valueIter.next());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/LinkedMap.emptyCollection.version4.obj");
 //        resetFull();
@@ -260,7 +260,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testReset() {
+    void testReset() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         ((ResettableIterator<K>) ordered.mapIterator()).reset();

@@ -65,7 +65,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
         final Integer i = 3;
 
@@ -76,7 +76,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalDecorate() {
+    void testIllegalDecorate() {
         final HashBag<Object> elements = new HashBag<>();
         elements.add("one");
         elements.add("two");
@@ -90,7 +90,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLegalAddRemove() {
+    void testLegalAddRemove() {
         final Bag<T> bag = makeTestBag();
         assertEquals(0, bag.size());
         final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
@@ -106,7 +106,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         assertFalse(set.contains(els[0]), "Unique set now does not contain the first element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/PredicatedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

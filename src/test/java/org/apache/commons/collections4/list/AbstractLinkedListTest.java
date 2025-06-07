@@ -48,7 +48,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAddNodeAfter() {
+    void testAddNodeAfter() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isAddSupported()) {
@@ -79,7 +79,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetNode() {
+    void testGetNode() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         // get marker
@@ -98,7 +98,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveFirst() {
+    void testRemoveFirst() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isRemoveSupported()) {
@@ -121,7 +121,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveLast() {
+    void testRemoveLast() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
         if (!isRemoveSupported()) {
@@ -141,7 +141,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemoveNode() {
+    void testRemoveNode() {
         resetEmpty();
         if (!isAddSupported() || !isRemoveSupported()) {
             return;

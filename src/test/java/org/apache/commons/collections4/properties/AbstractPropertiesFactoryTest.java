@@ -79,31 +79,31 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadClassLoaderMissingResource(final String fileExtension) throws Exception {
+    void testLoadClassLoaderMissingResource(final String fileExtension) throws Exception {
         assertNull(factory.load(ClassLoader.getSystemClassLoader(), "missing/test" + fileExtension));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadClassLoaderResource(final String fileExtension) throws Exception {
+    void testLoadClassLoaderResource(final String fileExtension) throws Exception {
         assertContents(factory.load(ClassLoader.getSystemClassLoader(), "org/apache/commons/collections4/properties/test" + fileExtension));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadFile(final String fileExtension) throws Exception {
+    void testLoadFile(final String fileExtension) throws Exception {
         assertContents(factory.load(Paths.get(getPathString(fileExtension)).toFile()));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadFileName(final String fileExtension) throws Exception {
+    void testLoadFileName(final String fileExtension) throws Exception {
         assertContents(factory.load(getPathString(fileExtension)));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadInputStream(final String fileExtension) throws Exception {
+    void testLoadInputStream(final String fileExtension) throws Exception {
         // Can't tell what we are reading
         Assumptions.assumeFalse(isXmlTest(fileExtension));
         //
@@ -114,13 +114,13 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadPath(final String fileExtension) throws Exception {
+    void testLoadPath(final String fileExtension) throws Exception {
         assertContents(factory.load(Paths.get(getPathString(fileExtension))));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadReader(final String fileExtension) throws Exception {
+    void testLoadReader(final String fileExtension) throws Exception {
         // Can't tell what we are reading
         Assumptions.assumeFalse(isXmlTest(fileExtension));
         //
@@ -131,13 +131,13 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadUri(final String fileExtension) throws Exception {
+    void testLoadUri(final String fileExtension) throws Exception {
         assertContents(factory.load(Paths.get(getPathString(fileExtension)).toUri()));
     }
 
     @ParameterizedTest
     @MethodSource(value = "getParameters")
-    public void testLoadUrl(final String fileExtension) throws Exception {
+    void testLoadUrl(final String fileExtension) throws Exception {
         assertContents(factory.load(Paths.get(getPathString(fileExtension)).toUri().toURL()));
     }
 

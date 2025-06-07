@@ -54,7 +54,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPushPeekPop() {
+    void testPushPeekPop() {
         final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
@@ -97,7 +97,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                 "Cannot find 'Missing Item'");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/ArrayStack.emptyCollection.version4.obj");
 //        resetFull();

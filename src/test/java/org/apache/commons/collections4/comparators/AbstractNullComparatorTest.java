@@ -57,7 +57,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
             return new NullComparator<>();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/NullComparator.version4.obj1");
 //        }
 
@@ -95,7 +95,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
             return new NullComparator<>(false);
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/NullComparator.version4.obj2");
 //        }
 

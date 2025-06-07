@@ -102,7 +102,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     @ParameterizedTest
     @ValueSource(ints = {32, 33})
-    public void testEntries(final int size) {
+    void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
         final IndexExtractor indexExtractor = predicate -> {
             Objects.requireNonNull(predicate);

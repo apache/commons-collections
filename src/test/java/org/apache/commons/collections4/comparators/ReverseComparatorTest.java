@@ -50,7 +50,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         return "4";
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ReverseComparator.version4.obj");
 //    }
 

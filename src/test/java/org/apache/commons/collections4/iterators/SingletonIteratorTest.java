@@ -98,7 +98,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSingletonIteratorRemove() {
+    void testSingletonIteratorRemove() {
         final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy", iter.next());

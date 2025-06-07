@@ -46,7 +46,7 @@ public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
         return SynchronizedCollection.synchronizedCollection(new ArrayList<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SynchronizedCollection.emptyCollection.version4.obj");
 //        resetFull();

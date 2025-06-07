@@ -41,7 +41,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final HashedMap<K, V> map = new HashedMap<>(10);
         map.put((K) "1", (V) "1");
         final HashedMap<K, V> cloned = map.clone();
@@ -58,7 +58,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.data.length);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.emptyCollection.version4.obj");
 //        resetFull();

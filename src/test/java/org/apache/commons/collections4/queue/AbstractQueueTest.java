@@ -109,7 +109,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         Queue queue = makeEmptyQueue();
@@ -129,7 +129,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
+    void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();
         if (!(queue instanceof Serializable && isTestSerialization())) {
             return;
@@ -148,7 +148,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
+    void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         Queue queue = makeFullQueue();
@@ -167,7 +167,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
+    void testFullQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeFullCollection();
         final int size = getFullElements().length;
         if (!(queue instanceof Serializable && isTestSerialization())) {

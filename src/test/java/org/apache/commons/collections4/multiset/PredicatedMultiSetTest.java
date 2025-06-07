@@ -65,7 +65,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final MultiSet<T> multiset = makeTestMultiSet();
         final Integer i = Integer.valueOf(3);
         assertThrows(IllegalArgumentException.class, () -> multiset.add((T) i),
@@ -75,7 +75,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalDecorate() {
+    void testIllegalDecorate() {
         final HashMultiSet<Object> elements = new HashMultiSet<>();
         elements.add("one");
         elements.add("two");
@@ -89,7 +89,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLegalAddRemove() {
+    void testLegalAddRemove() {
         final MultiSet<T> multiset = makeTestMultiSet();
         assertEquals(0, multiset.size());
         final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
@@ -106,7 +106,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
             "Unique set does not contain anymore the first element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        MultiSet<T> multiset = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/PredicatedMultiSet.emptyCollection.version4.1.obj");
 //        multiset = makeFullCollection();

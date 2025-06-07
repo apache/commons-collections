@@ -40,7 +40,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
     @Test
     @Disabled("Run once")
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         Queue<T> queue = makeObject();
         writeExternalFormToDisk((java.io.Serializable) queue,
             BulkTest.TEST_DATA_PATH + "SynchronizedQueue.emptyCollection.version4.2.obj");

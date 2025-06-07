@@ -437,7 +437,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(trie.prefixMap(prefixString).containsKey(longerString));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

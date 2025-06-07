@@ -601,7 +601,7 @@ public class IteratorUtilsTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyMapIterator() {
+    void testEmptyMapIterator() {
         assertSame(EmptyMapIterator.INSTANCE, IteratorUtils.EMPTY_MAP_ITERATOR);
         assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
         assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
@@ -626,7 +626,7 @@ public class IteratorUtilsTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyOrderedIterator() {
+    void testEmptyOrderedIterator() {
         assertSame(EmptyOrderedIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
         assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
@@ -649,7 +649,7 @@ public class IteratorUtilsTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyOrderedMapIterator() {
+    void testEmptyOrderedMapIterator() {
         assertSame(EmptyOrderedMapIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
