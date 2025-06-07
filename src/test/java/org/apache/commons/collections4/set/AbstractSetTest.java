@@ -140,7 +140,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      * Tests {@link Set#hashCode()}.
      */
     @Test
-    public void testSetHashCode() {
+    void testSetHashCode() {
         resetEmpty();
         assertEquals(getCollection().hashCode(), getConfirmed().hashCode(),
                 "Empty sets have equal hashCodes");

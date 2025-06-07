@@ -64,19 +64,19 @@ public class SplitMapUtilsTest {
     }
 
     @Test
-    public void testAlreadyReadableMap() {
+    void testAlreadyReadableMap() {
         final HashedMap<String, Integer> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
     }
 
     @Test
-    public void testAlreadyWritableMap() {
+    void testAlreadyWritableMap() {
         final HashedMap<String, String> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
     }
 
     @Test
-    public void testReadableMap() {
+    void testReadableMap() {
         final IterableMap<String, Integer> map = SplitMapUtils.readableMap(transformedMap);
 
         // basic

@@ -39,7 +39,7 @@ public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtract
     }
 
     @Test
-    public final void testFromIndexExtractor() {
+    final void testFromIndexExtractor() {
         final List<Long> lst = new ArrayList<>();
         createExtractor().processBitMaps(lst::add);
         final long[] buckets = lst.stream().mapToLong(Long::longValue).toArray();

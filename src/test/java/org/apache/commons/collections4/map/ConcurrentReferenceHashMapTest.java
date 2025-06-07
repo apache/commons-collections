@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 public class ConcurrentReferenceHashMapTest {
 
     @Test
-    public void testBuilderAll() {
+    void testBuilderAll() {
         final Map<Integer, String> map0 = new HashMap<>();
         map0.put(1, "1");
         // @formatter:off

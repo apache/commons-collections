@@ -80,7 +80,7 @@ public class MultiKeyMapCompress672Test {
     private final MultiKeyMap<Object, String> multiKeyMap = new MultiKeyMap<>();
 
     @Test
-    public void testMutateKey() {
+    void testMutateKey() {
         // Both objects have the 'field' value set to "originalValue"
         final KeyFixture keyFixture2Ro = new KeyFixture();
         final KeyFixture keyFixture2Rw = new KeyFixture();

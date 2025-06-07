@@ -89,7 +89,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test add behavior.
      */
     @Test
-    public void testAdd() {
+    void testAdd() {
         ListIterator<E> it = makeObject();
 
         final E addValue = addSetValue();
@@ -126,7 +126,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test remove after add behavior.
      */
     @Test
-    public void testAddThenRemove() {
+    void testAddThenRemove() {
         final ListIterator<E> it = makeObject();
 
         // add then remove
@@ -139,7 +139,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     @Test
-    public void testAddThenSet() {
+    void testAddThenSet() {
         final ListIterator<E> it = makeObject();
         // add then set
         if (supportsAdd() && supportsSet()) {
@@ -154,7 +154,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test that the empty list iterator contract is correct.
      */
     @Test
-    public void testEmptyListIteratorIsIndeedEmpty() {
+    void testEmptyListIteratorIsIndeedEmpty() {
         if (!supportsEmptyIterator()) {
             return;
         }
@@ -176,7 +176,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     @Test
-    public void testRemoveThenSet() {
+    void testRemoveThenSet() {
         final ListIterator<E> it = makeObject();
         if (supportsRemove() && supportsSet()) {
             it.next();
@@ -190,7 +190,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test set behavior.
      */
     @Test
-    public void testSet() {
+    void testSet() {
         final ListIterator<E> it = makeObject();
 
         if (!supportsSet()) {
@@ -216,7 +216,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test navigation through the iterator.
      */
     @Test
-    public void testWalkForwardAndBack() {
+    void testWalkForwardAndBack() {
         final ArrayList<E> list = new ArrayList<>();
         final ListIterator<E> it = makeObject();
         while (it.hasNext()) {

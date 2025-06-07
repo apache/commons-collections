@@ -62,7 +62,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testDefaultIfNull() {
+    void testDefaultIfNull() {
         assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
 
         final List<Long> list = new ArrayList<>();
@@ -70,7 +70,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(ListUtils.emptyIfNull(null).isEmpty());
 
         final List<Long> list = new ArrayList<>();
@@ -78,7 +78,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final List<String> list1 = new ArrayList<>(data);
@@ -103,21 +103,21 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testGetFirst() {
+    void testGetFirst() {
         assertEquals(a, ListUtils.getFirst(fullList));
         assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
         assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
     }
 
     @Test
-    public void testGetLast() {
+    void testGetLast() {
         assertEquals(e, ListUtils.getLast(fullList));
         assertThrows(NullPointerException.class, () -> ListUtils.getFirst(null));
         assertThrows(IndexOutOfBoundsException.class, () -> ListUtils.getFirst(new ArrayList<>()));
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final List<String> list1 = new ArrayList<>(data);
@@ -139,7 +139,7 @@ public class ListUtilsTest {
      * Tests the {@code indexOf} method in {@code ListUtils} class.
      */
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
         int index = ListUtils.indexOf(fullList, testPredicate);
         assertEquals(d, fullList.get(index));
@@ -156,7 +156,7 @@ public class ListUtilsTest {
      * Tests intersecting a non-empty list with an empty list.
      */
     @Test
-    public void testIntersectEmptyWithEmptyList() {
+    void testIntersectEmptyWithEmptyList() {
         final List<?> empty = Collections.EMPTY_LIST;
         assertTrue(ListUtils.intersection(empty, empty).isEmpty(), "result not empty");
     }
@@ -165,7 +165,7 @@ public class ListUtilsTest {
      * Tests intersecting two lists in different orders.
      */
     @Test
-    public void testIntersectionOrderInsensitivity() {
+    void testIntersectionOrderInsensitivity() {
         final List<String> one = new ArrayList<>();
         final List<String> two = new ArrayList<>();
         one.add("a");
@@ -181,7 +181,7 @@ public class ListUtilsTest {
      * Tests intersecting a non-empty list with a subset of itself.
      */
     @Test
-    public void testIntersectListWithNoOverlapAndDifferentTypes() {
+    void testIntersectListWithNoOverlapAndDifferentTypes() {
         @SuppressWarnings("boxing")
         final List<Integer> other = Arrays.asList(1, 23);
         assertTrue(ListUtils.intersection(fullList, other).isEmpty());
@@ -191,7 +191,7 @@ public class ListUtilsTest {
      * Tests intersecting a non-empty list with itself.
      */
     @Test
-    public void testIntersectListWithSelf() {
+    void testIntersectListWithSelf() {
         assertEquals(fullList, ListUtils.intersection(fullList, fullList));
     }
 
@@ -199,7 +199,7 @@ public class ListUtilsTest {
      * Tests intersecting a non-empty list with a subset of itself.
      */
     @Test
-    public void testIntersectNonEmptySubset() {
+    void testIntersectNonEmptySubset() {
         // create a copy
         final List<String> other = new ArrayList<>(fullList);
 
@@ -215,13 +215,13 @@ public class ListUtilsTest {
      * Tests intersecting a non-empty list with an empty list.
      */
     @Test
-    public void testIntersectNonEmptyWithEmptyList() {
+    void testIntersectNonEmptyWithEmptyList() {
         final List<String> empty = Collections.<String>emptyList();
         assertTrue(ListUtils.intersection(empty, fullList).isEmpty(), "result not empty");
     }
 
     @Test
-    public void testLazyFactoryList() {
+    void testLazyFactoryList() {
         final List<Integer> list = ListUtils.lazyList(new ArrayList<>(), new Factory<Integer>() {
 
             private int index;
@@ -241,7 +241,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testLazyTransformerList() {
+    void testLazyTransformerList() {
         final List<Integer> offsets = Arrays.asList(3, 5, 1, 5, 3, 6);
         final List<Integer> list = ListUtils.lazyList(new ArrayList<>(), new Transformer<Integer, Integer>() {
 
@@ -291,7 +291,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testLongestCommonSubsequenceWithString() {
+    void testLongestCommonSubsequenceWithString() {
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence((String) null, null), "failed to check for null argument");
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence("A", null), "failed to check for null argument");
         assertThrows(NullPointerException.class, () -> ListUtils.longestCommonSubsequence(null, "A"), "failed to check for null argument");
@@ -341,7 +341,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testPredicatedList() {
+    void testPredicatedList() {
         final Predicate<Object> predicate = String.class::isInstance;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
         assertInstanceOf(PredicatedList.class, list, "returned object should be a PredicatedList");
@@ -351,7 +351,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testRemoveAll() {
+    void testRemoveAll() {
         final List<String> sub = new ArrayList<>();
         sub.add(a);
         sub.add(b);
@@ -373,7 +373,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testRetainAll() {
+    void testRetainAll() {
         final List<String> sub = new ArrayList<>();
         sub.add(a);
         sub.add(b);
@@ -429,7 +429,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testSubtract() {
+    void testSubtract() {
         final List<String> list = new ArrayList<>();
         list.add(a);
         list.add(b);
@@ -454,7 +454,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testSubtractNullElement() {
+    void testSubtractNullElement() {
         final List<String> list = new ArrayList<>();
         list.add(a);
         list.add(null);
@@ -476,7 +476,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testSum() {
+    void testSum() {
         final List<String> list1 = new ArrayList<>();
         list1.add(a);
         final List<String> list2 = new ArrayList<>();
@@ -490,7 +490,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testUnion() {
+    void testUnion() {
         final List<String> list1 = new ArrayList<>();
         list1.add(a);
         final List<String> list2 = new ArrayList<>();

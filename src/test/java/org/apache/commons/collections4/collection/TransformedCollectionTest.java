@@ -91,7 +91,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     }
 
     @Test
-    public void testTransformedCollection() {
+    void testTransformedCollection() {
         final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
         final Object[] elements = getFullElements();
@@ -106,7 +106,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     }
 
     @Test
-    public void testTransformedCollection_decorateTransform() {
+    void testTransformedCollection_decorateTransform() {
         final Collection<Object> originalCollection = new ArrayList<>();
         final Object[] elements = getFullElements();
         Collections.addAll(originalCollection, elements);

@@ -74,7 +74,7 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final BidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableBidiMap.unmodifiableBidiMap(map));
 
@@ -82,7 +82,7 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }

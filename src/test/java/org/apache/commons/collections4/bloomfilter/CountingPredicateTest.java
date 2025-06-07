@@ -46,7 +46,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateLonger() {
+    void testPredicateLonger() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
@@ -83,7 +83,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateSameLength() {
+    void testPredicateSameLength() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
@@ -101,7 +101,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateShorter() {
+    void testPredicateShorter() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         final Integer[] shortAry = {Integer.valueOf(3)};

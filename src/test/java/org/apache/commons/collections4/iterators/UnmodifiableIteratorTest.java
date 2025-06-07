@@ -63,7 +63,7 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
 
@@ -74,7 +74,7 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 

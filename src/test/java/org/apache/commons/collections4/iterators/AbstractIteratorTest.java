@@ -94,7 +94,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test the empty iterator.
      */
     @Test
-    public void testEmptyIterator() {
+    void testEmptyIterator() {
         if (!supportsEmptyIterator()) {
             return;
         }
@@ -116,7 +116,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Tests {@link Iterator#forEachRemaining(java.util.function.Consumer)}.
      */
     @Test
-    public void testForEachRemaining() {
+    void testForEachRemaining() {
         final List<E> expected = IteratorUtils.toList(makeObject());
         final Iterator<E> it = makeObject();
         final List<E> actual = new ArrayList<>();
@@ -128,7 +128,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test normal iteration behavior.
      */
     @Test
-    public void testFullIterator() {
+    void testFullIterator() {
         if (!supportsFullIterator()) {
             return;
         }
@@ -158,7 +158,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test remove behavior.
      */
     @Test
-    public void testRemove() {
+    void testRemove() {
         final Iterator<E> it = makeObject();
 
         if (!supportsRemove()) {

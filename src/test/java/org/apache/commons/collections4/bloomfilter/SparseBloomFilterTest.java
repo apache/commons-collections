@@ -32,7 +32,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     }
 
     @Test
-    public void testBitMapExtractorEdgeCases() {
+    void testBitMapExtractorEdgeCases() {
         int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71};
         BloomFilter bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
 
@@ -82,7 +82,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     }
 
     @Test
-    public void testBloomFilterBasedMergeEdgeCases() {
+    void testBloomFilterBasedMergeEdgeCases() {
         final BloomFilter bf1 = createEmptyFilter(getTestShape());
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
         bf2.merge(TestingHashers.FROM1);

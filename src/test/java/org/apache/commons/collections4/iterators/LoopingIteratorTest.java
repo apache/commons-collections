@@ -37,7 +37,7 @@ public class LoopingIteratorTest {
      * Tests constructor exception.
      */
     @Test
-    public void testConstructorEx() {
+    void testConstructorEx() {
         assertThrows(NullPointerException.class, () -> new LoopingIterator<>(null));
     }
 
@@ -45,7 +45,7 @@ public class LoopingIteratorTest {
      * Tests whether an empty looping iterator works as designed.
      */
     @Test
-    public void testLooping0() {
+    void testLooping0() {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
         assertFalse(loop.hasNext(), "hasNext should return false");
@@ -58,7 +58,7 @@ public class LoopingIteratorTest {
      * Tests whether a populated looping iterator works as designed.
      */
     @Test
-    public void testLooping1() {
+    void testLooping1() {
         final List<String> list = Arrays.asList("a");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -76,7 +76,7 @@ public class LoopingIteratorTest {
      * Tests whether a populated looping iterator works as designed.
      */
     @Test
-    public void testLooping2() {
+    void testLooping2() {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -94,7 +94,7 @@ public class LoopingIteratorTest {
      * Tests whether a populated looping iterator works as designed.
      */
     @Test
-    public void testLooping3() {
+    void testLooping3() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -115,7 +115,7 @@ public class LoopingIteratorTest {
      * Tests the remove() method on a LoopingIterator wrapped ArrayList.
      */
     @Test
-    public void testRemoving1() {
+    void testRemoving1() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
         assertEquals(3, list.size(), "list should have 3 elements.");
@@ -145,7 +145,7 @@ public class LoopingIteratorTest {
      * Tests the reset() method on a LoopingIterator wrapped ArrayList.
      */
     @Test
-    public void testReset() {
+    void testReset() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 
@@ -167,7 +167,7 @@ public class LoopingIteratorTest {
      * Tests the size() method on a LoopingIterator wrapped ArrayList.
      */
     @Test
-    public void testSize() {
+    void testSize() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
 

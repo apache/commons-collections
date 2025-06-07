@@ -92,7 +92,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testCompute() {
+    void testCompute() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -112,7 +112,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testComputeIfAbsent() {
+    void testComputeIfAbsent() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -132,7 +132,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -148,7 +148,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -164,7 +164,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testKeys() {
+    void testKeys() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -178,7 +178,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testLoadOrderedKeys() throws IOException {
+    void testLoadOrderedKeys() throws IOException {
         final OrderedProperties orderedProperties = new OrderedProperties();
         try (FileReader reader = new FileReader("src/test/resources/org/apache/commons/collections4/properties/test.properties")) {
             orderedProperties.load(reader);
@@ -187,12 +187,12 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testLoadOrderedKeysReverse() throws IOException {
+    void testLoadOrderedKeysReverse() throws IOException {
         loadOrderedKeysReverse();
     }
 
     @Test
-    public void testMerge() {
+    void testMerge() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -210,7 +210,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPut() {
+    void testPut() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -228,7 +228,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         final OrderedProperties sourceProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -248,7 +248,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPutIfAbsent() {
+    void testPutIfAbsent() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -266,7 +266,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testRemoveKey() throws FileNotFoundException, IOException {
+    void testRemoveKey() throws FileNotFoundException, IOException {
         final OrderedProperties props = loadOrderedKeysReverse();
         final String k = "key1";
         props.remove(k);
@@ -277,7 +277,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testRemoveKeyValue() throws FileNotFoundException, IOException {
+    void testRemoveKeyValue() throws FileNotFoundException, IOException {
         final OrderedProperties props = loadOrderedKeysReverse();
         final String k = "key1";
         props.remove(k, "value1");
@@ -288,7 +288,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';

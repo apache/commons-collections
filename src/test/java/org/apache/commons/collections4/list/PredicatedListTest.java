@@ -120,7 +120,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSubList() {
+    void testSubList() {
         final List<E> list = makeTestList();
         list.add((E) "zero");
         //subList without any element of list

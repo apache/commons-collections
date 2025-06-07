@@ -28,13 +28,13 @@ public class NullPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testEnsurePredicateCanBeTypedWithoutWarning() throws Exception {
+    void testEnsurePredicateCanBeTypedWithoutWarning() throws Exception {
         final Predicate<String> predicate = NullPredicate.nullPredicate();
         assertPredicateFalse(predicate, cString);
     }
 
     @Test
-    public void testNullPredicate() {
+    void testNullPredicate() {
         assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
         assertPredicateTrue(NullPredicate.nullPredicate(), null);
     }

@@ -50,14 +50,14 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testCollections265() {
+    void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
 
         assertThrows(IllegalArgumentException.class, () -> bag.add(new Object()));
     }
 
     @Test
-    public void testCollections555() {
+    void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
 
         assertThrows(NullPointerException.class, () -> bag.add(null));
@@ -71,7 +71,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testOrdering() {
+    void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("A", bag.toArray()[0], "Should get elements in correct order");
         assertEquals("B", bag.toArray()[1], "Should get elements in correct order");

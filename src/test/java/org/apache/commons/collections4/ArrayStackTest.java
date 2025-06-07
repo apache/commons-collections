@@ -42,7 +42,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     }
 
     @Test
-    public void testNewStack() {
+    void testNewStack() {
         final ArrayStack<E> stack = makeObject();
         assertTrue(stack.empty(), "New stack is empty");
         assertEquals(0, stack.size(), "New stack has size zero");

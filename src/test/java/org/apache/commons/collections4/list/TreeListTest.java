@@ -119,7 +119,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testBug35258() {
+    void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
 
         final List<Integer> treelist = new TreeList<>();
@@ -150,7 +150,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testBugCollections447() {
+    void testBugCollections447() {
         final List<String> treeList = new TreeList<>();
         treeList.add("A");
         treeList.add("B");

@@ -79,14 +79,14 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     @Test
-    public void testAdd_Predicate_ComparatorCustom() throws Throwable {
+    void testAdd_Predicate_ComparatorCustom() throws Throwable {
         final TreeBag<Predicate<Object>> treeBagOfPredicateOfObject = new TreeBag<>(Comparator.comparing(Predicate::toString));
         final CollectionBag<Predicate<Object>> collectionBagOfPredicateOfObject = new CollectionBag<>(treeBagOfPredicateOfObject);
         collectionBagOfPredicateOfObject.add(NonePredicate.nonePredicate(collectionBagOfPredicateOfObject), 24);
     }
 
     @Test
-    public void testAdd_Predicate_ComparatorDefault() throws Throwable {
+    void testAdd_Predicate_ComparatorDefault() throws Throwable {
         final TreeBag<Predicate<Object>> treeBagOfPredicateOfObject = new TreeBag<>();
         final CollectionBag<Predicate<Object>> collectionBagOfPredicateOfObject = new CollectionBag<>(treeBagOfPredicateOfObject);
         assertThrows(ClassCastException.class, () -> collectionBagOfPredicateOfObject.add(NonePredicate.nonePredicate(collectionBagOfPredicateOfObject), 24));
@@ -104,7 +104,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -119,7 +119,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
+    void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = (Bag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {

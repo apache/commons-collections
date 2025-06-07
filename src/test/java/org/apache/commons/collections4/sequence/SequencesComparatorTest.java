@@ -125,7 +125,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testExecution() {
+    void testExecution() {
         final ExecutionVisitor<Character> ev = new ExecutionVisitor<>();
         for (int i = 0; i < before.size(); ++i) {
             ev.setList(sequence(before.get(i)));
@@ -136,7 +136,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         for (int i = 0; i < before.size(); ++i) {
             final SequencesComparator<Character> comparator =
                     new SequencesComparator<>(sequence(before.get(i)),
@@ -146,7 +146,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testMinimal() {
+    void testMinimal() {
         final String[] shadokAlph = {
             "GA",
             "BU",
@@ -195,7 +195,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testShadok() {
+    void testShadok() {
         final int lgMax = 5;
         final String[] shadokAlph = {
             "GA",

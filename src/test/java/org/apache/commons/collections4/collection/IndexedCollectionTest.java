@@ -98,7 +98,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testAddedObjectsCanBeRetrievedByKey() throws Exception {
+    void testAddedObjectsCanBeRetrievedByKey() throws Exception {
         final Collection<String> coll = makeTestCollection();
         coll.add("12");
         coll.add("16");
@@ -116,7 +116,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
+    void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
         final Collection<String> original = makeFullCollection();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
 
@@ -126,7 +126,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testEnsureDuplicateObjectsCauseException() throws Exception {
+    void testEnsureDuplicateObjectsCauseException() throws Exception {
         final Collection<String> coll = makeUniqueTestCollection();
 
         coll.add("1");
@@ -135,7 +135,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
+    void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
         final Collection<String> original = new ArrayList<>();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
 

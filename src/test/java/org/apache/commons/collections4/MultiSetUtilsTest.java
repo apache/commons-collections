@@ -45,7 +45,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#emptyMultiSet()}.
      */
     @Test
-    public void testEmptyMultiSet() {
+    void testEmptyMultiSet() {
         final MultiSet<Integer> empty = MultiSetUtils.emptyMultiSet();
         assertEquals(0, empty.size());
 
@@ -57,7 +57,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#predicatedMultiSet(org.apache.commons.collections4.MultiSet, org.apache.commons.collections4.Predicate)}.
      */
     @Test
-    public void testPredicatedMultiSet() {
+    void testPredicatedMultiSet() {
         final Predicate<String> predicate = object -> object.length() == 1;
         final MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
         assertEquals(multiSet.size(), predicated.size());
@@ -77,7 +77,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
-    public void testSynchronizedMultiSet() {
+    void testSynchronizedMultiSet() {
         final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
         assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
@@ -87,7 +87,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
-    public void testUnmodifiableMultiSet() {
+    void testUnmodifiableMultiSet() {
         final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
         assertEquals(multiSet, unmodifiable);
 

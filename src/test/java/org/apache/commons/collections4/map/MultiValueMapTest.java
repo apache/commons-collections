@@ -133,14 +133,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testEmptyMapCompatibility() throws Exception {
+    void testEmptyMapCompatibility() throws Exception {
         final Map<?, ?> map = makeEmptyMap();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
         assertEquals(0, map2.size(), "Map is empty");
     }
 
     @Test
-    public void testFullMapCompatibility() throws Exception {
+    void testFullMapCompatibility() throws Exception {
         final Map<?, ?> map = (Map<?, ?>) makeObject();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
         assertEquals(map.size(), map2.size(), "Map is the right size");
@@ -160,7 +160,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         @SuppressWarnings("unchecked")
         final Collection<V> values = new ArrayList<>((Collection<V>) map.values());
@@ -200,7 +200,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testKeyedIterator() {
+    void testKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         final ArrayList<Object> actual = new ArrayList<>(IteratorUtils.toList(map.iterator("one")));
         final ArrayList<Object> expected = new ArrayList<>(Arrays.asList("uno", "un"));
@@ -230,7 +230,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testNoMappingReturnsNull() {
+    void testNoMappingReturnsNull() {
         final MultiValueMap<K, V> map = createTestMap();
         assertNull(map.get("whatever"));
     }
@@ -354,7 +354,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaEntryIterator() {
+    void testRemoveAllViaEntryIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.iterator(); i.hasNext();) {
             i.next();
@@ -365,7 +365,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaIterator() {
+    void testRemoveAllViaIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.values().iterator(); i.hasNext();) {
             i.next();
@@ -376,7 +376,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaKeyedIterator() {
+    void testRemoveAllViaKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.iterator("one"); i.hasNext();) {
             i.next();
@@ -454,12 +454,12 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testTotalSizeA() {
+    void testTotalSizeA() {
         assertEquals(6, createTestMap().totalSize());
     }
 
     @Test
-    public void testUnsafeDeSerialization() throws Exception {
+    void testUnsafeDeSerialization() throws Exception {
         final MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
         byte[] bytes = serialize(map1);
         final Object result = deserialize(bytes);

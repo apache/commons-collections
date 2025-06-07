@@ -62,7 +62,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testHashSetValueHashMap() {
+    void testHashSetValueHashMap() {
         final SetValuedMap<K, V> setMap = new LinkedHashSetValuedLinkedHashMap<>(4);
         assertEquals(0, setMap.get((K) "whatever").size());
 
@@ -74,7 +74,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testHashSetValueHashMap_1() {
+    void testHashSetValueHashMap_1() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2 = makeObject();
@@ -97,7 +97,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testLinkedHashSetValuedLinkedHashMap_2() {
+    void testLinkedHashSetValuedLinkedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2;
@@ -131,7 +131,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testSetValuedMapEqualsHashCodeContract() {
+    void testSetValuedMapEqualsHashCodeContract() {
         final SetValuedMap map1 = makeObject();
         final SetValuedMap map2 = makeObject();
 

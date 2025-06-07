@@ -204,7 +204,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * against the canonical version in SCM.
      */
     @Test
-    public void testEmptyMultiSetCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -219,7 +219,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * against the canonical version in SCM.
      */
     @Test
-    public void testFullMultiSetCompatibility() throws IOException, ClassNotFoundException {
+    void testFullMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeFullCollection();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {

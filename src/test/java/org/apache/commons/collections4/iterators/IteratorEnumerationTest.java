@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class IteratorEnumerationTest {
 
     @Test
-    public void testEnumeration() {
+    void testEnumeration() {
         final Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
         final IteratorEnumeration<String> enumeration = new IteratorEnumeration<>(iterator);
 

@@ -93,7 +93,7 @@ public class ListOrderedSetTest<E>
     }
 
     @Test
-    public void testDecorator() {
+    void testDecorator() {
         assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null));
         assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null));
         assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null));

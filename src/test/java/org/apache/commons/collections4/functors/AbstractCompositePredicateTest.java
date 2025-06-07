@@ -77,7 +77,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      * Tests {@code getInstance} with a null predicate array.
      */
     @Test
-    public final void nullArrayToGetInstance() {
+    final void nullArrayToGetInstance() {
         assertThrows(NullPointerException.class, () -> getPredicateInstance((Predicate<T>[]) null));
     }
 
@@ -85,7 +85,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      * Tests {@code getInstance} with a null predicate collection
      */
     @Test
-    public final void nullCollectionToGetInstance() {
+    final void nullCollectionToGetInstance() {
         assertThrows(NullPointerException.class, () -> getPredicateInstance((Collection<Predicate<T>>) null));
     }
 
@@ -94,7 +94,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      */
     @SuppressWarnings({"unchecked"})
     @Test
-    public final void nullElementInArrayToGetInstance() {
+    final void nullElementInArrayToGetInstance() {
         assertThrows(NullPointerException.class, () -> getPredicateInstance(new Predicate[] { null }));
     }
 
@@ -103,7 +103,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      */
     @SuppressWarnings({"unchecked"})
     @Test
-    public final void nullElementsInArrayToGetInstance() {
+    final void nullElementsInArrayToGetInstance() {
         assertThrows(NullPointerException.class, () -> getPredicateInstance(new Predicate[] { null, null }));
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      * Tests {@code getInstance} with a predicate collection that contains null elements
      */
     @Test
-    public final void nullElementsInCollectionToGetInstance() {
+    final void nullElementsInCollectionToGetInstance() {
         final Collection<Predicate<T>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);

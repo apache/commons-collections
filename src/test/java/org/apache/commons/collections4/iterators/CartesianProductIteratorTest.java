@@ -65,7 +65,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     }
 
     @Test
-    public void testEmptyCollection() {
+    void testEmptyCollection() {
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, Collections.emptyList());
         assertFalse(it.hasNext());
         assertThrows(NoSuchElementException.class, it::next);
@@ -75,7 +75,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that all the tuples are returned
      */
     @Test
-    public void testExhaustivity() {
+    void testExhaustivity() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = makeObject();
         while (it.hasNext()) {
@@ -98,7 +98,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that no tuples are returned when all the lists are empty
      */
     @Test
-    public void testExhaustivityWithAllEmptyLists() {
+    void testExhaustivityWithAllEmptyLists() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(emptyList, emptyList, emptyList);
         while (it.hasNext()) {
@@ -113,7 +113,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that no tuples are returned when first of the lists is empty
      */
     @Test
-    public void testExhaustivityWithEmptyFirstList() {
+    void testExhaustivityWithEmptyFirstList() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(emptyList, numbers, symbols);
         while (it.hasNext()) {
@@ -128,7 +128,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that no tuples are returned when last of the lists is empty
      */
     @Test
-    public void testExhaustivityWithEmptyLastList() {
+    void testExhaustivityWithEmptyLastList() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, numbers, emptyList);
         while (it.hasNext()) {
@@ -143,7 +143,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that no tuples are returned when at least one of the lists is empty
      */
     @Test
-    public void testExhaustivityWithEmptyList() {
+    void testExhaustivityWithEmptyList() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, emptyList, symbols);
         while (it.hasNext()) {
@@ -158,7 +158,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      * test checking that all tuples are returned when same list is passed multiple times
      */
     @Test
-    public void testExhaustivityWithSameList() {
+    void testExhaustivityWithSameList() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = new CartesianProductIterator<>(letters, letters, letters);
         while (it.hasNext()) {
@@ -182,7 +182,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
      */
     @Override
     @Test
-    public void testForEachRemaining() {
+    void testForEachRemaining() {
         final List<Character[]> resultsList = new ArrayList<>();
         final CartesianProductIterator<Character> it = makeObject();
         it.forEachRemaining(tuple -> resultsList.add(tuple.toArray(new Character[0])));
@@ -198,7 +198,7 @@ public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Char
     }
 
     @Test
-    public void testRemoveThrows() {
+    void testRemoveThrows() {
         final CartesianProductIterator<Character> it = makeObject();
         assertThrows(UnsupportedOperationException.class, it::remove);
     }

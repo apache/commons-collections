@@ -56,7 +56,7 @@ public class IteratorIterableTest extends BulkTest {
     }
 
     @Test
-    public void testMultipleUserIterator() {
+    void testMultipleUserIterator() {
         final Iterator<Integer> iter = createIterator();
 
         final Iterable<Number> iterable = new IteratorIterable<>(iter, true);

@@ -54,7 +54,7 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Test
-    public void testByteConstructor() {
+    void testByteConstructor() {
         // single value become increment.
         EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(new byte[] {1});
         assertEquals(0, hasher.getInitial());

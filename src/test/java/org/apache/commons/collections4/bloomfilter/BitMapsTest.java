@@ -40,7 +40,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public final void testContains() {
+    final void testContains() {
         final long[] bitMaps = new long[1];
 
         for (int i = 0; i < 64; i++) {
@@ -76,7 +76,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public final void testGetLongBit() {
+    final void testGetLongBit() {
         assertEquals(1, BitMaps.getLongBit(0));
         assertEquals(0x8000000000000000L, BitMaps.getLongBit(63));
         assertEquals(1, BitMaps.getLongBit(64));
@@ -85,7 +85,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public final void testGetLongIndex() {
+    final void testGetLongIndex() {
         assertEquals(0, BitMaps.getLongIndex(0));
         assertEquals(0, BitMaps.getLongIndex(63));
         assertEquals(1, BitMaps.getLongIndex(64));
@@ -94,7 +94,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public void testMod() {
+    void testMod() {
         for (final long dividend : new long[] {0, -1, -2, -3, -6378683, -23567468136887892L,
             Long.MIN_VALUE, 345, 678686, 67868768686878924L, Long.MAX_VALUE, Long.MAX_VALUE - 1}) {
             for (final int divisor : new int[] {1, 2, 3, 5, 13, Integer.MAX_VALUE, Integer.MAX_VALUE - 1}) {
@@ -104,7 +104,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public void testModEdgeCases() {
+    void testModEdgeCases() {
         for (final long dividend : new long[] {0, -1, 1, Long.MAX_VALUE}) {
             assertThrows(ArithmeticException.class, () -> BitMaps.mod(dividend, 0));
         }
@@ -112,7 +112,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public final void testNumberOfBitMaps() {
+    final void testNumberOfBitMaps() {
         assertEquals(0, BitMaps.numberOfBitMaps(0), "Number of bits 0");
         for (int i = 1; i < 65; i++) {
             assertEquals(1, BitMaps.numberOfBitMaps(i), String.format("Number of bits %d", i));
@@ -124,7 +124,7 @@ public class BitMapsTest {
     }
 
     @Test
-    public final void testSet() {
+    final void testSet() {
         final long[] bitMaps = new long[BitMaps.numberOfBitMaps(129)];
         for (int i = 0; i < 129; i++) {
             BitMaps.set(bitMaps, i);

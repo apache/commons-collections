@@ -190,7 +190,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      * Tests addAsEqual method.
      */
     @Test
-    public void testAddAsEqual() {
+    void testAddAsEqual() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
         comparator.addAsEqual("New York", "Minneapolis");
         assertEquals(0, comparator.compare("New York", "Minneapolis"));
@@ -202,7 +202,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      * Tests that the array constructor compares items properly.
      */
     @Test
-    public void testArrayConstructor() {
+    void testArrayConstructor() {
         final String[] keys = topCities.clone();
         final String[] topCitiesForTest = topCities.clone();
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCitiesForTest);
@@ -216,7 +216,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      * Tests that the constructor plus add method compares items properly.
      */
     @Test
-    public void testConstructorPlusAdd() {
+    void testConstructorPlusAdd() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>();
         for (final String topCity : topCities) {
             comparator.add(topCity);
@@ -229,7 +229,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      * Tests the list constructor.
      */
     @Test
-    public void testListConstructor() {
+    void testListConstructor() {
         final String[] keys = topCities.clone();
         final List<String> topCitiesForTest = new LinkedList<>(Arrays.asList(topCities));
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCitiesForTest);
@@ -247,7 +247,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      * Tests whether or not updates are disabled after a comparison is made.
      */
     @Test
-    public void testLock() {
+    void testLock() {
         final FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
         assertFalse(comparator.isLocked());
         comparator.compare("New York", "Tokyo");
@@ -261,7 +261,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     }
 
     @Test
-    public void testUnknownObjectBehavior() {
+    void testUnknownObjectBehavior() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<>(topCities);
 
         final FixedOrderComparator<String> finalComparator = comparator;

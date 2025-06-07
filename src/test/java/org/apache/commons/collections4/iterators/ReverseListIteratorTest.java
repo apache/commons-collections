@@ -67,7 +67,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableListIterator<E> it = makeObject();
         assertEquals("Four", it.next());
         it.reset();
@@ -79,7 +79,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    public void testReverse() {
+    void testReverse() {
         final ListIterator<E> it = makeObject();
         assertTrue(it.hasNext());
         assertEquals(3, it.nextIndex());

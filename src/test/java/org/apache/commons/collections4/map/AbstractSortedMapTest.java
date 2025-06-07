@@ -72,7 +72,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         }
 
         @Test
-        public void testHeadMapOutOfRange() {
+        void testHeadMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -135,7 +135,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         }
 
         @Test
-        public void testSubMapOutOfRange() {
+        void testSubMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -192,7 +192,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         }
 
         @Test
-        public void testTailMapOutOfRange() {
+        void testTailMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -397,19 +397,19 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
     public abstract SortedMap<K, V> makeObject();
 
     @Test
-    public void testComparator() {
+    void testComparator() {
 //        SortedMap<K, V> sm = makeFullMap();
         // no tests I can think of
     }
 
     @Test
-    public void testFirstKey() {
+    void testFirstKey() {
         final SortedMap<K, V> sm = makeFullMap();
         assertSame(sm.keySet().iterator().next(), sm.firstKey());
     }
 
     @Test
-    public void testLastKey() {
+    void testLastKey() {
         final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
         for (final K k : sm.keySet()) {

@@ -113,7 +113,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testContainsWithEquator() {
+    void testContainsWithEquator() {
         final List<String> base = new ArrayList<>();
         base.add("AC");
         base.add("BB");
@@ -143,7 +143,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testCountMatches() {
+    void testCountMatches() {
         assertEquals(4, IterableUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, IterableUtils.countMatches(null, EQUALS_TWO));
         assertThrows(NullPointerException.class, () -> assertEquals(0, IterableUtils.countMatches(iterableA, null)), "predicate must not be null");
@@ -151,36 +151,36 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testDuplicateListAllSameInList() {
+    void testDuplicateListAllSameInList() {
         final List<Integer> input = Arrays.asList(5, 5, 5, 5);
         assertEquals(Arrays.asList(5), IterableUtils.duplicateList(input));
     }
 
     @Test
-    public void testDuplicateListEmptyDeque() {
+    void testDuplicateListEmptyDeque() {
         assertTrue(IterableUtils.duplicateList(new ArrayDeque<>()).isEmpty());
     }
 
     @Test
-    public void testDuplicateListEmptyList() {
+    void testDuplicateListEmptyList() {
         final List<Integer> input = Arrays.asList();
         assertTrue(IterableUtils.duplicateList(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateListEmptySet() {
+    void testDuplicateListEmptySet() {
         assertTrue(IterableUtils.duplicateList(new HashSet<>()).isEmpty());
     }
 
     @Test
-    public void testDuplicateListMultipleDuplicatesInDeque() {
+    void testDuplicateListMultipleDuplicatesInDeque() {
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
         final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
         assertEquals(expected, IterableUtils.duplicateList(input));
     }
 
     @Test
-    public void testDuplicateListMultipleDuplicatesInDequeReverse() {
+    void testDuplicateListMultipleDuplicatesInDequeReverse() {
         // We want to make sure that the actual list is in the expected order
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(4, 4, 3, 3, 2, 2, 1, 1));
         final List<Integer> expected = Arrays.asList(4, 3, 2, 1);
@@ -188,14 +188,14 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testDuplicateListMultipleDuplicatesInList() {
+    void testDuplicateListMultipleDuplicatesInList() {
         final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
         final List<Integer> expected = Arrays.asList(1, 2, 3, 4);
         assertEquals(expected, IterableUtils.duplicateList(input));
     }
 
     @Test
-    public void testDuplicateListMultipleDuplicatesInListReverse() {
+    void testDuplicateListMultipleDuplicatesInListReverse() {
         // We want to make sure that the actual list is in the expected order
         final List<Integer> input = Arrays.asList(4, 4, 3, 3, 2, 2, 1, 1);
         final List<Integer> expected = Arrays.asList(4, 3, 2, 1);
@@ -203,26 +203,26 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testDuplicateListNoDuplicates() {
+    void testDuplicateListNoDuplicates() {
         final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
         assertTrue(IterableUtils.duplicateList(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateListSingleElement() {
+    void testDuplicateListSingleElement() {
         final List<Integer> input = Arrays.asList(1);
         assertTrue(IterableUtils.duplicateList(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateListWithDuplicates() {
+    void testDuplicateListWithDuplicates() {
         final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
         final List<Integer> expected = Arrays.asList(2, 3);
         assertEquals(expected, IterableUtils.duplicateList(input));
     }
 
     @Test
-    public void testDuplicateSequencedSetMultipleDuplicates() {
+    void testDuplicateSequencedSetMultipleDuplicates() {
         final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
         final List<Integer> list = Arrays.asList(1, 2, 3, 4);
         assertEquals(list, new ArrayList<>(IterableUtils.duplicateSequencedSet(input)));
@@ -230,75 +230,75 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testDuplicateSetEmptyDeque() {
+    void testDuplicateSetEmptyDeque() {
         assertTrue(IterableUtils.duplicateSet(new ArrayDeque<>()).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetEmptyList() {
+    void testDuplicateSetEmptyList() {
         final List<Integer> input = Arrays.asList();
         assertTrue(IterableUtils.duplicateSet(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetEmptySet() {
+    void testDuplicateSetEmptySet() {
         assertTrue(IterableUtils.duplicateSet(new HashSet<>()).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetInSet() {
+    void testDuplicateSetInSet() {
         // Sets don't have duplicates, so the result is always an empty set.
         final Set<Integer> input = new HashSet<>(Arrays.asList(5));
         assertTrue(IterableUtils.duplicateSet(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetMultipleDuplicatesInDeque() {
+    void testDuplicateSetMultipleDuplicatesInDeque() {
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4));
         final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
         assertEquals(expected, IterableUtils.duplicateSet(input));
     }
 
     @Test
-    public void testDuplicateSetMultipleDuplicatesInList() {
+    void testDuplicateSetMultipleDuplicatesInList() {
         final List<Integer> input = Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4);
         final Set<Integer> expected = new HashSet<>(Arrays.asList(1, 2, 3, 4));
         assertEquals(expected, IterableUtils.duplicateSet(input));
     }
 
     @Test
-    public void testDuplicateSetNoDuplicates() {
+    void testDuplicateSetNoDuplicates() {
         final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
         assertTrue(IterableUtils.duplicateSet(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetSingleElement() {
+    void testDuplicateSetSingleElement() {
         final List<Integer> input = Arrays.asList(1);
         assertTrue(IterableUtils.duplicateSet(input).isEmpty());
     }
 
     @Test
-    public void testDuplicateSetWithDuplicates() {
+    void testDuplicateSetWithDuplicates() {
         final List<Integer> input = Arrays.asList(1, 2, 3, 2, 4, 5, 3);
         final Set<Integer> expected = new HashSet<>(Arrays.asList(2, 3));
         assertEquals(expected, IterableUtils.duplicateSet(input));
     }
 
     @Test
-    public void testDuplicatListAllSameInDeque() {
+    void testDuplicatListAllSameInDeque() {
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
         assertEquals(Arrays.asList(5), IterableUtils.duplicateList(input));
     }
 
     @Test
-    public void testDuplicatSetAllSameInDeque() {
+    void testDuplicatSetAllSameInDeque() {
         final Deque<Integer> input = new ArrayDeque<>(Arrays.asList(5, 5, 5, 5));
         assertEquals(new HashSet<>(Arrays.asList(5)), IterableUtils.duplicateSet(input));
     }
 
     @Test
-    public void testFind() {
+    void testFind() {
         Predicate<Number> testPredicate = EqualPredicate.equalPredicate(4);
         Integer test = IterableUtils.find(iterableA, testPredicate);
         assertEquals(4, (int) test);
@@ -311,7 +311,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testFirstFromIterableIndexOutOfBoundsException() throws Exception {
+    void testFirstFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         // Collection, non-existent entry
@@ -319,7 +319,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -343,7 +343,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testForEachButLast() {
+    void testForEachButLast() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -370,7 +370,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testForEachFailure() {
+    void testForEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<>();
         col.add("x");
@@ -378,7 +378,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testFrequency() {
+    void testFrequency() {
         // null iterable test
         assertEquals(0, IterableUtils.frequency(null, 1));
 
@@ -426,7 +426,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testFrequencyOfNull() {
+    void testFrequencyOfNull() {
         final List<String> list = new ArrayList<>();
         assertEquals(0, IterableUtils.frequency(list, null));
         list.add("A");
@@ -444,7 +444,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testGetFromIterableIndexOutOfBoundsException() throws Exception {
+    void testGetFromIterableIndexOutOfBoundsException() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
@@ -453,7 +453,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         int index = IterableUtils.indexOf(iterableA, testPredicate);
         assertEquals(6, index);
@@ -466,7 +466,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testMatchesAll() {
+    void testMatchesAll() {
         assertThrows(NullPointerException.class, () -> assertFalse(IterableUtils.matchesAll(null, null)), "predicate must not be null");
 
         assertThrows(NullPointerException.class, () -> assertFalse(IterableUtils.matchesAll(iterableA, null)), "predicate must not be null");
@@ -482,7 +482,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testMatchesAny() {
+    void testMatchesAny() {
         final List<Integer> list = new ArrayList<>();
 
         assertThrows(NullPointerException.class, () -> assertFalse(IterableUtils.matchesAny(null, null)), "predicate must not be null");
@@ -502,7 +502,7 @@ public class IterableUtilsTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testPartition() {
+    void testPartition() {
         final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
@@ -535,7 +535,7 @@ public class IterableUtilsTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testPartitionMultiplePredicates() {
+    void testPartitionMultiplePredicates() {
         final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
@@ -562,12 +562,12 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         assertEquals(0, IterableUtils.size(null));
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         String result = IterableUtils.toString(iterableA);
         assertEquals("[1, 2, 2, 3, 3, 3, 4, 4, 4, 4]", result);
 
@@ -594,7 +594,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testToStringDelimiter() {
+    void testToStringDelimiter() {
 
         final Transformer<Integer, String> transformer = input -> Integer.toString(input * 2);
 
@@ -627,7 +627,7 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void testToStringWithNullArguments() {
+    void testToStringWithNullArguments() {
         final String result = IterableUtils.toString(null, input -> {
             fail("not supposed to reach here");
             return StringUtils.EMPTY;

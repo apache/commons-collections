@@ -96,7 +96,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testNormalIteration() {
+    void testNormalIteration() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         assertEquals("b", iter.next());

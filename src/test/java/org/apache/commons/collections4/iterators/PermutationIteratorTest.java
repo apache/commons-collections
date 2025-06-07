@@ -68,7 +68,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testEmptyCollection() {
+    void testEmptyCollection() {
         final PermutationIterator<Character> it = makeEmptyIterator();
         // there is one permutation for an empty set: 0! = 1
         assertTrue(it.hasNext());
@@ -80,7 +80,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testPermutationException() {
+    void testPermutationException() {
         final List<List<Character>> resultsList = new ArrayList<>();
 
         final PermutationIterator<Character> it = makeObject();
@@ -166,7 +166,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      * test checking that all the permutations are returned only once.
      */
     @Test
-    public void testPermutationUnicity() {
+    void testPermutationUnicity() {
         final List<List<Character>> resultsList = new ArrayList<>();
         final Set<List<Character>> resultsSet = new HashSet<>();
 
@@ -182,7 +182,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testPermutatorHasMore() {
+    void testPermutatorHasMore() {
         final PermutationIterator<Character> it = makeObject();
         for (int i = 0; i < 6; i++) {
             assertTrue(it.hasNext());

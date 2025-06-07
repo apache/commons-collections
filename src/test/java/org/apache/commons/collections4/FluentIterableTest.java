@@ -104,7 +104,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testAllMatch() {
+    void testAllMatch() {
         assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
         assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
         assertFalse(FluentIterable.of(iterableA).allMatch(EVEN));
@@ -114,7 +114,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testAnyMatch() {
+    void testAnyMatch() {
         assertTrue(FluentIterable.of(iterableEven).anyMatch(EVEN));
         assertFalse(FluentIterable.of(iterableOdd).anyMatch(EVEN));
         assertTrue(FluentIterable.of(iterableA).anyMatch(EVEN));
@@ -124,7 +124,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testAppendElements() {
+    void testAppendElements() {
         final FluentIterable<Integer> it = FluentIterable.of(iterableA).append(10, 20, 30);
         assertEquals(IterableUtils.size(iterableA) + 3, IterableUtils.size(it));
         assertTrue(IterableUtils.contains(it, 1));
@@ -138,7 +138,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testAppendIterable() {
+    void testAppendIterable() {
         final List<Integer> listB = Arrays.asList(10, 20, 30);
         final FluentIterable<Integer> it = FluentIterable.of(iterableA).append(listB);
         assertEquals(IterableUtils.size(iterableA) + listB.size(), IterableUtils.size(it));
@@ -150,7 +150,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testAsEnumeration() {
+    void testAsEnumeration() {
         Enumeration<Long> enumeration = FluentIterable.of(iterableB).asEnumeration();
         final List<Long> result = EnumerationUtils.toList(enumeration);
         assertEquals(iterableB, result);
@@ -160,7 +160,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testCollate() {
+    void testCollate() {
         final List<Integer> result = FluentIterable.of(iterableOdd).collate(iterableEven).toList();
         final List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
@@ -173,7 +173,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testCollateWithComparator() {
+    void testCollateWithComparator() {
         List<Integer> result =
                 FluentIterable
                     .of(iterableOdd)
@@ -192,7 +192,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testContains() {
+    void testContains() {
         assertTrue(FluentIterable.of(iterableEven).contains(2));
         assertFalse(FluentIterable.of(iterableEven).contains(1));
         assertFalse(FluentIterable.of(iterableEven).contains(null));
@@ -200,7 +200,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testCopyInto() {
+    void testCopyInto() {
         List<Integer> result = new ArrayList<>();
         FluentIterable.of(iterableA).copyInto(result);
 
@@ -224,7 +224,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testEval() {
+    void testEval() {
         final List<Integer> listNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         final FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
         final FluentIterable<Integer> materialized = iterable.eval();
@@ -238,7 +238,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testFactoryMethodOf() {
+    void testFactoryMethodOf() {
         FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
         List<Integer> result = iterable.toList();
         assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
@@ -257,7 +257,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testFilter() {
+    void testFilter() {
         final Predicate<Integer> smallerThan3 = object -> object.intValue() < 3;
         List<Integer> result = FluentIterable.of(iterableA).filter(smallerThan3).toList();
         assertEquals(3, result.size());
@@ -272,7 +272,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         final AtomicInteger sum = new AtomicInteger();
         final Closure<Integer> closure = sum::addAndGet;
 
@@ -288,7 +288,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testGet() {
+    void testGet() {
         assertEquals(2, FluentIterable.of(iterableEven).get(0).intValue());
 
         assertThrows(IndexOutOfBoundsException.class, () -> FluentIterable.of(iterableEven).get(-1),
@@ -299,13 +299,13 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testIsEmpty() {
+    void testIsEmpty() {
         assertTrue(FluentIterable.of(emptyIterable).isEmpty());
         assertFalse(FluentIterable.of(iterableOdd).isEmpty());
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         Iterator<Integer> iterator = FluentIterable.of(iterableA).iterator();
         assertTrue(iterator.hasNext());
 
@@ -314,7 +314,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testLimit() {
+    void testLimit() {
         List<Integer> result = FluentIterable.of(iterableA).limit(3).toList();
         assertEquals(3, result.size());
         assertEquals(Arrays.asList(1, 2, 2), result);
@@ -338,7 +338,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testReverse() {
+    void testReverse() {
         List<Integer> result = FluentIterable.of(iterableA).reverse().toList();
         final List<Integer> expected = IterableUtils.toList(iterableA);
         Collections.reverse(expected);
@@ -350,13 +350,13 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         assertEquals(0, FluentIterable.of(emptyIterable).size());
         assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
     }
 
     @Test
-    public void testSkip() {
+    void testSkip() {
         List<Integer> result = FluentIterable.of(iterableA).skip(4).toList();
         assertEquals(6, result.size());
         assertEquals(Arrays.asList(3, 3, 4, 4, 4, 4), result);
@@ -381,7 +381,7 @@ public class FluentIterableTest {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
-    public void testToArray() {
+    void testToArray() {
         final Long[] arr = {1L, 2L, 3L, 4L, 5L};
         final Long[] result = FluentIterable.of(arr).toArray(Long.class);
         assertNotNull(result);
@@ -391,7 +391,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         String result = FluentIterable.of(iterableA).toString();
         assertEquals(iterableA.toString(), result);
 
@@ -400,7 +400,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testTransform() {
+    void testTransform() {
         final Transformer<Integer, Integer> squared = object -> object * object;
         List<Integer> result = FluentIterable.of(iterableA).transform(squared).toList();
         assertEquals(10, result.size());
@@ -415,7 +415,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testUnique() {
+    void testUnique() {
         List<Integer> result = FluentIterable.of(iterableA).unique().toList();
         assertEquals(4, result.size());
         assertEquals(Arrays.asList(1, 2, 3, 4), result);
@@ -426,7 +426,7 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         final FluentIterable<Integer> iterable1 = FluentIterable.of(iterableA).unmodifiable();
         final Iterator<Integer> it = iterable1.iterator();
         assertEquals(1, it.next().intValue());
@@ -441,7 +441,7 @@ public class FluentIterableTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testZip() {
+    void testZip() {
         List<Integer> result = FluentIterable.of(iterableOdd).zip(iterableEven).toList();
         List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);

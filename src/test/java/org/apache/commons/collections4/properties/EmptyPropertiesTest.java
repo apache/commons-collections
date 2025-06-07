@@ -67,60 +67,60 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testClear() {
+    void testClear() {
         PropertiesFactory.EMPTY_PROPERTIES.clear();
         assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
-    public void testClone() {
+    void testClone() {
         // TODO Better test?
         PropertiesFactory.EMPTY_PROPERTIES.clone();
         assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
-    public void testCompute() {
+    void testCompute() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.compute("key", (k, v) -> "foo"));
     }
 
     @Test
-    public void testComputeIfAbsent() {
+    void testComputeIfAbsent() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.computeIfAbsent("key", k -> "foo"));
     }
 
     @Test
-    public void testComputeIfPresent() {
+    void testComputeIfPresent() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.computeIfPresent("key", (k, v) -> "foo"));
     }
 
     @Test
-    public void testContains() {
+    void testContains() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.contains("foo"));
     }
 
     @Test
-    public void testContainsKey() {
+    void testContainsKey() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsKey("foo"));
     }
 
     @Test
-    public void testContainsValue() {
+    void testContainsValue() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.containsValue("foo"));
     }
 
     @Test
-    public void testElements() {
+    void testElements() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.elements().hasMoreElements());
     }
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.entrySet().isEmpty());
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         assertEquals(PropertiesFactory.EMPTY_PROPERTIES, PropertiesFactory.EMPTY_PROPERTIES);
         assertEquals(PropertiesFactory.EMPTY_PROPERTIES, new Properties());
         assertEquals(new Properties(), PropertiesFactory.EMPTY_PROPERTIES);
@@ -132,54 +132,54 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         PropertiesFactory.EMPTY_PROPERTIES.forEach((k, v) -> fail());
     }
 
     @Test
-    public void testGet() {
+    void testGet() {
         assertNull(PropertiesFactory.EMPTY_PROPERTIES.get("foo"));
     }
 
     @Test
-    public void testGetOrDefault() {
+    void testGetOrDefault() {
         assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getOrDefault("foo", "bar"));
     }
 
     @Test
-    public void testGetProperty() {
+    void testGetProperty() {
         assertNull(PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo"));
     }
 
     @Test
-    public void testGetPropertyDefault() {
+    void testGetPropertyDefault() {
         assertEquals("bar", PropertiesFactory.EMPTY_PROPERTIES.getProperty("foo", "bar"));
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), PropertiesFactory.EMPTY_PROPERTIES.hashCode());
         // Should be equals?
         // assertEquals(PropertiesFactory.EMPTY_PROPERTIES.hashCode(), new Properties().hashCode());
     }
 
     @Test
-    public void testIsEmpty() {
+    void testIsEmpty() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
-    public void testKeys() {
+    void testKeys() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.keys().hasMoreElements());
     }
 
     @Test
-    public void testKeySet() {
+    void testKeySet() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 
     @Test
-    public void testListToPrintStream() {
+    void testListToPrintStream() {
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
         PropertiesFactory.EMPTY_PROPERTIES.list(new PrintStream(actual));
@@ -193,7 +193,7 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testListToPrintWriter() {
+    void testListToPrintWriter() {
         // actual
         final ByteArrayOutputStream actual = new ByteArrayOutputStream();
         PropertiesFactory.EMPTY_PROPERTIES.list(new PrintWriter(actual));
@@ -207,81 +207,81 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testLoadFromXML() {
+    void testLoadFromXML() {
         assertThrows(UnsupportedOperationException.class,
             () -> PropertiesFactory.EMPTY_PROPERTIES.loadFromXML(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
     @Test
-    public void testLoadInputStream() {
+    void testLoadInputStream() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(new ByteArrayInputStream(ArrayUtils.EMPTY_BYTE_ARRAY)));
     }
 
     @Test
-    public void testLoadReader() throws IOException {
+    void testLoadReader() throws IOException {
         try (NullReader reader = new NullReader(0)) {
             assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.load(reader));
         }
     }
 
     @Test
-    public void testMerge() {
+    void testMerge() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.merge("key", "value", (k, v) -> "foo"));
     }
 
     @Test
-    public void testPropertyName() {
+    void testPropertyName() {
         assertFalse(PropertiesFactory.EMPTY_PROPERTIES.propertyNames().hasMoreElements());
     }
 
     @Test
-    public void testPut() {
+    void testPut() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.put("Key", "Value"));
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.putAll(new HashMap<>()));
     }
 
     @Test
-    public void testPutIfAbsent() {
+    void testPutIfAbsent() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.putIfAbsent("Key", "Value"));
     }
 
     @Test
-    public void testRehash() {
+    void testRehash() {
         // Can't really test without extending and casting to a currently private class
         // PropertiesFactory.EMPTY_PROPERTIES.rehash();
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.remove("key", "value"));
     }
 
     @Test
-    public void testRemoveKey() {
+    void testRemoveKey() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.remove("key"));
     }
 
     @Test
-    public void testReplace() {
+    void testReplace() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1"));
     }
 
     @Test
-    public void testReplaceAll() {
+    void testReplaceAll() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replaceAll((k, v) -> "value1"));
     }
 
     @Test
-    public void testReplaceOldValue() {
+    void testReplaceOldValue() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.replace("key", "value1", "value2"));
     }
 
     @Test
-    public void testSave() throws IOException {
+    void testSave() throws IOException {
         final String comments = "Hello world!";
         try (ByteArrayOutputStream actual = new ByteArrayOutputStream(); ByteArrayOutputStream expected = new ByteArrayOutputStream()) {
             // actual
@@ -310,17 +310,17 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testSetProperty() {
+    void testSetProperty() {
         assertThrows(UnsupportedOperationException.class, () -> PropertiesFactory.EMPTY_PROPERTIES.setProperty("Key", "Value"));
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         assertEquals(0, PropertiesFactory.EMPTY_PROPERTIES.size());
     }
 
     @Test
-    public void testStoreToOutputStream() throws IOException {
+    void testStoreToOutputStream() throws IOException {
         // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
@@ -342,7 +342,7 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testStoreToPrintWriter() throws IOException {
+    void testStoreToPrintWriter() throws IOException {
         // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
@@ -364,7 +364,7 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testStoreToXMLOutputStream() throws IOException {
+    void testStoreToXMLOutputStream() throws IOException {
         // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         // actual
@@ -386,7 +386,7 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testStoreToXMLOutputStreamWithEncoding() throws IOException {
+    void testStoreToXMLOutputStreamWithEncoding() throws IOException {
         // Note: The second line is always a comment with a timestamp.
         final String comments = "Hello world!";
         final String encoding = StandardCharsets.UTF_8.name();
@@ -409,17 +409,17 @@ public class EmptyPropertiesTest {
     }
 
     @Test
-    public void testStringPropertyName() {
+    void testStringPropertyName() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.stringPropertyNames().isEmpty());
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals(new Properties().toString(), PropertiesFactory.EMPTY_PROPERTIES.toString());
     }
 
     @Test
-    public void testValues() {
+    void testValues() {
         assertTrue(PropertiesFactory.EMPTY_PROPERTIES.isEmpty());
     }
 

@@ -185,7 +185,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#element()}.
      */
     @Test
-    public void testQueueElement() {
+    void testQueueElement() {
         resetEmpty();
 
         assertThrows(NoSuchElementException.class, () -> getCollection().element(),
@@ -223,7 +223,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#offer(Object)}.
      */
     @Test
-    public void testQueueOffer() {
+    void testQueueOffer() {
         if (!isAddSupported()) {
             return;
         }
@@ -256,7 +256,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#peek()}.
      */
     @Test
-    public void testQueuePeek() {
+    void testQueuePeek() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -292,7 +292,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#poll()}.
      */
     @Test
-    public void testQueuePoll() {
+    void testQueuePoll() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -320,7 +320,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#remove()}.
      */
     @Test
-    public void testQueueRemove() {
+    void testQueueRemove() {
         if (!isRemoveSupported()) {
             return;
         }

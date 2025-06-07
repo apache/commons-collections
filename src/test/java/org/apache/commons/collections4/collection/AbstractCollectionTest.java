@@ -555,7 +555,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#add(Object)}.
      */
     @Test
-    public void testCollectionAdd() {
+    void testCollectionAdd() {
         if (!isAddSupported()) {
             return;
         }
@@ -632,7 +632,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Test {@link Collection#clear()}.
      */
     @Test
-    public void testCollectionClear() {
+    void testCollectionClear() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -651,7 +651,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#contains(Object)}.
      */
     @Test
-    public void testCollectionContains() {
+    void testCollectionContains() {
         Object[] elements;
 
         resetEmpty();
@@ -689,7 +689,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#containsAll(Collection)}.
      */
     @Test
-    public void testCollectionContainsAll() {
+    void testCollectionContainsAll() {
         resetEmpty();
         Collection<E> col = new HashSet<>();
         assertTrue(getCollection().containsAll(col),
@@ -734,7 +734,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#isEmpty()}.
      */
     @Test
-    public void testCollectionIsEmpty() {
+    void testCollectionIsEmpty() {
         resetEmpty();
         assertTrue(getCollection().isEmpty(), "New Collection should be empty.");
         // make sure calls to "isEmpty() don't change anything
@@ -750,7 +750,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests the read-only functionality of {@link Collection#iterator()}.
      */
     @Test
-    public void testCollectionIterator() {
+    void testCollectionIterator() {
         resetEmpty();
         Iterator<E> it1 = getCollection().iterator();
         assertFalse(it1.hasNext(), "Iterator for empty Collection shouldn't have next.");
@@ -787,7 +787,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests that the collection's iterator is fail-fast.
      */
     @Test
-    public void testCollectionIteratorFailFast() {
+    void testCollectionIteratorFailFast() {
         if (!isFailFastSupported()) {
             return;
         }
@@ -918,7 +918,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#remove(Object)}.
      */
     @Test
-    public void testCollectionRemove() {
+    void testCollectionRemove() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -965,7 +965,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#removeAll(Collection)}.
      */
     @Test
-    public void testCollectionRemoveAll() {
+    void testCollectionRemoveAll() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -1009,7 +1009,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#removeIf(Predicate)}.
      */
     @Test
-    public void testCollectionRemoveIf() {
+    void testCollectionRemoveIf() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -1052,7 +1052,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#retainAll(Collection)}.
      */
     @Test
-    public void testCollectionRetainAll() {
+    void testCollectionRetainAll() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -1113,7 +1113,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#size()}.
      */
     @Test
-    public void testCollectionSize() {
+    void testCollectionSize() {
         resetEmpty();
         assertEquals(0, getCollection().size(), "Size of new Collection is 0.");
 
@@ -1125,7 +1125,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#toArray()}.
      */
     @Test
-    public void testCollectionToArray() {
+    void testCollectionToArray() {
         resetEmpty();
         assertEquals(0, getCollection().toArray().length,
                 "Empty Collection should return empty array for toArray");
@@ -1170,7 +1170,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#toArray(Object[])}.
      */
     @Test
-    public void testCollectionToArray2() {
+    void testCollectionToArray2() {
         resetEmpty();
         Object[] a = { new Object(), null, null };
         Object[] array = getCollection().toArray(a);
@@ -1229,7 +1229,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@code toString} on a collection.
      */
     @Test
-    public void testCollectionToString() {
+    void testCollectionToString() {
         resetEmpty();
         assertNotNull(getCollection().toString(), "toString shouldn't return null");
 
@@ -1275,7 +1275,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  raise <code>UnsupportedOperationException.
      */
     @Test
-    public void testUnsupportedAdd() {
+    void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
         }
@@ -1312,7 +1312,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     @Test
-    public void testUnsupportedRemove() {
+    void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
         }

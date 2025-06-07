@@ -87,14 +87,14 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         allTests(false, new BooleanComparator());
         allTests(false, new BooleanComparator(false));
         allTests(true, new BooleanComparator(true));
     }
 
     @Test
-    public void testEqualsCompatibleInstance() {
+    void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), BooleanComparator.getFalseFirstComparator());
@@ -109,7 +109,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-    public void testStaticFactoryMethods() {
+    void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
         allTests(false, BooleanComparator.booleanComparator(false));
         allTests(true, BooleanComparator.getTrueFirstComparator());

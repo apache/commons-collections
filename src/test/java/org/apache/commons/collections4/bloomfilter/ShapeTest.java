@@ -49,7 +49,7 @@ public class ShapeTest {
      * Tests that if the number of bits is less than 1 an exception is thrown
      */
     @Test
-    public void testBadNumberOfBits() {
+    void testBadNumberOfBits() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 0, 7));
@@ -60,7 +60,7 @@ public class ShapeTest {
      * Tests that if the number of hash functions is less than 1 an exception is thrown.
      */
     @Test
-    public void testBadNumberOfHashFunctions() {
+    void testBadNumberOfHashFunctions() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 7));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(5, 26, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromPMK(0.35, 26, 0));
@@ -71,7 +71,7 @@ public class ShapeTest {
      * Tests that if the number of items less than 1 an IllegalArgumentException is thrown.
      */
     @Test
-    public void testBadNumberOfItems() {
+    void testBadNumberOfItems() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNM(0, 24));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(0, 24, 5));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(0, 0.02));
@@ -81,7 +81,7 @@ public class ShapeTest {
      * Tests that if the calculated probability is greater than or equal to 1 an IllegalArgumentException is thrown
      */
     @Test
-    public void testBadProbability() {
+    void testBadProbability() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNMK(4000, 8, 1));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, 0.0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromNP(10, 1.0));
@@ -131,7 +131,7 @@ public class ShapeTest {
      */
 
     @Test
-    public void testEstimateN() {
+    void testEstimateN() {
         for (int i = 0; i < 24; i++) {
             final double c = i;
             final double expected = -(24.0 / 3.0) * Math.log1p(-c / 24.0);
@@ -147,7 +147,7 @@ public class ShapeTest {
      * Tests that if the number of bits less than 1 an IllegalArgumentException is thrown.
      */
     @Test
-    public void testFromKM() {
+    void testFromKM() {
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(5, 0));
         assertThrows(IllegalArgumentException.class, () -> Shape.fromKM(0, 5));
     }
@@ -156,7 +156,7 @@ public class ShapeTest {
      * Tests that the number of items and number of bits is passed the other values are calculated correctly.
      */
     @Test
-    public void testFromNM() {
+    void testFromNM() {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24
          */
@@ -175,7 +175,7 @@ public class ShapeTest {
      * calculated correctly.
      */
     @Test
-    public void testFromNMK() {
+    void testFromNMK() {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
          */
@@ -197,7 +197,7 @@ public class ShapeTest {
      * functions.
      */
     @Test
-    public void testFromNP() {
+    void testFromNP() {
         /*
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
@@ -221,7 +221,7 @@ public class ShapeTest {
      * functions.
      */
     @Test
-    public void testFromPMK() {
+    void testFromPMK() {
         /*
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=24&k=3
          */
@@ -242,7 +242,7 @@ public class ShapeTest {
     }
 
     @Test
-    public void testGetProbability() {
+    void testGetProbability() {
         for (int i = 0; i <= 24; i++) {
             final double expected = Math.pow(-Math.expm1(-3.0 * i / 24), 3);
             assertEquals(expected, shape.getProbability(i), "error at " + i);
@@ -254,7 +254,7 @@ public class ShapeTest {
     }
 
     @Test
-    public void testIsSparse() {
+    void testIsSparse() {
         final int functions = 1; // Ignored
         for (int i = 1; i <= 3; i++) {
             final int bits = i * Long.SIZE;
@@ -273,7 +273,7 @@ public class ShapeTest {
      * Tests that the probability is calculated correctly.
      */
     @Test
-    public void testProbability() {
+    void testProbability() {
         final Shape shape = Shape.fromNMK(5, 24, 3);
         assertEquals(24, shape.getNumberOfBits());
         assertEquals(3, shape.getNumberOfHashFunctions());
@@ -281,7 +281,7 @@ public class ShapeTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assertEquals("Shape[k=3 m=5]", Shape.fromKM(3, 5).toString());
     }
 }

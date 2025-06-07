@@ -55,7 +55,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testAndCardinality() {
+    final void testAndCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
         BloomFilter filter1 = createFilter(shape, IndexExtractor.fromIndexArray(1, 63, 64));
         BloomFilter filter2 = createFilter(shape, IndexExtractor.fromIndexArray(5, 64, 69));
@@ -71,7 +71,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testAndCardinalityWithDifferentLengthFilters() {
+    final void testAndCardinalityWithDifferentLengthFilters() {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
         BloomFilter filter1 = createFilter(shape, IndexExtractor.fromIndexArray(1, 63, 64));
@@ -88,7 +88,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testCommutativityOnMismatchedSizes() {
+    final void testCommutativityOnMismatchedSizes() {
         final BitMapExtractor p1 = BitMapExtractor.fromBitMapArray(0x3L, 0x5L);
         final BitMapExtractor p2 = BitMapExtractor.fromBitMapArray(0x1L);
 
@@ -106,7 +106,7 @@ public class SetOperationsTest {
      * Tests that the Cosine similarity is correctly calculated.
      */
     @Test
-    public final void testCosineDistance() {
+    final void testCosineDistance() {
 
         BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
         BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
@@ -154,7 +154,7 @@ public class SetOperationsTest {
      * Tests that the Cosine similarity is correctly calculated.
      */
     @Test
-    public final void testCosineSimilarity() {
+    final void testCosineSimilarity() {
         BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
         BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
@@ -184,7 +184,7 @@ public class SetOperationsTest {
      * Tests that the Hamming distance is correctly calculated.
      */
     @Test
-    public final void testHammingDistance() {
+    final void testHammingDistance() {
         final BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
         BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
@@ -200,7 +200,7 @@ public class SetOperationsTest {
      * Tests that the Jaccard distance is correctly calculated.
      */
     @Test
-    public final void testJaccardDistance() {
+    final void testJaccardDistance() {
         BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
         BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
@@ -227,7 +227,7 @@ public class SetOperationsTest {
      * Tests that the Jaccard similarity is correctly calculated.
      */
     @Test
-    public final void testJaccardSimilarity() {
+    final void testJaccardSimilarity() {
         BloomFilter filter1 = createFilter(shape, TestingHashers.FROM1);
         BloomFilter filter2 = createFilter(shape, TestingHashers.FROM1);
 
@@ -254,7 +254,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testOrCardinality() {
+    final void testOrCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
         BloomFilter filter1 = createFilter(shape, IndexExtractor.fromIndexArray(1, 63, 64));
         BloomFilter filter2 = createFilter(shape, IndexExtractor.fromIndexArray(5, 64, 69));
@@ -270,7 +270,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testOrCardinalityWithDifferentLengthFilters() {
+    final void testOrCardinalityWithDifferentLengthFilters() {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
         BloomFilter filter1 = createFilter(shape, IndexExtractor.fromIndexArray(1, 63, 64));
@@ -287,7 +287,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testXorCardinality() {
+    final void testXorCardinality() {
         final Shape shape = Shape.fromKM(3, 128);
         BloomFilter filter1 = createFilter(shape, IndexExtractor.fromIndexArray(1, 63, 64));
         BloomFilter filter2 = createFilter(shape, IndexExtractor.fromIndexArray(5, 64, 69));
@@ -308,7 +308,7 @@ public class SetOperationsTest {
     }
 
     @Test
-    public final void testXorCardinalityWithDifferentLengthFilters() {
+    final void testXorCardinalityWithDifferentLengthFilters() {
         final Shape shape = Shape.fromKM(3, 128);
         final Shape shape2 = Shape.fromKM(3, 192);
 

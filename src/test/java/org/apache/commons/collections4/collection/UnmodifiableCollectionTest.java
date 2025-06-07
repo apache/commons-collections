@@ -71,7 +71,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Collection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));
 
@@ -79,7 +79,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

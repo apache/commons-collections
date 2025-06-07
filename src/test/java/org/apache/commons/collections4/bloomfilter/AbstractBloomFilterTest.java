@@ -135,7 +135,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that asBitMapArray works correctly.
      */
     @Test
-    public final void testAsBitMapArray() {
+    final void testAsBitMapArray() {
 
         // test when multiple long values are returned.
         final IncrementingHasher hasher = new IncrementingHasher(63, 1);
@@ -147,7 +147,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testBitMapExtractorSize() {
+    void testBitMapExtractorSize() {
         final int[] idx = new int[1];
         createFilter(getTestShape(), TestingHashers.FROM1).processBitMaps(i -> {
             idx[0]++;
@@ -164,7 +164,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testCardinalityAndIsEmpty() {
+    void testCardinalityAndIsEmpty() {
         testCardinalityAndIsEmpty(createEmptyFilter(getTestShape()));
     }
 
@@ -195,7 +195,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testClear() {
+    void testClear() {
         final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         assertNotEquals(0, bf1.cardinality());
         bf1.clear();
@@ -203,7 +203,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public final void testContains() {
+    final void testContains() {
         BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
@@ -240,7 +240,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testCopy() {
+    void testCopy() {
         testCopy(true);
     }
 
@@ -263,7 +263,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testEmptyAfterMergeWithNothing() {
+    void testEmptyAfterMergeWithNothing() {
         // test the case where is empty after merge
         // in this case the internal cardinality == -1
         final BloomFilter bf = createEmptyFilter(getTestShape());
@@ -275,7 +275,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the estimated intersection calculations are correct.
      */
     @Test
-    public final void testEstimateIntersection() {
+    final void testEstimateIntersection() {
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = TestingHashers.populateFromHashersFrom1AndFrom11(createEmptyFilter(getTestShape()));
 
@@ -305,7 +305,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the size estimate is correctly calculated.
      */
     @Test
-    public final void testEstimateN() {
+    final void testEstimateN() {
         // build a filter
         BloomFilter filter1 = createFilter(getTestShape(), TestingHashers.FROM1);
         assertEquals(1, filter1.estimateN());
@@ -327,7 +327,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that the estimated union calculations are correct.
      */
     @Test
-    public final void testEstimateUnion() {
+    final void testEstimateUnion() {
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
 
@@ -341,7 +341,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testIndexExtractorMerge() {
+    void testIndexExtractorMerge() {
         final Shape shape = Shape.fromKM(5, 10);
 
         assertIndexExtractorMerge(shape, new int[] {0, 2, 4, 6, 8}, new int[] {0, 2, 4, 6, 8});
@@ -359,7 +359,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that isFull() returns the proper values.
      */
     @Test
-    public final void testIsFull() {
+    final void testIsFull() {
 
         // create empty filter
         BloomFilter filter = createEmptyFilter(getTestShape());
@@ -376,7 +376,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
      * Tests that merging bloom filters works as expected with a generic BloomFilter.
      */
     @Test
-    public final void testMerge() {
+    final void testMerge() {
 
         final BloomFilter bf1 = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = createFilter(getTestShape(), TestingHashers.FROM11);
@@ -426,7 +426,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testMergeWithBadHasher() {
+    void testMergeWithBadHasher() {
         // value too large
         final BloomFilter f = createEmptyFilter(getTestShape());
         assertThrows(IllegalArgumentException.class,
@@ -437,7 +437,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testMergeWithBitMapExtractor() {
+    void testMergeWithBitMapExtractor() {
         final int bitMapCount = BitMaps.numberOfBitMaps(getTestShape());
         for (int i = 0; i < 5; i++) {
             final long[] values = new long[bitMapCount];
@@ -466,7 +466,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testMergeWithHasher() {
+    void testMergeWithHasher() {
         for (int i = 0; i < 5; i++) {
             final BloomFilter f = createEmptyFilter(getTestShape());
             final int[] expected = DefaultIndexExtractorTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
@@ -478,7 +478,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public void testMergeWithIndexExtractor() {
+    void testMergeWithIndexExtractor() {
         for (int i = 0; i < 5; i++) {
             final int[] values = DefaultIndexExtractorTest.generateIntArray(getTestShape().getNumberOfHashFunctions(), getTestShape().getNumberOfBits());
             final BloomFilter f = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
@@ -501,7 +501,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     }
 
     @Test
-    public final void testNegativeIntersection() {
+    final void testNegativeIntersection() {
         final IndexExtractor p1 = IndexExtractor.fromIndexArray(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 26, 28, 30, 32, 34, 35, 36, 37, 39, 40, 41, 42, 43, 45, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71);
         final IndexExtractor p2 = IndexExtractor.fromIndexArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27);
 

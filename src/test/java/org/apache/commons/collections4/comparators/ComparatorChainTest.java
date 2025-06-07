@@ -125,7 +125,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testBadListComparatorChain() {
+    void testBadListComparatorChain() {
         final List<Comparator<Integer>> list = new LinkedList<>();
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
         final Integer i1 = 4;
@@ -135,7 +135,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testBadNoopComparatorChain() {
+    void testBadNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;
@@ -144,7 +144,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testComparatorChainOnMinValuedComparator() {
+    void testComparatorChainOnMinValuedComparator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
@@ -165,7 +165,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testListComparatorChain() {
+    void testListComparatorChain() {
         final List<Comparator<Integer>> list = new LinkedList<>();
         list.add(new ComparableComparator<>());
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
@@ -177,7 +177,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testNoopComparatorChain() {
+    void testNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;

@@ -61,7 +61,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         final SetView<Integer> set = SetUtils.difference(setA, setB);
         assertEquals(2, set.size());
         assertTrue(set.contains(1));
@@ -78,7 +78,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testDisjunction() {
+    void testDisjunction() {
         final SetView<Integer> set = SetUtils.disjunction(setA, setB);
         assertEquals(4, set.size());
         assertTrue(set.contains(1));
@@ -97,7 +97,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
 
         final Set<Long> set = new HashSet<>();
@@ -105,7 +105,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<>(data);
@@ -121,7 +121,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<>(data);
@@ -137,7 +137,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashSet() {
+    void testHashSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue(set1.isEmpty(), "set is empty");
 
@@ -162,7 +162,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testIntersection() {
+    void testIntersection() {
         final SetView<Integer> set = SetUtils.intersection(setA, setB);
         assertEquals(3, set.size());
         assertTrue(set.contains(3));
@@ -181,7 +181,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testNewIdentityHashSet() {
+    void testNewIdentityHashSet() {
         final Set<String> set = SetUtils.newIdentityHashSet();
         final String a = new String("a");
         set.add(a);
@@ -198,7 +198,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testpredicatedSet() {
+    void testpredicatedSet() {
         final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertInstanceOf(PredicatedSet.class, set, "returned object should be a PredicatedSet");
@@ -207,7 +207,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnion() {
+    void testUnion() {
         final SetView<Integer> set = SetUtils.union(setA, setB);
         assertEquals(7, set.size());
         assertTrue(set.containsAll(setA));
@@ -219,7 +219,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSet() {
+    void testUnmodifiableSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue(set1.isEmpty(), "set is empty");
 
@@ -244,7 +244,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSetWrap() {
+    void testUnmodifiableSetWrap() {
         final Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         final Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
         assertSame(set1, set2);

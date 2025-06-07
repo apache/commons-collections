@@ -68,7 +68,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Test
-    public void testGetSet() {
+    void testGetSet() {
         final PredicatedSet<E> set = makeTestSet();
         assertNotNull(set.decorated(), "returned set should not be null");
     }

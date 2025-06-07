@@ -58,7 +58,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * Tests whether multiple true predicates evaluates to true.
      */
     @Test
-    public void testAllTrue() {
+    void testAllTrue() {
         assertTrue(getPredicateInstance(true, true).evaluate(getTestValue()),
                 "multiple true predicates evaluated to false");
         assertTrue(getPredicateInstance(true, true, true).evaluate(getTestValue()),
@@ -70,7 +70,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @SuppressWarnings({"unchecked"})
     @Test
-    public void testEmptyArrayToGetInstance() {
+    void testEmptyArrayToGetInstance() {
         assertTrue(getPredicateInstance(new Predicate[] {}).evaluate(null), "empty array not true");
     }
 
@@ -78,7 +78,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * Verifies that providing an empty predicate collection evaluates to true.
      */
     @Test
-    public void testEmptyCollectionToGetInstance() {
+    void testEmptyCollectionToGetInstance() {
         final Predicate<Integer> allPredicate = getPredicateInstance(Collections.<Predicate<Integer>>emptyList());
         assertTrue(allPredicate.evaluate(getTestValue()), "empty collection not true");
     }
@@ -88,7 +88,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testOneFalsePredicate() {
+    void testOneFalsePredicate() {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(false);
@@ -100,7 +100,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testOneTruePredicate() {
+    void testOneTruePredicate() {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(true);
@@ -112,7 +112,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
      * false predicate is actually evaluated
      */
     @Test
-    public void testTrueAndFalseCombined() {
+    void testTrueAndFalseCombined() {
         assertFalse(getPredicateInstance(false, null).evaluate(getTestValue()),
                 "false predicate evaluated to true");
         assertFalse(getPredicateInstance(false, null, null).evaluate(getTestValue()),

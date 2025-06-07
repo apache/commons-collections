@@ -111,7 +111,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testGetByIndex() {
+    void testGetByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().get(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().get(-1));
@@ -126,7 +126,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testGetValueByIndex() {
+    void testGetValueByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(-1));
@@ -142,7 +142,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         resetEmpty();
         ListOrderedMap<K, V> lom = getMap();
         assertEquals(-1, lom.indexOf(getOtherKeys()));
@@ -170,7 +170,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 //    }
 
     @Test
-    public void testRemoveByIndex() {
+    void testRemoveByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(-1));

@@ -48,7 +48,7 @@ public class TransformedSplitMapTest extends BulkTest {
     private final Transformer<String, Integer> stringToInt = Integer::valueOf;
 
     @Test
-    public void testEmptyMap() throws IOException, ClassNotFoundException {
+    void testEmptyMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map =
                 TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(),
@@ -64,7 +64,7 @@ public class TransformedSplitMapTest extends BulkTest {
     }
 
     @Test
-    public void testFullMap() throws IOException, ClassNotFoundException {
+    void testFullMap() throws IOException, ClassNotFoundException {
         final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(new HashMap<>(),
                 NOPTransformer.<String>nopTransformer(), NOPTransformer.<String>nopTransformer());
         map.put("a", "b");
@@ -82,7 +82,7 @@ public class TransformedSplitMapTest extends BulkTest {
     }
 
     @Test
-    public void testMapIterator() {
+    void testMapIterator() {
         final TransformedSplitMap<String, String, String, Integer> map =
                 TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(), stringToInt);
@@ -99,7 +99,7 @@ public class TransformedSplitMapTest extends BulkTest {
     }
 
     @Test
-    public void testTransformedMap() {
+    void testTransformedMap() {
         final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
                 new HashMap<>(), intToString, objectToClass);
 

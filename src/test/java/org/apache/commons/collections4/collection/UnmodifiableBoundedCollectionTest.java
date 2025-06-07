@@ -79,7 +79,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final BoundedCollection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));
 
@@ -87,7 +87,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

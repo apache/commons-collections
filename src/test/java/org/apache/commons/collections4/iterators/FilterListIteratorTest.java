@@ -143,7 +143,7 @@ public class FilterListIteratorTest {
      * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360"}
      */
     @Test
-    public void testCollections360() throws Throwable {
+    void testCollections360() throws Throwable {
         final Collection<Predicate<Object>> var7 = new GrowthList<>();
         final Predicate<Object> var9 = PredicateUtils.anyPredicate(var7);
         final FilterListIterator<Object> var13 = new FilterListIterator<>(var9);
@@ -153,13 +153,13 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testEvens() {
+    void testEvens() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), evenPred);
         walkLists(evens, filtered);
     }
 
     @Test
-    public void testFailingHasNextBug() {
+    void testFailingHasNextBug() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
         final ListIterator<Integer> expected = fours.listIterator();
         while (expected.hasNext()) {
@@ -172,19 +172,19 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testFalsePredicate() {
+    void testFalsePredicate() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), falsePred);
         walkLists(new ArrayList<>(), filtered);
     }
 
     @Test
-    public void testFours() {
+    void testFours() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), fourPred);
         walkLists(fours, filtered);
     }
 
     @Test
-    public void testManual() {
+    void testManual() {
         // do this one "by hand" as a sanity check
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
 
@@ -244,7 +244,7 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testNestedSixes() {
+    void testNestedSixes() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(
                                         new FilterListIterator<>(list.listIterator(), threePred),
                                         evenPred
@@ -253,7 +253,7 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testNestedSixes2() {
+    void testNestedSixes2() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(
                                         new FilterListIterator<>(list.listIterator(), evenPred),
                                         threePred
@@ -262,7 +262,7 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testNestedSixes3() {
+    void testNestedSixes3() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(
                                         new FilterListIterator<>(list.listIterator(), threePred),
                                         evenPred
@@ -271,7 +271,7 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testNextChangesPrevious() {
+    void testNextChangesPrevious() {
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
             nextNextPrevious(threes.listIterator(), filtered);
@@ -284,13 +284,13 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testOdds() {
+    void testOdds() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), oddPred);
         walkLists(odds, filtered);
     }
 
     @Test
-    public void testPreviousChangesNext() {
+    void testPreviousChangesNext() {
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
             final ListIterator<Integer> expected = threes.listIterator();
@@ -306,7 +306,7 @@ public class FilterListIteratorTest {
     }
 
     @Test
-    public void testThrees() {
+    void testThrees() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), threePred);
         walkLists(threes, filtered);
     }
@@ -314,13 +314,13 @@ public class FilterListIteratorTest {
     // Utilities
 
     @Test
-    public void testTruePredicate() {
+    void testTruePredicate() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<>(list.listIterator(), truePred);
         walkLists(list, filtered);
     }
 
     @Test
-    public void testWalkLists() {
+    void testWalkLists() {
         // this just confirms that our walkLists method works OK
         walkLists(list, list.listIterator());
     }

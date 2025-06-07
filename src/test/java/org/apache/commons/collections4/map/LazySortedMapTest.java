@@ -78,7 +78,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Override
     @Test
-    public void testMapGet() {
+    void testMapGet() {
         Map<Integer, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get(5);
@@ -93,7 +93,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testReverseSortOrder() {
+    void testReverseSortOrder() {
         final SortedMap<String, Number> map = LazySortedMap.lazySortedMap(new ConcurrentSkipListMap<>(reverseStringComparator), oneFactory);
         map.put("A", 5);
         map.get("B"); // Entry with value "One" created
@@ -109,7 +109,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testSortOrder() {
+    void testSortOrder() {
         final SortedMap<String, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), oneFactory);
         map.put("A", 5);
         map.get("B"); // Entry with value "One" created
@@ -125,7 +125,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testTransformerDecorate() {
+    void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         final SortedMap<Integer, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), transformer);
         assertInstanceOf(LazySortedMap.class, map);

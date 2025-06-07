@@ -71,14 +71,14 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final NavigableSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
         assertThrows(NullPointerException.class, () -> UnmodifiableNavigableSet.unmodifiableNavigableSet(null));

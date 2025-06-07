@@ -64,7 +64,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<E> iter = makeObject();
         assertTrue(iter.hasNext(), "Iterator has a first item");
         final E iterValue = iter.next();
@@ -74,7 +74,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableIterator<E> it = makeObject();
 
         assertTrue(it.hasNext());

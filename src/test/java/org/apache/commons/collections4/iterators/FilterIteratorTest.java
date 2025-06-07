@@ -126,7 +126,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testAddTo() {
+    void testAddTo() {
         final List<E> expected = new ArrayList<>(list);
         expected.addAll(list);
         final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
@@ -135,7 +135,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testAddToCollection() {
+    void testAddToCollection() {
         final List<E> expected = new ArrayList<>(list);
         expected.addAll(list);
         final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
@@ -144,14 +144,14 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testAddToEmpty() {
+    void testAddToEmpty() {
         final FilterIterator<E> filterIterator = makeEmptyIterator();
         final List<E> actual = filterIterator.addTo(new ArrayList<>(list));
         assertEquals(list, actual);
     }
 
     @Test
-    public void testAddToEmptyToEmpty() {
+    void testAddToEmptyToEmpty() {
         final FilterIterator<E> filterIterator = makeEmptyIterator();
         final List<E> actual = filterIterator.addTo(new ArrayList<>());
         assertTrue(actual.isEmpty());
@@ -161,7 +161,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Tests a predicate that accepts some but not all elements.
      */
     @Test
-    public void testConstructorPredicateFilterInts() {
+    void testConstructorPredicateFilterInts() {
         final List<Integer> expected = Arrays.asList(2, 4, 6);
         final Predicate<Integer> predicate = i -> i % 2 == 0;
         final FilterIterator<Integer> filter = new FilterIterator<>(collectionInts.iterator(), predicate);
@@ -174,7 +174,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Tests a predicate that accepts everything.
      */
     @Test
-    public void testForEachRemainingAcceptAllCtor() {
+    void testForEachRemainingAcceptAllCtor() {
         final List<E> expected = IteratorUtils.toList(makeObject());
         final FilterIterator<E> it = new FilterIterator<>(makeObject(), TruePredicate.truePredicate());
         final List<E> actual = new ArrayList<>();
@@ -183,7 +183,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testForEachRemainingDefaultCtor() {
+    void testForEachRemainingDefaultCtor() {
         final List<E> expected = IteratorUtils.toList(makeObject());
         final FilterIterator<E> it = new FilterIterator<>();
         it.setIterator(expected.iterator());
@@ -196,7 +196,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Tests a predicate that rejects everything.
      */
     @Test
-    public void testForEachRemainingRejectAllCtor() {
+    void testForEachRemainingRejectAllCtor() {
         final List<E> expected = IteratorUtils.toList(makeObject());
         final FilterIterator<E> it = new FilterIterator<>(makeObject(), FalsePredicate.falsePredicate());
         final List<E> actual = new ArrayList<>();
@@ -205,7 +205,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testRemoveNext() {
+    void testRemoveNext() {
         final FilterIterator<E> iter = makeObject();
         final E i = iter.removeNext();
         assertFalse(list.contains(i));
@@ -215,13 +215,13 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testRemoveNextEmpty() {
+    void testRemoveNextEmpty() {
         final FilterIterator<E> empty = makeEmptyIterator();
         assertThrows(NoSuchElementException.class, empty::removeNext);
     }
 
     @Test
-    public void testRepeatedHasNext() {
+    void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
             assertTrue(iterator.hasNext());
         }
@@ -237,7 +237,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testReturnValues() {
+    void testReturnValues() {
         verifyElementsInPredicate(ArrayUtils.EMPTY_STRING_ARRAY);
         verifyElementsInPredicate(new String[] { "a" });
         verifyElementsInPredicate(new String[] { "b" });
@@ -273,7 +273,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * correct response for the new predicate.
      */
     @Test
-    public void testSetPredicate() {
+    void testSetPredicate() {
         final Iterator<E> iter = Collections.singleton((E) null).iterator();
 
         final FilterIterator<E> filterIterator = new FilterIterator<>(iter);
@@ -287,7 +287,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testToCollectionAsDeque() {
+    void testToCollectionAsDeque() {
         final Deque<E> expected = new ArrayDeque<>(list);
         final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
         final Deque<E> actual = filterIterator.toCollection(ArrayDeque::new);
@@ -295,7 +295,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testToList() {
+    void testToList() {
         final List<E> expected = new ArrayList<>(list);
         final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
         final List<E> actual = filterIterator.toList();
@@ -303,7 +303,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testToSet() {
+    void testToSet() {
         final Set<E> expected = new HashSet<>(list);
         final FilterIterator<E> filterIterator = new FilterIterator<>(list.iterator());
         final Set<E> actual = filterIterator.toSet();

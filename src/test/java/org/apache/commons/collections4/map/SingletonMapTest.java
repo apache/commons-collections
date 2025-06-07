@@ -86,7 +86,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testBoundedMap() {
+    void testBoundedMap() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertTrue(map.isFull());
@@ -95,7 +95,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testClone() {
+    void testClone() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         final SingletonMap<K, V> cloned = map.clone();
@@ -152,7 +152,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 //    }
 
     @Test
-    public void testKeyValue() {
+    void testKeyValue() {
         final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertEquals(ONE, map.getKey());

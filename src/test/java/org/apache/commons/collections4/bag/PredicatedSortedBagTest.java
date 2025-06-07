@@ -60,7 +60,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testDecorate() {
+    void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
 

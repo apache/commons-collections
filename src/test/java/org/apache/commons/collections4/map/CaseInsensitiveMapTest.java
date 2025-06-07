@@ -72,14 +72,14 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     @Test
-    public void testInitialCapacityZero() {
+    void testInitialCapacityZero() {
         final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
         assertEquals(1, map.data.length);
     }
 
     // COLLECTIONS-294
     @Test
-    public void testLocaleIndependence() {
+    void testLocaleIndependence() {
         final Locale orig = Locale.getDefault();
 
         final Locale[] locales = { Locale.ENGLISH, new Locale("tr", StringUtils.EMPTY, StringUtils.EMPTY), Locale.getDefault() };
@@ -131,7 +131,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         final Map<Object, String> map = new HashMap<>();
         map.put("One", "One");
         map.put("Two", "Two");

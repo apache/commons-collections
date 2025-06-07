@@ -104,7 +104,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testAddNull() {
+    void testAddNull() {
         final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
         assertThrows(NullPointerException.class, () -> b.add(null));
     }
@@ -142,7 +142,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      * Tests that the removal operation actually removes the first element.
      */
     @Test
-    public void testCircularFifoQueueRemove() {
+    void testCircularFifoQueueRemove() {
         resetFull();
         final int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
@@ -160,7 +160,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      * Tests that the constructor correctly throws an exception.
      */
     @Test
-    public void testConstructorException1() {
+    void testConstructorException1() {
         assertThrows(IllegalArgumentException.class, () -> new CircularFifoQueue<E>(0));
     }
 
@@ -168,7 +168,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      * Tests that the constructor correctly throws an exception.
      */
     @Test
-    public void testConstructorException2() {
+    void testConstructorException2() {
         assertThrows(IllegalArgumentException.class, () -> new CircularFifoQueue<E>(-20));
     }
 
@@ -176,12 +176,12 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
      * Tests that the constructor correctly throws an exception.
      */
     @Test
-    public void testConstructorException3() {
+    void testConstructorException3() {
         assertThrows(NullPointerException.class, () -> new CircularFifoQueue<E>(null));
     }
 
     @Test
-    public void testDefaultSizeAndGetError1() {
+    void testDefaultSizeAndGetError1() {
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
         assertEquals(32, fifo.maxSize());
         fifo.add((E) "1");
@@ -194,7 +194,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testDefaultSizeAndGetError2() {
+    void testDefaultSizeAndGetError2() {
         final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
         assertEquals(32, fifo.maxSize());
         fifo.add((E) "1");
@@ -207,7 +207,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testGetIndex() {
+    void testGetIndex() {
         resetFull();
 
         final CircularFifoQueue<E> queue = getCollection();

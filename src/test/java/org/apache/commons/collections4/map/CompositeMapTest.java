@@ -87,7 +87,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testGet() {
+    void testGet() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         assertEquals("one", map.get("1"));
         assertEquals("four", map.get("4"));
@@ -121,7 +121,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(), new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
 
@@ -194,7 +194,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testResolveCollision() {
+    void testResolveCollision() {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(), new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
 

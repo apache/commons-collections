@@ -75,14 +75,14 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Test
-    public void testAdd() {
+    void testAdd() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.add((E) "One", 1));
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final MultiSet<E> multiset = makeFullCollection();
         assertSame(multiset, UnmodifiableMultiSet.unmodifiableMultiSet(multiset));
 
@@ -90,28 +90,28 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet = UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         assertSame(unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.remove("One", 1));
     }
 
     @Test
-    public void testSetCount() {
+    void testSetCount() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.setCount((E) "One", 2));
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

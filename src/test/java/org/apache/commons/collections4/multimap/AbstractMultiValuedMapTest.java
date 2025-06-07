@@ -726,7 +726,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 //    }
 
     @Test
-    public void testAsMapGet_Empty() {
+    void testAsMapGet_Empty() {
         resetEmpty();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
         assertNull(mapCol.get("k0"));
@@ -734,7 +734,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testAsMapGet_Full() {
+    void testAsMapGet_Full() {
         resetFull();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
         final int maxK = getSampleKeySize();
@@ -748,7 +748,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testAsMapRemove() {
+    void testAsMapRemove() {
         assumeTrue(isRemoveSupported());
         resetFull();
         final Map<K, Collection<V>> mapCol = getMap().asMap();
@@ -766,7 +766,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testContainsValue() {
+    void testContainsValue() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final int maxK = getSampleKeySize();
         final int maxV = getSampleCountPerKey();
@@ -801,7 +801,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * Manual serialization testing as this class cannot easily extend the AbstractTestMap
      */
     @Test
-    public void testEmptyMapCompatibility() throws Exception {
+    void testEmptyMapCompatibility() throws Exception {
         final MultiValuedMap<?, ?> map = makeObject();
         final MultiValuedMap<?, ?> map2 =
                 (MultiValuedMap<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
@@ -809,7 +809,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testEntriesCollectionIterator() {
+    void testEntriesCollectionIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<V> values = new ArrayList<>(map.values());
         for (final Entry<K, V> entry : map.entries()) {
@@ -881,7 +881,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeyContainsValue() {
+    void testKeyContainsValue() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final int maxK = getSampleKeySize();
         final int maxV = getSampleCountPerKey();
@@ -912,7 +912,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeysBagIterator1() {
+    void testKeysBagIterator1() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<K> col = new ArrayList<>(map.keys());
         final Bag<K> bag = new HashBag<>(col);
@@ -924,7 +924,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeysBagIterator2() {
+    void testKeysBagIterator2() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final Iterable<K> iterable = new ArrayList<>(map.keys());
         final Bag<K> bag = new HashBag<>(iterable);
@@ -936,13 +936,13 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testKeySetSize() {
+    void testKeySetSize() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertEquals(getSampleKeySize(), map.keySet().size());
     }
 
     @Test
-    public void testKeysMultiSet() {
+    void testKeysMultiSet() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MultiSet<K> keyMultiSet = map.keys();
         final int maxK = getSampleKeySize();
@@ -967,7 +967,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testMapIterator() {
+    void testMapIterator() {
         resetEmpty();
         MapIterator<K, V> mapIt  = getMap().mapIterator();
         assertFalse(mapIt.hasNext());
@@ -982,7 +982,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testMapIteratorRemove() {
+    void testMapIteratorRemove() {
         assumeTrue(isRemoveSupported());
         resetFull();
         final MapIterator<K, V> mapIt = getMap().mapIterator();
@@ -1003,7 +1003,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testMultipleValues() {
+    void testMultipleValues() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final int maxK = getSampleKeySize();
         final int maxV = getSampleCountPerKey();
@@ -1017,7 +1017,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testMultiValuedMapIterator() {
+    void testMultiValuedMapIterator() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MapIterator<K, V> it = map.mapIterator();
         assertThrows(IllegalStateException.class, () -> it.getKey());
@@ -1185,7 +1185,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testRemoveMappingThroughGet() {
+    void testRemoveMappingThroughGet() {
         assumeTrue(isRemoveSupported());
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
@@ -1220,7 +1220,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testRemoveMappingThroughGetIterator() {
+    void testRemoveMappingThroughGetIterator() {
         assumeTrue(isRemoveSupported());
         resetFull();
         final MultiValuedMap<K, V> map = getMap();
@@ -1251,7 +1251,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testRemoveViaValuesRemove() {
+    void testRemoveViaValuesRemove() {
         assumeTrue(isRemoveSupported());
         final MultiValuedMap<K, V> map = makeFullMap();
         final Collection<V> values = map.values();
@@ -1270,7 +1270,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         assertEquals(getSampleTotalValueCount(), makeFullMap().size());
     }
 
@@ -1330,7 +1330,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         assumeTrue(isAddSupported());
         final MultiValuedMap<K, V> map = makeObject();
         map.put((K) "A", (V) "X");

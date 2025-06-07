@@ -29,7 +29,7 @@ public abstract class AbstractClosureTest {
     protected abstract <T> Closure<T> generateClosure();
 
     @Test
-    public void testClosureSanityTests() throws Exception {
+    void testClosureSanityTests() throws Exception {
         final Closure<?> closure = generateClosure();
         assertNotNull(closure);
     }

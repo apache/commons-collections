@@ -81,7 +81,7 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testAsBloomFilterArray() {
+    void testAsBloomFilterArray() {
         final BloomFilter[] result = createUnderTest().asBloomFilterArray();
         assertEquals(2, result.length);
         assertEquals(1, result[0].cardinality());
@@ -89,7 +89,7 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testFlatten() {
+    void testFlatten() {
         final BloomFilter underTest = createUnderTest().flatten();
         final BloomFilter expected = new SimpleBloomFilter(shape);
         expected.merge(IndexExtractor.fromIndexArray(1, 2, 3));
@@ -97,7 +97,7 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testForEachPairArrayTooLong() {
+    void testForEachPairArrayTooLong() {
         assertTrue(createUnderTest().processBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 counter));
         assertEquals(1, nullCount[0]);
@@ -106,7 +106,7 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testForEachPairArrayTooShort() {
+    void testForEachPairArrayTooShort() {
         assertTrue(createUnderTest().processBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one), counter));
         assertEquals(0, nullCount[0]);
         assertEquals(1, nullCount[1]);
@@ -114,20 +114,20 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testForEachPairCompleteMatch() {
+    void testForEachPairCompleteMatch() {
         assertTrue(createUnderTest().processBloomFilterPair(createUnderTest(), counter));
         assertArrayEquals(new int[] { 0, 0 }, nullCount);
         assertEquals(2, equalityCount[0]);
     }
 
     @Test
-    public void testForEachPairReturnFalseEarly() {
+    void testForEachPairReturnFalseEarly() {
         assertFalse(createUnderTest().processBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 (x, y) -> false));
     }
 
     @Test
-    public void testForEachPairReturnFalseLate() {
+    void testForEachPairReturnFalseLate() {
         assertFalse(createUnderTest().processBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one, two, one),
                 counter.and((x, y) -> x != null && y != null)));
         assertEquals(1, nullCount[0]);
@@ -136,7 +136,7 @@ public abstract class AbstractBloomFilterExtractorTest {
     }
 
     @Test
-    public void testForEachPairReturnFalseLateShortArray() {
+    void testForEachPairReturnFalseLateShortArray() {
         assertFalse(createUnderTest().processBloomFilterPair(BloomFilterExtractor.fromBloomFilterArray(one),
                 counter.and((x, y) -> x != null && y != null)));
         assertEquals(0, nullCount[0]);

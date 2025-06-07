@@ -110,7 +110,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      * Test that the empty list iterator contract is correct.
      */
     @Test
-    public void testEmptyMapIterator() {
+    void testEmptyMapIterator() {
         if (!supportsEmptyIterator()) {
             return;
         }
@@ -145,7 +145,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      * Test that the full list iterator contract is correct.
      */
     @Test
-    public void testFullMapIterator() {
+    void testFullMapIterator() {
         if (!supportsFullIterator()) {
             return;
         }
@@ -175,7 +175,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
-    public void testMapIteratorRemoveGetKey() {
+    void testMapIteratorRemoveGetKey() {
         if (!supportsRemove()) {
             return;
         }
@@ -194,7 +194,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
-    public void testMapIteratorRemoveGetValue() {
+    void testMapIteratorRemoveGetValue() {
         if (!supportsRemove()) {
             return;
         }
@@ -213,7 +213,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
-    public void testMapIteratorSet() {
+    void testMapIteratorSet() {
         if (!supportsFullIterator()) {
             return;
         }
@@ -257,7 +257,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     }
 
     @Test
-    public void testMapIteratorSetRemoveSet() {
+    void testMapIteratorSetRemoveSet() {
         if (!supportsSetValue() || !supportsRemove()) {
             return;
         }

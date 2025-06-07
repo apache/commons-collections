@@ -232,7 +232,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    public void testAddNullList() {
+    void testAddNullList() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList);
@@ -240,7 +240,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    public void testAddNullLists2Args() {
+    void testAddNullLists2Args() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
@@ -248,7 +248,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    public void testAddNullListsVarArgs() {
+    void testAddNullListsVarArgs() {
         final ArrayList<String> nullList = null;
         final CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);

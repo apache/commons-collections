@@ -63,14 +63,14 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         final NavigableSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testGetSet() {
+    void testGetSet() {
         final PredicatedNavigableSet<E> set = makeTestSet();
         assertNotNull(set.decorated(), "returned set should not be null");
     }

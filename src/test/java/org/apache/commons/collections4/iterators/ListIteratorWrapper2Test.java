@@ -66,7 +66,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final ListIterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
@@ -159,7 +159,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableListIterator<E> iter = makeObject();
         final E first = iter.next();
         final E second = iter.next();

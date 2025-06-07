@@ -79,7 +79,7 @@ public class IndexExtractorFromBitmapExtractorTest extends AbstractIndexExtracto
     }
 
     @Test
-    public final void testFromBitMapExtractor() {
+    final void testFromBitMapExtractor() {
         IndexExtractor underTest = createExtractor();
         List<Integer> lst = new ArrayList<>();
 

@@ -36,7 +36,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareEquals() {
+    void testCompareEquals() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = ComparatorPredicate.comparatorPredicate(value, new TestComparator<>());
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
@@ -45,7 +45,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareGreater() {
+    void testCompareGreater() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = ComparatorPredicate.comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
@@ -54,7 +54,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareGreaterOrEqual() {
+    void testCompareGreaterOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = ComparatorPredicate.comparatorPredicate(value, new TestComparator<>(), Criterion.GREATER_OR_EQUAL);
         assertPredicateTrue(p, Integer.valueOf(value.intValue() - 1));
@@ -63,7 +63,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareLess() {
+    void testCompareLess() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = ComparatorPredicate.comparatorPredicate(value, new TestComparator<>(), Criterion.LESS);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));
@@ -72,7 +72,7 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testCompareLessOrEqual() {
+    void testCompareLessOrEqual() {
         final Integer value = Integer.valueOf(10);
         final Predicate<Integer> p = ComparatorPredicate.comparatorPredicate(value, new TestComparator<>(), Criterion.LESS_OR_EQUAL);
         assertPredicateFalse(p, Integer.valueOf(value.intValue() - 1));

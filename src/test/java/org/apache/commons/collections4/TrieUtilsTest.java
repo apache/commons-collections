@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class TrieUtilsTest {
 
     @Test
-    public void testUnmodifiableTrie() {
+    void testUnmodifiableTrie() {
         final Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());
         assertInstanceOf(UnmodifiableTrie.class, trie, "Returned object should be an UnmodifiableTrie.");
 

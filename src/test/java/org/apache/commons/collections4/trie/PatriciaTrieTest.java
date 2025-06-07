@@ -62,7 +62,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMap() {
+    void testPrefixMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = {
@@ -291,7 +291,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapClear() {
+    void testPrefixMapClear() {
         final Trie<String, Integer> trie = new PatriciaTrie<>();
         trie.put("Anna", 1);
         trie.put("Anael", 2);
@@ -313,7 +313,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapClearNothing() {
+    void testPrefixMapClearNothing() {
         final Trie<String, Integer> trie = new PatriciaTrie<>();
         final SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
         assertEquals(new HashSet<>(), prefixMap.keySet());
@@ -328,7 +328,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapClearUsingRemove() {
+    void testPrefixMapClearUsingRemove() {
         final Trie<String, Integer> trie = new PatriciaTrie<>();
         trie.put("Anna", 1);
         trie.put("Anael", 2);
@@ -352,7 +352,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapRemoval() {
+    void testPrefixMapRemoval() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
 
         final String[] keys = {
@@ -396,7 +396,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapSizes() {
+    void testPrefixMapSizes() {
         // COLLECTIONS-525
         final PatriciaTrie<String> aTree = new PatriciaTrie<>();
         aTree.put("点评", "测试");
@@ -417,7 +417,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testPrefixMapSizes2() {
+    void testPrefixMapSizes2() {
         final char u8000 = Character.toChars(32768)[0]; // U+8000 (1000000000000000)
         final char char_b = 'b'; // 1100010
 

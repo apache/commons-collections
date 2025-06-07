@@ -57,7 +57,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
      * {@code previous()}.
      */
     @Test
-    public void testListIterator() {
+    void testListIterator() {
         final ListIterator<E> iter = makeObject();
         // TestArrayIterator#testIterator() has already tested the iterator forward,
         //  now we need to test it in reverse

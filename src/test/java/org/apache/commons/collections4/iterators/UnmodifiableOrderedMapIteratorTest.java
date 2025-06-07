@@ -81,7 +81,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         OrderedMapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
@@ -92,7 +92,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     }
 
     @Test
-    public void testOrderedMapIterator() {
+    void testOrderedMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 

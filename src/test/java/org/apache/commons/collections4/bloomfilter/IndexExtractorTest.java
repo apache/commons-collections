@@ -61,7 +61,7 @@ public class IndexExtractorTest {
     }
 
     @Test
-    public void testFromBitMapExtractor() {
+    void testFromBitMapExtractor() {
         TestingBitMapExtractor testingBitMapExtractor = new TestingBitMapExtractor(new long[] {1L, 2L, 3L});
         IndexExtractor underTest = IndexExtractor.fromBitMapExtractor(testingBitMapExtractor);
         List<Integer> lst = new ArrayList<>();

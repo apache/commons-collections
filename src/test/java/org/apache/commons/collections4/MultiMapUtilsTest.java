@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 public class MultiMapUtilsTest {
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
 
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
@@ -55,7 +55,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetCollection() {
+    void testGetCollection() {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -69,7 +69,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsBag() {
+    void testGetValuesAsBag() {
         assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -88,7 +88,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsList() {
+    void testGetValuesAsList() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -102,7 +102,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsSet() {
+    void testGetValuesAsSet() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -117,24 +117,24 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testIsEmptyWithEmptyMap() {
+    void testIsEmptyWithEmptyMap() {
         assertTrue(MultiMapUtils.isEmpty(new ArrayListValuedHashMap<>()));
     }
 
     @Test
-    public void testIsEmptyWithNonEmptyMap() {
+    void testIsEmptyWithNonEmptyMap() {
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         map.put("item", "value");
         assertFalse(MultiMapUtils.isEmpty(map));
     }
 
     @Test
-    public void testIsEmptyWithNull() {
+    void testIsEmptyWithNull() {
         assertTrue(MultiMapUtils.isEmpty(null));
     }
 
     @Test
-    public void testTypeSafeEmptyMultiValuedMap() {
+    void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
 

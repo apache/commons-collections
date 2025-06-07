@@ -111,7 +111,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testEmptyIteratorWithNodeConstructor() {
+    void testEmptyIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
     }
@@ -120,13 +120,13 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testFullIteratorWithNodeConstructor() {
+    void testFullIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testFullIterator();
     }
 
     @Test
-    public void testNullConstructor() {
+    void testNullConstructor() {
         assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 

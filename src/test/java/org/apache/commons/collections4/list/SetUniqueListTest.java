@@ -157,7 +157,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         }
     }
     @Test
-    public void testCollections304() {
+    void testCollections304() {
         final List<String> list = new LinkedList<>();
         final SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
         final String s1 = "Apple";
@@ -223,7 +223,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testCollections701() {
+    void testCollections701() {
         final SetUniqueList<Object> uniqueList = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
         final Integer obj1 = Integer.valueOf(1);
         final Integer obj2 = Integer.valueOf(2);
@@ -277,7 +277,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testFactory() {
+    void testFactory() {
         final Integer[] array = { Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(1) };
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(array));
         final SetUniqueList<Integer> lset = SetUniqueList.setUniqueList(list);
@@ -290,7 +290,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testIntCollectionAddAll() {
+    void testIntCollectionAddAll() {
         // make a SetUniqueList with one element
         final List<Integer> list = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
         final Integer existingElement = Integer.valueOf(1);
@@ -485,7 +485,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSetCollections444() {
+    void testSetCollections444() {
         final SetUniqueList<Integer> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
 
         // Duplicate element
@@ -607,7 +607,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSubListIsUnmodifiable() {
+    void testSubListIsUnmodifiable() {
         resetFull();
         final List<E> subList = getCollection().subList(1, 3);
         assertEquals(2, subList.size());

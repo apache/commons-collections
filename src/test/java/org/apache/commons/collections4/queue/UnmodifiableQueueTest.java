@@ -82,7 +82,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
 
@@ -90,14 +90,14 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testOffer() {
+    void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
         assertThrows(UnsupportedOperationException.class, () -> queue.offer(e));
     }
 
     @Test
-    public void testPoll() {
+    void testPoll() {
         final Queue<E> queue = makeFullCollection();
         assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
@@ -110,7 +110,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

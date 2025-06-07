@@ -86,7 +86,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testEmptyChain() {
+    void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
         assertFalse(chain.hasNext());
         assertThrows(NoSuchElementException.class, () -> chain.next());
@@ -94,7 +94,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testFirstIteratorIsEmptyBug() {
+    void testFirstIteratorIsEmptyBug() {
         final List<String> empty = new ArrayList<>();
         final List<String> notEmpty = new ArrayList<>();
         notEmpty.add("A");
@@ -122,7 +122,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<String> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
@@ -156,7 +156,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testRemoveFromFilteredIterator() {
+    void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
 

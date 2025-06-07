@@ -56,7 +56,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final Transformer<String, String> t1 = TransformerUtils.nopTransformer();
         final TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
         final TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);

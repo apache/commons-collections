@@ -100,7 +100,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     @Test
-    public void testFirstKey() {
+    void testFirstKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
 
@@ -114,7 +114,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     @Test
-    public void testLastKey() {
+    void testLastKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
 
@@ -131,7 +131,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     @Test
-    public void testNextKey() {
+    void testNextKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = (OrderedBidiMap<K, V>) map;
         assertNull(bidi.nextKey(getOtherKeys()[0]));
@@ -166,7 +166,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     @Test
-    public void testPreviousKey() {
+    void testPreviousKey() {
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
         assertNull(bidi.previousKey(getOtherKeys()[0]));

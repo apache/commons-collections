@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class ArrayUtilsTest {
 
     @Test
-    public void testContains() {
+    void testContains() {
         final Object[] array = { "0", "1", "2", "3", null, "0" };
         assertFalse(ArrayUtils.contains(null, null));
         assertFalse(ArrayUtils.contains(null, "1"));
@@ -38,7 +38,7 @@ public class ArrayUtilsTest {
     }
 
     @Test
-    public void testContains_LANG_1261() {
+    void testContains_LANG_1261() {
         class LANG1261ParentObject {
             @Override
             public boolean equals(final Object o) {
@@ -58,7 +58,7 @@ public class ArrayUtilsTest {
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         final Object[] array = { "0", "1", "2", "3", null, "0" };
         assertEquals(-1, ArrayUtils.indexOf(null, null));
         assertEquals(-1, ArrayUtils.indexOf(null, "0"));

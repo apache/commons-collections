@@ -115,7 +115,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     // Tests often fail because gc is uncontrollable
 
     @Test
-    public void testPurge() {
+    void testPurge() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < hard.length; i++) {
@@ -141,7 +141,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testGetAfterGC() {
+    void testGetAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         for (int i = 0; i < 10; i++) {
             map.put(Integer.valueOf(i), Integer.valueOf(i));
@@ -156,7 +156,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testEntrySetIteratorAfterGC() {
+    void testEntrySetIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -178,7 +178,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testMapIteratorAfterGC() {
+    void testMapIteratorAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -201,7 +201,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testMapIteratorAfterGC2() {
+    void testMapIteratorAfterGC2() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -249,7 +249,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testCustomPurge() {
+    void testCustomPurge() {
         final List<Integer> expiredValues = new ArrayList<>();
         @SuppressWarnings("unchecked")
         final Consumer<Integer> consumer = (Consumer<Integer> & Serializable) expiredValues::add;
@@ -289,7 +289,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-599">COLLECTIONS-599: HashEntry array object naming data initialized with double the size during deserialization</a>
      */
     @Test
-    public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
+    void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
 
         final ReferenceMap<String, String> serializeMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
         serializeMap.put("KEY", "VALUE");
@@ -315,7 +315,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-802">COLLECTIONS-802: ReferenceMap iterator remove violates contract</a>
      */
     @Test
-    public void testIteratorLastEntryCanBeRemovedAfterHasNext() {
+    void testIteratorLastEntryCanBeRemovedAfterHasNext() {
         final ReferenceMap<Integer, Integer> map = new ReferenceMap<>();
         map.put(1, 2);
         final Iterator<Map.Entry<Integer, Integer>> iter = map.entrySet().iterator();
@@ -345,7 +345,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     /** Tests whether purge values setting works */
     @Test
-    public void testPurgeValues() throws Exception {
+    void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();
 

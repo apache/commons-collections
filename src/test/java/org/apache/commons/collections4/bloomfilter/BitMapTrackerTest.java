@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 public class BitMapTrackerTest {
 
     @Test
-    public void testSeen() {
+    void testSeen() {
         final Shape shape = Shape.fromKM(3, 12);
         final IntPredicate tracker = new IndexFilter.BitMapTracker(shape);
 

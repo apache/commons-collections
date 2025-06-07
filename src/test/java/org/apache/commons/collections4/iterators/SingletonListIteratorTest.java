@@ -71,7 +71,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final ListIterator<E> iter = makeObject();
         assertTrue(iter.hasNext(), "Iterator should have next item");
         assertFalse(iter.hasPrevious(), "Iterator should have no previous item");
@@ -108,7 +108,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableListIterator<E> it = makeObject();
 
         assertTrue(it.hasNext());

@@ -66,7 +66,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSubList() {
+    void testSubList() {
         final List<E> list = makeObject();
         List<E> subList = list.subList(0, 0);
         assertNotNull(subList);
@@ -140,7 +140,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testTransformedList_decorateTransform() {
+    void testTransformedList_decorateTransform() {
         final List<Object> originalList = new ArrayList<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalList, els);

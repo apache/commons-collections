@@ -125,7 +125,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testGetByIndex() {
+    void testGetByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().get(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().get(-1));
@@ -140,7 +140,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testGetValueByIndex() {
+    void testGetValueByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().getValue(-1));
@@ -156,7 +156,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         resetEmpty();
         LinkedMap<K, V> lm = getMap();
         assertEquals(-1, lm.indexOf(getOtherKeys()));
@@ -176,13 +176,13 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     @Test
-    public void testInitialCapacityZero() {
+    void testInitialCapacityZero() {
         final LinkedMap<String, String> map = new LinkedMap<>(0);
         assertEquals(1, map.data.length);
     }
 
     @Test
-    public void testInsertionOrder() {
+    void testInsertionOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
@@ -237,7 +237,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 //    }
 
     @Test
-    public void testRemoveByIndex() {
+    void testRemoveByIndex() {
         resetEmpty();
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(0));
         assertThrows(IndexOutOfBoundsException.class, () -> getMap().remove(-1));

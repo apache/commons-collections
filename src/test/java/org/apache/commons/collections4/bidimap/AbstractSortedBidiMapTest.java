@@ -122,7 +122,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     public abstract SortedBidiMap<K, V> makeObject();
 
     @Test
-    public void testBidiClearByHeadMap() {
+    void testBidiClearByHeadMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -169,7 +169,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiClearBySubMap() {
+    void testBidiClearBySubMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -226,7 +226,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiClearByTailMap() {
+    void testBidiClearByTailMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -275,7 +275,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiHeadMapContains() {
+    void testBidiHeadMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
         final Iterator<K> it = sm.keySet().iterator();
@@ -298,7 +298,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveByHeadMap() {
+    void testBidiRemoveByHeadMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -342,7 +342,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveByHeadMapEntrySet() {
+    void testBidiRemoveByHeadMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -396,7 +396,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveBySubMap() {
+    void testBidiRemoveBySubMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -442,7 +442,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveBySubMapEntrySet() {
+    void testBidiRemoveBySubMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -498,7 +498,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveByTailMap() {
+    void testBidiRemoveByTailMap() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -543,7 +543,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiRemoveByTailMapEntrySet() {
+    void testBidiRemoveByTailMapEntrySet() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -597,7 +597,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiSubMapContains() {
+    void testBidiSubMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
         final Iterator<K> it = sm.keySet().iterator();
@@ -632,7 +632,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
-    public void testBidiTailMapContains() {
+    void testBidiTailMapContains() {
         // extra test as other tests get complex
         final SortedBidiMap<K, V> sm = makeFullMap();
         final Iterator<K> it = sm.keySet().iterator();

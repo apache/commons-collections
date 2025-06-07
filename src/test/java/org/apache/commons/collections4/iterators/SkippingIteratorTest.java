@@ -67,7 +67,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
-    public void testNegativeOffset() {
+    void testNegativeOffset() {
         assertThrows(IllegalArgumentException.class, () -> new SkippingIterator<>(testList.iterator(), -1),
                 "Expected IllegalArgumentException.");
     }
@@ -78,7 +78,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * behave as if there are no more elements to return.
      */
     @Test
-    public void testOffsetGreaterThanSize() {
+    void testOffsetGreaterThanSize() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 10);
         assertFalse(iter.hasNext());
 
@@ -91,7 +91,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code next()} in between.
      */
     @Test
-    public void testRemoveCalledTwice() {
+    void testRemoveCalledTwice() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
 
@@ -108,7 +108,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * the underlying collection.
      */
     @Test
-    public void testRemoveFirst() {
+    void testRemoveFirst() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 4);
 
@@ -134,7 +134,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * the underlying collection.
      */
     @Test
-    public void testRemoveLast() {
+    void testRemoveLast() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 5);
 
@@ -162,7 +162,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * element is removed from the underlying collection.
      */
     @Test
-    public void testRemoveMiddle() {
+    void testRemoveMiddle() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 3);
 
@@ -190,7 +190,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
     @Test
-    public void testRemoveUnsupported() {
+    void testRemoveUnsupported() {
         final Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
             @Override
             public void remove() {
@@ -211,7 +211,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code next()} being called first.
      */
     @Test
-    public void testRemoveWithoutCallingNext() {
+    void testRemoveWithoutCallingNext() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new SkippingIterator<>(testListCopy.iterator(), 1);
 
@@ -225,7 +225,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * as its decorated iterator.
      */
     @Test
-    public void testSameAsDecorated() {
+    void testSameAsDecorated() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 0);
 
         assertTrue(iter.hasNext());
@@ -255,7 +255,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
      * at an index less than its last element.
      */
     @Test
-    public void testSkipping() {
+    void testSkipping() {
         final Iterator<E> iter = new SkippingIterator<>(testList.iterator(), 2);
 
         assertTrue(iter.hasNext());

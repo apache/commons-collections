@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 public class Collections701Test {
 
     @Test
-    public void testArrayList() {
+    void testArrayList() {
         final List<Object> list = new ArrayList<>();
         list.add(list);
         assertEquals(1, list.size());
@@ -39,7 +39,7 @@ public class Collections701Test {
     }
 
     @Test
-    public void testHashSet() {
+    void testHashSet() {
         final Set<Object> set = new HashSet<>();
         set.add(set);
         assertEquals(1, set.size());
@@ -47,7 +47,7 @@ public class Collections701Test {
     }
 
     @Test
-    public void testSetUniqueList() {
+    void testSetUniqueList() {
         final List<Object> source = new ArrayList<>();
         final List<Object> list = SetUniqueList.setUniqueList(source);
         list.add(list);

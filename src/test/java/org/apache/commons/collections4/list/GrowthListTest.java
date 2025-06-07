@@ -50,7 +50,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthAdd() {
+    void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());
@@ -61,7 +61,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthAddAll() {
+    void testGrowthAddAll() {
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
         final Collection<Integer> coll = new ArrayList<>();
@@ -77,7 +77,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthList() {
+    void testGrowthList() {
         final Integer zero = Integer.valueOf(0);
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
@@ -92,7 +92,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthSet1() {
+    void testGrowthSet1() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());
@@ -103,7 +103,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthSet2() {
+    void testGrowthSet2() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());

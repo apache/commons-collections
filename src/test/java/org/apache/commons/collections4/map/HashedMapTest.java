@@ -53,7 +53,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     @Test
-    public void testInitialCapacityZero() {
+    void testInitialCapacityZero() {
         final HashedMap<String, String> map = new HashedMap<>(0);
         assertEquals(1, map.data.length);
     }
@@ -66,7 +66,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //    }
 
     @Test
-    public void testInternalState() {
+    void testInternalState() {
         final HashedMap<Integer, Integer> map = new HashedMap<>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
         assertEquals(0, map.size);

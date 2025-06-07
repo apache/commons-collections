@@ -140,7 +140,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Nearly all Comparators should be Serializable.
      */
     @Test
-    public void testComparatorIsSerializable() {
+    void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
         assertInstanceOf(Serializable.class, comparator, "This comparator should be Serializable.");
     }
@@ -149,7 +149,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting an empty list
      */
     @Test
-    public void testEmptyListSort() {
+    void testEmptyListSort() {
         final List<T> list = new LinkedList<>();
         sortObjects(list, makeObject());
         final List<T> list2 = new LinkedList<>();
@@ -160,7 +160,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting a random list.
      */
     @Test
-    public void testRandomListSort() {
+    void testRandomListSort() {
         final Comparator<T> comparator = makeObject();
         final List<T> randomList = getComparableObjectsOrdered();
         randomizeObjects(randomList);
@@ -179,7 +179,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting a reversed list.
      */
     @Test
-    public void testReverseListSort() {
+    void testReverseListSort() {
         final Comparator<T> comparator = makeObject();
         final List<T> randomList = getComparableObjectsOrdered();
         reverseObjects(randomList);

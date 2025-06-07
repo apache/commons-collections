@@ -103,7 +103,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     @Test
-    public void testClearException() {
+    void testClearException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.clear(),
                 "expected, not support clear() method UnmodifiableMultiValuedMap does not support change");
@@ -111,19 +111,19 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(map));
     }
 
     @Test
-    public void testDecoratorFactoryNullMap() {
+    void testDecoratorFactoryNullMap() {
         assertThrows(NullPointerException.class, () -> UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null),
                 "map must not be null");
     }
 
     @Test
-    public void testPutAllException() {
+    void testPutAllException() {
         final MultiValuedMap<K, V> map = makeObject();
         final MultiValuedMap<K, V> original = new ArrayListValuedHashMap<>();
         final Map<K, V> originalMap = new HashMap<>();
@@ -145,7 +145,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     @Test
-    public void testRemoveException() {
+    void testRemoveException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.remove("one"),
                 "not support remove() method UnmodifiableMultiValuedMap does not support change");
@@ -153,7 +153,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     @Test
-    public void testRemoveMappingException() {
+    void testRemoveMappingException() {
         final MultiValuedMap<K, V> map = makeFullMap();
         assertThrows(UnsupportedOperationException.class, () -> map.removeMapping("one", "uno"),
                 "expected, not support removeMapping() method UnmodifiableMultiValuedMap does not support change");
@@ -161,7 +161,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }

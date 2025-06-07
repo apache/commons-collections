@@ -63,14 +63,14 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         final SortedSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testGetSet() {
+    void testGetSet() {
         final PredicatedSortedSet<E> set = makeTestSet();
         assertNotNull(set.decorated(), "returned set should not be null");
     }

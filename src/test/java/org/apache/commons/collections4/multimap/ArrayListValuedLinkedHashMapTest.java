@@ -55,7 +55,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testArrayListValuedLinkedHashMap() {
+    void testArrayListValuedLinkedHashMap() {
         final ListValuedMap<K, V> listMap;
         final ListValuedMap<K, V> listMap1;
         final Map<K, V> map = new HashMap<>();
@@ -74,7 +74,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testCopyConstructorWithMultiValuedMap() {
+    void testCopyConstructorWithMultiValuedMap() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) "key", (V) "sleutel");
         final ListValuedMap<K, V> copy = new ArrayListValuedLinkedHashMap<>(map);
@@ -83,7 +83,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testEqualsHashCodeContract() {
+    void testEqualsHashCodeContract() {
         final MultiValuedMap map1 = makeObject();
         final MultiValuedMap map2 = makeObject();
 
@@ -127,7 +127,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testListValuedMapEqualsHashCodeContract() {
+    void testListValuedMapEqualsHashCodeContract() {
         final ListValuedMap map1 = makeObject();
         final ListValuedMap map2 = makeObject();
 
@@ -186,7 +186,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testPreservesKeyInsertionOrder() {
+    void testPreservesKeyInsertionOrder() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) Integer.valueOf(5), (V) "five");
         map.put((K) Integer.valueOf(1), (V) "one");
@@ -202,7 +202,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testTrimToSize() {
+    void testTrimToSize() {
         final ArrayListValuedLinkedHashMap<K, V> listMap = new ArrayListValuedLinkedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
@@ -218,7 +218,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testValuesListIteratorMethods() {
+    void testValuesListIteratorMethods() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
@@ -237,7 +237,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testWrappedListAdd() {
+    void testWrappedListAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         listA.add(0, (V) "W");
@@ -249,7 +249,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testWrappedListAddAll() {
+    void testWrappedListAddAll() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");

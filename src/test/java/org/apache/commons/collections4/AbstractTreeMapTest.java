@@ -44,7 +44,7 @@ public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<TreeMap<
     public abstract TreeMap<K, V> makeObject();
 
     @Test
-    public void testNewMap() {
+    void testNewMap() {
         final TreeMap<K, V> map = makeObject();
         assertTrue(map.isEmpty(), "New map is empty");
         assertEquals(0, map.size(), "New map has size zero");

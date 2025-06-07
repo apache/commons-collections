@@ -130,7 +130,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
      * Test that the iterator order matches the keySet order.
      */
     @Test
-    public void testMapIteratorOrder() {
+    void testMapIteratorOrder() {
         if (!supportsFullIterator()) {
             return;
         }

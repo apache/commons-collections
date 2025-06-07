@@ -54,7 +54,7 @@ public abstract class AbstractBitMapExtractorTest {
     }
 
     @Test
-    public final void testAsBitMapArray() {
+    final void testAsBitMapArray() {
         long[] array = createEmptyExtractor().asBitMapArray();
         for (int i = 0; i < array.length; i++) {
             assertEquals(0, array[i], "Wrong value at " + i);
@@ -65,7 +65,7 @@ public abstract class AbstractBitMapExtractorTest {
     }
 
     @Test
-    public final void testForEachBitMap() {
+    final void testForEachBitMap() {
         assertFalse(createExtractor().processBitMaps(FALSE_CONSUMER), "non-empty should be false");
         if (emptyIsZeroLength()) {
             assertTrue(createEmptyExtractor().processBitMaps(FALSE_CONSUMER), "empty should be true");
@@ -78,7 +78,7 @@ public abstract class AbstractBitMapExtractorTest {
     }
 
     @Test
-    public void testForEachBitMapEarlyExit() {
+    void testForEachBitMapEarlyExit() {
         final int[] passes = new int[1];
         assertFalse(createExtractor().processBitMaps(l -> {
             passes[0]++;
@@ -103,7 +103,7 @@ public abstract class AbstractBitMapExtractorTest {
     }
 
     @Test
-    public final void testForEachBitMapPair() {
+    final void testForEachBitMapPair() {
         final LongBiPredicate func = (x, y) -> x == y;
         assertTrue(createEmptyExtractor().processBitMapPairs(createEmptyExtractor(), func), "empty == empty failed");
         assertFalse(createEmptyExtractor().processBitMapPairs(createExtractor(), func), "empty == not_empty failed");
@@ -141,7 +141,7 @@ public abstract class AbstractBitMapExtractorTest {
     }
 
     @Test
-    public void testForEachBitMapPairEarlyExit() {
+    void testForEachBitMapPairEarlyExit() {
 
         // test BitMapExtractir of different length send 0 for missing values.
         final int[] count = new int[1];

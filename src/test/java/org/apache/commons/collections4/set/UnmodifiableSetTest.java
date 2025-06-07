@@ -65,7 +65,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Set<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSet.unmodifiableSet(set));
 
@@ -73,7 +73,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

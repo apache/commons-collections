@@ -114,7 +114,7 @@ public abstract class AbstractIndexExtractorTest {
      * Test to ensure that all expected values are generated at least once.
      */
     @Test
-    public final void testAsIndexArrayValues() {
+    final void testAsIndexArrayValues() {
         final BitSet bs = new BitSet();
         Arrays.stream(createExtractor().asIndexArray()).forEach(bs::set);
         for (final int i : getExpectedIndices()) {
@@ -130,7 +130,7 @@ public abstract class AbstractIndexExtractorTest {
      * method, including duplicates, are expected to be returned by the {@code asIndexArray()} method.
      */
     @Test
-    public final void testBehaviourAsIndexArray() {
+    final void testBehaviourAsIndexArray() {
         final int flags = getAsIndexArrayBehaviour();
         final int[] actual = createExtractor().asIndexArray();
         if ((flags & ORDERED) != 0) {
@@ -156,7 +156,7 @@ public abstract class AbstractIndexExtractorTest {
      * The order is assumed to follow the order produced by {@code IndexExtractor.asIndexArray()}.
      */
     @Test
-    public final void testBehaviourForEachIndex() {
+    final void testBehaviourForEachIndex() {
         final int flags = getForEachIndexBehaviour();
         final IntList list = new IntList();
         createExtractor().processIndices(list::add);
@@ -181,7 +181,7 @@ public abstract class AbstractIndexExtractorTest {
      * Test the distinct indices output from the extractor are consistent.
      */
     @Test
-    public final void testConsistency() {
+    final void testConsistency() {
         final IndexExtractor extractor = createExtractor();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
@@ -194,7 +194,7 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     @Test
-    public final void testEmptyExtractor() {
+    final void testEmptyExtractor() {
         final IndexExtractor empty = createEmptyExtractor();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
@@ -207,7 +207,7 @@ public abstract class AbstractIndexExtractorTest {
      * Test to ensure that processIndices returns each expected index at least once.
      */
     @Test
-    public final void testForEachIndex() {
+    final void testForEachIndex() {
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();
         Arrays.stream(getExpectedIndices()).forEach(bs1::set);
@@ -219,7 +219,7 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     @Test
-    public void testForEachIndexEarlyExit() {
+    void testForEachIndexEarlyExit() {
         final int[] passes = new int[1];
         assertFalse(createExtractor().processIndices(i -> {
             passes[0]++;
@@ -236,7 +236,7 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     @Test
-    public final void testForEachIndexPredicates() {
+    final void testForEachIndexPredicates() {
         final IndexExtractor populated = createExtractor();
         final IndexExtractor empty = createEmptyExtractor();
 
@@ -248,7 +248,7 @@ public abstract class AbstractIndexExtractorTest {
     }
 
     @Test
-    public void testUniqueReturnsSelf() {
+    void testUniqueReturnsSelf() {
         final IndexExtractor expected = createExtractor().uniqueIndices();
         assertSame(expected, expected.uniqueIndices());
     }

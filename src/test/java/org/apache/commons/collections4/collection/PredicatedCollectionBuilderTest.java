@@ -65,7 +65,7 @@ public class PredicatedCollectionBuilderTest {
      * Verify that only items that pass the Predicate end up in the buffer.
      */
     @Test
-    public void testAddAllPass() {
+    void testAddAllPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.addAll(Arrays.asList("test1", null, "test2"));
         assertEquals(builder.createPredicatedList().size(), 2);
@@ -75,7 +75,7 @@ public class PredicatedCollectionBuilderTest {
      * Verify that failing the Predicate means NOT ending up in the buffer.
      */
     @Test
-    public void testAddFail() {
+    void testAddFail() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
         assertTrue(builder.createPredicatedList().isEmpty());
@@ -87,14 +87,14 @@ public class PredicatedCollectionBuilderTest {
      * Verify that passing the Predicate means ending up in the buffer.
      */
     @Test
-    public void testAddPass() {
+    void testAddPass() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test");
         assertEquals(builder.createPredicatedList().size(), 1);
     }
 
     @Test
-    public void testCreatePredicatedCollectionWithNotNullPredicate() {
+    void testCreatePredicatedCollectionWithNotNullPredicate() {
         final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test1");
         builder.add((String) null);
@@ -113,7 +113,7 @@ public class PredicatedCollectionBuilderTest {
     }
 
     @Test
-    public void testCreatePredicatedCollectionWithPredicate() {
+    void testCreatePredicatedCollectionWithPredicate() {
         final OddPredicate p = new OddPredicate();
         final PredicatedCollection.Builder<Integer> builder = PredicatedCollection.builder(p);
 

@@ -81,7 +81,7 @@ public class IndexFilterTest {
     }
 
     @Test
-    public void testFiltering() {
+    void testFiltering() {
         final Shape shape = Shape.fromKM(3, 12);
         final List<Integer> consumer = new ArrayList<>();
         final IntPredicate filter = IndexFilter.create(shape, consumer::add);

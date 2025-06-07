@@ -50,12 +50,12 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testNullArgumentEqualsNullPredicate() throws Exception {
+    void testNullArgumentEqualsNullPredicate() throws Exception {
         assertSame(NullPredicate.nullPredicate(), EqualPredicate.equalPredicate(null));
     }
 
     @Test
-    public void testObjectFactoryUsesEqualsForTest() throws Exception {
+    void testObjectFactoryUsesEqualsForTest() throws Exception {
         final Predicate<EqualsTestObject> predicate = EqualPredicate.equalPredicate(FALSE_OBJECT);
         assertPredicateFalse(predicate, null);
         assertPredicateFalse(predicate, TRUE_OBJECT); // different object
@@ -66,7 +66,7 @@ public class EqualPredicateTest extends AbstractPredicateTest {
 
     @SuppressWarnings("boxing")
     @Test
-    public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
+    void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         final Predicate<Number> predicate = EqualPredicate.equalPredicate((Number) 4);
         assertPredicateTrue(predicate, 4);
     }

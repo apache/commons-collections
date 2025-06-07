@@ -99,7 +99,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         final Map.Entry<K, V> entry = makeMapEntry();
 
         assertThrows(UnsupportedOperationException.class, () -> entry.setValue(null));

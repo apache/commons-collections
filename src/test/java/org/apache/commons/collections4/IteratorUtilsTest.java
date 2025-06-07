@@ -165,7 +165,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testArrayIterator() {
+    void testArrayIterator() {
         final Object[] objArray = { "a", "b", "c" };
         ResettableIterator<Object> iterator = IteratorUtils.arrayIterator(objArray);
         assertEquals("a", iterator.next());
@@ -221,7 +221,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testArrayListIterator() {
+    void testArrayListIterator() {
         final Object[] objArray = { "a", "b", "c", "d" };
         ResettableListIterator<Object> iterator = IteratorUtils.arrayListIterator(objArray);
         assertFalse(iterator.hasPrevious());
@@ -316,12 +316,12 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testAsEnumerationNull() {
+    void testAsEnumerationNull() {
         assertThrows(NullPointerException.class, () -> IteratorUtils.asEnumeration(null));
     }
 
     @Test
-    public void testAsIterable() {
+    void testAsIterable() {
         final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
@@ -342,12 +342,12 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testAsIterableNull() {
+    void testAsIterableNull() {
         assertThrows(NullPointerException.class, () -> IteratorUtils.asIterable(null));
     }
 
     @Test
-    public void testAsIterator() {
+    void testAsIterator() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
@@ -357,7 +357,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testAsIteratorNull() {
+    void testAsIteratorNull() {
         final Collection coll = new ArrayList();
         coll.add("test");
         final Vector<String> vector = new Vector<>();
@@ -371,7 +371,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testAsMultipleIterable() {
+    void testAsMultipleIterable() {
         final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
@@ -398,12 +398,12 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testAsMultipleIterableNull() {
+    void testAsMultipleIterableNull() {
         assertThrows(NullPointerException.class, () -> IteratorUtils.asMultipleUseIterable(null));
     }
 
     @Test
-    public void testChainedIteratorArrayOfIterator() {
+    void testChainedIteratorArrayOfIterator() {
         // String
         final IteratorChainTest iteratorChainTest = new IteratorChainTest();
         iteratorChainTest.setUp();
@@ -423,7 +423,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testChainedIteratorList() {
+    void testChainedIteratorList() {
         final IteratorChainTest iteratorChainTest = new IteratorChainTest();
         iteratorChainTest.setUp();
         final List<Iterator<String>> list = new ArrayList<>();
@@ -440,7 +440,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testChainedIteratorOfIterators() {
+    void testChainedIteratorOfIterators() {
         final List<List<Number>> lst = new ArrayList<>();
         final List<Integer> iList = Arrays.asList(1, 3);
         lst.add(Arrays.asList(3.14f, Math.sqrt(2.0)));
@@ -467,7 +467,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testChainedIteratorRawGenerics() {
+    void testChainedIteratorRawGenerics() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.chainedIterator(iterator) instanceof Iterator, "create instance fail");
@@ -479,7 +479,7 @@ public class IteratorUtilsTest {
      * Tests methods collatedIterator(...)
      */
     @Test
-    public void testCollatedIterator() {
+    void testCollatedIterator() {
 
         assertThrows(NullPointerException.class, () -> IteratorUtils.collatedIterator(null, collectionOdd.iterator(), null));
         assertThrows(NullPointerException.class, () -> IteratorUtils.collatedIterator(null, null, collectionEven.iterator()));
@@ -514,7 +514,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testCollatedIteratorCollectionNull() {
+    void testCollatedIteratorCollectionNull() {
         final Collection<Iterator<?>> coll = new ArrayList<>();
         coll.add(collectionOdd.iterator());
         // natural ordering
@@ -525,7 +525,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testCollatedIteratorNull() {
+    void testCollatedIteratorNull() {
         final ArrayList arrayList = new ArrayList();
         // natural ordering
         Iterator<Integer> it = IteratorUtils.collatedIterator(null, collectionOdd.iterator(), collectionOdd.iterator(),
@@ -553,7 +553,7 @@ public class IteratorUtilsTest {
      * Test empty iterator
      */
     @Test
-    public void testEmptyIterator() {
+    void testEmptyIterator() {
         assertSame(EmptyIterator.INSTANCE, IteratorUtils.EMPTY_ITERATOR);
         assertSame(EmptyIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_ITERATOR);
         assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
@@ -574,7 +574,7 @@ public class IteratorUtilsTest {
      * Test empty list iterator
      */
     @Test
-    public void testEmptyListIterator() {
+    void testEmptyListIterator() {
         assertSame(EmptyListIterator.INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
         assertSame(EmptyListIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
         assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
@@ -671,7 +671,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testFilteredIterator() {
+    void testFilteredIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
 
@@ -680,7 +680,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testFilteredListIterator() {
+    void testFilteredListIterator() {
         final List arrayList = new ArrayList();
         arrayList.add("test");
         final Predicate predicate = TruePredicate.INSTANCE;
@@ -692,7 +692,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testFind() {
+    void testFind() {
         Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         Integer test = IteratorUtils.find(iterableA.iterator(), testPredicate);
         assertEquals(4, (int) test);
@@ -705,14 +705,14 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testFirstFromIterator() throws Exception {
+    void testFirstFromIterator() throws Exception {
         // Iterator, entry exists
         final Iterator<Integer> iterator = iterableA.iterator();
         assertEquals(1, (int) IteratorUtils.first(iterator));
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -736,7 +736,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testForEachButLast() {
+    void testForEachButLast() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -763,7 +763,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testGetAtIndexFromIterator() throws Exception {
+    void testGetAtIndexFromIterator() throws Exception {
         // Iterator, entry exists
         Iterator<Integer> iterator = iterableA.iterator();
         assertEquals(1, (int) IteratorUtils.get(iterator, 0));
@@ -776,7 +776,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testGetAtIndexFromIteratorDefault() throws Exception {
+    void testGetAtIndexFromIteratorDefault() throws Exception {
         // Iterator, entry exists
         Iterator<Integer> iterator = iterableA.iterator();
         assertEquals(1, (int) IteratorUtils.get(iterator, 0, i -> 0));
@@ -788,7 +788,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testGetIterator() {
+    void testGetIterator() {
         final Object[] objArray = { "a", "b", "c" };
         final Map<String, String> inMap = new HashMap<>();
         final Node[] nodes = createNodes();
@@ -814,7 +814,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testIndexOf() {
+    void testIndexOf() {
         Predicate<Number> testPredicate = EqualPredicate.equalPredicate((Number) 4);
         int index = IteratorUtils.indexOf(iterableA.iterator(), testPredicate);
         assertEquals(6, index);
@@ -827,7 +827,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testLoopingIterator() {
+    void testLoopingIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Collection coll = new ArrayList();
@@ -838,7 +838,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testLoopingListIterator() {
+    void testLoopingListIterator() {
         final ArrayList arrayList = new ArrayList();
         arrayList.add("test");
         final Iterator iterator = arrayList.iterator();
@@ -850,7 +850,7 @@ public class IteratorUtilsTest {
      * Tests method nodeListIterator(Node)
      */
     @Test
-    public void testNodeIterator() {
+    void testNodeIterator() {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
         final Node parentNode = createMock(Node.class);
@@ -877,7 +877,7 @@ public class IteratorUtilsTest {
      * Tests method nodeListIterator(NodeList)
      */
     @Test
-    public void testNodeListIterator() {
+    void testNodeListIterator() {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
 
@@ -898,12 +898,12 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testObjectGraphIterator() {
+    void testObjectGraphIterator() {
         assertTrue(IteratorUtils.objectGraphIterator(null, null) instanceof Iterator, "create instance fail");
     }
 
     @Test
-    public void testPeekingIterator() {
+    void testPeekingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.peekingIterator(iterator) instanceof Iterator, "create instance fail");
@@ -911,7 +911,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testPushBackIterator() {
+    void testPushBackIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.pushbackIterator(iterator) instanceof Iterator, "create instance fail");
@@ -919,17 +919,17 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testSingletonIterator() {
+    void testSingletonIterator() {
         assertTrue(IteratorUtils.singletonIterator(new Object()) instanceof ResettableIterator, "create instance fail");
     }
 
     @Test
-    public void testSingletonListIterator() {
+    void testSingletonListIterator() {
         assertTrue(IteratorUtils.singletonListIterator(new Object()) instanceof Iterator, "create instance fail");
     }
 
     @Test
-    public void testToArray() {
+    void testToArray() {
         final List<Object> list = new ArrayList<>();
         list.add(Integer.valueOf(1));
         list.add("Two");
@@ -941,7 +941,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testToArray2() {
+    void testToArray2() {
         final List<String> list = new ArrayList<>();
         list.add("One");
         list.add("Two");
@@ -954,7 +954,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testToList() {
+    void testToList() {
         final List<Object> list = new ArrayList<>();
         list.add(Integer.valueOf(1));
         list.add("Two");
@@ -968,7 +968,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testToListIterator() {
+    void testToListIterator() {
         final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
@@ -984,12 +984,12 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testToListIteratorNull() {
+    void testToListIteratorNull() {
         assertThrows(NullPointerException.class, () -> IteratorUtils.toListIterator(null));
     }
 
     @Test
-    public void testToSet() {
+    void testToSet() {
         final Set<Object> set = new HashSet<>();
         set.add(Integer.valueOf(1));
         set.add("Two");
@@ -1001,7 +1001,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testTransformedIterator() {
+    void testTransformedIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
 
@@ -1013,7 +1013,7 @@ public class IteratorUtilsTest {
      * Test remove() for an immutable Iterator.
      */
     @Test
-    public void testUnmodifiableIteratorImmutability() {
+    void testUnmodifiableIteratorImmutability() {
         final Iterator<String> iterator = getImmutableIterator();
 
         assertThrows(UnsupportedOperationException.class, () -> iterator.remove());
@@ -1027,7 +1027,7 @@ public class IteratorUtilsTest {
      * Test next() and hasNext() for an immutable Iterator.
      */
     @Test
-    public void testUnmodifiableIteratorIteration() {
+    void testUnmodifiableIteratorIteration() {
         final Iterator<String> iterator = getImmutableIterator();
 
         assertTrue(iterator.hasNext());
@@ -1053,7 +1053,7 @@ public class IteratorUtilsTest {
      * Test remove() for an immutable ListIterator.
      */
     @Test
-    public void testUnmodifiableListIteratorImmutability() {
+    void testUnmodifiableListIteratorImmutability() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
         assertThrows(UnsupportedOperationException.class, () -> listIterator.remove());
@@ -1071,7 +1071,7 @@ public class IteratorUtilsTest {
      * Test next(), hasNext(), previous() and hasPrevious() for an immutable ListIterator.
      */
     @Test
-    public void testUnmodifiableListIteratorIteration() {
+    void testUnmodifiableListIteratorIteration() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
         assertFalse(listIterator.hasPrevious());
@@ -1119,7 +1119,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableMapIterator() {
+    void testUnmodifiableMapIterator() {
         final Set<?> set = new LinkedHashSet<>();
         final MapIterator iterator = new EntrySetToMapIteratorAdapter(set);
         assertTrue(IteratorUtils.unmodifiableMapIterator(iterator) instanceof MapIterator, "create instance fail");
@@ -1127,7 +1127,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void testZippingIterator() {
+    void testZippingIterator() {
         final ArrayList arrayList = new ArrayList();
         final Iterator iterator = arrayList.iterator();
         assertTrue(IteratorUtils.zippingIterator(iterator, iterator, iterator) instanceof ZippingIterator, "create instance fail");

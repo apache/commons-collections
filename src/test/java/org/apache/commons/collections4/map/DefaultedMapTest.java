@@ -55,7 +55,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testFactoryMethods() {
+    void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
         assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"));
         assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory));

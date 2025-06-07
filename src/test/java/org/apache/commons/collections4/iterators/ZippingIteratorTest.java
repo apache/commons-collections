@@ -71,7 +71,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testIterateEven() {
+    void testIterateEven() {
         @SuppressWarnings("unchecked")
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator());
         for (final Integer even : evens) {
@@ -82,7 +82,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testIterateEvenEven() {
+    void testIterateEvenEven() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator(), evens.iterator());
         for (final Integer even : evens) {
             assertTrue(iter.hasNext());
@@ -94,7 +94,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testIterateEvenOdd() {
+    void testIterateEvenOdd() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator(), odds.iterator());
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
@@ -104,7 +104,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testIterateFibEvenOdd() {
+    void testIterateFibEvenOdd() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(fib.iterator(), evens.iterator(), odds.iterator());
 
         assertEquals(Integer.valueOf(1), iter.next());  // fib    1
@@ -140,7 +140,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testIterateOddEven() {
+    void testIterateOddEven() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(odds.iterator(), evens.iterator());
         for (int i = 0, j = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
@@ -156,7 +156,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testRemoveFromDouble() {
+    void testRemoveFromDouble() {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator(), odds.iterator());
         int expectedSize = evens.size() + odds.size();
         while (iter.hasNext()) {
@@ -171,7 +171,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     @Test
-    public void testRemoveFromSingle() {
+    void testRemoveFromSingle() {
         @SuppressWarnings("unchecked")
         final ZippingIterator<Integer> iter = new ZippingIterator<>(evens.iterator());
         int expectedSize = evens.size();

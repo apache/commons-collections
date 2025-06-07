@@ -69,7 +69,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final E iterValue = iter.next();
@@ -80,7 +80,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testNullArray() {
+    void testNullArray() {
         assertThrows(NullPointerException.class, () -> makeArrayIterator(null));
     }
 

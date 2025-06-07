@@ -140,7 +140,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     public abstract OrderedMap<K, V> makeObject();
 
     @Test
-    public void testFirstKey() {
+    void testFirstKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         final OrderedMap<K, V> finalOrdered = ordered;
@@ -153,7 +153,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     }
 
     @Test
-    public void testLastKey() {
+    void testLastKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         final OrderedMap<K, V> finalOrdered = ordered;
@@ -169,7 +169,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     }
 
     @Test
-    public void testNextKey() {
+    void testNextKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         assertNull(ordered.nextKey(getOtherKeys()[0]));
@@ -202,7 +202,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     }
 
     @Test
-    public void testPreviousKey() {
+    void testPreviousKey() {
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         assertNull(ordered.previousKey(getOtherKeys()[0]));

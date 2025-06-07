@@ -227,19 +227,19 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     @Test
-    public void testEqualsNull() {
+    void testEqualsNull() {
         final Object obj = makeObject();
         assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
     @Test
-    public void testObjectEqualsSelf() {
+    void testObjectEqualsSelf() {
         final Object obj = makeObject();
         assertEquals(obj, obj, "A Object should equal itself");
     }
 
     @Test
-    public void testObjectHashCodeEqualsContract() {
+    void testObjectHashCodeEqualsContract() {
         final Object obj1 = makeObject();
         if (obj1.equals(obj1)) {
             assertEquals(
@@ -256,7 +256,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     @Test
-    public void testObjectHashCodeEqualsSelfHashCode() {
+    void testObjectHashCodeEqualsSelfHashCode() {
         final Object obj = makeObject();
         assertEquals(obj.hashCode(), obj.hashCode(), "hashCode should be repeatable");
     }

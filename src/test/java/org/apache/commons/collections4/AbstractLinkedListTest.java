@@ -126,7 +126,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      * Tests {@link LinkedList#getFirst()}.
      */
     @Test
-    public void testLinkedListGetFirst() {
+    void testLinkedListGetFirst() {
         resetEmpty();
         assertThrows(NoSuchElementException.class, () -> getCollection().getFirst(), "getFirst() should throw a NoSuchElementException for an empty list.");
         verify();
@@ -142,7 +142,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      * Tests {@link LinkedList#getLast()}.
      */
     @Test
-    public void testLinkedListGetLast() {
+    void testLinkedListGetLast() {
         resetEmpty();
         assertThrows(NoSuchElementException.class, () -> getCollection().getLast(), "getLast() should throw a NoSuchElementException for an empty list.");
         verify();
@@ -158,7 +158,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      * Tests {@link LinkedList#removeFirst()}.
      */
     @Test
-    public void testLinkedListRemoveFirst() {
+    void testLinkedListRemoveFirst() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -179,7 +179,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      * Tests {@link LinkedList#removeLast()}.
      */
     @Test
-    public void testLinkedListRemoveLast() {
+    void testLinkedListRemoveLast() {
         if (!isRemoveSupported()) {
             return;
         }

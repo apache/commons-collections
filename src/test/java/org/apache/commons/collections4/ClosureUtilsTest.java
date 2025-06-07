@@ -104,7 +104,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testDoWhileClosure() {
+    void testDoWhileClosure() {
         MockClosure<Object> cmd = new MockClosure<>();
         ClosureUtils.doWhileClosure(cmd, FalsePredicate.falsePredicate()).execute(null);
         assertEquals(1, cmd.count);
@@ -117,7 +117,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testExceptionClosure() {
+    void testExceptionClosure() {
         assertNotNull(ClosureUtils.exceptionClosure());
         assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
 
@@ -126,7 +126,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testForClosure() {
+    void testForClosure() {
         final MockClosure<Object> cmd = new MockClosure<>();
         ClosureUtils.forClosure(5, cmd).execute(null);
         assertEquals(5, cmd.count);
@@ -138,7 +138,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testIfClosure() {
+    void testIfClosure() {
         MockClosure<Object> a = new MockClosure<>();
         MockClosure<Object> b;
         ClosureUtils.ifClosure(TruePredicate.truePredicate(), a).execute(null);
@@ -162,7 +162,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testInvokeClosure() {
+    void testInvokeClosure() {
         StringBuilder buf = new StringBuilder("Hello"); // Only StringBuffer has setLength() method
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
@@ -172,7 +172,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testNopClosure() {
+    void testNopClosure() {
         final StringBuilder buf = new StringBuilder("Hello");
         ClosureUtils.nopClosure().execute(null);
         assertEquals("Hello", buf.toString());
@@ -185,7 +185,7 @@ public class ClosureUtilsTest {
      * serialization/deserialization process.
      */
     @Test
-    public void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
+    void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
         final Object[] singletons = {
             ExceptionClosure.INSTANCE,
             NOPClosure.INSTANCE,
@@ -273,7 +273,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testSwitchMapClosure() {
+    void testSwitchMapClosure() {
         final MockClosure<String> a = new MockClosure<>();
         final MockClosure<String> b = new MockClosure<>();
         final Map<String, Closure<String>> map = new HashMap<>();
@@ -310,7 +310,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testTransformerClosure() {
+    void testTransformerClosure() {
         final MockTransformer<Object> mock = new MockTransformer<>();
         final Closure<Object> closure = ClosureUtils.asClosure(mock);
         closure.execute(null);
@@ -322,7 +322,7 @@ public class ClosureUtilsTest {
     }
 
     @Test
-    public void testWhileClosure() {
+    void testWhileClosure() {
         MockClosure<Object> cmd = new MockClosure<>();
         ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), cmd).execute(null);
         assertEquals(0, cmd.count);

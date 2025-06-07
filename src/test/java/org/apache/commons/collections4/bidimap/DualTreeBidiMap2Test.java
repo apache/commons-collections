@@ -75,7 +75,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     @Test
-    public void testCollections364() throws Exception {
+    void testCollections364() throws Exception {
         final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<>(
                 String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -95,7 +95,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         resetEmpty();
         final SortedBidiMap<K, V> bidi = (SortedBidiMap<K, V>) map;
         assertNotNull(bidi.comparator());
@@ -103,7 +103,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     @Test
-    public void testComparator2() {
+    void testComparator2() {
         final DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<>(
                 String.CASE_INSENSITIVE_ORDER, null);
         dtbm.put("two", 0);
@@ -114,7 +114,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     @Test
-    public void testSerializeDeserializeCheckComparator() throws Exception {
+    void testSerializeDeserializeCheckComparator() throws Exception {
         final SortedBidiMap<?, ?> obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
             final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -134,7 +134,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     @Test
-    public void testSortOrder() throws Exception {
+    void testSortOrder() throws Exception {
         final SortedBidiMap<K, V> sm = makeFullMap();
 
         // Sort by the comparator used in the makeEmptyBidiMap() method

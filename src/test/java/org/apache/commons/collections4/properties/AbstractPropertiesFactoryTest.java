@@ -73,7 +73,7 @@ public abstract class AbstractPropertiesFactoryTest<T extends Properties> {
     }
 
     @Test
-    public void testInstance() {
+    void testInstance() {
         assertNotNull(PropertiesFactory.INSTANCE);
     }
 

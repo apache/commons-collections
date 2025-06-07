@@ -55,13 +55,13 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testAdvanceOnCountInvalidArguments() {
+    void testAdvanceOnCountInvalidArguments() {
         assertThrows(IllegalArgumentException.class, () -> LayerManager.ExtendCheck.advanceOnCount(0));
         assertThrows(IllegalArgumentException.class, () -> LayerManager.ExtendCheck.advanceOnCount(-1));
     }
 
     @Test
-    public void testAdvanceOnPopulated() {
+    void testAdvanceOnPopulated() {
         final Predicate<LayerManager<SimpleBloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnPopulated();
         final LayerManager<SimpleBloomFilter> layerManager = testingBuilder().get();
         assertFalse(underTest.test(layerManager));
@@ -70,7 +70,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testAdvanceOnSaturation() {
+    void testAdvanceOnSaturation() {
         final double maxN = shape.estimateMaxN();
         int hashStart = 0;
         final Predicate<LayerManager<SimpleBloomFilter>> underTest = LayerManager.ExtendCheck.advanceOnSaturation(maxN);
@@ -86,7 +86,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testBuilder() {
+    void testBuilder() {
         final LayerManager.Builder<SimpleBloomFilter> underTest = LayerManager.builder();
         NullPointerException npe = assertThrows(NullPointerException.class, underTest::get);
         assertTrue(npe.getMessage().contains("filterSupplier"));
@@ -104,7 +104,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testClear() {
+    void testClear() {
         final LayerManager<SimpleBloomFilter> underTest = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.next();
@@ -118,7 +118,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testCopy() {
+    void testCopy() {
         final LayerManager<SimpleBloomFilter> underTest = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         underTest.getTarget().merge(TestingHashers.randomHasher());
         underTest.next();
@@ -138,7 +138,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testForEachBloomFilter() {
+    void testForEachBloomFilter() {
         final LayerManager<SimpleBloomFilter> underTest = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(shape))
                 .setExtendCheck(LayerManager.ExtendCheck.advanceOnPopulated()).get();
 
@@ -159,7 +159,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testGet() {
+    void testGet() {
         final SimpleBloomFilter f = new SimpleBloomFilter(shape);
         final LayerManager<SimpleBloomFilter> underTest = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> f).get();
         assertEquals(1, underTest.getDepth());
@@ -173,7 +173,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testNeverAdvance() {
+    void testNeverAdvance() {
         final Predicate<LayerManager<SimpleBloomFilter>> underTest = LayerManager.ExtendCheck.neverAdvance();
         final LayerManager<SimpleBloomFilter> layerManager = testingBuilder().get();
         assertFalse(underTest.test(layerManager));
@@ -184,7 +184,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testNextAndGetDepth() {
+    void testNextAndGetDepth() {
         final LayerManager<SimpleBloomFilter> underTest = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(shape)).get();
         assertEquals(1, underTest.getDepth());
         underTest.getTarget().merge(TestingHashers.randomHasher());
@@ -194,7 +194,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testNoCleanup() {
+    void testNoCleanup() {
         final Consumer<Deque<SimpleBloomFilter>> underTest = LayerManager.Cleanup.noCleanup();
         final Deque<SimpleBloomFilter> list = new LinkedList<>();
         for (int i = 0; i < 20; i++) {
@@ -224,13 +224,13 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testOnMaxSizeIllegalValues() {
+    void testOnMaxSizeIllegalValues() {
         assertThrows(IllegalArgumentException.class, () -> LayerManager.Cleanup.onMaxSize(0));
         assertThrows(IllegalArgumentException.class, () -> LayerManager.Cleanup.onMaxSize(-1));
     }
 
     @Test
-    public void testRemoveEmptyTarget() {
+    void testRemoveEmptyTarget() {
         final Consumer<Deque<SimpleBloomFilter>> underTest = LayerManager.Cleanup.removeEmptyTarget();
         final LinkedList<SimpleBloomFilter> list = new LinkedList<>();
 
@@ -269,7 +269,7 @@ public class LayerManagerTest {
     }
 
     @Test
-    public void testTarget() {
+    void testTarget() {
         final boolean[] extendCheckCalled = { false };
         final boolean[] cleanupCalled = { false };
         final int[] supplierCount = { 0 };

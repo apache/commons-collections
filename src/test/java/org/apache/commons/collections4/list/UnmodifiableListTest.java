@@ -74,7 +74,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final List<E> list = makeObject();
         assertSame(list, UnmodifiableList.unmodifiableList(list));
 
@@ -85,7 +85,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
      * Verify that base list and sublists are not modifiable
      */
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupList();
         verifyUnmodifiable(list);
         verifyUnmodifiable(list.subList(0, 2));
@@ -95,7 +95,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
      * Verify that iterator is not modifiable
      */
     @Test
-    public void testUnmodifiableIterator() {
+    void testUnmodifiableIterator() {
         setupList();
         final Iterator<E> iterator = list.iterator();
         iterator.next();

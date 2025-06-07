@@ -95,7 +95,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testTransformedMap() {
+    void testTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap

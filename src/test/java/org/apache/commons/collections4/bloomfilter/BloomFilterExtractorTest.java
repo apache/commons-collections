@@ -27,12 +27,12 @@ import org.junit.jupiter.api.Test;
 public class BloomFilterExtractorTest {
 
     @Test
-    public void testFlattenEmpty() {
+    void testFlattenEmpty() {
         assertThrows(NullPointerException.class, () -> BloomFilterExtractor.fromBloomFilterArray().flatten());
     }
 
     @Test
-    public void testFromBloomFilterArray() {
+    void testFromBloomFilterArray() {
         assertThrows(NullPointerException.class, () -> BloomFilterExtractor.fromBloomFilterArray((BloomFilter[]) null));
     }
 

@@ -58,7 +58,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testTransformedBag_decorateTransform() {
+    void testTransformedBag_decorateTransform() {
         final TreeBag<T> originalBag = new TreeBag<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {

@@ -49,7 +49,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testArrayListValuedHashMap() {
+    void testArrayListValuedHashMap() {
         final ListValuedMap<K, V> listMap;
         final ListValuedMap<K, V> listMap1;
         final Map<K, V> map = new HashMap<>();
@@ -68,7 +68,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testCopyConstructorWithMultiValuedMap() {
+    void testCopyConstructorWithMultiValuedMap() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) "key", (V) "sleutel");
         final ListValuedMap<K, V> copy = new ArrayListValuedHashMap<>(map);
@@ -77,7 +77,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testEqualsHashCodeContract() {
+    void testEqualsHashCodeContract() {
         final MultiValuedMap map1 = makeObject();
         final MultiValuedMap map2 = makeObject();
 
@@ -121,7 +121,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testListValuedMapEqualsHashCodeContract() {
+    void testListValuedMapEqualsHashCodeContract() {
         final ListValuedMap map1 = makeObject();
         final ListValuedMap map2 = makeObject();
 
@@ -180,7 +180,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testTrimToSize() {
+    void testTrimToSize() {
         final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
@@ -196,7 +196,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testValuesListIteratorMethods() {
+    void testValuesListIteratorMethods() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
@@ -215,7 +215,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testWrappedListAdd() {
+    void testWrappedListAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         listA.add(0, (V) "W");
@@ -227,7 +227,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
-    public void testWrappedListAddAll() {
+    void testWrappedListAddAll() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");

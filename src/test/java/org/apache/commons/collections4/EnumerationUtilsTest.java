@@ -41,7 +41,7 @@ public class EnumerationUtilsTest {
     public static final String TO_LIST_FIXTURE = "this is a test";
 
     @Test
-    public void testAsIterableFor() {
+    void testAsIterableFor() {
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
@@ -55,12 +55,12 @@ public class EnumerationUtilsTest {
     }
 
     @Test
-    public void testAsIterableForNull() {
+    void testAsIterableForNull() {
         assertThrows(NullPointerException.class, () -> EnumerationUtils.asIterable((Enumeration) null).iterator().next());
     }
 
     @Test
-    public void testGetFromEnumeration() throws Exception {
+    void testGetFromEnumeration() throws Exception {
         // Enumeration, entry exists
         final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
@@ -78,7 +78,7 @@ public class EnumerationUtilsTest {
     }
 
     @Test
-    public void testToListWithHashtable() {
+    void testToListWithHashtable() {
         final Hashtable<String, Integer> expected = new Hashtable<>();
         expected.put("one", Integer.valueOf(1));
         expected.put("two", Integer.valueOf(2));
@@ -109,7 +109,7 @@ public class EnumerationUtilsTest {
     }
 
     @Test
-    public void testToListWithStringTokenizer() {
+    void testToListWithStringTokenizer() {
         final List<String> expectedList1 = new ArrayList<>();
         final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
         while (st.hasMoreTokens()) {
@@ -127,7 +127,7 @@ public class EnumerationUtilsTest {
     }
 
     @Test
-    public void testToSetWithHashtable() {
+    void testToSetWithHashtable() {
         final Hashtable<String, Integer> expected = new Hashtable<>();
         expected.put("one", Integer.valueOf(1));
         expected.put("two", Integer.valueOf(2));

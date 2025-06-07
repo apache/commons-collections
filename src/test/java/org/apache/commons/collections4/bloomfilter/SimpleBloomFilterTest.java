@@ -32,7 +32,7 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     }
 
     @Test
-    public void testMergeShortBitMapExtractor() {
+    void testMergeShortBitMapExtractor() {
         final SimpleBloomFilter filter = createEmptyFilter(getTestShape());
         // create a bitMapExtractor that returns too few values
         // shape expects 2 longs we are sending 1.

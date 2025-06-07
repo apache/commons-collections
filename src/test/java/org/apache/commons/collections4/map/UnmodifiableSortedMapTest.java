@@ -68,7 +68,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final SortedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedMap.unmodifiableSortedMap(map));
 
@@ -76,7 +76,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testHeadMap() {
+    void testHeadMap() {
         final SortedMap<K, V> map = makeFullMap();
         final SortedMap<K, V> m = new TreeMap<>();
         // "again" is the first key of the map
@@ -89,7 +89,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testSubMap() {
+    void testSubMap() {
         final SortedMap<K, V> map = makeFullMap();
 
         assertSame(18, map.size());
@@ -104,7 +104,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testTailMap() {
+    void testTailMap() {
         final SortedMap<K, V> map = makeFullMap();
 
         assertSame(18, map.size());
@@ -117,7 +117,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }

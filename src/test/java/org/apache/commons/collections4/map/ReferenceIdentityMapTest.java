@@ -121,7 +121,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     // Tests often fail because gc is uncontrollable
 
     @Test
-    public void testPurge() {
+    void testPurge() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < hard.length; i++) {
@@ -147,7 +147,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testGetAfterGC() {
+    void testGetAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         for (int i = 0; i < 10; i++) {
             map.put(Integer.valueOf(i), Integer.valueOf(i));
@@ -162,7 +162,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testEntrySetIteratorAfterGC() {
+    void testEntrySetIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -184,7 +184,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testMapIteratorAfterGC() {
+    void testMapIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -207,7 +207,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testMapIteratorAfterGC2() {
+    void testMapIteratorAfterGC2() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -305,7 +305,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     /** Tests whether purge values setting works */
     @Test
-    public void testPurgeValues() throws Exception {
+    void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();
 

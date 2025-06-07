@@ -37,7 +37,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
     public abstract ArrayList<E> makeObject();
 
     @Test
-    public void testNewArrayList() {
+    void testNewArrayList() {
         final ArrayList<E> list = makeObject();
         assertTrue(list.isEmpty(), "New list is empty");
         assertEquals(0, list.size(), "New list has size zero");

@@ -116,7 +116,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
     public abstract IterableMap<K, V> makeObject();
 
     @Test
-    public void testFailFastEntrySet() {
+    void testFailFastEntrySet() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -139,7 +139,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
     }
 
     @Test
-    public void testFailFastKeySet() {
+    void testFailFastKeySet() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -169,7 +169,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<Iter
 //  }
 
     @Test
-    public void testFailFastValues() {
+    void testFailFastValues() {
         if (!isRemoveSupported()) {
             return;
         }

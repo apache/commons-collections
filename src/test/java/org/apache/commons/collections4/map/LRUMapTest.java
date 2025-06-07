@@ -166,7 +166,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testAccessOrder() {
+    void testAccessOrder() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
@@ -241,7 +241,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testAccessOrder2() {
+    void testAccessOrder2() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
@@ -301,7 +301,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testCtors() {
+    void testCtors() {
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(0), "maxSize must be positive");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(-1, 12, 0.75f, false), "maxSize must be positive");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1), "initialSize must not be negative");
@@ -422,7 +422,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testLRU() {
+    void testLRU() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
@@ -575,7 +575,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
+    void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);
 
@@ -654,7 +654,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testSynchronizedRemoveFromKeySet() throws InterruptedException {
+    void testSynchronizedRemoveFromKeySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);
 
@@ -738,7 +738,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
+    void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
         final LRUMap<Object, Thread> map = new LRUMap<>(10000);
 
@@ -822,7 +822,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    public void testSynchronizedRemoveFromValues() throws InterruptedException {
+    void testSynchronizedRemoveFromValues() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<>(10000);
 

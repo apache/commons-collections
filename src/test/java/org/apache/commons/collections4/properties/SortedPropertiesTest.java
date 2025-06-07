@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class SortedPropertiesTest {
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         final SortedProperties sortedProperties = new SortedProperties();
         for (char ch = 'Z'; ch >= 'A'; ch--) {
             sortedProperties.put(String.valueOf(ch), "Value" + ch);
@@ -41,7 +41,7 @@ public class SortedPropertiesTest {
     }
 
     @Test
-    public void testKeys() {
+    void testKeys() {
         final SortedProperties sortedProperties = new SortedProperties();
         for (char ch = 'Z'; ch >= 'A'; ch--) {
             sortedProperties.put(String.valueOf(ch), "Value" + ch);

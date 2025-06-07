@@ -71,7 +71,7 @@ public class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
     }
 
     @Test
-    public void testAsBitMapArrayLargeArray() {
+    void testAsBitMapArrayLargeArray() {
         final long[] expected = generateLongArray(32);
         final BitMapExtractor bitMapExtractor = predicate -> {
             for (final long l : expected) {
@@ -86,7 +86,7 @@ public class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
     }
 
     @Test
-    public void testFromBitMapArray() {
+    void testFromBitMapArray() {
         final int nOfBitMaps = BitMaps.numberOfBitMaps(256);
         final long[] expected = generateLongArray(nOfBitMaps);
         final long[] ary = BitMapExtractor.fromBitMapArray(expected).asBitMapArray();
@@ -94,7 +94,7 @@ public class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
     }
 
     @Test
-    public void testFromIndexExtractor() {
+    void testFromIndexExtractor() {
         final int[] expected = DefaultIndexExtractorTest.generateIntArray(10, 256);
         final IndexExtractor indexExtractor = IndexExtractor.fromIndexArray(expected);
         final long[] ary = BitMapExtractor.fromIndexExtractor(indexExtractor, 256).asBitMapArray();

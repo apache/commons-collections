@@ -71,7 +71,7 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final SortedBag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableSortedBag.unmodifiableSortedBag(queue));
 
@@ -79,7 +79,7 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }

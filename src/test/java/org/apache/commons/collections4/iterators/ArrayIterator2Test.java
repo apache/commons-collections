@@ -62,7 +62,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIndexedArray() {
+    void testIndexedArray() {
         Iterator<E> iter = makeArrayIterator(testArray, 2);
         int count = 0;
         while (iter.hasNext()) {
@@ -96,7 +96,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final int element : testArray) {
             final Integer testValue = Integer.valueOf(element);

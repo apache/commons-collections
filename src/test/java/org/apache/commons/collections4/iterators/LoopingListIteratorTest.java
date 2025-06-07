@@ -37,7 +37,7 @@ public class LoopingListIteratorTest {
      * Tests the add method.
      */
     @Test
-    public void testAdd() {
+    void testAdd() {
         List<String> list = new ArrayList<>(Arrays.asList("b", "e", "f"));
         LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <b> e f
 
@@ -92,7 +92,7 @@ public class LoopingListIteratorTest {
      * Tests constructor exception.
      */
     @Test
-    public void testConstructorEx() {
+    void testConstructorEx() {
         assertThrows(NullPointerException.class, () -> new LoopingListIterator<>(null));
     }
 
@@ -101,7 +101,7 @@ public class LoopingListIteratorTest {
      * the begin/end boundary of the list.
      */
     @Test
-    public void testJoggingNotOverBoundary() {
+    void testJoggingNotOverBoundary() {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b
 
@@ -122,7 +122,7 @@ public class LoopingListIteratorTest {
      * begin/end boundary of the list.
      */
     @Test
-    public void testJoggingOverBoundary() {
+    void testJoggingOverBoundary() {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b
 
@@ -141,7 +141,7 @@ public class LoopingListIteratorTest {
      * Tests whether an empty looping list iterator works.
      */
     @Test
-    public void testLooping0() {
+    void testLooping0() {
         final List<Object> list = new ArrayList<>();
         final LoopingListIterator<Object> loop = new LoopingListIterator<>(list);
         assertFalse(loop.hasNext());
@@ -155,7 +155,7 @@ public class LoopingListIteratorTest {
      * one element.
      */
     @Test
-    public void testLooping1() {
+    void testLooping1() {
         final List<String> list = Arrays.asList("a");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a>
 
@@ -183,7 +183,7 @@ public class LoopingListIteratorTest {
      * elements.
      */
     @Test
-    public void testLooping2() {
+    void testLooping2() {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b
 
@@ -213,7 +213,7 @@ public class LoopingListIteratorTest {
      * Tests nextIndex and previousIndex.
      */
     @Test
-    public void testNextAndPreviousIndex() {
+    void testNextAndPreviousIndex() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b c
 
@@ -245,7 +245,7 @@ public class LoopingListIteratorTest {
      * Tests removing an element from a wrapped ArrayList.
      */
     @Test
-    public void testRemovingElementsAndIteratingBackwards() {
+    void testRemovingElementsAndIteratingBackwards() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b c
 
@@ -273,7 +273,7 @@ public class LoopingListIteratorTest {
      * Tests removing an element from a wrapped ArrayList.
      */
     @Test
-    public void testRemovingElementsAndIteratingForward() {
+    void testRemovingElementsAndIteratingForward() {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b c
 
@@ -301,7 +301,7 @@ public class LoopingListIteratorTest {
      * Tests the reset method.
      */
     @Test
-    public void testReset() {
+    void testReset() {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <a> b c
 
@@ -329,7 +329,7 @@ public class LoopingListIteratorTest {
      * Tests using the set method to change elements.
      */
     @Test
-    public void testSet() {
+    void testSet() {
         final List<String> list = Arrays.asList("q", "r", "z");
         final LoopingListIterator<String> loop = new LoopingListIterator<>(list); // <q> r z
 

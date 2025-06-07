@@ -69,7 +69,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * at an index less than its last element.
      */
     @Test
-    public void testBounded() {
+    void testBounded() {
         final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 2, 4);
 
         assertTrue(iter.hasNext());
@@ -93,7 +93,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * since it is technically an empty iterator.
      */
     @Test
-    public void testEmptyBounded() {
+    void testEmptyBounded() {
         final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 3, 0);
         assertFalse(iter.hasNext());
 
@@ -107,7 +107,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * iterator.
      */
     @Test
-    public void testMaxGreaterThanSize() {
+    void testMaxGreaterThanSize() {
         final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 1, 10);
 
         assertTrue(iter.hasNext());
@@ -133,7 +133,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
-    public void testNegativeMax() {
+    void testNegativeMax() {
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new BoundedIterator<>(testList.iterator(), 3, -1));
         assertEquals("Max parameter must not be negative.", thrown.getMessage());
     }
@@ -143,7 +143,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
-    public void testNegativeOffset() {
+    void testNegativeOffset() {
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> new BoundedIterator<>(testList.iterator(), -1, 4));
         assertEquals("Offset parameter must not be negative.", thrown.getMessage());
     }
@@ -154,7 +154,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * behave as if there are no more elements to return.
      */
     @Test
-    public void testOffsetGreaterThanSize() {
+    void testOffsetGreaterThanSize() {
         final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 10, 4);
         assertFalse(iter.hasNext());
 
@@ -166,7 +166,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code next()} in between.
      */
     @Test
-    public void testRemoveCalledTwice() {
+    void testRemoveCalledTwice() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
@@ -182,7 +182,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * the underlying collection.
      */
     @Test
-    public void testRemoveFirst() {
+    void testRemoveFirst() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
@@ -211,7 +211,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * the underlying collection.
      */
     @Test
-    public void testRemoveLast() {
+    void testRemoveLast() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
@@ -245,7 +245,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * element is removed from the underlying collection.
      */
     @Test
-    public void testRemoveMiddle() {
+    void testRemoveMiddle() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
@@ -274,7 +274,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
     @Test
-    public void testRemoveUnsupported() {
+    void testRemoveUnsupported() {
         final Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
             @Override
             public void remove() {
@@ -296,7 +296,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * {@code next()} being called first.
      */
     @Test
-    public void testRemoveWithoutCallingNext() {
+    void testRemoveWithoutCallingNext() {
         final List<E> testListCopy = new ArrayList<>(testList);
         final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
@@ -310,7 +310,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      * should return all the same elements as its decorated iterator.
      */
     @Test
-    public void testSameAsDecorated() {
+    void testSameAsDecorated() {
         final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 0,
                                                   testList.size());
 

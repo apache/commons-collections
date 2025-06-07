@@ -79,7 +79,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         MapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
@@ -90,7 +90,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     }
 
     @Test
-    public void testMapIterator() {
+    void testMapIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 

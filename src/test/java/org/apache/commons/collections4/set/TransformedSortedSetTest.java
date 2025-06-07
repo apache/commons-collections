@@ -70,7 +70,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Test
-    public void testTransformedSet_decorateTransform() {
+    void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new TreeSet<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);

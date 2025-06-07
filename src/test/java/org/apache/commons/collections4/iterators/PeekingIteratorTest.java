@@ -65,13 +65,13 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         final Iterator<E> it = makeEmptyIterator();
         assertFalse(it.hasNext());
     }
 
     @Test
-    public void testIllegalRemove() {
+    void testIllegalRemove() {
         final PeekingIterator<E> it = makeObject();
         it.next();
         it.remove(); // supported
@@ -83,7 +83,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIteratorExhausted() {
+    void testIteratorExhausted() {
         final PeekingIterator<E> it = makeObject();
         it.next();
         it.next();
@@ -95,7 +95,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testMultiplePeek() {
+    void testMultiplePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.peek());
