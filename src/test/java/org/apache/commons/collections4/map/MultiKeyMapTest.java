@@ -491,8 +491,8 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     void testClassCastExceptionOnNonMultiKey() {
-        MultiKeyMap<String, String> map = new MultiKeyMap<>();
-        Object nonMultiKey = "test";
+        final MultiKeyMap<String, String> map = new MultiKeyMap<>();
+        final Object nonMultiKey = "test";
         assertThrows(ClassCastException.class, () -> map.put((MultiKey<? extends String>) nonMultiKey, "value"));
     }
 
@@ -507,7 +507,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        boolean result = multimap.removeAll(I1);
+        final boolean result = multimap.removeAll(I1);
         assertEquals(8, multimap.size());
         assertTrue(result);
 
@@ -520,10 +520,10 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     @Test
     void testMultiKeyRemoveAll_ReturnsFalseWhenNoEntriesRemoved() {
         resetFull();
-        MultiKeyMap<K, V> multimap = getMap();
+        final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        boolean result = multimap.removeAll(new Object());
+        final boolean result = multimap.removeAll(new Object());
         assertEquals(12, multimap.size());
         assertFalse(result);
     }

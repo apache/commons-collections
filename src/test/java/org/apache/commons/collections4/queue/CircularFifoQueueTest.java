@@ -456,14 +456,14 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         final CircularFifoQueue<E> queue = new CircularFifoQueue<>(3);
         queue.add((E) "1");
         queue.add((E) "2");
-        queue.add((E)"3");
-        assertTrue(queue.add((E)"4"));
-        assertTrue(queue.add((E)"5"));
+        queue.add((E) "3");
+        assertTrue(queue.add((E) "4"));
+        assertTrue(queue.add((E) "5"));
     }
 
     @Test
     void testIsEmpty() {
-        CircularFifoQueue<String> queue = new CircularFifoQueue<>(10);
+        final CircularFifoQueue<String> queue = new CircularFifoQueue<>(10);
         assertTrue(queue.isEmpty());
         queue.add("test");
         assertFalse(queue.isEmpty());
