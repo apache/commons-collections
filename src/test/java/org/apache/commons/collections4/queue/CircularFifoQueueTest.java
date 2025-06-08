@@ -451,6 +451,26 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CircularFifoQueue.fullCollection.version4.obj");
 //    }
 
+    @Test
+    void testAddAlwaysReturnsTrue() {
+        final CircularFifoQueue<E> queue = new CircularFifoQueue<>(3);
+        queue.add((E) "1");
+        queue.add((E) "2");
+        queue.add((E)"3");
+        assertTrue(queue.add((E)"4"));
+        assertTrue(queue.add((E)"5"));
+    }
+
+    @Test
+    void testIsEmpty() {
+        CircularFifoQueue<String> queue = new CircularFifoQueue<>(10);
+        assertTrue(queue.isEmpty());
+        queue.add("test");
+        assertFalse(queue.isEmpty());
+        queue.remove("test");
+        assertTrue(queue.isEmpty());
+    }
+
     /**
      *  Runs through the regular verifications, but also verifies that
      *  the buffer contains the same elements in the same sequence as the
