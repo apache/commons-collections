@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests ComparatorUtils.
  */
-public class ComparatorUtilsTest {
+class ComparatorUtilsTest {
 
     @Test
     void testBooleanComparator() {

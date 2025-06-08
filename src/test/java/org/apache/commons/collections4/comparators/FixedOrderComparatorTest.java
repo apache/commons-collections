@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for FixedOrderComparator.
  */
-public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
+class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
     @Nested
     class Equals {

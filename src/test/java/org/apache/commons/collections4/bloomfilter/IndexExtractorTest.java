@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class IndexExtractorTest {
+class IndexExtractorTest {
 
     private static final class TestingBitMapExtractor implements BitMapExtractor {
         long[] values;

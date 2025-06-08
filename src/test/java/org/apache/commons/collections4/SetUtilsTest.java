@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for SetUtils.
  */
-public class SetUtilsTest {
+class SetUtilsTest {
 
     private Set<Integer> setA;
     private Set<Integer> setB;

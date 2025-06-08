@@ -27,7 +27,7 @@ import java.util.function.BiPredicate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
-public class CountingPredicateTest {
+class CountingPredicateTest {
 
     private final Integer[] ary = {Integer.valueOf(1), Integer.valueOf(2)};
 

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link BloomFilterExtractor}.
  */
-public class BloomFilterExtractorTest {
+class BloomFilterExtractorTest {
 
     @Test
     void testFlattenEmpty() {

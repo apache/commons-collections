@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link TransformedSplitMap}
  */
 @SuppressWarnings("boxing")
-public class SplitMapUtilsTest {
+class SplitMapUtilsTest {
 
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;

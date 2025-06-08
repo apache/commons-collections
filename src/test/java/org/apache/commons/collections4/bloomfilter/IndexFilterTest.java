@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 /**
  * Tests the Filter class.
  */
-public class IndexFilterTest {
+class IndexFilterTest {
 
     @ParameterizedTest
     @CsvSource({

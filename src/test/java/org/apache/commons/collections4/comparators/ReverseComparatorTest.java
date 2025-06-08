@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for ReverseComparator.
  */
-public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
+class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {

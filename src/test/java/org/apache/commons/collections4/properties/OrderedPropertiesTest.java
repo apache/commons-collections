@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link OrderedProperties}.
  */
-public class OrderedPropertiesTest {
+class OrderedPropertiesTest {
 
     private void assertAscendingOrder(final OrderedProperties orderedProperties) {
         final int first = 1;

@@ -23,9 +23,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link OrderedPropertiesFactory}.
  */
-public class OrderedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<OrderedProperties> {
+class OrderedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<OrderedProperties> {
 
-    public OrderedPropertiesFactoryTest() {
+    OrderedPropertiesFactoryTest() {
         super(OrderedPropertiesFactory.INSTANCE);
     }
 

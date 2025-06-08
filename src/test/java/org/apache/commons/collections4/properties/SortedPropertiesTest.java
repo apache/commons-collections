@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-public class SortedPropertiesTest {
+class SortedPropertiesTest {
 
     @Test
     void testEntrySet() {

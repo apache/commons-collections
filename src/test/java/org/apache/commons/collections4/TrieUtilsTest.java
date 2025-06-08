@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for TrieUtils factory methods.
  */
-public class TrieUtilsTest {
+class TrieUtilsTest {
 
     @Test
     void testUnmodifiableTrie() {

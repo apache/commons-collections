@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link BooleanComparator}.
  */
 @SuppressWarnings("boxing")
-public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
+class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);

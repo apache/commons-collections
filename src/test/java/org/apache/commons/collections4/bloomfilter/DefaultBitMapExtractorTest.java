@@ -24,7 +24,7 @@ import java.util.function.LongPredicate;
 
 import org.junit.jupiter.api.Test;
 
-public class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
+class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
 
     class DefaultBitMapExtractor implements BitMapExtractor {
         long[] bitMaps;

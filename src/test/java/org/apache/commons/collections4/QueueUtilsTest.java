@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for QueueUtils factory methods.
  */
-public class QueueUtilsTest {
+class QueueUtilsTest {
 
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();

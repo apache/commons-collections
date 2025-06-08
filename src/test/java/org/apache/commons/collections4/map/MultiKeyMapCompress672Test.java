@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * </ol>
  * COUNTER CLAIM: The class is documented to use MultiKey which documents key elements as "The keys should be immutable".
  */
-public class MultiKeyMapCompress672Test {
+class MultiKeyMapCompress672Test {
 
     private static final class KeyFixture {
 

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloomFilter> {
+class WrappedBloomFilterTest extends AbstractBloomFilterTest<WrappedBloomFilter> {
 
     private static class Fixture extends WrappedBloomFilter {
 

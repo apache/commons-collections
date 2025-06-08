@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test {@link SetOperations}.
  */
-public class SetOperationsTest {
+class SetOperationsTest {
 
     private static void assertSymmetricOperation(final double expected, final ToDoubleBiFunction<BloomFilter, BloomFilter> operation,
             final BloomFilter filter1, final BloomFilter filter2) {

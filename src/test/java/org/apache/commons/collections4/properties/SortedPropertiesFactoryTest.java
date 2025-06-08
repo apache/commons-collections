@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-public class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
+class SortedPropertiesFactoryTest extends AbstractPropertiesFactoryTest<SortedProperties> {
 
-    public SortedPropertiesFactoryTest() {
+    SortedPropertiesFactoryTest() {
         super(SortedPropertiesFactory.INSTANCE);
     }
 

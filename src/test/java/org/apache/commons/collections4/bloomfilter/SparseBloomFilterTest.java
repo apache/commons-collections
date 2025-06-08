@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link SparseBloomFilter}.
  */
-public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFilter> {
+class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFilter> {
     @Override
     protected SparseBloomFilter createEmptyFilter(final Shape shape) {
         return new SparseBloomFilter(shape);

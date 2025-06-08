@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the TransformerUtils class.
  */
-public class TransformerUtilsTest {
+class TransformerUtilsTest {
 
     private static final Object cObject = new Object();
     private static final Object cString = "Hello";

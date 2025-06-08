@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link BloomFilter}.
  */
-public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloomFilterTest.AbstractDefaultBloomFilter> {
+class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloomFilterTest.AbstractDefaultBloomFilter> {
 
     abstract static class AbstractDefaultBloomFilter<T extends AbstractDefaultBloomFilter<T>> implements BloomFilter<T> {
 
@@ -128,7 +128,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
      */
     public static class NonSparseDefaultBloomFilter extends AbstractDefaultBloomFilter {
 
-        public NonSparseDefaultBloomFilter(final Shape shape) {
+        NonSparseDefaultBloomFilter(final Shape shape) {
             super(shape);
         }
 
@@ -150,7 +150,7 @@ public class DefaultBloomFilterTest extends AbstractBloomFilterTest<DefaultBloom
      */
     public static class SparseDefaultBloomFilter extends AbstractDefaultBloomFilter<SparseDefaultBloomFilter> {
 
-        public SparseDefaultBloomFilter(final Shape shape) {
+        SparseDefaultBloomFilter(final Shape shape) {
             super(shape);
         }
 

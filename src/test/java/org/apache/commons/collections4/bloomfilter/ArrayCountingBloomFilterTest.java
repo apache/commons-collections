@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 /**
  * Tests for the {@link ArrayCountingBloomFilter}.
  */
-public class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest<ArrayCountingBloomFilter> {
+class ArrayCountingBloomFilterTest extends AbstractCountingBloomFilterTest<ArrayCountingBloomFilter> {
 
     @Override
     protected ArrayCountingBloomFilter createEmptyFilter(final Shape shape) {

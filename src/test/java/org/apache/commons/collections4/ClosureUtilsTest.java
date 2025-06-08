@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the ClosureUtils class.
  */
-public class ClosureUtilsTest {
+class ClosureUtilsTest {
 
     static class MockClosure<T> implements Closure<T> {
         int count;

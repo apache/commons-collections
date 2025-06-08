@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexExtractorFromUniqueHasherTest extends AbstractIndexExtractorTest {
+class IndexExtractorFromUniqueHasherTest extends AbstractIndexExtractorTest {
 
     @Override
     protected IndexExtractor createEmptyExtractor() {

@@ -31,14 +31,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for ComparatorChain.
  */
-public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
+class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
     public static class ColumnComparator implements Comparator<PseudoRow>, Serializable {
         private static final long serialVersionUID = -2284880866328872105L;
 
         protected int colIndex;
 
-        public ColumnComparator(final int colIndex) {
+        ColumnComparator(final int colIndex) {
             this.colIndex = colIndex;
         }
 
@@ -66,7 +66,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         private static final long serialVersionUID = 8085570439751032499L;
         public int[] cols = new int[3];
 
-        public PseudoRow(final int col1, final int col2, final int col3) {
+        PseudoRow(final int col1, final int col2, final int col3) {
             cols[0] = col1;
             cols[1] = col2;
             cols[2] = col3;

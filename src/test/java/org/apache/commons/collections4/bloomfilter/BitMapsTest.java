@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class BitMapsTest {
+class BitMapsTest {
 
     /**
      * Assert the {@link BitMaps#mod(long, int)} method functions as an unsigned modulus.

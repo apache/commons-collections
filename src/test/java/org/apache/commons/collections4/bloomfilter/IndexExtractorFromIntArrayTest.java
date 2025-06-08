@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexExtractorFromIntArrayTest extends AbstractIndexExtractorTest {
+class IndexExtractorFromIntArrayTest extends AbstractIndexExtractorTest {
 
     int[] data = {6, 8, 1, 2, 4, 4, 5};
 

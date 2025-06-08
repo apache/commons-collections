@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class DefaultCellExtractorTest extends AbstractCellExtractorTest {
+class DefaultCellExtractorTest extends AbstractCellExtractorTest {
 
     /** Make forEachIndex unordered and contain duplicates. */
     private final int[] indices = {1, 2, 3, 5};

@@ -21,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
-public class EqualPredicateTest extends AbstractPredicateTest {
+class EqualPredicateTest extends AbstractPredicateTest {
     public static class EqualsTestObject {
         private final boolean b;
 
-        public EqualsTestObject(final boolean b) {
+        EqualsTestObject(final boolean b) {
             this.b = b;
         }
 

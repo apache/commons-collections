@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for ListUtils.
  */
-public class ListUtilsTest {
+class ListUtilsTest {
 
     private static final String a = "a";
     private static final String b = "b";

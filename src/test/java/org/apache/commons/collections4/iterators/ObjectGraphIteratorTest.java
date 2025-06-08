@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Testcase.
  */
-public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
+class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     static class Branch {
 

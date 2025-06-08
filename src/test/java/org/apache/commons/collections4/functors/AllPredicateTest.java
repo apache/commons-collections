@@ -29,12 +29,12 @@ import org.junit.jupiter.api.Test;
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
  */
 @SuppressWarnings("boxing")
-public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
+class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
 
     /**
      * Creates a new {@code TestAllPredicate}.
      */
-    public AllPredicateTest() {
+    AllPredicateTest() {
         super(42);
     }
 

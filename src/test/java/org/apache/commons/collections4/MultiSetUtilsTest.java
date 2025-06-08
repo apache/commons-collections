@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for MultiSetUtils.
  */
-public class MultiSetUtilsTest {
+class MultiSetUtilsTest {
 
     private String[] fullArray;
     private MultiSet<String> multiSet;

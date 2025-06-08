@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the LoopingListIterator class.
  */
-public class LoopingListIteratorTest {
+class LoopingListIteratorTest {
 
     /**
      * Tests the add method.

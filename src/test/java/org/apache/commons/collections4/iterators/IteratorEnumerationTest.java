@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the IteratorEnumeration.
  */
-public class IteratorEnumerationTest {
+class IteratorEnumerationTest {
 
     @Test
     void testEnumeration() {

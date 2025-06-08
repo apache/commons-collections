@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for PermutationIterator.
  */
-public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
+class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 
     @SuppressWarnings("boxing") // OK in test code
     protected Character[] testArray = { 'A', 'B', 'C' };

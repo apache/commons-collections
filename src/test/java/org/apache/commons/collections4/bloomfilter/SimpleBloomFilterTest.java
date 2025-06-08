@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link SimpleBloomFilter}.
  */
-public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFilter> {
+class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFilter> {
 
     @Override
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {

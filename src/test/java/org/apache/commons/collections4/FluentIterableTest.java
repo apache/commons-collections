@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for FluentIterable.
  */
-public class FluentIterableTest {
+class FluentIterableTest {
 
     private static final Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 

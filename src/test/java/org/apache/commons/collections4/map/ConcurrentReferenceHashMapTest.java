@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link ConcurrentReferenceHashMap}.
  */
-public class ConcurrentReferenceHashMapTest {
+class ConcurrentReferenceHashMapTest {
 
     @Test
     void testBuilderAll() {

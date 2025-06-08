@@ -33,7 +33,7 @@ import org.w3c.dom.Text;
 /**
  * Tests the NodeListIterator.
  */
-public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
+class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
     // Node array to be filled with mocked Node instances
     private Node[] nodes;

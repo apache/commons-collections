@@ -66,7 +66,7 @@ import org.w3c.dom.NodeList;
 /**
  * Tests for IteratorUtils.
  */
-public class IteratorUtilsTest {
+class IteratorUtilsTest {
 
     /**
      * Collection of {@link Integer}s

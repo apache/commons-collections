@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class IndexExtractorFromSparseBloomFilterTest extends AbstractIndexExtractorTest {
+class IndexExtractorFromSparseBloomFilterTest extends AbstractIndexExtractorTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 

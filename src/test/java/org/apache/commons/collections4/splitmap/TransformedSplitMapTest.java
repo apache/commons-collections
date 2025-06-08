@@ -39,7 +39,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link TransformedSplitMap}
  */
 @SuppressWarnings("boxing")
-public class TransformedSplitMapTest extends BulkTest {
+class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<Integer, String> intToString = String::valueOf;
 

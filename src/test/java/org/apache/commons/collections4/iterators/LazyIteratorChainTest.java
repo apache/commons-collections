@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the LazyIteratorChain class.
  */
-public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
+class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"

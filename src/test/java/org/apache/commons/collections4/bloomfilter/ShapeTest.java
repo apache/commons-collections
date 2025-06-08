@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 /**
  * Tests the {@link Shape} class.
  */
-public class ShapeTest {
+class ShapeTest {
 
     /*
      * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=

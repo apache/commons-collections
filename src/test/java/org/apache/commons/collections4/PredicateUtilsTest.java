@@ -45,7 +45,7 @@ import org.junit.jupiter.api.Test;
  * Tests the PredicateUtils class.
  */
 @SuppressWarnings("boxing")
-public class PredicateUtilsTest extends AbstractPredicateTest {
+class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Override
     protected Predicate<?> generatePredicate() {

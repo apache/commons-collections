@@ -31,7 +31,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ExtendedIteratorTest {
+class ExtendedIteratorTest {
     /**
      * Collection of {@link Integer}s
      */

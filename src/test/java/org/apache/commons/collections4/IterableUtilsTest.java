@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for IterableUtils.
  */
-public class IterableUtilsTest {
+class IterableUtilsTest {
 
     private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 

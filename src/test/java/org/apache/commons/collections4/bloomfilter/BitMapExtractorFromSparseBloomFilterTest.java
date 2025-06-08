@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class BitMapExtractorFromSparseBloomFilterTest extends AbstractBitMapExtractorTest {
+class BitMapExtractorFromSparseBloomFilterTest extends AbstractBitMapExtractorTest {
 
     protected Shape shape = Shape.fromKM(17, 72);
 

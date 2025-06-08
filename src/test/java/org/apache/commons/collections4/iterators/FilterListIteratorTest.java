@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * Tests the FilterListIterator class.
  */
 @SuppressWarnings("boxing")
-public class FilterListIteratorTest {
+class FilterListIteratorTest {
 
     private ArrayList<Integer> list;
     private ArrayList<Integer> odds;

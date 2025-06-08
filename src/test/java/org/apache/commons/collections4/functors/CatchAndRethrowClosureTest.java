@@ -29,7 +29,7 @@ import org.apache.commons.collections4.FunctorException;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-public class CatchAndRethrowClosureTest extends AbstractClosureTest {
+class CatchAndRethrowClosureTest extends AbstractClosureTest {
 
     private static <T> Closure<T> generateIOExceptionClosure() {
         return new CatchAndRethrowClosure<T>() {

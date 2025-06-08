@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
-public class NullPredicateTest extends AbstractPredicateTest {
+class NullPredicateTest extends AbstractPredicateTest {
     @Override
     protected Predicate<?> generatePredicate() {
         return NullPredicate.nullPredicate();

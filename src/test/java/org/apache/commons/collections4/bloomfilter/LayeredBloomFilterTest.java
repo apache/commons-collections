@@ -35,7 +35,7 @@ import org.apache.commons.collections4.bloomfilter.LayerManager.Cleanup;
 import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
 import org.junit.jupiter.api.Test;
 
-public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
+class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
 
     /**
      * A Predicate that advances after a quantum of time.

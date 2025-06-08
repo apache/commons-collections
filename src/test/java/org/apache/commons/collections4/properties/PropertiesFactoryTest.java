@@ -23,9 +23,9 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
-public class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
+class PropertiesFactoryTest extends AbstractPropertiesFactoryTest<Properties> {
 
-    public PropertiesFactoryTest() {
+    PropertiesFactoryTest() {
         super(PropertiesFactory.INSTANCE);
     }
 

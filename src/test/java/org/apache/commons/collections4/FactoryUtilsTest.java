@@ -39,13 +39,17 @@ import org.junit.jupiter.api.Test;
 public class FactoryUtilsTest {
 
     public static class Mock1 {
+
         private final int iVal;
+
         public Mock1(final int val) {
             iVal = val;
         }
+
         public Mock1(final Mock1 mock) {
             iVal = mock.iVal;
         }
+
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof Mock1 && iVal == ((Mock1) obj).iVal) {
@@ -53,6 +57,7 @@ public class FactoryUtilsTest {
             }
             return false;
         }
+
         @Override
         public int hashCode() { // please Findbugs
             return super.hashCode();
@@ -65,9 +70,11 @@ public class FactoryUtilsTest {
          */
         private static final long serialVersionUID = 4899282162482588924L;
         private final Object iVal;
-        public Mock2(final Object val) {
+
+        Mock2(final Object val) {
             iVal = val;
         }
+
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof Mock2 && iVal == ((Mock2) obj).iVal) {
@@ -75,6 +82,7 @@ public class FactoryUtilsTest {
             }
             return false;
         }
+
         @Override
         public int hashCode() { // please Findbugs
             return super.hashCode();
@@ -82,12 +90,15 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock3 {
+
         private static int cCounter;
         private final int iVal;
+
         public Mock3() {
             iVal = cCounter++;
         }
-        public int getValue() {
+
+        int getValue() {
             return iVal;
         }
     }

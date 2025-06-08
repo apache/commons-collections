@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for BagUtils factory methods.
  */
-public class BagUtilsTest {
+class BagUtilsTest {
 
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();

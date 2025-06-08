@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-public class CellExtractorFromDefaultIndexExtractorTest extends AbstractCellExtractorTest {
+class CellExtractorFromDefaultIndexExtractorTest extends AbstractCellExtractorTest {
 
     int[] data = {0, 63, 1, 64, 128, 1, 127};
     int[] indices = {0, 1, 63, 64, 127, 128};

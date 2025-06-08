@@ -64,7 +64,7 @@ import org.junit.jupiter.api.Test;
  * Tests for CollectionUtils.
  */
 @SuppressWarnings("boxing")
-public class CollectionUtilsTest extends MockTestCase {
+class CollectionUtilsTest extends MockTestCase {
 
     private static final Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 

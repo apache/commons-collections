@@ -29,7 +29,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SequencesComparatorTest {
+class SequencesComparatorTest {
 
     private static final class ExecutionVisitor<T> implements CommandVisitor<T> {
 

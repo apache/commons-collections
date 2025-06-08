@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for ComparableComparator.
  */
 @SuppressWarnings("boxing")
-public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
+class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {

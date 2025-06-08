@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the LoopingIterator class.
  */
-public class LoopingIteratorTest {
+class LoopingIteratorTest {
 
     /**
      * Tests constructor exception.

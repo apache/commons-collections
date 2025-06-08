@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 import org.junit.jupiter.api.Test;
 
-public class LazyListTest extends AbstractObjectTest {
+class LazyListTest extends AbstractObjectTest {
 
     @Override
     public Object makeObject() {

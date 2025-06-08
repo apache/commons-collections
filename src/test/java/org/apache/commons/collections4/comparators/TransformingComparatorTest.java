@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for TransformingComparator.
  */
-public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
+class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     @SuppressWarnings("boxing") // OK in test code

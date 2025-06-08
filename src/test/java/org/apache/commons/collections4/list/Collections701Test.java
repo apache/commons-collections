@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for COLLECTIONS-701.
  */
-public class Collections701Test {
+class Collections701Test {
 
     @Test
     void testArrayList() {

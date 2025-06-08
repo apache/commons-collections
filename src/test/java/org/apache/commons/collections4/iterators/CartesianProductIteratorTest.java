@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for {@link CartesianProductIterator}.
  */
-public class CartesianProductIteratorTest extends AbstractIteratorTest<List<Character>> {
+class CartesianProductIteratorTest extends AbstractIteratorTest<List<Character>> {
 
     private List<Character> letters;
     private List<Character> numbers;

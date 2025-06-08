@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for IteratorIterable.
  */
-public class IteratorIterableTest extends BulkTest {
+class IteratorIterableTest extends BulkTest {
 
     private Iterator<Integer> createIterator() {
         final List<Integer> list = new ArrayList<>();

@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 import org.apache.commons.collections4.bloomfilter.LayerManager.Builder;
 import org.apache.commons.lang3.ArrayUtils;
 
-public class BloomFilterExtractorFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
+class BloomFilterExtractorFromLayeredBloomFilterTest extends AbstractBloomFilterExtractorTest {
 
     @Override
     protected BloomFilterExtractor createUnderTest(final BloomFilter... filters) {

@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the Filter class.
  */
-public class BitMapTrackerTest {
+class BitMapTrackerTest {
 
     @Test
     void testSeen() {

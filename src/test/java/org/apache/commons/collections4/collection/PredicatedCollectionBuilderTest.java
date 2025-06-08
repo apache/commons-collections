@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the PredicatedCollection.Builder class.
  */
-public class PredicatedCollectionBuilderTest {
+class PredicatedCollectionBuilderTest {
 
     private static final class OddPredicate implements Predicate<Integer> {
         @Override

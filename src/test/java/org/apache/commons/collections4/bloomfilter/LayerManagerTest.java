@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class LayerManagerTest {
+class LayerManagerTest {
 
     private final Shape shape = Shape.fromKM(17, 72);
 

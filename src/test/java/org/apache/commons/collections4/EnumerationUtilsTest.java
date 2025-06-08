@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests EnumerationUtils.
  */
-public class EnumerationUtilsTest {
+class EnumerationUtilsTest {
 
     public static final String TO_LIST_FIXTURE = "this is a test";
 

@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the Filter class.
  */
-public class ArrayTrackerTest {
+class ArrayTrackerTest {
 
     @Test
     void testSeen() {

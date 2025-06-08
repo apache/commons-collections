@@ -45,7 +45,7 @@ import org.junit.jupiter.api.TestFactory;
 /**
  * Tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
  */
-public class MultiKeyTest {
+class MultiKeyTest {
 
     static class DerivedMultiKey<T> extends MultiKey<T> {
 

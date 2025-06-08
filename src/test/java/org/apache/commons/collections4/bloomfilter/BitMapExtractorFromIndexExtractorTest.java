@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
+class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
 
     @Override
     protected BitMapExtractor createEmptyExtractor() {

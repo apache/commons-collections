@@ -56,7 +56,7 @@ import org.junit.jupiter.api.Test;
  * Tests for MapUtils.
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest {
+class MapUtilsTest {
 
     /**
      * Test class for populateMap(MultiMap).
