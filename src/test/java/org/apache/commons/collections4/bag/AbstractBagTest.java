@@ -68,7 +68,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
-    public class TestBagUniqueSet extends AbstractSetTest<T> {
+    public class BagUniqueSetTest extends AbstractSetTest<T> {
 
         @Override
         public T[] getFullElements() {
@@ -118,15 +118,15 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         @Override
         public void resetEmpty() {
             AbstractBagTest.this.resetEmpty();
-            TestBagUniqueSet.this.setCollection(AbstractBagTest.this.getCollection().uniqueSet());
-            TestBagUniqueSet.this.setConfirmed(new HashSet<>(AbstractBagTest.this.getConfirmed()));
+            BagUniqueSetTest.this.setCollection(AbstractBagTest.this.getCollection().uniqueSet());
+            BagUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractBagTest.this.getConfirmed()));
         }
 
         @Override
         public void resetFull() {
             AbstractBagTest.this.resetFull();
-            TestBagUniqueSet.this.setCollection(AbstractBagTest.this.getCollection().uniqueSet());
-            TestBagUniqueSet.this.setConfirmed(new HashSet<>(AbstractBagTest.this.getConfirmed()));
+            BagUniqueSetTest.this.setCollection(AbstractBagTest.this.getCollection().uniqueSet());
+            BagUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractBagTest.this.getConfirmed()));
         }
 
         @Override
@@ -150,7 +150,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
      * @return a {@link AbstractSetTest} instance for testing the bag's unique set
      */
     public BulkTest bulkTestBagUniqueSet() {
-        return new TestBagUniqueSet();
+        return new BagUniqueSetTest();
     }
 
     /**

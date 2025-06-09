@@ -138,7 +138,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
-    public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
+    public class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -230,14 +230,14 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         public void resetEmpty() {
             AbstractMapTest.this.resetEmpty();
             setCollection(AbstractMapTest.this.getMap().entrySet());
-            TestMapEntrySet.this.setConfirmed(AbstractMapTest.this.getConfirmed().entrySet());
+            MapEntrySetTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().entrySet());
         }
 
         @Override
         public void resetFull() {
             AbstractMapTest.this.resetFull();
             setCollection(AbstractMapTest.this.getMap().entrySet());
-            TestMapEntrySet.this.setConfirmed(AbstractMapTest.this.getConfirmed().entrySet());
+            MapEntrySetTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().entrySet());
         }
 
         @Test
@@ -265,13 +265,13 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
             resetFull();
             // explicitly get entries as sample values/keys are connected for some maps
             // such as BeanMap
-            Iterator<Map.Entry<K, V>> it = TestMapEntrySet.this.getCollection().iterator();
+            Iterator<Map.Entry<K, V>> it = MapEntrySetTest.this.getCollection().iterator();
             final Map.Entry<K, V> entry1 = getEntry(it, key1);
-            it = TestMapEntrySet.this.getCollection().iterator();
+            it = MapEntrySetTest.this.getCollection().iterator();
             final Map.Entry<K, V> entry2 = getEntry(it, key2);
-            Iterator<Map.Entry<K, V>> itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
+            Iterator<Map.Entry<K, V>> itConfirmed = MapEntrySetTest.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed1 = getEntry(itConfirmed, key1);
-            itConfirmed = TestMapEntrySet.this.getConfirmed().iterator();
+            itConfirmed = MapEntrySetTest.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed2 = getEntry(itConfirmed, key2);
             verify();
 
@@ -322,7 +322,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         }
     }
 
-    public class TestMapKeySet extends AbstractSetTest<K> {
+    public class MapKeySetTest extends AbstractSetTest<K> {
 
         @Override
         public K[] getFullElements() {
@@ -373,14 +373,14 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         public void resetEmpty() {
             AbstractMapTest.this.resetEmpty();
             setCollection(AbstractMapTest.this.getMap().keySet());
-            TestMapKeySet.this.setConfirmed(AbstractMapTest.this.getConfirmed().keySet());
+            MapKeySetTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().keySet());
         }
 
         @Override
         public void resetFull() {
             AbstractMapTest.this.resetFull();
             setCollection(AbstractMapTest.this.getMap().keySet());
-            TestMapKeySet.this.setConfirmed(AbstractMapTest.this.getConfirmed().keySet());
+            MapKeySetTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().keySet());
         }
 
         @Override
@@ -399,7 +399,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // to the confirmed, that the already-constructed collection views
     // are still equal to the confirmed's collection views.
 
-    public class TestMapValues extends AbstractCollectionTest<V> {
+    public class MapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -469,14 +469,14 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         public void resetEmpty() {
             AbstractMapTest.this.resetEmpty();
             setCollection(map.values());
-            TestMapValues.this.setConfirmed(AbstractMapTest.this.getConfirmed().values());
+            MapValuesTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().values());
         }
 
         @Override
         public void resetFull() {
             AbstractMapTest.this.resetFull();
             setCollection(map.values());
-            TestMapValues.this.setConfirmed(AbstractMapTest.this.getConfirmed().values());
+            MapValuesTest.this.setConfirmed(AbstractMapTest.this.getConfirmed().values());
         }
 
         @Override
@@ -554,7 +554,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
-        return new TestMapEntrySet();
+        return new MapEntrySetTest();
     }
 
     /**
@@ -564,7 +564,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
-        return new TestMapKeySet();
+        return new MapKeySetTest();
     }
 
     /**
@@ -574,7 +574,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractCollectionTest} instance for testing the map's values collection
      */
     public BulkTest bulkTestMapValues() {
-        return new TestMapValues();
+        return new MapValuesTest();
     }
 
     /**

@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
+    public class BidiOrderedMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override
         public V[] addSetValues() {
@@ -88,7 +88,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
     }
 
     public BulkTest bulkTestOrderedMapIterator() {
-        return new TestBidiOrderedMapIterator();
+        return new BidiOrderedMapIteratorTest();
     }
 
     /**

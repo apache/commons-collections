@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public class TestKeyListView extends AbstractListTest<K> {
+    public class KeyListViewTest extends AbstractListTest<K> {
 
         @Override
         public K[] getFullElements() {
@@ -85,7 +85,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     }
 
-    public class TestValueListView extends AbstractListTest<V> {
+    public class ValueListViewTest extends AbstractListTest<V> {
 
         @Override
         public V[] getFullElements() {
@@ -130,11 +130,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     public BulkTest bulkTestKeyListView() {
-        return new TestKeyListView();
+        return new KeyListViewTest();
     }
 
     public BulkTest bulkTestValueListView() {
-        return new TestValueListView();
+        return new ValueListViewTest();
     }
 
     @Override

@@ -131,7 +131,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    public class TestListIterator extends AbstractListIteratorTest<E> {
+    public class ListIteratorTest extends AbstractListIteratorTest<E> {
 
         @Override
         public E addSetValue() {
@@ -199,7 +199,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     public BulkTest bulkTestListIterator() {
-        return new TestListIterator();
+        return new ListIteratorTest();
     }
 
     /**

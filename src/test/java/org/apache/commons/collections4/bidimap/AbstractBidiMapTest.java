@@ -46,9 +46,9 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public class TestBidiMapEntrySet extends TestMapEntrySet {
+    public class BidiMapEntrySetTest extends MapEntrySetTest {
 
-        public TestBidiMapEntrySet() {
+        public BidiMapEntrySetTest() {
         }
 
         @Test
@@ -61,15 +61,15 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             resetFull();
             // explicitly get entries as sample values/keys are connected for some maps
             // such as BeanMap
-            Iterator<Map.Entry<K, V>> it = TestBidiMapEntrySet.this.getCollection().iterator();
+            Iterator<Map.Entry<K, V>> it = BidiMapEntrySetTest.this.getCollection().iterator();
             final Map.Entry<K, V> entry1 = getEntry(it, key1);
-            it = TestBidiMapEntrySet.this.getCollection().iterator();
+            it = BidiMapEntrySetTest.this.getCollection().iterator();
             final Map.Entry<K, V> entry2 = getEntry(it, key2);
-            Iterator<Map.Entry<K, V>> itConfirmed = TestBidiMapEntrySet.this.getConfirmed().iterator();
+            Iterator<Map.Entry<K, V>> itConfirmed = BidiMapEntrySetTest.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed1 = getEntry(itConfirmed, key1);
-            itConfirmed = TestBidiMapEntrySet.this.getConfirmed().iterator();
+            itConfirmed = BidiMapEntrySetTest.this.getConfirmed().iterator();
             final Map.Entry<K, V> entryConfirmed2 = getEntry(itConfirmed, key2);
-            TestBidiMapEntrySet.this.verify();
+            BidiMapEntrySetTest.this.verify();
 
             if (!isSetValueSupported()) {
                 assertThrows(UnsupportedOperationException.class, () -> entry1.setValue(newValue1));
@@ -97,7 +97,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             assertEquals(newValue1, AbstractBidiMapTest.this.getMap().get(entry2.getKey()));
             assertFalse(AbstractBidiMapTest.this.getMap().containsKey(key1));
             assertFalse(AbstractBidiMapTest.this.getMap().containsValue(newValue2));
-            TestBidiMapEntrySet.this.verify();
+            BidiMapEntrySetTest.this.verify();
 
             // check for ConcurrentModification
             it.next();  // if you fail here, maybe you should be throwing an IAE, see above
@@ -108,7 +108,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
+    public class BidiMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override
         public V[] addSetValues() {
@@ -157,11 +157,11 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    public class TestInverseBidiMap extends AbstractBidiMapTest<V, K> {
+    public class InverseBidiMapTest extends AbstractBidiMapTest<V, K> {
 
         final AbstractBidiMapTest<K, V> main;
 
-        public TestInverseBidiMap(final AbstractBidiMapTest<K, V> main) {
+        public InverseBidiMapTest(final AbstractBidiMapTest<K, V> main) {
             this.main = main;
         }
 
@@ -237,16 +237,16 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public BulkTest bulkTestBidiMapIterator() {
-        return new TestBidiMapIterator();
+        return new BidiMapIteratorTest();
     }
 
     public BulkTest bulkTestInverseMap() {
-        return new TestInverseBidiMap(this);
+        return new InverseBidiMapTest(this);
     }
 
     @Override
     public BulkTest bulkTestMapEntrySet() {
-        return new TestBidiMapEntrySet();
+        return new BidiMapEntrySetTest();
     }
 
     private void doTestGetKey(final BidiMap<?, ?> map, final Object key, final Object value) {

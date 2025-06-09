@@ -34,7 +34,7 @@ import org.apache.commons.collections4.BulkTest;
  */
 public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
-    public class TestSortedSetSubSet extends AbstractSortedSetTest<E> {
+    public class SortedSetSubSetTest extends AbstractSortedSetTest<E> {
 
         static final int TYPE_SUBSET = 0;
         static final int TYPE_TAILSET = 1;
@@ -48,7 +48,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
         private final E[] otherElements;
         @SuppressWarnings("unchecked")
-        public TestSortedSetSubSet(final int bound, final boolean head) {
+        public SortedSetSubSetTest(final int bound, final boolean head) {
             if (head) {
                 //System.out.println("HEADSET");
                 this.type = TYPE_HEADSET;
@@ -81,7 +81,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
         } //type
         @SuppressWarnings("unchecked")
-        public TestSortedSetSubSet(final int loBound, final int hiBound) {
+        public SortedSetSubSetTest(final int loBound, final int hiBound) {
             //System.out.println("SUBSET");
             this.type = TYPE_SUBSET;
             this.lowBound = loBound;
@@ -182,7 +182,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
         final int loBound = length / 3;
         final int hiBound = loBound * 2;
-        return new TestSortedSetSubSet(hiBound, true);
+        return new SortedSetSubSetTest(hiBound, true);
     }
 
     /**
@@ -198,7 +198,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
         final int loBound = length / 3;
         final int hiBound = loBound * 2;
-        return new TestSortedSetSubSet(loBound, hiBound);
+        return new SortedSetSubSetTest(loBound, hiBound);
 
     }
 
@@ -213,7 +213,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
     public BulkTest bulkTestSortedSetTailSet() {
         final int length = getFullElements().length;
         final int loBound = length / 3;
-        return new TestSortedSetSubSet(loBound, false);
+        return new SortedSetSubSetTest(loBound, false);
     }
 
     /**

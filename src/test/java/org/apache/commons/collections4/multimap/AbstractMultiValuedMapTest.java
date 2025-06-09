@@ -64,7 +64,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
-    public class TestMultiValuedMapAsMap extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
+    public class MultiValuedMapAsMapTest extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -175,7 +175,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
-    public class TestMultiValuedMapEntries extends AbstractCollectionTest<Entry<K, V>> {
+    public class MultiValuedMapEntriesTest extends AbstractCollectionTest<Entry<K, V>> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -235,19 +235,19 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         public void resetEmpty() {
             AbstractMultiValuedMapTest.this.resetEmpty();
             setCollection(AbstractMultiValuedMapTest.this.getMap().entries());
-            TestMultiValuedMapEntries.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().entries());
+            MultiValuedMapEntriesTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().entries());
         }
 
         @Override
         public void resetFull() {
             AbstractMultiValuedMapTest.this.resetFull();
             setCollection(AbstractMultiValuedMapTest.this.getMap().entries());
-            TestMultiValuedMapEntries.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().entries());
+            MultiValuedMapEntriesTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().entries());
         }
 
     }
 
-    public class TestMultiValuedMapKeys extends AbstractMultiSetTest<K> {
+    public class MultiValuedMapKeysTest extends AbstractMultiSetTest<K> {
 
         @Override
         public K[] getFullElements() {
@@ -293,18 +293,18 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         public void resetEmpty() {
             AbstractMultiValuedMapTest.this.resetEmpty();
             setCollection(AbstractMultiValuedMapTest.this.getMap().keys());
-            TestMultiValuedMapKeys.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
+            MultiValuedMapKeysTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
         }
 
         @Override
         public void resetFull() {
             AbstractMultiValuedMapTest.this.resetFull();
             setCollection(AbstractMultiValuedMapTest.this.getMap().keys());
-            TestMultiValuedMapKeys.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
+            MultiValuedMapKeysTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
         }
     }
 
-    public class TestMultiValuedMapKeySet extends AbstractSetTest<K> {
+    public class MultiValuedMapKeySetTest extends AbstractSetTest<K> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -348,7 +348,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
-    public class TestMultiValuedMapValues extends AbstractCollectionTest<V> {
+    public class MultiValuedMapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
         public V[] getFullElements() {
@@ -406,14 +406,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         public void resetEmpty() {
             AbstractMultiValuedMapTest.this.resetEmpty();
             setCollection(AbstractMultiValuedMapTest.this.getMap().values());
-            TestMultiValuedMapValues.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().values());
+            MultiValuedMapValuesTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().values());
         }
 
         @Override
         public void resetFull() {
             AbstractMultiValuedMapTest.this.resetFull();
             setCollection(AbstractMultiValuedMapTest.this.getMap().values());
-            TestMultiValuedMapValues.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().values());
+            MultiValuedMapValuesTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().values());
         }
     }
 
@@ -432,7 +432,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     public BulkTest bulkTestAsMap() {
-        return new TestMultiValuedMapAsMap();
+        return new MultiValuedMapAsMapTest();
     }
 
     // Bulk Tests
@@ -446,7 +446,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapEntries() {
-        return new TestMultiValuedMapEntries();
+        return new MultiValuedMapEntriesTest();
     }
 
     /**
@@ -459,7 +459,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      *         collection
      */
     public BulkTest bulkTestMultiValuedMapKeys() {
-        return new TestMultiValuedMapKeys();
+        return new MultiValuedMapKeysTest();
     }
 
     /**
@@ -471,7 +471,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * @return a {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMultiValuedMapKeySet() {
-        return new TestMultiValuedMapKeySet();
+        return new MultiValuedMapKeySetTest();
     }
 
     /**
@@ -484,7 +484,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapValues() {
-        return new TestMultiValuedMapValues();
+        return new MultiValuedMapValuesTest();
     }
 
     @Override
