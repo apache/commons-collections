@@ -101,7 +101,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         return new CompositeCollection<>();
     }
 
-    @SuppressWarnings("serial")
     protected void setUpMutatorTest() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -143,7 +142,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    @SuppressWarnings({ "unchecked", "serial" })
+    @SuppressWarnings({ "unchecked" })
     void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -194,7 +193,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    @SuppressWarnings({ "unchecked", "serial" })
+    @SuppressWarnings({ "unchecked" })
     void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
