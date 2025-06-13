@@ -100,11 +100,9 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     private byte[] serialize(final Object object) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-        oos.writeObject(object);
-        oos.close();
-
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+        }
         return baos.toByteArray();
     }
 
