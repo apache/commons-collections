@@ -37,6 +37,10 @@
     <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-collections.git</developerConnection>
     <url>https://gitbox.apache.org/repos/asf?p=commons-collections.git</url>
   </scm>
+  <ciManagement>
+    <system>GitHub</system>
+    <url>https://github.com/apache/commons-collections/actions</url>
+  </ciManagement>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
