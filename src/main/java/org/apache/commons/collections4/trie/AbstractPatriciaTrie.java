@@ -1610,17 +1610,13 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      *   key is prefixed by the search key
      */
     private SortedMap<K, V> getPrefixMapByBits(final K key, final int offsetInBits, final int lengthInBits) {
-
         final int offsetLength = offsetInBits + lengthInBits;
         if (offsetLength > lengthInBits(key)) {
-            throw new IllegalArgumentException(offsetInBits + " + "
-                    + lengthInBits + " > " + lengthInBits(key));
+            throw new IllegalArgumentException(offsetInBits + " + " + lengthInBits + " > " + lengthInBits(key));
         }
-
         if (offsetLength == 0) {
             return this;
         }
-
         return new PrefixRangeMap(key, offsetInBits, lengthInBits);
     }
 

@@ -784,7 +784,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final E[] other = getOtherElements();
         for (final E element : other) {
             assertEquals(-1, list1.lastIndexOf(element),
-                    "lastIndexOf should return -1 for nonexistent " + "element");
+                    "lastIndexOf should return -1 for nonexistent element");
             verify();
         }
     }

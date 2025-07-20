@@ -693,10 +693,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         resetEmpty();
         Collection<E> col = new HashSet<>();
         assertTrue(getCollection().containsAll(col),
-                "Every Collection should contain all elements of an " + "empty Collection.");
+                "Every Collection should contain all elements of an empty Collection.");
         col.addAll(Arrays.asList(getOtherElements()));
         assertFalse(getCollection().containsAll(col),
-                "Empty Collection shouldn't contain all elements of " + "a non-empty Collection.");
+                "Empty Collection shouldn't contain all elements of a non-empty Collection.");
         // make sure calls to "containsAll" don't change anything
         verify();
 
@@ -1103,10 +1103,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         final HashSet<E> set = new HashSet<>(elements);
         size = getCollection().size();
         assertFalse(getCollection().retainAll(set),
-                "Collection shouldn't change from retainAll without " + "duplicate elements");
+                "Collection shouldn't change from retainAll without duplicate elements");
         verify();
         assertEquals(size, getCollection().size(),
-                "Collection size didn't change from nonduplicate " + "retainAll");
+                "Collection size didn't change from nonduplicate retainAll");
     }
 
     /**
@@ -1162,7 +1162,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             }
         }
         for (final boolean element : matched) {
-            assertTrue(element, "Collection should return all its elements in " + "toArray");
+            assertTrue(element, "Collection should return all its elements in toArray");
         }
     }
 

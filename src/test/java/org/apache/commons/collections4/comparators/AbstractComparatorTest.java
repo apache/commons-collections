@@ -121,9 +121,9 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
                     comparator = makeObject();
                     final String fileName = getCanonicalComparatorName(comparator);
                     writeExternalFormToDisk((Serializable) comparator, fileName);
-                    fail("Serialized form could not be found.  A serialized version " + "has now been written (and should be added to CVS): " + fileName);
+                    fail("Serialized form could not be found.  A serialized version has now been written (and should be added to CVS): " + fileName);
                 } else {
-                    fail("The Serialized form could be located to test serialization " + "compatibility: " + e.getMessage());
+                    fail("The Serialized form could be located to test serialization compatibility: " + e.getMessage());
                 }
             }
             // make sure the canonical form produces the ordering we currently
