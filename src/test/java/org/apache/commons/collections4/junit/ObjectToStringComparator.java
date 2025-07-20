@@ -23,7 +23,7 @@ import java.util.Comparator;
 public final class ObjectToStringComparator implements Comparator<Object>, Serializable {
 
     /**
-     * Singleton instance.
+     * The singleton instance.
      */
     public static final ObjectToStringComparator INSTANCE = new ObjectToStringComparator();
 
