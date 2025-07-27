@@ -69,6 +69,12 @@ import java.lang.ref.Reference;
  * using {@link java.util.Collections#synchronizedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * </p>
+ * <p>
+ * NOTE: Handling of many different keys with identical hash values is slow, thus
+ * this class shouldn't be used with poor key hashing functions or when a malicious user
+ * can inject many entries with identical hash values, as this can result in
+ * disproportionate resource usage.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

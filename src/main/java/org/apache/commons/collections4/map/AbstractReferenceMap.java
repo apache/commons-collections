@@ -82,6 +82,12 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * You can use {@link java.util.Collections#synchronizedMap} to
  * provide synchronized access to a {@code ReferenceMap}.
  * </p>
+ * <p>
+ * NOTE: Handling of many different keys with identical hash values is slow, thus
+ * this class shouldn't be used with poor key hashing functions or when a malicious user
+ * can inject many entries with identical hash values, as this can result in
+ * disproportionate resource usage.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

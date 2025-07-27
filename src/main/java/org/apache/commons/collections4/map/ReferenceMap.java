@@ -72,6 +72,12 @@ import java.io.Serializable;
  * (previously it extended AbstractMap). As a result, the implementation is now
  * extensible and provides a {@code MapIterator}.
  * </p>
+ * <p>
+ * NOTE: Handling of many different keys with identical hash values is slow, thus
+ * this class shouldn't be used with poor key hashing functions or when a malicious user
+ * can inject many entries with identical hash values, as this can result in
+ * disproportionate resource usage.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
