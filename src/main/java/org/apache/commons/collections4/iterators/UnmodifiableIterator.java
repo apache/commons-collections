@@ -79,4 +79,15 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
+    /**
+     * Allows package scoped access to the wrapped iterator for a very specific IteratorChain usecase.
+     * @return the wrapped IteratorChain instance or null when wrapped iterator is not a IteratorChain
+     */
+    IteratorChain<? extends E> getPossibleUnderlyingIteratorChain() {
+        if (iterator instanceof IteratorChain) {
+            return (IteratorChain<? extends E>) iterator;
+        }
+        return null;
+    }
+
 }

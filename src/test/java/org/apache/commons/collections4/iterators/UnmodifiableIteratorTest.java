@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,4 +80,10 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
+    void testIteratorChainRetrieval() {
+        assertNull(((UnmodifiableIterator) makeObject()).getPossibleUnderlyingIteratorChain());
+        final IteratorChain iteratorChain = new IteratorChain(testList.iterator());
+        assertEquals(((UnmodifiableIterator) UnmodifiableIterator.unmodifiableIterator(iteratorChain)).getPossibleUnderlyingIteratorChain(), iteratorChain);
+    }
 }
