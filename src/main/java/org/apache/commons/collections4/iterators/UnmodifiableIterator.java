@@ -76,7 +76,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("remove() is not supported");
+        throw new UnsupportedOperationException("remove");
     }
 
 }

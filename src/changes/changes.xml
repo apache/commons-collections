@@ -31,6 +31,7 @@
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Closure; this will be deprecated in 5.0 in favor of java.util.function.Consumer.</action>
     <action type="fix" dev="ggregory" due-to="Sebastian Götz, Gary Gregory" issue="COLLECTIONS-874">MapUtils.getLongValue(Map, K, Function) returns a byte instead of a long.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.functors.FunctorUtils.validate(Consumer...)</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.iterators.UnmodifiableIterator.remove() to match java.util.Iterator.remove().</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 84 #612.</action>
