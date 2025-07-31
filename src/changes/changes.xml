@@ -33,6 +33,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.functors.FunctorUtils.validate(Consumer...)</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.iterators.UnmodifiableIterator.remove() to match java.util.Iterator.remove().</action>
     <!-- ADD -->
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 84 #612.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.4.8-jre.</action>

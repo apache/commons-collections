@@ -24,13 +24,14 @@ import org.apache.commons.collections4.Unmodifiable;
 /**
  * Decorates an iterator such that it cannot be modified.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException.
+ * Calling {@link #remove()} throws {@link UnsupportedOperationException}.
  * </p>
  *
  * @param <E> the type of elements returned by this iterator.
+ * @param <T> The wrapped Iterator type.
  * @since 3.0
  */
-public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {
+public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> implements Iterator<E>, Unmodifiable {
 
     /**
      * Decorates the specified iterator such that it cannot be modified.
@@ -50,18 +51,24 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
             final Iterator<E> tmpIterator = (Iterator<E>) iterator;
             return tmpIterator;
         }
+        return wrap(iterator);
+    }
+
+    static <E, T extends Iterator<? extends E>> UnmodifiableIterator<E, T> wrap(final T iterator) {
         return new UnmodifiableIterator<>(iterator);
     }
 
-    /** The iterator being decorated */
-    private final Iterator<? extends E> iterator;
+    /**
+     * The decorated iterator.
+     */
+    private final T iterator;
 
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  the iterator to decorate.
      */
-    private UnmodifiableIterator(final Iterator<? extends E> iterator) {
+    private UnmodifiableIterator(final T iterator) {
         this.iterator = iterator;
     }
 
@@ -75,9 +82,14 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
         return iterator.next();
     }
 
+    // TODO This method can be removed in 5.0 since it's implemented as a default method in Iterator.
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");
+    }
+
+    T unwrap() {
+        return iterator;
     }
 
 }
