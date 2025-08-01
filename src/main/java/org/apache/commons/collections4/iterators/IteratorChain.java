@@ -165,19 +165,17 @@ public class IteratorChain<E> implements Iterator<E> {
         checkLocked();
         Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof UnmodifiableIterator) {
-            @SuppressWarnings("unchecked") // safe to upcast
-            final IteratorChain<? extends E> possibleUnderlyingIteratorChain =
-                ((UnmodifiableIterator) iterator).getPossibleUnderlyingIteratorChain();
-            if (possibleUnderlyingIteratorChain == null) {
-                // we don't know anything about the underlying iterator, simply add it here
-                iteratorQueue.add(iterator);
-            } else {
+            final Iterator<? extends E> underlyingIterator = ((UnmodifiableIterator) iterator).unwrap();
+            if (underlyingIterator instanceof IteratorChain) {
                 // in case it is an IteratorChain, wrap every underlying iterators as unmodifiable
                 // multiple rechainings would otherwise lead to exponential growing number of function calls
                 // when the iteratorChain gets used.
-                for (Iterator<? extends E> nestedIterator : possibleUnderlyingIteratorChain.iteratorQueue) {
+                for (Iterator<? extends E> nestedIterator : ((IteratorChain<? extends E>) underlyingIterator).iteratorQueue) {
                     iteratorQueue.add(UnmodifiableIterator.unmodifiableIterator(nestedIterator));
                 }
+            } else {
+                // we don't know anything about the underlying iterator, simply add it here
+                iteratorQueue.add(iterator);
             }
         } else if (iterator instanceof IteratorChain) {
             // add the wrapped iterators directly instead of reusing the given instance

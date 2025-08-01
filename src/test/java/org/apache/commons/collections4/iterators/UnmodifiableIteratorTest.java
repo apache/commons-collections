@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,8 +39,8 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
-    protected String[] testArray = { "One", "Two", "Three" };
-    protected List<E> testList;
+    private final String[] testArray = { "One", "Two", "Three" };
+    private List<E> testList;
 
     @Override
     public Iterator<E> makeEmptyIterator() {
@@ -68,10 +67,8 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     void testDecorateFactory() {
         Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
-
         it = testList.iterator();
         assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
-
         assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
     }
 
@@ -81,9 +78,18 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    void testIteratorChainRetrieval() {
-        assertNull(((UnmodifiableIterator) makeObject()).getPossibleUnderlyingIteratorChain());
-        final IteratorChain iteratorChain = new IteratorChain(testList.iterator());
-        assertEquals(((UnmodifiableIterator) UnmodifiableIterator.unmodifiableIterator(iteratorChain)).getPossibleUnderlyingIteratorChain(), iteratorChain);
+    void testUnwrap() {
+        final Iterator<E> iterator = testList.iterator();
+        @SuppressWarnings("unchecked")
+        final UnmodifiableIterator<E, Iterator<E>> unmodifiableIterator = (UnmodifiableIterator<E, Iterator<E>>) UnmodifiableIterator
+                .unmodifiableIterator(iterator);
+        assertSame(iterator, unmodifiableIterator.unwrap());
+    }
+
+    @Test
+    void testWrapUnwrap() {
+        final Iterator<E> iterator = testList.iterator();
+        final UnmodifiableIterator<E, Iterator<E>> unmodifiableIterator = UnmodifiableIterator.wrap(iterator);
+        assertSame(iterator, unmodifiableIterator.unwrap());
     }
 }
