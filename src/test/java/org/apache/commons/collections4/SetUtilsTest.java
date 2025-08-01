@@ -72,9 +72,31 @@ class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.difference(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
-
+        setA.add(42);
+        setB.add(2);
+        assertTrue(set.contains(42));
+        assertFalse(set.contains(2));
         assertThrows(NullPointerException.class, () -> SetUtils.difference(setA, null));
         assertThrows(NullPointerException.class, () -> SetUtils.difference(null, setA));
+    }
+    @Test
+    void testDifferenceSet() {
+        final Set<Integer> set = SetUtils.differenceSet(setA, setB);
+        assertEquals(2, set.size());
+        assertTrue(set.contains(1));
+        assertTrue(set.contains(2));
+        for (final Integer i : setB) {
+            assertFalse(set.contains(i));
+        }
+
+        final Set<Integer> set2 = SetUtils.differenceSet(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+        setA.add(42);
+        setB.add(2);
+        assertFalse(set.contains(42));
+        assertTrue(set.contains(2));
+        assertThrows(NullPointerException.class, () -> SetUtils.differenceSet(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.differenceSet(null, setA));
     }
 
     @Test
@@ -91,9 +113,38 @@ class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
-
+        setA.add(6);
+        setB.add(2);
+        setA.remove(5);
+        assertFalse(set.contains(6));
+        assertFalse(set.contains(2));
+        assertTrue(set.contains(5));
         assertThrows(NullPointerException.class, () -> SetUtils.disjunction(setA, null));
         assertThrows(NullPointerException.class, () -> SetUtils.disjunction(null, setA));
+    }
+
+    @Test
+    void testDisjunctionSet() {
+        final Set<Integer> set = SetUtils.disjunctionSet(setA, setB);
+        assertEquals(4, set.size());
+        assertTrue(set.contains(1));
+        assertTrue(set.contains(2));
+        assertTrue(set.contains(6));
+        assertTrue(set.contains(7));
+        assertFalse(set.contains(3));
+        assertFalse(set.contains(4));
+        assertFalse(set.contains(5));
+
+        final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+        setA.add(6);
+        setB.add(2);
+        setA.remove(5);
+        assertTrue(set.contains(6));
+        assertTrue(set.contains(2));
+        assertFalse(set.contains(5));
+        assertThrows(NullPointerException.class, () -> SetUtils.disjunctionSet(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.disjunctionSet(null, setA));
     }
 
     @Test
@@ -175,11 +226,37 @@ class SetUtilsTest {
 
         final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
         assertEquals(SetUtils.<Integer>emptySet(), set2);
+        setA.add(6);
+        setB.remove(5);
+        assertTrue(set.contains(6));
+        assertFalse(set.contains(5));
 
         assertThrows(NullPointerException.class, () -> SetUtils.intersection(setA, null));
         assertThrows(NullPointerException.class, () -> SetUtils.intersection(null, setA));
     }
 
+    @Test
+    void testIntersectionSet() {
+        final Set<Integer> set = SetUtils.intersectionSet(setA, setB);
+        assertEquals(3, set.size());
+        assertTrue(set.contains(3));
+        assertTrue(set.contains(4));
+        assertTrue(set.contains(5));
+        assertFalse(set.contains(1));
+        assertFalse(set.contains(2));
+        assertFalse(set.contains(6));
+        assertFalse(set.contains(7));
+
+        final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
+        assertEquals(SetUtils.<Integer>emptySet(), set2);
+        setA.add(6);
+        setB.remove(5);
+        assertFalse(set.contains(6));
+        assertTrue(set.contains(5));
+
+        assertThrows(NullPointerException.class, () -> SetUtils.intersectionSet(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.intersectionSet(null, setA));
+    }
     @Test
     void testNewIdentityHashSet() {
         final Set<String> set = SetUtils.newIdentityHashSet();
@@ -214,8 +291,24 @@ class SetUtilsTest {
         assertTrue(set.containsAll(setB));
         final Set<Integer> set2 = SetUtils.union(setA, SetUtils.<Integer>emptySet());
         assertEquals(setA, set2);
+        setA.add(42);
+        assertTrue(set.contains(42));
         assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null));
         assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA));
+    }
+
+    @Test
+    void testUnionSet() {
+        final Set<Integer> set = SetUtils.unionSet(setA, setB);
+        assertEquals(7, set.size());
+        assertTrue(set.containsAll(setA));
+        assertTrue(set.containsAll(setB));
+        final Set<Integer> set2 = SetUtils.unionSet(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+        setA.add(42);
+        assertFalse(set.contains(42));
+        assertThrows(NullPointerException.class, () -> SetUtils.unionSet(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.unionSet(null, setA));
     }
 
     @Test

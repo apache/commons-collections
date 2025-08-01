@@ -117,10 +117,12 @@ public class SetUtils {
 
     /**
      * Returns an unmodifiable <strong>view</strong> containing the difference of the given
-     * {@link Set}s, denoted by {@code a \ b} (or {@code a - b}).
+     * {@link Set}s, denoted by {@code setA \ setB} (or {@code setA - setBb}).
      * <p>
-     * The returned view contains all elements of {@code a} that are not a member
-     * of {@code b}.
+     * The returned view at all times contains all elements of {@code setA} that are not a member
+     * of {@code setB} also when {@code setA} and {@code setB} change later on.
+     * ; in case you don't need this view behaviour and you want to subtract the sets only once,
+     * use {@link SetUtils.SetView#toSet} on the return value or use directly {@link SetUtils#differenceSet} instead.
      * </p>
      *
      * @param <E> the generic type that is able to represent the types contained
@@ -150,14 +152,36 @@ public class SetUtils {
     }
 
     /**
+     * Returns a set of the difference of the given
+     * {@link Set}s, denoted by {@code setA \ setB} (or {@code setA - setB}).
+     * <p>
+     * The returned set contains all elements of {@code setA} that are not a member
+     * of {@code setB} at the moment of invocation. Later changes to {@code setA}
+     * or {@code setB} do not affect the returned set.
+     * Convenience method for difference(...).toSet().
+     * </p>
+     *
+     * @param <E> the generic type that is able to represent the types contained
+     *   in both input sets.
+     * @param setA  the set to subtract from, must not be null
+     * @param setB  the set to subtract, must not be null
+     * @return a new set with the difference of the given {@link Set}s
+     * @since 4.5.1
+     */
+    public static <E> Set<E> differenceSet(final Set<? extends E> setA, final Set<? extends E> setB) {
+        return difference(setA, setB).toSet();
+    }
+
+    /**
      * Returns an unmodifiable <strong>view</strong> of the symmetric difference of the given
      * {@link Set}s.
      * <p>
-     * The returned view contains all elements of {@code a} and {@code b} that are
-     * not a member of the other set.
-     * </p>
+     * The returned view at all times contains all elements of {@code setA} and {@code setB} that are
+     * not a member of the other set also when {@code setA} and {@code setB} change later on; in case you don't
+     * need this view behaviour and you want to disjunct the sets only once,
+     * use {@link SetUtils.SetView#toSet} on the return value or use directly {@link SetUtils#disjunctionSet} instead.
      * <p>
-     * This is equivalent to {@code union(difference(a, b), difference(b, a))}.
+     * This is equivalent to {@code union(difference(setA, setB), difference(setB, setA))}.
      * </p>
      *
      * @param <E> the generic type that is able to represent the types contained
@@ -195,6 +219,29 @@ public class SetUtils {
                 return aMinusB.size() + bMinusA.size();
             }
         };
+    }
+
+    /**
+     * Returns a set of the symmetric difference of the given {@link Set}s.
+     * <p>
+     * The returned set contains all elements of {@code setA} and {@code setB} that are
+     * not a member of the other set at the moment of invocation;
+     * Later changes to {@code setA} or {@code setB} do not affect the returned set.
+     * Convenience method for disjunction(...).toSet().
+     * </p>
+     * <p>
+     * This is equivalent to {@code unionSet(differenceSet(setA, setB), differenceSet(setB, setA))}.
+     * </p>
+     *
+     * @param <E> the generic type that is able to represent the types contained
+     *   in both input sets.
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
+     * @return a new set of the symmetric difference of the two sets
+     * @since 4.1
+     */
+    public static <E> Set<E> disjunctionSet(final Set<? extends E> setA, final Set<? extends E> setB) {
+        return disjunction(setA, setB).toSet();
     }
 
     /**
@@ -277,8 +324,9 @@ public class SetUtils {
     /**
      * Returns an unmodifiable <strong>view</strong> of the intersection of the given {@link Set}s.
      * <p>
-     * The returned view contains all elements that are members of both input sets
-     * ({@code a} and {@code b}).
+     * The returned view at all times contains all elements that are members of both input sets
+     * ({@code setA} and {@code setB}). in case you don't need this view behaviour and you want to intersect the sets only once,
+     * use {@link SetUtils.SetView#toSet} on the return value or use directly {@link SetUtils#intersectionSet} instead.
      * </p>
      *
      * @param <E> the generic type that is able to represent the types contained
@@ -303,6 +351,25 @@ public class SetUtils {
                 return IteratorUtils.filteredIterator(setA.iterator(), setB::contains);
             }
         };
+    }
+
+    /**
+     * Returns a set of the intersection of the given {@link Set}s.
+     * <p>
+     * The returned set contains all elements of {@code setA} and {@code setB} at the moment of invocation.
+     * Later changes to {@code setA} or {@code setB} do not affect the returned set.
+     * Convenience method for intersection(...).toSet().
+     * </p>
+     *
+     * @param <E> the generic type that is able to represent the types contained
+     *   in both input sets.
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
+     * @return a new set of the intersection of the two sets
+     * @since 4.5.1
+     */
+    public static <E> Set<E> intersectionSet(final Set<? extends E> setA, final Set<? extends E> setB) {
+        return intersection(setA, setB).toSet();
     }
 
     /**
@@ -585,7 +652,9 @@ public class SetUtils {
     /**
      * Returns an unmodifiable <strong>view</strong> of the union of the given {@link Set}s.
      * <p>
-     * The returned view contains all elements of {@code a} and {@code b}.
+     * The returned view at all times contains the elements of {@code setA} and {@code setB} also when {@code setA} and {@code setB}
+     * change later on; in case you don't need this view behaviour and you want to unionize the sets only once,
+     * use {@link SetUtils.SetView#toSet} on the return value or use directly {@link SetUtils#unionSet} instead.
      * </p>
      *
      * @param <E> the generic type that is able to represent the types contained
@@ -623,6 +692,26 @@ public class SetUtils {
                 return setA.size() + bMinusA.size();
             }
         };
+    }
+
+    /**
+     * Returns a set of the union of the given {@link Set}s.
+     * <p>
+     * The returned set contains all elements of {@code setA} and {@code setB} at the moment of invocation.
+     * Later changes to {@code setA} or {@code setB} do not affect the returned set.
+     * Convenience method for union(...).toSet().
+     * </p>
+     *
+     * @param <E> the generic type that is able to represent the types contained
+     *   in both input sets.
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
+     * @return a new set with the union of the given {@link Set}s
+     * @throws NullPointerException if either input set is null
+     * @since 4.5.1
+     */
+    public static <E> Set<E> unionSet(final Set<? extends E> setA, final Set<? extends E> setB) {
+        return union(setA, setB).toSet();
     }
 
     /**
