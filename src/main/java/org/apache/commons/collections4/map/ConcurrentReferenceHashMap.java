@@ -878,7 +878,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         }
 
         /**
-         * This method must be called with exactly one of <code>value</code> and <code>function</code> non-null.
+         * This method must be called with exactly one of {@code value} and {@code function} non-null.
          **/
         V put(final K key, final int hash, final V value, final Function<? super K, ? extends V> function, final boolean onlyIfAbsent) {
             lock();

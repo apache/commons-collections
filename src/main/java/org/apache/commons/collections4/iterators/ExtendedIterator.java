@@ -35,8 +35,8 @@ import org.apache.commons.collections4.IteratorUtils;
 public final class ExtendedIterator<T> implements IteratorOperations<T> {
 
     /**
-     * Create an ExtendedIterator returning the elements of <code>it</code>. If <code>it</code> is itself an ExtendedIterator, return that; otherwise wrap
-     * <code>it</code>.
+     * Create an ExtendedIterator returning the elements of {@code it}. If {@code it} is itself an ExtendedIterator, return that; otherwise wrap
+     * {@code it}.
      *
      * @param <T> The type of object returned from the iterator.
      * @param it The iterator to wrap.
@@ -47,7 +47,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
     }
 
     /**
-     * Creates an ExtendedIterator wrapped round a {@link Stream}. The extended iterator does not permit <code>.remove()</code>.
+     * Creates an ExtendedIterator wrapped round a {@link Stream}. The extended iterator does not permit {@code .remove()}.
      * <p>
      * The stream should not be used directly. The effect of doing so is undefined.
      * </p>
@@ -61,7 +61,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
     }
 
     /**
-     * Creates an ExtendedIterator wrapped round <code>it</code>, which does not permit <code>.remove()</code> even if <code>it</code> does.
+     * Creates an ExtendedIterator wrapped round {@code it}, which does not permit {@code .remove()} even if {@code it} does.
      *
      * @param <T> The type of object returned from the iterator.
      * @param it The Iterator to wrap.
@@ -93,7 +93,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
     }
 
     /**
-     * Set to <code>true</code> if this wrapping doesn't permit the use of {@link #remove()}, otherwise removal is delegated to the base iterator.
+     * Set to {@code true} if this wrapping doesn't permit the use of {@link #remove()}, otherwise removal is delegated to the base iterator.
      */
     private final boolean throwOnRemove;
 
