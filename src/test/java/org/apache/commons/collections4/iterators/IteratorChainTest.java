@@ -148,7 +148,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemove() {
         final Iterator<String> iter = makeObject();
         assertThrows(IllegalStateException.class, () -> iter.remove(), "Calling remove before the first call to next() should throw an exception");
-        assertTrue(iter.hasNext(),"initial has next should be true");
+        assertTrue(iter.hasNext(), "initial has next should be true");
         assertThrows(IllegalStateException.class, () -> iter.remove(), "Calling remove before the first call to next() should throw an exception");
 
         for (final String testValue : testArray) {
