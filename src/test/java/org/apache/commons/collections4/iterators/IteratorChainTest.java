@@ -126,8 +126,10 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertTrue(chain.hasNext(), "should have next");
         assertEquals("B", chain.next());
         assertTrue(chain.hasNext(), "should have next");
+        assertTrue(chain.hasNext(), "should not change");
         assertEquals("C", chain.next());
         assertFalse(chain.hasNext(), "should not have next");
+        assertFalse(chain.hasNext(), "should not change");
     }
 
     @Test
@@ -146,6 +148,9 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemove() {
         final Iterator<String> iter = makeObject();
         assertThrows(IllegalStateException.class, () -> iter.remove(), "Calling remove before the first call to next() should throw an exception");
+        assertTrue(iter.hasNext(),"initial has next should be true");
+        assertThrows(IllegalStateException.class, () -> iter.remove(), "Calling remove before the first call to next() should throw an exception");
+
         for (final String testValue : testArray) {
             final String iterValue = iter.next();
             assertEquals(testValue, iterValue, "Iteration value is correct");
@@ -153,6 +158,52 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
                 iter.remove();
             }
         }
+        assertTrue(list1.isEmpty(), "List is empty");
+        assertEquals(1, list2.size(), "List is empty");
+        assertTrue(list3.isEmpty(), "List is empty");
+    }
+
+    @Test
+    public void testChainingPerformsWell() {
+        Iterator<String> iter = makeObject();
+        for (int i = 0; i < 150; i++) {
+            final IteratorChain<String> chain = new IteratorChain<>();
+            chain.addIterator(iter);
+            iter = chain;
+        }
+
+        for (final String testValue : testArray) {
+            final String iterValue = iter.next();
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+            if (!iterValue.equals("Four")) {
+                iter.remove();
+            }
+        }
+        assertFalse(iter.hasNext(), "all values got iterated");
+        assertTrue(list1.isEmpty(), "List is empty");
+        assertEquals(1, list2.size(), "List is empty");
+        assertTrue(list3.isEmpty(), "List is empty");
+    }
+
+    @Test
+    public void testChaining() {
+        IteratorChain<String> chain = new IteratorChain<>();
+        chain.addIterator(list1.iterator());
+        chain = new IteratorChain<>(chain);
+        chain.addIterator(list2.iterator());
+        chain = new IteratorChain<>(chain);
+        chain.addIterator(list3.iterator());
+
+        for (final String testValue : testArray) {
+            assertTrue(chain.hasNext(), "chain contains values");
+            assertTrue(chain.hasNext(), "hasNext doesn't change on 2nd invocation");
+            final String iterValue = chain.next();
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+            if (!iterValue.equals("Four")) {
+                chain.remove();
+            }
+        }
+        assertFalse(chain.hasNext(), "all values got iterated");
         assertTrue(list1.isEmpty(), "List is empty");
         assertEquals(1, list2.size(), "List is empty");
         assertTrue(list3.isEmpty(), "List is empty");

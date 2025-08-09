@@ -75,6 +75,11 @@ public class IteratorChain<E> implements Iterator<E> {
     private boolean isLocked;
 
     /**
+     * Contains the result of the last hasNext() call until either next() or remove() is invoked
+     */
+    private Boolean cachedHasNextValue;
+
+    /**
      * Constructs an IteratorChain with no Iterators.
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some
@@ -183,9 +188,12 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public boolean hasNext() {
         lockChain();
-        updateCurrentIterator();
-        lastUsedIterator = currentIterator;
-        return currentIterator.hasNext();
+        if (cachedHasNextValue == null) {
+            updateCurrentIterator();
+            lastUsedIterator = currentIterator;
+            cachedHasNextValue = currentIterator.hasNext();
+        }
+        return cachedHasNextValue;
     }
 
     /**
@@ -221,7 +229,7 @@ public class IteratorChain<E> implements Iterator<E> {
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-
+        cachedHasNextValue = null;
         return currentIterator.next();
     }
 
@@ -244,6 +252,7 @@ public class IteratorChain<E> implements Iterator<E> {
         if (currentIterator == null) {
             updateCurrentIterator();
         }
+        cachedHasNextValue = null;
         lastUsedIterator.remove();
     }
 
