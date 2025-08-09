@@ -23,17 +23,22 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils.SetView;
 import org.apache.commons.collections4.set.PredicatedSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for SetUtils.
@@ -216,6 +221,31 @@ class SetUtilsTest {
         assertEquals(setA, set2);
         assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null));
         assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA));
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void testReverseNestedUnionPerfomWell(final boolean mergeLeft) {
+        Set<Integer> set = SetUtils.union(setA, setB);
+        for (int i = 0; i < 40; i++) {
+            if (mergeLeft) {
+                set = SetUtils.union(setB, set);
+            } else {
+                set = SetUtils.union(set, setB);
+            }
+        }
+        final Set<Integer> combinedSet = set;
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+                assertEquals(7, combinedSet.size());
+                assertTrue(combinedSet.containsAll(setA));
+                assertTrue(combinedSet.containsAll(setB));
+
+                final Iterator<Integer> iterator = combinedSet.iterator();
+                while (iterator.hasNext()) { // without the IteratorChain hasNext() caching, this would run hours
+                    iterator.next();
+                }
+                assertFalse(iterator.hasNext());
+            });
     }
 
     @Test

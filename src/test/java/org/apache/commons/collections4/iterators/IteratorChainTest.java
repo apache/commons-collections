@@ -19,8 +19,10 @@ package org.apache.commons.collections4.iterators;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -171,18 +173,20 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
             chain.addIterator(iter);
             iter = chain;
         }
-
-        for (final String testValue : testArray) {
-            final String iterValue = iter.next();
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-            if (!iterValue.equals("Four")) {
-                iter.remove();
-            }
-        }
-        assertFalse(iter.hasNext(), "all values got iterated");
-        assertTrue(list1.isEmpty(), "List is empty");
-        assertEquals(1, list2.size(), "List is empty");
-        assertTrue(list3.isEmpty(), "List is empty");
+        final Iterator<String> iterFinal = iter;
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+                for (final String testValue : testArray) {
+                    final String iterValue = iterFinal.next();
+                    assertEquals(testValue, iterValue, "Iteration value is correct");
+                    if (!iterValue.equals("Four")) {
+                        iterFinal.remove();
+                    }
+                }
+                assertFalse(iterFinal.hasNext(), "all values got iterated");
+                assertTrue(list1.isEmpty(), "List is empty");
+                assertEquals(1, list2.size(), "List is empty");
+                assertTrue(list3.isEmpty(), "List is empty");
+            });
     }
 
     @Test
