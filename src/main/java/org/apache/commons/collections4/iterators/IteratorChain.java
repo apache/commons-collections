@@ -63,7 +63,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> currentIterator;
 
     /**
-     * The "last used" Iterator is the Iterator upon which next() or hasNext()
+     * The "last used" Iterator is the Iterator upon which next()
      * was most recently called used for the remove() operation only
      */
     private Iterator<? extends E> lastUsedIterator;
@@ -75,7 +75,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private boolean isLocked;
 
     /**
-     * Contains the result of the last hasNext() call until either next() or remove() is invoked
+     * Contains the result of the last hasNext() call until next() is invoked
      */
     private Boolean cachedHasNextValue;
 

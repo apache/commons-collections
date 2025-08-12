@@ -181,13 +181,13 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals(iter.next(), "Two");
         assertEquals(iter.next(), "Three");
         assertTrue(iter.hasNext(), "next elements exists");
-        iter.remove();  // though hasNext() on next iterator has been invoked, remove on element on old iterator  must still work
+        iter.remove();  // though hasNext() on next iterator has been invoked, removing an element on old iterator must still work
         assertTrue(iter.hasNext(), "next elements exists");
         assertEquals(iter.next(), "Four");
 
         assertEquals(list1, Arrays.asList("One", "Two")); // Three must be gone
         assertEquals(list2, Arrays.asList("Four")); // Four still be there
-        assertEquals(list3, Arrays.asList("Five", "Six")); // Four still be there
+        assertEquals(list3, Arrays.asList("Five", "Six")); // Five+Six anyway
     }
 
     @Test
