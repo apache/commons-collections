@@ -227,7 +227,9 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public E next() {
         lockChain();
-        updateCurrentIterator();
+        if( cachedHasNextValue == null ) {
+            updateCurrentIterator();
+        }
         lastUsedIterator = currentIterator;
         cachedHasNextValue = null;
         return currentIterator.next();
