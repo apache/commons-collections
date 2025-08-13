@@ -63,7 +63,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> currentIterator;
 
     /**
-     * The "last used" Iterator is the Iterator upon which next() or hasNext()
+     * The "last used" Iterator is the Iterator upon which next()
      * was most recently called used for the remove() operation only
      */
     private Iterator<? extends E> lastUsedIterator;
@@ -73,6 +73,11 @@ public class IteratorChain<E> implements Iterator<E> {
      * is called
      */
     private boolean isLocked;
+
+    /**
+     * Contains the result of the last hasNext() call until next() is invoked
+     */
+    private Boolean cachedHasNextValue;
 
     /**
      * Constructs an IteratorChain with no Iterators.
@@ -183,9 +188,10 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public boolean hasNext() {
         lockChain();
-        updateCurrentIterator();
-        lastUsedIterator = currentIterator;
-        return currentIterator.hasNext();
+        if (cachedHasNextValue == null) {
+            updateCurrentIterator();
+        }
+        return cachedHasNextValue;
     }
 
     /**
@@ -219,9 +225,11 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public E next() {
         lockChain();
-        updateCurrentIterator();
+        if (cachedHasNextValue == null) {
+            updateCurrentIterator();
+        }
         lastUsedIterator = currentIterator;
-
+        cachedHasNextValue = null;
         return currentIterator.next();
     }
 
@@ -241,10 +249,11 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public void remove() {
         lockChain();
-        if (currentIterator == null) {
-            updateCurrentIterator();
+        if (lastUsedIterator == null)  {
+            throw new IllegalStateException("remove() has been invoked without next()");
         }
         lastUsedIterator.remove();
+        lastUsedIterator = null;  // must never be used twice without next() being invoked
     }
 
     /**
@@ -267,13 +276,16 @@ public class IteratorChain<E> implements Iterator<E> {
             } else {
                 currentIterator = iteratorQueue.remove();
             }
-            // set last used iterator here, in case the user calls remove
-            // before calling hasNext() or next() (although they shouldn't)
-            lastUsedIterator = currentIterator;
         }
-        while (!currentIterator.hasNext() && !iteratorQueue.isEmpty()) {
+        while (true) {
+            cachedHasNextValue = currentIterator.hasNext();
+            if (cachedHasNextValue) {
+                break;
+            }
+            if (iteratorQueue.isEmpty()) {
+                break;
+            }
             currentIterator = iteratorQueue.remove();
         }
     }
-
 }
