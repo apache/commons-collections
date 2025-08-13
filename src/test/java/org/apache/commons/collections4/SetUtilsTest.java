@@ -227,7 +227,7 @@ class SetUtilsTest {
     @ValueSource(booleans = {true, false})
     void testReverseNestedUnionPerfomWell(final boolean mergeLeft) {
         Set<Integer> set = SetUtils.union(setA, setB);
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 128; i++) {
             if (mergeLeft) {
                 set = SetUtils.union(setB, set);
             } else {

@@ -250,7 +250,7 @@ public class IteratorChain<E> implements Iterator<E> {
     public void remove() {
         lockChain();
         if (lastUsedIterator == null)  {
-            throw new IllegalStateException("remove has been invoked() without next()");
+            throw new IllegalStateException("remove() has been invoked without next()");
         }
         lastUsedIterator.remove();
         lastUsedIterator = null;  // must never be used twice without next() being invoked
