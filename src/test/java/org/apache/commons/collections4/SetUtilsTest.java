@@ -211,18 +211,6 @@ class SetUtilsTest {
         assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(null, predicate), "Expecting NullPointerException for null set.");
     }
 
-    @Test
-    void testUnion() {
-        final SetView<Integer> set = SetUtils.union(setA, setB);
-        assertEquals(7, set.size());
-        assertTrue(set.containsAll(setA));
-        assertTrue(set.containsAll(setB));
-        final Set<Integer> set2 = SetUtils.union(setA, SetUtils.<Integer>emptySet());
-        assertEquals(setA, set2);
-        assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null));
-        assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA));
-    }
-
     @ParameterizedTest
     @ValueSource(booleans = {true, false})
     void testReverseNestedUnionPerfomWell(final boolean mergeLeft) {
@@ -246,6 +234,18 @@ class SetUtilsTest {
                 }
                 assertFalse(iterator.hasNext());
             });
+    }
+
+    @Test
+    void testUnion() {
+        final SetView<Integer> set = SetUtils.union(setA, setB);
+        assertEquals(7, set.size());
+        assertTrue(set.containsAll(setA));
+        assertTrue(set.containsAll(setB));
+        final Set<Integer> set2 = SetUtils.union(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+        assertThrows(NullPointerException.class, () -> SetUtils.union(setA, null));
+        assertThrows(NullPointerException.class, () -> SetUtils.union(null, setA));
     }
 
     @Test
