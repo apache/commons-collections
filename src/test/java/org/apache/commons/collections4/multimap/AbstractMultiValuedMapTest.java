@@ -247,6 +247,50 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     }
 
+    public class MultiValuedMapKeySetTest extends AbstractSetTest<K> {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public K[] getFullElements() {
+            return (K[]) AbstractMultiValuedMapTest.this.makeFullMap().keySet().toArray();
+        }
+
+        @Override
+        protected int getIterationBehaviour() {
+            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
+        }
+
+        @Override
+        public boolean isAddSupported() {
+            return false;
+        }
+
+        @Override
+        public boolean isNullSupported() {
+            return AbstractMultiValuedMapTest.this.isAllowNullKey();
+        }
+
+        @Override
+        public boolean isRemoveSupported() {
+            return AbstractMultiValuedMapTest.this.isRemoveSupported();
+        }
+
+        @Override
+        public boolean isTestSerialization() {
+            return false;
+        }
+
+        @Override
+        public Set<K> makeFullCollection() {
+            return AbstractMultiValuedMapTest.this.makeFullMap().keySet();
+        }
+
+        @Override
+        public Set<K> makeObject() {
+            return AbstractMultiValuedMapTest.this.makeObject().keySet();
+        }
+    }
+
     public class MultiValuedMapKeysTest extends AbstractMultiSetTest<K> {
 
         @Override
@@ -301,50 +345,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             AbstractMultiValuedMapTest.this.resetFull();
             setCollection(AbstractMultiValuedMapTest.this.getMap().keys());
             MultiValuedMapKeysTest.this.setConfirmed(AbstractMultiValuedMapTest.this.getConfirmed().keys());
-        }
-    }
-
-    public class MultiValuedMapKeySetTest extends AbstractSetTest<K> {
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public K[] getFullElements() {
-            return (K[]) AbstractMultiValuedMapTest.this.makeFullMap().keySet().toArray();
-        }
-
-        @Override
-        protected int getIterationBehaviour() {
-            return AbstractMultiValuedMapTest.this.getIterationBehaviour();
-        }
-
-        @Override
-        public boolean isAddSupported() {
-            return false;
-        }
-
-        @Override
-        public boolean isNullSupported() {
-            return AbstractMultiValuedMapTest.this.isAllowNullKey();
-        }
-
-        @Override
-        public boolean isRemoveSupported() {
-            return AbstractMultiValuedMapTest.this.isRemoveSupported();
-        }
-
-        @Override
-        public boolean isTestSerialization() {
-            return false;
-        }
-
-        @Override
-        public Set<K> makeFullCollection() {
-            return AbstractMultiValuedMapTest.this.makeFullMap().keySet();
-        }
-
-        @Override
-        public Set<K> makeObject() {
-            return AbstractMultiValuedMapTest.this.makeObject().keySet();
         }
     }
 
