@@ -91,5 +91,4 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
     T unwrap() {
         return iterator;
     }
-
 }
