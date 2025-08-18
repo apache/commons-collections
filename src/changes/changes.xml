@@ -33,6 +33,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.functors.FunctorUtils.validate(Consumer...)</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.iterators.UnmodifiableIterator.remove() to match java.util.Iterator.remove().</action>
     <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-838">Calling SetUtils.union on multiple instances of SetView causes JVM to hang</action>
+    <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-722">Improve IteratorUtils.chainedIterator() performance.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <!-- UPDATE -->
