@@ -151,6 +151,51 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
+    public void testChainOfChains() {
+        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
+        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
+        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(iteratorChain1, iteratorChain2);
+
+        for (final String testValue : testArray1234) {
+            final String iterValue = (String) iteratorChainOfChains.next();
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+        }
+
+        assertFalse(iteratorChainOfChains.hasNext(), "Iterator should now be empty");
+        assertThrows(NoSuchElementException.class, iteratorChainOfChains::next, "NoSuchElementException must be thrown");
+    }
+
+    @Test
+    public void testChainOfUnmodifiableChains() {
+        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
+        final Iterator<String> unmodifiableChain1 = IteratorUtils.unmodifiableIterator(iteratorChain1);
+        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
+        final Iterator<String> unmodifiableChain2 = IteratorUtils.unmodifiableIterator(iteratorChain2);
+        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(unmodifiableChain1, unmodifiableChain2);
+
+        for (final String testValue : testArray1234) {
+            final String iterValue = (String) iteratorChainOfChains.next();
+            assertEquals(testValue, iterValue, "Iteration value is correct");
+        }
+
+        assertFalse(iteratorChainOfChains.hasNext(), "Iterator should now be empty");
+        assertThrows(NoSuchElementException.class, iteratorChainOfChains::next, "NoSuchElementException must be thrown");
+    }
+
+    @Test
+    public void testChainOfUnmodifiableChainsRetainsUnmodifiableBehaviourOfNestedIterator() {
+        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
+        final Iterator<String> unmodifiableChain1 = IteratorUtils.unmodifiableIterator(iteratorChain1);
+        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
+        final Iterator<String> unmodifiableChain2 = IteratorUtils.unmodifiableIterator(iteratorChain2);
+        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(unmodifiableChain1, unmodifiableChain2);
+
+        iteratorChainOfChains.next();
+        assertThrows(UnsupportedOperationException.class, iteratorChainOfChains::remove,
+                     "Calling remove must fail when nested iterator is unmodifiable");
+    }
+
+    @Test
     void testConstructList() {
         final List<Iterator<String>> list = new ArrayList<>();
         list.add(list1.iterator());
@@ -227,6 +272,27 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
+    public void testMultipleChainedIteratorPerformWellCollections722() {
+        final Map<Integer, List<Integer>> source = new HashMap<>();
+        for (int i = 0; i < 50; i++) {
+            source.put(i, Arrays.asList(1, 2, 3));
+        }
+
+        Iterator<Integer> iterator = IteratorUtils.emptyIterator();
+        final Set<Entry<Integer, List<Integer>>> entries = source.entrySet();
+        for (final Entry<Integer, List<Integer>> entry : entries) {
+            final Iterator<Integer> next = entry.getValue().iterator();
+            iterator = IteratorUtils.chainedIterator(iterator, next);
+        }
+        final Iterator<Integer> lastIterator = iterator;
+        assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
+                      while (lastIterator.hasNext()) {
+                          lastIterator.next().toString();
+                      }
+            });
+    }
+
+    @Test
     @Override
     public void testRemove() {
         final Iterator<String> iter = makeObject();
@@ -277,71 +343,5 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         }
         assertEquals(0, list1.size());
         assertEquals(1, list2.size());
-    }
-
-    @Test
-    public void testChainOfChains() {
-        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
-        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
-        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(iteratorChain1, iteratorChain2);
-
-        for (final String testValue : testArray1234) {
-            final String iterValue = (String) iteratorChainOfChains.next();
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-        }
-
-        assertFalse(iteratorChainOfChains.hasNext(), "Iterator should now be empty");
-        assertThrows(NoSuchElementException.class, iteratorChainOfChains::next, "NoSuchElementException must be thrown");
-    }
-
-    @Test
-    public void testChainOfUnmodifiableChains() {
-        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
-        final Iterator<String> unmodifiableChain1 = IteratorUtils.unmodifiableIterator(iteratorChain1);
-        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
-        final Iterator<String> unmodifiableChain2 = IteratorUtils.unmodifiableIterator(iteratorChain2);
-        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(unmodifiableChain1, unmodifiableChain2);
-
-        for (final String testValue : testArray1234) {
-            final String iterValue = (String) iteratorChainOfChains.next();
-            assertEquals(testValue, iterValue, "Iteration value is correct");
-        }
-
-        assertFalse(iteratorChainOfChains.hasNext(), "Iterator should now be empty");
-        assertThrows(NoSuchElementException.class, iteratorChainOfChains::next, "NoSuchElementException must be thrown");
-    }
-
-    @Test
-    public void testChainOfUnmodifiableChainsRetainsUnmodifiableBehaviourOfNestedIterator() {
-        final Iterator<String> iteratorChain1 = new IteratorChain<>(list1.iterator(), list2.iterator());
-        final Iterator<String> unmodifiableChain1 = IteratorUtils.unmodifiableIterator(iteratorChain1);
-        final Iterator<String> iteratorChain2 = new IteratorChain<>(list3.iterator(), list4.iterator());
-        final Iterator<String> unmodifiableChain2 = IteratorUtils.unmodifiableIterator(iteratorChain2);
-        final Iterator<String> iteratorChainOfChains = new IteratorChain<>(unmodifiableChain1, unmodifiableChain2);
-
-        iteratorChainOfChains.next();
-        assertThrows(UnsupportedOperationException.class, iteratorChainOfChains::remove,
-                     "Calling remove must fail when nested iterator is unmodifiable");
-    }
-
-    @Test
-    public void testMultipleChainedIteratorPerformWellCollections722() {
-        final Map<Integer, List<Integer>> source = new HashMap<>();
-        for (int i = 0; i < 50; i++) {
-            source.put(i, Arrays.asList(1, 2, 3));
-        }
-
-        Iterator<Integer> iterator = IteratorUtils.emptyIterator();
-        final Set<Entry<Integer, List<Integer>>> entries = source.entrySet();
-        for (final Entry<Integer, List<Integer>> entry : entries) {
-            final Iterator<Integer> next = entry.getValue().iterator();
-            iterator = IteratorUtils.chainedIterator(iterator, next);
-        }
-        final Iterator<Integer> lastIterator = iterator;
-        assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
-                      while (lastIterator.hasNext()) {
-                          lastIterator.next().toString();
-                      }
-            });
     }
 }
