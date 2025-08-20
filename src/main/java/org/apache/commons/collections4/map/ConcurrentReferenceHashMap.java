@@ -194,7 +194,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the estimated number of concurrently updating threads. The implementation performs internal sizing to try to accommodate this many threads.
          *
          * @param concurrencyLevel estimated number of concurrently updating threads
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setConcurrencyLevel(final int concurrencyLevel) {
             this.concurrencyLevel = concurrencyLevel;
@@ -205,7 +205,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the initial capacity. The implementation performs internal sizing to accommodate this many elements.
          *
          * @param initialCapacity the initial capacity.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setInitialCapacity(final int initialCapacity) {
             this.initialCapacity = initialCapacity;
@@ -216,7 +216,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the reference type to use for keys.
          *
          * @param keyReferenceType the reference type to use for keys.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setKeyReferenceType(final ReferenceType keyReferenceType) {
             this.keyReferenceType = keyReferenceType;
@@ -227,7 +227,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the load factor factor, used to control resizing. Resizing may be performed when the average number of elements per bin exceeds this threshold.
          *
          * @param loadFactor the load factor factor, used to control resizing
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setLoadFactor(final float loadFactor) {
             this.loadFactor = loadFactor;
@@ -238,7 +238,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the behavioral options.
          *
          * @param options the behavioral options.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setOptions(final EnumSet<Option> options) {
             this.options = options;
@@ -249,7 +249,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the values to load into a new map.
          *
          * @param sourceMap the values to load into a new map.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setSourceMap(final Map<? extends K, ? extends V> sourceMap) {
             this.sourceMap = sourceMap;
@@ -260,7 +260,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
          * Sets the reference type to use for values.
          *
          * @param valueReferenceType the reference type to use for values.
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> setValueReferenceType(final ReferenceType valueReferenceType) {
             this.valueReferenceType = valueReferenceType;
@@ -270,7 +270,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets key reference type to {@link ReferenceType#SOFT}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> softKeys() {
             setKeyReferenceType(ReferenceType.SOFT);
@@ -280,7 +280,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets value reference type to {@link ReferenceType#SOFT}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> softValues() {
             setValueReferenceType(ReferenceType.SOFT);
@@ -290,7 +290,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets key reference type to {@link ReferenceType#STRONG}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> strongKeys() {
             setKeyReferenceType(ReferenceType.STRONG);
@@ -300,7 +300,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets value reference type to {@link ReferenceType#STRONG}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> strongValues() {
             setValueReferenceType(ReferenceType.STRONG);
@@ -310,7 +310,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets key reference type to {@link ReferenceType#WEAK}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> weakKeys() {
             setKeyReferenceType(ReferenceType.WEAK);
@@ -320,7 +320,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets value reference type to {@link ReferenceType#WEAK}.
          *
-         * @return this instance.
+         * @return {@code this} instance.
          */
         public Builder<K, V> weakValues() {
             setValueReferenceType(ReferenceType.WEAK);
