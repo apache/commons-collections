@@ -490,6 +490,45 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
+    void testClassCastExceptionOnNonMultiKey() {
+        final MultiKeyMap<String, String> map = new MultiKeyMap<>();
+        final Object nonMultiKey = "test";
+        assertThrows(ClassCastException.class, () -> map.put((MultiKey<? extends String>) nonMultiKey, "value"));
+    }
+
+    @Test
+    void testMultiKeyMapNullMap() {
+        assertThrows(NullPointerException.class, () -> MultiKeyMap.multiKeyMap(null));
+    }
+
+    @Test
+    void testMultiKeyRemoveAll_ReturnsTrueWhenEntriesRemoved() {
+        resetFull();
+        final MultiKeyMap<K, V> multimap = getMap();
+        assertEquals(12, multimap.size());
+
+        final boolean result = multimap.removeAll(I1);
+        assertEquals(8, multimap.size());
+        assertTrue(result);
+
+        for (final MapIterator<MultiKey<? extends K>, V> it = multimap.mapIterator(); it.hasNext();) {
+            final MultiKey<? extends K> key = it.next();
+            assertFalse(I1.equals(key.getKey(0)));
+        }
+    }
+
+    @Test
+    void testMultiKeyRemoveAll_ReturnsFalseWhenNoEntriesRemoved() {
+        resetFull();
+        final MultiKeyMap<K, V> multimap = getMap();
+        assertEquals(12, multimap.size());
+
+        final boolean result = multimap.removeAll(new Object());
+        assertEquals(12, multimap.size());
+        assertFalse(result);
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testNullHandling() {
         resetFull();
