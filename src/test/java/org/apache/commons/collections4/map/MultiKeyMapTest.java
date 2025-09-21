@@ -172,19 +172,19 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         assertEquals(2, map.size());
         map.put((K) I1, (K) I4, (V) "1-4");
         assertEquals(2, map.size());
-        assertTrue(map.containsKey(I1, I3));
-        assertTrue(map.containsKey(I1, I4));
-        assertFalse(map.containsKey(I1, I2));
+        assertTrue(map.containsKey((K) I1,(K) I3));
+        assertTrue(map.containsKey((K) I1,(K) I4));
+        assertFalse(map.containsKey((K) I1, (K) I2));
 
         final MultiKeyMap<K, V> cloned = map.clone();
         assertEquals(2, map.size());
-        assertTrue(cloned.containsKey(I1, I3));
-        assertTrue(cloned.containsKey(I1, I4));
-        assertFalse(cloned.containsKey(I1, I2));
+        assertTrue(cloned.containsKey((K) I1, (K) I3));
+        assertTrue(cloned.containsKey((K) I1, (K) I4));
+        assertFalse(cloned.containsKey((K) I1, (K) I2));
         cloned.put((K) I1, (K) I5, (V) "1-5");
         assertEquals(2, cloned.size());
-        assertTrue(cloned.containsKey(I1, I4));
-        assertTrue(cloned.containsKey(I1, I5));
+        assertTrue(cloned.containsKey((K) I1, (K) I4));
+        assertTrue(cloned.containsKey((K) I1, (K) I5));
     }
 
     @Test
@@ -428,7 +428,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        multimap.removeAll(I1);
+        multimap.removeAll((K) I1);
         assertEquals(8, multimap.size());
         for (final MapIterator<MultiKey<? extends K>, V> it = multimap.mapIterator(); it.hasNext();) {
             final MultiKey<? extends K> key = it.next();
@@ -442,7 +442,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        multimap.removeAll(I2, I3);
+        multimap.removeAll((K) I2, (K) I3);
         assertEquals(9, multimap.size());
         for (final MapIterator<MultiKey<? extends K>, V> it = multimap.mapIterator(); it.hasNext();) {
             final MultiKey<? extends K> key = it.next();
@@ -456,7 +456,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        multimap.removeAll(I1, I1, I2);
+        multimap.removeAll((K) I1, (K) I1, (K) I2);
         assertEquals(9, multimap.size());
         for (final MapIterator<MultiKey<? extends K>, V> it = multimap.mapIterator(); it.hasNext();) {
             final MultiKey<? extends K> key = it.next();
@@ -481,7 +481,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
 
-        multimap.removeAll(I1, I1, I2, I3);
+        multimap.removeAll((K) I1, (K) I1, (K) I2, (K) I3);
         assertEquals(10, multimap.size());
         for (final MapIterator<MultiKey<? extends K>, V> it = multimap.mapIterator(); it.hasNext();) {
             final MultiKey<? extends K> key = it.next();
