@@ -43,7 +43,7 @@ import org.apache.commons.collections4.OrderedIterator;
  *
  * @param <E> the type of elements in this list
  * @since 3.0
- * @deprecated use {@link AbstractLinkedListJava21} instead
+ * @deprecated Use {@link AbstractLinkedListJava21} instead
  */
 @Deprecated
 public abstract class AbstractLinkedList<E> implements List<E> {
