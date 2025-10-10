@@ -84,6 +84,26 @@ public class OrderedProperties extends Properties {
         return orderedKeys.stream().map(k -> new SimpleEntry<>(k, get(k))).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /**
+     * Enumerates all key/value pairs in the specified LinkedHashSet and omits the property if the key or value is not a string.
+     *
+     * @param result The result set to populate.
+     * @return The given set.
+     */
+    private synchronized LinkedHashSet<String> enumerateStringProperties(final LinkedHashSet<String> result) {
+        if (defaults != null) {
+            result.addAll(defaults.stringPropertyNames());
+        }
+        for (final Enumeration<?> e = keys(); e.hasMoreElements();) {
+            final Object k = e.nextElement();
+            final Object v = get(k);
+            if (k instanceof String && v instanceof String) {
+                result.add((String) k);
+            }
+        }
+        return result;
+    }
+
     @Override
     public synchronized void forEach(final BiConsumer<? super Object, ? super Object> action) {
         Objects.requireNonNull(action);
@@ -152,6 +172,11 @@ public class OrderedProperties extends Properties {
             orderedKeys.remove(key);
         }
         return remove;
+    }
+
+    @Override
+    public Set<String> stringPropertyNames() {
+        return enumerateStringProperties(new LinkedHashSet<>());
     }
 
     @Override
