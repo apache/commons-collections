@@ -38,22 +38,22 @@ class SortedPropertiesTest {
     private SortedProperties assertAscendingOrder(final SortedProperties sortedProperties) {
         final String[] keys = { "1", "10", "11", "2", "3", "4", "5", "6", "7", "8", "9" };
         final Enumeration<Object> enumObjects = sortedProperties.keys();
-        for (int i = 0; i < keys.length; i++) {
-            assertEquals("key" + keys[i], enumObjects.nextElement());
+        for (final String key : keys) {
+            assertEquals("key" + key, enumObjects.nextElement());
         }
         final Iterator<Object> iterSet = sortedProperties.keySet().iterator();
-        for (int i = 0; i < keys.length; i++) {
-            assertEquals("key" + keys[i], iterSet.next());
+        for (final String key : keys) {
+            assertEquals("key" + key, iterSet.next());
         }
         final Iterator<Entry<Object, Object>> iterEntrySet = sortedProperties.entrySet().iterator();
-        for (int i = 0; i < keys.length; i++) {
+        for (final String key : keys) {
             final Entry<Object, Object> next = iterEntrySet.next();
-            assertEquals("key" + keys[i], next.getKey());
-            assertEquals("value" + keys[i], next.getValue());
+            assertEquals("key" + key, next.getKey());
+            assertEquals("value" + key, next.getValue());
         }
         final Enumeration<?> propertyNames = sortedProperties.propertyNames();
-        for (int i = 0; i < keys.length; i++) {
-            assertEquals("key" + keys[i], propertyNames.nextElement());
+        for (final String key : keys) {
+            assertEquals("key" + key, propertyNames.nextElement());
         }
         final Set<String> propertyNameSet = sortedProperties.stringPropertyNames();
         final AtomicInteger i = new AtomicInteger(0);
