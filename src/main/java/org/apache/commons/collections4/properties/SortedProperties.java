@@ -18,7 +18,6 @@
 package org.apache.commons.collections4.properties;
 
 import java.util.AbstractMap;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
@@ -29,8 +28,6 @@ import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.collections4.iterators.IteratorEnumeration;
 
 /**
  * A drop-in replacement for {@link Properties} for sorting keys.
@@ -54,8 +51,7 @@ public class SortedProperties extends Properties {
 
     @Override
     public Set<Map.Entry<Object, Object>> entrySet() {
-        final Stream<SimpleEntry<Object, Object>> stream = sortedKeys().map(k -> new AbstractMap.SimpleEntry<>(k, getProperty(k)));
-        return stream.collect(Collectors.toCollection(LinkedHashSet::new));
+        return keyStream().map(k -> new AbstractMap.SimpleEntry<>(k, get(k))).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     /**
@@ -79,13 +75,13 @@ public class SortedProperties extends Properties {
     }
 
     @Override
-    public synchronized void forEach(BiConsumer<? super Object, ? super Object> action) {
-        keySet().stream().forEach(k -> action.accept(k, get(k)));
+    public synchronized void forEach(final BiConsumer<? super Object, ? super Object> action) {
+        keyStream().forEach(k -> action.accept(k, get(k)));
     }
 
     @Override
     public synchronized Enumeration<Object> keys() {
-        return new IteratorEnumeration<>(sortedKeys().collect(Collectors.toList()).iterator());
+        return Collections.enumeration(keySet());
     }
 
     @Override
@@ -93,13 +89,13 @@ public class SortedProperties extends Properties {
         return new TreeSet<>(super.keySet());
     }
 
-    @Override
-    public Enumeration<?> propertyNames() {
-        return Collections.enumeration(keySet());
+    private Stream<Object> keyStream() {
+        return keySet().stream();
     }
 
-    private Stream<String> sortedKeys() {
-        return keySet().stream().map(Object::toString);
+    @Override
+    public Enumeration<?> propertyNames() {
+        return Collections.enumeration(stringPropertyNames());
     }
 
     @Override
