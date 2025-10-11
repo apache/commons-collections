@@ -129,7 +129,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public Enumeration<?> propertyNames() {
-        return Collections.enumeration(orderedKeys);
+        return Collections.enumeration(stringPropertyNames());
     }
 
     @Override
