@@ -175,7 +175,7 @@ public class IteratorChain<E> implements Iterator<E> {
                 // in case it is an IteratorChain, wrap every underlying iterators as unmodifiable
                 // multiple rechainings would otherwise lead to exponential growing number of function calls
                 // when the iteratorChain gets used.
-                for (Iterator<? extends E> nestedIterator : ((IteratorChain<? extends E>) underlyingIterator).iteratorQueue) {
+                for (final Iterator<? extends E> nestedIterator : ((IteratorChain<? extends E>) underlyingIterator).iteratorQueue) {
                     iteratorQueue.add(UnmodifiableIterator.unmodifiableIterator(nestedIterator));
                 }
             } else {
