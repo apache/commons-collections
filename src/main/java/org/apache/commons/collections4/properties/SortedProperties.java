@@ -19,11 +19,14 @@ package org.apache.commons.collections4.properties;
 
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,12 +58,52 @@ public class SortedProperties extends Properties {
         return stream.collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /**
+     * Enumerates all key/value pairs in the specified TreeSet and omits the property if the key or value is not a string.
+     *
+     * @param result The result set to populate.
+     * @return The given set.
+     */
+    private synchronized TreeSet<String> enumerateStringProperties(final TreeSet<String> result) {
+        if (defaults != null) {
+            result.addAll(defaults.stringPropertyNames());
+        }
+        for (final Enumeration<?> e = keys(); e.hasMoreElements();) {
+            final Object k = e.nextElement();
+            final Object v = get(k);
+            if (k instanceof String && v instanceof String) {
+                result.add((String) k);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public synchronized void forEach(BiConsumer<? super Object, ? super Object> action) {
+        keySet().stream().forEach(k -> action.accept(k, get(k)));
+    }
+
     @Override
     public synchronized Enumeration<Object> keys() {
         return new IteratorEnumeration<>(sortedKeys().collect(Collectors.toList()).iterator());
     }
 
+    @Override
+    public Set<Object> keySet() {
+        return new TreeSet<>(super.keySet());
+    }
+
+    @Override
+    public Enumeration<?> propertyNames() {
+        return Collections.enumeration(keySet());
+    }
+
     private Stream<String> sortedKeys() {
         return keySet().stream().map(Object::toString).sorted();
+    }
+
+    @Override
+    public Set<String> stringPropertyNames() {
+        return enumerateStringProperties(new TreeSet<>());
     }
 }

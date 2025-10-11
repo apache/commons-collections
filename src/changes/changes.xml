@@ -35,7 +35,11 @@
     <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-838">Calling SetUtils.union on multiple instances of SetView causes JVM to hang</action>
     <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-722">Improve IteratorUtils.chainedIterator() performance.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory, PMD">Fix UselessOverridingMethod in org.apache.commons.collections4.properties.PropertiesFactory.</action>
-    <action type="fix" dev="ggregory" due-to="Adam Rauch, Gary Gregory" issue="COLLECTIONS-693">OrderedProperties.stringPropertyNames() returns an unordered set.</action>
+    <action type="fix" dev="ggregory" due-to="Adam Rauch, Gary Gregory" issue="COLLECTIONS-693">OrderedProperties.stringPropertyNames() returns an unordered Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.keySet() returned an unsorted Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.propertyNames() returned an unsorted Enumeration.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.stringPropertyNames() returned an unsorted Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.forEach() called its consumer out of order.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <!-- UPDATE -->
