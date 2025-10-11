@@ -99,7 +99,7 @@ public class SortedProperties extends Properties {
     }
 
     private Stream<String> sortedKeys() {
-        return keySet().stream().map(Object::toString).sorted();
+        return keySet().stream().map(Object::toString);
     }
 
     @Override
