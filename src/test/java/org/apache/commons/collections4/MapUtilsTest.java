@@ -628,29 +628,35 @@ class MapUtilsTest {
 
     @Test
     void testInvertMap() {
-        final Map<String, String> in = new HashMap<>(5, 1);
+        testInvertMap(new HashMap<>(5, 1));
+    }
+
+    private void testInvertMap(final Map<String, String> in) {
+        // setup
         in.put("1", "A");
         in.put("2", "B");
         in.put("3", "C");
         in.put("4", "D");
         in.put("5", "E");
-
         final Set<String> inKeySet = new HashSet<>(in.keySet());
         final Set<String> inValSet = new HashSet<>(in.values());
-
+        // invert
         final Map<String, String> out = MapUtils.invertMap(in);
-
+        // assert
         final Set<String> outKeySet = new HashSet<>(out.keySet());
         final Set<String> outValSet = new HashSet<>(out.values());
-
         assertEquals(inKeySet, outValSet);
         assertEquals(inValSet, outKeySet);
-
         assertEquals("1", out.get("A"));
         assertEquals("2", out.get("B"));
         assertEquals("3", out.get("C"));
         assertEquals("4", out.get("D"));
         assertEquals("5", out.get("E"));
+    }
+
+    @Test
+    void testInvertMapDefault() {
+        testInvertMap(new HashMap<>());
     }
 
     @Test
