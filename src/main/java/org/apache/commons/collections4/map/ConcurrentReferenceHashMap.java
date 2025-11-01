@@ -400,9 +400,9 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     /**
      * ConcurrentReferenceHashMap list entry. Note that this is never exported out as a user-visible Map.Entry.
      * <p>
-     * Because the value field is volatile, not final, it is legal wrt the Java Memory Model for an unsynchronized reader to see null instead of initial value
-     * when read via a data race. Although a reordering leading to this is not likely to ever actually occur, the Segment.readValueUnderLock method is used as a
-     * backup in case a null (pre-initialized) value is ever seen in an unsynchronized access method.
+     * Because the value field is volatile, not final, it is legal with respect to the Java Memory Model for an unsynchronized reader to see null instead of
+     * initial value when read via a data race. Although a reordering leading to this is not likely to ever actually occur, the Segment.readValueUnderLock
+     * method is used as a backup in case a null (pre-initialized) value is ever seen in an unsynchronized access method.
      * </p>
      */
     private static final class HashEntry<K, V> {
