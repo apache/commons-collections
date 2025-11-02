@@ -88,7 +88,7 @@ The following deprecations must be resolved in v2.1.1 to allow compatibility wit
 </ul>
 
 <p>
-For the future, a new tool <a href="http://clirr.sourceforge.net">clirr</a> is being developed
+For the future, a new tool <a href="https://clirr.sourceforge.net">clirr</a> is being developed
 to help spot binary incompatibility before release.
 </p>
 
