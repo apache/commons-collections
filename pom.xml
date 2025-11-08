@@ -29,7 +29,6 @@
   <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
   <url>https://commons.apache.org/proper/commons-collections/</url>
   <issueManagement>
-    <system>jira</system>
     <url>https://issues.apache.org/jira/browse/COLLECTIONS</url>
   </issueManagement>
   <scm>
