@@ -363,7 +363,7 @@ public class CollectionUtils {
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the number of occurrences of obj in coll
      * @throws NullPointerException if collection is null
-     * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
+     * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.
      */
     @Deprecated
@@ -718,7 +718,7 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
-     * @deprecated since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -794,7 +794,7 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return true if at least one element of the collection matches the predicate
-     * @deprecated since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -875,7 +875,7 @@ public class CollectionUtils {
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first element of the collection which matches the predicate or null if none could be found
-     * @deprecated since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
@@ -894,7 +894,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
@@ -914,7 +914,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
@@ -932,7 +932,7 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
-     * @deprecated since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
@@ -954,7 +954,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return closure
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
@@ -976,7 +976,7 @@ public class CollectionUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
-     * @deprecated since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
+     * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
      */
     @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
@@ -999,7 +999,7 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      * @throws NullPointerException if iterator is null
-     * @deprecated since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
+     * @deprecated Since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
      */
     @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
@@ -1361,7 +1361,7 @@ public class CollectionUtils {
      * @return true if every element of the collection matches the predicate or if the
      * collection is empty, false otherwise
      * @since 4.0
-     * @deprecated since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -2020,7 +2020,7 @@ public class CollectionUtils {
      * @param collection  the collection to synchronize, must not be null
      * @return a synchronized collection backed by the given collection
      * @throws NullPointerException if the collection is null
-     * @deprecated since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
+     * @deprecated Since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
      */
     @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
@@ -2127,7 +2127,7 @@ public class CollectionUtils {
      * @param collection  the collection to make unmodifiable, must not be null
      * @return an unmodifiable collection backed by the given collection
      * @throws NullPointerException if the collection is null
-     * @deprecated since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
+     * @deprecated Since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
      */
     @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
