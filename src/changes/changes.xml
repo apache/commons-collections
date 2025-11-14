@@ -43,7 +43,7 @@
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <!-- UPDATE -->
-    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 91 #612, #645.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 92 #612, #645, #662.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM).</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.easymock:easymock from 5.5.0 to 5.6.0 #617.</action>
