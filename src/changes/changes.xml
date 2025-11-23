@@ -40,6 +40,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.propertyNames() returned an unsorted Enumeration.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.stringPropertyNames() returned an unsorted Set.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.forEach() called its consumer out of order.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <!-- UPDATE -->

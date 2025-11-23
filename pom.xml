@@ -180,11 +180,11 @@
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>.asf.yaml</exclude>
-            <exclude>site-content/**/*</exclude>
-            <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>.asf.yaml</inputExclude>
+            <inputExclude>site-content/**/*</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/collections4/data/test/*</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <plugin>
@@ -272,11 +272,11 @@
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>.asf.yaml</exclude>
-            <exclude>site-content/**/*</exclude>
-            <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>.asf.yaml</inputExclude>
+            <inputExclude>site-content/**/*</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/collections4/data/test/*</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <plugin>
