@@ -43,6 +43,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 93 #612, #645, #662, #663.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644.</action>
