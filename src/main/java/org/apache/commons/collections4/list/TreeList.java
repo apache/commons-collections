@@ -76,9 +76,11 @@ public class TreeList<E> extends AbstractList<E> {
      * The nodes don't know the index of the object they are holding.  They
      * do know however their position relative to their parent node.
      * This allows to calculate the index of a node while traversing the tree.
+     * </p>
      * <p>
      * The Faedelung calculation stores a flag for both the left and right child
      * to indicate if they are a child (false) or a link as in linked list (true).
+     * </p>
      */
     static class AVLNode<E> {
         /** The left child node or the predecessor if {@link #leftIsPrevious}.*/
@@ -132,6 +134,7 @@ public class TreeList<E> extends AbstractList<E> {
          * to this method will construct the subtree for elements {@code start}
          * through {@code end} of the collection, assuming the iterator
          * {@code e} already points at element {@code start}.
+         * </p>
          *
          * @param iterator  an iterator over the collection, which should already point
          *          to the element at index {@code start} within the collection
@@ -949,6 +952,7 @@ public class TreeList<E> extends AbstractList<E> {
      * <p>
      * This method runs in O(n + log m) time, where m is
      * the size of this list and n is the size of {@code c}.
+     * </p>
      *
      * @param c  the collection to be added to this list
      * @return {@code true} if this list changed as a result of the call
