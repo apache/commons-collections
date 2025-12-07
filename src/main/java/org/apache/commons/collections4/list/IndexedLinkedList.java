@@ -1431,7 +1431,7 @@ public class IndexedLinkedList<E> implements Deque<E>,
         } else {
             linkBefore(element, 
                        index, 
-                       getNode(index));
+                       fingerList.getNodeNoFingersFix(index));
         }   
     }
     
