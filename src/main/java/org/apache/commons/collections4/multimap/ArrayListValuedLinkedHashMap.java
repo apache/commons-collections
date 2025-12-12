@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
@@ -116,6 +117,11 @@ public class ArrayListValuedLinkedHashMap<K, V> extends AbstractListValuedMap<K,
     @Override
     protected ArrayList<V> createCollection() {
         return new ArrayList<>(initialListCapacity);
+    }
+
+    @Override
+    public ArrayListValuedLinkedHashMap<V, K> inverted() {
+        return MultiMapUtils.invert(this, new ArrayListValuedLinkedHashMap<>());
     }
 
     /**
