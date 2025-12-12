@@ -94,6 +94,19 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     }
 
     @Test
+    void testInverted() {
+        final ArrayListValuedHashMap<String, String> shopping = new ArrayListValuedHashMap<>(4);
+        shopping.put("Alice", "Bread");
+        shopping.put("Alice", "Milk");
+        shopping.put("Alice", "Milk");
+        shopping.put("Bob", "Pizza");
+        shopping.put("Bob", "Bread");
+        shopping.put("Bob", "Bread");
+        assertEquals("{Pizza=[Bob], Bread=[Bob, Bob, Alice], Milk=[Alice, Alice]}",
+                shopping.inverted().toString());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = makeObject();

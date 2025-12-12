@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedLinkedHashMap;
+import org.apache.commons.collections4.multimap.LinkedHashSetValuedLinkedHashMap;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -114,6 +116,21 @@ class MultiMapUtilsTest {
 
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         assertEquals(new HashSet<>(Arrays.asList(values)), set);
+    }
+
+    @Test
+    void testInvertInto() {
+        final ArrayListValuedLinkedHashMap<String, String> shopping = new ArrayListValuedLinkedHashMap<>(4);
+        shopping.put("Alice", "Bread");
+        shopping.put("Alice", "Milk");
+        shopping.put("Alice", "Milk");
+        shopping.put("Bob", "Pizza");
+        shopping.put("Bob", "Bread");
+        shopping.put("Bob", "Bread");
+        final LinkedHashSetValuedLinkedHashMap<String, String> buyersOf = new LinkedHashSetValuedLinkedHashMap<>();
+        MultiMapUtils.invertInto(shopping, buyersOf);
+        assertEquals("{Bread=[Alice, Bob], Milk=[Alice], Pizza=[Bob]}",
+                buyersOf.toString());
     }
 
     @Test
