@@ -20,10 +20,11 @@
  * These are usually used in maps, however they can be used as data holders in any collection.
  * <p>
  * The following key/value designs are included:
+ * </p>
  * <ul>
- *   <li>Map Entry - various map entry implementations
- *   <li>KeyValue - a key and value pair, without map entry semantics
- *   <li>MultiKey - a holder of multiple keys tied together
+ *   <li>Map Entry - various map entry implementations</li>
+ *   <li>KeyValue - a key and value pair, without map entry semantics</li>
+ *   <li>MultiKey - a holder of multiple keys tied together</li>
  * </ul>
  */
 package org.apache.commons.collections4.keyvalue;

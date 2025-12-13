@@ -21,7 +21,7 @@
  * The following collection implementations are provided in the package:
  * </p>
  * <ul>
- *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}
+ *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}</li>
  * </ul>
  */
 package org.apache.commons.collections4;

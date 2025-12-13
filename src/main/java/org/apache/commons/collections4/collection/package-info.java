@@ -20,16 +20,19 @@
  * {@link java.util.Collection Collection} interface.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
- *   <li>CompositeCollection - a collection that combines multiple collections into one
+ *   <li>CompositeCollection - a collection that combines multiple collections into one</li>
  * </ul>
+ * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
- *   <li>Synchronized - synchronizes method access for multithreaded environments
- *   <li>Unmodifiable - ensures the collection cannot be altered
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms elements as they are added
- *   <li>Indexed - provides a map-like view onto another collection
+ *   <li>Synchronized - synchronizes method access for multithreaded environments</li>
+ *   <li>Unmodifiable - ensures the collection cannot be altered</li>
+ *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Transformed - transforms elements as they are added</li>
+ *   <li>Indexed - provides a map-like view onto another collection</li>
  * </ul>
  */
 package org.apache.commons.collections4.collection;

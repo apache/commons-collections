@@ -25,29 +25,31 @@
  * simple iteration of map keys and values.
  * <p>
  * The following implementations are provided:
+ * </p>
  * <ul>
- *   <li>CaseInsensitiveMap - map that compares keys in a case insensitive way
- *   <li>CompositeMap - map that combines multiple maps into a single view
- *   <li>HashedMap - general purpose HashMap replacement supporting MapIterator
- *   <li>Flat3Map - designed for good performance at size 3 or less
- *   <li>LinkedMap - a hash map that maintains insertion order, supporting OrderedMapIterator
- *   <li>LRUMap - a hash map that maintains a maximum size by removing the least recently used entries
- *   <li>MultiKeyMap - map that provides special methods for using more than one key to access the value
- *   <li>ReferenceMap - allows the garbage collector to collect keys and values using equals() for comparison
- *   <li>ReferenceIdentityMap - allows the garbage collector to collect keys and values using == for comparison
- *   <li>SingletonMap - a fully featured map to hold one key-value pair
- *   <li>StaticBucketMap - internally synchronized and designed for thread-contentious environments
+ *   <li>CaseInsensitiveMap - map that compares keys in a case insensitive way</li>
+ *   <li>CompositeMap - map that combines multiple maps into a single view</li>
+ *   <li>HashedMap - general purpose HashMap replacement supporting MapIterator</li>
+ *   <li>Flat3Map - designed for good performance at size 3 or less</li>
+ *   <li>LinkedMap - a hash map that maintains insertion order, supporting OrderedMapIterator</li>
+ *   <li>LRUMap - a hash map that maintains a maximum size by removing the least recently used entries</li>
+ *   <li>MultiKeyMap - map that provides special methods for using more than one key to access the value</li>
+ *   <li>ReferenceMap - allows the garbage collector to collect keys and values using equals() for comparison</li>
+ *   <li>ReferenceIdentityMap - allows the garbage collector to collect keys and values using == for comparison</li>
+ *   <li>SingletonMap - a fully featured map to hold one key-value pair</li>
+ *   <li>StaticBucketMap - internally synchronized and designed for thread-contentious environments</li>
  * </ul>
  * <p>
  * The following decorators are provided:
+ * </p>
  * <ul>
- *   <li>Unmodifiable - ensures the collection cannot be altered
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms each element added
- *   <li>FixedSize - ensures that the size of the map cannot change
- *   <li>Defaulted - provides default values for non-existing keys
- *   <li>Lazy - creates objects in the map on demand
- *   <li>ListOrdered - ensures that insertion order is retained
+ *   <li>Unmodifiable - ensures the collection cannot be altered</li>
+ *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Transformed - transforms each element added</li>
+ *   <li>FixedSize - ensures that the size of the map cannot change</li>
+ *   <li>Defaulted - provides default values for non-existing keys</li>
+ *   <li>Lazy - creates objects in the map on demand</li>
+ *   <li>ListOrdered - ensures that insertion order is retained</li>
  * </ul>
  */
 package org.apache.commons.collections4.map;

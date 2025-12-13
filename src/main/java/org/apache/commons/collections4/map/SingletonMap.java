@@ -52,9 +52,9 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * The key and value can be obtained by:
  * </p>
  * <ul>
- * <li>normal Map methods and views
- * <li>the {@code MapIterator}, see {@link #mapIterator()}
- * <li>the {@code KeyValue} interface (just cast - no object creation)
+ * <li>normal Map methods and views</li>
+ * <li>the {@code MapIterator}, see {@link #mapIterator()}</li>
+ * <li>the {@code KeyValue} interface (just cast - no object creation)</li>
  * </ul>
  *
  * @param <K> the type of the keys in this map

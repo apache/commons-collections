@@ -1838,11 +1838,11 @@ public class CollectionUtils {
      * This method can handles objects as follows
      * </p>
      * <ul>
-     * <li>Collection - the collection size
-     * <li>Map - the map size
-     * <li>Array - the array size
-     * <li>Iterator - the number of elements remaining in the iterator
-     * <li>Enumeration - the number of elements remaining in the enumeration
+     * <li>Collection - the collection size</li>
+     * <li>Map - the map size</li>
+     * <li>Array - the array size</li>
+     * <li>Iterator - the number of elements remaining in the iterator</li>
+     * <li>Enumeration - the number of elements remaining in the enumeration</li>
      * </ul>
      *
      * @param object  the object to get the size of, may be null
@@ -1887,11 +1887,11 @@ public class CollectionUtils {
      * This method can handles objects as follows
      * </p>
      * <ul>
-     * <li>Collection - via collection isEmpty
-     * <li>Map - via map isEmpty
-     * <li>Array - using array size
-     * <li>Iterator - via hasNext
-     * <li>Enumeration - via hasMoreElements
+     * <li>Collection - via collection isEmpty</li>
+     * <li>Map - via map isEmpty</li>
+     * <li>Array - using array size</li>
+     * <li>Iterator - via hasNext</li>
+     * <li>Enumeration - via hasMoreElements</li>
      * </ul>
      * <p>
      * Note: This method is named to avoid clashing with

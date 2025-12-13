@@ -45,24 +45,24 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  * {@code PredicateUtils} provides reference implementations and utilities
  * for the Predicate functor interface. The supplied predicates are:
  * <ul>
- * <li>Invoker - returns the result of a method call on the input object
- * <li>InstanceOf - true if the object is an instanceof a class
- * <li>Equal - true if the object equals() a specified object
- * <li>Identity - true if the object == a specified object
- * <li>Null - true if the object is null
- * <li>NotNull - true if the object is not null
- * <li>Unique - true if the object has not already been evaluated
- * <li>And/All - true if all of the predicates are true
- * <li>Or/Any - true if any of the predicates is true
- * <li>Either/One - true if only one of the predicate is true
- * <li>Neither/None - true if none of the predicates are true
- * <li>Not - true if the predicate is false, and vice versa
- * <li>Transformer - wraps a Transformer as a Predicate
- * <li>True - always return true
- * <li>False - always return false
- * <li>Exception - always throws an exception
- * <li>NullIsException/NullIsFalse/NullIsTrue - check for null input
- * <li>Transformed - transforms the input before calling the predicate
+ * <li>Invoker - returns the result of a method call on the input object</li>
+ * <li>InstanceOf - true if the object is an instanceof a class</li>
+ * <li>Equal - true if the object equals() a specified object</li>
+ * <li>Identity - true if the object == a specified object</li>
+ * <li>Null - true if the object is null</li>
+ * <li>NotNull - true if the object is not null</li>
+ * <li>Unique - true if the object has not already been evaluated</li>
+ * <li>And/All - true if all of the predicates are true</li>
+ * <li>Or/Any - true if any of the predicates is true</li>
+ * <li>Either/One - true if only one of the predicate is true</li>
+ * <li>Neither/None - true if none of the predicates are true</li>
+ * <li>Not - true if the predicate is false, and vice versa</li>
+ * <li>Transformer - wraps a Transformer as a Predicate</li>
+ * <li>True - always return true</li>
+ * <li>False - always return false</li>
+ * <li>Exception - always throws an exception</li>
+ * <li>NullIsException/NullIsFalse/NullIsTrue - check for null input</li>
+ * <li>Transformed - transforms the input before calling the predicate</li>
  * </ul>
  * <p>
  * All the supplied predicates are Serializable.

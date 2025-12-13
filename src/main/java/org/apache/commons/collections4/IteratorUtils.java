@@ -866,17 +866,17 @@ public class IteratorUtils {
      * This method can handle objects as follows
      * </p>
      * <ul>
-     * <li>null - empty iterator
-     * <li>Iterator - returned directly
-     * <li>Enumeration - wrapped
-     * <li>Collection - iterator from collection returned
-     * <li>Map - values iterator returned
-     * <li>Dictionary - values (elements) enumeration returned as iterator
-     * <li>array - iterator over array returned
-     * <li>object with iterator() public method accessed by reflection
-     * <li>object - singleton iterator
-     * <li>NodeList - iterator over the list
-     * <li>Node - iterator over the child nodes
+     * <li>null - empty iterator</li>
+     * <li>Iterator - returned directly</li>
+     * <li>Enumeration - wrapped</li>
+     * <li>Collection - iterator from collection returned</li>
+     * <li>Map - values iterator returned</li>
+     * <li>Dictionary - values (elements) enumeration returned as iterator</li>
+     * <li>array - iterator over array returned</li>
+     * <li>object with iterator() public method accessed by reflection</li>
+     * <li>object - singleton iterator</li>
+     * <li>NodeList - iterator over the list</li>
+     * <li>Node - iterator over the child nodes</li>
      * </ul>
      *
      * @param obj  the object to convert to an iterator

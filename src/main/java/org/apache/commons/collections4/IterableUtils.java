@@ -39,10 +39,10 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
  * </p>
  * <ul>
  * <li>All decorator methods are <em>not</em> null-safe for the provided Iterable argument; for example, they will throw a {@link NullPointerException} if a
- * null Iterable is passed as argument.
+ * null Iterable is passed as argument.</li>
  * <li>All other utility methods are null-safe for the provided Iterable argument; for example, they will treat a null Iterable the same way as an empty one.
  * For other arguments which are null, a {@link Predicate} will result in a {@link NullPointerException}. Exception: passing a null {@link Comparator} is
- * equivalent to a Comparator with natural ordering.
+ * equivalent to a Comparator with natural ordering.</li>
  * </ul>
  *
  * @since 4.1

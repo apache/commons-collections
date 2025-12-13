@@ -32,7 +32,7 @@
  * <p>
  * The following decorators are provided:
  * <ul>
- *   <li>Transformed - transforms each element added
+ *   <li>Transformed - transforms each element added</li>
  * </ul>
  */
 package org.apache.commons.collections4.splitmap;

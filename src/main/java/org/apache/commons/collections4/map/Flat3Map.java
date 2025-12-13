@@ -44,11 +44,11 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * It also has good garbage collection characteristics.
  * </p>
  * <ul>
- * <li>Optimized for operation at size 3 or less.
- * <li>Still works well once size 3 exceeded.
- * <li>Gets at size 3 or less are about 0-10% faster than HashMap,
- * <li>Puts at size 3 or less are over 4 times faster than HashMap.
- * <li>Performance 5% slower than HashMap once size 3 exceeded once.
+ * <li>Optimized for operation at size 3 or less.</li>
+ * <li>Still works well once size 3 exceeded.</li>
+ * <li>Gets at size 3 or less are about 0-10% faster than HashMap,</li>
+ * <li>Puts at size 3 or less are over 4 times faster than HashMap.</li>
+ * <li>Performance 5% slower than HashMap once size 3 exceeded once.</li>
  * </ul>
  * <p>
  * The design uses two distinct modes of operation - flat and delegate.

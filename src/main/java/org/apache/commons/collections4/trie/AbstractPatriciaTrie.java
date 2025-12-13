@@ -2259,9 +2259,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
@@ -2288,9 +2288,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
@@ -2340,9 +2340,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would

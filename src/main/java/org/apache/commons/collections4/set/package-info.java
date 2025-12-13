@@ -23,18 +23,22 @@
  * The implementations are in the form of direct implementations and decorators.
  * A decorator wraps another implementation of the interface to add some
  * specific additional functionality.
+ * </p>
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
- *   <li>CompositeSet - a set that combines multiple sets into one
+ *   <li>CompositeSet - a set that combines multiple sets into one</li>
  * </ul>
+ * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
- *   <li>Unmodifiable - ensures the collection cannot be altered
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms each element added
- *   <li>ListOrdered - ensures that insertion order is retained
- *   <li>MapBackedSet - a set formed by decorating a Map
+ *   <li>Unmodifiable - ensures the collection cannot be altered</li>
+ *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Transformed - transforms each element added</li>
+ *   <li>ListOrdered - ensures that insertion order is retained</li>
+ *   <li>MapBackedSet - a set formed by decorating a Map</li>
  * </ul>
  */
 package org.apache.commons.collections4.set;
