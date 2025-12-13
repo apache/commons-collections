@@ -111,6 +111,19 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
+    void testInverted() {
+        final HashSetValuedHashMap<String, String> dependencies = new HashSetValuedHashMap<>();
+        dependencies.put("commons-configuration2", "commons-logging");
+        dependencies.put("commons-configuration2", "commons-lang3");
+        dependencies.put("commons-configuration2", "commons-text");
+        dependencies.put("commons-beanutils", "commons-collections");
+        dependencies.put("commons-beanutils", "commons-logging");
+        final Set<String> loggingUsages = dependencies.inverted().get("commons-logging");
+        assertEquals("[commons-beanutils, commons-configuration2]",
+                loggingUsages.toString());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();

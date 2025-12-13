@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -168,6 +169,27 @@ public class MultiMapUtils {
      */
     public static boolean isEmpty(final MultiValuedMap<?, ?> map) {
         return map == null || map.isEmpty();
+    }
+
+    /**
+     * A utility method to invert the mappings from a source MultiValuedMap
+     * to a collector MultiValuedMap. If you are trying to create an
+     * inverse multimap of the same kind as the original, consider using
+     * {@link MultiValuedMap#inverted()}.
+     *
+     * @param source take key-to-value mappings from here
+     * @param dest add value-to-key mappings here
+     * @param <K> the dest key type
+     * @param <V> the dest value type
+     * @param <M> the dest multimap
+     * @return the destination
+     */
+    public static <K, V, M extends MultiValuedMap<K, V>>
+    M invertInto(MultiValuedMap<? extends V, ? extends K> source, M dest) {
+        for (Map.Entry<? extends V, ? extends K> e : source.entries()) {
+            dest.put(e.getValue(), e.getKey());
+        }
+        return dest;
     }
 
     /**
