@@ -159,19 +159,6 @@ public class MultiMapUtils {
     }
 
     /**
-     * Null-safe check if the specified {@code MultiValuedMap} is empty.
-     * <p>
-     * If the provided map is null, returns true.
-     * </p>
-     *
-     * @param map  the map to check, may be null
-     * @return true if the map is empty or null
-     */
-    public static boolean isEmpty(final MultiValuedMap<?, ?> map) {
-        return map == null || map.isEmpty();
-    }
-
-    /**
      * A utility method to invert the mappings from an input MultiValuedMap
      * and add them to an output MultiValuedMap. Use this method to have complete
      * control of the output MultiValuedMap or when merging several inverse mappings.
@@ -190,6 +177,19 @@ public class MultiMapUtils {
             output.put(e.getValue(), e.getKey());
         }
         return output;
+    }
+
+    /**
+     * Null-safe check if the specified {@code MultiValuedMap} is empty.
+     * <p>
+     * If the provided map is null, returns true.
+     * </p>
+     *
+     * @param map  the map to check, may be null
+     * @return true if the map is empty or null
+     */
+    public static boolean isEmpty(final MultiValuedMap<?, ?> map) {
+        return map == null || map.isEmpty();
     }
 
     /**
