@@ -41,9 +41,10 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.stringPropertyNames() returned an unsorted Set.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.forEach() called its consumer out of order.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
-    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix malformed Javadoc comments.</action>
+    <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory, Sebb">Add MultiValuedMap.inverted() #665.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 93 #612, #645, #662, #663.</action>
