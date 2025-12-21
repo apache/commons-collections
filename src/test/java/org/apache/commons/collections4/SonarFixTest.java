@@ -16,8 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -31,6 +30,6 @@ public class SonarFixTest {
     @Test
     public void testCalculate() {
         final SonarFix fix = new SonarFix();
-        assertEquals(5, fix.calculate(2, 3));
+        Assert.assertEquals(5, fix.calculate(2, 3));
     }
 }
