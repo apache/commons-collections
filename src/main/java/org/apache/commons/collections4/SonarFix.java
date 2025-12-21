@@ -24,9 +24,9 @@ public final class SonarFix {
 
     /**
      * Calculates the sum of two integers.
-     * @param a the first integer
-     * @param b the second integer
-     * @return the sum of a and b
+     * @param a the first integer.
+     * @param b the second integer.
+     * @return the sum of a and b.
      */
     public int calculate(final int a, final int b) {
         return a + b;
