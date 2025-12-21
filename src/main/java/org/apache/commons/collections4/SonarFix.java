@@ -18,8 +18,9 @@ package org.apache.commons.collections4;
 
 /**
  * Simple class to fix SonarCloud coverage.
+ * @since 4.5
  */
-public class SonarFix {
+public final class SonarFix {
 
     /**
      * Calculates the sum of two integers.
