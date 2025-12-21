@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,6 +30,6 @@ public class SonarFixTest {
     @Test
     public void testCalculate() {
         final SonarFix fix = new SonarFix();
-        org.junit.jupiter.api.Assertions.assertEquals(5, fix.calculate(2, 3));
+        Assertions.assertEquals(5, fix.calculate(2, 3));
     }
 }
