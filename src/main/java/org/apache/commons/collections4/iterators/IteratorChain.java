@@ -69,7 +69,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> lastUsedIterator;
 
     /**
-     * ComparatorChain is "locked" after the first time compare(Object,Object)
+     * ComparatorChain is "locked" after the first time compare(Object, Object)
      * is called
      */
     private boolean isLocked;

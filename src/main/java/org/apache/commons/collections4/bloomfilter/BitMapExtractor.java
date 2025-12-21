@@ -131,7 +131,7 @@ public interface BitMapExtractor {
      * arrays reimplement this method.</em>
      * </p>
      *
-     * @param other The other BitMapExtractor that provides the y values in the (x,y) pair.
+     * @param other The other BitMapExtractor that provides the y values in the (x, y) pair.
      * @param func  The function to apply.
      * @return A LongPredicate that tests this BitMapExtractor's bitmap values in order.
      */

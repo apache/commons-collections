@@ -736,9 +736,9 @@ public class CollectionUtils {
      * </p>
      * <p>
      * This is equivalent to
-     * {@code {@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})}
+     * {@code {@link #subtract subtract}({@link #union union(a, b)},{@link #intersection intersection(a, b)})}
      * or
-     * {@code {@link #union union}({@link #subtract subtract(a,b)},{@link #subtract subtract(b,a)})}.
+     * {@code {@link #union union}({@link #subtract subtract(a, b)},{@link #subtract subtract(b, a)})}.
      * </p>
      *
      * @param a the first collection, must not be null

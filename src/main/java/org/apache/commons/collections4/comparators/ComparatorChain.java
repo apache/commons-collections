@@ -66,7 +66,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     /**
      * Constructs a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
-     * the compare(Object,Object) method, or an
+     * the compare(Object, Object) method, or an
      * UnsupportedOperationException is thrown
      */
     public ComparatorChain() {
@@ -182,7 +182,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Perform comparisons on the Objects as per
-     * Comparator.compare(o1,o2).
+     * Comparator.compare(o1, o2).
      *
      * @param o1  the first object to compare
      * @param o2  the second object to compare

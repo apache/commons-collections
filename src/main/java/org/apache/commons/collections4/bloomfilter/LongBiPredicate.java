@@ -20,7 +20,7 @@ package org.apache.commons.collections4.bloomfilter;
  * Represents a function that accepts a two long-valued argument and produces a binary result.
  * This is the long-consuming primitive specialization for {@code BiPredicate}.
  * <p>
- * This is a functional interface whose functional method is {@code test(long,long)}.
+ * This is a functional interface whose functional method is {@code test(long, long)}.
  * </p>
  *
  * @since 4.5.0-M1

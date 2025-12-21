@@ -471,9 +471,9 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * correctly handled.
      * <p>
      * If you call this method with a normal map, each entry is
-     * added using {@code put(Object,Object)}.
+     * added using {@code put(Object, Object)}.
      * If you call this method with a multi map, each entry is
-     * added using {@code putAll(Object,Collection)}.
+     * added using {@code putAll(Object, Collection)}.
      * </p>
      *
      * @param map  the map to copy (either a normal or multi map)

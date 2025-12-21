@@ -70,7 +70,7 @@ public interface CellExtractor extends IndexExtractor {
      * <li>The CellExtractor aggregates duplicate indices from the IndexExtractor.</li>
      * </ul>
      *
-     * <p>A CellExtractor that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
+     * <p>A CellExtractor that outputs the mapping [(1, 2),(2, 3),(3, 1)] can be created from many combinations
      * of indices including:</p>
      * <pre>
      * [1, 1, 2, 2, 2, 3]
