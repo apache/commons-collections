@@ -16,20 +16,19 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests for SonarFix class.
  */
-class SonarFixTest {
+public class SonarFixTest {
 
     /**
      * Test the calculate method.
      */
     @Test
-    void testCalculate() {
+    public void testCalculate() {
         final SonarFix fix = new SonarFix();
-        assertEquals(5, fix.calculate(2, 3));
+        org.junit.jupiter.api.Assertions.assertEquals(5, fix.calculate(2, 3));
     }
 }
