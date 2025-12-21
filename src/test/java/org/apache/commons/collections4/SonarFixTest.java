@@ -16,20 +16,20 @@
  */
 package org.apache.commons.collections4;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for SonarFix class.
  */
-public class SonarFixTest {
+class SonarFixTest {
 
     /**
      * Test the calculate method.
      */
     @Test
-    public void testCalculate() {
+    void testCalculate() {
         final SonarFix fix = new SonarFix();
-        Assert.assertEquals(5, fix.calculate(2, 3));
+        assertEquals(5, fix.calculate(2, 3));
     }
 }
