@@ -176,7 +176,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * I sort {@code true} values before
      * {@code false} values.  In other words,
      * returns {@code true} iff
-     * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE,Boolean.TRUE)}
+     * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE, Boolean.TRUE)}
      * returns a positive value.
      *
      * @return the trueFirst flag
