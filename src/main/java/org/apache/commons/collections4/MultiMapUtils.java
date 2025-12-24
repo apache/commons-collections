@@ -166,8 +166,8 @@ public class MultiMapUtils {
      *
      * @param input take key-to-value mappings from here
      * @param output add value-to-key mappings here
-     * @param <K> the output MultiValuedMap key type
-     * @param <V> the output MultiValuedMap value type
+     * @param <K> the output MultiValuedMap key type and the input MultiValuedMap value type
+     * @param <V> the output MultiValuedMap value type and the input MultiValuedMap key type
      * @param <M> the output MultiValuedMap with key and value types reversed compared with input
      * @return the updated output MultiValuedMap
      */
