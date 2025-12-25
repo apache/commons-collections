@@ -119,6 +119,32 @@ class MultiMapUtilsTest {
     }
 
     @Test
+    void testGetValuesAsListIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+        }
+
+        final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
+        list.add("v4");
+        assertFalse(map.containsMapping("key1", "v4"));
+    }
+
+    @Test
+    void testGetValuesAsSetIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new HashSetValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+        }
+
+        final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
+        set.add("v4");
+        assertFalse(map.containsMapping("key1", "v4"));
+    }
+
+    @Test
     void testInvert() {
         final HashSetValuedHashMap<String, String> usages = new HashSetValuedHashMap<>();
 
