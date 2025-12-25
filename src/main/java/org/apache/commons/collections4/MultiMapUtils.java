@@ -180,6 +180,26 @@ public class MultiMapUtils {
     }
 
     /**
+     * A utility method to invert the mappings from an input Map
+     * and add them to an output MultiValuedMap. Use this method to have complete
+     * control of the output MultiValuedMap or when merging several inverse mappings.
+     *
+     * @param input take key-to-value mappings from here
+     * @param output add value-to-key mappings here
+     * @param <K> the output MultiValuedMap key type and the input Map value type
+     * @param <V> the output MultiValuedMap value type and the input Map key type
+     * @param <M> the output MultiValuedMap with key and value types reversed compared with input
+     * @return the updated output MultiValuedMap
+     */
+    public static <K, V, M extends MultiValuedMap<K, V>>
+    M invert(Map<? extends V, ? extends K> input, M output) {
+        for (Map.Entry<? extends V, ? extends K> e : input.entrySet()) {
+            output.put(e.getValue(), e.getKey());
+        }
+        return output;
+    }
+
+    /**
      * Null-safe check if the specified {@code MultiValuedMap} is empty.
      * <p>
      * If the provided map is null, returns true.
