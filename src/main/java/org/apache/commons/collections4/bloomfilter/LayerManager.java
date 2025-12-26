@@ -138,7 +138,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
         }
 
         /**
-         * Removes the earliest filters in the list when the the number of filters
+         * Removes the earliest filters in the list when the number of filters
          * exceeds maxSize.
          *
          * @param <T> Type of BloomFilter.
@@ -292,7 +292,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Constructs a new instance.
      *
-     * @param filterSupplier the non-null supplier of new Bloom filters to add the the list
+     * @param filterSupplier the non-null supplier of new Bloom filters to add the list
      *                       when necessary.
      * @param extendCheck    The non-null predicate that checks if a new filter should be
      *                       added to the list.
