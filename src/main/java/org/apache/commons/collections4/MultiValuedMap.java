@@ -148,7 +148,7 @@ public interface MultiValuedMap<K, V> {
      * @return a new MultiValuedMap with inverted mappings
      */
     default MultiValuedMap<V, K> inverted() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(getClass() + ".inverted()");
     }
 
     /**
