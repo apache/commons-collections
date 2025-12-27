@@ -146,6 +146,7 @@ public interface MultiValuedMap<K, V> {
      * for each key-to-value mapping in the original.
      *
      * @return a new MultiValuedMap with inverted mappings
+     * @since 4.6.0
      */
     default MultiValuedMap<V, K> inverted() {
         throw new UnsupportedOperationException(getClass() + ".inverted()");
