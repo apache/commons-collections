@@ -26,6 +26,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
@@ -141,6 +142,39 @@ public class IterableUtils {
     }
 
     /**
+     * Combines the provided iterables into a single iterable.
+     * <p>
+     * The returned iterable has an iterator that traverses the elements in the order
+     * of the arguments, i.e. iterables[0], iterables[1], .... The source iterators
+     * are not polled until necessary.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the corresponding
+     * input iterator supports it.
+     *
+     * @param <E> the element type
+     * @param iterableSuppliers  the iterables to combine, may not be null
+     * @return a new iterable, combining the provided iterables
+     * @throws NullPointerException if either of the provided iterables is null
+     */
+    public static <E> Iterable<E> chainedIterable(final Supplier<Iterable<? extends E>>... iterableSuppliers) {
+        checkNotNull(iterableSuppliers);
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return new LazyIteratorChain<E>() {
+                    @Override
+                    protected Iterator<? extends E> nextIterator(final int count) {
+                        if (count > iterableSuppliers.length) {
+                            return null;
+                        }
+                        return iterableSuppliers[count - 1].get().iterator();
+                    }
+                };
+            }
+        };
+    }
+
+    /**
      * Combines two iterables into a single iterable.
      * <p>
      * The returned iterable has an iterator that traverses the elements in {@code a},
@@ -228,6 +262,19 @@ public class IterableUtils {
         Objects.requireNonNull(iterables, "iterables");
         for (final Iterable<?> iterable : iterables) {
             Objects.requireNonNull(iterable, "iterable");
+        }
+    }
+
+    /**
+     * Fail-fast check for null arguments.
+     *
+     * @param suppliers  the suppliers to check
+     * @throws NullPointerException if the argument or any of its contents is null
+     */
+    static void checkNotNull(final Supplier<?>... suppliers) {
+        Objects.requireNonNull(suppliers, "suppliers");
+        for (final Supplier<?> supplier : suppliers) {
+            Objects.requireNonNull(supplier, "supplier");
         }
     }
 
@@ -384,7 +431,7 @@ public class IterableUtils {
     }
 
     /**
-     * Worker method for {@link #duplicateSet(Collection)} and friends.
+     * Worker method for {@link #duplicateSet(Iterable)} and friends.
      *
      * @param <C> the type of Collection.
      * @param <E> the type of elements in the Collection.
