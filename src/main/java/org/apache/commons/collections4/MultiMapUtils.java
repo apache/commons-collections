@@ -159,21 +159,23 @@ public class MultiMapUtils {
     }
 
     /**
-     * A utility method to invert the mappings from an input MultiValuedMap
-     * and add them to an output MultiValuedMap. Use this method to have complete
-     * control of the output MultiValuedMap or when merging several inverse mappings.
-     * In simple cases, consider just using the {@link MultiValuedMap#inverted()} method.
+     * Inverts the mappings from an input MultiValuedMap by adding entries to an output MultiValuedMap. The input is unchanged.
+     * <p>
+     * Use this method to have complete control of the output MultiValuedMap or when merging several inverse mappings. In simple cases, consider using
+     * {@link MultiValuedMap#inverted()} method.
+     * </p>
      *
-     * @param input take key-to-value mappings from here
-     * @param output add value-to-key mappings here
-     * @param <K> the output MultiValuedMap key type
-     * @param <V> the output MultiValuedMap value type
-     * @param <M> the output MultiValuedMap with key and value types reversed compared with input
-     * @return the updated output MultiValuedMap
+     * @param <K>    the input <em>value</em> type and output <em>key</em> type.
+     * @param <V>    the input <em>key</em> type and output <em>value</em> type.
+     * @param <M>    the output MultiValuedMap type where {@code K} is the <em>key</em> type and {@code V} is the <em>value</em> type.
+     * @param input  The input key-value mappings of type {@code <V, K>}.
+     * @param output The output value-key mappings of type {@code <K, V>}.
+     * @return The updated output MultiValuedMap of type {@code <K, V>}
+     * @see MultiValuedMap#inverted()
+     * @since 4.6.0
      */
-    public static <K, V, M extends MultiValuedMap<K, V>>
-    M invert(MultiValuedMap<? extends V, ? extends K> input, M output) {
-        for (Map.Entry<? extends V, ? extends K> e : input.entries()) {
+    public static <K, V, M extends MultiValuedMap<K, V>> M invert(final MultiValuedMap<? extends V, ? extends K> input, final M output) {
+        for (final Map.Entry<? extends V, ? extends K> e : input.entries()) {
             output.put(e.getValue(), e.getKey());
         }
         return output;
