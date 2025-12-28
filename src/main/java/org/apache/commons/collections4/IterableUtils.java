@@ -624,7 +624,7 @@ public class IterableUtils {
                 return new LazyIteratorChain<E>() {
                     @Override
                     protected Iterator<? extends E> nextIterator(final int count) {
-                        if (IterableUtils.isEmpty(iterable)) {
+                        if (IterableUtils.isEmpty(iterable)) { //NOPMD: qualifier is needed here
                             return null;
                         }
                         return iterable.iterator();
