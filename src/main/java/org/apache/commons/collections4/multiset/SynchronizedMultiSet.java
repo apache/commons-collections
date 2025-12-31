@@ -45,6 +45,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
 
         /**
          * Constructs a new instance.
+         *
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the multiset
          */

@@ -46,6 +46,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
         /**
          * Constructs a new instance.
+         *
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the bag
          */

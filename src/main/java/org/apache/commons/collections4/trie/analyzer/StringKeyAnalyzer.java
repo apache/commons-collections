@@ -23,6 +23,7 @@ import org.apache.commons.collections4.trie.KeyAnalyzer;
  * <p>
  * This class is stateless.
  * </p>
+ *
  * @since 4.0
  */
 public class StringKeyAnalyzer extends KeyAnalyzer<String> {

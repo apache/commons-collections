@@ -38,6 +38,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractListDecorator() {

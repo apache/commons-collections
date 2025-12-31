@@ -138,6 +138,7 @@ public class FluentIterable<E> implements Iterable<E> {
 
     /**
      * Create a new FluentIterable by wrapping the provided iterable.
+     *
      * @param iterable  the iterable to wrap
      */
     private FluentIterable(final Iterable<E> iterable) {

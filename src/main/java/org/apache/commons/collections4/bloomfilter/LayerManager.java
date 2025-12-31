@@ -361,6 +361,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Gets the Bloom filter from the first layer.
      * No extension check is performed during this call.
+     *
      * @return The Bloom filter from the first layer.
      * @see #getTarget()
      */

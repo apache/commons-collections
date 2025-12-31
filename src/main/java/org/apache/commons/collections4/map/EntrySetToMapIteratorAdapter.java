@@ -43,6 +43,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
 
     /**
      * Create a new EntrySetToMapIteratorAdapter.
+     *
      * @param entrySet  the entrySet to adapt
      */
     public EntrySetToMapIteratorAdapter(final Set<Map.Entry<K, V>> entrySet) {
@@ -52,6 +53,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
 
     /**
      * Gets the currently active entry.
+     *
      * @return Map.Entry&lt;K, V&gt;
      */
     protected synchronized Map.Entry<K, V> current() {

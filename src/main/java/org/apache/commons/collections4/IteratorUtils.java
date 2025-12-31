@@ -759,6 +759,7 @@ public class IteratorUtils {
      * The Iterator is advanced to {@code 0} (or to the end, if
      * {@code 0} exceeds the number of entries) as a side effect of this method.
      * </p>
+     *
      * @param <E> the type of object in the {@link Iterator}
      * @param iterator the iterator to get a value from
      * @return the first object

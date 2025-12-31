@@ -42,6 +42,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractOrderedMapDecorator() {

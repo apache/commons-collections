@@ -95,6 +95,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /**
          * Constructs a new instance.
+         *
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractView(final DataElement orderType) {
@@ -130,6 +131,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /**
          * Constructs a new instance.
+         *
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractViewIterator(final DataElement orderType) {

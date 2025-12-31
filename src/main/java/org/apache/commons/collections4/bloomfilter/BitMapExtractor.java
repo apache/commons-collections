@@ -94,6 +94,7 @@ public interface BitMapExtractor {
      * The default implementation of this method is slow. It is recommended
      * that implementing classes reimplement this method.
      * </p>
+     *
      * @return An array of bit map data.
      */
     default long[] asBitMapArray() {

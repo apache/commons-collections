@@ -32,6 +32,7 @@ public final class IndexFilter {
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
      * number has been seen. Suitable for Shapes that have few hash functions.
+     *
      * @since 4.5.0
      */
     static class ArrayTracker implements IntPredicate {
@@ -40,6 +41,7 @@ public final class IndexFilter {
 
         /**
          * Constructs the tracker based on the shape.
+         *
          * @param shape the shape to build the tracker for.
          */
         ArrayTracker(final Shape shape) {
@@ -70,6 +72,7 @@ public final class IndexFilter {
 
         /**
          * Constructs a bit map based tracker for the specified shape.
+         *
          * @param shape The shape that is being generated.
          */
         BitMapTracker(final Shape shape) {

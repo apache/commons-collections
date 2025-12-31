@@ -309,6 +309,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         /**
          * Purges the specified reference
+         *
          * @param ref  the reference to purge
          * @return true or false
          */
@@ -517,6 +518,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         /**
          * Resolve enum from int.
+         *
          * @param value  the int value
          * @return ReferenceType
          * @throws IllegalArgumentException if the specified value is invalid.

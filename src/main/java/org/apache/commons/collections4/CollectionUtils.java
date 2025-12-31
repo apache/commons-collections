@@ -58,6 +58,7 @@ public class CollectionUtils {
 
     /**
      * Helper class to easily access cardinality properties of two collections.
+     *
      * @param <O>  the element type
      */
     private static class CardinalityHelper<O> {
@@ -169,6 +170,7 @@ public class CollectionUtils {
 
     /**
      * Helper class for set-related operations, for example union, subtract, intersection.
+     *
      * @param <O>  the element type
      */
     private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
@@ -181,6 +183,7 @@ public class CollectionUtils {
 
         /**
          * Create a new set operation helper from the two collections.
+         *
          * @param a  the first collection
          * @param b  the second collection
          */
@@ -200,6 +203,7 @@ public class CollectionUtils {
 
         /**
          * Returns the resulting collection.
+         *
          * @return the result
          */
         public Collection<O> list() {
@@ -208,6 +212,7 @@ public class CollectionUtils {
 
         /**
          * Add the object {@code count} times to the result collection.
+         *
          * @param obj  the object to add
          * @param count  the count
          */
@@ -373,6 +378,7 @@ public class CollectionUtils {
 
     /**
      * Ensures an index is not negative.
+     *
      * @param index the index to check.
      * @throws IndexOutOfBoundsException if the index is negative.
      */

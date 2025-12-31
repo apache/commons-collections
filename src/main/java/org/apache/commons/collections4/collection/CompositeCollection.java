@@ -37,6 +37,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * Add and remove operations require the use of a pluggable strategy. If no
  * strategy is provided then add and remove are unsupported.
  * </p>
+ *
  * @param <E> the type of the elements in the collection
  * @since 3.0
  */
@@ -228,6 +229,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code clear()} on each collection.
      * </p>
+     *
      * @throws UnsupportedOperationException if clear is unsupported
      */
     @Override
@@ -242,6 +244,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code contains()} on each collection.
      * </p>
+     *
      * @param obj  the object to search for
      * @return true if obj is contained in any of the contained collections
      */
@@ -261,6 +264,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * This implementation calls {@code contains()} for each element in the
      * specified collection.
      * </p>
+     *
      * @param coll  the collection to check for
      * @return true if all elements contained
      */
@@ -288,6 +292,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Gets the collection mutator to be used for this CompositeCollection.
+     *
      * @return CollectionMutator&lt;E&gt;
      */
     protected CollectionMutator<E> getMutator() {
@@ -299,6 +304,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code isEmpty()} on each collection.
      * </p>
+     *
      * @return true if all of the contained collections are empty
      */
     @Override
@@ -316,6 +322,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation uses an {@code IteratorChain}.
      * </p>
+     *
      * @return an {@code IteratorChain} instance which supports
      *  {@code remove()}. Iteration occurs over contained collections in
      *  the order they were added, but this behavior should not be relied upon.
@@ -356,6 +363,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code removeAll} on each collection.
      * </p>
+     *
      * @param coll  the collection to remove
      * @return true if the collection was modified
      * @throws UnsupportedOperationException if removeAll is unsupported
@@ -386,6 +394,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code removeIf} on each collection.
      * </p>
+     *
      * @param filter  a predicate which returns true for elements to be removed
      * @return true if the collection was modified
      * @throws UnsupportedOperationException if removeIf is unsupported
@@ -409,6 +418,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code retainAll()} on each collection.
      * </p>
+     *
      * @param coll  the collection to remove
      * @return true if the collection was modified
      * @throws UnsupportedOperationException if retainAll is unsupported
@@ -438,6 +448,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * <p>
      * This implementation calls {@code size()} on each collection.
      * </p>
+     *
      * @return total number of elements in all contained containers
      */
     @Override

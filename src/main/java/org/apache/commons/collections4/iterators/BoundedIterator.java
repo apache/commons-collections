@@ -82,6 +82,7 @@ public class BoundedIterator<E> implements Iterator<E> {
 
     /**
      * Checks whether the iterator is still within its bounded range.
+     *
      * @return {@code true} if the iterator is within its bounds, {@code false} otherwise
      */
     private boolean checkBounds() {

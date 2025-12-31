@@ -64,6 +64,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param decorated  the iterator to decorate
          * @param parent  the parent multiset
          */
@@ -174,6 +175,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param parentEntry  the entry to decorate
          */
         protected MultiSetEntry(final Map.Entry<E, MutableInteger> parentEntry) {
@@ -200,6 +202,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param value the initial value
          */
         MutableInteger(final int value) {
@@ -238,6 +241,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent multiset
          */

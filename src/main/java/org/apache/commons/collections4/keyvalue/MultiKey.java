@@ -233,6 +233,7 @@ public class MultiKey<K> implements Serializable {
 
     /**
      * Calculate the hash code of the instance using the provided keys.
+     *
      * @param keys the keys to calculate the hash code for
      */
     private void calculateHashCode(final Object[] keys) {
@@ -316,6 +317,7 @@ public class MultiKey<K> implements Serializable {
      * Recalculate the hash code after deserialization. The hash code of some
      * keys might have change (hash codes based on the system hash code are
      * only stable for the same process).
+     *
      * @return the instance with recalculated hash code
      */
     protected Object readResolve() {

@@ -289,6 +289,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @see java.util.Set#equals
      */
     @Override
@@ -302,6 +303,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * Gets the set mutator to be used for this CompositeSet.
+     *
      * @return the set mutator
      */
     protected SetMutator<E> getMutator() {
@@ -319,6 +321,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * {@inheritDoc}
+     *
      * @see java.util.Set#hashCode
      */
     @Override
