@@ -17,7 +17,7 @@
 package org.apache.commons.collections4.sequence;
 
 /**
- * Abstract base class for all commands used to transform an objects sequence
+ * Abstrac class for all commands used to transform an objects sequence
  * into another one.
  * <p>
  * When two objects sequences are compared through the

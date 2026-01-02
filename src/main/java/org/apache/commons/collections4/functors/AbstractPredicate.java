@@ -19,7 +19,7 @@ package org.apache.commons.collections4.functors;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Abstract base class for predicates.
+ * Abstrac class for predicates.
  *
  * @param <T> the type of the input to the predicate.
  * @since 4.5.0-M3
