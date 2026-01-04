@@ -22,6 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * A collection of methods and statics that represent standard hashers in testing.
  */
 public class TestingHashers {
+
     /**
      * Hasher that increments from 1.
      */

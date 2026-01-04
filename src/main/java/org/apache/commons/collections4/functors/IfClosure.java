@@ -50,6 +50,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure, NOPClosure.<E>nopClosure());
     }
+
     /**
      * Factory method that performs validation.
      *
@@ -67,6 +68,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
                 Objects.requireNonNull(trueClosure, "trueClosure"),
                 Objects.requireNonNull(falseClosure, "falseClosure"));
     }
+
     /** The test */
     private final Predicate<? super T> iPredicate;
 

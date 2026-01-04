@@ -83,18 +83,25 @@ public class TreeList<E> extends AbstractList<E> {
      * </p>
      */
     static class AVLNode<E> {
+
         /** The left child node or the predecessor if {@link #leftIsPrevious}.*/
         private AVLNode<E> left;
+
         /** Flag indicating that left reference is not a subtree but the predecessor. */
         private boolean leftIsPrevious;
+
         /** The right child node or the successor if {@link #rightIsNext}. */
         private AVLNode<E> right;
+
         /** Flag indicating that right reference is not a subtree but the successor. */
         private boolean rightIsNext;
+
         /** How many levels of left/right are below this one. */
         private int height;
+
         /** The relative position, root holds absolute position. */
         private int relativePosition;
+
         /** The stored element. */
         private E value;
 
@@ -757,25 +764,31 @@ public class TreeList<E> extends AbstractList<E> {
      * A list iterator over the linked list.
      */
     static class TreeListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
+
         /** The parent list */
         private final TreeList<E> parent;
+
         /**
          * Cache of the next node that will be returned by {@link #next()}.
          */
         private AVLNode<E> next;
+
         /**
          * The index of the next node to be returned.
          */
         private int nextIndex;
+
         /**
          * Cache of the last node that was returned by {@link #next()}
          * or {@link #previous()}.
          */
         private AVLNode<E> current;
+
         /**
          * The index of the last node that was returned.
          */
         private int currentIndex;
+
         /**
          * The modification count that the list is expected to have. If the list
          * doesn't have this count, then a

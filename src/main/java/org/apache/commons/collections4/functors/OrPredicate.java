@@ -46,6 +46,7 @@ public final class OrPredicate<T> extends AbstractPredicate<T> implements Predic
         return new OrPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
                 Objects.requireNonNull(predicate2, "predicate2"));
     }
+
     /** The array of predicates to call */
     private final Predicate<? super T> iPredicate1;
 

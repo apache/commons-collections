@@ -44,6 +44,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
 
     /** The list to base the iterator on */
     private final List<E> list;
+
     /** The current list iterator */
     private ListIterator<E> iterator;
 

@@ -32,10 +32,13 @@ public class SingletonIterator<E>
 
     /** Whether remove is allowed */
     private final boolean removeAllowed;
+
     /** Is the cursor before the first element */
     private boolean beforeFirst = true;
+
     /** Has the element been removed */
     private boolean removed;
+
     /** The object */
     private E object;
 

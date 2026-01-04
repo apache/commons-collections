@@ -32,6 +32,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ExtendedIteratorTest {
+
     /**
      * Collection of {@link Integer}s
      */

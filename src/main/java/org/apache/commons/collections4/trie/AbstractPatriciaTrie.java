@@ -342,6 +342,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             return AbstractPatriciaTrie.this.size();
         }
     }
+
     /**
      * This is a key set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#keySet()}.
      */
@@ -384,6 +385,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             return AbstractPatriciaTrie.this.size();
         }
     }
+
     /**
      * A prefix {@link RangeEntrySet} view of the {@link org.apache.commons.collections4.Trie}.
      */

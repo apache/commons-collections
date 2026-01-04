@@ -32,6 +32,7 @@ import org.junit.jupiter.api.BeforeEach;
  * provides methods to create and verify mock predicates to which to delegate.
  */
 public abstract class AbstractMockPredicateTest<T> {
+
     /**
      * Mock predicates created by a single test case which need to be verified after the test completes.
      */

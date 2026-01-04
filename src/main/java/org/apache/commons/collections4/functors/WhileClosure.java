@@ -51,8 +51,10 @@ public class WhileClosure<T> implements Closure<T> {
         return new WhileClosure<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(closure, "closure"), doLoop);
     }
+
     /** The test condition */
     private final Predicate<? super T> iPredicate;
+
     /** The closure to call */
     private final Closure<? super T> iClosure;
 

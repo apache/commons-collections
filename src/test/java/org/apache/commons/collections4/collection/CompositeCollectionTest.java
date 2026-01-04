@@ -79,6 +79,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public Collection<E> makeConfirmedFullCollection() {
         return new HashSet<>(Arrays.asList(getFullElements()));
     }
+
     /**
      * Full collection consists of 4 collections, each with one element
      */
@@ -93,6 +94,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         }
         return compositeCollection;
     }
+
     /**
      * Empty collection is empty composite
      */

@@ -625,6 +625,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * Behavior-changing configuration options for the map
      */
     public enum Option {
+
         /**
          * Indicates that referential-equality (== instead of .equals()) should be used when locating keys. This offers similar behavior to
          * {@link IdentityHashMap}
@@ -636,14 +637,17 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * An option specifying which Java reference type should be used to refer to a key and/or value.
      */
     public enum ReferenceType {
+
         /**
          * Indicates a normal Java strong reference should be used
          */
         STRONG,
+
         /**
          * Indicates a {@link WeakReference} should be used
          */
         WEAK,
+
         /**
          * Indicates a {@link SoftReference} should be used
          */

@@ -49,6 +49,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {
         return NO_ARG_INSTANCE;
     }
+
     /**
      * Transformer method that performs validation.
      *

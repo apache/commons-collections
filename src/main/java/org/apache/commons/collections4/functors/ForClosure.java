@@ -53,6 +53,7 @@ public class ForClosure<T> implements Closure<T> {
         }
         return new ForClosure<>(count, closure);
     }
+
     /** The number of times to loop */
     private final int iCount;
 

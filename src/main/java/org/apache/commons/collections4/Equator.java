@@ -27,6 +27,7 @@ package org.apache.commons.collections4;
  * @since 4.0
  */
 public interface Equator<T> {
+
     /**
      * Evaluates the two arguments for their equality.
      *

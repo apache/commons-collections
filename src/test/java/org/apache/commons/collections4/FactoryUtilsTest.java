@@ -65,6 +65,7 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock2 implements Serializable {
+
         /**
          * Generated serial version ID.
          */

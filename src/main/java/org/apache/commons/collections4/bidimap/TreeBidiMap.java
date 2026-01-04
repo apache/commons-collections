@@ -120,12 +120,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /** Whether to return KEY or VALUE order. */
         private final DataElement orderType;
+
         /** The last node returned by the iterator. */
         Node<K, V> lastReturnedNode;
+
         /** The next node to be returned by the iterator. */
         private Node<K, V> nextNode;
+
         /** The previous node in the sequence returned by the iterator. */
         private Node<K, V> previousNode;
+
         /** The modification count. */
         private int expectedModifications;
 
@@ -216,6 +220,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return description;
         }
     }
+
     /**
      * A view of this map.
      */
@@ -256,6 +261,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return false;
         }
     }
+
     /**
      * The inverse map implementation.
      */
@@ -263,8 +269,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /** Store the keySet once created. */
         private Set<V> inverseKeySet;
+
         /** Store the valuesSet once created. */
         private Set<K> inverseValuesSet;
+
         /** Store the entrySet once created. */
         private Set<Map.Entry<V, K>> inverseEntrySet;
 
@@ -409,6 +417,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseValuesSet;
         }
     }
+
     /**
      * A view of this map.
      */
@@ -449,6 +458,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return false;
         }
     }
+
     /**
      * An iterator over the inverse map entries.
      */
@@ -475,6 +485,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return createEntry(navigatePrevious());
         }
     }
+
     /**
      * An iterator over the map.
      */

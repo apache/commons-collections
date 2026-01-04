@@ -42,6 +42,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
 
     /** The collection to base the iterator on */
     private final Collection<? extends E> collection;
+
     /** The current iterator */
     private Iterator<? extends E> iterator;
 

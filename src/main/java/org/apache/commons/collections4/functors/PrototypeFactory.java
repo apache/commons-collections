@@ -51,6 +51,7 @@ public class PrototypeFactory {
 
         /** The object to clone each time */
         private final T iPrototype;
+
         /** The method used to clone */
         private transient Method iCloneMethod;
 

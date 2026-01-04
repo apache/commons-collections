@@ -56,6 +56,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param <V> the type of the values in the map
      */
     public interface MapMutator<K, V> extends Serializable {
+
         /**
          * Called when the CompositeMap.put() method is invoked.
          *

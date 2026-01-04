@@ -183,6 +183,7 @@ public class SingletonMap<K, V>
             return 1;
         }
     }
+
     /** Serialization version */
     private static final long serialVersionUID = -8931271118676803261L;
 

@@ -92,6 +92,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
             final Transformer<? super U, ? extends V> valueTransformer) {
         return new TransformedSplitMap<>(map, keyTransformer, valueTransformer);
     }
+
     /** The transformer to use for the key */
     private final Transformer<? super J, ? extends K> keyTransformer;
 

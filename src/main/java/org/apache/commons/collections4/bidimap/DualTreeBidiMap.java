@@ -173,6 +173,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * @param <V> the type of the values.
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
+
         /**
          * Constructs a new instance.
          *

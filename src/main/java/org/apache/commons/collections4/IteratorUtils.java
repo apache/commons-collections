@@ -112,6 +112,7 @@ public class IteratorUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
+
     /**
      * Default delimiter used to delimit elements while converting an Iterator
      * to its String representation.

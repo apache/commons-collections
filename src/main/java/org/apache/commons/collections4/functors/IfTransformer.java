@@ -53,6 +53,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
                 Objects.requireNonNull(trueTransformer, "trueTransformer"),
                 Objects.requireNonNull(falseTransformer, "falseTransformer"));
     }
+
     /**
      * Factory method that performs validation.
      * <p>
@@ -71,6 +72,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
         return new IfTransformer<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(trueTransformer, "trueTransformer"), NOPTransformer.<T>nopTransformer());
     }
+
     /** The test */
     private final Predicate<? super T> iPredicate;
 

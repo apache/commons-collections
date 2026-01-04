@@ -94,6 +94,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Base iterator class.
      */
     static class ReferenceBaseIterator<K, V> {
+
         /** The parent map */
         final AbstractReferenceMap<K, V> parent;
 
@@ -197,6 +198,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
+
         /** The parent map */
         private final AbstractReferenceMap<K, V> parent;
 
@@ -588,6 +590,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A soft reference holder.
      */
     static class SoftRef<T> extends SoftReference<T> {
+
         /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
@@ -621,6 +624,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A weak reference holder.
      */
     static class WeakRef<T> extends WeakReference<T> {
+
         /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 

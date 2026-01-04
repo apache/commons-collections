@@ -96,6 +96,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             canRemove = false;
         }
     }
+
     /**
      * Inner class iterator for the MultiSet.
      */
@@ -197,6 +198,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * Mutable integer class for storing the data.
      */
     protected static class MutableInteger {
+
         /** The value of this mutable. */
         protected int value;
 

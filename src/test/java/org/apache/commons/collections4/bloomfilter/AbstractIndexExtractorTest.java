@@ -66,6 +66,7 @@ public abstract class AbstractIndexExtractorTest {
     private static final IntPredicate TRUE_PREDICATE = i -> true;
 
     private static final IntPredicate FALSE_PREDICATE = i -> false;
+
     /** Flag to indicate the indices are ordered, for example from {@link IndexExtractor#processIndices(IntPredicate)}. */
     protected static final int ORDERED = 0x1;
 

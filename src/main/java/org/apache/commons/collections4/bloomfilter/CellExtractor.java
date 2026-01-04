@@ -51,6 +51,7 @@ public interface CellExtractor extends IndexExtractor {
      */
     @FunctionalInterface
     interface CellPredicate {
+
         /**
          * Performs an operation on the given {@code <index, count>} pair.
          *
@@ -84,6 +85,7 @@ public interface CellExtractor extends IndexExtractor {
      */
     static CellExtractor from(final IndexExtractor indexExtractor) {
         return new CellExtractor() {
+
             /**
              * Class to track cell values in the TreeMap.
              */

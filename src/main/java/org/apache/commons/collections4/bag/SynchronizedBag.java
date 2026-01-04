@@ -41,6 +41,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * Synchronized Set for the Bag class.
      */
     final class SynchronizedBagSet extends SynchronizedCollection<E> implements Set<E> {
+
         /** Serialization version */
         private static final long serialVersionUID = 2990565892366827855L;
 

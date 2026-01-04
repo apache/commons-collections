@@ -135,6 +135,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             return totalSize();
         }
     }
+
     /**
      * Inner class that provides the values iterator.
      */

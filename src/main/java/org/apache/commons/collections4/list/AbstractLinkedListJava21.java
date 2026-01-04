@@ -229,12 +229,16 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
+
         /** The main list */
         AbstractLinkedListJava21<E> parent;
+
         /** Offset from the main list */
         int offset;
+
         /** Sublist size */
         int size;
+
         /** Sublist modCount */
         int expectedModCount;
 
@@ -437,8 +441,10 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
 
         /** A pointer to the node before this node */
         protected Node<E> previous;
+
         /** A pointer to the node after this node */
         protected Node<E> next;
+
         /** The object contained within this node */
         protected E value;
 

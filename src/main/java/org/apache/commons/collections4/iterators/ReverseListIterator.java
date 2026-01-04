@@ -42,8 +42,10 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
 
     /** The list being wrapped. */
     private final List<E> list;
+
     /** The list iterator being wrapped. */
     private ListIterator<E> iterator;
+
     /** Flag to indicate if updating is possible at the moment. */
     private boolean validForUpdate = true;
 
