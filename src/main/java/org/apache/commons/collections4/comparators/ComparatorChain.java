@@ -60,7 +60,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     private final List<Comparator<E>> comparatorChain;
     /** Order - false (clear) = ascend; true (set) = descend. */
     private final BitSet orderingBits;
-   /** Whether the chain has been "locked". */
+    /** Whether the chain has been "locked". */
     private boolean isLocked;
 
     /**

@@ -578,7 +578,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         this.confirmed = confirmed;
     }
 
-    // Tests
     /**
      *  Tests {@link Collection#add(Object)}.
      */

@@ -336,7 +336,6 @@ public class SingletonMap<K, V>
         return getKey();
     }
 
-    // Map
     /**
      * Gets the value mapped to the key specified.
      *
@@ -351,7 +350,6 @@ public class SingletonMap<K, V>
         return null;
     }
 
-    // KeyValue
     /**
      * Gets the key.
      *
@@ -413,7 +411,6 @@ public class SingletonMap<K, V>
         return Objects.equals(value, getValue());
     }
 
-    // BoundedMap
     /**
      * Is the map currently full, always true.
      *

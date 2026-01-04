@@ -435,7 +435,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return new MultiValuedMapAsMapTest();
     }
 
-    // Bulk Tests
     /**
      * Bulk test {@link MultiValuedMap#entries()}. This method runs through all
      * of the tests in {@link AbstractCollectionTest}. After modification

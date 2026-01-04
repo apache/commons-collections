@@ -480,7 +480,6 @@ public class SetUtils {
         return Collections.synchronizedSet(set);
     }
 
-    // SortedSet
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>

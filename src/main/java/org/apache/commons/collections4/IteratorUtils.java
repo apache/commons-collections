@@ -392,7 +392,6 @@ public class IteratorUtils {
         return new IteratorIterable<>(iterator, true);
     }
 
-    // Bounded
     /**
      * Decorates the specified iterator to return at most the given number
      * of elements.
