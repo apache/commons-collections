@@ -804,6 +804,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param fromIndex  the index to start at
          */
         protected TreeListIterator(final TreeList<E> parent, final int fromIndex) {
+            checkInterval(fromIndex, 0, parent.size(), parent.size());
             this.parent = parent;
             this.expectedModCount = parent.modCount;
             this.next = parent.root == null ? null : parent.root.get(fromIndex);
@@ -916,6 +917,21 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
+    /**
+     * Checks whether the index is valid.
+     *
+     * @param index  the index to check.
+     * @param startIndex  the first allowed index.
+     * @param endIndex  the last allowed index.
+     * @param endIndex  the size.
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    private static void checkInterval(final int index, final int startIndex, final int endIndex, final int size) {
+        if (index < startIndex || index > endIndex) {
+            throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size);
+        }
+    }
+
     /** The root node in the AVL tree */
     private AVLNode<E> root;
 
@@ -994,9 +1010,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     private void checkInterval(final int index, final int startIndex, final int endIndex) {
-        if (index < startIndex || index > endIndex) {
-            throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size());
-        }
+        checkInterval(index, startIndex, endIndex, size());
     }
 
     /**
@@ -1072,14 +1086,13 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets a ListIterator over the list.
      *
-     * @param fromIndex  the index to start from
-     * @return the new iterator
+     * @param fromIndex  the index to start from.
+     * @return the new iterator.
      */
     @Override
     public ListIterator<E> listIterator(final int fromIndex) {
         // override to go 75% faster
         // cannot use EmptyIterator as iterator.add() must work
-        checkInterval(fromIndex, 0, size());
         return new TreeListIterator<>(this, fromIndex);
     }
 

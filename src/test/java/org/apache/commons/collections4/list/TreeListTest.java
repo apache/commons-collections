@@ -19,6 +19,7 @@ package org.apache.commons.collections4.list;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,17 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     @Override
     public TreeList<E> makeObject() {
         return new TreeList<>();
+    }
+
+    @Test
+    void testPreviousNullPointerException() throws Throwable {
+        final TreeList<String> treeList = new TreeList<>();
+        treeList.add("a");
+        treeList.add("b");
+        assertThrows(IndexOutOfBoundsException.class, () -> treeList.listIterator(3).previous());
+        assertThrows(IndexOutOfBoundsException.class, () -> new TreeList.TreeListIterator<String>(treeList, 3));
+        // Test doesn't get to previous()
+        assertThrows(IndexOutOfBoundsException.class, () -> new TreeList.TreeListIterator<String>(treeList, 3).previous());
     }
 
     @Test
