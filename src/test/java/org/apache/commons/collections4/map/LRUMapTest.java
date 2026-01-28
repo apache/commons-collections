@@ -612,6 +612,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                             map.entrySet().removeIf(entry -> entry.getValue() == this);
                         }
                     } catch (final InterruptedException e) {
+                        interrupt();
                         fail("Unexpected InterruptedException");
                     }
                     if (i > 0) {
@@ -696,6 +697,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                             }
                         }
                     } catch (final InterruptedException e) {
+                        interrupt();
                         fail("Unexpected InterruptedException");
                     }
                     if (i > 0) {
@@ -780,6 +782,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                             }
                         }
                     } catch (final InterruptedException e) {
+                        interrupt();
                         fail("Unexpected InterruptedException");
                     }
                     if (i > 0) {
@@ -859,6 +862,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                             map.values().removeIf(thread1 -> thread1 == this);
                         }
                     } catch (final InterruptedException e) {
+                        interrupt();
                         fail("Unexpected InterruptedException");
                     }
                     if (i > 0) {
