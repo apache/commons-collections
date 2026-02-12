@@ -302,6 +302,7 @@ public class IterableUtils {
      * @param equator  the equator to use to check, may not be null
      * @return true if the object is contained in the iterable, false otherwise
      * @throws NullPointerException if equator is null
+     * @since 4.1
      */
     public static <E> boolean contains(final Iterable<? extends E> iterable, final E object,
                                        final Equator<? super E> equator) {
@@ -319,6 +320,7 @@ public class IterableUtils {
      * @param iterable  the iterable to check, may be null
      * @param object  the object to check
      * @return true if the object is contained in the iterable, false otherwise
+     * @since 4.1
      */
     public static <E> boolean contains(final Iterable<E> iterable, final Object object) {
         if (iterable instanceof Collection<?>) {
@@ -407,6 +409,7 @@ public class IterableUtils {
      * @param <E> the element type
      * @param iterable  the iterable, may be null
      * @return an empty iterable if the argument is null
+     * @since 4.1
      */
     public static <E> Iterable<E> emptyIfNull(final Iterable<E> iterable) {
         return iterable == null ? IterableUtils.<E>emptyIterable() : iterable;
@@ -592,6 +595,7 @@ public class IterableUtils {
      *
      * @param iterable  the {@link Iterable to use}, may be null
      * @return true if the iterable is null or empty, false otherwise
+     * @since 4.1
      */
     public static boolean isEmpty(final Iterable<?> iterable) {
         if (iterable instanceof Collection<?>) {
@@ -883,6 +887,7 @@ public class IterableUtils {
      *
      * @param iterable  the iterable to check, may be null
      * @return the number of elements contained in the iterable
+     * @since 4.1
      */
     public static int size(final Iterable<?> iterable) {
         if (iterable == null) {
