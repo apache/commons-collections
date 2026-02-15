@@ -272,7 +272,7 @@
       Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests.
     </action>
     <action issue="COLLECTIONS-697" dev="eax" type="fix" due-to="Ranjan George">
-      JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
+      Javadoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
     </action>
     <action dev="ggregory" type="fix" due-to="dota17">
       Fill in some map test cases #104.
