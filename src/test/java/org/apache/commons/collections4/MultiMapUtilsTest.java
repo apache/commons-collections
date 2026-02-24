@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4;
 
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.easymock.EasyMock.createMock;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -28,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.collections4.multimap.LinkedHashSetValuedLinkedHashMap;
@@ -105,7 +110,7 @@ class MultiMapUtilsTest {
 
     @Test
     void testGetValuesAsSet() {
-        assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
+        assertNull(MultiMapUtils.getValuesAsSet(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
@@ -116,6 +121,47 @@ class MultiMapUtilsTest {
 
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         assertEquals(new HashSet<>(Arrays.asList(values)), set);
+    }
+
+    @Test
+    void testGetValuesAsBagIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> mockMap = createMock(MultiValuedMap.class);
+        final Bag<String> bagToReturn = new HashBag<>();
+        bagToReturn.addAll(Arrays.asList(values));
+        expect(mockMap.get("key1")).andReturn(bagToReturn);
+        replay(mockMap);
+
+        final Bag<String> bag = MultiMapUtils.getValuesAsBag(mockMap, "key1");
+        bag.add("v4");
+        assertFalse(bagToReturn.contains("v4"));
+        verify(mockMap);
+    }
+
+    @Test
+    void testGetValuesAsListIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+        }
+
+        final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
+        list.add("v4");
+        assertFalse(map.containsMapping("key1", "v4"));
+    }
+
+    @Test
+    void testGetValuesAsSetIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new HashSetValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+        }
+
+        final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
+        set.add("v4");
+        assertFalse(map.containsMapping("key1", "v4"));
     }
 
     @Test
