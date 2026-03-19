@@ -40,7 +40,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * JUnit tests for the PatriciaTrie.
+ * Tests {@link PatriciaTrie}.
  *
  * @param <V> the value type.
  */
