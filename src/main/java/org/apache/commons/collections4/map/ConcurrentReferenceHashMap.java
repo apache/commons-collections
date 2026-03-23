@@ -622,7 +622,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     }
 
     /**
-     * Behavior-changing configuration options for the map
+     * Enumerates eehavior-changing configuration options for the map.
      */
     public enum Option {
 
@@ -634,7 +634,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     }
 
     /**
-     * An option specifying which Java reference type should be used to refer to a key and/or value.
+     * Enumerates which Java reference type should be used to refer to a key and/or value.
      */
     public enum ReferenceType {
 
