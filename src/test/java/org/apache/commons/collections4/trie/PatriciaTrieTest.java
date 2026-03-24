@@ -601,7 +601,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
 
     @Test
-    void verifyNoConcurrentModificationExceptionOnConcurrentSubmapIteration() throws InterruptedException, ExecutionException, TimeoutException {
+    void testConcurrentTrieIterationAndSubMapIteration() throws InterruptedException, ExecutionException, TimeoutException {
         final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
         // populate with enough entries to make concurrent collisions likely
         // call subMap with both keys missing to ensure phantom node addition done twice
