@@ -169,20 +169,6 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * A null-safe utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
-     */
-    final boolean keysAreEqual(final K key, final K other) {
-        if (key == null) {
-            return other == null;
-        }
-        if (other == null) {
-            return false;
-        }
-
-        return keyAnalyzer.compare(key, other) == 0;
-    }
-
-    /**
      * Gets the {@link KeyAnalyzer} that constructed the {@link Trie}.
      *
      * @return the {@link KeyAnalyzer} used by this {@link Trie}
@@ -201,6 +187,20 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
             return false;
         }
         return keyAnalyzer.isBitSet(key, bitIndex, lengthInBits);
+    }
+
+    /**
+     * A null-safe utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
+     */
+    final boolean keysAreEqual(final K key, final K other) {
+        if (key == null) {
+            return other == null;
+        }
+        if (other == null) {
+            return false;
+        }
+
+        return keyAnalyzer.compare(key, other) == 0;
     }
 
     /**
