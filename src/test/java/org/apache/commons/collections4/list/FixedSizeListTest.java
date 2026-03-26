@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,7 +62,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         return FixedSizeList.fixedSizeList(list);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.emptyCollection.version4.obj");
 //        resetFull();
@@ -75,14 +75,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testAdd() {
+    void testAdd() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.add(2, "New Value"));
     }
 
     @Test
-    public void testAddAll() {
+    void testAddAll() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> addList = new ArrayList<>();
@@ -93,14 +93,14 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testIsFull() {
+    void testIsFull() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertTrue(fixedSizeList.isFull());
     }
 
     @Test
-    public void testListAllowsMutationOfUnderlyingCollection() {
+    void testListAllowsMutationOfUnderlyingCollection() {
 
         final List<String> decoratedList = new ArrayList<>();
         decoratedList.add("item 1");
@@ -117,21 +117,21 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testMaxSize() {
+    void testMaxSize() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertEquals(2, fixedSizeList.maxSize());
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         assertThrows(UnsupportedOperationException.class, () -> fixedSizeList.remove(1));
     }
 
     @Test
-    public void testSubList() {
+    void testSubList() {
         final FixedSizeList<String> fixedSizeList = initFixedSizeList();
 
         final List<String> subFixedSizeList = fixedSizeList.subList(1, 1);

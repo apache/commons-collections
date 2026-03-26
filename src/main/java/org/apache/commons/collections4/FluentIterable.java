@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,12 +35,11 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  * </p>
  * <ul>
  *   <li>fluent methods which return a new {@code FluentIterable} instance,
- *       providing a view of the original iterable (for example filter(Predicate));
+ *       providing a view of the original iterable (for example filter(Predicate));</li>
  *   <li>conversion methods which copy the FluentIterable's contents into a
- *       new collection or array (for example toList());
+ *       new collection or array (for example toList());</li>
  *   <li>utility methods which answer questions about the FluentIterable's
- *       contents (for example size(), anyMatch(Predicate)).
- *   <li>
+ *       contents (for example size(), anyMatch(Predicate)).</li>
  * </ul>
  * <p>
  * The following example outputs the first 3 even numbers in the range [1, 10]
@@ -139,6 +138,7 @@ public class FluentIterable<E> implements Iterable<E> {
 
     /**
      * Create a new FluentIterable by wrapping the provided iterable.
+     *
      * @param iterable  the iterable to wrap
      */
     private FluentIterable(final Iterable<E> iterable) {
@@ -218,8 +218,8 @@ public class FluentIterable<E> implements Iterable<E> {
      * Example: natural ordering
      * </p>
      * <ul>
-     *   <li>this contains elements [1, 3, 5, 7]
-     *   <li>other contains elements [2, 4, 6, 8]
+     *   <li>this contains elements [1, 3, 5, 7]</li>
+     *   <li>other contains elements [2, 4, 6, 8]</li>
      * </ul>
      * <p>
      * The returned iterable will traverse the elements in the following
@@ -243,8 +243,8 @@ public class FluentIterable<E> implements Iterable<E> {
      * Example: descending order
      * </p>
      * <ul>
-     *   <li>this contains elements [7, 5, 3, 1]
-     *   <li>other contains elements [8, 6, 4, 2]
+     *   <li>this contains elements [7, 5, 3, 1]</li>
+     *   <li>other contains elements [8, 6, 4, 2]</li>
      * </ul>
      * <p>
      * The returned iterable will traverse the elements in the following
@@ -326,7 +326,7 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Returns the element at the provided position in this iterable.
+     * Gets the element at the provided position in this iterable.
      * In order to return the element, an iterator needs to be traversed
      * up to the requested position.
      *

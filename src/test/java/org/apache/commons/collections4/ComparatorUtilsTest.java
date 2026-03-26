@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests ComparatorUtils.
  */
-public class ComparatorUtilsTest {
+class ComparatorUtilsTest {
 
     @Test
-    public void testBooleanComparator() {
+    void testBooleanComparator() {
         Comparator<Boolean> comp = ComparatorUtils.booleanComparator(true);
         assertTrue(comp.compare(Boolean.TRUE, Boolean.FALSE) < 0);
         assertEquals(0, comp.compare(Boolean.TRUE, Boolean.TRUE));
@@ -43,7 +43,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testChainedComparator() {
+    void testChainedComparator() {
         // simple test: chain 2 natural comparators
         final Comparator<Integer> comp = ComparatorUtils.chainedComparator(ComparatorUtils.<Integer>naturalComparator(),
                 ComparatorUtils.naturalComparator());
@@ -53,7 +53,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testMax() {
+    void testMax() {
         final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
@@ -68,7 +68,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testMin() {
+    void testMin() {
         final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
@@ -83,7 +83,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testNullHighComparator() {
+    void testNullHighComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
         assertTrue(comp.compare(null, 10) > 0);
         assertEquals(0, comp.compare(null, null));
@@ -91,7 +91,7 @@ public class ComparatorUtilsTest {
     }
 
     @Test
-    public void testNullLowComparator() {
+    void testNullLowComparator() {
         final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
         assertTrue(comp.compare(null, 10) < 0);
         assertEquals(0, comp.compare(null, null));

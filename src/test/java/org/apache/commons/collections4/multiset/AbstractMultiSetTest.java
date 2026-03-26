@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> {
 
-    public class TestMultiSetUniqueSet extends AbstractSetTest<T> {
+    public class MultiSetUniqueSetTest extends AbstractSetTest<T> {
 
         @Override
         public T[] getFullElements() {
@@ -112,15 +112,15 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         @Override
         public void resetEmpty() {
             AbstractMultiSetTest.this.resetEmpty();
-            TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
+            MultiSetUniqueSetTest.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
+            MultiSetUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override
         public void resetFull() {
             AbstractMultiSetTest.this.resetFull();
-            TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
+            MultiSetUniqueSetTest.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
+            MultiSetUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override
@@ -138,7 +138,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * @return a {@link AbstractSetTest} instance for testing the multiset's unique set
      */
     public BulkTest bulkTestMultiSetUniqueSet() {
-        return new TestMultiSetUniqueSet();
+        return new MultiSetUniqueSetTest();
     }
 
     /**
@@ -204,7 +204,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * against the canonical version in SCM.
      */
     @Test
-    public void testEmptyMultiSetCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeObject();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -219,7 +219,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * against the canonical version in SCM.
      */
     @Test
-    public void testFullMultiSetCompatibility() throws IOException, ClassNotFoundException {
+    void testFullMultiSetCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final MultiSet<T> multiset = makeFullCollection();
         if (multiset instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -231,7 +231,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetAdd() {
+    void testMultiSetAdd() {
         if (!isAddSupported()) {
             return;
         }
@@ -250,7 +250,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetContains() {
+    void testMultiSetContains() {
         if (!isAddSupported()) {
             return;
         }
@@ -275,7 +275,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetContainsAll() {
+    void testMultiSetContainsAll() {
         if (!isAddSupported()) {
             return;
         }
@@ -330,7 +330,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetEntrySetUpdatedToZero() {
+    void testMultiSetEntrySetUpdatedToZero() {
         if (!isAddSupported()) {
             return;
         }
@@ -347,7 +347,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetEquals() {
+    void testMultiSetEquals() {
         if (!isAddSupported()) {
             return;
         }
@@ -372,7 +372,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetEqualsHashMultiSet() {
+    void testMultiSetEqualsHashMultiSet() {
         if (!isAddSupported()) {
             return;
         }
@@ -397,7 +397,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetEqualsSelf() {
+    void testMultiSetEqualsSelf() {
         final MultiSet<T> multiset = makeObject();
         assertEquals(multiset, multiset);
 
@@ -415,7 +415,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetHashCode() {
+    void testMultiSetHashCode() {
         if (!isAddSupported()) {
             return;
         }
@@ -447,7 +447,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetIterator() {
+    void testMultiSetIterator() {
         if (!isAddSupported()) {
             return;
         }
@@ -479,7 +479,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetIteratorFail() {
+    void testMultiSetIteratorFail() {
         if (!isAddSupported()) {
             return;
         }
@@ -497,7 +497,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetIteratorFailDoubleRemove() {
+    void testMultiSetIteratorFailDoubleRemove() {
         if (!isAddSupported()) {
             return;
         }
@@ -522,7 +522,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetIteratorFailNoMore() {
+    void testMultiSetIteratorFailNoMore() {
         if (!isAddSupported()) {
             return;
         }
@@ -541,7 +541,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetIteratorRemoveProtectsInvariants() {
+    void testMultiSetIteratorRemoveProtectsInvariants() {
         if (!isAddSupported()) {
             return;
         }
@@ -568,7 +568,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetRemove() {
+    void testMultiSetRemove() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -593,7 +593,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetRemoveAll() {
+    void testMultiSetRemoveAll() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -616,7 +616,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetRetainAll() {
+    void testMultiSetRetainAll() {
         if (!isAddSupported()) {
             return;
         }
@@ -637,7 +637,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetSize() {
+    void testMultiSetSize() {
         if (!isAddSupported()) {
             return;
         }
@@ -663,7 +663,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetToArray() {
+    void testMultiSetToArray() {
         if (!isAddSupported()) {
             return;
         }
@@ -690,7 +690,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiSetToArrayPopulate() {
+    void testMultiSetToArrayPopulate() {
         if (!isAddSupported()) {
             return;
         }

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,7 +56,7 @@ import org.junit.jupiter.api.Test;
  * Tests for MapUtils.
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest {
+class MapUtilsTest {
 
     /**
      * Test class for populateMap(MultiMap).
@@ -94,7 +94,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testConvertResourceBundle() {
+    void testConvertResourceBundle() {
         final Map<String, String> in = new HashMap<>(5, 1);
         in.put("1", "A");
         in.put("2", "B");
@@ -123,7 +123,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugAndVerbosePrintCasting() {
+    void testDebugAndVerbosePrintCasting() {
         final Map<Integer, String> inner = new HashMap<>(2, 1);
         inner.put(2, "B");
         inner.put(3, "C");
@@ -136,7 +136,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugAndVerbosePrintNullMap() {
+    void testDebugAndVerbosePrintNullMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -156,7 +156,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrint() {
+    void testDebugPrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -192,7 +192,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullKey() {
+    void testDebugPrintNullKey() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -212,7 +212,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullKeyToMap1() {
+    void testDebugPrintNullKeyToMap1() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -232,7 +232,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullKeyToMap2() {
+    void testDebugPrintNullKeyToMap2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -257,7 +257,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullLabel() {
+    void testDebugPrintNullLabel() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -281,7 +281,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullLabelAndMap() {
+    void testDebugPrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -294,13 +294,13 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testDebugPrintNullStream() {
+    void testDebugPrintNullStream() {
         assertThrows(NullPointerException.class, () -> MapUtils.debugPrint(null, "Map", new HashMap<>()),
                 "Should generate NullPointerException");
     }
 
     @Test
-    public void testDebugPrintSelfReference() {
+    void testDebugPrintSelfReference() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -347,7 +347,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
 
         final Map<Long, Long> map = new HashMap<>();
@@ -355,17 +355,17 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testFixedSizeMap() {
+    void testFixedSizeMap() {
         final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeMap(new HashMap<>()).put(new Object(), new Object()));
     }
 
     @Test
-    public void testFixedSizeSortedMap() {
+    void testFixedSizeSortedMap() {
         final Exception exception = assertThrows(IllegalArgumentException.class, () -> MapUtils.fixedSizeSortedMap(new TreeMap<>()).put(1L, 1L));
     }
 
     @Test
-    public void testGetBooleanValue() {
+    void testGetBooleanValue() {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", true);
         in.put("keyNumberTrue", 1);
@@ -407,7 +407,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetByteValue() {
+    void testGetByteValue() {
         final Map<String, Byte> in = new HashMap<>();
         final byte val = 100;
         in.put("key", val);
@@ -416,6 +416,8 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getByteValue(in, "key"), 0);
         assertEquals(val, MapUtils.getByteValue(in, "noKey", val), 0);
         assertEquals(val, MapUtils.getByteValue(in, "noKey", key -> (byte) 100), 0);
+        assertEquals(Byte.MIN_VALUE, MapUtils.getByteValue(in, "noKey", Byte.MIN_VALUE), 0);
+        assertEquals(Byte.MAX_VALUE, MapUtils.getByteValue(in, "noKey", Byte.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getByteValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getByte(in, "key", val), 0);
         assertEquals(val, MapUtils.getByte(in, "noKey", val), 0);
@@ -428,7 +430,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetDoubleValue() {
+    void testGetDoubleValue() {
         final Map<String, Double> in = new HashMap<>();
         in.put("key", 2.0);
 
@@ -436,6 +438,9 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getDoubleValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getDoubleValue(in, "noKey", 1.0), 0);
         assertEquals(5.0, MapUtils.getDoubleValue(in, "noKey", key -> 5.0D), 0);
+        assertEquals(Double.MIN_VALUE, MapUtils.getDoubleValue(in, "noKey", Double.MIN_VALUE), 0);
+        assertEquals(Double.MIN_NORMAL, MapUtils.getDoubleValue(in, "noKey", Double.MIN_NORMAL), 0);
+        assertEquals(Double.MAX_VALUE, MapUtils.getDoubleValue(in, "noKey", Double.MAX_VALUE), 0);
 
         assertEquals(0, MapUtils.getDoubleValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getDouble(in, "key", 0.0), 0);
@@ -450,7 +455,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetFloatValue() {
+    void testGetFloatValue() {
         final Map<String, Float> in = new HashMap<>();
         in.put("key", 2.0f);
 
@@ -458,6 +463,9 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getFloatValue(in, "key"), 0);
         assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", 1.0f), 0);
         assertEquals(1.0, MapUtils.getFloatValue(in, "noKey", key -> 1.0F), 0);
+        assertEquals(Float.MIN_VALUE, MapUtils.getFloatValue(in, "noKey", Float.MIN_VALUE), 0);
+        assertEquals(Float.MIN_NORMAL, MapUtils.getFloatValue(in, "noKey", Float.MIN_NORMAL), 0);
+        assertEquals(Float.MAX_VALUE, MapUtils.getFloatValue(in, "noKey", Float.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getFloatValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getFloat(in, "key", 0.0f), 0);
         assertEquals(1.0, MapUtils.getFloat(in, "noKey", 1.0f), 0);
@@ -471,7 +479,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetIntValue() {
+    void testGetIntValue() {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
 
@@ -479,6 +487,8 @@ public class MapUtilsTest {
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
+        assertEquals(Integer.MIN_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MIN_VALUE), 0);
+        assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
         assertEquals(2, MapUtils.getInteger(in, "key", 0), 0);
         assertEquals(0, MapUtils.getInteger(in, "noKey", 0), 0);
@@ -491,7 +501,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetLongValue() {
+    void testGetLongValue() {
         final Map<String, Long> in = new HashMap<>();
         in.put("key", 2L);
 
@@ -499,6 +509,8 @@ public class MapUtilsTest {
         assertEquals(2.0, MapUtils.getLongValue(in, "key"), 0);
         assertEquals(1, MapUtils.getLongValue(in, "noKey", 1L), 0);
         assertEquals(1, MapUtils.getLongValue(in, "noKey", key -> 1L), 0);
+        assertEquals(Long.MIN_VALUE, MapUtils.getLongValue(in, "noKey", key -> Long.MIN_VALUE), 0);
+        assertEquals(Long.MAX_VALUE, MapUtils.getLongValue(in, "noKey", key -> Long.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getLongValue(in, "noKey"), 0);
         assertEquals(2.0, MapUtils.getLong(in, "key", 0L), 0);
         assertEquals(1, MapUtils.getLong(in, "noKey", 1L), 0);
@@ -517,7 +529,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetMap() {
+    void testGetMap() {
         final Map<String, Map<String, String>> in = new HashMap<>();
         final Map<String, String> valMap = new HashMap<>();
         valMap.put("key1", "value1");
@@ -531,7 +543,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetNumber() {
+    void testGetNumber() {
         final Map<String, Number> in = new HashMap<>();
         final Number val = 1000;
         in.put("key", val);
@@ -547,7 +559,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetNumberValueWithInvalidString() {
+    void testGetNumberValueWithInvalidString() {
         final Map<String, String> map = new HashMap<>();
         map.put("key", "one");
 
@@ -555,7 +567,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetObject() {
+    void testGetObject() {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", "str");
 
@@ -567,7 +579,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetShortValue() {
+    void testGetShortValue() {
         final Map<String, Short> in = new HashMap<>();
         final short val = 10;
         in.put("key", val);
@@ -576,6 +588,8 @@ public class MapUtilsTest {
         assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
+        assertEquals(Short.MIN_VALUE, MapUtils.getShortValue(in, "noKey", Short.MIN_VALUE), 0);
+        assertEquals(Short.MAX_VALUE, MapUtils.getShortValue(in, "noKey", Short.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);
         assertEquals(val, MapUtils.getShort(in, "key", val), 0);
         assertEquals(val, MapUtils.getShort(in, "noKey", val), 0);
@@ -588,7 +602,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testGetString() {
+    void testGetString() {
         final Map<String, String> in = new HashMap<>();
         in.put("key", "str");
 
@@ -606,32 +620,33 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testInvertEmptyMap() {
+    void testInvertEmptyMap() {
         final Map<String, String> emptyMap = new HashMap<>();
         final Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
         assertEquals(emptyMap, resultMap);
     }
 
     @Test
-    public void testInvertMap() {
-        final Map<String, String> in = new HashMap<>(5, 1);
+    void testInvertMap() {
+        testInvertMap(new HashMap<>(5, 1));
+    }
+
+    private void testInvertMap(final Map<String, String> in) {
+        // setup
         in.put("1", "A");
         in.put("2", "B");
         in.put("3", "C");
         in.put("4", "D");
         in.put("5", "E");
-
         final Set<String> inKeySet = new HashSet<>(in.keySet());
         final Set<String> inValSet = new HashSet<>(in.values());
-
+        // invert
         final Map<String, String> out = MapUtils.invertMap(in);
-
+        // assert
         final Set<String> outKeySet = new HashSet<>(out.keySet());
         final Set<String> outValSet = new HashSet<>(out.values());
-
         assertEquals(inKeySet, outValSet);
         assertEquals(inValSet, outKeySet);
-
         assertEquals("1", out.get("A"));
         assertEquals("2", out.get("B"));
         assertEquals("3", out.get("C"));
@@ -640,7 +655,12 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testInvertMapNull() {
+    void testInvertMapDefault() {
+        testInvertMap(new HashMap<>());
+    }
+
+    @Test
+    void testInvertMapNull() {
         final Map<String, String> nullMap = null;
         final Exception exception = assertThrows(NullPointerException.class, () -> MapUtils.invertMap(nullMap));
         final String actualMessage = exception.getMessage();
@@ -648,45 +668,45 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testIsEmptyWithEmptyMap() {
+    void testIsEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<>();
         assertTrue(MapUtils.isEmpty(map));
     }
 
     @Test
-    public void testIsEmptyWithNonEmptyMap() {
+    void testIsEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
         assertFalse(MapUtils.isEmpty(map));
     }
 
     @Test
-    public void testIsEmptyWithNull() {
+    void testIsEmptyWithNull() {
         final Map<Object, Object> map = null;
         assertTrue(MapUtils.isEmpty(map));
     }
 
     @Test
-    public void testIsNotEmptyWithEmptyMap() {
+    void testIsNotEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<>();
         assertFalse(MapUtils.isNotEmpty(map));
     }
 
     @Test
-    public void testIsNotEmptyWithNonEmptyMap() {
+    void testIsNotEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
         assertTrue(MapUtils.isNotEmpty(map));
     }
 
     @Test
-    public void testIsNotEmptyWithNull() {
+    void testIsNotEmptyWithNull() {
         final Map<Object, Object> map = null;
         assertFalse(MapUtils.isNotEmpty(map));
     }
 
     @Test
-    public void testIterableMap() {
+    void testIterableMap() {
         assertThrows(NullPointerException.class, () -> MapUtils.iterableMap(null),
                 "Should throw NullPointerException");
 
@@ -702,7 +722,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testIterableSortedMap() {
+    void testIterableSortedMap() {
         assertThrows(NullPointerException.class, () -> MapUtils.iterableSortedMap(null),
                 "Should throw NullPointerException");
 
@@ -717,7 +737,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testLazyMap() {
+    void testLazyMap() {
         final Map<String, Integer> lazyMap = MapUtils.lazyMap(new HashMap<>(), () -> 1);
         lazyMap.put(TWO, 2);
 
@@ -726,7 +746,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testLazyMapFactory() {
+    void testLazyMapFactory() {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertInstanceOf(LazyMap.class, map);
@@ -743,7 +763,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testLazyMapTransformer() {
+    void testLazyMapTransformer() {
         final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) mapKey -> {
             if (mapKey instanceof String) {
                 return Integer.valueOf((String) mapKey);
@@ -762,7 +782,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testLazySortedMapFactory() {
+    void testLazySortedMapFactory() {
         final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), () -> 1);
         lazySortedMap.put(TWO, 2);
 
@@ -777,7 +797,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testLazySortedMapTransformer() {
+    void testLazySortedMapTransformer() {
         final SortedMap<String, Integer> lazySortedMap = MapUtils.lazySortedMap(new TreeMap<>(), s -> 1);
         lazySortedMap.put(TWO, 2);
 
@@ -792,7 +812,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testOrderedMap() {
+    void testOrderedMap() {
         final Map<String, String> inMap = new HashMap<>();
         inMap.put("key1", "value1");
         inMap.put("key2", "value2");
@@ -801,7 +821,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testPopulateMap() {
+    void testPopulateMap() {
         // Setup Test Data
         final List<String> list = new ArrayList<>();
         list.add("1");
@@ -838,7 +858,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testPopulateMultiMap() {
+    void testPopulateMultiMap() {
         // Setup Test Data
         final List<X> list = new ArrayList<>();
         list.add(new X(1, "x1"));
@@ -859,7 +879,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testPredicatedMap() {
+    void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
         final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertInstanceOf(PredicatedMap.class, map);
@@ -869,7 +889,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testPutAll_Map_array() {
+    void testPutAll_Map_array() {
 
         assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, null));
         assertThrows(NullPointerException.class, () -> MapUtils.putAll(null, new Object[0]));
@@ -957,7 +977,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testSafeAddToMap() {
+    void testSafeAddToMap() {
 
         final Map<String, Object> inMap = new HashMap<>();
 
@@ -968,7 +988,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testSize() {
+    void testSize() {
         final HashMap<Object, Object> map = new HashMap<>();
         map.put("A", "1");
         map.put("B", "2");
@@ -976,17 +996,17 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testSize0() {
+    void testSize0() {
         assertEquals(0, MapUtils.size(new HashMap<>()));
     }
 
     @Test
-    public void testSizeNull() {
+    void testSizeNull() {
         assertEquals(0, MapUtils.size(null));
     }
 
     @Test
-    public void testToProperties() {
+    void testToProperties() {
         final Map<String, String> in = new HashMap<>();
         in.put("key1", "A");
         in.put("key2", "B");
@@ -1000,7 +1020,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testToPropertiesEmpty() {
+    void testToPropertiesEmpty() {
         final Map<String, String> in = null;
         final Properties out =  MapUtils.toProperties(in);
 
@@ -1008,7 +1028,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testTransformedMap() {
+    void testTransformedMap() {
         final Map<Long, Long> map = new HashMap<>();
 
         final Map<Long, Long> transformedMap = MapUtils.transformedMap(map, i -> i + 1, i -> i + 10);
@@ -1021,7 +1041,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testTransformedSortedMap() {
+    void testTransformedSortedMap() {
         final SortedMap<Long, Long> sortedMap = new TreeMap<>();
 
         final SortedMap<Long, Long> transformedSortedMap = MapUtils.transformedSortedMap(sortedMap, i -> i + 1, i -> i + 10);
@@ -1036,17 +1056,17 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableMap() {
+    void testUnmodifiableMap() {
         final Exception exception = assertThrows(UnsupportedOperationException.class, () -> MapUtils.unmodifiableMap(new HashMap<>()).clear());
     }
 
     @Test
-    public void testUnmodifiableSortedMap() {
+    void testUnmodifiableSortedMap() {
         final Exception exception = assertThrows(UnsupportedOperationException.class, () -> MapUtils.unmodifiableSortedMap(new TreeMap<>()).clear());
     }
 
     @Test
-    public void testVerbosePrint() {
+    void testVerbosePrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1082,7 +1102,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullKey() {
+    void testVerbosePrintNullKey() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1102,7 +1122,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullKeyToMap1() {
+    void testVerbosePrintNullKeyToMap1() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1122,7 +1142,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullKeyToMap2() {
+    void testVerbosePrintNullKeyToMap2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1147,7 +1167,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullLabel() {
+    void testVerbosePrintNullLabel() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1171,7 +1191,7 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullLabelAndMap() {
+    void testVerbosePrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
@@ -1184,13 +1204,13 @@ public class MapUtilsTest {
     }
 
     @Test
-    public void testVerbosePrintNullStream() {
+    void testVerbosePrintNullStream() {
         assertThrows(NullPointerException.class, () -> MapUtils.verbosePrint(null, "Map", new HashMap<>()),
                 "Should generate NullPointerException");
     }
 
     @Test
-    public void testVerbosePrintSelfReference() {
+    void testVerbosePrintSelfReference() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 

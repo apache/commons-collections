@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,15 +21,17 @@
  * A multiset stores an object and a count of the number of occurrences of the object.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
- *   <li>HashMultiSet - implementation that uses a HashMap to store the data
+ *   <li>HashMultiSet - implementation that uses a HashMap to store the data</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
- *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added
- *   <li>Synchronized - synchronizes method access for multithreaded environments
- *   <li>Unmodifiable - ensures the multiset cannot be altered
+ *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Synchronized - synchronizes method access for multithreaded environments</li>
+ *   <li>Unmodifiable - ensures the multiset cannot be altered</li>
  * </ul>
  */
 package org.apache.commons.collections4.multiset;

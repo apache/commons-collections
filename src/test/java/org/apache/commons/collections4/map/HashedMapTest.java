@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,7 +41,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final HashedMap<K, V> map = new HashedMap<>(10);
         map.put((K) "1", (V) "1");
         final HashedMap<K, V> cloned = map.clone();
@@ -53,12 +53,12 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     @Test
-    public void testInitialCapacityZero() {
+    void testInitialCapacityZero() {
         final HashedMap<String, String> map = new HashedMap<>(0);
         assertEquals(1, map.data.length);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.emptyCollection.version4.obj");
 //        resetFull();
@@ -66,7 +66,7 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //    }
 
     @Test
-    public void testInternalState() {
+    void testInternalState() {
         final HashedMap<Integer, Integer> map = new HashedMap<>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
         assertEquals(0, map.size);

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -75,7 +75,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     boolean add(CellExtractor other);
 
     /**
-     * Returns the maximum allowable value for a cell count in this Counting filter.
+     * Gets the maximum allowable value for a cell count in this Counting filter.
      *
      * @return the maximum allowable value for a cell count in this Counting filter.
      */
@@ -234,6 +234,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * to a CellExtractor and add that.</li>
      * <li>Implementations should throw {@code IllegalArgumentException} and no other exception on bad input.</li>
      * </ul>
+     *
      * @param indexExtractor the IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
@@ -348,6 +349,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
 
     /**
      * The default implementation is a no-op since the counting bloom filter returns an unique IndexExtractor by default.
+     *
      * @return this counting Bloom filter.
      */
     @Override

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SequencesComparatorTest {
+class SequencesComparatorTest {
 
     private static final class ExecutionVisitor<T> implements CommandVisitor<T> {
 
@@ -125,7 +125,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testExecution() {
+    void testExecution() {
         final ExecutionVisitor<Character> ev = new ExecutionVisitor<>();
         for (int i = 0; i < before.size(); ++i) {
             ev.setList(sequence(before.get(i)));
@@ -136,7 +136,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testLength() {
+    void testLength() {
         for (int i = 0; i < before.size(); ++i) {
             final SequencesComparator<Character> comparator =
                     new SequencesComparator<>(sequence(before.get(i)),
@@ -146,7 +146,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testMinimal() {
+    void testMinimal() {
         final String[] shadokAlph = {
             "GA",
             "BU",
@@ -195,7 +195,7 @@ public class SequencesComparatorTest {
     }
 
     @Test
-    public void testShadok() {
+    void testShadok() {
         final int lgMax = 5;
         final String[] shadokAlph = {
             "GA",

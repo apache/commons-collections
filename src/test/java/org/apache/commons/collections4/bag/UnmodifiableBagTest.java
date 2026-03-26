@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -76,7 +76,7 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Bag<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableBag.unmodifiableBag(queue));
 
@@ -84,12 +84,12 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<E> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/UnmodifiableBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

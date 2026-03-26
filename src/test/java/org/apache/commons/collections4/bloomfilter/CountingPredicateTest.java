@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import java.util.function.BiPredicate;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 
-public class CountingPredicateTest {
+class CountingPredicateTest {
 
     private final Integer[] ary = {Integer.valueOf(1), Integer.valueOf(2)};
 
@@ -46,7 +46,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateLonger() {
+    void testPredicateLonger() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
@@ -83,7 +83,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateSameLength() {
+    void testPredicateSameLength() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         expected.add(Pair.of(1, 3));
@@ -101,7 +101,7 @@ public class CountingPredicateTest {
      * of times cp.test() is called and all other values result in a true statement.
      */
     @Test
-    public void testPredicateShorter() {
+    void testPredicateShorter() {
         final List<Pair<Integer, Integer>> expected = new ArrayList<>();
         final List<Pair<Integer, Integer>> result = new ArrayList<>();
         final Integer[] shortAry = {Integer.valueOf(3)};

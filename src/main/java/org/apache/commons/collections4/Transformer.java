@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,9 +36,9 @@ import java.util.function.Function;
  * @param <T> the type of the input to the function.
  * @param <R> the type of the result of the function.
  * @since 1.0
- * @deprecated Use {@link Function}.
+ * This will be deprecated in 5.0 in favor of  {@link Function}.
  */
-@Deprecated
+//@Deprecated
 @FunctionalInterface
 public interface Transformer<T, R> extends Function<T, R> {
 

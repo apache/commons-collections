@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,6 +51,7 @@ public interface CellExtractor extends IndexExtractor {
      */
     @FunctionalInterface
     interface CellPredicate {
+
         /**
          * Performs an operation on the given {@code <index, count>} pair.
          *
@@ -70,7 +71,7 @@ public interface CellExtractor extends IndexExtractor {
      * <li>The CellExtractor aggregates duplicate indices from the IndexExtractor.</li>
      * </ul>
      *
-     * <p>A CellExtractor that outputs the mapping [(1,2),(2,3),(3,1)] can be created from many combinations
+     * <p>A CellExtractor that outputs the mapping [(1, 2),(2, 3),(3, 1)] can be created from many combinations
      * of indices including:</p>
      * <pre>
      * [1, 1, 2, 2, 2, 3]
@@ -84,6 +85,7 @@ public interface CellExtractor extends IndexExtractor {
      */
     static CellExtractor from(final IndexExtractor indexExtractor) {
         return new CellExtractor() {
+
             /**
              * Class to track cell values in the TreeMap.
              */

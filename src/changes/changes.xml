@@ -7,7 +7,7 @@
      (the "License"); you may not use this file except in compliance with
      the License.  You may obtain a copy of the License at
 
-          http://www.apache.org/licenses/LICENSE-2.0
+          https://www.apache.org/licenses/LICENSE-2.0
 
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,41 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5.0-M4" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+  <release version="4.6.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
+    <!-- FIX -->
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry.toReference(ReferenceStrength, T, int) now throws IllegalArgumentException instead of Error.</action>
+    <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Factory; this will be deprecated in 5.0 in favor of java.util.function.Supplier.</action>
+    <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Predicate; this will be deprecated in 5.0 in favor of java.util.function.Predicate.</action>
+    <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Transformer; this will be deprecated in 5.0 in favor of java.util.function.Function.</action>
+    <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Closure; this will be deprecated in 5.0 in favor of java.util.function.Consumer.</action>
+    <action type="fix" dev="ggregory" due-to="Sebastian Götz, Gary Gregory" issue="COLLECTIONS-874">MapUtils.getLongValue(Map, K, Function) returns a byte instead of a long.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.functors.FunctorUtils.validate(Consumer...)</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix exception message in org.apache.commons.collections4.iterators.UnmodifiableIterator.remove() to match java.util.Iterator.remove().</action>
+    <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-838">Calling SetUtils.union on multiple instances of SetView causes JVM to hang</action>
+    <action type="fix" dev="pkarwasz" due-to="Piotr P. Karwasz, Joerg Budischewski" issue="COLLECTIONS-722">Improve IteratorUtils.chainedIterator() performance.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory, PMD">Fix UselessOverridingMethod in org.apache.commons.collections4.properties.PropertiesFactory.</action>
+    <action type="fix" dev="ggregory" due-to="Adam Rauch, Gary Gregory" issue="COLLECTIONS-693">OrderedProperties.stringPropertyNames() returns an unordered Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.keySet() returned an unsorted Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.propertyNames() returned an unsorted Enumeration.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.stringPropertyNames() returned an unsorted Set.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory" >Fix SortedProperties.forEach() called its consumer out of order.</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
+    <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory, Sebb">Add MultiValuedMap.inverted() #665.</action>
+    <action type="fix" dev="ggregory" due-to="John Griffin, Gary Gregory" issue="COLLECTIONS-885">PatriciaTrie submap and range view operations silently mutate trie structure resulting in ConcurrentModificationException for any iterating threads #672.</action>
+    <!-- ADD -->
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
+    <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
+    <!-- UPDATE -->
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 97 #612, #645, #662, #663.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM).</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.easymock:easymock from 5.5.0 to 5.6.0 #617.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #625.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.19.0 to 2.21.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.18.0 to 1.21.0.</action>
+  </release>
+  <release version="4.5.0" date="2025-04-19" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(File) to use NIO.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Refactor AbstractPropertiesFactory.load(String) to use NIO.</action>
@@ -30,10 +64,12 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add IteratorUtils.toSet(Iterator).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add IteratorUtils.toSet(Iterator, int).</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add EnumerationUtils.toSet(Enumeration).</action>
+    <action type="add" issue="COLLECTIONS-693" dev="ggregory" due-to="Gary Gregory">Please add OWASP Dependency Check to the build.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.17.1 to 1.18.0 #591.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 78 to 81 #2296.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons.jacoco.version from 0.8.13-SNAPSHOT to 0.13.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.18.0 to 2.19.0.</action>
   </release>
   <release version="4.5.0-M3" date="2024-12-15" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
@@ -237,7 +273,7 @@
       Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests.
     </action>
     <action issue="COLLECTIONS-697" dev="eax" type="fix" due-to="Ranjan George">
-      JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
+      Javadoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented
     </action>
     <action dev="ggregory" type="fix" due-to="dota17">
       Fill in some map test cases #104.

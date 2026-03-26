@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -140,6 +140,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Remove the object from this iterator.
+     *
      * @throws IllegalStateException if the {@code next} or {@code previous}
      *        method has not yet been called, or the {@code remove} method
      *        has already been called after the last call to {@code next}

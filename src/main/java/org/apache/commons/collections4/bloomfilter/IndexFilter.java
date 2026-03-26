@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,6 +32,7 @@ public final class IndexFilter {
     /**
      * An IndexTracker implementation that uses an array of integers to track whether or not a
      * number has been seen. Suitable for Shapes that have few hash functions.
+     *
      * @since 4.5.0
      */
     static class ArrayTracker implements IntPredicate {
@@ -40,6 +41,7 @@ public final class IndexFilter {
 
         /**
          * Constructs the tracker based on the shape.
+         *
          * @param shape the shape to build the tracker for.
          */
         ArrayTracker(final Shape shape) {
@@ -70,6 +72,7 @@ public final class IndexFilter {
 
         /**
          * Constructs a bit map based tracker for the specified shape.
+         *
          * @param shape The shape that is being generated.
          */
         BitMapTracker(final Shape shape) {
@@ -110,8 +113,7 @@ public final class IndexFilter {
     private IndexFilter(final Shape shape, final IntPredicate consumer) {
         this.size = shape.getNumberOfBits();
         this.consumer = consumer;
-        if (BitMaps.numberOfBitMaps(shape) * Long.BYTES < (long) shape.getNumberOfHashFunctions()
-                * Integer.BYTES) {
+        if (BitMaps.numberOfBitMaps(shape) * Long.BYTES < (long) shape.getNumberOfHashFunctions() * Integer.BYTES) {
             this.tracker = new BitMapTracker(shape);
         } else {
             this.tracker = new ArrayTracker(shape);
@@ -134,7 +136,7 @@ public final class IndexFilter {
             throw new IndexOutOfBoundsException(String.format("number too large %d >= %d", number, size));
         }
         if (tracker.test(number)) {
-            return  consumer.test(number);
+            return consumer.test(number);
         }
         return true;
     }

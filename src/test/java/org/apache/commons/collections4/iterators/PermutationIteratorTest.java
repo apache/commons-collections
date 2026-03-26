@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for PermutationIterator.
  */
-public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
+class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 
     @SuppressWarnings("boxing") // OK in test code
     protected Character[] testArray = { 'A', 'B', 'C' };
@@ -68,7 +68,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testEmptyCollection() {
+    void testEmptyCollection() {
         final PermutationIterator<Character> it = makeEmptyIterator();
         // there is one permutation for an empty set: 0! = 1
         assertTrue(it.hasNext());
@@ -80,7 +80,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testPermutationException() {
+    void testPermutationException() {
         final List<List<Character>> resultsList = new ArrayList<>();
 
         final PermutationIterator<Character> it = makeObject();
@@ -97,7 +97,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      */
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testPermutationExhaustivity() {
+    void testPermutationExhaustivity() {
         final List<Character> perm1 = new ArrayList<>();
         final List<Character> perm2 = new ArrayList<>();
         final List<Character> perm3 = new ArrayList<>();
@@ -145,7 +145,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
-    public void testPermutationResultSize() {
+    void testPermutationResultSize() {
         int factorial = 1;
         for (int i = 0; i < 8; i++, factorial *= i) {
             final List<Integer> list = new ArrayList<>();
@@ -166,7 +166,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      * test checking that all the permutations are returned only once.
      */
     @Test
-    public void testPermutationUnicity() {
+    void testPermutationUnicity() {
         final List<List<Character>> resultsList = new ArrayList<>();
         final Set<List<Character>> resultsSet = new HashSet<>();
 
@@ -182,7 +182,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     @Test
-    public void testPermutatorHasMore() {
+    void testPermutatorHasMore() {
         final PermutationIterator<Character> it = makeObject();
         for (int i = 0; i < 6; i++) {
             assertTrue(it.hasNext());

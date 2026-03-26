@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +45,7 @@ import java.util.function.Predicate;
  * <ul>
  * <li>Level 0 is the oldest layer and the highest level is the newest.</li>
  * <li>There is always at least one enclosed filter.</li>
- * <li>The newest filter is the {@code target} into which merges are performed.
+ * <li>The newest filter is the {@code target} into which merges are performed.</li>
  * <li>Whenever the target is retrieved, or a {@code merge} operation is performed the code checks if any older layers should be removed, and if so removes
  * them. It also checks it a new layer should be added, and if so adds it and sets the {@code target} before the operation.</li>
  * </ul>

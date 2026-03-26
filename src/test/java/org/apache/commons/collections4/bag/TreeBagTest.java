@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,14 +50,14 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testCollections265() {
+    void testCollections265() {
         final Bag<Object> bag = new TreeBag<>();
 
         assertThrows(IllegalArgumentException.class, () -> bag.add(new Object()));
     }
 
     @Test
-    public void testCollections555() {
+    void testCollections555() {
         final Bag<Object> bag = new TreeBag<>();
 
         assertThrows(NullPointerException.class, () -> bag.add(null));
@@ -71,7 +71,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testOrdering() {
+    void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("A", bag.toArray()[0], "Should get elements in correct order");
         assertEquals("B", bag.toArray()[1], "Should get elements in correct order");
@@ -80,7 +80,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         assertEquals("D", ((SortedBag<T>) bag).last(), "Should get last key");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TreeBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

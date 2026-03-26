@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,10 +20,11 @@
  * These are usually used in maps, however they can be used as data holders in any collection.
  * <p>
  * The following key/value designs are included:
+ * </p>
  * <ul>
- *   <li>Map Entry - various map entry implementations
- *   <li>KeyValue - a key and value pair, without map entry semantics
- *   <li>MultiKey - a holder of multiple keys tied together
+ *   <li>Map Entry - various map entry implementations</li>
+ *   <li>KeyValue - a key and value pair, without map entry semantics</li>
+ *   <li>MultiKey - a holder of multiple keys tied together</li>
  * </ul>
  */
 package org.apache.commons.collections4.keyvalue;

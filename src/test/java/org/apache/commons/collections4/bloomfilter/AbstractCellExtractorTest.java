@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,6 +34,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
      * A testing CellConsumer that always returns true.
      */
     private static final CellPredicate TRUE_CONSUMER = (i, j) -> true;
+
     /**
      * A testing CellConsumer that always returns false.
      */
@@ -71,7 +72,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
      * {@link IndexExtractor#processIndices(java.util.function.IntPredicate)}.
      */
     @Test
-    public final void testBehaviourForEachCell() {
+    final void testBehaviourForEachCell() {
         final IntList list = new IntList();
         createExtractor().processCells((i, j) -> list.add(i));
         final int[] actual = list.toArray();
@@ -84,7 +85,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public final void testEmptyCellExtractor() {
+    final void testEmptyCellExtractor() {
         final CellExtractor empty = createEmptyExtractor();
         final int[] ary = empty.asIndexArray();
         assertEquals(0, ary.length);
@@ -95,7 +96,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public void testForEachCellEarlyExit() {
+    void testForEachCellEarlyExit() {
         final int[] passes = new int[1];
         assertTrue(createEmptyExtractor().processCells((i, j) -> {
             passes[0]++;
@@ -111,7 +112,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public final void testForEachCellPredicates() {
+    final void testForEachCellPredicates() {
         final CellExtractor populated = createExtractor();
         final CellExtractor empty = createEmptyExtractor();
 
@@ -123,7 +124,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public void testForEachCellValues() {
+    void testForEachCellValues() {
         final int[] expectedIdx = getExpectedIndices();
         final int[] expectedValue = getExpectedValues();
         assertEquals(expectedIdx.length, expectedValue.length, "expected index length and value length do not match");
@@ -137,7 +138,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
     }
 
     @Test
-    public final void testIndexConsistency() {
+    final void testIndexConsistency() {
         final CellExtractor extractor = createExtractor();
         final BitSet bs1 = new BitSet();
         final BitSet bs2 = new BitSet();

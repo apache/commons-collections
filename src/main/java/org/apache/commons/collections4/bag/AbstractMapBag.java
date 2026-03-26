@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -121,6 +121,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param value the initial value
          */
         MutableInteger(final int value) {
@@ -283,7 +284,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Reads the map in using a custom routine.
+     *
      * @param map the map to use
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
@@ -304,7 +306,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Writes the map out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -344,7 +347,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Returns the number of occurrence of the given element in this bag by
+     * Gets the number of occurrence of the given element in this bag by
      * looking up its count in the underlying map.
      *
      * @param object the object to search for
@@ -477,6 +480,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Remove any members of the bag that are not in the given bag, respecting
      * cardinality.
+     *
      * @see #retainAll(Collection)
      * @param other the bag to retain
      * @return {@code true} if this call changed the collection

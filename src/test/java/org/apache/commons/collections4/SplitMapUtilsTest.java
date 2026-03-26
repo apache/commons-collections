@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link TransformedSplitMap}
  */
 @SuppressWarnings("boxing")
-public class SplitMapUtilsTest {
+class SplitMapUtilsTest {
 
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
@@ -64,19 +64,19 @@ public class SplitMapUtilsTest {
     }
 
     @Test
-    public void testAlreadyReadableMap() {
+    void testAlreadyReadableMap() {
         final HashedMap<String, Integer> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
     }
 
     @Test
-    public void testAlreadyWritableMap() {
+    void testAlreadyWritableMap() {
         final HashedMap<String, String> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
     }
 
     @Test
-    public void testReadableMap() {
+    void testReadableMap() {
         final IterableMap<String, Integer> map = SplitMapUtils.readableMap(transformedMap);
 
         // basic
@@ -127,7 +127,7 @@ public class SplitMapUtilsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testWritableMap() {
+    void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
         attemptGetOperation(() -> map.get(null));
         attemptGetOperation(map::entrySet);

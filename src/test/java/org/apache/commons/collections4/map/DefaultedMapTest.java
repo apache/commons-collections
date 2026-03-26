@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,7 +55,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testFactoryMethods() {
+    void testFactoryMethods() {
         final HashMap<K, V> base = new HashMap<>();
         assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap(null, (V) "DEFAULT_VALUE"));
         assertThrows(NullPointerException.class, () -> DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory));
@@ -84,7 +84,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet2() {
+    void testMapGet2() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, (V) "NULL");
 
@@ -104,7 +104,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet3() {
+    void testMapGet3() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, ConstantFactory.constantFactory((V) "NULL"));
 
@@ -124,7 +124,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapGet4() {
+    void testMapGet4() {
         final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, (Transformer<K, V>) input -> {
             if (input instanceof String) {
@@ -149,7 +149,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

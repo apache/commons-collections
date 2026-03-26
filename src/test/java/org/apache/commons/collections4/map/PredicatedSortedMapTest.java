@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -94,7 +94,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     // from TestPredicatedMap
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntrySet() {
+    void testEntrySet() {
         SortedMap<K, V> map = makeTestMap();
         assertNotNull(map.entrySet(), "returned entryset should not be null");
         map = decorateMap(new TreeMap<>(), null, null);
@@ -105,7 +105,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPut() {
+    void testPut() {
         final Map<K, V> map = makeTestMap();
         assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)),
                 "Illegal value should raise IllegalArgument");
@@ -141,7 +141,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testReverseSortOrder() {
+    void testReverseSortOrder() {
         final SortedMap<K, V> map = makeTestMapWithComparator();
         map.put((K) "A",  (V) "a");
         map.put((K) "B", (V) "b");
@@ -165,7 +165,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSortOrder() {
+    void testSortOrder() {
         final SortedMap<K, V> map = makeTestMap();
         map.put((K) "A", (V) "a");
         map.put((K) "B", (V) "b");
@@ -187,7 +187,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertNull(c, "natural order, so comparator should be null");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

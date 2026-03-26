@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ public class SynchronizedQueueTest<T> extends AbstractQueueTest<T> {
 
     @Test
     @Disabled("Run once")
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         Queue<T> queue = makeObject();
         writeExternalFormToDisk((java.io.Serializable) queue,
             BulkTest.TEST_DATA_PATH + "SynchronizedQueue.emptyCollection.version4.2.obj");

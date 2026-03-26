@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,15 +29,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
+import org.apache.commons.collections4.multimap.LinkedHashSetValuedLinkedHashMap;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests for MultiMapUtils
  */
-public class MultiMapUtilsTest {
+class MultiMapUtilsTest {
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
 
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
@@ -47,7 +49,7 @@ public class MultiMapUtilsTest {
 
     @Test
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void testEmptyUnmodifiableMultiValuedMap() {
+    void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
         assertTrue(map.isEmpty());
 
@@ -55,7 +57,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetCollection() {
+    void testGetCollection() {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -69,7 +71,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsBag() {
+    void testGetValuesAsBag() {
         assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -88,7 +90,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsList() {
+    void testGetValuesAsList() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -102,7 +104,7 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetValuesAsSet() {
+    void testGetValuesAsSet() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         final String[] values = { "v1", "v2", "v3" };
@@ -117,24 +119,48 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testIsEmptyWithEmptyMap() {
+    void testInvert() {
+        final HashSetValuedHashMap<String, String> usages = new HashSetValuedHashMap<>();
+
+        final LinkedHashSetValuedLinkedHashMap<String, String> deps = new LinkedHashSetValuedLinkedHashMap<>();
+        deps.put("commons-configuration2", "commons-logging");
+        deps.put("commons-configuration2", "commons-lang3");
+        deps.put("commons-configuration2", "commons-text");
+        deps.put("commons-beanutils", "commons-collections");
+        deps.put("commons-beanutils", "commons-logging");
+        MultiMapUtils.invert(deps, usages);
+        final Set<String> loggingUsagesCompile = usages.get("commons-logging");
+        assertEquals("[commons-configuration2, commons-beanutils]", loggingUsagesCompile.toString());
+        final Set<String> codecUsagesCompile = usages.get("commons-codec");
+        assertEquals("[]", codecUsagesCompile.toString());
+
+        final LinkedHashSetValuedLinkedHashMap<String, String> optionalDeps = new LinkedHashSetValuedLinkedHashMap<>();
+        optionalDeps.put("commons-configuration2", "commons-codec");
+        optionalDeps.put("commons-collections", "commons-codec");
+        MultiMapUtils.invert(optionalDeps, usages);
+        final Set<String> codecUsagesAll = usages.get("commons-codec");
+        assertEquals("[commons-collections, commons-configuration2]", codecUsagesAll.toString());
+    }
+
+    @Test
+    void testIsEmptyWithEmptyMap() {
         assertTrue(MultiMapUtils.isEmpty(new ArrayListValuedHashMap<>()));
     }
 
     @Test
-    public void testIsEmptyWithNonEmptyMap() {
+    void testIsEmptyWithNonEmptyMap() {
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         map.put("item", "value");
         assertFalse(MultiMapUtils.isEmpty(map));
     }
 
     @Test
-    public void testIsEmptyWithNull() {
+    void testIsEmptyWithNull() {
         assertTrue(MultiMapUtils.isEmpty(null));
     }
 
     @Test
-    public void testTypeSafeEmptyMultiValuedMap() {
+    void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
 

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test class for TransformingComparator.
  */
-public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
+class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     @SuppressWarnings("boxing") // OK in test code
@@ -56,7 +56,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final Transformer<String, String> t1 = TransformerUtils.nopTransformer();
         final TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
         final TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
@@ -70,7 +70,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
                 "Contract failed: equals-hashCode");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/TransformingComparator.version4.obj");
 //    }
 

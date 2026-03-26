@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -84,17 +84,22 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
     private final Deque<Iterator<? extends E>> stack = new ArrayDeque<>(8);
+
     /** The root object in the tree */
     private E root;
+
     /** The transformer to use */
     private final Transformer<? super E, ? extends E> transformer;
 
     /** Whether there is another element in the iteration */
     private boolean hasNext;
+
     /** The current iterator */
     private Iterator<? extends E> currentIterator;
+
     /** The current value */
     private E currentValue;
+
     /** The last used iterator, needed for remove() */
     private Iterator<? extends E> lastUsedIterator;
 

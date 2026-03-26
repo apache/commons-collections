@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * {@link IndexedCollection} implementation.
  */
 @SuppressWarnings("boxing")
-public class IndexedCollectionTest extends AbstractCollectionTest<String> {
+class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     private static final class IntegerTransformer implements Transformer<String, Integer>, Serializable {
         private static final long serialVersionUID = 809439581555072949L;
@@ -98,7 +98,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testAddedObjectsCanBeRetrievedByKey() throws Exception {
+    void testAddedObjectsCanBeRetrievedByKey() throws Exception {
         final Collection<String> coll = makeTestCollection();
         coll.add("12");
         coll.add("16");
@@ -116,7 +116,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
+    void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
         final Collection<String> original = makeFullCollection();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
 
@@ -126,7 +126,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testEnsureDuplicateObjectsCauseException() throws Exception {
+    void testEnsureDuplicateObjectsCauseException() throws Exception {
         final Collection<String> coll = makeUniqueTestCollection();
 
         coll.add("1");
@@ -135,7 +135,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    public void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
+    void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
         final Collection<String> original = new ArrayList<>();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
 

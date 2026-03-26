@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,6 +53,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
                 Objects.requireNonNull(trueTransformer, "trueTransformer"),
                 Objects.requireNonNull(falseTransformer, "falseTransformer"));
     }
+
     /**
      * Factory method that performs validation.
      * <p>
@@ -71,6 +72,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
         return new IfTransformer<>(Objects.requireNonNull(predicate, "predicate"),
                 Objects.requireNonNull(trueTransformer, "trueTransformer"), NOPTransformer.<T>nopTransformer());
     }
+
     /** The test */
     private final Predicate<? super T> iPredicate;
 

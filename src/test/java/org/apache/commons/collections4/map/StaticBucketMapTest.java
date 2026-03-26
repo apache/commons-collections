@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,7 +47,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void test_containsKey_nullMatchesIncorrectly() {
+    void test_containsKey_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
         map.put(null, (V) "A");
         assertTrue(map.containsKey(null));
@@ -60,7 +60,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void test_containsValue_nullMatchesIncorrectly() {
+    void test_containsValue_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
         map.put((K) "A", null);
         assertTrue(map.containsValue(null));
@@ -74,7 +74,7 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     // Bugzilla 37567
     @Test
     @SuppressWarnings("unchecked")
-    public void test_get_nullMatchesIncorrectly() {
+    void test_get_nullMatchesIncorrectly() {
         final StaticBucketMap<K, V> map = new StaticBucketMap<>(17);
         map.put(null, (V) "A");
         assertEquals("A", map.get(null));

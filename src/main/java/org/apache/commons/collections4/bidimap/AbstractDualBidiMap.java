@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,6 +67,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param parent  the parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
@@ -210,6 +211,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -298,6 +300,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -339,6 +342,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param entry  the entry to decorate
          * @param parent  the parent map
          */
@@ -419,6 +423,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -742,6 +747,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // Map views
+
     /**
      * Gets a keySet view of the map.
      * Changes made on the view are reflected in the map.
@@ -758,6 +764,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // BidiMap
+
     /**
      * Obtains a {@code MapIterator} over the map.
      * The iterator implements {@link BidiMapIterator}.

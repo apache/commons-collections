@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,7 +67,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<E> iter = makeObject();
         assertTrue(iter.hasNext(), "Iterator has a first item");
         final E iterValue = iter.next();
@@ -77,7 +77,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableIterator<E> it = makeObject();
 
         assertTrue(it.hasNext());
@@ -98,7 +98,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSingletonIteratorRemove() {
+    void testSingletonIteratorRemove() {
         final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy", iter.next());

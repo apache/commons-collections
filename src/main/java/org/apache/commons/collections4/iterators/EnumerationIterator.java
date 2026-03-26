@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,12 +31,13 @@ public class EnumerationIterator<E> implements Iterator<E> {
 
     /** The collection to remove elements from */
     private final Collection<? super E> collection;
+
     /** The enumeration being converted */
     private Enumeration<? extends E> enumeration;
+
     /** The last object retrieved */
     private E last;
 
-    // Constructors
     /**
      * Constructs a new {@code EnumerationIterator} that will not
      * function until {@link #setEnumeration(Enumeration)} is called.
@@ -68,9 +69,8 @@ public class EnumerationIterator<E> implements Iterator<E> {
         this.last = null;
     }
 
-    // Properties
     /**
-     * Returns the underlying enumeration.
+     * Gets the underlying enumeration.
      *
      * @return the underlying enumeration
      */
@@ -78,7 +78,6 @@ public class EnumerationIterator<E> implements Iterator<E> {
         return enumeration;
     }
 
-    // Iterator interface
     /**
      * Returns true if the underlying enumeration has more elements.
      *

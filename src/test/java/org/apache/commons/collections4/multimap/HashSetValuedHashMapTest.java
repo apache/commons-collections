@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,7 +57,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
-    public void testHashSetValuedHashMap_2() {
+    void testHashSetValuedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2;
@@ -76,7 +76,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
-    public void testHashSetValueHashMap() {
+    void testHashSetValueHashMap() {
         final SetValuedMap<K, V> setMap = new HashSetValuedHashMap<>(4);
         assertEquals(0, setMap.get((K) "whatever").size());
 
@@ -88,7 +88,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
-    public void testHashSetValueHashMap_1() {
+    void testHashSetValueHashMap_1() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2 = makeObject();
@@ -111,8 +111,21 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     }
 
     @Test
+    void testInverted() {
+        final HashSetValuedHashMap<String, String> dependencies = new HashSetValuedHashMap<>();
+        dependencies.put("commons-configuration2", "commons-logging");
+        dependencies.put("commons-configuration2", "commons-lang3");
+        dependencies.put("commons-configuration2", "commons-text");
+        dependencies.put("commons-beanutils", "commons-collections");
+        dependencies.put("commons-beanutils", "commons-logging");
+        final Set<String> loggingUsages = dependencies.inverted().get("commons-logging");
+        assertEquals("[commons-beanutils, commons-configuration2]",
+                loggingUsages.toString());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapAdd() {
+    void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -126,7 +139,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testSetValuedMapEqualsHashCodeContract() {
+    void testSetValuedMapEqualsHashCodeContract() {
         final SetValuedMap map1 = makeObject();
         final SetValuedMap map2 = makeObject();
 
@@ -148,7 +161,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemove() {
+    void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -169,7 +182,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemoveViaIterator() {
+    void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -187,7 +200,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         assertFalse(setMap.containsKey("A"));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/HashSetValuedHashMap.emptyCollection.version4.1.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

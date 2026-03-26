@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -109,7 +109,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         Queue queue = makeEmptyQueue();
@@ -129,7 +129,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
+    void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();
         if (!(queue instanceof Serializable && isTestSerialization())) {
             return;
@@ -148,7 +148,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
+    void testFullQueueCompatibility() throws IOException, ClassNotFoundException {
         /*
          * Create canonical objects with this code
         Queue queue = makeFullQueue();
@@ -167,7 +167,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFullQueueSerialization() throws IOException, ClassNotFoundException {
+    void testFullQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeFullCollection();
         final int size = getFullElements().length;
         if (!(queue instanceof Serializable && isTestSerialization())) {
@@ -185,7 +185,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#element()}.
      */
     @Test
-    public void testQueueElement() {
+    void testQueueElement() {
         resetEmpty();
 
         assertThrows(NoSuchElementException.class, () -> getCollection().element(),
@@ -223,7 +223,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#offer(Object)}.
      */
     @Test
-    public void testQueueOffer() {
+    void testQueueOffer() {
         if (!isAddSupported()) {
             return;
         }
@@ -256,7 +256,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#peek()}.
      */
     @Test
-    public void testQueuePeek() {
+    void testQueuePeek() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -292,7 +292,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#poll()}.
      */
     @Test
-    public void testQueuePoll() {
+    void testQueuePoll() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -320,7 +320,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link Queue#remove()}.
      */
     @Test
-    public void testQueueRemove() {
+    void testQueueRemove() {
         if (!isRemoveSupported()) {
             return;
         }

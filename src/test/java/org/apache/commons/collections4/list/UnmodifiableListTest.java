@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -74,7 +74,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final List<E> list = makeObject();
         assertSame(list, UnmodifiableList.unmodifiableList(list));
 
@@ -85,7 +85,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
      * Verify that base list and sublists are not modifiable
      */
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupList();
         verifyUnmodifiable(list);
         verifyUnmodifiable(list.subList(0, 2));
@@ -95,7 +95,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
      * Verify that iterator is not modifiable
      */
     @Test
-    public void testUnmodifiableIterator() {
+    void testUnmodifiableIterator() {
         setupList();
         final Iterator<E> iterator = list.iterator();
         iterator.next();
@@ -118,7 +118,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> list.set(0, (E) Integer.valueOf(0)));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableList.emptyCollection.version4.obj");
 //        resetFull();

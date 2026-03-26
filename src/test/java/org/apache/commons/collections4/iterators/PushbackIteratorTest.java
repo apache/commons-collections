@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -63,7 +63,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testDelayedPushback() {
+    void testDelayedPushback() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         iter.pushback((E) "x");
@@ -74,7 +74,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testImmediatePushback() {
+    void testImmediatePushback() {
         final PushbackIterator<E> iter = makeObject();
         iter.pushback((E) "x");
         assertEquals("x", iter.next());
@@ -84,7 +84,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultiplePushback() {
+    void testMultiplePushback() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         iter.pushback((E) "x");
@@ -96,7 +96,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testNormalIteration() {
+    void testNormalIteration() {
         final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         assertEquals("b", iter.next());

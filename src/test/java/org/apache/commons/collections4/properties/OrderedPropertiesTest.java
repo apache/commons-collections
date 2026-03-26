@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package org.apache.commons.collections4.properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,6 +28,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link OrderedProperties}.
  */
-public class OrderedPropertiesTest {
+class OrderedPropertiesTest {
 
     private void assertAscendingOrder(final OrderedProperties orderedProperties) {
         final int first = 1;
@@ -57,6 +59,9 @@ public class OrderedPropertiesTest {
         for (int i = first; i <= last; i++) {
             assertEquals("key" + i, propertyNames.nextElement());
         }
+        final Set<String> propertyNameSet = orderedProperties.stringPropertyNames();
+        final AtomicInteger i = new AtomicInteger(first);
+        propertyNameSet.forEach(e -> assertEquals("key" + i.getAndIncrement(), e));
     }
 
     private OrderedProperties assertDescendingOrder(final OrderedProperties orderedProperties) {
@@ -80,6 +85,9 @@ public class OrderedPropertiesTest {
         for (int i = first; i <= last; i--) {
             assertEquals("key" + i, propertyNames.nextElement());
         }
+        final Set<String> propertyNameSet = orderedProperties.stringPropertyNames();
+        final AtomicInteger i = new AtomicInteger(first);
+        propertyNameSet.forEach(e -> assertEquals("key" + i.getAndDecrement(), e));
         return orderedProperties;
     }
 
@@ -92,7 +100,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testCompute() {
+    void testCompute() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -112,7 +120,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testComputeIfAbsent() {
+    void testComputeIfAbsent() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -132,7 +140,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -148,7 +156,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testForEach() {
+    void testForEach() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -164,7 +172,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testKeys() {
+    void testKeys() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';
@@ -178,7 +186,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testLoadOrderedKeys() throws IOException {
+    void testLoadOrderedKeys() throws IOException {
         final OrderedProperties orderedProperties = new OrderedProperties();
         try (FileReader reader = new FileReader("src/test/resources/org/apache/commons/collections4/properties/test.properties")) {
             orderedProperties.load(reader);
@@ -187,12 +195,12 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testLoadOrderedKeysReverse() throws IOException {
+    void testLoadOrderedKeysReverse() throws IOException {
         loadOrderedKeysReverse();
     }
 
     @Test
-    public void testMerge() {
+    void testMerge() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -210,7 +218,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPut() {
+    void testPut() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -228,7 +236,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         final OrderedProperties sourceProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -248,7 +256,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testPutIfAbsent() {
+    void testPutIfAbsent() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
         int last = 11;
@@ -266,7 +274,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testRemoveKey() throws FileNotFoundException, IOException {
+    void testRemoveKey() throws FileNotFoundException, IOException {
         final OrderedProperties props = loadOrderedKeysReverse();
         final String k = "key1";
         props.remove(k);
@@ -277,7 +285,7 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testRemoveKeyValue() throws FileNotFoundException, IOException {
+    void testRemoveKeyValue() throws FileNotFoundException, IOException {
         final OrderedProperties props = loadOrderedKeysReverse();
         final String k = "key1";
         props.remove(k, "value1");
@@ -288,7 +296,13 @@ public class OrderedPropertiesTest {
     }
 
     @Test
-    public void testToString() {
+    void testStringPropertyName() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        assertTrue(orderedProperties.stringPropertyNames().isEmpty());
+    }
+
+    @Test
+    void testToString() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
         final char last = 'A';

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * A {@code List} implementation that is optimized for fast insertions and
  * removals at any index in the list.
  * <p>
- * This list implementation utilises a tree structure internally to ensure that
+ * This list implementation utilizes a tree structure internally to ensure that
  * all insertions and removals are O(log n). This provides much faster performance
  * than both an {@code ArrayList} and a {@code LinkedList} where elements
  * are inserted and removed repeatedly from anywhere in the list.
@@ -76,23 +76,32 @@ public class TreeList<E> extends AbstractList<E> {
      * The nodes don't know the index of the object they are holding.  They
      * do know however their position relative to their parent node.
      * This allows to calculate the index of a node while traversing the tree.
+     * </p>
      * <p>
      * The Faedelung calculation stores a flag for both the left and right child
      * to indicate if they are a child (false) or a link as in linked list (true).
+     * </p>
      */
     static class AVLNode<E> {
+
         /** The left child node or the predecessor if {@link #leftIsPrevious}.*/
         private AVLNode<E> left;
+
         /** Flag indicating that left reference is not a subtree but the predecessor. */
         private boolean leftIsPrevious;
+
         /** The right child node or the successor if {@link #rightIsNext}. */
         private AVLNode<E> right;
+
         /** Flag indicating that right reference is not a subtree but the successor. */
         private boolean rightIsNext;
+
         /** How many levels of left/right are below this one. */
         private int height;
+
         /** The relative position, root holds absolute position. */
         private int relativePosition;
+
         /** The stored element. */
         private E value;
 
@@ -132,6 +141,7 @@ public class TreeList<E> extends AbstractList<E> {
          * to this method will construct the subtree for elements {@code start}
          * through {@code end} of the collection, assuming the iterator
          * {@code e} already points at element {@code start}.
+         * </p>
          *
          * @param iterator  an iterator over the collection, which should already point
          *          to the element at index {@code start} within the collection
@@ -297,7 +307,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Locate the element with the given index relative to the
+         * Gets the element with the given index relative to the
          * offset of the parent of this node.
          */
         AVLNode<E> get(final int index) {
@@ -315,7 +325,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Returns the height of the node or -1 if the node is null.
+         * Gets the height of the node or -1 if the node is null.
          */
         private int getHeight(final AVLNode<E> node) {
             return node == null ? -1 : node.height;
@@ -362,7 +372,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         /**
-         * Locate the index that contains the specified object.
+         * Finds the index that contains the specified object.
          */
         int indexOf(final Object object, final int index) {
             if (getLeftSubTree() != null) {
@@ -754,25 +764,31 @@ public class TreeList<E> extends AbstractList<E> {
      * A list iterator over the linked list.
      */
     static class TreeListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
+
         /** The parent list */
         private final TreeList<E> parent;
+
         /**
          * Cache of the next node that will be returned by {@link #next()}.
          */
         private AVLNode<E> next;
+
         /**
          * The index of the next node to be returned.
          */
         private int nextIndex;
+
         /**
          * Cache of the last node that was returned by {@link #next()}
          * or {@link #previous()}.
          */
         private AVLNode<E> current;
+
         /**
          * The index of the last node that was returned.
          */
         private int currentIndex;
+
         /**
          * The modification count that the list is expected to have. If the list
          * doesn't have this count, then a
@@ -788,6 +804,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param fromIndex  the index to start at
          */
         protected TreeListIterator(final TreeList<E> parent, final int fromIndex) {
+            checkInterval(fromIndex, 0, parent.size(), parent.size());
             this.parent = parent;
             this.expectedModCount = parent.modCount;
             this.next = parent.root == null ? null : parent.root.get(fromIndex);
@@ -900,6 +917,21 @@ public class TreeList<E> extends AbstractList<E> {
         }
     }
 
+    /**
+     * Checks whether the index is valid.
+     *
+     * @param index  the index to check.
+     * @param startIndex  the first allowed index.
+     * @param endIndex  the last allowed index.
+     * @param endIndex  the size.
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    private static void checkInterval(final int index, final int startIndex, final int endIndex, final int size) {
+        if (index < startIndex || index > endIndex) {
+            throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size);
+        }
+    }
+
     /** The root node in the AVL tree */
     private AVLNode<E> root;
 
@@ -949,6 +981,7 @@ public class TreeList<E> extends AbstractList<E> {
      * <p>
      * This method runs in O(n + log m) time, where m is
      * the size of this list and n is the size of {@code c}.
+     * </p>
      *
      * @param c  the collection to be added to this list
      * @return {@code true} if this list changed as a result of the call
@@ -977,9 +1010,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     private void checkInterval(final int index, final int startIndex, final int endIndex) {
-        if (index < startIndex || index > endIndex) {
-            throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size());
-        }
+        checkInterval(index, startIndex, endIndex, size());
     }
 
     /**
@@ -1055,14 +1086,13 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets a ListIterator over the list.
      *
-     * @param fromIndex  the index to start from
-     * @return the new iterator
+     * @param fromIndex  the index to start from.
+     * @return the new iterator.
      */
     @Override
     public ListIterator<E> listIterator(final int fromIndex) {
         // override to go 75% faster
         // cannot use EmptyIterator as iterator.add() must work
-        checkInterval(fromIndex, 0, size());
         return new TreeListIterator<>(this, fromIndex);
     }
 

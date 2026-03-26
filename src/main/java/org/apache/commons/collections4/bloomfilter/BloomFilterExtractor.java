@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -70,12 +71,7 @@ public interface BloomFilterExtractor {
 
             @Override
             public boolean processBloomFilters(final Predicate<BloomFilter> predicate) {
-                for (final BloomFilter filter : filters) {
-                    if (!predicate.test(filter)) {
-                        return false;
-                    }
-                }
-                return true;
+                return Arrays.stream(filters).allMatch(predicate);
             }
         };
     }
@@ -124,7 +120,7 @@ public interface BloomFilterExtractor {
      * instances, or references to the filters in the collection.</em>
      * </p>
      *
-     * @param other The other BloomFilterExtractor that provides the y values in the (x,y) pair.
+     * @param other The other BloomFilterExtractor that provides the y values in the (x, y) pair.
      * @param func  The function to apply.
      * @return {@code true} if the {@code func} returned {@code true} for every pair, {@code false} otherwise.
      */

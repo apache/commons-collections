@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for COLLECTIONS-701.
  */
-public class Collections701Test {
+class Collections701Test {
 
     @Test
-    public void testArrayList() {
+    void testArrayList() {
         final List<Object> list = new ArrayList<>();
         list.add(list);
         assertEquals(1, list.size());
@@ -39,7 +39,7 @@ public class Collections701Test {
     }
 
     @Test
-    public void testHashSet() {
+    void testHashSet() {
         final Set<Object> set = new HashSet<>();
         set.add(set);
         assertEquals(1, set.size());
@@ -47,7 +47,7 @@ public class Collections701Test {
     }
 
     @Test
-    public void testSetUniqueList() {
+    void testSetUniqueList() {
         final List<Object> source = new ArrayList<>();
         final List<Object> list = SetUniqueList.setUniqueList(source);
         list.add(list);

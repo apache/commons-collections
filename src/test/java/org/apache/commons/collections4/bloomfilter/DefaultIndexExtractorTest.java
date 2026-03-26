@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
+class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Generates an array of integers.
@@ -102,7 +102,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     @ParameterizedTest
     @ValueSource(ints = {32, 33})
-    public void testEntries(final int size) {
+    void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
         final IndexExtractor indexExtractor = predicate -> {
             Objects.requireNonNull(predicate);
@@ -118,7 +118,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     }
 
     @Test
-    public void testFromBitMapExtractor() {
+    void testFromBitMapExtractor() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(7, 256);
             final long[] bits = BitMaps.newBitMap(256);
@@ -131,7 +131,7 @@ public class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     }
 
     @Test
-    public void testFromIndexArray() {
+    void testFromIndexArray() {
         for (int i = 0; i < 5; i++) {
             final int[] expected = generateIntArray(10, 256);
             final IndexExtractor ip = IndexExtractor.fromIndexArray(expected);

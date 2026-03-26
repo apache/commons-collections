@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -81,6 +81,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         }
         return new SwitchTransformer<>(false, preds, transformers, defaultTransformer);
     }
+
     /**
      * Factory method that performs validation and copies the parameter arrays.
      *
@@ -109,6 +110,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         }
         return new SwitchTransformer<>(predicates, transformers, defaultTransformer);
     }
+
     /** The tests to consider */
     private final Predicate<? super T>[] iPredicates;
 

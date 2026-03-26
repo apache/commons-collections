@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,6 +56,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param <V> the type of the values in the map
      */
     public interface MapMutator<K, V> extends Serializable {
+
         /**
          * Called when the CompositeMap.put() method is invoked.
          *
@@ -313,7 +314,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     }
 
     /**
-     * Returns the value to which this map maps the specified key.  Returns
+     * Gets the value to which this map maps the specified key.  Returns
      * {@code null} if the map contains no mapping for this key.  A return
      * value of {@code null} does not <em>necessarily</em> indicate that the
      * map contains no mapping for the key; it's also possible that the map

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,7 +48,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testCaseInsensitive() {
+    void testCaseInsensitive() {
         final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");
@@ -60,7 +60,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>(10);
         map.put((K) "1", (V) "1");
         final CaseInsensitiveMap<K, V> cloned = map.clone();
@@ -72,14 +72,14 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     @Test
-    public void testInitialCapacityZero() {
+    void testInitialCapacityZero() {
         final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
         assertEquals(1, map.data.length);
     }
 
     // COLLECTIONS-294
     @Test
-    public void testLocaleIndependence() {
+    void testLocaleIndependence() {
         final Locale orig = Locale.getDefault();
 
         final Locale[] locales = { Locale.ENGLISH, new Locale("tr", StringUtils.EMPTY, StringUtils.EMPTY), Locale.getDefault() };
@@ -106,7 +106,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/CaseInsensitiveMap.emptyCollection.version4.obj");
 //        resetFull();
@@ -115,7 +115,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");
@@ -131,7 +131,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     }
 
     @Test
-    public void testPutAll() {
+    void testPutAll() {
         final Map<Object, String> map = new HashMap<>();
         map.put("One", "One");
         map.put("Two", "Two");

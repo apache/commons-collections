@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,7 +47,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
+    public class FlatMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override
         public V[] addSetValues() {
@@ -105,7 +105,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public BulkTest bulkTestMapIterator() {
-        return new TestFlatMapIterator();
+        return new FlatMapIteratorTest();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone2() {
+    void testClone2() {
         final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
@@ -168,7 +168,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone4() {
+    void testClone4() {
         final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
@@ -204,7 +204,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testCollections261() {
+    void testCollections261() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         m.put(Integer.valueOf(1), Integer.valueOf(1));
         m.put(Integer.valueOf(0), Integer.valueOf(0));
@@ -220,7 +220,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsKey1() {
+    void testContainsKey1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -231,7 +231,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsKey2() {
+    void testContainsKey2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -241,7 +241,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsKey3() {
+    void testContainsKey3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(null, ONE);
@@ -250,7 +250,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsValue1() {
+    void testContainsValue1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -261,7 +261,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsValue2() {
+    void testContainsValue2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -271,7 +271,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testContainsValue3() {
+    void testContainsValue3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, null);
@@ -281,7 +281,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue1() throws Exception {
+    void testEntryIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -301,7 +301,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue2() throws Exception {
+    void testEntryIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -322,7 +322,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntryIteratorSetValue3() throws Exception {
+    void testEntryIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -343,7 +343,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testEntrySet() {
+    void testEntrySet() {
         // Sanity check
         putAndRemove(new LinkedHashMap<>());
         // Actual test
@@ -352,7 +352,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEquals1() {
+    void testEquals1() {
         final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
@@ -362,7 +362,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(map1.equals(map2));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -375,7 +375,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEquals2() {
+    void testEquals2() {
         final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
@@ -386,7 +386,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testGet1() {
+    void testGet1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -396,7 +396,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testGet2() {
+    void testGet2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -407,7 +407,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testGet3() {
+    void testGet3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -420,7 +420,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue1() throws Exception {
+    void testMapIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -440,7 +440,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue2() throws Exception {
+    void testMapIteratorSetValue2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -461,7 +461,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapIteratorSetValue3() throws Exception {
+    void testMapIteratorSetValue3() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -482,7 +482,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testNewInstance1() {
+    void testNewInstance1() {
         final Map<Integer, Integer> orig = new HashMap<>();
         orig.put(ONE, ONE);
         orig.put(TWO, TWO);
@@ -494,7 +494,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut1() {
+    void testPut1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -506,7 +506,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut2() {
+    void testPut2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -517,7 +517,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut3() {
+    void testPut3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(null, THREE);
@@ -527,7 +527,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut4() {
+    void testPut4() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -539,7 +539,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut5() {
+    void testPut5() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, ONE);
@@ -550,7 +550,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testPut6() {
+    void testPut6() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         m.put(ONE, THREE);
@@ -560,7 +560,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove1() {
+    void testRemove1() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
 
         // object is not existing
@@ -590,7 +590,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove10() {
+    void testRemove10() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -602,7 +602,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove11() {
+    void testRemove11() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -615,7 +615,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove12() {
+    void testRemove12() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -628,7 +628,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove13() {
+    void testRemove13() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -640,7 +640,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove2() {
+    void testRemove2() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -660,7 +660,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove3() {
+    void testRemove3() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -680,7 +680,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove4() {
+    void testRemove4() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -700,7 +700,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove5() {
+    void testRemove5() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -714,7 +714,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove6() {
+    void testRemove6() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -731,7 +731,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove7() {
+    void testRemove7() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -748,7 +748,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove8() {
+    void testRemove8() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         Object obj;
 
@@ -768,7 +768,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testRemove9() {
+    void testRemove9() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final Object obj;
 
@@ -779,7 +779,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testSerialization0() throws Exception {
+    void testSerialization0() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(bout);
@@ -796,7 +796,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialization2() throws Exception {
+    void testSerialization2() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -820,7 +820,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSerialization4() throws Exception {
+    void testSerialization4() throws Exception {
         final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -849,7 +849,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final String string0 = m.toString();
         assertNotNull(string0);

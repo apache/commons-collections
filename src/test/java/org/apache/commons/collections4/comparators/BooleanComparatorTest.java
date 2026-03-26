@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
  * Tests for {@link BooleanComparator}.
  */
 @SuppressWarnings("boxing")
-public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
+class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);
@@ -59,7 +59,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
                 true));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/BooleanComparator.version4.obj");
 //    }
 
@@ -87,14 +87,14 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-    public void testConstructors() {
+    void testConstructors() {
         allTests(false, new BooleanComparator());
         allTests(false, new BooleanComparator(false));
         allTests(true, new BooleanComparator(true));
     }
 
     @Test
-    public void testEqualsCompatibleInstance() {
+    void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), new BooleanComparator(false));
         assertEquals(new BooleanComparator(false), BooleanComparator.getFalseFirstComparator());
@@ -109,7 +109,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     }
 
     @Test
-    public void testStaticFactoryMethods() {
+    void testStaticFactoryMethods() {
         allTests(false, BooleanComparator.getFalseFirstComparator());
         allTests(false, BooleanComparator.booleanComparator(false));
         allTests(true, BooleanComparator.getTrueFirstComparator());

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,6 +48,13 @@ public class OrderedProperties extends Properties {
      */
     private final LinkedHashSet<Object> orderedKeys = new LinkedHashSet<>();
 
+    /**
+     * Constructs a new instance.
+     */
+    public OrderedProperties() {
+        // empty
+    }
+
     @Override
     public synchronized void clear() {
         orderedKeys.clear();
@@ -77,6 +84,26 @@ public class OrderedProperties extends Properties {
         return orderedKeys.stream().map(k -> new SimpleEntry<>(k, get(k))).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
+    /**
+     * Enumerates all key/value pairs in the specified LinkedHashSet and omits the property if the key or value is not a string.
+     *
+     * @param result The result set to populate.
+     * @return The given set.
+     */
+    private synchronized LinkedHashSet<String> enumerateStringProperties(final LinkedHashSet<String> result) {
+        if (defaults != null) {
+            result.addAll(defaults.stringPropertyNames());
+        }
+        for (final Enumeration<?> e = keys(); e.hasMoreElements();) {
+            final Object k = e.nextElement();
+            final Object v = get(k);
+            if (k instanceof String && v instanceof String) {
+                result.add((String) k);
+            }
+        }
+        return result;
+    }
+
     @Override
     public synchronized void forEach(final BiConsumer<? super Object, ? super Object> action) {
         Objects.requireNonNull(action);
@@ -102,7 +129,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public Enumeration<?> propertyNames() {
-        return Collections.enumeration(orderedKeys);
+        return Collections.enumeration(stringPropertyNames());
     }
 
     @Override
@@ -145,6 +172,11 @@ public class OrderedProperties extends Properties {
             orderedKeys.remove(key);
         }
         return remove;
+    }
+
+    @Override
+    public Set<String> stringPropertyNames() {
+        return enumerateStringProperties(new LinkedHashSet<>());
     }
 
     @Override

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -38,8 +39,8 @@ import org.junit.jupiter.api.Test;
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
-    protected String[] testArray = { "One", "Two", "Three" };
-    protected List<E> testList;
+    private final String[] testArray = { "One", "Two", "Three" };
+    private List<E> testList;
 
     @Override
     public Iterator<E> makeEmptyIterator() {
@@ -63,19 +64,32 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.unmodifiableIterator(it));
-
         it = testList.iterator();
         assertNotSame(it, UnmodifiableIterator.unmodifiableIterator(it));
-
         assertThrows(NullPointerException.class, () -> UnmodifiableIterator.unmodifiableIterator(null));
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
 
+    @Test
+    void testUnwrap() {
+        final Iterator<E> iterator = testList.iterator();
+        @SuppressWarnings("unchecked")
+        final UnmodifiableIterator<E, Iterator<E>> unmodifiableIterator = (UnmodifiableIterator<E, Iterator<E>>) UnmodifiableIterator
+                .unmodifiableIterator(iterator);
+        assertSame(iterator, unmodifiableIterator.unwrap());
+    }
+
+    @Test
+    void testWrapUnwrap() {
+        final Iterator<E> iterator = testList.iterator();
+        final UnmodifiableIterator<E, Iterator<E>> unmodifiableIterator = UnmodifiableIterator.wrap(iterator);
+        assertSame(iterator, unmodifiableIterator.unwrap());
+    }
 }

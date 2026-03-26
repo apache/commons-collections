@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for IteratorIterable.
  */
-public class IteratorIterableTest extends BulkTest {
+class IteratorIterableTest extends BulkTest {
 
     private Iterator<Integer> createIterator() {
         final List<Integer> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class IteratorIterableTest extends BulkTest {
 
     @Test
     @SuppressWarnings("unused")
-    public void testIterator() {
+    void testIterator() {
         final Iterator<Integer> iter = createIterator();
         final Iterable<Number> iterable = new IteratorIterable<>(iter);
 
@@ -56,7 +56,7 @@ public class IteratorIterableTest extends BulkTest {
     }
 
     @Test
-    public void testMultipleUserIterator() {
+    void testMultipleUserIterator() {
         final Iterator<Integer> iter = createIterator();
 
         final Iterable<Number> iterable = new IteratorIterable<>(iter, true);

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,9 +50,9 @@ import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
  * enables extra behavior to be added easily.
  * </p>
  * <ul>
- * <li>{@code MultiKeyMap.decorate(new LinkedMap())} creates an ordered map.
- * <li>{@code MultiKeyMap.decorate(new LRUMap())} creates an least recently used map.
- * <li>{@code MultiKeyMap.decorate(new ReferenceMap())} creates a garbage collector sensitive map.
+ * <li>{@code MultiKeyMap.decorate(new LinkedMap())} creates an ordered map.</li>
+ * <li>{@code MultiKeyMap.decorate(new LRUMap())} creates an least recently used map.</li>
+ * <li>{@code MultiKeyMap.decorate(new ReferenceMap())} creates a garbage collector sensitive map.</li>
  * </ul>
  * <p>
  * Note that {@code IdentityMap} and {@code ReferenceIdentityMap} are unsuitable

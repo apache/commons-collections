@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -65,13 +65,13 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testEmpty() {
+    void testEmpty() {
         final Iterator<E> it = makeEmptyIterator();
         assertFalse(it.hasNext());
     }
 
     @Test
-    public void testIllegalRemove() {
+    void testIllegalRemove() {
         final PeekingIterator<E> it = makeObject();
         it.next();
         it.remove(); // supported
@@ -83,7 +83,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIteratorExhausted() {
+    void testIteratorExhausted() {
         final PeekingIterator<E> it = makeObject();
         it.next();
         it.next();
@@ -95,7 +95,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testMultiplePeek() {
+    void testMultiplePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.peek());
@@ -113,7 +113,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSinglePeek() {
+    void testSinglePeek() {
         final PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.element());

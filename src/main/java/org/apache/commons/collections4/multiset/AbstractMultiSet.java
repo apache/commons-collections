@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,6 +45,13 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * @param <E> the element type.
      */
     protected abstract static class AbstractEntry<E> implements Entry<E> {
+
+        /**
+         * Constructs a new instance.
+         */
+        public AbstractEntry() {
+            // empty
+        }
 
         @Override
         public boolean equals(final Object object) {
@@ -240,7 +247,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     private transient Set<Entry<E>> entrySet;
 
     /**
-     * Constructor needed for subclass serialization.
+     * Constructs a new instance subclasses.
      */
     protected AbstractMultiSet() {
     }
@@ -317,7 +324,8 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Read the multiset in using a custom routine.
+     * Reads the multiset in using a custom routine.
+     *
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
@@ -335,7 +343,8 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Write the multiset out using a custom routine.
+     * Writes the multiset out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -381,7 +390,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     }
 
     /**
-     * Returns the number of occurrence of the given element in this multiset by
+     * Gets the number of occurrence of the given element in this multiset by
      * iterating over its entrySet.
      *
      * @param object the object to search for

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,7 +55,7 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAccessorsAndMutators() {
+    void testAccessorsAndMutators() {
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
         kv.setKey((K) key);
@@ -77,7 +77,7 @@ public class DefaultKeyValueTest<K, V> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testConstructors() {
+    void testConstructors() {
         // 1. test default constructor
         DefaultKeyValue<K, V> kv = new DefaultKeyValue<>();
         assertTrue(kv.getKey() == null && kv.getValue() == null);
@@ -111,7 +111,7 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         // 1. test with object data
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         DefaultKeyValue<K, V> kv2 = makeDefaultKeyValue((K) key, (V) value);
@@ -131,7 +131,7 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSelfReferenceHandling() {
+    void testSelfReferenceHandling() {
         // test that #setKey and #setValue do not permit
         //  the KVP to contain itself (and thus cause infinite recursion
         //  in #hashCode and #toString)
@@ -145,7 +145,7 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToMapEntry() {
+    void testToMapEntry() {
         final DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
 
         final Map<K, V> map = new HashMap<>();
@@ -158,7 +158,7 @@ public class DefaultKeyValueTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToString() {
+    void testToString() {
         DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         assertEquals(kv.toString(), kv.getKey() + "=" + kv.getValue());
 

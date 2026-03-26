@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -229,12 +229,16 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * @param <E> the type of elements in this list.
      */
     protected static class LinkedSubList<E> extends AbstractList<E> {
+
         /** The main list */
         AbstractLinkedListJava21<E> parent;
+
         /** Offset from the main list */
         int offset;
+
         /** Sublist size */
         int size;
+
         /** Sublist modCount */
         int expectedModCount;
 
@@ -437,8 +441,10 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
 
         /** A pointer to the node before this node */
         protected Node<E> previous;
+
         /** A pointer to the node after this node */
         protected Node<E> next;
+
         /** The object contained within this node */
         protected E value;
 
@@ -551,6 +557,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * <p>
      * If this constructor is used by a serializable subclass then the init()
      * method must be called.
+     * </p>
      */
     protected AbstractLinkedListJava21() {
     }
@@ -629,6 +636,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * <p>
      * This implementation uses {@link #createNode(Object)} and
      * {@link #addNode(AbstractLinkedListJava21.Node,AbstractLinkedListJava21.Node)}.
+     * </p>
      *
      * @param node  node to insert after
      * @param value  value of the newly added node
@@ -645,6 +653,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * <p>
      * This implementation uses {@link #createNode(Object)} and
      * {@link #addNode(AbstractLinkedListJava21.Node,AbstractLinkedListJava21.Node)}.
+     * </p>
      *
      * @param node  node to insert before
      * @param value  value of the newly added node
@@ -724,6 +733,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * {@code readObject}.
+     * </p>
      *
      * @param inputStream  the stream to read the object from
      * @throws IOException  if any error occurs while reading from the stream
@@ -743,6 +753,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * {@code writeObject}.
+     * </p>
      *
      * @param outputStream  the stream to write the object to
      * @throws IOException  if anything goes wrong
@@ -952,6 +963,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * from this list. As a consequence, it is advised to use a collection type for
      * {@code coll} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
+     * </p>
      */
     @Override
     public boolean removeAll(final Collection<?> coll) {
@@ -1024,6 +1036,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * from this list. As a consequence, it is advised to use a collection type for
      * {@code coll} that provides a fast (for example O(1)) implementation of
      * {@link Collection#contains(Object)}.
+     * </p>
      */
     @Override
     public boolean retainAll(final Collection<?> coll) {

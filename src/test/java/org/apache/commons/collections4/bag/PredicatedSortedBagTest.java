@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,7 +60,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     @Test
-    public void testDecorate() {
+    void testDecorate() {
         final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
 
@@ -71,7 +71,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSortOrder() {
+    void testSortOrder() {
         final SortedBag<T> bag = decorateBag(new TreeBag<>(), stringPredicate());
         final String one = "one";
         final String two = "two";
@@ -85,7 +85,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         assertNull(c, "natural order, so comparator should be null");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/PredicatedSortedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -95,6 +95,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /**
          * Constructs a new instance.
+         *
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractView(final DataElement orderType) {
@@ -119,17 +120,22 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /** Whether to return KEY or VALUE order. */
         private final DataElement orderType;
+
         /** The last node returned by the iterator. */
         Node<K, V> lastReturnedNode;
+
         /** The next node to be returned by the iterator. */
         private Node<K, V> nextNode;
+
         /** The previous node in the sequence returned by the iterator. */
         private Node<K, V> previousNode;
+
         /** The modification count. */
         private int expectedModifications;
 
         /**
          * Constructs a new instance.
+         *
          * @param orderType  the KEY or VALUE int for the order
          */
         AbstractViewIterator(final DataElement orderType) {
@@ -214,6 +220,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return description;
         }
     }
+
     /**
      * A view of this map.
      */
@@ -254,6 +261,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return false;
         }
     }
+
     /**
      * The inverse map implementation.
      */
@@ -261,8 +269,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /** Store the keySet once created. */
         private Set<V> inverseKeySet;
+
         /** Store the valuesSet once created. */
         private Set<K> inverseValuesSet;
+
         /** Store the entrySet once created. */
         private Set<Map.Entry<V, K>> inverseEntrySet;
 
@@ -407,6 +417,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseValuesSet;
         }
     }
+
     /**
      * A view of this map.
      */
@@ -447,6 +458,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return false;
         }
     }
+
     /**
      * An iterator over the inverse map entries.
      */
@@ -473,6 +485,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return createEntry(navigatePrevious());
         }
     }
+
     /**
      * An iterator over the map.
      */
@@ -1210,13 +1223,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (deletedNode.getLeft(dataElement) != null && deletedNode.getRight(dataElement) != null) {
                 swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
-
-            final Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ?
-                    deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
-
+            final Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ? deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
             if (replacement != null) {
                 replacement.setParent(deletedNode.getParent(dataElement), dataElement);
-
                 if (deletedNode.getParent(dataElement) == null) {
                     rootNode[dataElement.ordinal()] = replacement;
                 } else if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
@@ -1224,37 +1233,28 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                 } else {
                     deletedNode.getParent(dataElement).setRight(replacement, dataElement);
                 }
-
                 deletedNode.setLeft(null, dataElement);
                 deletedNode.setRight(null, dataElement);
                 deletedNode.setParent(null, dataElement);
-
                 if (isBlack(deletedNode, dataElement)) {
                     doRedBlackDeleteFixup(replacement, dataElement);
                 }
-            } else {
-
+            } else if (deletedNode.getParent(dataElement) == null) {
                 // replacement is null
-                if (deletedNode.getParent(dataElement) == null) {
-
-                    // empty tree
-                    rootNode[dataElement.ordinal()] = null;
-                } else {
-
-                    // deleted node had no children
-                    if (isBlack(deletedNode, dataElement)) {
-                        doRedBlackDeleteFixup(deletedNode, dataElement);
+                // empty tree
+                rootNode[dataElement.ordinal()] = null;
+            } else {
+                // deleted node had no children
+                if (isBlack(deletedNode, dataElement)) {
+                    doRedBlackDeleteFixup(deletedNode, dataElement);
+                }
+                if (deletedNode.getParent(dataElement) != null) {
+                    if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
+                        deletedNode.getParent(dataElement).setLeft(null, dataElement);
+                    } else {
+                        deletedNode.getParent(dataElement).setRight(null, dataElement);
                     }
-
-                    if (deletedNode.getParent(dataElement) != null) {
-                        if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
-                            deletedNode.getParent(dataElement).setLeft(null, dataElement);
-                        } else {
-                            deletedNode.getParent(dataElement).setRight(null, dataElement);
-                        }
-
-                        deletedNode.setParent(null, dataElement);
-                    }
+                    deletedNode.setParent(null, dataElement);
                 }
             }
         }
@@ -1543,7 +1543,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     /**
-     * Returns the key to which this map maps the specified value.
+     * Gets the key to which this map maps the specified value.
      * Returns null if the map contains no mapping for this value.
      * <p>
      * The value must implement {@code Comparable}.

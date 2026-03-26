@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,9 +31,9 @@ import org.apache.commons.collections4.functors.UniquePredicate;
 public class UniqueFilterIterator<E> extends FilterIterator<E> {
 
     /**
-     *  Constructs a new {@code UniqueFilterIterator}.
+     * Constructs a new {@code UniqueFilterIterator}.
      *
-     *  @param iterator  the iterator to use
+     * @param iterator  the iterator to use
      */
     public UniqueFilterIterator(final Iterator<? extends E> iterator) {
         super(iterator, UniquePredicate.uniquePredicate());

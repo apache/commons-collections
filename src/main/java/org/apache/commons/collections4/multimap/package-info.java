@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,15 +20,17 @@
  * A MultiValuedMap holds a collection of values against each key.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
- *   <li>ArrayListValuedHashMap - ListValuedMap implementation using a HashMap/ArrayList
- *   <li>HashSetValuedHashMap   - SetValuedMap implementation using a HashMap/HashSet
+ *   <li>ArrayListValuedHashMap - ListValuedMap implementation using a HashMap/ArrayList</li>
+ *   <li>HashSetValuedHashMap   - SetValuedMap implementation using a HashMap/HashSet</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
- *   <li>Transformed - transforms elements added to the MultiValuedMap
- *   <li>Unmodifiable - ensures the collection cannot be altered
+ *   <li>Transformed - transforms elements added to the MultiValuedMap</li>
+ *   <li>Unmodifiable - ensures the collection cannot be altered</li>
  * </ul>
  */
 package org.apache.commons.collections4.multimap;

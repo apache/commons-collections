@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -74,7 +74,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         return retval.toString();
     }
 
-    // protected implementation
     /**
      * Gets the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to
@@ -118,7 +117,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     public abstract Object makeObject();
 
     /**
-     * Read a Serialized or Externalized Object from bytes.
+     * Reads a Serialized or Externalized Object from bytes.
      * Useful for verifying serialization in memory.
      *
      * @param b byte array containing a serialized Object
@@ -227,19 +226,19 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     @Test
-    public void testEqualsNull() {
+    void testEqualsNull() {
         final Object obj = makeObject();
         assertFalse(obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
     @Test
-    public void testObjectEqualsSelf() {
+    void testObjectEqualsSelf() {
         final Object obj = makeObject();
         assertEquals(obj, obj, "A Object should equal itself");
     }
 
     @Test
-    public void testObjectHashCodeEqualsContract() {
+    void testObjectHashCodeEqualsContract() {
         final Object obj1 = makeObject();
         if (obj1.equals(obj1)) {
             assertEquals(
@@ -256,7 +255,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     @Test
-    public void testObjectHashCodeEqualsSelfHashCode() {
+    void testObjectHashCodeEqualsSelfHashCode() {
         final Object obj = makeObject();
         assertEquals(obj.hashCode(), obj.hashCode(), "hashCode should be repeatable");
     }

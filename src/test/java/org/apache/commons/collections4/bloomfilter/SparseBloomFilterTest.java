@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,14 +25,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link SparseBloomFilter}.
  */
-public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFilter> {
+class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFilter> {
     @Override
     protected SparseBloomFilter createEmptyFilter(final Shape shape) {
         return new SparseBloomFilter(shape);
     }
 
     @Test
-    public void testBitMapExtractorEdgeCases() {
+    void testBitMapExtractorEdgeCases() {
         int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 65, 66, 67, 68, 69, 70, 71};
         BloomFilter bf = createFilter(getTestShape(), IndexExtractor.fromIndexArray(values));
 
@@ -82,7 +82,7 @@ public class SparseBloomFilterTest extends AbstractBloomFilterTest<SparseBloomFi
     }
 
     @Test
-    public void testBloomFilterBasedMergeEdgeCases() {
+    void testBloomFilterBasedMergeEdgeCases() {
         final BloomFilter bf1 = createEmptyFilter(getTestShape());
         final BloomFilter bf2 = new SimpleBloomFilter(getTestShape());
         bf2.merge(TestingHashers.FROM1);

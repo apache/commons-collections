@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the LazyIteratorChain class.
  */
-public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
+class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -86,7 +86,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testEmptyChain() {
+    void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
         assertFalse(chain.hasNext());
         assertThrows(NoSuchElementException.class, () -> chain.next());
@@ -94,7 +94,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testFirstIteratorIsEmptyBug() {
+    void testFirstIteratorIsEmptyBug() {
         final List<String> empty = new ArrayList<>();
         final List<String> notEmpty = new ArrayList<>();
         notEmpty.add("A");
@@ -122,7 +122,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final Iterator<String> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
@@ -156,7 +156,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
-    public void testRemoveFromFilteredIterator() {
+    void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
 

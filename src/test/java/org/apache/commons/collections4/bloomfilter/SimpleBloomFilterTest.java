@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link SimpleBloomFilter}.
  */
-public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFilter> {
+class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFilter> {
 
     @Override
     protected SimpleBloomFilter createEmptyFilter(final Shape shape) {
@@ -32,7 +32,7 @@ public class SimpleBloomFilterTest extends AbstractBloomFilterTest<SimpleBloomFi
     }
 
     @Test
-    public void testMergeShortBitMapExtractor() {
+    void testMergeShortBitMapExtractor() {
         final SimpleBloomFilter filter = createEmptyFilter(getTestShape());
         // create a bitMapExtractor that returns too few values
         // shape expects 2 longs we are sending 1.

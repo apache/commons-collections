@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -70,10 +70,13 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param <E> the type of elements in this cursor.
      */
     public static class Cursor<E> extends AbstractLinkedList.LinkedListIterator<E> {
+
         /** Is the cursor valid (not closed) */
         boolean valid = true;
+
         /** Is the next index valid */
         boolean nextIndexValid = true;
+
         /** Flag to indicate if the current element was removed by another object. */
         boolean currentRemovedByAnother;
 

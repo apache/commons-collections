@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -169,21 +169,8 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * A utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
-     */
-    final boolean compareKeys(final K key, final K other) {
-        if (key == null) {
-            return other == null;
-        }
-        if (other == null) {
-            return false;
-        }
-
-        return keyAnalyzer.compare(key, other) == 0;
-    }
-
-    /**
-     * Returns the {@link KeyAnalyzer} that constructed the {@link Trie}.
+     * Gets the {@link KeyAnalyzer} that constructed the {@link Trie}.
+     *
      * @return the {@link KeyAnalyzer} used by this {@link Trie}
      */
     protected KeyAnalyzer<? super K> getKeyAnalyzer() {
@@ -200,6 +187,20 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
             return false;
         }
         return keyAnalyzer.isBitSet(key, bitIndex, lengthInBits);
+    }
+
+    /**
+     * A null-safe utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
+     */
+    final boolean keysAreEqual(final K key, final K other) {
+        if (key == null) {
+            return other == null;
+        }
+        if (other == null) {
+            return false;
+        }
+
+        return keyAnalyzer.compare(key, other) == 0;
     }
 
     /**

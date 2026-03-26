@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,17 +62,17 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
+            return main.makeFullMap().headMap(toKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).headMap(toKey);
+            return main.makeObject().headMap(toKey);
         }
 
         @Test
-        public void testHeadMapOutOfRange() {
+        void testHeadMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -81,7 +81,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -125,17 +125,17 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
+            return main.makeFullMap().subMap(fromKey, toKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).subMap(fromKey, toKey);
+            return main.makeObject().subMap(fromKey, toKey);
         }
 
         @Test
-        public void testSubMapOutOfRange() {
+        void testSubMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -144,7 +144,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -182,17 +182,17 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
 
         @Override
         public SortedMap<K, V> makeFullMap() {
-            return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
+            return main.makeFullMap().tailMap(fromKey);
         }
 
         @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
-            return ((SortedMap<K, V>) main.makeObject()).tailMap(fromKey);
+            return main.makeObject().tailMap(fromKey);
         }
 
         @Test
-        public void testTailMapOutOfRange() {
+        void testTailMapOutOfRange() {
             if (!isPutAddSupported()) {
                 return;
             }
@@ -201,7 +201,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
             verify();
         }
 
-//        public void testCreate() throws Exception {
+//        void testCreate() throws Exception {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
@@ -295,19 +295,19 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
         public boolean isTestSerialization() {
             return false;
         }
-//        public void testSimpleSerialization() throws Exception {
+//        void testSimpleSerialization() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testSimpleSerialization();
 //        }
-//        public void testSerializeDeserializeThenCompare() throws Exception {
+//        void testSerializeDeserializeThenCompare() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testSerializeDeserializeThenCompare();
 //        }
-//        public void testEmptyMapCompatibility() throws Exception {
+//        void testEmptyMapCompatibility() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testEmptyMapCompatibility();
 //        }
-//        public void testFullMapCompatibility() throws Exception {
+//        void testFullMapCompatibility() throws Exception {
 //            if (main.isSubMapViewsSerializable() == false) return;
 //            super.testFullMapCompatibility();
 //        }
@@ -359,7 +359,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
      */
     @Override
     public SortedMap<K, V> getMap() {
-        return (SortedMap<K, V>) super.getMap();
+        return super.getMap();
     }
 
     /**
@@ -387,7 +387,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
      */
     @Override
     public SortedMap<K, V> makeFullMap() {
-        return (SortedMap<K, V>) super.makeFullMap();
+        return super.makeFullMap();
     }
 
     /**
@@ -397,19 +397,19 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
     public abstract SortedMap<K, V> makeObject();
 
     @Test
-    public void testComparator() {
+    void testComparator() {
 //        SortedMap<K, V> sm = makeFullMap();
         // no tests I can think of
     }
 
     @Test
-    public void testFirstKey() {
+    void testFirstKey() {
         final SortedMap<K, V> sm = makeFullMap();
         assertSame(sm.keySet().iterator().next(), sm.firstKey());
     }
 
     @Test
-    public void testLastKey() {
+    void testLastKey() {
         final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
         for (final K k : sm.keySet()) {

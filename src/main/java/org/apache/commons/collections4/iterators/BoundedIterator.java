@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -82,6 +82,7 @@ public class BoundedIterator<E> implements Iterator<E> {
 
     /**
      * Checks whether the iterator is still within its bounded range.
+     *
      * @return {@code true} if the iterator is within its bounds, {@code false} otherwise
      */
     private boolean checkBounds() {

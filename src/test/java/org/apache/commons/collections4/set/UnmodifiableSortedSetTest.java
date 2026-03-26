@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,14 +71,14 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final SortedSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableSortedSet.unmodifiableSortedSet(set));
 
@@ -90,7 +90,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
         verifyUnmodifiable(set.headSet((E) Integer.valueOf(1)));
@@ -111,7 +111,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertThrows(UnsupportedOperationException.class, () -> set.retainAll(array));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableSortedSet.emptyCollection.version4.obj");
 //        resetFull();

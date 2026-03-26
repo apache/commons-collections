@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -50,7 +50,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthAdd() {
+    void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());
@@ -61,7 +61,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthAddAll() {
+    void testGrowthAddAll() {
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
         final Collection<Integer> coll = new ArrayList<>();
@@ -77,7 +77,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthList() {
+    void testGrowthList() {
         final Integer zero = Integer.valueOf(0);
         final Integer one = Integer.valueOf(1);
         final Integer two = Integer.valueOf(2);
@@ -92,7 +92,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthSet1() {
+    void testGrowthSet1() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());
@@ -103,7 +103,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testGrowthSet2() {
+    void testGrowthSet2() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
         assertEquals(0, grower.size());
@@ -163,7 +163,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
                 "List.set should throw IndexOutOfBoundsException [-1]");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/GrowthList.emptyCollection.version4.obj");
 //        resetFull();

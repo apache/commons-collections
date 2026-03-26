@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,6 +46,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
 
     /**
      * Create a new AbstractSplitMapDecorator.
+     *
      * @param map the map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
@@ -107,6 +108,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
 
     /**
      * Gets a MapIterator over this Get.
+     *
      * @return MapIterator&lt;K, V&gt;
      */
     @Override

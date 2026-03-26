@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -179,7 +179,7 @@ public class FixedSizeSortedMap<K, V>
     }
 
     /**
-     * Write the map out using a custom routine.
+     * Writes the map out using a custom routine.
      *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream

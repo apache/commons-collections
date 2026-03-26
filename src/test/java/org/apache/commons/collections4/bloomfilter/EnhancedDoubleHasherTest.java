@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the {@link EnhancedDoubleHasher}.
  */
-public class EnhancedDoubleHasherTest extends AbstractHasherTest {
+class EnhancedDoubleHasherTest extends AbstractHasherTest {
     int[] expected = {1, 0, 0, 2, 7, 16, 30, 50, 5, 40, 12, 66, 59, 64, 10, 42, 17};
 
     @Override
@@ -54,7 +54,7 @@ public class EnhancedDoubleHasherTest extends AbstractHasherTest {
     }
 
     @Test
-    public void testByteConstructor() {
+    void testByteConstructor() {
         // single value become increment.
         EnhancedDoubleHasher hasher = new EnhancedDoubleHasher(new byte[] {1});
         assertEquals(0, hasher.getInitial());

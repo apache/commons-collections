@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,7 +66,7 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Trie<String, V> trie = makeFullMap();
         assertSame(trie, UnmodifiableTrie.unmodifiableTrie(trie));
 
@@ -74,12 +74,12 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

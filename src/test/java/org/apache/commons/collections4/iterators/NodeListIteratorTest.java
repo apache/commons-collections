@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ import org.w3c.dom.Text;
 /**
  * Tests the NodeListIterator.
  */
-public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
+class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
     // Node array to be filled with mocked Node instances
     private Node[] nodes;
@@ -111,7 +111,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testEmptyIteratorWithNodeConstructor() {
+    void testEmptyIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testEmptyIterator();
     }
@@ -120,13 +120,13 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
      * tests the convenience Constructor with parameter type org.w3c.Node
      */
     @Test
-    public void testFullIteratorWithNodeConstructor() {
+    void testFullIteratorWithNodeConstructor() {
         createIteratorWithStandardConstr = false;
         testFullIterator();
     }
 
     @Test
-    public void testNullConstructor() {
+    void testNullConstructor() {
         assertThrows(NullPointerException.class, () -> new NodeListIterator((Node) null));
     }
 

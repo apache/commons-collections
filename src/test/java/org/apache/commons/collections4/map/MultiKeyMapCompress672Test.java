@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * </ol>
  * COUNTER CLAIM: The class is documented to use MultiKey which documents key elements as "The keys should be immutable".
  */
-public class MultiKeyMapCompress672Test {
+class MultiKeyMapCompress672Test {
 
     private static final class KeyFixture {
 
@@ -80,7 +80,7 @@ public class MultiKeyMapCompress672Test {
     private final MultiKeyMap<Object, String> multiKeyMap = new MultiKeyMap<>();
 
     @Test
-    public void testMutateKey() {
+    void testMutateKey() {
         // Both objects have the 'field' value set to "originalValue"
         final KeyFixture keyFixture2Ro = new KeyFixture();
         final KeyFixture keyFixture2Rw = new KeyFixture();

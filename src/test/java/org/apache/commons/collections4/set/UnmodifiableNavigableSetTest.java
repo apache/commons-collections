@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,14 +71,14 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         setupSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final NavigableSet<E> set = makeFullCollection();
         assertSame(set, UnmodifiableNavigableSet.unmodifiableNavigableSet(set));
         assertThrows(NullPointerException.class, () -> UnmodifiableNavigableSet.unmodifiableNavigableSet(null));
@@ -89,7 +89,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
         verifyUnmodifiable(set.descendingSet());
@@ -123,7 +123,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableNavigableSet.emptyCollection.version4.1.obj");
 //        resetFull();

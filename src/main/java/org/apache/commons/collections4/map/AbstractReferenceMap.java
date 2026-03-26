@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -94,6 +94,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Base iterator class.
      */
     static class ReferenceBaseIterator<K, V> {
+
         /** The parent map */
         final AbstractReferenceMap<K, V> parent;
 
@@ -197,6 +198,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
+
         /** The parent map */
         private final AbstractReferenceMap<K, V> parent;
 
@@ -309,6 +311,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         /**
          * Purges the specified reference
+         *
          * @param ref  the reference to purge
          * @return true or false
          */
@@ -368,7 +371,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             default:
                 break;
             }
-            throw new Error();
+            throw new IllegalArgumentException(type.toString());
         }
     }
 
@@ -517,6 +520,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         /**
          * Resolve enum from int.
+         *
          * @param value  the int value
          * @return ReferenceType
          * @throws IllegalArgumentException if the specified value is invalid.
@@ -586,6 +590,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A soft reference holder.
      */
     static class SoftRef<T> extends SoftReference<T> {
+
         /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 
@@ -619,6 +624,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * A weak reference holder.
      */
     static class WeakRef<T> extends WeakReference<T> {
+
         /** The hashCode of the key (even if the reference points to a value) */
         private final int hash;
 

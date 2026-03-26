@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,6 +58,7 @@ public class CollectionUtils {
 
     /**
      * Helper class to easily access cardinality properties of two collections.
+     *
      * @param <O>  the element type
      */
     private static class CardinalityHelper<O> {
@@ -169,6 +170,7 @@ public class CollectionUtils {
 
     /**
      * Helper class for set-related operations, for example union, subtract, intersection.
+     *
      * @param <O>  the element type
      */
     private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
@@ -181,6 +183,7 @@ public class CollectionUtils {
 
         /**
          * Create a new set operation helper from the two collections.
+         *
          * @param a  the first collection
          * @param b  the second collection
          */
@@ -200,6 +203,7 @@ public class CollectionUtils {
 
         /**
          * Returns the resulting collection.
+         *
          * @return the result
          */
         public Collection<O> list() {
@@ -208,6 +212,7 @@ public class CollectionUtils {
 
         /**
          * Add the object {@code count} times to the result collection.
+         *
          * @param obj  the object to add
          * @param count  the count
          */
@@ -363,7 +368,7 @@ public class CollectionUtils {
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the number of occurrences of obj in coll
      * @throws NullPointerException if collection is null
-     * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
+     * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.
      */
     @Deprecated
@@ -373,6 +378,7 @@ public class CollectionUtils {
 
     /**
      * Ensures an index is not negative.
+     *
      * @param index the index to check.
      * @throws IndexOutOfBoundsException if the index is negative.
      */
@@ -718,7 +724,7 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
-     * @deprecated since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -736,9 +742,9 @@ public class CollectionUtils {
      * </p>
      * <p>
      * This is equivalent to
-     * {@code {@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})}
+     * {@code {@link #subtract subtract}({@link #union union(a, b)},{@link #intersection intersection(a, b)})}
      * or
-     * {@code {@link #union union}({@link #subtract subtract(a,b)},{@link #subtract subtract(b,a)})}.
+     * {@code {@link #union union}({@link #subtract subtract(a, b)},{@link #subtract subtract(b, a)})}.
      * </p>
      *
      * @param a the first collection, must not be null
@@ -794,7 +800,7 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return true if at least one element of the collection matches the predicate
-     * @deprecated since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -875,7 +881,7 @@ public class CollectionUtils {
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first element of the collection which matches the predicate or null if none could be found
-     * @deprecated since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
@@ -894,7 +900,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
@@ -914,7 +920,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
@@ -932,7 +938,7 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
-     * @deprecated since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
@@ -954,7 +960,7 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return closure
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
@@ -965,7 +971,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
+     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
@@ -976,7 +982,7 @@ public class CollectionUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
-     * @deprecated since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
+     * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
      */
     @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
@@ -985,7 +991,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in {@link Iterator}, throwing
+     * Gets the {@code index}-th value in {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * The Iterator is advanced to {@code index} (or to the end, if
@@ -999,7 +1005,7 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      * @throws NullPointerException if iterator is null
-     * @deprecated since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
+     * @deprecated Since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
      */
     @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
@@ -1008,7 +1014,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet},
+     * Gets the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet},
      * throwing {@code IndexOutOfBoundsException} if there is no such element.
      *
      * @param <K>  the key type in the {@link Map}
@@ -1025,7 +1031,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in {@code object}, throwing
+     * Gets the {@code index}-th value in {@code object}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element or
      * {@code IllegalArgumentException} if {@code object} is not an
      * instance of one of the supported types.
@@ -1091,7 +1097,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a {@link Map} mapping each unique element in the given
+     * Gets a {@link Map} mapping each unique element in the given
      * {@link Collection} to an {@link Integer} representing the number
      * of occurrences of that element in the {@link Collection}.
      * <p>
@@ -1361,7 +1367,7 @@ public class CollectionUtils {
      * @return true if every element of the collection matches the predicate or if the
      * collection is empty, false otherwise
      * @since 4.0
-     * @deprecated since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -1838,11 +1844,11 @@ public class CollectionUtils {
      * This method can handles objects as follows
      * </p>
      * <ul>
-     * <li>Collection - the collection size
-     * <li>Map - the map size
-     * <li>Array - the array size
-     * <li>Iterator - the number of elements remaining in the iterator
-     * <li>Enumeration - the number of elements remaining in the enumeration
+     * <li>Collection - the collection size</li>
+     * <li>Map - the map size</li>
+     * <li>Array - the array size</li>
+     * <li>Iterator - the number of elements remaining in the iterator</li>
+     * <li>Enumeration - the number of elements remaining in the enumeration</li>
      * </ul>
      *
      * @param object  the object to get the size of, may be null
@@ -1887,11 +1893,11 @@ public class CollectionUtils {
      * This method can handles objects as follows
      * </p>
      * <ul>
-     * <li>Collection - via collection isEmpty
-     * <li>Map - via map isEmpty
-     * <li>Array - using array size
-     * <li>Iterator - via hasNext
-     * <li>Enumeration - via hasMoreElements
+     * <li>Collection - via collection isEmpty</li>
+     * <li>Map - via map isEmpty</li>
+     * <li>Array - using array size</li>
+     * <li>Iterator - via hasNext</li>
+     * <li>Enumeration - via hasMoreElements</li>
      * </ul>
      * <p>
      * Note: This method is named to avoid clashing with
@@ -2020,7 +2026,7 @@ public class CollectionUtils {
      * @param collection  the collection to synchronize, must not be null
      * @return a synchronized collection backed by the given collection
      * @throws NullPointerException if the collection is null
-     * @deprecated since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
+     * @deprecated Since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
      */
     @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
@@ -2127,7 +2133,7 @@ public class CollectionUtils {
      * @param collection  the collection to make unmodifiable, must not be null
      * @return an unmodifiable collection backed by the given collection
      * @throws NullPointerException if the collection is null
-     * @deprecated since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
+     * @deprecated Since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
      */
     @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
@@ -116,6 +117,11 @@ public class ArrayListValuedLinkedHashMap<K, V> extends AbstractListValuedMap<K,
     @Override
     protected ArrayList<V> createCollection() {
         return new ArrayList<>(initialListCapacity);
+    }
+
+    @Override
+    public ArrayListValuedLinkedHashMap<V, K> inverted() {
+        return MultiMapUtils.invert(this, new ArrayListValuedLinkedHashMap<>());
     }
 
     /**

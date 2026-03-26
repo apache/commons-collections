@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -82,7 +82,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final Queue<E> queue = makeFullCollection();
         assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
 
@@ -90,14 +90,14 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testOffer() {
+    void testOffer() {
         final Queue<E> queue = makeFullCollection();
         final E e = null;
         assertThrows(UnsupportedOperationException.class, () -> queue.offer(e));
     }
 
     @Test
-    public void testPoll() {
+    void testPoll() {
         final Queue<E> queue = makeFullCollection();
         assertThrows(UnsupportedOperationException.class, () -> queue.poll());
     }
@@ -110,12 +110,12 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableQueue.emptyCollection.version4.obj");
 //        resetFull();

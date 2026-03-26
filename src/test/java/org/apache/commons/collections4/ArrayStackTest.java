@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,7 +42,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     }
 
     @Test
-    public void testNewStack() {
+    void testNewStack() {
         final ArrayStack<E> stack = makeObject();
         assertTrue(stack.empty(), "New stack is empty");
         assertEquals(0, stack.size(), "New stack has size zero");
@@ -54,29 +54,29 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPushPeekPop() {
+    void testPushPeekPop() {
         final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
         assertFalse(stack.empty(), "Stack is not empty");
         assertEquals(1, stack.size(), "Stack size is one");
-        assertEquals("First Item", (String) stack.peek(),
+        assertEquals("First Item", stack.peek(),
                 "Top item is 'First Item'");
         assertEquals(1, stack.size(), "Stack size is one");
 
         stack.push((E) "Second Item");
         assertEquals(2, stack.size(), "Stack size is two");
-        assertEquals("Second Item", (String) stack.peek(),
+        assertEquals("Second Item", stack.peek(),
                 "Top item is 'Second Item'");
         assertEquals(2, stack.size(), "Stack size is two");
 
-        assertEquals("Second Item", (String) stack.pop(),
+        assertEquals("Second Item", stack.pop(),
                 "Popped item is 'Second Item'");
-        assertEquals("First Item", (String) stack.peek(),
+        assertEquals("First Item", stack.peek(),
                 "Top item is 'First Item'");
         assertEquals(1, stack.size(), "Stack size is one");
 
-        assertEquals("First Item", (String) stack.pop(),
+        assertEquals("First Item", stack.pop(),
                 "Popped item is 'First Item'");
         assertEquals(0, stack.size(), "Stack size is zero");
     }
@@ -97,7 +97,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                 "Cannot find 'Missing Item'");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/ArrayStack.emptyCollection.version4.obj");
 //        resetFull();

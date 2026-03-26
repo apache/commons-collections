@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.apache.commons.collections4.Predicate;
 import org.junit.jupiter.api.Test;
 
-public class EqualPredicateTest extends AbstractPredicateTest {
+class EqualPredicateTest extends AbstractPredicateTest {
     public static class EqualsTestObject {
         private final boolean b;
 
-        public EqualsTestObject(final boolean b) {
+        EqualsTestObject(final boolean b) {
             this.b = b;
         }
 
@@ -50,12 +50,12 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     }
 
     @Test
-    public void testNullArgumentEqualsNullPredicate() throws Exception {
+    void testNullArgumentEqualsNullPredicate() throws Exception {
         assertSame(NullPredicate.nullPredicate(), EqualPredicate.equalPredicate(null));
     }
 
     @Test
-    public void testObjectFactoryUsesEqualsForTest() throws Exception {
+    void testObjectFactoryUsesEqualsForTest() throws Exception {
         final Predicate<EqualsTestObject> predicate = EqualPredicate.equalPredicate(FALSE_OBJECT);
         assertPredicateFalse(predicate, null);
         assertPredicateFalse(predicate, TRUE_OBJECT); // different object
@@ -66,7 +66,7 @@ public class EqualPredicateTest extends AbstractPredicateTest {
 
     @SuppressWarnings("boxing")
     @Test
-    public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
+    void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         final Predicate<Number> predicate = EqualPredicate.equalPredicate((Number) 4);
         assertPredicateTrue(predicate, 4);
     }

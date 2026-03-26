@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,9 +52,9 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * The key and value can be obtained by:
  * </p>
  * <ul>
- * <li>normal Map methods and views
- * <li>the {@code MapIterator}, see {@link #mapIterator()}
- * <li>the {@code KeyValue} interface (just cast - no object creation)
+ * <li>normal Map methods and views</li>
+ * <li>the {@code MapIterator}, see {@link #mapIterator()}</li>
+ * <li>the {@code KeyValue} interface (just cast - no object creation)</li>
  * </ul>
  *
  * @param <K> the type of the keys in this map
@@ -183,6 +183,7 @@ public class SingletonMap<K, V>
             return 1;
         }
     }
+
     /** Serialization version */
     private static final long serialVersionUID = -8931271118676803261L;
 
@@ -336,7 +337,6 @@ public class SingletonMap<K, V>
         return getKey();
     }
 
-    // Map
     /**
      * Gets the value mapped to the key specified.
      *
@@ -351,7 +351,6 @@ public class SingletonMap<K, V>
         return null;
     }
 
-    // KeyValue
     /**
      * Gets the key.
      *
@@ -413,7 +412,6 @@ public class SingletonMap<K, V>
         return Objects.equals(value, getValue());
     }
 
-    // BoundedMap
     /**
      * Is the map currently full, always true.
      *

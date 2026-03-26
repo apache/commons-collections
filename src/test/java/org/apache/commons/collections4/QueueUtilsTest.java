@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,13 +34,13 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for QueueUtils factory methods.
  */
-public class QueueUtilsTest {
+class QueueUtilsTest {
 
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     @Test
-    public void testEmptyQueue() {
+    void testEmptyQueue() {
         final Queue<Object> queue = QueueUtils.emptyQueue();
         assertInstanceOf(UnmodifiableQueue.class, queue, "Returned object should be an UnmodifiableQueue.");
         assertTrue(queue.isEmpty(), "Returned queue is not empty.");
@@ -50,7 +50,7 @@ public class QueueUtilsTest {
     }
 
     @Test
-    public void testPredicatedQueue() {
+    void testPredicatedQueue() {
         final Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
         assertInstanceOf(PredicatedQueue.class, queue, "Returned object should be a PredicatedQueue.");
 
@@ -62,7 +62,7 @@ public class QueueUtilsTest {
     }
 
     @Test
-    public void testSynchronizedQueue() {
+    void testSynchronizedQueue() {
         final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
         assertInstanceOf(SynchronizedQueue.class, queue, "Returned object should be a SynchronizedQueue.");
 
@@ -71,7 +71,7 @@ public class QueueUtilsTest {
     }
 
     @Test
-    public void testTransformedQueue() {
+    void testTransformedQueue() {
         final Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
         assertInstanceOf(TransformedQueue.class, queue, "Returned object should be an TransformedQueue.");
 
@@ -83,7 +83,7 @@ public class QueueUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableQueue() {
+    void testUnmodifiableQueue() {
         final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
         assertInstanceOf(UnmodifiableQueue.class, queue, "Returned object should be an UnmodifiableQueue.");
 

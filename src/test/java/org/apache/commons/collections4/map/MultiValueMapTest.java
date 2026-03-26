@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -100,17 +100,15 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     private byte[] serialize(final Object object) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-        oos.writeObject(object);
-        oos.close();
-
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+        }
         return baos.toByteArray();
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testContainsValue() {
+    void testContainsValue() {
         final MultiValueMap<K, V> map = createTestMap(HashSet.class);
         assertTrue(map.containsValue("uno"));
         assertTrue(map.containsValue("un"));
@@ -123,7 +121,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testContainsValue_Key() {
+    void testContainsValue_Key() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         assertFalse(map.containsValue("A", "AA"));
         assertFalse(map.containsValue("B", "BB"));
@@ -133,14 +131,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testEmptyMapCompatibility() throws Exception {
+    void testEmptyMapCompatibility() throws Exception {
         final Map<?, ?> map = makeEmptyMap();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
         assertEquals(0, map2.size(), "Map is empty");
     }
 
     @Test
-    public void testFullMapCompatibility() throws Exception {
+    void testFullMapCompatibility() throws Exception {
         final Map<?, ?> map = (Map<?, ?>) makeObject();
         final Map<?, ?> map2 = (Map<?, ?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
         assertEquals(map.size(), map2.size(), "Map is the right size");
@@ -153,14 +151,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetCollection() {
+    void testGetCollection() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         map.put((K) "A", "AA");
         assertSame(map.get("A"), map.getCollection("A"));
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         @SuppressWarnings("unchecked")
         final Collection<V> values = new ArrayList<>((Collection<V>) map.values());
@@ -176,7 +174,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIterator_Key() {
+    void testIterator_Key() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         assertFalse(map.iterator("A").hasNext());
         map.put((K) "A", "AA");
@@ -188,7 +186,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testKeyContainsValue() {
+    void testKeyContainsValue() {
         final MultiValueMap<K, V> map = createTestMap(HashSet.class);
         assertTrue(map.containsValue("one", "uno"));
         assertTrue(map.containsValue("one", "un"));
@@ -200,7 +198,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testKeyedIterator() {
+    void testKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         final ArrayList<Object> actual = new ArrayList<>(IteratorUtils.toList(map.iterator("one")));
         final ArrayList<Object> expected = new ArrayList<>(Arrays.asList("uno", "un"));
@@ -209,7 +207,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMapEquals() {
+    void testMapEquals() {
         final MultiValueMap<K, V> one = new MultiValueMap<>();
         final Integer value = Integer.valueOf(1);
         one.put((K) "One", value);
@@ -221,7 +219,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testMultipleValues() {
+    void testMultipleValues() {
         final MultiValueMap<K, V> map = createTestMap(HashSet.class);
         final HashSet<V> expected = new HashSet<>();
         expected.add((V) "uno");
@@ -230,14 +228,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testNoMappingReturnsNull() {
+    void testNoMappingReturnsNull() {
         final MultiValueMap<K, V> map = createTestMap();
         assertNull(map.get("whatever"));
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutAll_KeyCollection() {
+    void testPutAll_KeyCollection() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         Collection<V> coll = (Collection<V>) Arrays.asList("X", "Y", "Z");
 
@@ -270,7 +268,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutAll_Map1() {
+    void testPutAll_Map1() {
         final MultiMap<K, V> original = new MultiValueMap<>();
         original.put((K) "key", "object1");
         original.put((K) "key", "object2");
@@ -292,7 +290,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutAll_Map2() {
+    void testPutAll_Map2() {
         final Map<K, V> original = new HashMap<>();
         original.put((K) "keyX", (V) "object1");
         original.put((K) "keyY", (V) "object2");
@@ -315,8 +313,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutWithList() {
-        @SuppressWarnings("rawtypes")
+    void testPutWithList() {
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<>(), ArrayList.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
@@ -327,8 +324,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testPutWithSet() {
-        @SuppressWarnings("rawtypes")
+    void testPutWithSet() {
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<>(), HashSet.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
@@ -340,7 +336,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testRemove_KeyItem() {
+    void testRemove_KeyItem() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         map.put((K) "A", "AA");
         map.put((K) "A", "AB");
@@ -354,7 +350,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaEntryIterator() {
+    void testRemoveAllViaEntryIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.iterator(); i.hasNext();) {
             i.next();
@@ -365,7 +361,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaIterator() {
+    void testRemoveAllViaIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.values().iterator(); i.hasNext();) {
             i.next();
@@ -376,7 +372,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testRemoveAllViaKeyedIterator() {
+    void testRemoveAllViaKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         for (final Iterator<?> i = map.iterator("one"); i.hasNext();) {
             i.next();
@@ -388,7 +384,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSize() {
+    void testSize() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         assertEquals(0, map.size());
         map.put((K) "A", "AA");
@@ -407,7 +403,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSize_Key() {
+    void testSize_Key() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         assertEquals(0, map.size("A"));
         assertEquals(0, map.size("B"));
@@ -436,7 +432,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTotalSize() {
+    void testTotalSize() {
         final MultiValueMap<K, V> map = new MultiValueMap<>();
         assertEquals(0, map.totalSize());
         map.put((K) "A", "AA");
@@ -454,12 +450,12 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     @Test
-    public void testTotalSizeA() {
+    void testTotalSizeA() {
         assertEquals(6, createTestMap().totalSize());
     }
 
     @Test
-    public void testUnsafeDeSerialization() throws Exception {
+    void testUnsafeDeSerialization() throws Exception {
         final MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
         byte[] bytes = serialize(map1);
         final Object result = deserialize(bytes);
@@ -474,14 +470,14 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testValueCollectionType() {
+    void testValueCollectionType() {
         final MultiValueMap<K, V> map = createTestMap(LinkedList.class);
         assertTrue(map.get("one") instanceof LinkedList);
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testValues() {
+    void testValues() {
         final MultiValueMap<K, V> map = createTestMap(HashSet.class);
         final HashSet<V> expected = new HashSet<>();
         expected.add((V) "uno");
@@ -495,7 +491,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(expected, new HashSet<>(c));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) makeEmptyMap(),
 //            "src/test/resources/data/test/MultiValueMap.emptyCollection.version4.obj");

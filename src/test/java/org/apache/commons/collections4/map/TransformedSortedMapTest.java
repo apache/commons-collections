@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -61,7 +61,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
+    void testFactory_Decorate() {
         final SortedMap<K, V> base = new TreeMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -82,7 +82,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
+    void testFactory_decorateTransform() {
         final SortedMap<K, V> base = new TreeMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -103,7 +103,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedMap() {
+    void testTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         SortedMap<K, V> map = TransformedSortedMap
@@ -156,7 +156,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

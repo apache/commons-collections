@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -61,7 +61,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Returns a BooleanComparator instance that sorts
+     * Gets a BooleanComparator instance that sorts
      * {@code false} values before {@code true} values.
      * <p>
      * Clients are encouraged to use the value returned from
@@ -78,7 +78,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     }
 
     /**
-     * Returns a BooleanComparator instance that sorts
+     * Gets a BooleanComparator instance that sorts
      * {@code true} values before {@code false} values.
      * <p>
      * Clients are encouraged to use the value returned from
@@ -176,7 +176,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * I sort {@code true} values before
      * {@code false} values.  In other words,
      * returns {@code true} iff
-     * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE,Boolean.TRUE)}
+     * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE, Boolean.TRUE)}
      * returns a positive value.
      *
      * @return the trueFirst flag

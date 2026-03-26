@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,10 +39,10 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
  * </p>
  * <ul>
  * <li>All decorator methods are <em>not</em> null-safe for the provided Iterable argument; for example, they will throw a {@link NullPointerException} if a
- * null Iterable is passed as argument.
+ * null Iterable is passed as argument.</li>
  * <li>All other utility methods are null-safe for the provided Iterable argument; for example, they will treat a null Iterable the same way as an empty one.
  * For other arguments which are null, a {@link Predicate} will result in a {@link NullPointerException}. Exception: passing a null {@link Comparator} is
- * equivalent to a Comparator with natural ordering.
+ * equivalent to a Comparator with natural ordering.</li>
  * </ul>
  *
  * @since 4.1
@@ -547,7 +547,7 @@ public class IterableUtils {
     }
 
     /**
-     * Returns the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
+     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
      * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
@@ -624,7 +624,7 @@ public class IterableUtils {
                 return new LazyIteratorChain<E>() {
                     @Override
                     protected Iterator<? extends E> nextIterator(final int count) {
-                        if (IterableUtils.isEmpty(iterable)) {
+                        if (IterableUtils.isEmpty(iterable)) { //NOPMD: qualifier is needed here
                             return null;
                         }
                         return iterable.iterator();

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,6 +30,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
 
     /**
      * Singleton instance of the iterator.
+     *
      * @since 3.1
      */
     @SuppressWarnings("rawtypes")
@@ -37,6 +38,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
 
     /**
      * Gets a typed instance of the iterator.
+     *
      * @param <K> the key type
      * @param <V> the value type
      * @return {@link OrderedMapIterator}&lt;K, V&gt;

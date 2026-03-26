@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -86,7 +86,7 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
     }
 
     @Test
-    public void testDecorateFactory() {
+    void testDecorateFactory() {
         final SortedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(map));
 
@@ -94,7 +94,7 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
     }
 
     @Test
-    public void testUnmodifiable() {
+    void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }

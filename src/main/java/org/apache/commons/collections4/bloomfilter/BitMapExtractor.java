@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -94,6 +94,7 @@ public interface BitMapExtractor {
      * The default implementation of this method is slow. It is recommended
      * that implementing classes reimplement this method.
      * </p>
+     *
      * @return An array of bit map data.
      */
     default long[] asBitMapArray() {
@@ -131,7 +132,7 @@ public interface BitMapExtractor {
      * arrays reimplement this method.</em>
      * </p>
      *
-     * @param other The other BitMapExtractor that provides the y values in the (x,y) pair.
+     * @param other The other BitMapExtractor that provides the y values in the (x, y) pair.
      * @param func  The function to apply.
      * @return A LongPredicate that tests this BitMapExtractor's bitmap values in order.
      */

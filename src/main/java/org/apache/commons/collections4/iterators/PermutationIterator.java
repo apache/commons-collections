@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,6 +71,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Standard constructor for this class.
+     *
      * @param collection  the collection to generate permutations for
      * @throws NullPointerException if coll is null
      */
@@ -91,6 +92,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Indicates if there are more permutation available.
+     *
      * @return true if there are more permutations, otherwise false
      */
     @Override
@@ -100,6 +102,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Returns the next permutation of the input collection.
+     *
      * @return a list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
      */

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,7 +62,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testHashSetValueHashMap() {
+    void testHashSetValueHashMap() {
         final SetValuedMap<K, V> setMap = new LinkedHashSetValuedLinkedHashMap<>(4);
         assertEquals(0, setMap.get((K) "whatever").size());
 
@@ -74,7 +74,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testHashSetValueHashMap_1() {
+    void testHashSetValueHashMap_1() {
         final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2 = makeObject();
@@ -97,7 +97,20 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
-    public void testLinkedHashSetValuedLinkedHashMap_2() {
+    void testInverted() {
+        final LinkedHashSetValuedLinkedHashMap<String, String> citiesLived = new LinkedHashSetValuedLinkedHashMap<>(4);
+        citiesLived.put("Alice", "N.Y.");
+        citiesLived.put("Alice", "L.A.");
+        citiesLived.put("Alice", "Chicago");
+        citiesLived.put("Bob", "N.Y.");
+        citiesLived.put("Cara", "L.A.");
+        citiesLived.put("Cara", "Chicago");
+        assertEquals("{N.Y.=[Alice, Bob], L.A.=[Alice, Cara], Chicago=[Alice, Cara]}",
+                citiesLived.inverted().toString());
+    }
+
+    @Test
+    void testLinkedHashSetValuedLinkedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;
         final SetValuedMap<K, V> map2;
@@ -117,7 +130,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapAdd() {
+    void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -131,7 +144,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testSetValuedMapEqualsHashCodeContract() {
+    void testSetValuedMapEqualsHashCodeContract() {
         final SetValuedMap map1 = makeObject();
         final SetValuedMap map2 = makeObject();
 
@@ -153,7 +166,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemove() {
+    void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -174,7 +187,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetValuedMapRemoveViaIterator() {
+    void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
@@ -192,7 +205,7 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
         assertFalse(setMap.containsKey("A"));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/LinkedHashSetValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

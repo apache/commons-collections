@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,7 +43,7 @@ import org.apache.commons.collections4.OrderedIterator;
  *
  * @param <E> the type of elements in this list
  * @since 3.0
- * @deprecated use {@link AbstractLinkedListJava21} instead
+ * @deprecated Use {@link AbstractLinkedListJava21} instead
  */
 @Deprecated
 public abstract class AbstractLinkedList<E> implements List<E> {
@@ -438,8 +438,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
         /** A pointer to the node before this node */
         protected Node<E> previous;
+
         /** A pointer to the node after this node */
         protected Node<E> next;
+
         /** The object contained within this node */
         protected E value;
 

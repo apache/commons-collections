@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for MultiSetUtils.
  */
-public class MultiSetUtilsTest {
+class MultiSetUtilsTest {
 
     private String[] fullArray;
     private MultiSet<String> multiSet;
@@ -45,7 +45,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#emptyMultiSet()}.
      */
     @Test
-    public void testEmptyMultiSet() {
+    void testEmptyMultiSet() {
         final MultiSet<Integer> empty = MultiSetUtils.emptyMultiSet();
         assertEquals(0, empty.size());
 
@@ -57,7 +57,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#predicatedMultiSet(org.apache.commons.collections4.MultiSet, org.apache.commons.collections4.Predicate)}.
      */
     @Test
-    public void testPredicatedMultiSet() {
+    void testPredicatedMultiSet() {
         final Predicate<String> predicate = object -> object.length() == 1;
         final MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
         assertEquals(multiSet.size(), predicated.size());
@@ -77,7 +77,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
-    public void testSynchronizedMultiSet() {
+    void testSynchronizedMultiSet() {
         final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
         assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
@@ -87,7 +87,7 @@ public class MultiSetUtilsTest {
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
-    public void testUnmodifiableMultiSet() {
+    void testUnmodifiableMultiSet() {
         final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
         assertEquals(multiSet, unmodifiable);
 

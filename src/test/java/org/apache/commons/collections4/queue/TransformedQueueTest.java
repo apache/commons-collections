@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,7 +66,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Test
-    public void testTransformedQueue() {
+    void testTransformedQueue() {
         final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<>(),
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, queue.size());
@@ -85,7 +85,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
-    public void testTransformedQueue_decorateTransform() {
+    void testTransformedQueue_decorateTransform() {
         final Queue originalQueue = new LinkedList();
         final Object[] elements = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalQueue, elements);
@@ -101,7 +101,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         assertTrue(queue.remove(Integer.valueOf((String) elements[0])));
     }
 
-//  public void testCreate() throws Exception {
+//  void testCreate() throws Exception {
 //      resetEmpty();
 //      writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedQueue.emptyCollection.version4.obj");
 //      resetFull();

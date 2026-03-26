@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -79,20 +79,20 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     @Test
-    public void testAdd_Predicate_ComparatorCustom() throws Throwable {
+    void testAdd_Predicate_ComparatorCustom() throws Throwable {
         final TreeBag<Predicate<Object>> treeBagOfPredicateOfObject = new TreeBag<>(Comparator.comparing(Predicate::toString));
         final CollectionBag<Predicate<Object>> collectionBagOfPredicateOfObject = new CollectionBag<>(treeBagOfPredicateOfObject);
         collectionBagOfPredicateOfObject.add(NonePredicate.nonePredicate(collectionBagOfPredicateOfObject), 24);
     }
 
     @Test
-    public void testAdd_Predicate_ComparatorDefault() throws Throwable {
+    void testAdd_Predicate_ComparatorDefault() throws Throwable {
         final TreeBag<Predicate<Object>> treeBagOfPredicateOfObject = new TreeBag<>();
         final CollectionBag<Predicate<Object>> collectionBagOfPredicateOfObject = new CollectionBag<>(treeBagOfPredicateOfObject);
         assertThrows(ClassCastException.class, () -> collectionBagOfPredicateOfObject.add(NonePredicate.nonePredicate(collectionBagOfPredicateOfObject), 24));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
 //        resetFull();
@@ -104,7 +104,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -119,7 +119,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
+    void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = (Bag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,8 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ExtendedIteratorTest {
+class ExtendedIteratorTest {
+
     /**
      * Collection of {@link Integer}s
      */
@@ -49,7 +50,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testAddTo() {
+    void testAddTo() {
         final List<Integer> expected = new ArrayList<>(collectionA);
         expected.addAll(collectionA);
         final List<Integer> actual = ExtendedIterator.create(collectionA.iterator()).addTo(new ArrayList<>(collectionA));
@@ -57,7 +58,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testAndThen() {
+    void testAndThen() {
         final Iterator<Integer> iter1 = Arrays.asList(1, 2, 3).iterator();
         final Iterator<Integer> iter2 = Arrays.asList(4, 5, 6).iterator();
 
@@ -68,7 +69,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         final Iterator<Integer> iter = ExtendedIterator.create(collectionA.iterator());
         final List<Integer> actual = new ArrayList<>();
         iter.forEachRemaining(actual::add);
@@ -76,13 +77,13 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testCreateNoRemove() {
+    void testCreateNoRemove() {
         final Iterator<Integer> iter = ExtendedIterator.createNoRemove(collectionA.iterator());
         assertThrows(UnsupportedOperationException.class, iter::remove);
     }
 
     @Test
-    public void testCreateWithStream() {
+    void testCreateWithStream() {
         final Iterator<Integer> iter = ExtendedIterator.create(collectionA.stream());
         assertThrows(UnsupportedOperationException.class, iter::remove);
         final List<Integer> actual = new ArrayList<>();
@@ -91,12 +92,12 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testEmptyIterator() {
+    void testEmptyIterator() {
         assertFalse(ExtendedIterator.emptyIterator().hasNext());
     }
 
     @Test
-    public void testFilter() {
+    void testFilter() {
         final List<Integer> expected = Arrays.asList(2, 4, 6);
         final Predicate<Integer> predicate = i -> i % 2 == 0;
         final ExtendedIterator<Integer> underTest = ExtendedIterator.create(collectionA.iterator()).filter(predicate);
@@ -106,7 +107,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testFlatten() {
+    void testFlatten() {
         final Iterator<Iterator<Integer>> iteratorIterator = Arrays.asList(
                 Arrays.asList(1, 2, 3).iterator(),
                 Arrays.asList(4, 5, 6).iterator()
@@ -118,7 +119,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testMap() {
+    void testMap() {
         final List<Double> expected = Arrays.asList(0.5, 1., 1.5, 2.0, 2.5, 3.0);
         final Function<Integer, Double> function = i -> i / 2.0;
         final ExtendedIterator<Double> underTest = ExtendedIterator.create(collectionA.iterator()).map(function);
@@ -128,7 +129,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testRemove() {
+    void testRemove() {
         final Iterator<Integer> iter = ExtendedIterator.create(collectionA.iterator());
         final Integer i = iter.next();
         iter.remove();
@@ -139,7 +140,7 @@ public class ExtendedIteratorTest {
     }
 
     @Test
-    public void testRemoveNext() {
+    void testRemoveNext() {
         final ExtendedIterator<Integer> iter = ExtendedIterator.create(collectionA.iterator());
         final Integer i = iter.removeNext();
         assertFalse(collectionA.contains(i));

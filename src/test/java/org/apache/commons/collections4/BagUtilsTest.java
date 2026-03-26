@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,13 +37,13 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for BagUtils factory methods.
  */
-public class BagUtilsTest {
+class BagUtilsTest {
 
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     @Test
-    public void testPredicatedBag() {
+    void testPredicatedBag() {
         final Bag<Object> bag = BagUtils.predicatedBag(new HashBag<>(), truePredicate);
         assertInstanceOf(PredicatedBag.class, bag, "Returned object should be a PredicatedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.predicatedBag(null, truePredicate), "Expecting NullPointerException for null bag.");
@@ -51,7 +51,7 @@ public class BagUtilsTest {
     }
 
     @Test
-    public void testPredicatedSortedBag() {
+    void testPredicatedSortedBag() {
         final Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<>(), truePredicate);
         assertInstanceOf(PredicatedSortedBag.class, bag, "Returned object should be a PredicatedSortedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.predicatedSortedBag(null, truePredicate), "Expecting NullPointerException for null bag.");
@@ -60,21 +60,21 @@ public class BagUtilsTest {
     }
 
     @Test
-    public void testSynchronizedBag() {
+    void testSynchronizedBag() {
         final Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<>());
         assertInstanceOf(SynchronizedBag.class, bag, "Returned object should be a SynchronizedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.synchronizedBag(null), "Expecting NullPointerException for null bag.");
     }
 
     @Test
-    public void testSynchronizedSortedBag() {
+    void testSynchronizedSortedBag() {
         final Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<>());
         assertInstanceOf(SynchronizedSortedBag.class, bag, "Returned object should be a SynchronizedSortedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.synchronizedSortedBag(null), "Expecting NullPointerException for null bag.");
     }
 
     @Test
-    public void testTransformedBag() {
+    void testTransformedBag() {
         final Bag<Object> bag = BagUtils.transformingBag(new HashBag<>(), nopTransformer);
         assertInstanceOf(TransformedBag.class, bag, "Returned object should be an TransformedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.transformingBag(null, nopTransformer), "Expecting NullPointerException for null bag.");
@@ -82,7 +82,7 @@ public class BagUtilsTest {
     }
 
     @Test
-    public void testTransformedSortedBag() {
+    void testTransformedSortedBag() {
         final Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<>(), nopTransformer);
         assertInstanceOf(TransformedSortedBag.class, bag, "Returned object should be an TransformedSortedBag");
         assertThrows(NullPointerException.class, () -> BagUtils.transformingSortedBag(null, nopTransformer), "Expecting NullPointerException for null bag.");
@@ -91,7 +91,7 @@ public class BagUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableBag() {
+    void testUnmodifiableBag() {
         final Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<>());
         assertInstanceOf(UnmodifiableBag.class, bag, "Returned object should be an UnmodifiableBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.unmodifiableBag(null), "Expecting NullPointerException for null bag.");
@@ -99,7 +99,7 @@ public class BagUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSortedBag() {
+    void testUnmodifiableSortedBag() {
         final SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<>());
         assertInstanceOf(UnmodifiableSortedBag.class, bag, "Returned object should be an UnmodifiableSortedBag.");
         assertThrows(NullPointerException.class, () -> BagUtils.unmodifiableSortedBag(null), "Expecting NullPointerException for null bag.");

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -105,7 +105,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
         return CollectionSortedBag.collectionSortedBag(new TreeBag<>());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionSortedBag.emptyCollection.version4.obj");
 //        resetFull();
@@ -117,7 +117,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
+    void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
@@ -132,7 +132,7 @@ public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
      * against the canonical version in SCM.
      */
     @Test
-    public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
+    void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         final SortedBag<T> bag = (SortedBag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {

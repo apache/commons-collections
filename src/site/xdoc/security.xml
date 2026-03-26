@@ -7,7 +7,7 @@
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -110,5 +110,10 @@
         <p>Please report any errors or omissions to <a
         href="mail-lists.html">the dev mailing list</a>.</p>
       </section>
-    </body>
+    <section name="Safe Deserialization">
+      <p>
+      For information about safe deserialization, please see <a href="https://commons.apache.org/io/description.html#Safe_Deserialization">Safe Deserialization</a>.
+      </p>
+    </section>
+  </body>
 </document>

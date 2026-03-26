@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -109,7 +109,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
+    void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
             // test to make sure the canonical form has been preserved
@@ -121,9 +121,9 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
                     comparator = makeObject();
                     final String fileName = getCanonicalComparatorName(comparator);
                     writeExternalFormToDisk((Serializable) comparator, fileName);
-                    fail("Serialized form could not be found.  A serialized version " + "has now been written (and should be added to CVS): " + fileName);
+                    fail("Serialized form could not be found.  A serialized version has now been written (and should be added to CVS): " + fileName);
                 } else {
-                    fail("The Serialized form could be located to test serialization " + "compatibility: " + e.getMessage());
+                    fail("The Serialized form could be located to test serialization compatibility: " + e.getMessage());
                 }
             }
             // make sure the canonical form produces the ordering we currently
@@ -140,7 +140,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Nearly all Comparators should be Serializable.
      */
     @Test
-    public void testComparatorIsSerializable() {
+    void testComparatorIsSerializable() {
         final Comparator<T> comparator = makeObject();
         assertInstanceOf(Serializable.class, comparator, "This comparator should be Serializable.");
     }
@@ -149,7 +149,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting an empty list
      */
     @Test
-    public void testEmptyListSort() {
+    void testEmptyListSort() {
         final List<T> list = new LinkedList<>();
         sortObjects(list, makeObject());
         final List<T> list2 = new LinkedList<>();
@@ -160,7 +160,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting a random list.
      */
     @Test
-    public void testRandomListSort() {
+    void testRandomListSort() {
         final Comparator<T> comparator = makeObject();
         final List<T> randomList = getComparableObjectsOrdered();
         randomizeObjects(randomList);
@@ -179,7 +179,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
      * Test sorting a reversed list.
      */
     @Test
-    public void testReverseListSort() {
+    void testReverseListSort() {
         final Comparator<T> comparator = makeObject();
         final List<T> randomList = getComparableObjectsOrdered();
         reverseObjects(randomList);

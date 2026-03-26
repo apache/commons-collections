@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,6 @@ package org.apache.commons.collections4.properties;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
@@ -254,13 +253,6 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
             throw new UnsupportedOperationException();
         }
 
-        @SuppressWarnings("deprecation")
-        @Override
-        public void save(final OutputStream out, final String comments) {
-            // Implement as super
-            super.save(out, comments);
-        }
-
         @Override
         public synchronized Object setProperty(final String key, final String value) {
             Objects.requireNonNull(key);
@@ -276,12 +268,6 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
         @Override
         public Set<String> stringPropertyNames() {
             return Collections.emptySet();
-        }
-
-        @Override
-        public synchronized String toString() {
-            // Implement as super
-            return super.toString();
         }
 
         @Override

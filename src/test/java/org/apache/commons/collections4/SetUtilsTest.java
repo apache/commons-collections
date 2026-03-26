@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,22 +23,27 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.collections4.SetUtils.SetView;
 import org.apache.commons.collections4.set.PredicatedSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for SetUtils.
  */
-public class SetUtilsTest {
+class SetUtilsTest {
 
     private Set<Integer> setA;
     private Set<Integer> setB;
@@ -61,7 +66,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testDifference() {
+    void testDifference() {
         final SetView<Integer> set = SetUtils.difference(setA, setB);
         assertEquals(2, set.size());
         assertTrue(set.contains(1));
@@ -78,7 +83,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testDisjunction() {
+    void testDisjunction() {
         final SetView<Integer> set = SetUtils.disjunction(setA, setB);
         assertEquals(4, set.size());
         assertTrue(set.contains(1));
@@ -97,7 +102,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testEmptyIfNull() {
+    void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
 
         final Set<Long> set = new HashSet<>();
@@ -105,7 +110,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testEquals() {
+    void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<>(data);
@@ -121,7 +126,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<>(data);
@@ -137,7 +142,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testHashSet() {
+    void testHashSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue(set1.isEmpty(), "set is empty");
 
@@ -162,7 +167,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testIntersection() {
+    void testIntersection() {
         final SetView<Integer> set = SetUtils.intersection(setA, setB);
         assertEquals(3, set.size());
         assertTrue(set.contains(3));
@@ -181,7 +186,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testNewIdentityHashSet() {
+    void testNewIdentityHashSet() {
         final Set<String> set = SetUtils.newIdentityHashSet();
         final String a = new String("a");
         set.add(a);
@@ -198,7 +203,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testpredicatedSet() {
+    void testpredicatedSet() {
         final Predicate<Object> predicate = String.class::isInstance;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertInstanceOf(PredicatedSet.class, set, "returned object should be a PredicatedSet");
@@ -206,8 +211,33 @@ public class SetUtilsTest {
         assertThrows(NullPointerException.class, () -> SetUtils.predicatedSet(null, predicate), "Expecting NullPointerException for null set.");
     }
 
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void testReverseNestedUnionPerfomWell(final boolean mergeLeft) {
+        Set<Integer> set = SetUtils.union(setA, setB);
+        for (int i = 0; i < 128; i++) {
+            if (mergeLeft) {
+                set = SetUtils.union(setB, set);
+            } else {
+                set = SetUtils.union(set, setB);
+            }
+        }
+        final Set<Integer> combinedSet = set;
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> {
+                assertEquals(7, combinedSet.size());
+                assertTrue(combinedSet.containsAll(setA));
+                assertTrue(combinedSet.containsAll(setB));
+
+                final Iterator<Integer> iterator = combinedSet.iterator();
+                while (iterator.hasNext()) { // without the IteratorChain hasNext() caching, this would run hours
+                    iterator.next();
+                }
+                assertFalse(iterator.hasNext());
+            });
+    }
+
     @Test
-    public void testUnion() {
+    void testUnion() {
         final SetView<Integer> set = SetUtils.union(setA, setB);
         assertEquals(7, set.size());
         assertTrue(set.containsAll(setA));
@@ -219,7 +249,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSet() {
+    void testUnmodifiableSet() {
         final Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue(set1.isEmpty(), "set is empty");
 
@@ -244,7 +274,7 @@ public class SetUtilsTest {
     }
 
     @Test
-    public void testUnmodifiableSetWrap() {
+    void testUnmodifiableSetWrap() {
         final Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         final Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
         assertSame(set1, set2);

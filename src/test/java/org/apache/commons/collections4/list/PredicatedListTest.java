@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,7 +66,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final List<E> list = makeTestList();
         final Integer i = Integer.valueOf(3);
 
@@ -78,7 +78,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final List<E> list = makeTestList();
         final List<E> elements = new ArrayList<>();
         elements.add((E) "one");
@@ -97,7 +97,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalSet() {
+    void testIllegalSet() {
         final List<E> list = makeTestList();
         assertThrows(IllegalArgumentException.class, () -> list.set(0, (E) Integer.valueOf(3)),
                 "Integer should fail string predicate.");
@@ -105,7 +105,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLegalAddAll() {
+    void testLegalAddAll() {
         final List<E> list = makeTestList();
         list.add((E) "zero");
         final List<E> elements = new ArrayList<>();
@@ -120,7 +120,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSubList() {
+    void testSubList() {
         final List<E> list = makeTestList();
         list.add((E) "zero");
         //subList without any element of list
@@ -142,7 +142,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertEquals(list.size(), subList.size());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedList.emptyCollection.version4.obj");
 //        resetFull();

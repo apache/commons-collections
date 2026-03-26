@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,6 +51,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
         return new InvokerTransformer<>(Objects.requireNonNull(methodName, "methodName"));
     }
+
     /**
      * Gets an instance of this transformer calling a specific method with specific values.
      *
@@ -76,6 +77,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
         }
         return new InvokerTransformer<>(methodName, paramTypes, args);
     }
+
     /** The method name to call */
     private final String iMethodName;
 

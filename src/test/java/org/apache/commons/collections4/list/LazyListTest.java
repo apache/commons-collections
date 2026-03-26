@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 import org.junit.jupiter.api.Test;
 
-public class LazyListTest extends AbstractObjectTest {
+class LazyListTest extends AbstractObjectTest {
 
     @Override
     public Object makeObject() {
@@ -52,7 +52,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testCreateNullGapsWithFactory() {
+    void testCreateNullGapsWithFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
 
@@ -62,7 +62,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testCreateNullGapsWithTransformer() {
+    void testCreateNullGapsWithTransformer() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> dateFactory = input -> LocalDateTime.now().withHour(hours.get(input));
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
@@ -73,7 +73,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testElementCreationWithFactory() {
+    void testElementCreationWithFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
 
@@ -85,7 +85,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testElementCreationWithTransformer() {
+    void testElementCreationWithTransformer() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
 
@@ -97,7 +97,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testGetWithNull() {
+    void testGetWithNull() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
@@ -141,7 +141,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testSubListWitheFactory() {
+    void testSubListWitheFactory() {
         final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
         final LocalDateTime fourthElement = list.get(3);
@@ -151,7 +151,7 @@ public class LazyListTest extends AbstractObjectTest {
     }
 
     @Test
-    public void testSubListWithTransformer() {
+    void testSubListWithTransformer() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
         final List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);

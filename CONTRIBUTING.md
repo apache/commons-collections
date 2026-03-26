@@ -61,15 +61,15 @@ Making Changes
 
 + Create a _topic branch_ for your isolated work.
   * Usually you should base your branch from the `master` branch.
-  * A good topic branch name can be the JIRA bug ID plus a keyword, for example, `COLLECTIONS-123-InputStream`.
+  * A good topic branch name can be the JIRA bug ID plus a keyword, e.g. `COLLECTIONS-123-InputStream`.
   * If you have submitted multiple JIRA issues, try to maintain separate branches and pull requests.
 + Make commits of logical units.
   * Make sure your commit messages are meaningful and in the proper format. Your commit message should contain the key of the JIRA issue.
-  * For example, `[COLLECTIONS-123] Close input stream earlier`
+  * For example, `[COLLECTIONS-123] Close input stream sooner`
 + Respect the original code style:
   + Only use spaces for indentation; you can check for unnecessary whitespace with `git diff` before committing.
   + Create minimal diffs - disable _On Save_ actions like _Reformat Source Code_ or _Organize Imports_. If you feel the source code should be reformatted create a separate PR for this change first.
-+ Write unit tests that match behavioral changes, where the tests fail if the changes to the runtime are not applied. This may not always be possible but is a best-practice.
++ Write unit tests that match behavioral changes, where the tests fail if the changes to the runtime are not applied. This may not always be possible but is a best practice.
 Unit tests are typically in the `src/test/java` directory.
 + Run a successful build using the default [Maven](https://maven.apache.org/) goal with `mvn`; that's `mvn` on the command line by itself.
 + Write a pull request description that is detailed enough to understand what the pull request does, how, and why.

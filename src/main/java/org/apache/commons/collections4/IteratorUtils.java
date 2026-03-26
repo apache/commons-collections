@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -112,6 +112,7 @@ public class IteratorUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
+
     /**
      * Default delimiter used to delimit elements while converting an Iterator
      * to its String representation.
@@ -392,7 +393,6 @@ public class IteratorUtils {
         return new IteratorIterable<>(iterator, true);
     }
 
-    // Bounded
     /**
      * Decorates the specified iterator to return at most the given number
      * of elements.
@@ -759,6 +759,7 @@ public class IteratorUtils {
      * The Iterator is advanced to {@code 0} (or to the end, if
      * {@code 0} exceeds the number of entries) as a side effect of this method.
      * </p>
+     *
      * @param <E> the type of object in the {@link Iterator}
      * @param iterator the iterator to get a value from
      * @return the first object
@@ -866,17 +867,17 @@ public class IteratorUtils {
      * This method can handle objects as follows
      * </p>
      * <ul>
-     * <li>null - empty iterator
-     * <li>Iterator - returned directly
-     * <li>Enumeration - wrapped
-     * <li>Collection - iterator from collection returned
-     * <li>Map - values iterator returned
-     * <li>Dictionary - values (elements) enumeration returned as iterator
-     * <li>array - iterator over array returned
-     * <li>object with iterator() public method accessed by reflection
-     * <li>object - singleton iterator
-     * <li>NodeList - iterator over the list
-     * <li>Node - iterator over the child nodes
+     * <li>null - empty iterator</li>
+     * <li>Iterator - returned directly</li>
+     * <li>Enumeration - wrapped</li>
+     * <li>Collection - iterator from collection returned</li>
+     * <li>Map - values iterator returned</li>
+     * <li>Dictionary - values (elements) enumeration returned as iterator</li>
+     * <li>array - iterator over array returned</li>
+     * <li>object with iterator() public method accessed by reflection</li>
+     * <li>object - singleton iterator</li>
+     * <li>NodeList - iterator over the list</li>
+     * <li>Node - iterator over the child nodes</li>
      * </ul>
      *
      * @param obj  the object to convert to an iterator

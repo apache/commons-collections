@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -63,21 +63,21 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Test
-    public void testComparator() {
+    void testComparator() {
         final SortedSet<E> set = makeTestSet();
         final Comparator<? super E> c = set.comparator();
         assertNull(c, "natural order, so comparator should be null");
     }
 
     @Test
-    public void testGetSet() {
+    void testGetSet() {
         final PredicatedSortedSet<E> set = makeTestSet();
         assertNotNull(set.decorated(), "returned set should not be null");
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAdd() {
+    void testIllegalAdd() {
         final SortedSet<E> set = makeTestSet();
         final String testString = "B";
         assertThrows(IllegalArgumentException.class, () -> set.add((E) testString),
@@ -87,7 +87,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIllegalAddAll() {
+    void testIllegalAddAll() {
         final SortedSet<E> set = makeTestSet();
         final Set<E> elements = new TreeSet<>();
         elements.add((E) "Aone");
@@ -102,7 +102,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertFalse(set.contains("Afour"), "Set shouldn't contain illegal element");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/PredicatedSortedSet.emptyCollection.version4.obj");
 //        resetFull();

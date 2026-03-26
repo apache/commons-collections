@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,11 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.DefaultTimeZone;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
@@ -39,13 +39,17 @@ import org.junit.jupiter.api.Test;
 public class FactoryUtilsTest {
 
     public static class Mock1 {
+
         private final int iVal;
+
         public Mock1(final int val) {
             iVal = val;
         }
+
         public Mock1(final Mock1 mock) {
             iVal = mock.iVal;
         }
+
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof Mock1 && iVal == ((Mock1) obj).iVal) {
@@ -53,6 +57,7 @@ public class FactoryUtilsTest {
             }
             return false;
         }
+
         @Override
         public int hashCode() { // please Findbugs
             return super.hashCode();
@@ -60,14 +65,17 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock2 implements Serializable {
+
         /**
          * Generated serial version ID.
          */
         private static final long serialVersionUID = 4899282162482588924L;
         private final Object iVal;
-        public Mock2(final Object val) {
+
+        Mock2(final Object val) {
             iVal = val;
         }
+
         @Override
         public boolean equals(final Object obj) {
             if (obj instanceof Mock2 && iVal == ((Mock2) obj).iVal) {
@@ -75,6 +83,7 @@ public class FactoryUtilsTest {
             }
             return false;
         }
+
         @Override
         public int hashCode() { // please Findbugs
             return super.hashCode();
@@ -82,18 +91,21 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock3 {
+
         private static int cCounter;
         private final int iVal;
+
         public Mock3() {
             iVal = cCounter++;
         }
-        public int getValue() {
+
+        int getValue() {
             return iVal;
         }
     }
 
     @Test
-    public void testConstantFactoryConstant() {
+    void testConstantFactoryConstant() {
         final Integer constant = Integer.valueOf(9);
         final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
         assertNotNull(factory);
@@ -102,7 +114,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testConstantFactoryNull() {
+    void testConstantFactoryNull() {
         final Factory<Object> factory = FactoryUtils.constantFactory(null);
         assertNotNull(factory);
         final Object created = factory.create();
@@ -110,7 +122,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testExceptionFactory() {
+    void testExceptionFactory() {
         assertNotNull(FactoryUtils.exceptionFactory());
         assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
 
@@ -118,8 +130,8 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testInstantiateFactoryComplex() {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+    @DefaultTimeZone("GMT")
+    void testInstantiateFactoryComplex() {
         // 2nd Jan 1970
         final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
@@ -131,22 +143,22 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testInstantiateFactoryMismatch() {
+    void testInstantiateFactoryMismatch() {
         assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null}));
     }
 
     @Test
-    public void testInstantiateFactoryNoConstructor() {
+    void testInstantiateFactoryNoConstructor() {
         assertThrows(IllegalArgumentException.class, () -> FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null}));
     }
 
     @Test
-    public void testInstantiateFactoryNull() {
+    void testInstantiateFactoryNull() {
         assertThrows(NullPointerException.class, () -> FactoryUtils.instantiateFactory(null));
     }
 
     @Test
-    public void testInstantiateFactorySimple() {
+    void testInstantiateFactorySimple() {
         final Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
         assertNotNull(factory);
         Mock3 created = factory.get();
@@ -156,7 +168,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testNullFactory() {
+    void testNullFactory() {
         final Factory<Object> factory = FactoryUtils.nullFactory();
         assertNotNull(factory);
         final Object created = factory.create();
@@ -164,18 +176,18 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testPrototypeFactoryNull() {
+    void testPrototypeFactoryNull() {
         assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
     }
 
     @Test
-    public void testPrototypeFactoryPublicBad() {
+    void testPrototypeFactoryPublicBad() {
         final Object proto = new Object();
         assertThrows(IllegalArgumentException.class, () -> FactoryUtils.prototypeFactory(proto));
     }
 
     @Test
-    public void testPrototypeFactoryPublicCloneMethod() throws Exception {
+    void testPrototypeFactoryPublicCloneMethod() throws Exception {
         final Date proto = new Date();
         final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
@@ -185,7 +197,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
+    void testPrototypeFactoryPublicCopyConstructor() throws Exception {
         final Mock1 proto = new Mock1(6);
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
@@ -195,7 +207,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testPrototypeFactoryPublicSerialization() throws Exception {
+    void testPrototypeFactoryPublicSerialization() throws Exception {
         final Integer proto = 9;
         final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
@@ -205,7 +217,7 @@ public class FactoryUtilsTest {
     }
 
     @Test
-    public void testPrototypeFactoryPublicSerializationError() {
+    void testPrototypeFactoryPublicSerializationError() {
         final Mock2 proto = new Mock2(new Object());
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
@@ -219,7 +231,7 @@ public class FactoryUtilsTest {
      * serialization/deserialization process.
      */
     @Test
-    public void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
+    void testSingletonPatternInSerialization() throws ClassNotFoundException, IOException {
         final Object[] singletons = {
             ExceptionFactory.INSTANCE,
         };

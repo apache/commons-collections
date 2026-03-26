@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -53,7 +53,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_Decorate() {
+    void testFactory_Decorate() {
         final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -74,7 +74,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testFactory_decorateTransform() {
+    void testFactory_decorateTransform() {
         final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
@@ -95,7 +95,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testTransformedMap() {
+    void testTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap
@@ -143,7 +143,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

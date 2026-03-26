@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -63,16 +63,21 @@ public class IteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> currentIterator;
 
     /**
-     * The "last used" Iterator is the Iterator upon which next() or hasNext()
+     * The "last used" Iterator is the Iterator upon which next()
      * was most recently called used for the remove() operation only
      */
     private Iterator<? extends E> lastUsedIterator;
 
     /**
-     * ComparatorChain is "locked" after the first time compare(Object,Object)
+     * ComparatorChain is "locked" after the first time compare(Object, Object)
      * is called
      */
     private boolean isLocked;
+
+    /**
+     * Contains the result of the last hasNext() call until next() is invoked
+     */
+    private Boolean cachedHasNextValue;
 
     /**
      * Constructs an IteratorChain with no Iterators.
@@ -163,7 +168,29 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        iteratorQueue.add(Objects.requireNonNull(iterator, "iterator"));
+        Objects.requireNonNull(iterator, "iterator");
+        if (iterator instanceof UnmodifiableIterator) {
+            final Iterator<? extends E> underlyingIterator = ((UnmodifiableIterator) iterator).unwrap();
+            if (underlyingIterator instanceof IteratorChain) {
+                // in case it is an IteratorChain, wrap every underlying iterators as unmodifiable
+                // multiple rechainings would otherwise lead to exponential growing number of function calls
+                // when the iteratorChain gets used.
+                for (final Iterator<? extends E> nestedIterator : ((IteratorChain<? extends E>) underlyingIterator).iteratorQueue) {
+                    iteratorQueue.add(UnmodifiableIterator.unmodifiableIterator(nestedIterator));
+                }
+            } else {
+                // we don't know anything about the underlying iterator, simply add it here
+                iteratorQueue.add(iterator);
+            }
+        } else if (iterator instanceof IteratorChain) {
+            // add the wrapped iterators directly instead of reusing the given instance
+            // multiple rechainings would otherwise lead to exponential growing number of function calls
+            // when the iteratorChain gets used.
+            iteratorQueue.addAll(((IteratorChain) iterator).iteratorQueue);
+        } else {
+            // arbitrary other iterator
+            iteratorQueue.add(iterator);
+        }
     }
 
     /**
@@ -183,9 +210,10 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public boolean hasNext() {
         lockChain();
-        updateCurrentIterator();
-        lastUsedIterator = currentIterator;
-        return currentIterator.hasNext();
+        if (cachedHasNextValue == null) {
+            updateCurrentIterator();
+        }
+        return cachedHasNextValue;
     }
 
     /**
@@ -219,9 +247,11 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public E next() {
         lockChain();
-        updateCurrentIterator();
+        if (cachedHasNextValue == null) {
+            updateCurrentIterator();
+        }
         lastUsedIterator = currentIterator;
-
+        cachedHasNextValue = null;
         return currentIterator.next();
     }
 
@@ -241,10 +271,11 @@ public class IteratorChain<E> implements Iterator<E> {
     @Override
     public void remove() {
         lockChain();
-        if (currentIterator == null) {
-            updateCurrentIterator();
+        if (lastUsedIterator == null)  {
+            throw new IllegalStateException("remove() has been invoked without next()");
         }
         lastUsedIterator.remove();
+        lastUsedIterator = null;  // must never be used twice without next() being invoked
     }
 
     /**
@@ -267,13 +298,16 @@ public class IteratorChain<E> implements Iterator<E> {
             } else {
                 currentIterator = iteratorQueue.remove();
             }
-            // set last used iterator here, in case the user calls remove
-            // before calling hasNext() or next() (although they shouldn't)
-            lastUsedIterator = currentIterator;
         }
-        while (!currentIterator.hasNext() && !iteratorQueue.isEmpty()) {
+        while (true) {
+            cachedHasNextValue = currentIterator.hasNext();
+            if (cachedHasNextValue) {
+                break;
+            }
+            if (iteratorQueue.isEmpty()) {
+                break;
+            }
             currentIterator = iteratorQueue.remove();
         }
     }
-
 }

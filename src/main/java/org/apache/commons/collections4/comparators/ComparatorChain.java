@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,15 +58,17 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /** The list of comparators in the chain. */
     private final List<Comparator<E>> comparatorChain;
+
     /** Order - false (clear) = ascend; true (set) = descend. */
     private final BitSet orderingBits;
-   /** Whether the chain has been "locked". */
+
+    /** Whether the chain has been "locked". */
     private boolean isLocked;
 
     /**
      * Constructs a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
-     * the compare(Object,Object) method, or an
+     * the compare(Object, Object) method, or an
      * UnsupportedOperationException is thrown
      */
     public ComparatorChain() {
@@ -182,7 +184,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Perform comparisons on the Objects as per
-     * Comparator.compare(o1,o2).
+     * Comparator.compare(o1, o2).
      *
      * @param o1  the first object to compare
      * @param o2  the second object to compare

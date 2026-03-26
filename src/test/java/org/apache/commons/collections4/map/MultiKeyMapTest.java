@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -129,7 +129,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testClone() {
+    void testClone() {
         final MultiKeyMap<K, V> map = new MultiKeyMap<>();
         map.put(new MultiKey<>((K) I1, (K) I2), (V) "1-2");
         final Map<MultiKey<? extends K>, V> cloned = map.clone();
@@ -152,7 +152,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
      * </ol>
      */
     @Test
-    public void testCompress872() {
+    void testCompress872() {
         final AtomicReference<String> k1 = new AtomicReference<>("K1v1");
         final AtomicReference<String> k2 = new AtomicReference<>("K2v1");
         final MultiKeyMap<AtomicReference<String>, String> map = (MultiKeyMap<AtomicReference<String>, String>) makeObject();
@@ -165,7 +165,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testLRUMultiKeyMap() {
+    void testLRUMultiKeyMap() {
         final MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<>(2));
         map.put((K) I1, (K) I2, (V) "1-2");
         map.put((K) I1, (K) I3, (V) "1-1");
@@ -188,7 +188,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyContainsKey() {
+    void testMultiKeyContainsKey() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         final MultiKey<K>[] keys = getMultiKeyKeys();
@@ -238,7 +238,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyGet() {
+    void testMultiKeyGet() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         final MultiKey<K>[] keys = getMultiKeyKeys();
@@ -292,7 +292,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyPut() {
+    void testMultiKeyPut() {
         final MultiKey<K>[] keys = getMultiKeyKeys();
         final V[] values = getSampleValues();
 
@@ -354,7 +354,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyPutWithNullKey() {
+    void testMultiKeyPutWithNullKey() {
         final MultiKeyMap<String, String> map = new MultiKeyMap<>();
         map.put("a", null, "value1");
         map.put("b", null, "value2");
@@ -371,7 +371,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyRemove() {
+    void testMultiKeyRemove() {
         final MultiKey<K>[] keys = getMultiKeyKeys();
         final V[] values = getSampleValues();
 
@@ -423,7 +423,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyRemoveAll1() {
+    void testMultiKeyRemoveAll1() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
@@ -437,7 +437,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyRemoveAll2() {
+    void testMultiKeyRemoveAll2() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
@@ -451,7 +451,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     }
 
     @Test
-    public void testMultiKeyRemoveAll3() {
+    void testMultiKeyRemoveAll3() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
@@ -464,7 +464,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -476,7 +476,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 //    }
 
     @Test
-    public void testMultiKeyRemoveAll4() {
+    void testMultiKeyRemoveAll4() {
         resetFull();
         final MultiKeyMap<K, V> multimap = getMap();
         assertEquals(12, multimap.size());
@@ -491,7 +491,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         resetFull();
         assertNull(map.get(null));
         assertFalse(map.containsKey(null));

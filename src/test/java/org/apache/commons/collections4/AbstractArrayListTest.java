@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
     public abstract ArrayList<E> makeObject();
 
     @Test
-    public void testNewArrayList() {
+    void testNewArrayList() {
         final ArrayList<E> list = makeObject();
         assertTrue(list.isEmpty(), "New list is empty");
         assertEquals(0, list.size(), "New list has size zero");
@@ -47,7 +47,7 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSearch() {
+    void testSearch() {
         final ArrayList<E> list = makeObject();
         list.add((E) "First Item");
         list.add((E) "Last Item");

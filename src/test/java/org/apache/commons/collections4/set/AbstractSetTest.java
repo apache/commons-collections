@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -118,7 +118,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testSetEquals() {
+    void testSetEquals() {
         resetEmpty();
         assertEquals(getCollection(), getConfirmed(), "Empty sets should be equal");
         verify();
@@ -140,7 +140,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      * Tests {@link Set#hashCode()}.
      */
     @Test
-    public void testSetHashCode() {
+    void testSetHashCode() {
         resetEmpty();
         assertEquals(getCollection().hashCode(), getConfirmed().hashCode(),
                 "Empty sets have equal hashCodes");

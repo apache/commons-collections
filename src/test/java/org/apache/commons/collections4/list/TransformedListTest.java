@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,7 +66,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testSubList() {
+    void testSubList() {
         final List<E> list = makeObject();
         List<E> subList = list.subList(0, 0);
         assertNotNull(subList);
@@ -92,7 +92,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedList() {
+    void testTransformedList() {
         final List<E> list = TransformedList.transformingList(new ArrayList<>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, list.size());
         final E[] els = (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
@@ -140,7 +140,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    public void testTransformedList_decorateTransform() {
+    void testTransformedList_decorateTransform() {
         final List<Object> originalList = new ArrayList<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalList, els);
@@ -155,7 +155,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertTrue(list.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedList.emptyCollection.version4.obj");
 //        resetFull();

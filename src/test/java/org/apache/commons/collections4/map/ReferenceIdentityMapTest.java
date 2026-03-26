@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -83,7 +83,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return "4";
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
@@ -121,7 +121,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     // Tests often fail because gc is uncontrollable
 
     @Test
-    public void testPurge() {
+    void testPurge() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < hard.length; i++) {
@@ -147,7 +147,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testGetAfterGC() {
+    void testGetAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         for (int i = 0; i < 10; i++) {
             map.put(Integer.valueOf(i), Integer.valueOf(i));
@@ -162,7 +162,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testEntrySetIteratorAfterGC() {
+    void testEntrySetIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -184,7 +184,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testMapIteratorAfterGC() {
+    void testMapIteratorAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -207,7 +207,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     }
 
     @Test
-    public void testMapIteratorAfterGC2() {
+    void testMapIteratorAfterGC2() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
@@ -237,7 +237,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testBasics() {
+    void testBasics() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
         assertEquals(0, map.size());
 
@@ -271,7 +271,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testHashEntry() {
+    void testHashEntry() {
         final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
 
         map.put((K) I1A, (V) I2A);
@@ -289,7 +289,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testNullHandling() {
+    void testNullHandling() {
         resetFull();
         assertNull(getMap().get(null));
         assertFalse(getMap().containsKey(null));
@@ -305,7 +305,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     /** Tests whether purge values setting works */
     @Test
-    public void testPurgeValues() throws Exception {
+    void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
         final Map<K, V> testMap = buildRefMap();
 

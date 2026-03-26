@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -66,6 +66,13 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * was most recently called used for the remove() operation only.
      */
     private Iterator<? extends E> lastUsedIterator;
+
+    /**
+     * Constructs a new instance.
+     */
+    public LazyIteratorChain() {
+        // empty
+    }
 
     /**
      * Return true if any Iterator in the chain has a remaining element.

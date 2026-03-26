@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,7 +55,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testArrayListValuedLinkedHashMap() {
+    void testArrayListValuedLinkedHashMap() {
         final ListValuedMap<K, V> listMap;
         final ListValuedMap<K, V> listMap1;
         final Map<K, V> map = new HashMap<>();
@@ -74,7 +74,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testCopyConstructorWithMultiValuedMap() {
+    void testCopyConstructorWithMultiValuedMap() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) "key", (V) "sleutel");
         final ListValuedMap<K, V> copy = new ArrayListValuedLinkedHashMap<>(map);
@@ -83,7 +83,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testEqualsHashCodeContract() {
+    void testEqualsHashCodeContract() {
         final MultiValuedMap map1 = makeObject();
         final MultiValuedMap map2 = makeObject();
 
@@ -100,8 +100,21 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
+    void testInverted() {
+        final ArrayListValuedLinkedHashMap<String, String> shopping = new ArrayListValuedLinkedHashMap<>(4);
+        shopping.put("Alice", "Bread");
+        shopping.put("Alice", "Milk");
+        shopping.put("Alice", "Milk");
+        shopping.put("Bob", "Pizza");
+        shopping.put("Bob", "Bread");
+        shopping.put("Bob", "Bread");
+        assertEquals("{Bread=[Alice, Bob, Bob], Milk=[Alice, Alice], Pizza=[Bob]}",
+                shopping.inverted().toString());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapAdd() {
+    void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         assertTrue(listMap.get((K) "whatever") instanceof List);
         final List<V> list = listMap.get((K) "A");
@@ -112,7 +125,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapAddViaListIterator() {
+    void testListValuedMapAddViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
         final ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         assertFalse(listIt.hasNext());
@@ -127,7 +140,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void testListValuedMapEqualsHashCodeContract() {
+    void testListValuedMapEqualsHashCodeContract() {
         final ListValuedMap map1 = makeObject();
         final ListValuedMap map2 = makeObject();
 
@@ -148,7 +161,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapRemove() {
+    void testListValuedMapRemove() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
@@ -166,7 +179,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testListValuedMapRemoveViaListIterator() {
+    void testListValuedMapRemoveViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
         ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         listIt.add((V) "b1");
@@ -186,7 +199,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testPreservesKeyInsertionOrder() {
+    void testPreservesKeyInsertionOrder() {
         final ListValuedMap<K, V> map = makeObject();
         map.put((K) Integer.valueOf(5), (V) "five");
         map.put((K) Integer.valueOf(1), (V) "one");
@@ -202,7 +215,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testTrimToSize() {
+    void testTrimToSize() {
         final ArrayListValuedLinkedHashMap<K, V> listMap = new ArrayListValuedLinkedHashMap<>(4);
 
         assertEquals("{}", listMap.toString());
@@ -218,7 +231,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testValuesListIteratorMethods() {
+    void testValuesListIteratorMethods() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V) "F");
@@ -237,7 +250,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testWrappedListAdd() {
+    void testWrappedListAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         listA.add(0, (V) "W");
@@ -249,7 +262,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
     @Test
-    public void testWrappedListAddAll() {
+    void testWrappedListAddAll() {
         final ListValuedMap<K, V> listMap = makeObject();
         final List<V> listA = listMap.get((K) "A");
         final List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");
@@ -281,7 +294,7 @@ public class ArrayListValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedM
     }
 
 //    @Test
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/org/apache/commons/collections4/data/test/ArrayListValuedLinkedHashMap.emptyCollection.version4.5.obj");
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,12 +31,25 @@ import org.apache.commons.collections4.Predicate;
 final class FunctorUtils {
 
     /**
+     * Clones the given array or returns null on null input.
+     *
+     * @param <T> The array type.
+     * @param array The array to clone.
+     * @return The cloned array or null.
+     */
+    private static <T> T[] clone(final T... array) {
+        return array != null ? array.clone() : null;
+    }
+
+    /**
      * A very simple method that coerces Predicate<? super T> to Predicate<T>.
      * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
-     * <p>This method exists
+     * <p>
+     * This method exists
      * simply as centralized documentation and atomic unchecked warning
      * suppression.
+     * </p>
      *
      * @param <T> the type of object the returned predicate should "accept"
      * @param predicate the predicate to coerce.
@@ -49,9 +62,11 @@ final class FunctorUtils {
 
     /**
      * A very simple method that coerces Transformer<? super I, ? extends O> to Transformer<I, O>.
-     * <p>This method exists
+     * <p>
+     * This method exists
      * simply as centralized documentation and atomic unchecked warning
      * suppression.
+     * </p>
      *
      * @param <I> the type of object the returned transformer should "accept"
      * @param <O> the type of object the returned transformer should "produce"
@@ -71,10 +86,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends Consumer<?>> T[] copy(final T... consumers) {
-        if (consumers == null) {
-            return null;
-        }
-        return consumers.clone();
+        return clone(consumers);
     }
 
     /**
@@ -87,10 +99,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends java.util.function.Predicate<?>> T[] copy(final T... predicates) {
-        if (predicates == null) {
-            return null;
-        }
-        return predicates.clone();
+        return clone(predicates);
     }
 
     /**
@@ -101,10 +110,7 @@ final class FunctorUtils {
      */
     @SuppressWarnings("unchecked")
     static <T extends Function<?, ?>> T[] copy(final T... transformers) {
-        if (transformers == null) {
-            return null;
-        }
-        return transformers.clone();
+        return clone(transformers);
     }
 
     /**
@@ -135,7 +141,7 @@ final class FunctorUtils {
      * @param consumers  the consumers to validate.
      */
     static void validate(final Consumer<?>... consumers) {
-        Objects.requireNonNull(consumers, "closures");
+        Objects.requireNonNull(consumers, "consumers");
         for (int i = 0; i < consumers.length; i++) {
             if (consumers[i] == null) {
                 throw new NullPointerException("closures[" + i + "]");

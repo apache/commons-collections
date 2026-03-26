@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -78,7 +78,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Override
     @Test
-    public void testMapGet() {
+    void testMapGet() {
         Map<Integer, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get(5);
@@ -93,7 +93,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testReverseSortOrder() {
+    void testReverseSortOrder() {
         final SortedMap<String, Number> map = LazySortedMap.lazySortedMap(new ConcurrentSkipListMap<>(reverseStringComparator), oneFactory);
         map.put("A", 5);
         map.get("B"); // Entry with value "One" created
@@ -109,7 +109,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testSortOrder() {
+    void testSortOrder() {
         final SortedMap<String, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), oneFactory);
         map.put("A", 5);
         map.get("B"); // Entry with value "One" created
@@ -125,7 +125,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
-    public void testTransformerDecorate() {
+    void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         final SortedMap<Integer, Number> map = LazySortedMap.lazySortedMap(new TreeMap<>(), transformer);
         assertInstanceOf(LazySortedMap.class, map);
@@ -135,7 +135,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
                 "Expecting NullPointerException for null map");
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

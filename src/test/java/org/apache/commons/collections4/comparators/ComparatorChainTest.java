@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,14 +31,14 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for ComparatorChain.
  */
-public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
+class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
     public static class ColumnComparator implements Comparator<PseudoRow>, Serializable {
         private static final long serialVersionUID = -2284880866328872105L;
 
         protected int colIndex;
 
-        public ColumnComparator(final int colIndex) {
+        ColumnComparator(final int colIndex) {
             this.colIndex = colIndex;
         }
 
@@ -66,7 +66,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         private static final long serialVersionUID = 8085570439751032499L;
         public int[] cols = new int[3];
 
-        public PseudoRow(final int col1, final int col2, final int col3) {
+        PseudoRow(final int col1, final int col2, final int col3) {
             cols[0] = col1;
             cols[1] = col2;
             cols[2] = col3;
@@ -83,13 +83,13 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
             return getColumn(0) == row.getColumn(0) && getColumn(1) == row.getColumn(1) && getColumn(2) == row.getColumn(2);
         }
 
+        public int getColumn(final int colIndex) {
+            return cols[colIndex];
+        }
+
         @Override
         public int hashCode() {
             return Arrays.hashCode(cols);
-        }
-
-        public int getColumn(final int colIndex) {
-            return cols[colIndex];
         }
 
         @Override
@@ -98,7 +98,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         }
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ComparatorChain.version4.obj");
 //    }
 
@@ -125,7 +125,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testBadListComparatorChain() {
+    void testBadListComparatorChain() {
         final List<Comparator<Integer>> list = new LinkedList<>();
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
         final Integer i1 = 4;
@@ -135,7 +135,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testBadNoopComparatorChain() {
+    void testBadNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;
@@ -144,7 +144,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testComparatorChainOnMinValuedComparator() {
+    void testComparatorChainOnMinValuedComparator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
@@ -165,7 +165,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testListComparatorChain() {
+    void testListComparatorChain() {
         final List<Comparator<Integer>> list = new LinkedList<>();
         list.add(new ComparableComparator<>());
         final ComparatorChain<Integer> chain = new ComparatorChain<>(list);
@@ -177,7 +177,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     }
 
     @Test
-    public void testNoopComparatorChain() {
+    void testNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<>();
         final Integer i1 = 4;
         final Integer i2 = 6;

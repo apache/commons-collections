@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for ReverseComparator.
  */
-public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
+class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {
@@ -50,7 +50,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         return "4";
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ReverseComparator.version4.obj");
 //    }
 

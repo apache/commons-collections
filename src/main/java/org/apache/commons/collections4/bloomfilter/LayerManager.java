@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -138,7 +138,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
         }
 
         /**
-         * Removes the earliest filters in the list when the the number of filters
+         * Removes the earliest filters in the list when the number of filters
          * exceeds maxSize.
          *
          * @param <T> Type of BloomFilter.
@@ -292,7 +292,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Constructs a new instance.
      *
-     * @param filterSupplier the non-null supplier of new Bloom filters to add the the list
+     * @param filterSupplier the non-null supplier of new Bloom filters to add the list
      *                       when necessary.
      * @param extendCheck    The non-null predicate that checks if a new filter should be
      *                       added to the list.
@@ -361,6 +361,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Gets the Bloom filter from the first layer.
      * No extension check is performed during this call.
+     *
      * @return The Bloom filter from the first layer.
      * @see #getTarget()
      */
@@ -385,7 +386,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     }
 
     /**
-     * Returns the number of filters in the LayerManager.  In the default LayerManager implementation
+     * Gets the number of filters in the LayerManager.  In the default LayerManager implementation
      * there is always at least one layer.
      *
      * @return the current depth.
@@ -395,7 +396,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     }
 
     /**
-     * Returns the current target filter. If a new filter should be created based on
+     * Gets the current target filter. If a new filter should be created based on
      * {@code extendCheck} it will be created before this method returns.
      *
      * @return the current target filter after any extension.
@@ -445,11 +446,6 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      */
     @Override
     public boolean processBloomFilters(final Predicate<BloomFilter> bloomFilterPredicate) {
-        for (final T bf : filters) {
-            if (!bloomFilterPredicate.test(bf)) {
-                return false;
-            }
-        }
-        return true;
+        return filters.stream().allMatch(bloomFilterPredicate);
     }
 }

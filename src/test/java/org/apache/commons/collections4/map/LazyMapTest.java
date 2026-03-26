@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,7 +62,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testMapGetWithFactory() {
+    void testMapGetWithFactory() {
         Map<Integer, Number> map = LazyMap.lazyMap(new HashMap<>(), oneFactory);
         assertEquals(0, map.size());
         final Number i1 = map.get("Five");
@@ -80,7 +80,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    public void testMapGetWithTransformer() {
+    void testMapGetWithTransformer() {
         final Transformer<Number, Integer> intConverter = Number::intValue;
         final Map<Long, Number> map = LazyMap.lazyMap(new HashMap<>(), intConverter);
         assertEquals(0, map.size());
@@ -89,7 +89,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(1, map.size());
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,

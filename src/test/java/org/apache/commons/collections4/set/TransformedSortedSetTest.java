@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,7 +55,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testTransformedSet() {
+    void testTransformedSet() {
         final SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
@@ -70,7 +70,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     @Test
-    public void testTransformedSet_decorateTransform() {
+    void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new TreeSet<>();
         final Object[] els = {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
@@ -83,7 +83,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         assertTrue(set.remove(Integer.valueOf((String) els[0])));
     }
 
-//    public void testCreate() throws Exception {
+//    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.emptyCollection.version4.obj");
 //        resetFull();

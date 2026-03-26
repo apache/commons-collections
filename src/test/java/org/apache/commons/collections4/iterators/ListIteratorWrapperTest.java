@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -67,7 +67,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testIterator() {
+    void testIterator() {
         final ListIterator<E> iter = makeObject();
         for (final String testValue : testArray) {
             final Object iterValue = iter.next();
@@ -181,7 +181,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
-    public void testReset() {
+    void testReset() {
         final ResettableListIterator<E> iter = makeObject();
         final E first = iter.next();
         final E second = iter.next();

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -98,12 +98,12 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         /**
-         * Returns the FROM Key.
+         * Gets the FROM Key.
          */
         protected abstract K getFromKey();
 
         /**
-         * Returns the TO Key.
+         * Gets the TO Key.
          */
         protected abstract K getToKey();
 
@@ -342,6 +342,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             return AbstractPatriciaTrie.this.size();
         }
     }
+
     /**
      * This is a key set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#keySet()}.
      */
@@ -384,6 +385,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             return AbstractPatriciaTrie.this.size();
         }
     }
+
     /**
      * A prefix {@link RangeEntrySet} view of the {@link org.apache.commons.collections4.Trie}.
      */
@@ -1329,24 +1331,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * than or equal to the given key, or null if there is no such key.
      */
     TrieEntry<K, V> ceilingEntry(final K key) {
-        // Basically:
-        // Follow the steps of adding an entry, but instead...
-        //
-        // - If we ever encounter a situation where we found an equal
-        //   key, we return it immediately.
-        //
-        // - If we hit an empty root, return the first iterable item.
-        //
-        // - If we have to add a new item, we temporarily add it,
-        //   find the successor to it, then remove the added item.
-        //
-        // These steps ensure that the returned value is either the
-        // entry for the key itself, or the first entry directly after
-        // the key.
-
-        // TODO: Cleanup so that we don't actually have to add/remove from the
-        //       tree.  (We do it here because there are other well-defined
-        //       functions to perform the search.)
         final int lengthInBits = lengthInBits(key);
 
         if (lengthInBits == 0) {
@@ -1357,19 +1341,31 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
-        if (compareKeys(key, found.key)) {
+        if (keysAreEqual(key, found.key)) {
             return found;
         }
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
-            addEntry(added, lengthInBits);
-            incrementSize(); // must increment because remove will decrement
-            final TrieEntry<K, V> ceil = nextEntry(added);
-            removeEntry(added);
-            modCount -= 2; // we didn't really modify it.
-            return ceil;
+            if (!isBitSet(key, bitIndex, lengthInBits)) {
+                // search key < found.key
+                // found is a ceiling candidate, walk backward to find the smallest entry still >= key
+                TrieEntry<K, V> ceiling = found;
+                TrieEntry<K, V> prev = previousEntry(found);
+                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) <= 0) {
+                    ceiling = prev;
+                    prev = previousEntry(prev);
+                }
+                return ceiling;
+            } else {
+                // search key > found.key
+                // walk forward to find the first entry.key > key
+                TrieEntry<K, V> next = nextEntry(found);
+                while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
+                    next = nextEntry(next);
+                }
+                return next;
+            }
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1414,7 +1410,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         final K key = castKey(k);
         final int lengthInBits = lengthInBits(key);
         final TrieEntry<K, V> entry = getNearestEntryForKey(key, lengthInBits);
-        return !entry.isEmpty() && compareKeys(key, entry.key);
+        return !entry.isEmpty() && keysAreEqual(key, entry.key);
     }
 
     /**
@@ -1461,9 +1457,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * less than or equal to the given key, or null if there is no such key.
      */
     TrieEntry<K, V> floorEntry(final K key) {
-        // TODO: Cleanup so that we don't actually have to add/remove from the
-        //       tree.  (We do it here because there are other well-defined
-        //       functions to perform the search.)
         final int lengthInBits = lengthInBits(key);
 
         if (lengthInBits == 0) {
@@ -1474,19 +1467,30 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
-        if (compareKeys(key, found.key)) {
+        if (keysAreEqual(key, found.key)) {
             return found;
         }
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
-            addEntry(added, lengthInBits);
-            incrementSize(); // must increment because remove will decrement
-            final TrieEntry<K, V> floor = previousEntry(added);
-            removeEntry(added);
-            modCount -= 2; // we didn't really modify it.
-            return floor;
+            if (isBitSet(key, bitIndex, lengthInBits)) {
+                TrieEntry<K, V> floor = found;
+                TrieEntry<K, V> next = nextEntry(found);
+                while (next != null && getKeyAnalyzer().compare(key, next.key) >= 0) {
+                    floor = next;
+                    next = nextEntry(next);
+                }
+                return floor;
+            } else {
+                TrieEntry<K, V> prev = previousEntry(found);
+                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
+                    prev = previousEntry(prev);
+                }
+                if (prev == null || prev.isEmpty()) {
+                    return null;
+                }
+                return prev;
+            }
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1545,7 +1549,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the entry associated with the specified key in the
+     * Gets the entry associated with the specified key in the
      * PatriciaTrieBase.  Returns null if the map contains no mapping
      * for this key.
      * <p>
@@ -1559,11 +1563,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
 
         final int lengthInBits = lengthInBits(key);
         final TrieEntry<K, V> entry = getNearestEntryForKey(key, lengthInBits);
-        return !entry.isEmpty() && compareKeys(key, entry.key) ? entry : null;
+        return !entry.isEmpty() && keysAreEqual(key, entry.key) ? entry : null;
     }
 
     /**
-     * Returns the nearest entry for a given key.  This is useful
+     * Gets the nearest entry for a given key.  This is useful
      * for finding knowing if a given key exists (and finding the value
      * for it), or for inserting the key.
      *
@@ -1589,7 +1593,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
+     * Gets a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
      * <p>
      * The view that this returns is optimized to have a very efficient
@@ -1610,17 +1614,13 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      *   key is prefixed by the search key
      */
     private SortedMap<K, V> getPrefixMapByBits(final K key, final int offsetInBits, final int lengthInBits) {
-
         final int offsetLength = offsetInBits + lengthInBits;
         if (offsetLength > lengthInBits(key)) {
-            throw new IllegalArgumentException(offsetInBits + " + "
-                    + lengthInBits + " > " + lengthInBits(key));
+            throw new IllegalArgumentException(offsetInBits + " + " + lengthInBits + " > " + lengthInBits(key));
         }
-
         if (offsetLength == 0) {
             return this;
         }
-
         return new PrefixRangeMap(key, offsetInBits, lengthInBits);
     }
 
@@ -1634,9 +1634,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * or null if no such entry exists.
      */
     TrieEntry<K, V> higherEntry(final K key) {
-        // TODO: Cleanup so that we don't actually have to add/remove from the
-        //       tree.  (We do it here because there are other well-defined
-        //       functions to perform the search.)
         final int lengthInBits = lengthInBits(key);
 
         if (lengthInBits == 0) {
@@ -1653,19 +1650,27 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
-        if (compareKeys(key, found.key)) {
+        if (keysAreEqual(key, found.key)) {
             return nextEntry(found);
         }
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
-            addEntry(added, lengthInBits);
-            incrementSize(); // must increment because remove will decrement
-            final TrieEntry<K, V> ceil = nextEntry(added);
-            removeEntry(added);
-            modCount -= 2; // we didn't really modify it.
-            return ceil;
+            if (!isBitSet(key, bitIndex, lengthInBits)) {
+                TrieEntry<K, V> ceiling = found;
+                TrieEntry<K, V> prev = previousEntry(found);
+                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) <= 0) {
+                    ceiling = prev;
+                    prev = previousEntry(prev);
+                }
+                return ceiling;
+            } else {
+                TrieEntry<K, V> next = nextEntry(found);
+                while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
+                    next = nextEntry(next);
+                }
+                return next;
+            }
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1731,23 +1736,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * strictly less than the given key, or null if there is no such key.
      */
     TrieEntry<K, V> lowerEntry(final K key) {
-        // Basically:
-        // Follow the steps of adding an entry, but instead...
-        //
-        // - If we ever encounter a situation where we found an equal
-        //   key, we return it's previousEntry immediately.
-        //
-        // - If we hit root (empty or not), return null.
-        //
-        // - If we have to add a new item, we temporarily add it,
-        //   find the previousEntry to it, then remove the added item.
-        //
-        // These steps ensure that the returned value is always just before
-        // the key or null (if there was nothing before it).
-
-        // TODO: Cleanup so that we don't actually have to add/remove from the
-        //       tree.  (We do it here because there are other well-defined
-        //       functions to perform the search.)
         final int lengthInBits = lengthInBits(key);
 
         if (lengthInBits == 0) {
@@ -1755,19 +1743,30 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
-        if (compareKeys(key, found.key)) {
+        if (keysAreEqual(key, found.key)) {
             return previousEntry(found);
         }
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
-            addEntry(added, lengthInBits);
-            incrementSize(); // must increment because remove will decrement
-            final TrieEntry<K, V> prior = previousEntry(added);
-            removeEntry(added);
-            modCount -= 2; // we didn't really modify it.
-            return prior;
+            if (isBitSet(key, bitIndex, lengthInBits)) {
+                TrieEntry<K, V> floor = found;
+                TrieEntry<K, V> next = nextEntry(found);
+                while (next != null && getKeyAnalyzer().compare(key, next.key) >= 0) {
+                    floor = next;
+                    next = nextEntry(next);
+                }
+                return floor;
+            } else {
+                TrieEntry<K, V> prev = previousEntry(found);
+                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
+                    prev = previousEntry(prev);
+                }
+                if (prev == null || prev.isEmpty()) {
+                    return null;
+                }
+                return prev;
+            }
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             return null;
@@ -2030,7 +2029,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
-        if (compareKeys(key, found.key)) {
+        if (keysAreEqual(key, found.key)) {
             if (found.isEmpty()) { // <- must be the root
                 incrementSize();
             } else {
@@ -2106,7 +2105,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         TrieEntry<K, V> path = root;
         while (true) {
             if (current.bitIndex <= path.bitIndex) {
-                if (!current.isEmpty() && compareKeys(key, current.key)) {
+                if (!current.isEmpty() && keysAreEqual(key, current.key)) {
                     return removeEntry(current);
                 }
                 return null;
@@ -2263,9 +2262,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
@@ -2292,9 +2291,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
@@ -2344,9 +2343,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * For example, given the keys:
      *
      * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
+     * <li>D = 1000100</li>
+     * <li>H = 1001000</li>
+     * <li>L = 1001100</li>
      * </ol>
      *
      * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would

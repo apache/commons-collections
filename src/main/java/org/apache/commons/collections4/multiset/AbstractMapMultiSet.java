@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,6 +64,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param decorated  the iterator to decorate
          * @param parent  the parent multiset
          */
@@ -95,6 +96,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             canRemove = false;
         }
     }
+
     /**
      * Inner class iterator for the MultiSet.
      */
@@ -174,6 +176,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param parentEntry  the entry to decorate
          */
         protected MultiSetEntry(final Map.Entry<E, MutableInteger> parentEntry) {
@@ -195,11 +198,13 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * Mutable integer class for storing the data.
      */
     protected static class MutableInteger {
+
         /** The value of this mutable. */
         protected int value;
 
         /**
          * Constructs a new instance.
+         *
          * @param value the initial value
          */
         MutableInteger(final int value) {
@@ -238,6 +243,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent multiset
          */
@@ -345,7 +351,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Read the multiset in using a custom routine.
+     * Reads the multiset in using a custom routine.
+     *
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
@@ -365,7 +372,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Write the multiset out using a custom routine.
+     * Writes the multiset out using a custom routine.
+     *
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
@@ -399,7 +407,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Returns the number of occurrence of the given element in this multiset by
+     * Gets the number of occurrence of the given element in this multiset by
      * looking up its count in the underlying map.
      *
      * @param object the object to search for
@@ -415,7 +423,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Utility method for implementations to access the map that backs this multiset.
+     * Gets the map that backs this multiset.
      * Not intended for interactive use outside of subclasses.
      *
      * @return the map being used by the MultiSet

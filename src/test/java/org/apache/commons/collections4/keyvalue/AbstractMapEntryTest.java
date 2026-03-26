@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -73,7 +73,7 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testAccessorsAndMutators() {
+    void testAccessorsAndMutators() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
 
         assertSame(key, entry.getKey());
@@ -96,7 +96,7 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         // 1. test with object data
         Map.Entry<K, V> e1 = makeMapEntry((K) key, (V) value);
         Map.Entry<K, V> e2 = makeKnownMapEntry((K) key, (V) value);
@@ -124,7 +124,7 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSelfReferenceHandling() {
+    void testSelfReferenceHandling() {
         // test that #setValue does not permit
         //  the MapEntry to contain itself (and thus cause infinite recursion
         //  in #hashCode and #toString)
@@ -139,7 +139,7 @@ public abstract class AbstractMapEntryTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testToString() {
+    void testToString() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
         assertEquals(entry.toString(), entry.getKey() + "=" + entry.getValue());
 

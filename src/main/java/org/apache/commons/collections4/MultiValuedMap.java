@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -126,7 +126,7 @@ public interface MultiValuedMap<K, V> {
     // Modification operations
 
     /**
-     * Returns a view collection of the values associated with the specified key.
+     * Gets a view collection of the values associated with the specified key.
      * <p>
      * This method will return an <strong>empty</strong> collection if {@link #containsKey(Object)}
      * returns {@code false}. Changes to the returned collection will update the underlying
@@ -139,6 +139,18 @@ public interface MultiValuedMap<K, V> {
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
     Collection<V> get(K key);
+
+    /**
+     * Returns a new MultiValuedMap with inverted mappings.
+     * The new multimap will have a value-to-key mapping
+     * for each key-to-value mapping in the original.
+     *
+     * @return a new MultiValuedMap with inverted mappings
+     * @since 4.6.0
+     */
+    default MultiValuedMap<V, K> inverted() {
+        throw new UnsupportedOperationException(getClass() + ".inverted()");
+    }
 
     /**
      * Returns {@code true} if this map contains no key-value mappings.

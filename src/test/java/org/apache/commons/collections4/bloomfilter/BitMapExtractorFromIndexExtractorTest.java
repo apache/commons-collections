@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
+class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtractorTest {
 
     @Override
     protected BitMapExtractor createEmptyExtractor() {
@@ -39,7 +39,7 @@ public class BitMapExtractorFromIndexExtractorTest extends AbstractBitMapExtract
     }
 
     @Test
-    public final void testFromIndexExtractor() {
+    final void testFromIndexExtractor() {
         final List<Long> lst = new ArrayList<>();
         createExtractor().processBitMaps(lst::add);
         final long[] buckets = lst.stream().mapToLong(Long::longValue).toArray();

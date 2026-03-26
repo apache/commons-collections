@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,7 +35,7 @@ import org.apache.commons.collections4.bloomfilter.LayerManager.Cleanup;
 import org.apache.commons.collections4.bloomfilter.LayerManager.ExtendCheck;
 import org.junit.jupiter.api.Test;
 
-public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
+class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<?>> {
 
     /**
      * A Predicate that advances after a quantum of time.
@@ -221,7 +221,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
 
     @Override
     @Test
-    public void testCardinalityAndIsEmpty() {
+    void testCardinalityAndIsEmpty() {
         final LayerManager<SimpleBloomFilter> layerManager = LayerManager.<SimpleBloomFilter>builder().setExtendCheck(ExtendCheck.neverAdvance())
                 .setSupplier(() -> new SimpleBloomFilter(getTestShape())).get();
         testCardinalityAndIsEmpty(new LayeredBloomFilter<>(getTestShape(), layerManager));
@@ -230,7 +230,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     // ***** TESTS THAT CHECK LAYERED PROCESSING ******
 
     @Test
-    public void testCleanup() {
+    void testCleanup() {
         final int[] sequence = {1};
         final LayerManager<NumberedBloomFilter> layerManager = LayerManager.<NumberedBloomFilter>builder()
                 .setSupplier(() -> new NumberedBloomFilter(getTestShape(), 3, sequence[0]++))
@@ -260,11 +260,12 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
         f = underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.
     }
+
     /**
      * Tests that the estimated union calculations are correct.
      */
     @Test
-    public final void testEstimateUnionCrossTypes() {
+    final void testEstimateUnionCrossTypes() {
         final BloomFilter bf = createFilter(getTestShape(), TestingHashers.FROM1);
         final BloomFilter bf2 = new DefaultBloomFilterTest.SparseDefaultBloomFilter(getTestShape());
         bf2.merge(TestingHashers.FROM11);
@@ -274,7 +275,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testExpiration() throws InterruptedException {
+    void testExpiration() throws InterruptedException {
         // this test uses the instrumentation noted above to track changes for debugging
         // purposes.
 
@@ -316,7 +317,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testFindBitMapExtractor() {
+    void testFindBitMapExtractor() {
         final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
 
         IndexExtractor indexExtractor = TestingHashers.FROM1.indices(getTestShape());
@@ -334,7 +335,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testFindBloomFilter() {
+    void testFindBloomFilter() {
         final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
         int[] expected = {0, 3};
         int[] result = filter.find(TestingHashers.FROM1);
@@ -345,7 +346,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testFindIndexExtractor() {
+    void testFindIndexExtractor() {
         IndexExtractor indexExtractor = TestingHashers.FROM1.indices(getTestShape());
         final LayeredBloomFilter<SimpleBloomFilter> filter = setupFindTest();
 
@@ -360,7 +361,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public final void testGetLayer() {
+    final void testGetLayer() {
         final BloomFilter bf = new SimpleBloomFilter(getTestShape());
         bf.merge(TestingHashers.FROM11);
         final LayeredBloomFilter<SimpleBloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
@@ -372,7 +373,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public void testMultipleFilters() {
+    void testMultipleFilters() {
         final LayeredBloomFilter<SimpleBloomFilter> filter = LayeredBloomFilterTest.fixed(getTestShape(), 10);
         filter.merge(TestingHashers.FROM1);
         filter.merge(TestingHashers.FROM11);
@@ -386,7 +387,7 @@ public class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloom
     }
 
     @Test
-    public final void testNext() {
+    final void testNext() {
         final LayerManager<SimpleBloomFilter> layerManager = LayerManager.<SimpleBloomFilter>builder().setSupplier(() -> new SimpleBloomFilter(getTestShape())).get();
         final LayeredBloomFilter<SimpleBloomFilter> filter = new LayeredBloomFilter<>(getTestShape(), layerManager);
         filter.merge(TestingHashers.FROM1);

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,13 +60,16 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
     /** The underlying iterator being decorated. */
     private final Iterator<? extends E> iterator;
+
     /** The list being used to cache the iterator. */
     private final List<E> list = new ArrayList<>();
 
     /** The current index of this iterator. */
     private int currentIndex;
+
     /** The current index of the wrapped iterator. */
     private int wrappedIteratorIndex;
+
     /** Recall whether the wrapped iterator's "cursor" is in such a state as to allow remove() to be called */
     private boolean removeState;
 
