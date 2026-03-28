@@ -1763,6 +1763,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V remove(final Object key) {
+        Objects.requireNonNull(key, "key");
         final int hash = hashOf(key);
         return segmentFor(hash).remove(key, hash, null, false);
     }
@@ -1774,6 +1775,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public boolean remove(final Object key, final Object value) {
+        Objects.requireNonNull(key, "key");
         final int hash = hashOf(key);
         if (value == null) {
             return false;
@@ -1789,6 +1791,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V replace(final K key, final V value) {
+        Objects.requireNonNull(key, "key");
         Objects.requireNonNull(value, "value");
         final int hash = hashOf(key);
         return segmentFor(hash).replace(key, hash, value);
@@ -1801,6 +1804,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public boolean replace(final K key, final V oldValue, final V newValue) {
+        Objects.requireNonNull(key, "key");
         Objects.requireNonNull(oldValue, "oldValue");
         Objects.requireNonNull(newValue, "newValue");
         final int hash = hashOf(key);
