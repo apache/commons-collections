@@ -186,7 +186,6 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param set  the set to add
      * @throws IllegalArgumentException if a SetMutator is set, but fails to resolve a collision
      * @throws UnsupportedOperationException if there is no SetMutator set
-     * @throws NullPointerException if {@code set} is null
      * @see SetMutator
      */
     public synchronized void addComposited(final Set<E> set) {
