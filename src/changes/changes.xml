@@ -43,6 +43,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix Apache RAT plugin console warnings.</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory, Sebb">Add MultiValuedMap.inverted() #665.</action>
     <action type="fix" dev="ggregory" due-to="John Griffin, Gary Gregory" issue="COLLECTIONS-885">PatriciaTrie submap and range view operations silently mutate trie structure resulting in ConcurrentModificationException for any iterating threads #672.</action>
+    <action type="fix" dev="ggregory" due-to="Partha Protim Paul" issue="COLLECTIONS-886">[javadoc] CompositeSet.addComposited(Set) does not throw NullPointerException when null is passed #675.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
