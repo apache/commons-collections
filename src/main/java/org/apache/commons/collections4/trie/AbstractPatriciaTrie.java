@@ -1432,10 +1432,13 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Returns the first entry the {@link org.apache.commons.collections4.Trie} is storing.
      * <p>
-     * This is implemented by going always to the left until
-     * we encounter a valid uplink. That uplink is the first key.
+     * This is implemented by going always to the left until we encounter a valid uplink. That uplink is the first key.
+     * </p>
+     *
+     * @return the first entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * @since 4.6.0
      */
-    TrieEntry<K, V> firstEntry() {
+    public TrieEntry<K, V> firstEntry() {
         // if Trie is empty, no first node.
         if (isEmpty()) {
             return null;
@@ -1715,10 +1718,14 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Returns the last entry the {@link org.apache.commons.collections4.Trie} is storing.
      *
-     * <p>This is implemented by going always to the right until
-     * we encounter a valid uplink. That uplink is the last key.
+     * <p>
+     * This is implemented by going always to the right until we encounter a valid uplink. That uplink is the last key.
+     * </p>
+     *
+     * @return the last entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * @since 4.6.0
      */
-    TrieEntry<K, V> lastEntry() {
+    public TrieEntry<K, V> lastEntry() {
         return followRight(root.left);
     }
 
