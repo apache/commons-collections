@@ -66,7 +66,7 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
  * @since 3.2
- * @deprecated since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
+ * @deprecated Since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
  */
 @Deprecated
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {
@@ -135,6 +135,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             return totalSize();
         }
     }
+
     /**
      * Inner class that provides the values iterator.
      */
@@ -471,9 +472,9 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * correctly handled.
      * <p>
      * If you call this method with a normal map, each entry is
-     * added using {@code put(Object,Object)}.
+     * added using {@code put(Object, Object)}.
      * If you call this method with a multi map, each entry is
-     * added using {@code putAll(Object,Collection)}.
+     * added using {@code putAll(Object, Collection)}.
      * </p>
      *
      * @param map  the map to copy (either a normal or multi map)

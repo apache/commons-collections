@@ -30,6 +30,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
 
     /** The key */
     private K key;
+
     /** The value */
     private V value;
 

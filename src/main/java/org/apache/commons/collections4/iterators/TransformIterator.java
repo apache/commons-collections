@@ -31,6 +31,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
 
     /** The iterator being used */
     private Iterator<? extends I> iterator;
+
     /** The transformer being used */
     private Transformer<? super I, ? extends O> transformer;
 

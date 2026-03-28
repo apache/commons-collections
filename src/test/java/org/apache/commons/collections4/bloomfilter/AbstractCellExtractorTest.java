@@ -34,6 +34,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
      * A testing CellConsumer that always returns true.
      */
     private static final CellPredicate TRUE_CONSUMER = (i, j) -> true;
+
     /**
      * A testing CellConsumer that always returns false.
      */

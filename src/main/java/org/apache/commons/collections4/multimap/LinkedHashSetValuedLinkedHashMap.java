@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
@@ -115,6 +116,11 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
     @Override
     protected LinkedHashSet<V> createCollection() {
         return new LinkedHashSet<>(initialSetCapacity);
+    }
+
+    @Override
+    public LinkedHashSetValuedLinkedHashMap<V, K> inverted() {
+        return MultiMapUtils.invert(this, new LinkedHashSetValuedLinkedHashMap<V, K>());
     }
 
     /**

@@ -74,7 +74,6 @@ public abstract class AbstractObjectTest extends BulkTest {
         return retval.toString();
     }
 
-    // protected implementation
     /**
      * Gets the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to

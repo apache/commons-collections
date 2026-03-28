@@ -79,6 +79,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public Collection<E> makeConfirmedFullCollection() {
         return new HashSet<>(Arrays.asList(getFullElements()));
     }
+
     /**
      * Full collection consists of 4 collections, each with one element
      */
@@ -93,6 +94,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         }
         return compositeCollection;
     }
+
     /**
      * Empty collection is empty composite
      */
@@ -101,7 +103,6 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         return new CompositeCollection<>();
     }
 
-    @SuppressWarnings("serial")
     protected void setUpMutatorTest() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -143,7 +144,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    @SuppressWarnings({ "unchecked", "serial" })
+    @SuppressWarnings({ "unchecked" })
     void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -194,7 +195,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     @Test
-    @SuppressWarnings({ "unchecked", "serial" })
+    @SuppressWarnings({ "unchecked" })
     void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {

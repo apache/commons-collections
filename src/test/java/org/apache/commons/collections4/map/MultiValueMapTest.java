@@ -100,11 +100,9 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     private byte[] serialize(final Object object) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-        oos.writeObject(object);
-        oos.close();
-
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+        }
         return baos.toByteArray();
     }
 
@@ -316,7 +314,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @Test
     @SuppressWarnings("unchecked")
     void testPutWithList() {
-        @SuppressWarnings("rawtypes")
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<>(), ArrayList.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
@@ -328,7 +325,6 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @Test
     @SuppressWarnings("unchecked")
     void testPutWithSet() {
-        @SuppressWarnings("rawtypes")
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<>(), HashSet.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));

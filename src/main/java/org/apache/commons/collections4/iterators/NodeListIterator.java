@@ -37,6 +37,7 @@ public class NodeListIterator implements Iterator<Node> {
 
     /** The original NodeList instance */
     private final NodeList nodeList;
+
     /** The current iterator index */
     private int index;
 

@@ -47,6 +47,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractMapDecorator() {

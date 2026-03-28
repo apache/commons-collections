@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.apache.commons.collections4.MultiMapUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
@@ -115,6 +116,11 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
     @Override
     protected HashSet<V> createCollection() {
         return new HashSet<>(initialSetCapacity);
+    }
+
+    @Override
+    public HashSetValuedHashMap<V, K> inverted() {
+        return MultiMapUtils.invert(this, new HashSetValuedHashMap<V, K>());
     }
 
     /**

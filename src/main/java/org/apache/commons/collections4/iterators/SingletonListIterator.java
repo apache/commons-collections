@@ -140,6 +140,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Remove the object from this iterator.
+     *
      * @throws IllegalStateException if the {@code next} or {@code previous}
      *        method has not yet been called, or the {@code remove} method
      *        has already been called after the last call to {@code next}

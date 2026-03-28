@@ -62,7 +62,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> {
 
-    public class TestMultiSetUniqueSet extends AbstractSetTest<T> {
+    public class MultiSetUniqueSetTest extends AbstractSetTest<T> {
 
         @Override
         public T[] getFullElements() {
@@ -112,15 +112,15 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         @Override
         public void resetEmpty() {
             AbstractMultiSetTest.this.resetEmpty();
-            TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
+            MultiSetUniqueSetTest.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
+            MultiSetUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override
         public void resetFull() {
             AbstractMultiSetTest.this.resetFull();
-            TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
+            MultiSetUniqueSetTest.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
+            MultiSetUniqueSetTest.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override
@@ -138,7 +138,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * @return a {@link AbstractSetTest} instance for testing the multiset's unique set
      */
     public BulkTest bulkTestMultiSetUniqueSet() {
-        return new TestMultiSetUniqueSet();
+        return new MultiSetUniqueSetTest();
     }
 
     /**

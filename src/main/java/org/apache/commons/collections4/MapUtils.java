@@ -60,19 +60,19 @@ import org.apache.commons.collections4.map.UnmodifiableSortedMap;
  * </p>
  *
  * <ul>
- * <li>{@link #fixedSizeMap(Map)}
- * <li>{@link #fixedSizeSortedMap(SortedMap)}
- * <li>{@link #lazyMap(Map,Factory)}
- * <li>{@link #lazyMap(Map,Transformer)}
- * <li>{@link #lazySortedMap(SortedMap,Factory)}
- * <li>{@link #lazySortedMap(SortedMap,Transformer)}
- * <li>{@link #predicatedMap(Map,Predicate,Predicate)}
- * <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
- * <li>{@link #transformedMap(Map, Transformer, Transformer)}
- * <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}
- * <li>{@link #multiValueMap(Map)}
- * <li>{@link #multiValueMap(Map, Class)}
- * <li>{@link #multiValueMap(Map, Factory)}
+ * <li>{@link #fixedSizeMap(Map)}</li>
+ * <li>{@link #fixedSizeSortedMap(SortedMap)}</li>
+ * <li>{@link #lazyMap(Map,Factory)}</li>
+ * <li>{@link #lazyMap(Map,Transformer)}</li>
+ * <li>{@link #lazySortedMap(SortedMap,Factory)}</li>
+ * <li>{@link #lazySortedMap(SortedMap,Transformer)}</li>
+ * <li>{@link #predicatedMap(Map,Predicate,Predicate)}</li>
+ * <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}</li>
+ * <li>{@link #transformedMap(Map, Transformer, Transformer)}</li>
+ * <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}</li>
+ * <li>{@link #multiValueMap(Map)}</li>
+ * <li>{@link #multiValueMap(Map, Class)}</li>
+ * <li>{@link #multiValueMap(Map, Factory)}</li>
  * </ul>
  *
  * @since 1.0
@@ -1417,7 +1417,7 @@ public class MapUtils {
      * @return a multi-value map backed by the given map which returns ArrayLists of values.
      * @see MultiValueMap
      * @since 3.2
-     * @deprecated since 4.1, use {@link MultiValuedMap} instead
+     * @deprecated Since 4.1, use {@link MultiValuedMap} instead
      */
     @Deprecated
     public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
@@ -1436,7 +1436,7 @@ public class MapUtils {
      * @return a multi-value map backed by the given map which returns collections of the specified type
      * @see MultiValueMap
      * @since 3.2
-     * @deprecated since 4.1, use {@link MultiValuedMap} instead
+     * @deprecated Since 4.1, use {@link MultiValuedMap} instead
      */
     @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
@@ -1457,7 +1457,7 @@ public class MapUtils {
      *         factory
      * @see MultiValueMap
      * @since 3.2
-     * @deprecated since 4.1, use {@link MultiValuedMap} instead
+     * @deprecated Since 4.1, use {@link MultiValuedMap} instead
      */
     @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,

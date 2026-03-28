@@ -260,6 +260,7 @@ class LayeredBloomFilterTest extends AbstractBloomFilterTest<LayeredBloomFilter<
         f = underTest.get(0);
         assertEquals(3, f.sequence);  // it is a new one.
     }
+
     /**
      * Tests that the estimated union calculations are correct.
      */

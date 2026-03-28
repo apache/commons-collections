@@ -58,6 +58,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
         return new SynchronizedCollection<>(coll);
     }
+
     /** The collection to decorate */
     private final Collection<E> collection;
 

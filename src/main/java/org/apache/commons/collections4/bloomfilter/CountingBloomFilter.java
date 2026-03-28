@@ -234,6 +234,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * to a CellExtractor and add that.</li>
      * <li>Implementations should throw {@code IllegalArgumentException} and no other exception on bad input.</li>
      * </ul>
+     *
      * @param indexExtractor the IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
@@ -348,6 +349,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
 
     /**
      * The default implementation is a no-op since the counting bloom filter returns an unique IndexExtractor by default.
+     *
      * @return this counting Bloom filter.
      */
     @Override

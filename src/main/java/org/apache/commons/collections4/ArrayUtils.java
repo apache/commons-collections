@@ -46,7 +46,7 @@ final class ArrayUtils {
      *
      * @param array        the array to search, may be {@code null}.
      * @param objectToFind the object to find, may be {@code null}.
-     * @return {@code true} if the array contains the object
+     * @return {@code true} if the array contains the object.
      */
     static boolean contains(final Object[] array, final Object objectToFind) {
         return indexOf(array, objectToFind) != CollectionUtils.INDEX_NOT_FOUND;
@@ -65,9 +65,9 @@ final class ArrayUtils {
      *
      * @param array        the array to search for the object, may be {@code null}.
      * @param objectToFind the object to find, may be {@code null}.
-     * @param startIndex   the index to start searching at
+     * @param startIndex   the index to start searching.
      * @return the index of the object within the array starting at the index, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
-     *         array input
+     *         array input.
      */
     static int indexOf(final Object[] array, final Object objectToFind, int startIndex) {
         if (array == null) {
@@ -102,7 +102,7 @@ final class ArrayUtils {
      *
      * @param array        the array to search for the object, may be {@code null}.
      * @param objectToFind the object to find, may be {@code null}.
-     * @return the index of the object within the array, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
+     * @return the index of the object within the array, {@link CollectionUtils#INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input.
      */
     static <T> int indexOf(final T[] array, final Object objectToFind) {
         return indexOf(array, objectToFind, 0);

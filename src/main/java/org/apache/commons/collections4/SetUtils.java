@@ -81,6 +81,7 @@ public class SetUtils {
         /**
          * Return an iterator for this view; the returned iterator is
          * not required to be unmodifiable.
+         *
          * @return a new iterator for this view
          */
         protected abstract Iterator<E> createIterator();
@@ -479,7 +480,6 @@ public class SetUtils {
         return Collections.synchronizedSet(set);
     }
 
-    // SortedSet
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>
@@ -644,6 +644,7 @@ public class SetUtils {
     /**
      * Creates an unmodifiable set from the given items. If the passed var-args argument is {@code
      * null}, then the method returns {@code null}.
+     *
      * @param <E> the element type
      * @param items the elements that make up the new set
      * @return a set

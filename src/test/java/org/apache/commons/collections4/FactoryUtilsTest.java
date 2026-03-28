@@ -27,11 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
 import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.DefaultTimeZone;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
@@ -65,6 +65,7 @@ public class FactoryUtilsTest {
     }
 
     public static class Mock2 implements Serializable {
+
         /**
          * Generated serial version ID.
          */
@@ -129,8 +130,8 @@ public class FactoryUtilsTest {
     }
 
     @Test
+    @DefaultTimeZone("GMT")
     void testInstantiateFactoryComplex() {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
         final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},

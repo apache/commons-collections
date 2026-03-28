@@ -40,11 +40,13 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
      * @param <T> the type held in this Set.
      */
     static class SynchronizedSet<T> extends SynchronizedCollection<T> implements Set<T> {
+
         /** Serialization version */
         private static final long serialVersionUID = 20150629L;
 
         /**
          * Constructs a new instance.
+         *
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the multiset
          */

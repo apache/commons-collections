@@ -72,6 +72,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
         }
         return new SwitchClosure<>(false, preds, closures, defaultClosure);
     }
+
     /**
      * Factory method that performs validation and copies the parameter arrays.
      *
@@ -98,6 +99,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
         }
         return new SwitchClosure<>(predicates, closures, defaultClosure);
     }
+
     /** The tests to consider */
     private final Predicate<? super T>[] iPredicates;
 

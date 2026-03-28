@@ -25,6 +25,7 @@ import java.util.Map;
  * class also has to be serialized.
  */
 final class EmptyMapMutator<K, V> implements CompositeMap.MapMutator<K, V> {
+
     /** Serialization version */
     private static final long serialVersionUID = -2729718980002476794L;
 

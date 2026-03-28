@@ -23,18 +23,18 @@
  * The following implementations are provided in the package:
  * </p>
  * <ul>
- *   <li>HashBag - implementation that uses a HashMap to store the data
- *   <li>TreeBag - implementation that uses a TreeMap to store the data
+ *   <li>HashBag - implementation that uses a HashMap to store the data</li>
+ *   <li>TreeBag - implementation that uses a TreeMap to store the data</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
  * </p>
  * <ul>
- *   <li>Synchronized - synchronizes method access for multithreaded environments
- *   <li>Unmodifiable - ensures the bag cannot be altered
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms each element added to the bag
- *   <li>Collection - ensures compliance with the java.util.Collection contract
+ *   <li>Synchronized - synchronizes method access for multithreaded environments</li>
+ *   <li>Unmodifiable - ensures the bag cannot be altered</li>
+ *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Transformed - transforms each element added to the bag</li>
+ *   <li>Collection - ensures compliance with the java.util.Collection contract</li>
  * </ul>
  */
 package org.apache.commons.collections4.bag;

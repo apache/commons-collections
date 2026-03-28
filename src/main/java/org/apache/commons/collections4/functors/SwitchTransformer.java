@@ -81,6 +81,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         }
         return new SwitchTransformer<>(false, preds, transformers, defaultTransformer);
     }
+
     /**
      * Factory method that performs validation and copies the parameter arrays.
      *
@@ -109,6 +110,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         }
         return new SwitchTransformer<>(predicates, transformers, defaultTransformer);
     }
+
     /** The tests to consider */
     private final Predicate<? super T>[] iPredicates;
 

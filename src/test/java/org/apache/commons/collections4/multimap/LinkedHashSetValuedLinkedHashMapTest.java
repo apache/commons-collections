@@ -97,6 +97,19 @@ public class LinkedHashSetValuedLinkedHashMapTest<K, V> extends AbstractMultiVal
     }
 
     @Test
+    void testInverted() {
+        final LinkedHashSetValuedLinkedHashMap<String, String> citiesLived = new LinkedHashSetValuedLinkedHashMap<>(4);
+        citiesLived.put("Alice", "N.Y.");
+        citiesLived.put("Alice", "L.A.");
+        citiesLived.put("Alice", "Chicago");
+        citiesLived.put("Bob", "N.Y.");
+        citiesLived.put("Cara", "L.A.");
+        citiesLived.put("Cara", "Chicago");
+        assertEquals("{N.Y.=[Alice, Bob], L.A.=[Alice, Cara], Chicago=[Alice, Cara]}",
+                citiesLived.inverted().toString());
+    }
+
+    @Test
     void testLinkedHashSetValuedLinkedHashMap_2() {
         final Map<K, V> map = new HashMap<>();
         final SetValuedMap<K, V> map1;

@@ -84,6 +84,7 @@ public class TransformedMap<K, V>
         }
         return decorated;
     }
+
     /**
      * Factory method to create a transforming map.
      * <p>

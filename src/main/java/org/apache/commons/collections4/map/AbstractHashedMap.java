@@ -235,6 +235,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return new StringBuilder().append(getKey()).append('=').append(getValue()).toString();
         }
     }
+
     /**
      * Base Iterator.
      *

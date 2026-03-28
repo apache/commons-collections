@@ -46,7 +46,7 @@ import java.util.Collection;
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
  * @since 2.0
- * @deprecated since 4.1, use {@link MultiValuedMap} instead
+ * @deprecated Since 4.1, use {@link MultiValuedMap} instead
  */
 @Deprecated
 public interface MultiMap<K, V> extends IterableMap<K, Object> {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -155,6 +156,29 @@ public class MultiMapUtils {
             return new HashSet<>(col);
         }
         return null;
+    }
+
+    /**
+     * Inverts the mappings from an input MultiValuedMap by adding entries to an output MultiValuedMap. The input is unchanged.
+     * <p>
+     * Use this method to have complete control of the output MultiValuedMap or when merging several inverse mappings. In simple cases, consider using
+     * {@link MultiValuedMap#inverted()} method.
+     * </p>
+     *
+     * @param <K>    the input <em>value</em> type and output <em>key</em> type.
+     * @param <V>    the input <em>key</em> type and output <em>value</em> type.
+     * @param <M>    the output MultiValuedMap type where {@code K} is the <em>key</em> type and {@code V} is the <em>value</em> type.
+     * @param input  The input key-value mappings of type {@code <V, K>}.
+     * @param output The output value-key mappings of type {@code <K, V>}.
+     * @return The updated output MultiValuedMap of type {@code <K, V>}
+     * @see MultiValuedMap#inverted()
+     * @since 4.6.0
+     */
+    public static <K, V, M extends MultiValuedMap<K, V>> M invert(final MultiValuedMap<? extends V, ? extends K> input, final M output) {
+        for (final Map.Entry<? extends V, ? extends K> e : input.entries()) {
+            output.put(e.getValue(), e.getKey());
+        }
+        return output;
     }
 
     /**

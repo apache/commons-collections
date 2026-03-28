@@ -120,7 +120,7 @@ public interface BloomFilterExtractor {
      * instances, or references to the filters in the collection.</em>
      * </p>
      *
-     * @param other The other BloomFilterExtractor that provides the y values in the (x,y) pair.
+     * @param other The other BloomFilterExtractor that provides the y values in the (x, y) pair.
      * @param func  The function to apply.
      * @return {@code true} if the {@code func} returned {@code true} for every pair, {@code false} otherwise.
      */

@@ -25,19 +25,19 @@ import org.apache.commons.collections4.functors.PrototypeFactory;
  * {@code FactoryUtils} provides reference implementations and utilities
  * for the Factory functor interface. The supplied factories are:
  * <ul>
- * <li>Prototype - clones a specified object
- * <li>Instantiate - creates objects using reflection
- * <li>Constant - always returns the same object
- * <li>Null - always returns null
- * <li>Exception - always throws an exception
+ * <li>Prototype - clones a specified object</li>
+ * <li>Instantiate - creates objects using reflection</li>
+ * <li>Constant - always returns the same object</li>
+ * <li>Null - always returns null</li>
+ * <li>Exception - always throws an exception</li>
  * </ul>
  * <p>
  * Since v4.1 only factories which are considered to be safe are
  * Serializable. Factories considered to be unsafe for serialization are:
  * </p>
  * <ul>
- * <li>Prototype
- * <li>Instantiate
+ * <li>Prototype</li>
+ * <li>Instantiate</li>
  * </ul>
  *
  * @since 3.0

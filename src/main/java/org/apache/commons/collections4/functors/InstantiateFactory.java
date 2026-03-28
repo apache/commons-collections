@@ -63,10 +63,13 @@ public class InstantiateFactory<T> implements Factory<T> {
         }
         return new InstantiateFactory<>(classToInstantiate, paramTypes, args);
     }
+
     /** The class to create */
     private final Class<T> iClassToInstantiate;
+
     /** The constructor parameter types */
     private final Class<?>[] iParamTypes;
+
     /** The constructor arguments */
     private final Object[] iArgs;
 

@@ -59,6 +59,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
 
         /**
          * Create a new AbstractSortedMapDecorator.SortedMapIterator.
+         *
          * @param entrySet  the entrySet to iterate
          */
         protected SortedMapIterator(final Set<Map.Entry<K, V>> entrySet) {
@@ -94,6 +95,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractSortedMapDecorator() {

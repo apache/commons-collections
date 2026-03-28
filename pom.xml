@@ -19,24 +19,24 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>84</version>
+    <version>97</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.1-SNAPSHOT</version>
+  <version>4.6.0-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
   <inceptionYear>2001</inceptionYear>
   <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
   <url>https://commons.apache.org/proper/commons-collections/</url>
-  <issueManagement>
-    <system>jira</system>
-    <url>https://issues.apache.org/jira/browse/COLLECTIONS</url>
-  </issueManagement>
   <scm>
-    <connection>scm:git:http://gitbox.apache.org/repos/asf/commons-collections.git</connection>
+    <connection>scm:git:https://gitbox.apache.org/repos/asf/commons-collections.git</connection>
     <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/commons-collections.git</developerConnection>
     <url>https://gitbox.apache.org/repos/asf?p=commons-collections.git</url>
   </scm>
+  <ciManagement>
+    <system>GitHub</system>
+    <url>https://github.com/apache/commons-collections/actions</url>
+  </ciManagement>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -49,6 +49,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.junit-pioneer</groupId>
+      <artifactId>junit-pioneer</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
       <version>${commons.easymock.version}</version>
@@ -57,25 +62,31 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.17.0</version>
+      <version>3.20.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.19.0</version>
+      <version>2.21.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.18.0</version>
+      <version>1.21.0</version>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
-      <version>33.4.8-jre</version>
+      <version>33.5.0-jre</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>${commons.jmh.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -175,11 +186,11 @@
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>.asf.yaml</exclude>
-            <exclude>site-content/**/*</exclude>
-            <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>.asf.yaml</inputExclude>
+            <inputExclude>site-content/**/*</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/collections4/data/test/*</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <plugin>
@@ -249,35 +260,6 @@
   <reporting>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>${commons.changes.version}</version>
-        <configuration>
-          <issueLinkTemplatePerSystem>
-            <default>%URL%/%ISSUE%</default>
-          </issueLinkTemplatePerSystem>
-          <!--  Add sample JIRA report - 'mvn changes:jira-report' or 'mvn site' -->
-          <onlyCurrentVersion>false</onlyCurrentVersion>
-          <columnNames>Fix Version,Key,Summary,Type,Resolution,Status</columnNames>
-          <!-- Sort cols have to be reversed in JIRA 4 -->
-          <sortColumnNames>Key DESC,Type,Fix Version DESC</sortColumnNames>
-          <resolutionIds>Fixed</resolutionIds>
-          <statusIds>Resolved,Closed</statusIds>
-          <!-- Don't include sub-task -->
-          <typeIds>Bug,New Feature,Task,Improvement,Wish,Test</typeIds>
-          <fixVersionIds>${commons.release.version}</fixVersionIds>
-          <maxEntries>500</maxEntries>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>changes-report</report>
-              <report>jira-report</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
@@ -296,11 +278,11 @@
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
         <configuration>
-          <excludes>
-            <exclude>.asf.yaml</exclude>
-            <exclude>site-content/**/*</exclude>
-            <exclude>src/test/resources/org/apache/commons/collections4/data/test/*</exclude>
-          </excludes>
+          <inputExcludes>
+            <inputExclude>.asf.yaml</inputExclude>
+            <inputExclude>site-content/**/*</inputExclude>
+            <inputExclude>src/test/resources/org/apache/commons/collections4/data/test/*</inputExclude>
+          </inputExcludes>
         </configuration>
       </plugin>
       <plugin>
@@ -388,6 +370,70 @@
           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </pluginRepository>
       </pluginRepositories>
+    </profile>
+    <!-- Profile to build and run the benchmarks. Use 'mvn test -Pbenchmark', and add '-Dbenchmark=foo' to run only the foo benchmark -->
+    <profile>
+      <id>benchmark</id>
+      <properties>
+        <skipTests>true</skipTests>
+        <benchmark>org.apache</benchmark>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core</artifactId>
+          <version>${commons.jmh.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-annprocess</artifactId>
+          <version>${commons.jmh.version}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <!-- Enable the compilation of the benchmarks -->
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${commons.compiler.version}</version>
+            <configuration combine.self="override">
+              <testIncludes>
+                <testInclude>**/*</testInclude>
+              </testIncludes>
+            </configuration>
+          </plugin>
+          <!-- Hook the benchmarks to the test phase -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>benchmark</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <classpathScope>test</classpathScope>
+                  <executable>java</executable>
+                  <arguments>
+                    <argument>-classpath</argument>
+                    <classpath />
+                    <argument>org.openjdk.jmh.Main</argument>
+                    <argument>-rf</argument>
+                    <argument>json</argument>
+                    <argument>-rff</argument>
+                    <argument>target/jmh-result.json</argument>
+                    <argument>${benchmark}</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
   <developers>

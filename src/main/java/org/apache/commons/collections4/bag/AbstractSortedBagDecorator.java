@@ -37,6 +37,7 @@ public abstract class AbstractSortedBagDecorator<E>
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
+     *
      * @since 3.1
      */
     protected AbstractSortedBagDecorator() {

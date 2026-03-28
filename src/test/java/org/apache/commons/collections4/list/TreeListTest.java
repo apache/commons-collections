@@ -19,6 +19,7 @@ package org.apache.commons.collections4.list;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,16 +203,6 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals(0, l.indexOf("3"));
     }
 
-//    void testCheck() {
-//        List l = makeEmptyList();
-//        l.add("A1");
-//        l.add("A2");
-//        l.add("A3");
-//        l.add("A4");
-//        l.add("A5");
-//        l.add("A6");
-//    }
-
     @Test
     @SuppressWarnings("unchecked")
     void testInsertBefore() {
@@ -221,6 +212,16 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("hugo", l.get(0));
         assertEquals("erna", l.get(1));
     }
+
+//    void testCheck() {
+//        List l = makeEmptyList();
+//        l.add("A1");
+//        l.add("A2");
+//        l.add("A3");
+//        l.add("A4");
+//        l.add("A5");
+//        l.add("A6");
+//    }
 
     @Test
     @SuppressWarnings("boxing") // OK in test code
@@ -324,6 +325,17 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("hugo", l.get(i++));
         assertEquals("daniel", l.get(i++));
         assertEquals("harald", l.get(i++));
+    }
+
+    @Test
+    void testTreeListIteratorConstruction() throws Throwable {
+        final TreeList<String> treeList = new TreeList<>();
+        treeList.add("a");
+        treeList.add("b");
+        assertThrows(IndexOutOfBoundsException.class, () -> treeList.listIterator(3).previous());
+        assertThrows(IndexOutOfBoundsException.class, () -> new TreeList.TreeListIterator<String>(treeList, 3));
+        // Test doesn't get to previous()
+        assertThrows(IndexOutOfBoundsException.class, () -> new TreeList.TreeListIterator<String>(treeList, 3).previous());
     }
 
 }

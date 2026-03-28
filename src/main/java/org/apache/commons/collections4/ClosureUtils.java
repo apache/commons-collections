@@ -35,25 +35,25 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * {@code ClosureUtils} provides reference implementations and utilities
  * for the Closure functor interface. The supplied closures are:
  * <ul>
- * <li>Invoker - invokes a method on the input object
- * <li>For - repeatedly calls a closure for a fixed number of times
- * <li>While - repeatedly calls a closure while a predicate is true
- * <li>Chained - chains two or more closures together
- * <li>If - calls one closure or another based on a predicate
- * <li>Switch - calls one closure based on one or more predicates
- * <li>SwitchMap - calls one closure looked up from a Map
- * <li>Transformer - wraps a Transformer as a Closure
- * <li>NOP - does nothing
- * <li>Exception - always throws an exception
+ * <li>Invoker - invokes a method on the input object</li>
+ * <li>For - repeatedly calls a closure for a fixed number of times</li>
+ * <li>While - repeatedly calls a closure while a predicate is true</li>
+ * <li>Chained - chains two or more closures together</li>
+ * <li>If - calls one closure or another based on a predicate</li>
+ * <li>Switch - calls one closure based on one or more predicates</li>
+ * <li>SwitchMap - calls one closure looked up from a Map</li>
+ * <li>Transformer - wraps a Transformer as a Closure</li>
+ * <li>NOP - does nothing</li>
+ * <li>Exception - always throws an exception</li>
  * </ul>
  * <p>
  * Since v4.1 only closures which are considered to be safe are
  * Serializable. Closures considered to be unsafe for serialization are:
  * </p>
  * <ul>
- * <li>Invoker
- * <li>For
- * <li>While
+ * <li>Invoker</li>
+ * <li>For</li>
+ * <li>While</li>
  * </ul>
  *
  * @since 3.0

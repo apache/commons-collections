@@ -140,8 +140,10 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param <V> the value type.
      */
     protected static class LinkEntry<K, V> extends HashEntry<K, V> {
+
         /** The entry before this one in the order */
         protected LinkEntry<K, V> before;
+
         /** The entry after this one in the order */
         protected LinkEntry<K, V> after;
 

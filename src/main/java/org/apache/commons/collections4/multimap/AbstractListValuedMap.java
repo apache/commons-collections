@@ -242,6 +242,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
 
     /**
      * Creates a new value collection using the provided factory.
+     *
      * @return a new list
      */
     @Override

@@ -19,3 +19,7 @@ site-content
 
 # Mac files
 .DS_Store
+
+# NetBeans files
+nb-configuration.xml
+nbactions.xml

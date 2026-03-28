@@ -19,15 +19,17 @@
  * Implements the {@link java.util.Queue Queue} interface.
  * <p>
  * The following implementations are provided in the package:
+ * </p>
  * <ul>
- *   <li>CircularFifoQueue - implements a queue with a fixed size that discards oldest when full
+ *   <li>CircularFifoQueue - implements a queue with a fixed size that discards oldest when full</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
+ * </p>
  * <ul>
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms elements added to the queue
- *   <li>Unmodifiable - ensures the collection cannot be altered
+ *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
+ *   <li>Transformed - transforms elements added to the queue</li>
+ *   <li>Unmodifiable - ensures the collection cannot be altered</li>
  * </ul>
  */
 package org.apache.commons.collections4.queue;

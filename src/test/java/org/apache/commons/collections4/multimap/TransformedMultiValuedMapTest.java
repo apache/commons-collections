@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
@@ -97,6 +98,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         transMap.put((K) "D", (V) "4");
         assertEquals(1, transMap.size());
         assertTrue(transMap.get((K) "D").contains(Integer.valueOf(4)));
+    }
+
+    @Test
+    void testInvertedIsUnsupportedByDefault() {
+        assertThrows(UnsupportedOperationException.class, () -> makeObject().inverted());
     }
 
     @Test

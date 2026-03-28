@@ -40,31 +40,31 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * {@code TransformerUtils} provides reference implementations and
  * utilities for the Transformer functor interface. The supplied transformers are:
  * <ul>
- * <li>Invoker - returns the result of a method call on the input object
- * <li>Clone - returns a clone of the input object
- * <li>Constant - always returns the same object
- * <li>Closure - performs a Closure and returns the input object
- * <li>Predicate - returns the result of the predicate as a Boolean
- * <li>Factory - returns a new object from a factory
- * <li>Chained - chains two or more transformers together
- * <li>If - calls one transformer or another based on a predicate
- * <li>Switch - calls one transformer based on one or more predicates
- * <li>SwitchMap - calls one transformer looked up from a Map
- * <li>Instantiate - the Class input object is instantiated
- * <li>Map - returns an object from a supplied Map
- * <li>Null - always returns null
- * <li>NOP - returns the input object, which should be immutable
- * <li>Exception - always throws an exception
- * <li>StringValue - returns a {@link String} representation of the input object
+ * <li>Invoker - returns the result of a method call on the input object</li>
+ * <li>Clone - returns a clone of the input object</li>
+ * <li>Constant - always returns the same object</li>
+ * <li>Closure - performs a Closure and returns the input object</li>
+ * <li>Predicate - returns the result of the predicate as a Boolean</li>
+ * <li>Factory - returns a new object from a factory</li>
+ * <li>Chained - chains two or more transformers together</li>
+ * <li>If - calls one transformer or another based on a predicate</li>
+ * <li>Switch - calls one transformer based on one or more predicates</li>
+ * <li>SwitchMap - calls one transformer looked up from a Map</li>
+ * <li>Instantiate - the Class input object is instantiated</li>
+ * <li>Map - returns an object from a supplied Map</li>
+ * <li>Null - always returns null</li>
+ * <li>NOP - returns the input object, which should be immutable</li>
+ * <li>Exception - always throws an exception</li>
+ * <li>StringValue - returns a {@link String} representation of the input object</li>
  * </ul>
  * <p>
  * Since v4.1 only transformers which are considered to be safe are
  * Serializable. Transformers considered to be unsafe for serialization are:
  * </p>
  * <ul>
- * <li>Invoker
- * <li>Clone
- * <li>Instantiate
+ * <li>Invoker</li>
+ * <li>Clone</li>
+ * <li>Instantiate</li>
  * </ul>
  *
  * @since 3.0

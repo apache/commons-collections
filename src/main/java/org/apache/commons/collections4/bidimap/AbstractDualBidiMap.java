@@ -67,6 +67,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param parent  the parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
@@ -210,6 +211,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -298,6 +300,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -339,6 +342,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param entry  the entry to decorate
          * @param parent  the parent map
          */
@@ -419,6 +423,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * Constructs a new instance.
+         *
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
@@ -742,6 +747,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // Map views
+
     /**
      * Gets a keySet view of the map.
      * Changes made on the view are reflected in the map.
@@ -758,6 +764,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     }
 
     // BidiMap
+
     /**
      * Obtains a {@code MapIterator} over the map.
      * The iterator implements {@link BidiMapIterator}.

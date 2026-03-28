@@ -232,6 +232,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
 
     /**
      * Gets the shape that was used when the filter was built.
+     *
      * @return The shape the filter was built with.
      */
     Shape getShape();

@@ -266,7 +266,7 @@ Fixed Bugs
 * COLLECTIONS-836:  Correct test of BidiMap to optionally ignore testing the key set matches the values order.
                  Ordering is not specified for some BidiMaps such as DualHashBidiMaps. Thanks to Anant Dahiya. 
 * COLLECTIONS-737:  Return 0 immediately if the given iterable is null in IterableUtils#size. Update tests. Thanks to Prodigysov. 
-* COLLECTIONS-697:  JavaDoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented Thanks to Ranjan George. 
+* COLLECTIONS-697:  Javadoc for FixedSizeList should warn that modifying underlying list is still allowed and is not prevented Thanks to Ranjan George. 
 * Fill in some map test cases #104. Thanks to dota17. 
 * COLLECTIONS-738:  Remove the redundant assertNull in IterableUtilsTest.find and update Javadocs. Thanks to Pengyu Nie. 
 * COLLECTIONS-724:  Simplify two remove-if loops #77. Thanks to Eitan Adler. 

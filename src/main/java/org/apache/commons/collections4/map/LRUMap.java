@@ -68,11 +68,13 @@ public class LRUMap<K, V>
 
     /** Serialization version */
     private static final long serialVersionUID = -612114643488955218L;
+
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;
 
     /** Maximum size */
     private transient int maxSize;
+
     /** Scan behavior */
     private final boolean scanUntilRemovable;
 

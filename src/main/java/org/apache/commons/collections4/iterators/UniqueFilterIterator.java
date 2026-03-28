@@ -31,9 +31,9 @@ import org.apache.commons.collections4.functors.UniquePredicate;
 public class UniqueFilterIterator<E> extends FilterIterator<E> {
 
     /**
-     *  Constructs a new {@code UniqueFilterIterator}.
+     * Constructs a new {@code UniqueFilterIterator}.
      *
-     *  @param iterator  the iterator to use
+     * @param iterator  the iterator to use
      */
     public UniqueFilterIterator(final Iterator<? extends E> iterator) {
         super(iterator, UniquePredicate.uniquePredicate());

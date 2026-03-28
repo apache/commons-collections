@@ -25,6 +25,7 @@ package org.apache.commons.collections4;
  * @see Put
  */
 public interface IterableGet<K, V> extends Get<K, V> {
+
     /**
      * Obtains a {@code MapIterator} over the map.
      * <p>

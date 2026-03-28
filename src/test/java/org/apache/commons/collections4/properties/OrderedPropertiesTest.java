@@ -18,6 +18,7 @@ package org.apache.commons.collections4.properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,6 +28,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -57,6 +59,9 @@ class OrderedPropertiesTest {
         for (int i = first; i <= last; i++) {
             assertEquals("key" + i, propertyNames.nextElement());
         }
+        final Set<String> propertyNameSet = orderedProperties.stringPropertyNames();
+        final AtomicInteger i = new AtomicInteger(first);
+        propertyNameSet.forEach(e -> assertEquals("key" + i.getAndIncrement(), e));
     }
 
     private OrderedProperties assertDescendingOrder(final OrderedProperties orderedProperties) {
@@ -80,6 +85,9 @@ class OrderedPropertiesTest {
         for (int i = first; i <= last; i--) {
             assertEquals("key" + i, propertyNames.nextElement());
         }
+        final Set<String> propertyNameSet = orderedProperties.stringPropertyNames();
+        final AtomicInteger i = new AtomicInteger(first);
+        propertyNameSet.forEach(e -> assertEquals("key" + i.getAndDecrement(), e));
         return orderedProperties;
     }
 
@@ -285,6 +293,12 @@ class OrderedPropertiesTest {
         assertFalse(props.containsKey(k));
         assertFalse(Collections.list(props.keys()).contains(k));
         assertFalse(Collections.list(props.propertyNames()).contains(k));
+    }
+
+    @Test
+    void testStringPropertyName() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        assertTrue(orderedProperties.stringPropertyNames().isEmpty());
     }
 
     @Test

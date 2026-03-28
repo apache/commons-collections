@@ -78,6 +78,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
         /**
          * Constructs a new instance.
+         *
          * @param parent  the parent map
          */
         protected BidiOrderedMapIterator(final AbstractDualBidiMap<K, V> parent) {
@@ -172,8 +173,10 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * @param <V> the type of the values.
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
+
         /**
          * Constructs a new instance.
+         *
          * @param bidi  the parent bidi map
          * @param sm  the subMap sorted map
          */

@@ -141,6 +141,18 @@ public interface MultiValuedMap<K, V> {
     Collection<V> get(K key);
 
     /**
+     * Returns a new MultiValuedMap with inverted mappings.
+     * The new multimap will have a value-to-key mapping
+     * for each key-to-value mapping in the original.
+     *
+     * @return a new MultiValuedMap with inverted mappings
+     * @since 4.6.0
+     */
+    default MultiValuedMap<V, K> inverted() {
+        throw new UnsupportedOperationException(getClass() + ".inverted()");
+    }
+
+    /**
      * Returns {@code true} if this map contains no key-value mappings.
      *
      * @return {@code true} if this map contains no key-value mappings

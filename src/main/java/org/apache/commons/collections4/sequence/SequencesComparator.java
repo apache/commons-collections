@@ -124,6 +124,7 @@ public class SequencesComparator<T> {
 
     /** The equator used for testing object equality. */
     private final Equator<? super T> equator;
+
     /** Temporary variables. */
     private final int[] vDown;
 
