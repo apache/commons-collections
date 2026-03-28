@@ -17,6 +17,7 @@
 
 package org.apache.commons.collections4.map;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,6 +51,30 @@ class ConcurrentReferenceHashMapTest {
         map0.put(2, "2");
         assertTrue(map.containsKey(1));
         assertFalse(map.containsKey(2));
+    }
 
+    @Test
+    void testRemoveNullKeyThrowsWithoutIdentityComparisons() {
+        ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
+                .get();
+        map.put("testKey", "testValue");
+
+        assertThrows(NullPointerException.class, () -> map.remove(null, "testValue"));
+        assertThrows(NullPointerException.class, () -> map.remove(null));
+        assertThrows(NullPointerException.class, () -> map.replace(null, "value"));
+        assertThrows(NullPointerException.class, () -> map.replace(null, "oldValue", "newValue"));
+    }
+    
+    @Test
+    void testRemoveNullKeyThrowsWithIdentityComparisons() {
+        ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
+                .setOptions(EnumSet.of(Option.IDENTITY_COMPARISONS))
+                .get();
+        map.put("testKey", "testValue");
+
+        assertThrows(NullPointerException.class, () -> map.remove(null));
+        assertThrows(NullPointerException.class, () -> map.remove(null, "value"));
+        assertThrows(NullPointerException.class, () -> map.replace(null, "value"));
+        assertThrows(NullPointerException.class, () -> map.replace(null, "old", "new"));
     }
 }
