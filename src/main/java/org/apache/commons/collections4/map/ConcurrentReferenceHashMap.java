@@ -1642,7 +1642,16 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         return segmentFor(hash).get(key, hash);
     }
 
+    /**
+     * Returns the hash code of the given key, which is either the result of calling {@code hashCode} or {@code System.identityHashCode} depending on
+     * {@code identityComparisons}.
+     * 
+     * @param key The key to hash.
+     * @return the hash code of the given key.
+     * @throws NullPointerException if the specified key is null.
+     */
     private int hashOf(final Object key) {
+        Objects.requireNonNull(key, "key");
         return hash(identityComparisons ? System.identityHashCode(key) : key.hashCode());
     }
 
