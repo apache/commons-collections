@@ -55,7 +55,7 @@ class ConcurrentReferenceHashMapTest {
 
     @Test
     void testRemoveNullKeyThrowsWithoutIdentityComparisons() {
-        ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
+        final ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
                 .get();
         map.put("testKey", "testValue");
 
@@ -64,10 +64,10 @@ class ConcurrentReferenceHashMapTest {
         assertThrows(NullPointerException.class, () -> map.replace(null, "value"));
         assertThrows(NullPointerException.class, () -> map.replace(null, "oldValue", "newValue"));
     }
-    
+
     @Test
     void testRemoveNullKeyThrowsWithIdentityComparisons() {
-        ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
+        final ConcurrentReferenceHashMap<String, String> map = ConcurrentReferenceHashMap.<String, String>builder()
                 .setOptions(EnumSet.of(Option.IDENTITY_COMPARISONS))
                 .get();
         map.put("testKey", "testValue");
