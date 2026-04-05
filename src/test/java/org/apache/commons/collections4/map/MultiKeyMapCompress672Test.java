@@ -17,9 +17,12 @@
 
 package org.apache.commons.collections4.map;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import java.util.Objects;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -85,16 +88,16 @@ class MultiKeyMapCompress672Test {
         final KeyFixture keyFixture2Ro = new KeyFixture();
         final KeyFixture keyFixture2Rw = new KeyFixture();
         // Put original mapping
-        Assertions.assertNull(multiKeyMap.put(KEY_1, keyFixture2Rw, "value"));
+        assertNull(multiKeyMap.put(KEY_1, keyFixture2Rw, "value"));
         // Both mappings are correct
-        Assertions.assertEquals("value", multiKeyMap.get(KEY_1, keyFixture2Rw));
-        Assertions.assertEquals("value", multiKeyMap.get(KEY_1, keyFixture2Ro));
+        assertEquals("value", multiKeyMap.get(KEY_1, keyFixture2Rw));
+        assertEquals("value", multiKeyMap.get(KEY_1, keyFixture2Ro));
         // Modify 'fixture2'
         keyFixture2Rw.setValue("newValue");
         // Modified mapping SHOULD NOT work
-        Assertions.assertNull(multiKeyMap.get(KEY_1, keyFixture2Rw));
+        assertNull(multiKeyMap.get(KEY_1, keyFixture2Rw));
         // Claim: Original mapping SHOULD work
         // COUNTER CLAIM: The class is documented to use MultiKey which documents key elements as "The keys should be immutable".
-        Assertions.assertNotEquals("value", multiKeyMap.get(KEY_1, keyFixture2Ro));
+        assertNotEquals("value", multiKeyMap.get(KEY_1, keyFixture2Ro));
     }
 }

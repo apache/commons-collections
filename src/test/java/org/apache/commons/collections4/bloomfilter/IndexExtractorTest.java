@@ -16,13 +16,13 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.LongPredicate;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -57,7 +57,7 @@ class IndexExtractorTest {
             }
             return true;
         };
-        Assertions.assertArrayEquals(new int[n], ip.asIndexArray());
+        assertArrayEquals(new int[n], ip.asIndexArray());
     }
 
     @Test
