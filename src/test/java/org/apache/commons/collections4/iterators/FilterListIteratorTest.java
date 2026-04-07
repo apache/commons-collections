@@ -140,7 +140,7 @@ class FilterListIteratorTest {
     }
 
     /**
-     * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360"}
+     * Test for https://issues.apache.org/jira/browse/COLLECTIONS-360.
      */
     @Test
     void testCollections360() throws Throwable {

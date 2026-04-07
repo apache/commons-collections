@@ -185,7 +185,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     /**
-     * Inner class that provides the Entry<K, V> view
+     * Inner class that provides the {@code Entry<K, V>} view
      */
     private final class EntryValues extends AbstractCollection<Entry<K, V>> {
 

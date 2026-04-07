@@ -47,7 +47,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
      * Asserts the given map contains all added values after it was initialized
      * with makeFullMap(). See COLLECTIONS-769.
      *
-     * @param map the MultiValuedMap<K, V> to check
+     * @param map the MultiValuedMap to check.
      */
     private void assertMapContainsAllValues(final MultiValuedMap<K, V> map) {
         final int maxK = getSampleKeySize();

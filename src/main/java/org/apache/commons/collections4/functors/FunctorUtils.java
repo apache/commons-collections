@@ -61,7 +61,7 @@ final class FunctorUtils {
     }
 
     /**
-     * A very simple method that coerces Transformer<? super I, ? extends O> to Transformer<I, O>.
+     * A very simple method that coerces {@code Transformer<? super I, ? extends O>} to {@code Transformer<I, O>}.
      * <p>
      * This method exists
      * simply as centralized documentation and atomic unchecked warning

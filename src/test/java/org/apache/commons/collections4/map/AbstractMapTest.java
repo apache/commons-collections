@@ -609,7 +609,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Gets the confirmed.
      *
-     * @return Map<K, V>
+     * @return {@code Map<K, V>}
      */
     public Map<K, V> getConfirmed() {
         return confirmed;
@@ -629,7 +629,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Gets the map.
      *
-     * @return Map<K, V>
+     * @return {@code Map<K, V>}
      */
     public M getMap() {
         return map;
