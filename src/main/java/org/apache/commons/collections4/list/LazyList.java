@@ -137,7 +137,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         if (transformer != null) {
             return transformer.apply(index);
         }
-        throw new IllegalStateException("Factory and Transformer are both null!");
+        throw new IllegalStateException("Factory and Transformer are both null.");
     }
 
     /**
@@ -185,7 +185,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         if (transformer != null) {
             return new LazyList<>(sub, transformer);
         }
-        throw new IllegalStateException("Factory and Transformer are both null!");
+        throw new IllegalStateException("Factory and Transformer are both null.");
     }
 
 }

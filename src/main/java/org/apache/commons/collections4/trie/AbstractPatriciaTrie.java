@@ -743,7 +743,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                                 final K toKey, final boolean toInclusive) {
 
             if (fromKey == null && toKey == null) {
-                throw new IllegalArgumentException("must have a from or to!");
+                throw new IllegalArgumentException("must have a from or to.");
             }
 
             if (fromKey != null && toKey != null && getKeyAnalyzer().compare(fromKey, toKey) > 0) {
@@ -1976,7 +1976,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      */
     TrieEntry<K, V> previousEntry(final TrieEntry<K, V> start) {
         if (start.predecessor == null) {
-            throw new IllegalArgumentException("must have come from somewhere!");
+            throw new IllegalArgumentException("must have come from somewhere.");
         }
 
         if (start.predecessor.right == start) {
@@ -2156,10 +2156,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      */
     private void removeExternalEntry(final TrieEntry<K, V> h) {
         if (h == root) {
-            throw new IllegalArgumentException("Cannot delete root Entry!");
+            throw new IllegalArgumentException("Cannot delete root Entry.");
         }
         if (!h.isExternalNode()) {
-            throw new IllegalArgumentException(h + " is not an external Entry!");
+            throw new IllegalArgumentException(h + " is not an external Entry.");
         }
 
         final TrieEntry<K, V> parent = h.parent;
@@ -2189,10 +2189,10 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      */
     private void removeInternalEntry(final TrieEntry<K, V> h) {
         if (h == root) {
-            throw new IllegalArgumentException("Cannot delete root Entry!");
+            throw new IllegalArgumentException("Cannot delete root Entry.");
         }
         if (!h.isInternalNode()) {
-            throw new IllegalArgumentException(h + " is not an internal Entry!");
+            throw new IllegalArgumentException(h + " is not an internal Entry.");
         }
 
         final TrieEntry<K, V> p = h.predecessor;

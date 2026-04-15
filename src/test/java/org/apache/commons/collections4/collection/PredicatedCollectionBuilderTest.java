@@ -48,13 +48,13 @@ class PredicatedCollectionBuilderTest {
         collection.add("test2");
         assertEquals(2, collection.size());
 
-        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate!");
+        assertThrows(IllegalArgumentException.class, () -> collection.add(null), "Expecting IllegalArgumentException for failing predicate.");
 
     }
 
     private void checkPredicatedCollection2(final Collection<Integer> collection) {
         assertEquals(2, collection.size());
-        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate!");
+        assertThrows(IllegalArgumentException.class, () -> collection.add(4), "Expecting IllegalArgumentException for failing predicate.");
         assertEquals(2, collection.size());
 
         collection.add(5);
