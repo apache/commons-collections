@@ -42,7 +42,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link org.apache.commons.collections4.Bag Bag}.
+ * Tests {@link Bag}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.
