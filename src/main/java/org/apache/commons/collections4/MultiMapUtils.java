@@ -102,14 +102,11 @@ public class MultiMapUtils {
      * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
-     * @return the Collection in the {@link MultiValuedMap} as Bag, or null if input map is null
+     * @return a new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null
      */
     public static <K, V> Bag<V> getValuesAsBag(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
             final Collection<V> col = map.get(key);
-            if (col instanceof Bag) {
-                return (Bag<V>) col;
-            }
             return new HashBag<>(col);
         }
         return null;
@@ -122,21 +119,15 @@ public class MultiMapUtils {
      * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
-     * @return the Collection in the {@link MultiValuedMap} as List, or null if input map is null
+     * @return a new List containing the values from the {@link MultiValuedMap}, or null if input map is null
      */
     public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
             final Collection<V> col = map.get(key);
-            if (col instanceof List) {
-                return (List<V>) col;
-            }
             return new ArrayList<>(col);
         }
         return null;
     }
-
-    // TODO: review the getValuesAsXXX methods - depending on the actual MultiValuedMap type, changes
-    // to the returned collection might update the backing map. This should be clarified and/or prevented.
 
     /**
      * Gets a Set from {@code MultiValuedMap} in a null-safe manner.
@@ -145,14 +136,11 @@ public class MultiMapUtils {
      * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
-     * @return the Collection in the {@link MultiValuedMap} as Set, or null if input map is null
+     * @return a new Set containing the values from the {@link MultiValuedMap}, or null if input map is null
      */
     public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
             final Collection<V> col = map.get(key);
-            if (col instanceof Set) {
-                return (Set<V>) col;
-            }
             return new HashSet<>(col);
         }
         return null;
