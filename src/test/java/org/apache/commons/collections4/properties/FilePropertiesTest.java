@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,26 @@
  * limitations under the License.
  */
 
-/**
- * Extends and customizes the behavior of
- * {@link java.util.Properties Properties}.
- * <p>
- * The following classes are provided in the package:
- * <ul>
- *   <li>SortedProperties- A drop-in replacement for Properties for sorting keys.</li>
- *   <li>FileProperties- A class that extend load functionality for getting Properties.<li/>
- * </ul>
- */
 package org.apache.commons.collections4.properties;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Properties;
+
+public class FilePropertiesTest {
+
+    @Test
+    public void testLoad() {
+        final FileProperties fileProperties = new FileProperties();
+        try {
+            Properties properties = fileProperties.load("test.properties");
+            Assert.assertEquals(properties.get("test.key"), "age");
+            Assert.assertEquals(properties.get("test.group"), "human");
+            Assert.assertEquals(properties.get("test.value"), "28");
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
+    }
+}
