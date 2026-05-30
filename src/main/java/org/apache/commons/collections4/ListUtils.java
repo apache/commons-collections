@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
@@ -132,6 +133,221 @@ public class ListUtils {
         public int size() {
             return (int) Math.ceil((double) list.size() / (double) size);
         }
+    }
+
+    /**
+     * Searches element in list sorted by key.  If there are multiple elements matching, it returns first occurrence.
+     * If the list is not sorted, the result is undefined.
+     *
+     * @param list
+     *      list sorted by key field
+     * @param key
+     *      key to search for
+     * @param keyExtractor
+     *      function to extract key from element
+     * @param comparator
+     *      comparator for keys
+     *
+     * @return
+     *      index of the first occurrence of search key, if it is contained in the list; otherwise,
+     *      (-first_greater - 1). The first_greater is the index of lowest greater element in the list - if all elements
+     *      are lower, the first_greater is defined as list.size().
+     *
+     * @param <T>
+     *     type of list element
+     * @param <K>
+     *     type of key
+     */
+    public static <K, T> int binarySearchFirst(
+            List<T> list,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        return binarySearchFirst0(list, 0, list.size(), key, keyExtractor, comparator);
+    }
+
+    /**
+     * Searches element in list sorted by key, within range fromIndex (inclusive) - toIndex (exclusive).  If there are
+     * multiple elements matching, it returns first occurrence.  If the list is not sorted, the result is undefined.
+     *
+     * @param list
+     *      list sorted by key field
+     * @param fromIndex
+     *      start index (inclusive)
+     * @param toIndex
+     *      end index (exclusive)
+     * @param key
+     *      key to search for
+     * @param keyExtractor
+     *      function to extract key from element
+     * @param comparator
+     *      comparator for keys
+     *
+     * @return
+     *      index of the first occurrence of search key, if it is contained in the list within specified range;
+     *      otherwise, (-first_greater - 1).  The first_greater is the index of lowest greater element in the list - if
+     *      all elements are lower, the first_greater is defined as toIndex.
+     *
+     * @throws ArrayIndexOutOfBoundsException
+     *      when fromIndex or toIndex is out of array range
+     * @throws IllegalArgumentException
+     *      when fromIndex is greater than toIndex
+     *
+     * @param <T>
+     *     type of list element
+     * @param <K>
+     *     type of key
+     */
+    public static <T, K> int binarySearchFirst(
+            List<T> list,
+            int fromIndex, int toIndex,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        checkRange(list.size(), fromIndex, toIndex);
+
+        return binarySearchFirst0(list, fromIndex, toIndex, key, keyExtractor, comparator);
+    }
+
+    // common implementation for binarySearch methods, with same semantics:
+    private static <T, K> int binarySearchFirst0(
+            List<T> list,
+            int fromIndex, int toIndex,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        int l = fromIndex;
+        int h = toIndex - 1;
+
+        while (l <= h) {
+            final int m = (l + h) >>> 1; // unsigned shift to avoid overflow
+            final K value = keyExtractor.apply(list.get(m));
+            final int c = comparator.compare(value, key);
+            if (c < 0) {
+                l = m + 1;
+            } else if (c > 0) {
+                h = m - 1;
+            } else if (l < h) {
+                // possibly multiple matching items remaining:
+                h = m;
+            } else {
+                // single matching item remaining:
+                return m;
+            }
+        }
+
+        // not found, the l points to the lowest higher match:
+        return -l - 1;
+    }
+
+    /**
+     * Searches element in list sorted by key.  If there are multiple elements matching, it returns last occurrence.
+     * If the list is not sorted, the result is undefined.
+     *
+     * @param list
+     *      list sorted by key field
+     * @param key
+     *      key to search for
+     * @param keyExtractor
+     *      function to extract key from element
+     * @param comparator
+     *      comparator for keys
+     *
+     * @return
+     *      index of the last occurrence of search key, if it is contained in the list; otherwise,
+     *      (-first_greater - 1). The first_greater is the index of lowest greater element in the list - if all elements
+     *      are lower, the first_greater is defined as list.size() .
+     *
+     * @param <T>
+     *     type of array element
+     * @param <K>
+     *     type of key
+     */
+    public static <K, T> int binarySearchLast(
+            List<T> list,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        return binarySearchLast0(list, 0, list.size(), key, keyExtractor, comparator);
+    }
+
+    /**
+     * Searches element in list sorted by key, within range fromIndex (inclusive) - toIndex (exclusive).  If there are
+     * multiple elements matching, it returns last occurrence.  If the list is not sorted, the result is undefined.
+     *
+     * @param list
+     *      list sorted by key field
+     * @param fromIndex
+     *      start index (inclusive)
+     * @param toIndex
+     *      end index (exclusive)
+     * @param key
+     *      key to search for
+     * @param keyExtractor
+     *      function to extract key from element
+     * @param comparator
+     *      comparator for keys
+     *
+     * @return
+     *      index of the last occurrence of search key, if it is contained in the list within specified range;
+     *      otherwise, (-first_greater - 1).  The first_greater is the index of lowest greater element in the list - if
+     *      all elements are lower, the first_greater is defined as toIndex.
+     *
+     * @throws ArrayIndexOutOfBoundsException
+     *      when fromIndex or toIndex is out of array range
+     * @throws IllegalArgumentException
+     *      when fromIndex is greater than toIndex
+     *
+     * @param <T>
+     *     type of array element
+     * @param <K>
+     *     type of key
+     */
+    public static <T, K> int binarySearchLast(
+            List<T> list,
+            int fromIndex, int toIndex,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        checkRange(list.size(), fromIndex, toIndex);
+
+        return binarySearchLast0(list, fromIndex, toIndex, key, keyExtractor, comparator);
+    }
+
+    // common implementation for binarySearch methods, with same semantics:
+    private static <T, K> int binarySearchLast0(
+            List<T> list,
+            int fromIndex, int toIndex,
+            K key,
+            Function<T, K> keyExtractor, Comparator<? super K> comparator
+    ) {
+        int l = fromIndex;
+        int h = toIndex - 1;
+
+        while (l <= h) {
+            final int m = (l + h) >>> 1; // unsigned shift to avoid overflow
+            final K value = keyExtractor.apply(list.get(m));
+            final int c = comparator.compare(value, key);
+            if (c < 0) {
+                l = m + 1;
+            } else if (c > 0) {
+                h = m - 1;
+            } else if (m + 1 < h) {
+                // matching, more than two items remaining:
+                l = m;
+            } else if (m + 1 == h) {
+                // two items remaining, next loops would result in unchanged l and h, we have to choose m or h:
+                final K valueH = keyExtractor.apply(list.get(h));
+                final int cH = comparator.compare(valueH, key);
+                return cH == 0 ? h : m;
+            } else {
+                // one item remaining, single match:
+                return m;
+            }
+        }
+
+        // not found, the l points to the lowest higher match:
+        return -l - 1;
     }
 
     /**
@@ -764,6 +980,19 @@ public class ListUtils {
      */
     public static <E> List<E> unmodifiableList(final List<? extends E> list) {
         return UnmodifiableList.unmodifiableList(list);
+    }
+
+    static void checkRange(int length, int fromIndex, int toIndex) {
+        if (fromIndex > toIndex) {
+            throw new IllegalArgumentException(
+                    "fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")");
+        }
+        if (fromIndex < 0) {
+            throw new ArrayIndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > length) {
+            throw new ArrayIndexOutOfBoundsException(toIndex);
+        }
     }
 
     /**
