@@ -24,8 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -119,7 +121,7 @@ class MultiMapUtilsTest {
     }
 
     @Test
-    void testInvert() {
+    void testInvertMultiValuedMap() {
         final HashSetValuedHashMap<String, String> usages = new HashSetValuedHashMap<>();
 
         final LinkedHashSetValuedLinkedHashMap<String, String> deps = new LinkedHashSetValuedLinkedHashMap<>();
@@ -135,6 +137,30 @@ class MultiMapUtilsTest {
         assertEquals("[]", codecUsagesCompile.toString());
 
         final LinkedHashSetValuedLinkedHashMap<String, String> optionalDeps = new LinkedHashSetValuedLinkedHashMap<>();
+        optionalDeps.put("commons-configuration2", "commons-codec");
+        optionalDeps.put("commons-collections", "commons-codec");
+        MultiMapUtils.invert(optionalDeps, usages);
+        final Set<String> codecUsagesAll = usages.get("commons-codec");
+        assertEquals("[commons-collections, commons-configuration2]", codecUsagesAll.toString());
+    }
+
+    @Test
+    void testInvertMap() {
+        final HashSetValuedHashMap<String, String> usages = new HashSetValuedHashMap<>();
+
+        final Map<String, String> deps = new HashMap<>();
+        deps.put("commons-configuration1", "commons-logging");
+        deps.put("commons-configuration2", "commons-lang3");
+        deps.put("commons-configuration3", "commons-text");
+        deps.put("commons-beanutils1", "commons-collections");
+        deps.put("commons-beanutils2", "commons-logging");
+        MultiMapUtils.invert(deps, usages);
+        final Set<String> loggingUsagesCompile = usages.get("commons-logging");
+        assertEquals("[commons-beanutils2, commons-configuration1]", loggingUsagesCompile.toString());
+        final Set<String> codecUsagesCompile = usages.get("commons-codec");
+        assertEquals("[]", codecUsagesCompile.toString());
+
+        final Map<String, String> optionalDeps = new HashMap<>();
         optionalDeps.put("commons-configuration2", "commons-codec");
         optionalDeps.put("commons-collections", "commons-codec");
         MultiMapUtils.invert(optionalDeps, usages);
