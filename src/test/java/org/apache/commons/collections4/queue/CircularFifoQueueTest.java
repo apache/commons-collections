@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -442,6 +443,56 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertEquals(2, b3.size());
         assertTrue(b3.contains("b"));
         assertTrue(b3.contains("c"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testDeserializeRejectsCorruptSize() throws Exception {
+        // a stored size larger than maxElements would write past the backing array
+        final CircularFifoQueue<E> full = new CircularFifoQueue<>(7);
+        for (int i = 0; i < 7; i++) {
+            full.add((E) ("x" + i));
+        }
+        final byte[] tooLarge = serialize(full);
+        // first 0x00000007 is maxElements; shrink it so size (7) now exceeds it
+        patchInt(tooLarge, indexOfInt(tooLarge, 7), 2);
+        assertThrows(InvalidObjectException.class, () -> deserialize(tooLarge));
+
+        // a negative stored size leaves the queue in an inconsistent state
+        final CircularFifoQueue<E> partial = new CircularFifoQueue<>(7);
+        partial.add((E) "a");
+        partial.add((E) "b");
+        final byte[] negative = serialize(partial);
+        patchInt(negative, indexOfInt(negative, 2), -1);
+        assertThrows(InvalidObjectException.class, () -> deserialize(negative));
+    }
+
+    private static byte[] serialize(final Object obj) throws Exception {
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        new ObjectOutputStream(bos).writeObject(obj);
+        return bos.toByteArray();
+    }
+
+    private static Object deserialize(final byte[] data) throws Exception {
+        return new ObjectInputStream(new ByteArrayInputStream(data)).readObject();
+    }
+
+    private static int indexOfInt(final byte[] data, final int value) {
+        final byte[] needle = {(byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value};
+        for (int i = 0; i <= data.length - 4; i++) {
+            if (data[i] == needle[0] && data[i + 1] == needle[1]
+                    && data[i + 2] == needle[2] && data[i + 3] == needle[3]) {
+                return i;
+            }
+        }
+        throw new IllegalStateException("value not found in stream");
+    }
+
+    private static void patchInt(final byte[] data, final int pos, final int value) {
+        data[pos] = (byte) (value >>> 24);
+        data[pos + 1] = (byte) (value >>> 16);
+        data[pos + 2] = (byte) (value >>> 8);
+        data[pos + 3] = (byte) value;
     }
 
 //    void testCreate() throws Exception {
