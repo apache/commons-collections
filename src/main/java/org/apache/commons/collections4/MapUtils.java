@@ -1185,7 +1185,7 @@ public class MapUtils {
      */
     public static <K, V> Map<V, K> invertMap(final Map<K, V> map) {
         Objects.requireNonNull(map, "map");
-        final Map<V, K> out = new HashMap<>(map.size());
+        final Map<V, K> out = new HashMap<>((int) Math.ceil(map.size() / 0.75d));
         for (final Entry<K, V> entry : map.entrySet()) {
             out.put(entry.getValue(), entry.getKey());
         }
