@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bag;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
@@ -300,6 +301,9 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
             final E obj = (E) in.readObject();
             final int count = in.readInt();
+            if (count < 1) {
+                throw new InvalidObjectException("Invalid count for entry: " + count);
+            }
             map.put(obj, new MutableInteger(count));
             size += count;
         }
