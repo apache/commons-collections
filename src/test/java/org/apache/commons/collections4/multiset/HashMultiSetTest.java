@@ -16,13 +16,36 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import org.apache.commons.collections4.MultiSet;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
  * {@link HashMultiSet} implementation.
  */
 public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
+
+    private static void replaceInt(final byte[] bytes, final int from, final int to) {
+        for (int i = 0; i + 4 <= bytes.length; i++) {
+            if (((bytes[i] & 0xFF) << 24 | (bytes[i + 1] & 0xFF) << 16
+                    | (bytes[i + 2] & 0xFF) << 8 | bytes[i + 3] & 0xFF) == from) {
+                bytes[i] = (byte) (to >>> 24);
+                bytes[i + 1] = (byte) (to >>> 16);
+                bytes[i + 2] = (byte) (to >>> 8);
+                bytes[i + 3] = (byte) to;
+                return;
+            }
+        }
+        throw new IllegalStateException("marker not found in stream");
+    }
 
     @Override
     public String getCompatibilityVersion() {
@@ -37,6 +60,26 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     public MultiSet<T> makeObject() {
         return new HashMultiSet<>();
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveCount() throws Exception {
+        final int marker = 0x11223344;
+        final HashMultiSet<String> set = new HashMultiSet<>();
+        set.add("Y", marker);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
+            oos.writeObject(set);
+        }
+        for (final int count : new int[] {0, -7}) {
+            final byte[] bytes = out.toByteArray();
+            replaceInt(bytes, marker, count);
+            assertThrows(InvalidObjectException.class, () -> {
+                try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+                    ois.readObject();
+                }
+            });
+        }
     }
 
 //    void testCreate() throws Exception {
