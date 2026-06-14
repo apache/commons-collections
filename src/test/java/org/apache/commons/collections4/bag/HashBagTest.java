@@ -33,20 +33,6 @@ import org.junit.jupiter.api.Test;
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 
-    private static void replaceInt(final byte[] bytes, final int from, final int to) {
-        for (int i = 0; i + 4 <= bytes.length; i++) {
-            if (((bytes[i] & 0xFF) << 24 | (bytes[i + 1] & 0xFF) << 16
-                    | (bytes[i + 2] & 0xFF) << 8 | bytes[i + 3] & 0xFF) == from) {
-                bytes[i] = (byte) (to >>> 24);
-                bytes[i + 1] = (byte) (to >>> 16);
-                bytes[i + 2] = (byte) (to >>> 8);
-                bytes[i + 3] = (byte) to;
-                return;
-            }
-        }
-        throw new IllegalStateException("marker not found in stream");
-    }
-
     @Override
     public String getCompatibilityVersion() {
         return "4";
