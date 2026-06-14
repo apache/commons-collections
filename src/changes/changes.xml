@@ -46,6 +46,7 @@
     <action type="fix" dev="ggregory" due-to="Partha Protim Paul" issue="COLLECTIONS-886">[javadoc] CompositeSet.addComposited(Set) does not throw NullPointerException when null is passed #675.</action>
     <action type="fix" dev="ggregory" due-to="Partha Paul, Gary Gregory" issue="COLLECTIONS-887">ConcurrentReferenceHashMap.remove(key), remove(key, value), replace(key, value), and replace(key, oldValue, newValue) throw NullPointerException inconsistently.</action>
     <action type="fix" dev="ggregory" due-to="Marc Carter, Gary Gregory" issue="COLLECTIONS-888">PatriciaTrie incompatible with Java 21 (JEP 431 Sequenced Collections).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Reject non-positive entry count in bag/multiset doReadObject (#679).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
