@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import static org.easymock.EasyMock.expect;
@@ -46,7 +47,6 @@ class MultiMapUtilsTest {
     @Test
     void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
-
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         map.put("item", "value");
         assertFalse(MultiMapUtils.emptyIfNull(map).isEmpty());
@@ -57,20 +57,17 @@ class MultiMapUtilsTest {
     void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
         assertTrue(map.isEmpty());
-
         assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
 
     @Test
     void testGetCollection() {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
-
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
         }
-
         final Collection<String> col = MultiMapUtils.getCollection(map, "key1");
         assertEquals(Arrays.asList(values), col);
     }
@@ -78,14 +75,12 @@ class MultiMapUtilsTest {
     @Test
     void testGetValuesAsBag() {
         assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
-
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
             map.put("key1", val);
         }
-
         final Bag<String> bag = MultiMapUtils.getValuesAsBag(map, "key1");
         assertEquals(6, bag.size());
         for (final String val : values) {
@@ -102,7 +97,6 @@ class MultiMapUtilsTest {
         bagToReturn.addAll(Arrays.asList(values));
         expect(mockMap.get("key1")).andReturn(bagToReturn);
         replay(mockMap);
-
         final Bag<String> bag = MultiMapUtils.getValuesAsBag(mockMap, "key1");
         bag.add("v4");
         assertFalse(bagToReturn.contains("v4"));
@@ -112,13 +106,11 @@ class MultiMapUtilsTest {
     @Test
     void testGetValuesAsList() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
-
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
         }
-
         final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
         assertEquals(Arrays.asList(values), list);
     }
@@ -130,7 +122,6 @@ class MultiMapUtilsTest {
         for (final String val : values) {
             map.put("key1", val);
         }
-
         final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
         list.add("v4");
         assertFalse(map.containsMapping("key1", "v4"));
@@ -139,14 +130,12 @@ class MultiMapUtilsTest {
     @Test
     void testGetValuesAsSet() {
         assertNull(MultiMapUtils.getValuesAsSet(null, "key1"));
-
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
             map.put("key1", val);
             map.put("key1", val);
         }
-
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         assertEquals(new HashSet<>(Arrays.asList(values)), set);
     }
@@ -158,7 +147,6 @@ class MultiMapUtilsTest {
         for (final String val : values) {
             map.put("key1", val);
         }
-
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         set.add("v4");
         assertFalse(map.containsMapping("key1", "v4"));
@@ -167,7 +155,6 @@ class MultiMapUtilsTest {
     @Test
     void testInvert() {
         final HashSetValuedHashMap<String, String> usages = new HashSetValuedHashMap<>();
-
         final LinkedHashSetValuedLinkedHashMap<String, String> deps = new LinkedHashSetValuedLinkedHashMap<>();
         deps.put("commons-configuration2", "commons-logging");
         deps.put("commons-configuration2", "commons-lang3");
@@ -179,7 +166,6 @@ class MultiMapUtilsTest {
         assertEquals("[commons-configuration2, commons-beanutils]", loggingUsagesCompile.toString());
         final Set<String> codecUsagesCompile = usages.get("commons-codec");
         assertEquals("[]", codecUsagesCompile.toString());
-
         final LinkedHashSetValuedLinkedHashMap<String, String> optionalDeps = new LinkedHashSetValuedLinkedHashMap<>();
         optionalDeps.put("commons-configuration2", "commons-codec");
         optionalDeps.put("commons-collections", "commons-codec");
@@ -209,8 +195,6 @@ class MultiMapUtilsTest {
     void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
-
         assertThrows(UnsupportedOperationException.class, () -> map.put("key", "value"));
     }
-
 }
