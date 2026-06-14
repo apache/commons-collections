@@ -87,6 +87,8 @@ class MultiMapUtilsTest {
             assertTrue(bag.contains(val));
             assertEquals(2, bag.getCount(val));
         }
+        assertTrue(MultiMapUtils.getValuesAsBag(map, null).isEmpty());
+        assertTrue(MultiMapUtils.getValuesAsBag(map, "MISSING_KEY").isEmpty());
     }
 
     @Test
@@ -106,6 +108,7 @@ class MultiMapUtilsTest {
     @Test
     void testGetValuesAsList() {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
+        assertNull(MultiMapUtils.getValuesAsList(null, null));
         final String[] values = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
         for (final String val : values) {
@@ -113,6 +116,8 @@ class MultiMapUtilsTest {
         }
         final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
         assertEquals(Arrays.asList(values), list);
+        assertTrue(MultiMapUtils.getValuesAsList(map, null).isEmpty());
+        assertTrue(MultiMapUtils.getValuesAsList(map, "MISSING_KEY").isEmpty());
     }
 
     @Test
@@ -138,6 +143,8 @@ class MultiMapUtilsTest {
         }
         final Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         assertEquals(new HashSet<>(Arrays.asList(values)), set);
+        assertTrue(MultiMapUtils.getValuesAsSet(map, null).isEmpty());
+        assertTrue(MultiMapUtils.getValuesAsSet(map, "MISSING_KEY").isEmpty());
     }
 
     @Test
