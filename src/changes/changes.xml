@@ -60,6 +60,7 @@
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.19.0 to 2.22.0.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.18.0 to 1.22.0.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump doxia.module.markdown.version from 2.0.0 to 2.1.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump com.google.guava:guava-testlib from 33.5.0-jre to 33.6.0-jre (#680)..</action>
   </release>
   <release version="4.5.0" date="2025-04-19" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
