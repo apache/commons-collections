@@ -47,7 +47,7 @@ public class MultiMapUtils {
     /**
      * An empty {@link UnmodifiableMultiValuedMap}.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     public static final MultiValuedMap EMPTY_MULTI_VALUED_MAP =
             UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(new ArrayListValuedHashMap(0, 0));
 
