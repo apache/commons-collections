@@ -86,10 +86,7 @@ public class MultiMapUtils {
      * @return the Collection in the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> Collection<V> getCollection(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            return map.get(key);
-        }
-        return null;
+        return map != null ? map.get(key) : null;
     }
 
     /**
@@ -102,10 +99,7 @@ public class MultiMapUtils {
      * @return a new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> Bag<V> getValuesAsBag(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            return new HashBag<>(map.get(key));
-        }
-        return null;
+        return map != null ? new HashBag<>(map.get(key)) : null;
     }
 
     /**
@@ -118,10 +112,7 @@ public class MultiMapUtils {
      * @return a new List containing the values from the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            return new ArrayList<>(map.get(key));
-        }
-        return null;
+        return map != null ? new ArrayList<>(map.get(key)) : null;
     }
 
     /**
@@ -134,10 +125,7 @@ public class MultiMapUtils {
      * @return a new Set containing the values from the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
-        if (map != null) {
-            return new HashSet<>(map.get(key));
-        }
-        return null;
+        return map != null ? new HashSet<>(map.get(key)) : null;
     }
 
     /**
