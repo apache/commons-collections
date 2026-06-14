@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -145,9 +144,7 @@ public class MultiMapUtils {
      * @since 4.6.0
      */
     public static <K, V, M extends MultiValuedMap<K, V>> M invert(final MultiValuedMap<? extends V, ? extends K> input, final M output) {
-        for (final Map.Entry<? extends V, ? extends K> e : input.entries()) {
-            output.put(e.getValue(), e.getKey());
-        }
+        input.entries().forEach(e -> output.put(e.getValue(), e.getKey()));
         return output;
     }
 
