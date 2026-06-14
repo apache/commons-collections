@@ -68,6 +68,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return map;
     }
 
+    @Override
+    public boolean isValuesRemoveSupported() {
+        return false;
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         pass = false;

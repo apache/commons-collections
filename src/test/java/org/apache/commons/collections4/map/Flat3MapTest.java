@@ -37,6 +37,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -47,6 +48,7 @@ import org.junit.jupiter.api.Test;
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    @Nested
     public class FlatMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override

@@ -131,11 +131,19 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
     }
 
-    public class ListIteratorTest extends AbstractListIteratorTest<E> {
+    protected E getListIteratorAddSetValue() {
+        return getOtherElements()[0];
+    }
+
+    protected boolean isListIteratorSetSupported() {
+        return isSetSupported();
+    }
+
+    public abstract class ListIteratorTest extends AbstractListIteratorTest<E> {
 
         @Override
         public E addSetValue() {
-            return getOtherElements()[0];
+            return getListIteratorAddSetValue();
         }
 
         @Override
@@ -162,7 +170,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         @Override
         public boolean supportsSet() {
-            return AbstractListTest.this.isSetSupported();
+            return isListIteratorSetSupported();
         }
     }
 
@@ -199,7 +207,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     public BulkTest bulkTestListIterator() {
-        return new ListIteratorTest();
+        return new ListIteratorTest() {
+        };
     }
 
     /**

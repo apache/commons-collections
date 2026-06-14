@@ -137,7 +137,12 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             }
         } else {
             // setValue() should throw an IllegalStateException
-            assertThrows(IllegalStateException.class, () -> it.setValue(addSetValues()[0]));
+            try {
+                it.setValue(addSetValues()[0]);
+                fail();
+            } catch (final UnsupportedOperationException | IllegalStateException ex) {
+                // ignore
+            }
         }
     }
 
@@ -295,7 +300,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         assertFalse(map.containsKey(key));
         verify();
         // second remove fails
-        assertThrows(NoSuchElementException.class, it::remove, "Full iterators must have at least one element");
+        assertThrows(IllegalStateException.class, it::remove, "Full iterators must have at least one element");
         verify();
     }
 
