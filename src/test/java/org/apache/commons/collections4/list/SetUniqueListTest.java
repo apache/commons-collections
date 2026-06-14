@@ -86,11 +86,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
-    public List<E> makeObject() {
-        return new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     protected E getListIteratorAddSetValue() {
         return (E) Long.valueOf(1000);
@@ -99,6 +94,11 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Override
     protected boolean isListIteratorSetSupported() {
         return false;
+    }
+
+    @Override
+    public List<E> makeObject() {
+        return new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
     }
 
     @Test

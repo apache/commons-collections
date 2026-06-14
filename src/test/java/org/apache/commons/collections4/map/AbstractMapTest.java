@@ -757,6 +757,15 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     /**
+     * Returns true if the entry set view supports adding entries.
+     *
+     * @return false by default.
+     */
+    public boolean isEntrySetAddSupported() {
+        return false;
+    }
+
+    /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} provide fail-fast behavior on their various iterators.
      * <p>
      * Default implementation returns true. Override if your collection class does not support fast failure.
@@ -767,6 +776,11 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isFailFastExpected() {
         return true;
     }
+
+    // tests begin here. Each test adds a little bit of tested functionality.
+    // Many methods assume previous methods passed. That is, they do not
+    // exhaustively recheck things that have already been checked in a previous
+    // test methods.
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} can cause structural modification on a get(). The example is
@@ -780,11 +794,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isGetStructuralModify() {
         return false;
     }
-
-    // tests begin here. Each test adds a little bit of tested functionality.
-    // Many methods assume previous methods passed. That is, they do not
-    // exhaustively recheck things that have already been checked in a previous
-    // test methods.
 
     protected boolean isLazyMapTest() {
         return false;
@@ -817,15 +826,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     /**
-     * Returns true if the entry set view supports adding entries.
-     *
-     * @return false by default.
-     */
-    public boolean isEntrySetAddSupported() {
-        return false;
-    }
-
-    /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} support the {@code remove} and {@link Map#clear()} operations.
      * <p>
      * Default implementation returns true. Override if your collection class does not support removal operations.
@@ -835,15 +835,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     public boolean isRemoveSupported() {
         return true;
-    }
-
-    /**
-     * Returns true if the values view supports removal operations.
-     *
-     * @return {@link #isRemoveSupported()} by default.
-     */
-    public boolean isValuesRemoveSupported() {
-        return isRemoveSupported();
     }
 
     /**
@@ -877,6 +868,15 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     public boolean isSubMapViewsSerializable() {
         return true;
+    }
+
+    /**
+     * Returns true if the values view supports removal operations.
+     *
+     * @return {@link #isRemoveSupported()} by default.
+     */
+    public boolean isValuesRemoveSupported() {
+        return isRemoveSupported();
     }
 
     /**
