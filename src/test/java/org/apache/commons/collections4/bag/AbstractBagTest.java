@@ -39,6 +39,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -68,6 +69,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
+    @Nested
     public class BagUniqueSetTest extends AbstractSetTest<T> {
 
         @Override

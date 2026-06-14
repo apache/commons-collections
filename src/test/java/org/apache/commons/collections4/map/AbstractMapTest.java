@@ -50,6 +50,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -138,7 +139,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
-    public class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
+    public abstract class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -198,8 +199,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
         @Override
         public boolean isAddSupported() {
-            // Collection views don't support add operations.
-            return false;
+            return isEntrySetAddSupported();
         }
 
         public boolean isGetStructuralModify() {
@@ -323,6 +323,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
         }
     }
 
+    @Nested
     public class MapKeySetTest extends AbstractSetTest<K> {
 
         @Override
@@ -400,7 +401,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // to the confirmed, that the already-constructed collection views
     // are still equal to the confirmed's collection views.
 
-    public class MapValuesTest extends AbstractCollectionTest<V> {
+    public abstract class MapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -436,7 +437,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
 
         @Override
         public boolean isRemoveSupported() {
-            return AbstractMapTest.this.isRemoveSupported();
+            return isValuesRemoveSupported();
         }
 
         @Override
@@ -555,7 +556,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
-        return new MapEntrySetTest();
+        return new MapEntrySetTest() {
+        };
     }
 
     /**
@@ -575,7 +577,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractCollectionTest} instance for testing the map's values collection
      */
     public BulkTest bulkTestMapValues() {
-        return new MapValuesTest();
+        return new MapValuesTest() {
+        };
     }
 
     /**
@@ -754,6 +757,15 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     }
 
     /**
+     * Returns true if the entry set view supports adding entries.
+     *
+     * @return false by default.
+     */
+    public boolean isEntrySetAddSupported() {
+        return false;
+    }
+
+    /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} provide fail-fast behavior on their various iterators.
      * <p>
      * Default implementation returns true. Override if your collection class does not support fast failure.
@@ -764,6 +776,11 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isFailFastExpected() {
         return true;
     }
+
+    // tests begin here. Each test adds a little bit of tested functionality.
+    // Many methods assume previous methods passed. That is, they do not
+    // exhaustively recheck things that have already been checked in a previous
+    // test methods.
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and {@link #makeFullMap()} can cause structural modification on a get(). The example is
@@ -777,11 +794,6 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     public boolean isGetStructuralModify() {
         return false;
     }
-
-    // tests begin here. Each test adds a little bit of tested functionality.
-    // Many methods assume previous methods passed. That is, they do not
-    // exhaustively recheck things that have already been checked in a previous
-    // test methods.
 
     protected boolean isLazyMapTest() {
         return false;
@@ -856,6 +868,15 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     public boolean isSubMapViewsSerializable() {
         return true;
+    }
+
+    /**
+     * Returns true if the values view supports removal operations.
+     *
+     * @return {@link #isRemoveSupported()} by default.
+     */
+    public boolean isValuesRemoveSupported() {
+        return isRemoveSupported();
     }
 
     /**
@@ -2240,7 +2261,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     @Test
     void testReplaceKeyValue() {
-        assumeTrue(isRemoveSupported());
+        assumeTrue(isPutChangeSupported());
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final V[] sampleValues = getSampleValues();
@@ -2274,7 +2295,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      */
     @Test
     void testReplaceKeyValueValue() {
-        assumeTrue(isRemoveSupported());
+        assumeTrue(isPutChangeSupported());
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final V[] sampleValues = getSampleValues();

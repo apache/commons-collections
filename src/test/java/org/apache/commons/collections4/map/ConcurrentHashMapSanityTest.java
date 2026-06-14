@@ -42,6 +42,11 @@ public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<Concurren
         return false;
     }
 
+    @Override
+    public boolean isEntrySetAddSupported() {
+        return true;
+    }
+
     /**
      * Don't test, just a sanity check for the test framework.
      */

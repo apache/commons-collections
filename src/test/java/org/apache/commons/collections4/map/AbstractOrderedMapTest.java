@@ -34,6 +34,7 @@ import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.comparators.NullComparator;
 import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -44,6 +45,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    @Nested
     public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
 
         @Override

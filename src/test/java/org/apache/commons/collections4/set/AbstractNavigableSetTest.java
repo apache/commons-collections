@@ -34,7 +34,7 @@ import org.apache.commons.collections4.BulkTest;
  */
 public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public class NavigableSetSubSetTest extends AbstractNavigableSetTest<E> {
+    public abstract class NavigableSetSubSet extends AbstractNavigableSetTest<E> {
 
         static final int TYPE_SUBSET = 0;
         static final int TYPE_TAILSET = 1;
@@ -49,7 +49,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         private final boolean inclusive;
         @SuppressWarnings("unchecked")
-        public NavigableSetSubSetTest(final int bound, final boolean head, final boolean inclusive) {
+        public NavigableSetSubSet(final int bound, final boolean head, final boolean inclusive) {
             if (head) {
                 this.type = TYPE_HEADSET;
                 this.inclusive = inclusive;
@@ -76,7 +76,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         } //type
         @SuppressWarnings("unchecked")
-        public NavigableSetSubSetTest(final int loBound, final int hiBound, final boolean inclusive) {
+        public NavigableSetSubSet(final int loBound, final int hiBound, final boolean inclusive) {
             this.type = TYPE_SUBSET;
             this.lowBound = loBound;
             this.highBound = hiBound;
@@ -188,7 +188,8 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         final int loBound = length / 3;
         final int hiBound = loBound * 2;
-        return new NavigableSetSubSetTest(hiBound, true, true);
+        return new NavigableSetSubSet(hiBound, true, true) {
+        };
     }
 
     /**
@@ -204,7 +205,8 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
 
         final int loBound = length / 3;
         final int hiBound = loBound * 2;
-        return new NavigableSetSubSetTest(loBound, hiBound, false);
+        return new NavigableSetSubSet(loBound, hiBound, false) {
+        };
     }
 
     /**
@@ -218,7 +220,8 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
     public BulkTest bulkTestNavigableSetTailSet() {
         final int length = getFullElements().length;
         final int loBound = length / 3;
-        return new NavigableSetSubSetTest(loBound, false, false);
+        return new NavigableSetSubSet(loBound, false, false) {
+        };
     }
 
     /**

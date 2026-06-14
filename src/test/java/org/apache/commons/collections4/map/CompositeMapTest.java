@@ -61,6 +61,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Override
+    public boolean isValuesRemoveSupported() {
+        return false;
+    }
+
+    @Override
     public CompositeMap<K, V> makeObject() {
         final CompositeMap<K, V> map = new CompositeMap<>();
         map.addComposited(new HashMap<>());
