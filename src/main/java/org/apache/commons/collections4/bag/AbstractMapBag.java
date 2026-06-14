@@ -302,7 +302,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             final E obj = (E) in.readObject();
             final int count = in.readInt();
             if (count < 1) {
-                throw new InvalidObjectException("Invalid count for entry: " + count);
+                throw new InvalidObjectException("Invalid count for entry (must be >= 1): " + count);
             }
             map.put(obj, new MutableInteger(count));
             size += count;
