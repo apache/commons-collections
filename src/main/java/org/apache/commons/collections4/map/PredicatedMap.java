@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -155,6 +156,11 @@ public class PredicatedMap<K, V>
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
+        try {
+            map.forEach(this::validate);
+        } catch (final IllegalArgumentException ex) {
+            throw new InvalidObjectException(ex.getMessage());
+        }
     }
 
     /**

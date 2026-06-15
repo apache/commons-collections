@@ -21,12 +21,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
 
@@ -60,6 +66,25 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public IterableMap<K, V> makeTestMap() {
         return decorateMap(new HashMap<>(), testPredicate, testPredicate);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testDeserializeRejectsEntryFailingPredicate() throws Exception {
+        final PredicatedMap<K, V> map = (PredicatedMap<K, V>) decorateMap(new HashMap<>(),
+                NotNullPredicate.notNullPredicate(), null);
+        // a crafted stream can carry an entry that never passed put(); mimic it by
+        // writing one straight into the decorated map
+        map.decorated().put(null, (V) "value");
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
+            oos.writeObject(map);
+        }
+        assertThrows(InvalidObjectException.class, () -> {
+            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
+                ois.readObject();
+            }
+        });
     }
 
     @Test
