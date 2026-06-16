@@ -22,6 +22,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -155,11 +156,11 @@ public class PredicatedMap<K, V>
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map<K, V>) in.readObject(); // (1)
+        map = Objects.requireNonNull((Map<K, V>) in.readObject(), "map"); // (1)
         try {
             map.forEach(this::validate);
         } catch (final IllegalArgumentException ex) {
-            throw new InvalidObjectException(ex.getMessage());
+            throw (InvalidObjectException) new InvalidObjectException(ex.getMessage()).initCause(ex);
         }
     }
 
