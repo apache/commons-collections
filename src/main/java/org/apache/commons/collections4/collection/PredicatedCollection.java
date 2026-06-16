@@ -421,8 +421,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        Objects.requireNonNull(decorated(), "collection");
-        Objects.requireNonNull(predicate, "predicate");
+        if (decorated() == null) {
+            throw new InvalidObjectException("Null collection");
+        }
+        if (predicate == null) {
+            throw new InvalidObjectException("Null predicate");
+        }
         try {
             decorated().forEach(this::validate);
         } catch (final IllegalArgumentException ex) {
