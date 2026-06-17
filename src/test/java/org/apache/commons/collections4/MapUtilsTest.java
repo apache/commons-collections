@@ -633,11 +633,10 @@ class MapUtilsTest {
 
     private void testInvertMap(final Map<String, String> in) {
         // setup
-        in.put("1", "A");
-        in.put("2", "B");
-        in.put("3", "C");
-        in.put("4", "D");
-        in.put("5", "E");
+        final int entryCount = 32;
+        for (int i = 1; i <= entryCount; i++) {
+            in.put(String.valueOf(i), String.valueOf((char) ('A' + i - 1)));
+        }
         final Set<String> inKeySet = new HashSet<>(in.keySet());
         final Set<String> inValSet = new HashSet<>(in.values());
         // invert
@@ -647,11 +646,9 @@ class MapUtilsTest {
         final Set<String> outValSet = new HashSet<>(out.values());
         assertEquals(inKeySet, outValSet);
         assertEquals(inValSet, outKeySet);
-        assertEquals("1", out.get("A"));
-        assertEquals("2", out.get("B"));
-        assertEquals("3", out.get("C"));
-        assertEquals("4", out.get("D"));
-        assertEquals("5", out.get("E"));
+        for (int i = 1; i <= entryCount; i++) {
+            assertEquals(String.valueOf((char) ('A' + i - 1)), in.get(String.valueOf(i)));
+        }
     }
 
     @Test
