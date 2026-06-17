@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -152,6 +153,17 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("1", indexed.get(1));
         assertEquals("2", indexed.get(2));
         assertEquals("3", indexed.get(3));
+    }
+
+    @Test
+    void testRemovePreservesRemainingValuesWithSameTransformedKey() {
+        @SuppressWarnings("unchecked")
+        final IndexedCollection<Integer, String> indexed = (IndexedCollection<Integer, String>) decorateCollection(new ArrayList<>());
+        indexed.add("01");
+        indexed.add("1");
+        indexed.remove("01");
+        assertEquals("1", indexed.get(1));
+        assertNotNull(indexed.values(1));
     }
 
 }

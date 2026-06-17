@@ -235,7 +235,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param object the object to remove
      */
     private void removeFromIndex(final C object) {
-        index.remove(keyTransformer.apply(object));
+        index.removeMapping(keyTransformer.apply(object), object);
     }
 
     /**
