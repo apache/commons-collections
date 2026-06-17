@@ -54,37 +54,30 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Creates an {@link IndexedCollection} for a non-unique index.
      *
-     * @param <K> the index object type.
-     * @param <C> the collection type.
-     * @param coll the decorated {@link Collection}.
+     * @param <K>            the index object type.
+     * @param <C>            the collection type.
+     * @param coll           the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
      * @return the created {@link IndexedCollection}.
      */
-    public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll,
-                                                                            final Transformer<C, K> keyTransformer) {
-        return new IndexedCollection<>(coll, keyTransformer,
-                                           MultiValueMap.<K, C>multiValueMap(new HashMap<>()),
-                                           false);
+    public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
+        return new IndexedCollection<>(coll, keyTransformer, MultiValueMap.<K, C>multiValueMap(new HashMap<>()), false);
     }
 
     /**
      * Creates an {@link IndexedCollection} for a unique index.
      * <p>
-     * If an element is added, which maps to an existing key, an {@link IllegalArgumentException}
-     * will be thrown.
+     * If an element is added, which maps to an existing key, an {@link IllegalArgumentException} will be thrown.
      * </p>
      *
-     * @param <K> the index object type.
-     * @param <C> the collection type.
-     * @param coll the decorated {@link Collection}.
+     * @param <K>            the index object type.
+     * @param <C>            the collection type.
+     * @param coll           the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
      * @return the created {@link IndexedCollection}.
      */
-    public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll,
-                                                                         final Transformer<C, K> keyTransformer) {
-        return new IndexedCollection<>(coll, keyTransformer,
-                                           MultiValueMap.<K, C>multiValueMap(new HashMap<>()),
-                                           true);
+    public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
+        return new IndexedCollection<>(coll, keyTransformer, MultiValueMap.<K, C>multiValueMap(new HashMap<>()), true);
     }
 
     /** The {@link Transformer} for generating index keys. */
@@ -104,8 +97,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param map  map to use as index.
      * @param uniqueIndex  if the index shall enforce uniqueness of index keys.
      */
-    public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer,
-                             final MultiMap<K, C> map, final boolean uniqueIndex) {
+    public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer, final MultiMap<K, C> map, final boolean uniqueIndex) {
         super(coll);
         this.keyTransformer = keyTransformer;
         this.index = map;
