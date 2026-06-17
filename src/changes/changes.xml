@@ -46,6 +46,7 @@
     <action type="fix" dev="ggregory" due-to="Partha Protim Paul" issue="COLLECTIONS-886">[javadoc] CompositeSet.addComposited(Set) does not throw NullPointerException when null is passed #675.</action>
     <action type="fix" dev="ggregory" due-to="Partha Paul, Gary Gregory" issue="COLLECTIONS-887">ConcurrentReferenceHashMap.remove(key), remove(key, value), replace(key, value), and replace(key, oldValue, newValue) throw NullPointerException inconsistently.</action>
     <action type="fix" dev="ggregory" due-to="Marc Carter, Gary Gregory" issue="COLLECTIONS-888">PatriciaTrie incompatible with Java 21 (JEP 431 Sequenced Collections).</action>
+    <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-889">IndexedCollection.remove(Object) removes all values for a non-unique index key.</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Reject non-positive entry count in bag/multiset doReadObject (#679).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix most Junit 5 nested tests (#681).</action>
     <action type="fix" dev="ggregory" due-to="Suhyeon Park, Gary Gregory" issue="COLLECTIONS-881">MultiMapUtils.getXXX ensure safe copy (#669).</action>
