@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.iterators.EmptyIterator;
@@ -201,11 +202,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollections  the Collections to be appended to the composite
      */
     public void addComposited(final Collection<E>... compositeCollections) {
-        for (final Collection<E> compositeCollection : compositeCollections) {
-            if (compositeCollection != null) {
-                all.add(compositeCollection);
-            }
-        }
+        Stream.of(compositeCollections).filter(Objects::nonNull).forEach(all::add);
     }
 
     /**
