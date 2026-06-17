@@ -245,12 +245,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     @Override
     public boolean contains(final Object obj) {
-        for (final Collection<E> item : all) {
-            if (item.contains(obj)) {
-                return true;
-            }
-        }
-        return false;
+        return all.stream().anyMatch(c -> c.contains(obj));
     }
 
     /**
