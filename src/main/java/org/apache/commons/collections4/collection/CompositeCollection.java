@@ -227,13 +227,11 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * This implementation calls {@code clear()} on each collection.
      * </p>
      *
-     * @throws UnsupportedOperationException if clear is unsupported
+     * @throws UnsupportedOperationException if clear is unsupported.
      */
     @Override
     public void clear() {
-        for (final Collection<E> coll : all) {
-            coll.clear();
-        }
+        all.forEach(Collection::clear);
     }
 
     /**
