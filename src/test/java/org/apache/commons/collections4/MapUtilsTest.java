@@ -53,7 +53,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for MapUtils.
+ * Tests {@link MapUtils}.
  */
 @SuppressWarnings("boxing")
 class MapUtilsTest {
