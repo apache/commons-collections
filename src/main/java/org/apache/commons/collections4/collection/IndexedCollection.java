@@ -52,7 +52,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     private static final long serialVersionUID = -5512610452568370038L;
 
     /**
-     * Create an {@link IndexedCollection} for a non-unique index.
+     * Creates an {@link IndexedCollection} for a non-unique index.
      *
      * @param <K> the index object type.
      * @param <C> the collection type.
@@ -68,10 +68,11 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Create an {@link IndexedCollection} for a unique index.
+     * Creates an {@link IndexedCollection} for a unique index.
      * <p>
      * If an element is added, which maps to an existing key, an {@link IllegalArgumentException}
      * will be thrown.
+     * </p>
      *
      * @param <K> the index object type.
      * @param <C> the collection type.
@@ -98,10 +99,10 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Create a {@link IndexedCollection}.
      *
-     * @param coll  decorated {@link Collection}
-     * @param keyTransformer  {@link Transformer} for generating index keys
-     * @param map  map to use as index
-     * @param uniqueIndex  if the index shall enforce uniqueness of index keys
+     * @param coll  decorated {@link Collection}.
+     * @param keyTransformer  {@link Transformer} for generating index keys.
+     * @param map  map to use as index.
+     * @param uniqueIndex  if the index shall enforce uniqueness of index keys.
      */
     public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer,
                              final MultiMap<K, C> map, final boolean uniqueIndex) {
@@ -116,7 +117,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * {@inheritDoc}
      *
      * @throws IllegalArgumentException if the object maps to an existing key and the index
-     *   enforces a uniqueness constraint
+     *   enforces a uniqueness constraint.
      */
     @Override
     public boolean add(final C object) {
@@ -139,9 +140,9 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Provides checking for adding the index.
      *
-     * @param object the object to index
+     * @param object the object to index.
      * @throws IllegalArgumentException if the object maps to an existing key and the index
-     *   enforces a uniqueness constraint
+     *   enforces a uniqueness constraint.
      */
     private void addToIndex(final C object) {
         final K key = keyTransformer.apply(object);
@@ -160,7 +161,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * {@inheritDoc}
      * <p>
-     * Note: uses the index for fast lookup
+     * Note: uses the index for fast lookup.
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -171,7 +172,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * {@inheritDoc}
      * <p>
-     * Note: uses the index for fast lookup
+     * Note: uses the index for fast lookup.
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
@@ -189,6 +190,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * In case of a non-unique index, this method will return the first
      * value associated with the given key. To retrieve all elements associated
      * with a key, use {@link #values(Object)}.
+     * </p>
      *
      * @param key  key to look up
      * @return element found
@@ -272,8 +274,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Gets all elements associated with the given key.
      *
-     * @param key  key to look up
-     * @return a collection of elements found, or null if {@code contains(key) == false}
+     * @param key  key to look up.
+     * @return a collection of elements found, or null if {@code contains(key) == false}.
      */
     @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection
     public Collection<C> values(final K key) {

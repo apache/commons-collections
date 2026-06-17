@@ -74,10 +74,10 @@ public abstract class AbstractCollectionDecorator<E>
     }
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null
-     * @throws NullPointerException if the collection is null
+     * @param collection  the collection to decorate, must not be null.
+     * @throws NullPointerException if the collection is null.
      */
     protected AbstractCollectionDecorator(final Collection<E> collection) {
         this.collection = Objects.requireNonNull(collection, "collection");
@@ -112,7 +112,7 @@ public abstract class AbstractCollectionDecorator<E>
      * Gets the collection being decorated.
      * All access to the decorated collection goes via this method.
      *
-     * @return the decorated collection
+     * @return the decorated collection.
      */
     protected Collection<E> decorated() {
         return collection;
@@ -154,9 +154,10 @@ public abstract class AbstractCollectionDecorator<E>
     /**
      * Sets the collection being decorated.
      * <p>
-     * <strong>NOTE:</strong> this method should only be used during deserialization
+     * <strong>NOTE:</strong> this method should only be used during deserialization.
+     * </p>
      *
-     * @param collection  the decorated collection
+     * @param collection  the decorated collection.
      */
     protected void setCollection(final Collection<E> collection) {
         this.collection = collection;

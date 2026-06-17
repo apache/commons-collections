@@ -52,12 +52,12 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     private static final long serialVersionUID = -7112672385450340330L;
 
     /**
-     * Factory method to create an unmodifiable bounded collection.
+     * Creates an unmodifiable bounded collection.
      *
-     * @param <E> the type of the elements in the collection
-     * @param coll  the {@code BoundedCollection} to decorate, must not be null
-     * @return a new unmodifiable bounded collection
-     * @throws NullPointerException if {@code coll} is {@code null}
+     * @param <E> the type of the elements in the collection.
+     * @param coll  the {@code BoundedCollection} to decorate, must not be null.
+     * @return a new unmodifiable bounded collection.
+     * @throws NullPointerException if {@code coll} is {@code null}.
      * @since 4.0
      */
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
@@ -70,16 +70,17 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     /**
-     * Factory method to create an unmodifiable bounded collection.
+     * Creates an unmodifiable bounded collection.
      * <p>
      * This method is capable of drilling down through up to 1000 other decorators
      * to find a suitable BoundedCollection.
+     * </p>
      *
-     * @param <E> the type of the elements in the collection
-     * @param collection  the {@code BoundedCollection} to decorate, must not be null
-     * @return a new unmodifiable bounded collection
-     * @throws NullPointerException if coll is null
-     * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}
+     * @param <E> the type of the elements in the collection.
+     * @param collection  the {@code BoundedCollection} to decorate, must not be null.
+     * @return a new unmodifiable bounded collection.
+     * @throws NullPointerException if coll is null.
+     * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}.
      * @since 4.0
      */
     @SuppressWarnings("unchecked")
@@ -105,10 +106,10 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
-     * @param coll  the collection to decorate, must not be null
-     * @throws NullPointerException if coll is null
+     * @param coll  the collection to decorate, must not be null.
+     * @throws NullPointerException if coll is null.
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
