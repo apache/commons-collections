@@ -309,12 +309,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     @Override
     public boolean isEmpty() {
-        for (final Collection<E> item : all) {
-            if (!item.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
+        return all.stream().allMatch(Collection::isEmpty);
     }
 
     /**
@@ -352,8 +347,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     @Override
     public boolean remove(final Object obj) {
         if (mutator == null) {
-            throw new UnsupportedOperationException(
-                "remove() is not supported on CompositeCollection without a CollectionMutator strategy");
+            throw new UnsupportedOperationException("remove() is not supported on CompositeCollection without a CollectionMutator strategy");
         }
         return mutator.remove(this, all, obj);
     }
