@@ -90,7 +90,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     private final boolean uniqueIndex;
 
     /**
-     * Create a {@link IndexedCollection}.
+     * Creates a {@link IndexedCollection}.
      *
      * @param coll  decorated {@link Collection}.
      * @param keyTransformer  {@link Transformer} for generating index keys.
@@ -154,6 +154,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * {@inheritDoc}
      * <p>
      * Note: uses the index for fast lookup.
+     * </p>
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -165,15 +166,11 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * {@inheritDoc}
      * <p>
      * Note: uses the index for fast lookup.
+     * </p>
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
-        for (final Object o : coll) {
-            if (!contains(o)) {
-                return false;
-            }
-        }
-        return true;
+        return coll.stream().allMatch(this::contains);
     }
 
     /**
@@ -199,9 +196,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      */
     public void reindex() {
         index.clear();
-        for (final C c : decorated()) {
-            addToIndex(c);
-        }
+        decorated().forEach(this::addToIndex);
     }
 
     @SuppressWarnings("unchecked")
