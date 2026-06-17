@@ -45,8 +45,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     protected Predicate<E> testPredicate =
         String.class::isInstance;
 
-    protected Collection<E> decorateCollection(
-                final Collection<E> collection, final Predicate<E> predicate) {
+    protected Collection<E> decorateCollection(final Collection<E> collection, final Predicate<E> predicate) {
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
@@ -82,10 +81,13 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         return decorateCollection(new ArrayList<>(), truePredicate);
     }
 
+    public Collection<E> makeTestCollection() {
+        return decorateCollection(new ArrayList<>(), testPredicate);
+    }
+
     @Test
     void testDeserializeRejectsElementFailingPredicate() throws Exception {
-        final PredicatedCollection<E> coll = (PredicatedCollection<E>) decorateCollection(
-                new ArrayList<>(), NotNullPredicate.<E>notNullPredicate());
+        final PredicatedCollection<E> coll = (PredicatedCollection<E>) decorateCollection(new ArrayList<>(), NotNullPredicate.<E>notNullPredicate());
         // a crafted stream can carry an element that never passed add(); mimic it by
         // writing one straight into the decorated collection
         coll.decorated().add(null);
@@ -100,18 +102,12 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         });
     }
 
-    public Collection<E> makeTestCollection() {
-        return decorateCollection(new ArrayList<>(), testPredicate);
-    }
-
     @Test
     @SuppressWarnings("unchecked")
     void testIllegalAdd() {
         final Collection<E> c = makeTestCollection();
         final Integer i = 3;
-
         assertThrows(IllegalArgumentException.class, () -> c.add((E) i), "Integer should fail string predicate.");
-
         assertFalse(c.contains(i), "Collection shouldn't contain illegal element");
     }
 
@@ -124,9 +120,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
-
         assertThrows(IllegalArgumentException.class, () -> c.addAll(elements), "Integer should fail string predicate.");
-
         assertFalse(c.contains("one"), "Collection shouldn't contain illegal element");
         assertFalse(c.contains("two"), "Collection shouldn't contain illegal element");
         assertFalse(c.contains(3), "Collection shouldn't contain illegal element");

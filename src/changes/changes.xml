@@ -49,6 +49,7 @@
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Reject non-positive entry count in bag/multiset doReadObject (#679).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix most Junit 5 nested tests (#681).</action>
     <action type="fix" dev="ggregory" due-to="Suhyeon Park, Gary Gregory" issue="COLLECTIONS-881">MultiMapUtils.getXXX ensure safe copy (#669).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Re-validate entries in PredicatedMap/PredicatedCollection readObject (#682).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
