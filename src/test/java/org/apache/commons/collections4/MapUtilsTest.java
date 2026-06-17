@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.AbstractMap;
@@ -659,6 +660,71 @@ class MapUtilsTest {
         final Exception exception = assertThrows(NullPointerException.class, () -> MapUtils.invertMap(nullMap));
         final String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains("map"));
+    }
+
+    /**
+     * Proves that the patched initial capacity calculation prevents HashMap resizing
+     * that would otherwise occur with the original {@code new HashMap<>(map.size())}.
+     *
+     * <p>The test mimics the core logic of {@link MapUtils#invertMap(Map)} but
+     * creates two output maps: one using the old capacity, one using the new formula.
+     * Entries are added in the same order, and resize events are detected via
+     * reflection by tracking changes to the internal {@code table} array.</p>
+     *
+     * <p>For Java 9+ requires JVM argument:
+     * {@code --add-opens java.base/java.util=ALL-UNNAMED}
+     * (configured in your build tool).</p>
+     */
+    @Test
+    void testInvertMapCapacityFormulaAvoidsResize() throws Exception {
+        // create an input map with a size that triggers a resize for the old formula
+        // (e.g. 14 entries → default capacity 16, threshold 12 → resize on 13th put).
+        final Map<String, String> input = new HashMap<>();
+        for (int i = 0; i < 14; i++) {
+            input.put("key" + i, "val" + i);
+        }
+
+        // ---- old capacity (original code) ----
+        final Map<String, String> oldOutput = new HashMap<>(input.size());  // line to be replaced
+
+        // ---- new capacity (patched code) ----
+        final Map<String, String> newOutput = new HashMap<>((int) Math.ceil(input.size() / 0.75d));  // should we use named constant for 0.75d?
+
+        // prepare reflective access to HashMap.table
+        final Field tableField = HashMap.class.getDeclaredField("table");
+        tableField.setAccessible(true);
+
+        int oldResizes = 0;
+        int newResizes = 0;
+        // tables are null before first put
+        Object[] prevOldTable = (Object[]) tableField.get(oldOutput);
+        Object[] prevNewTable = (Object[]) tableField.get(newOutput);
+
+        // simulate the loop from invertMap for both output maps simultaneously
+        // and check if table size changed
+        for (final Map.Entry<String, String> entry : input.entrySet()) {
+            oldOutput.put(entry.getValue(), entry.getKey());
+            newOutput.put(entry.getValue(), entry.getKey());
+
+            final Object[] currOldTable = (Object[]) tableField.get(oldOutput);
+            if (currOldTable != prevOldTable) {
+                oldResizes++;
+                prevOldTable = currOldTable;
+            }
+
+            final Object[] currNewTable = (Object[]) tableField.get(newOutput);
+            if (currNewTable != prevNewTable) {
+                newResizes++;
+                prevNewTable = currNewTable;
+            }
+
+            System.out.printf("el(%6s:%6s): old formula table size is %4d, new formula table is %4d\n", entry.getValue(), entry.getKey(), prevOldTable.length, prevNewTable.length);
+        }
+
+        assertEquals(2, oldResizes,
+                "Old capacity formula should cause exactly one resize for 14 elements, except init alloc");
+        assertEquals(1, newResizes,
+                "Patched capacity formula should prevent any resize for 14 elements, except init alloc");
     }
 
     @Test
