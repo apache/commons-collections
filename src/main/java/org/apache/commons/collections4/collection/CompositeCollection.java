@@ -260,15 +260,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
-        if (coll == null) {
-            return false;
-        }
-        for (final Object item : coll) {
-            if (!contains(item)) {
-                return false;
-            }
-        }
-        return true;
+        return coll != null && coll.stream().allMatch(this::contains);
     }
 
     /**
