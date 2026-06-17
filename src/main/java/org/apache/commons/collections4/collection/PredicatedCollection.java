@@ -140,9 +140,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          */
         public Builder<E> addAll(final Collection<? extends E> items) {
             if (items != null) {
-                for (final E item : items) {
-                    add(item);
-                }
+                items.forEach(this::add);
             }
             return this;
         }
@@ -235,8 +233,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          */
         public MultiSet<E> createPredicatedMultiSet(final MultiSet<E> multiset) {
             Objects.requireNonNull(multiset, "multiset");
-            final PredicatedMultiSet<E> predicatedMultiSet =
-                    PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
+            final PredicatedMultiSet<E> predicatedMultiSet = PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
             predicatedMultiSet.addAll(accepted);
             return predicatedMultiSet;
         }
@@ -376,9 +373,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
     protected PredicatedCollection(final Collection<E> collection, final Predicate<? super E> predicate) {
         super(collection);
         this.predicate = Objects.requireNonNull(predicate, "predicate");
-        for (final E item : collection) {
-            validate(item);
-        }
+        collection.forEach(this::validate);
     }
 
     /**
@@ -406,9 +401,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
-        for (final E item : coll) {
-            validate(item);
-        }
+        coll.forEach(this::validate);
         return decorated().addAll(coll);
     }
 
@@ -445,8 +438,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     protected void validate(final E object) {
         if (!predicate.test(object)) {
-            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
-                                               predicate + "' rejected it");
+            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" + predicate + "' rejected it");
         }
     }
 
