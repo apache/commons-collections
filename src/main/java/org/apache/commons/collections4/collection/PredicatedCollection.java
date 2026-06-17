@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.collection;
 
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -407,6 +410,28 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
             validate(item);
         }
         return decorated().addAll(coll);
+    }
+
+    /**
+     * Deserializes the collection in using a custom routine.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream cannot be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (decorated() == null) {
+            throw new InvalidObjectException("Null collection");
+        }
+        if (predicate == null) {
+            throw new InvalidObjectException("Null predicate");
+        }
+        try {
+            decorated().forEach(this::validate);
+        } catch (final IllegalArgumentException ex) {
+            throw (InvalidObjectException) new InvalidObjectException(ex.getMessage()).initCause(ex);
+        }
     }
 
     /**

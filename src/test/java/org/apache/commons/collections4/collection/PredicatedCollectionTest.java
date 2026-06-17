@@ -19,12 +19,18 @@ package org.apache.commons.collections4.collection;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
 
@@ -74,6 +80,24 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     @Override
     public Collection<E> makeObject() {
         return decorateCollection(new ArrayList<>(), truePredicate);
+    }
+
+    @Test
+    void testDeserializeRejectsElementFailingPredicate() throws Exception {
+        final PredicatedCollection<E> coll = (PredicatedCollection<E>) decorateCollection(
+                new ArrayList<>(), NotNullPredicate.<E>notNullPredicate());
+        // a crafted stream can carry an element that never passed add(); mimic it by
+        // writing one straight into the decorated collection
+        coll.decorated().add(null);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
+            oos.writeObject(coll);
+        }
+        assertThrows(InvalidObjectException.class, () -> {
+            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
+                ois.readObject();
+            }
+        });
     }
 
     public Collection<E> makeTestCollection() {
