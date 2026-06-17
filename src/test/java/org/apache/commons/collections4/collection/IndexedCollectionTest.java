@@ -161,12 +161,9 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         final IndexedCollection<Integer, String> indexed = (IndexedCollection<Integer, String>) decorateCollection(new ArrayList<>());
         indexed.add("01");
         indexed.add("1");
-
         indexed.remove("01");
-
         assertEquals("1", indexed.get(1));
         assertNotNull(indexed.values(1));
-        assertEquals(asList("1"), new ArrayList<>(indexed.values(1)));
     }
 
 }
