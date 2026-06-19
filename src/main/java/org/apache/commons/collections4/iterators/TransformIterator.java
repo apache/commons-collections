@@ -14,9 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -31,39 +33,34 @@ public class TransformIterator<I, O> implements Iterator<O> {
 
     /** The iterator being used */
     private Iterator<? extends I> iterator;
-
     /** The transformer being used */
     private Transformer<? super I, ? extends O> transformer;
 
     /**
-     * Constructs a new {@code TransformIterator} that will not function
-     * until the {@link #setIterator(Iterator) setIterator} and
+     * Constructs a new {@code TransformIterator} that will not function until the {@link #setIterator(Iterator) setIterator} and
      * {@link #setTransformer(Transformer)} methods are invoked.
      */
     public TransformIterator() {
     }
 
     /**
-     * Constructs a new {@code TransformIterator} that won't transform
-     * elements from the given iterator.
+     * Constructs a new {@code TransformIterator} that won't transform elements from the given iterator.
      *
-     * @param iterator  the iterator to use
+     * @param iterator the iterator to use.
      */
     public TransformIterator(final Iterator<? extends I> iterator) {
-        this.iterator = iterator;
+        this(iterator, null);
     }
 
     /**
-     * Constructs a new {@code TransformIterator} that will use the
-     * given iterator and transformer.  If the given transformer is null,
-     * then objects will not be transformed.
+     * Constructs a new {@code TransformIterator} that will use the given iterator and transformer. If the given transformer is null, then objects will not be
+     * transformed.
      *
-     * @param iterator  the iterator to use
-     * @param transformer  the transformer to use, may be null to pass elements through unchanged
+     * @param iterator    the iterator to use, may not be null.
+     * @param transformer the transformer to use, may be null to pass elements through unchanged
      */
-    public TransformIterator(final Iterator<? extends I> iterator,
-                             final Transformer<? super I, ? extends O> transformer) {
-        this.iterator = iterator;
+    public TransformIterator(final Iterator<? extends I> iterator, final Transformer<? super I, ? extends O> transformer) {
+        this.iterator = Objects.requireNonNull(iterator);
         this.transformer = transformer;
     }
 
@@ -91,12 +88,11 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Gets the next object from the iteration, transforming it using the
-     * current transformer. If the transformer is null, no transformation
-     * occurs and the object from the iterator is returned directly.
+     * Gets the next object from the iteration, transforming it using the current transformer. If the transformer is null, no transformation occurs and the
+     * object from the iterator is returned directly.
      *
-     * @return the next object
-     * @throws java.util.NoSuchElementException if there are no more elements
+     * @return the next object.
+     * @throws java.util.NoSuchElementException if there are no more elements.
      */
     @Override
     public O next() {
@@ -109,30 +105,27 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Sets the iterator for this iterator to use.
-     * If iteration has started, this effectively resets the iterator.
+     * Sets the iterator for this iterator to use. If iteration has started, this effectively resets the iterator.
      *
-     * @param iterator  the iterator to use.
+     * @param iterator the iterator to use.
      */
     public void setIterator(final Iterator<? extends I> iterator) {
         this.iterator = iterator;
     }
 
     /**
-     * Sets the transformer this the iterator to use.
-     * A null transformer is a no-op transformer.
+     * Sets the transformer this the iterator to use. A null transformer is a no-op transformer.
      *
-     * @param transformer  the transformer to use, may be null to pass elements through unchanged.
+     * @param transformer the transformer to use, may be null to pass elements through unchanged.
      */
     public void setTransformer(final Transformer<? super I, ? extends O> transformer) {
         this.transformer = transformer;
     }
 
     /**
-     * Transforms the given object using the transformer.
-     * If the transformer is null, the original object is returned as-is.
+     * Transforms the given object using the transformer. If the transformer is null, the original object is returned as-is.
      *
-     * @param source  the object to transform, may be null.
+     * @param source the object to transform, may be null.
      * @return the transformed object, the original object the transformer is null.
      */
     @SuppressWarnings("unchecked")
