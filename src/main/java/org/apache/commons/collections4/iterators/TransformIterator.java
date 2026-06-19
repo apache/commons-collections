@@ -59,7 +59,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * then objects will not be transformed.
      *
      * @param iterator  the iterator to use
-     * @param transformer  the transformer to use
+     * @param transformer  the transformer to use, may be null to pass elements through unchanged
      */
     public TransformIterator(final Iterator<? extends I> iterator,
                              final Transformer<? super I, ? extends O> transformer) {
@@ -79,7 +79,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     /**
      * Gets the transformer this iterator is using.
      *
-     * @return the transformer.
+     * @return the transformer, may be null.
      */
     public Transformer<? super I, ? extends O> getTransformer() {
         return transformer;
@@ -122,7 +122,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Sets the transformer this the iterator to use.
      * A null transformer is a no-op transformer.
      *
-     * @param transformer  the transformer to use
+     * @param transformer  the transformer to use, may be null to pass elements through unchanged
      */
     public void setTransformer(final Transformer<? super I, ? extends O> transformer) {
         this.transformer = transformer;
@@ -135,7 +135,8 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param source  the object to transform
      * @return the transformed object
      */
+    @SuppressWarnings("unchecked")
     protected O transform(final I source) {
-        return transformer.apply(source);
+        return transformer == null ? (O) source : transformer.apply(source);
     }
 }
