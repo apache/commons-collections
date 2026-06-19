@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,28 @@
  * limitations under the License.
  */
 
-/**
- * Extends and customizes the behavior of
- * {@link java.util.Properties Properties}.
- * <p>
- * The following classes are provided in the package:
- * <ul>
- *   <li>SortedProperties- A drop-in replacement for Properties for sorting keys.</li>
- *   <li>FileProperties- A class that extend load functionality for getting Properties.<li/>
- * </ul>
- */
 package org.apache.commons.collections4.properties;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/**
+ * A class that extend a load method which accept a filename.
+ * <p>
+ * Use context classloader to load current activated file.
+ * </p>
+ *
+ * @since 4.2
+ */
+public class FileProperties extends Properties {
+
+    private static final long serialVersionUID = 1L;
+
+    public synchronized Properties load(String fileName) throws IOException {
+        Properties properties = new Properties();
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
+        properties.load(inputStream);
+        return properties;
+    }
+}
