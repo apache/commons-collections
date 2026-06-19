@@ -153,6 +153,17 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
+    void testFailedUniqueAddDoesNotPolluteDecoratedCollection() {
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(new ArrayList<>());
+        indexed.add("01");
+
+        assertThrows(IllegalArgumentException.class, () -> indexed.add("1"));
+        assertEquals(1, indexed.size());
+        assertEquals(asList("01"), new ArrayList<>(indexed));
+        assertEquals("01", indexed.get(1));
+    }
+
+    @Test
     void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
         final Collection<String> original = new ArrayList<>();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
