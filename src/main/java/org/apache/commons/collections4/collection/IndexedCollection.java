@@ -113,6 +113,17 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      */
     @Override
     public boolean add(final C object) {
+        if (uniqueIndex) {
+            final K key = keyTransformer.apply(object);
+            if (index.containsKey(key)) {
+                throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
+            }
+            final boolean added = super.add(object);
+            if (added) {
+                index.put(key, object);
+            }
+            return added;
+        }
         final boolean added = super.add(object);
         if (added) {
             addToIndex(object);
