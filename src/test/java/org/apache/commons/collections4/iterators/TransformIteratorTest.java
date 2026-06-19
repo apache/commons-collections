@@ -14,15 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests {@link TransformIterator}.
+ */
 class TransformIteratorTest {
+
+    @Test
+    void testConstructorInvariant() {
+        assertThrows(NullPointerException.class, () -> new TransformIterator<>(null));
+        assertThrows(NullPointerException.class, () -> new TransformIterator<>(null, null));
+    }
 
     /**
      * Tests <a href="https://issues.apache.org/jira/browse/COLLECTIONS-890">COLLECTIONS-890</a>.
@@ -30,16 +41,14 @@ class TransformIteratorTest {
     @Test
     void testNullTransformerActsAsPassThrough() {
         final TransformIterator<Integer, Integer> iterator = new TransformIterator<>(Arrays.asList(1, 2).iterator(), null);
-
         assertEquals(Integer.valueOf(1), iterator.next());
         assertEquals(Integer.valueOf(2), iterator.next());
     }
 
     @Test
     void testSetNullTransformerActsAsPassThrough() {
-        final TransformIterator<Integer, Integer> iterator = new TransformIterator<>(Arrays.asList(1, 2).iterator(), i -> i + 1);
+        final TransformIterator<Integer, Integer> iterator = new TransformIterator<>(Arrays.asList(1, 2).iterator(), null);
         iterator.setTransformer(null);
-
         assertEquals(Integer.valueOf(1), iterator.next());
         assertEquals(Integer.valueOf(2), iterator.next());
     }
