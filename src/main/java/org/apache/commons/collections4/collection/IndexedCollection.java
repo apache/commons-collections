@@ -159,7 +159,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean contains(final Object object) {
-        return index.containsKey(keyTransformer.apply((C) object));
+        final Collection<C> values = (Collection<C>) index.get(keyTransformer.apply((C) object));
+        return values != null && values.contains(object);
     }
 
     /**
