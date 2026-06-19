@@ -22,6 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -99,6 +104,24 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @Override
     public List<E> makeObject() {
         return new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
+    }
+
+    @Test
+    void testDeserializeRejectsDuplicateInBackingList() throws Exception {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
+        list.add("alpha");
+        list.add("beta");
+        // push a duplicate straight onto the decorated list, bypassing the uniqueness set
+        list.decorated().add("alpha");
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
+            oos.writeObject(list);
+        }
+        assertThrows(InvalidObjectException.class, () -> {
+            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
+                ois.readObject();
+            }
+        });
     }
 
     @Test
