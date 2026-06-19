@@ -21,11 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -178,15 +174,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         map.put("two", "2");
         // drop a key straight from the backing map; the insert-order list still names it
         map.decorated().remove("one");
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-            oos.writeObject(map);
-        }
-        assertThrows(InvalidObjectException.class, () -> {
-            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
-                ois.readObject();
-            }
-        });
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

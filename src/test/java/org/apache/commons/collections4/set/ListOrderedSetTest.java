@@ -21,11 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -104,15 +100,7 @@ public class ListOrderedSetTest<E>
         set.add("green");
         // remove an element from the decorated set only; the order list keeps naming it
         set.decorated().remove("red");
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-            oos.writeObject(set);
-        }
-        assertThrows(InvalidObjectException.class, () -> {
-            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
-                ois.readObject();
-            }
-        });
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(set));
     }
 
     @Test
