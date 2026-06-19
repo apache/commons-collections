@@ -113,20 +113,10 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      */
     @Override
     public boolean add(final C object) {
-        if (uniqueIndex) {
-            final K key = keyTransformer.apply(object);
-            if (index.containsKey(key)) {
-                throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
-            }
-            final boolean added = super.add(object);
-            if (added) {
-                index.put(key, object);
-            }
-            return added;
-        }
+        final K key = toValidKey(object);
         final boolean added = super.add(object);
         if (added) {
-            addToIndex(object);
+            index.put(key, object);
         }
         return added;
     }
@@ -148,11 +138,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *   enforces a uniqueness constraint.
      */
     private void addToIndex(final C object) {
-        final K key = keyTransformer.apply(object);
-        if (uniqueIndex && index.containsKey(key)) {
-            throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
-        }
-        index.put(key, object);
+        index.put(toValidKey(object), object);
     }
 
     @Override
@@ -267,6 +253,14 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
             reindex();
         }
         return changed;
+    }
+
+    private K toValidKey(final C object) {
+        final K key = keyTransformer.apply(object);
+        if (uniqueIndex && index.containsKey(key)) {
+            throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
+        }
+        return key;
     }
 
     /**
