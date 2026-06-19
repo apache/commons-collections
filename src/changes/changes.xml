@@ -52,6 +52,7 @@
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Re-validate entries in PredicatedMap/PredicatedCollection readObject (#682).</action>
     <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-889">IndexedCollection.remove(Object) removes all values for a non-unique index key.</action>
     <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-890">TransformIterator throws NullPointerException when its transformer is null.</action>
+    <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-892">IndexedCollection.add(Object) mutates unique indexed collections before rejecting duplicate keys.</action>
     <action type="fix" dev="ggregory" due-to="Maxim Safronov, Gary Gregory" issue="COLLECTIONS-878">MapUtils.invertMap() improves HashMap construction (#652).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Validate order and uniqueness invariants in decorator readObject() (#684).</action>
     <!-- ADD -->
