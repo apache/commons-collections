@@ -112,7 +112,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  the iterator to use.
      */
     public void setIterator(final Iterator<? extends I> iterator) {
         this.iterator = iterator;
@@ -122,7 +122,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Sets the transformer this the iterator to use.
      * A null transformer is a no-op transformer.
      *
-     * @param transformer  the transformer to use, may be null to pass elements through unchanged
+     * @param transformer  the transformer to use, may be null to pass elements through unchanged.
      */
     public void setTransformer(final Transformer<? super I, ? extends O> transformer) {
         this.transformer = transformer;
@@ -132,8 +132,8 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Transforms the given object using the transformer.
      * If the transformer is null, the original object is returned as-is.
      *
-     * @param source  the object to transform
-     * @return the transformed object
+     * @param source  the object to transform, may be null.
+     * @return the transformed object, the original object the transformer is null.
      */
     @SuppressWarnings("unchecked")
     protected O transform(final I source) {
