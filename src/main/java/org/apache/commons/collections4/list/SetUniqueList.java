@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.list;
 
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -425,6 +428,21 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         final List<E> superSubList = super.subList(fromIndex, toIndex);
         final Set<E> subSet = createSetBasedOnList(set, superSubList);
         return ListUtils.unmodifiableList(new SetUniqueList<>(superSubList, subSet));
+    }
+
+    /**
+     * Deserializes the list and re-checks the no-duplicate invariant the
+     * constructors guarantee.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (set.size() != size() || !new HashSet<>(decorated()).equals(set)) {
+            throw new InvalidObjectException("Inconsistent SetUniqueList deserialized: backing list does not match the uniqueness set");
+        }
     }
 
 }

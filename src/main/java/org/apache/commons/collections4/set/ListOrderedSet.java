@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.set;
 
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -411,6 +414,21 @@ public class ListOrderedSet<E>
     @Override
     public String toString() {
         return setOrder.toString();
+    }
+
+    /**
+     * Deserializes the set and re-checks that the iteration order matches the
+     * decorated set, as the constructors guarantee.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (setOrder.size() != size() || !new HashSet<>(setOrder).equals(decorated())) {
+            throw new InvalidObjectException("Inconsistent ListOrderedSet deserialized: iteration order does not match the set");
+        }
     }
 
 }
