@@ -56,6 +56,7 @@
     <action type="fix" dev="ggregory" due-to="Maxim Safronov, Gary Gregory" issue="COLLECTIONS-878">MapUtils.invertMap() improves HashMap construction (#652).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Validate order and uniqueness invariants in decorator readObject() (#684).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">TransformIterator now fail-fast on a null Iterator (#686).</action>
+    <action type="fix" dev="ggregory" due-to="sankalp suman, Ben Manes" issue="COLLECTIONS-884">[COLLECTIONS-884] Fix JUnit 5 test discovery for Map EntrySet and Values views (#689).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
