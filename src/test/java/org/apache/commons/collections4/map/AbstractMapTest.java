@@ -139,7 +139,8 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
-    public abstract class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
+    @Nested
+    public class MapEntrySetTest extends AbstractSetTest<Map.Entry<K, V>> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -401,7 +402,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     // to the confirmed, that the already-constructed collection views
     // are still equal to the confirmed's collection views.
 
-    public abstract class MapValuesTest extends AbstractCollectionTest<V> {
+    @Nested
+    public class MapValuesTest extends AbstractCollectionTest<V> {
 
         @Override
         public boolean areEqualElementsDistinguishable() {
@@ -556,8 +558,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
-        return new MapEntrySetTest() {
-        };
+        return new MapEntrySetTest();
     }
 
     /**
@@ -577,8 +578,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @return a {@link AbstractCollectionTest} instance for testing the map's values collection
      */
     public BulkTest bulkTestMapValues() {
-        return new MapValuesTest() {
-        };
+        return new MapValuesTest();
     }
 
     /**

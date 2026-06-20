@@ -1316,7 +1316,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  raise <code>UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedAdd() {
+    public void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
         }
@@ -1353,7 +1353,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedRemove() {
+    public void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
         }
