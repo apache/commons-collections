@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -297,6 +298,9 @@ public class LRUMap<K, V>
     @Override
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         maxSize = in.readInt();
+        if (maxSize < 1) {
+            throw new InvalidObjectException("LRUMap max size must be greater than 0");
+        }
         super.doReadObject(in);
     }
 

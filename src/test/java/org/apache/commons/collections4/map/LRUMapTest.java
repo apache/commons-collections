@@ -25,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.InvalidObjectException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -308,6 +310,18 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12), "initialSize must not be larger than maxSize");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1, 0.75f, false), "initialSize must not be negative");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12, 0.75f, false), "initialSize must not be larger than maxSize");
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveMaxSize() throws Exception {
+        final LRUMap<String, String> map = new LRUMap<>(3);
+        map.put("a", "1");
+        final Field maxSizeField = LRUMap.class.getDeclaredField("maxSize");
+        maxSizeField.setAccessible(true);
+        for (final int maxSize : new int[] {0, -7}) {
+            maxSizeField.setInt(map, maxSize);
+            assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
+        }
     }
 
     @Test
