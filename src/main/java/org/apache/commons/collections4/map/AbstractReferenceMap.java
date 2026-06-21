@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.ref.Reference;
@@ -823,6 +824,9 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         valueType = ReferenceStrength.resolve(in.readInt());
         purgeValues = in.readBoolean();
         loadFactor = in.readFloat();
+        if (loadFactor <= 0.0f || Float.isNaN(loadFactor)) {
+            throw new InvalidObjectException("Load factor must be greater than 0");
+        }
         final int capacity = in.readInt();
         init();
         data = new HashEntry[capacity];
