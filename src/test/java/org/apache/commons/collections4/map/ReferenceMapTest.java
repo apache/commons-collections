@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -41,6 +42,8 @@ import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for ReferenceMap.
@@ -307,6 +310,18 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             assertEquals(serializeMap.data.length, deserializedMap.data.length);
         }
 
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractReferenceMap.doReadObject
+     * (its own override) must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final ReferenceMap<K, V> map = new ReferenceMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     /**

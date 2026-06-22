@@ -92,18 +92,14 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     /**
-     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap and
-     * AbstractReferenceMap (its own doReadObject override) must reapply that contract on read.
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
      */
     @ParameterizedTest
     @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
     void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
-        final HashedMap<K, V> hashed = new HashedMap<>();
-        hashed.loadFactor = badLoadFactor;
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(hashed));
-
-        final ReferenceMap<K, V> reference = new ReferenceMap<>();
-        reference.loadFactor = badLoadFactor;
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(reference));
+        final HashedMap<K, V> map = new HashedMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 }
