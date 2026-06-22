@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.InvalidObjectException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * JUnit tests.
@@ -93,16 +95,15 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap and
      * AbstractReferenceMap (its own doReadObject override) must reapply that contract on read.
      */
-    @Test
-    void testDeserializeRejectsInvalidLoadFactor() {
-        for (final float bad : new float[] {0.0f, -1.0f, Float.NaN}) {
-            final HashedMap<K, V> hashed = new HashedMap<>();
-            hashed.loadFactor = bad;
-            assertThrows(InvalidObjectException.class, () -> serializeDeserialize(hashed));
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final HashedMap<K, V> hashed = new HashedMap<>();
+        hashed.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(hashed));
 
-            final ReferenceMap<K, V> reference = new ReferenceMap<>();
-            reference.loadFactor = bad;
-            assertThrows(InvalidObjectException.class, () -> serializeDeserialize(reference));
-        }
+        final ReferenceMap<K, V> reference = new ReferenceMap<>();
+        reference.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(reference));
     }
 }
