@@ -23,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -253,6 +255,70 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         assertNotNull(map.get("a"));
         Thread.sleep(2 * timeout);
         assertNull(map.get("a"));
+    }
+
+    @Test
+    void testCollectionsSynchronizedMapExpiration() throws InterruptedException {
+        final Map<String, String> map = Collections.synchronizedMap(new PassiveExpiringMap<>(50L));
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        Thread.sleep(100L);
+
+        // entrySet iterator triggers expiration
+        synchronized (map) {
+            assertEquals(0, map.entrySet().size());
+        }
+
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        Thread.sleep(100L);
+
+        // keySet iterator triggers expiration
+        synchronized (map) {
+            assertEquals(0, map.keySet().size());
+        }
+
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        Thread.sleep(100L);
+
+        // values iterator triggers expiration
+        synchronized (map) {
+            assertEquals(0, map.values().size());
+        }
+    }
+
+    @Test
+    void testCollectionViewRemoval() {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(10000L);
+        map.put("a", "b");
+        map.put("c", "d");
+        map.put("e", "f");
+
+        // Remove via entrySet iterator
+        final Iterator<Map.Entry<String, String>> entryIter = map.entrySet().iterator();
+        assertTrue(entryIter.hasNext());
+        final Map.Entry<String, String> entry = entryIter.next();
+        final String removedKey = entry.getKey();
+        entryIter.remove();
+        assertFalse(map.containsKey(removedKey));
+
+        // Remove via keySet iterator
+        final Iterator<String> keyIter = map.keySet().iterator();
+        assertTrue(keyIter.hasNext());
+        final String key = keyIter.next();
+        keyIter.remove();
+        assertFalse(map.containsKey(key));
+
+        // Remove via values iterator
+        final Iterator<String> valIter = map.values().iterator();
+        assertTrue(valIter.hasNext());
+        final String val = valIter.next();
+        valIter.remove();
+        assertFalse(map.containsValue(val));
     }
 
 }
