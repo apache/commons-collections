@@ -23,10 +23,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
@@ -263,11 +265,17 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         map.put("a", "b");
         map.put("c", "d");
         assertEquals(2, map.size());
+
+        // Cache the views in SynchronizedMap before they expire
+        final Collection<Map.Entry<String, String>> entrySet = map.entrySet();
+        final Collection<String> keySet = map.keySet();
+        final Collection<String> values = map.values();
+
         Thread.sleep(100L);
 
         // entrySet iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, map.entrySet().size());
+            assertEquals(0, entrySet.size());
         }
 
         map.put("a", "b");
@@ -277,7 +285,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
 
         // keySet iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, map.keySet().size());
+            assertEquals(0, keySet.size());
         }
 
         map.put("a", "b");
@@ -287,7 +295,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
 
         // values iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, map.values().size());
+            assertEquals(0, values.size());
         }
     }
 
