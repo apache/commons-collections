@@ -543,7 +543,16 @@ public class IterableUtils {
         if (iterable instanceof Bag<?>) {
             return ((Bag<E>) iterable).getCount(obj);
         }
-        return size(filteredIterable(emptyIfNull(iterable), EqualPredicate.<E>equalPredicate(obj)));
+        if (iterable == null) {
+            return 0;
+        }
+        int count = 0;
+        for (final E element : iterable) {
+            if (Objects.equals(obj, element)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
