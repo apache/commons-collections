@@ -341,7 +341,15 @@ public class IterableUtils {
      */
     public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
         Objects.requireNonNull(predicate, "predicate");
-        return size(filteredIterable(emptyIfNull(input), predicate));
+        long count = 0;
+        if (input != null) {
+            for (final E element : input) {
+                if (predicate.test(element)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     /**
