@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -63,9 +64,10 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         if (map.isEmpty()) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
-        // convert to array like this to guarantee iterator() ordering
-        final Transformer<? super I, ? extends O> defaultTransformer = map.remove(null);
-        final int size = map.size();
+        // copy so the caller's map is not mutated; LinkedHashMap preserves iterator() ordering
+        final Map<Predicate<? super I>, Transformer<? super I, ? extends O>> entries = new LinkedHashMap<>(map);
+        final Transformer<? super I, ? extends O> defaultTransformer = entries.remove(null);
+        final int size = entries.size();
         if (size == 0) {
             return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
                                                                      defaultTransformer);
@@ -73,8 +75,8 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
         final Transformer<? super I, ? extends O>[] transformers = new Transformer[size];
         final Predicate<? super I>[] preds = new Predicate[size];
         int i = 0;
-        for (final Map.Entry<? extends Predicate<? super I>,
-                             ? extends Transformer<? super I, ? extends O>> entry : map.entrySet()) {
+        for (final Map.Entry<Predicate<? super I>,
+                             Transformer<? super I, ? extends O>> entry : entries.entrySet()) {
             preds[i] = entry.getKey();
             transformers[i] = entry.getValue();
             i++;
