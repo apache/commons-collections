@@ -19,11 +19,7 @@ package org.apache.commons.collections4.collection;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -91,15 +87,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         // a crafted stream can carry an element that never passed add(); mimic it by
         // writing one straight into the decorated collection
         coll.decorated().add(null);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-            oos.writeObject(coll);
-        }
-        assertThrows(InvalidObjectException.class, () -> {
-            try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(out.toByteArray()))) {
-                ois.readObject();
-            }
-        });
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(coll));
     }
 
     @Test
