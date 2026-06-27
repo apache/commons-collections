@@ -497,7 +497,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             final int otherCount = other.getCount(current);
             if (1 <= otherCount && otherCount <= myCount) {
                 excess.add(current, myCount - otherCount);
-            } else {
+            } else if (otherCount == 0) {
                 excess.add(current, myCount);
             }
         }
