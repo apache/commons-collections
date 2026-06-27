@@ -141,13 +141,13 @@ public abstract class AbstractObjectTest extends BulkTest {
         return oStream.readObject();
     }
 
-    protected Object serializeDeserialize(final Object obj) throws IOException, ClassNotFoundException {
+    protected <T> T serializeDeserialize(final T obj) throws IOException, ClassNotFoundException {
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         try (ObjectOutputStream out = new ObjectOutputStream(buffer)) {
             out.writeObject(obj);
         }
         try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()))) {
-            return in.readObject();
+            return (T) in.readObject();
         }
     }
 

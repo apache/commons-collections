@@ -76,18 +76,8 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
     @Test
     void testCollections364() throws Exception {
-        final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<>(
-                String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(original);
-        out.close();
-
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        @SuppressWarnings("unchecked")
-        final DualTreeBidiMap<String, Integer> deserialized = (DualTreeBidiMap<String, Integer>) in.readObject();
-        in.close();
-
+        final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<>(String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
+        final DualTreeBidiMap<String, Integer> deserialized = serializeDeserialize(original);
         assertNotNull(original.comparator());
         assertNotNull(deserialized.comparator());
         assertEquals(original.comparator().getClass(), deserialized.comparator().getClass());
