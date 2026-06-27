@@ -20,10 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
@@ -107,15 +103,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     void testSerializeDeserializeCheckComparator() throws Exception {
         final SortedBidiMap<?, ?> obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
-
+            final Object dest = serializeDeserialize(obj);
             final SortedBidiMap<?, ?> bidi = (SortedBidiMap<?, ?>) dest;
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
