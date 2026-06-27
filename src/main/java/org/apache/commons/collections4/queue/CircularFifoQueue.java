@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.queue;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -358,8 +359,14 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     @SuppressWarnings("unchecked")
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        if (maxElements < 1) {
+            throw new InvalidObjectException("maxElements must be greater than 0");
+        }
         elements = (E[]) new Object[maxElements];
         final int size = in.readInt();
+        if (size < 0 || size > maxElements) {
+            throw new InvalidObjectException("size is out of range: " + size);
+        }
         for (int i = 0; i < size; i++) {
             elements[i] = (E) in.readObject();
         }
