@@ -720,7 +720,6 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isAddSupported()) {
             return;
         }
-
         final Bag<T> bag = makeObject();
         bag.add((T) "A", 2);
         bag.add((T) "B", 3);
