@@ -180,7 +180,7 @@ public interface Bag<E> extends Collection<E> {
      * Remove any members of the bag that are not in the given
      * collection, respecting cardinality.  That is, if the given
      * collection {@code coll} contains {@code n} copies of a
-     * given object and the bag has {@code m &gt; n} copies, then
+     * given object and the bag has {@code m > n} copies, then
      * delete {@code m - n} copies from the bag.  In addition, if
      * {@code e} is an object in the bag but
      * {@code !coll.contains(e)}, then remove {@code e} and any
