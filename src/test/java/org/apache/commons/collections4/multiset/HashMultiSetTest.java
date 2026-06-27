@@ -18,11 +18,7 @@ package org.apache.commons.collections4.multiset;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import org.apache.commons.collections4.MultiSet;
 import org.junit.jupiter.api.Test;
@@ -53,18 +49,11 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
         final int marker = 0x11223344;
         final HashMultiSet<String> set = new HashMultiSet<>();
         set.add("Y", marker);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-            oos.writeObject(set);
-        }
+        final byte[] byteArray = serialize(set);
         for (final int count : new int[] {0, -7}) {
-            final byte[] bytes = out.toByteArray();
+            final byte[] bytes = byteArray.clone();
             replaceInt(bytes, marker, count);
-            assertThrows(InvalidObjectException.class, () -> {
-                try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
-                    ois.readObject();
-                }
-            });
+            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
         }
     }
 

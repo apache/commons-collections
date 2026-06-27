@@ -16,6 +16,14 @@
  */
 package org.apache.commons.collections4;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /**
  * This class is left over from the JUnit 3 implementation.
  */
@@ -26,6 +34,29 @@ public class BulkTest {
 
     /** Path to test properties resources. */
     public static final String TEST_PROPERTIES_PATH = "src/test/resources/org/apache/commons/collections4/properties/";
+
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(final byte[] serialized) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(serialized))) {
+            return (T) in.readObject();
+        }
+    }
+
+    public static Object deserialize(final Path path) throws IOException, ClassNotFoundException {
+        return deserialize(Files.readAllBytes(path));
+    }
+
+    public static byte[] serialize(final Object object) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+        }
+        return baos.toByteArray();
+    }
+
+    public static <T> T serializeDeserialize(final T obj) throws IOException, ClassNotFoundException {
+        return deserialize(serialize(obj));
+    }
 
     /**
      * The full name of this bulk test instance.

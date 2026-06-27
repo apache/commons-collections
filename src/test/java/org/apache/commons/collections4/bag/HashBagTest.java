@@ -18,11 +18,7 @@ package org.apache.commons.collections4.bag;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import org.apache.commons.collections4.Bag;
 import org.junit.jupiter.api.Test;
@@ -53,18 +49,11 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
         final int marker = 0x11223344;
         final HashBag<String> bag = new HashBag<>();
         bag.add("X", marker);
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-            oos.writeObject(bag);
-        }
-        for (final int count : new int[] {0, -7}) {
-            final byte[] bytes = out.toByteArray();
+        final byte[] byteArray = serialize(bag);
+        for (final int count : new int[] { 0, -7 }) {
+            final byte[] bytes = byteArray.clone();
             replaceInt(bytes, marker, count);
-            assertThrows(InvalidObjectException.class, () -> {
-                try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
-                    ois.readObject();
-                }
-            });
+            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
         }
     }
 

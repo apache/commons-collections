@@ -18,12 +18,7 @@ package org.apache.commons.collections4;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public final class TestUtils {
 
@@ -61,20 +56,8 @@ public final class TestUtils {
      * @see #assertSameAfterSerialization(Object)
      */
     public static void assertSameAfterSerialization(final String msg, final Object o) throws IOException, ClassNotFoundException {
-        // write object to byte buffer
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(o);
-        oos.close();
-
-        // read same object from byte buffer
-        final InputStream is = new ByteArrayInputStream(baos.toByteArray());
-        final ObjectInputStream ois = new ObjectInputStream(is);
-        final Object object = ois.readObject();
-        ois.close();
-
         // assert that original object and deserialized objects are the same
-        assertSame(o, object, msg);
+        assertSame(o, AbstractObjectTest.serializeDeserialize(o), msg);
     }
 
     private TestUtils() {
