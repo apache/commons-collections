@@ -24,10 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -1290,13 +1286,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
         obj = makeFullCollection();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - FULL Collection");
             }

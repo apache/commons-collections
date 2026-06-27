@@ -51,6 +51,17 @@ public abstract class AbstractObjectTest extends BulkTest {
     /** Current major release for Collections */
     public static final int COLLECTIONS_MAJOR_VERSION = 4;
 
+    @SuppressWarnings("unchecked")
+    public static <T> T serializeDeserialize(final T obj) throws IOException, ClassNotFoundException {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        try (ObjectOutputStream out = new ObjectOutputStream(buffer)) {
+            out.writeObject(obj);
+        }
+        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()))) {
+            return (T) in.readObject();
+        }
+    }
+
     protected String getCanonicalEmptyCollectionName(final Object object) {
         final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
@@ -139,16 +150,6 @@ public abstract class AbstractObjectTest extends BulkTest {
     private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
         final ObjectInputStream oStream = new ObjectInputStream(stream);
         return oStream.readObject();
-    }
-
-    protected <T> T serializeDeserialize(final T obj) throws IOException, ClassNotFoundException {
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        try (ObjectOutputStream out = new ObjectOutputStream(buffer)) {
-            out.writeObject(obj);
-        }
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()))) {
-            return (T) in.readObject();
-        }
     }
 
     protected boolean skipSerializedCanonicalTests() {
