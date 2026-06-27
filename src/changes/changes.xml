@@ -62,6 +62,7 @@
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Document non-atomic merge semantics for BloomFilter (#695).</action>
     <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Fix AbstractMapBag.retainAll removing all copies when the other bag has more (#692).</action>
     <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Fix integer overflow in SetOperations.cosineSimilarity (#693).</action>
+    <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Validate deserialized size in CircularFifoQueue.readObject (#678).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
