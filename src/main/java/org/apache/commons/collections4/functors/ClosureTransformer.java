@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.functors;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
@@ -25,14 +24,17 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that calls a Closure using the input object
  * and then returns the input.
+ * <p>
+ * Note: Serializable was removed in 4.5 to complete the COLLECTIONS-580
+ * deserialization mitigation. This class acts as a bridge between Closure
+ * and Transformer type hierarchies and must not be serializable to prevent
+ * deserialization gadget chains.
+ * </p>
  *
  * @param <T> the type of the input and result to the function.
  * @since 3.0
  */
-public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
-
-    /** Serial version UID */
-    private static final long serialVersionUID = 478466901448617286L;
+public class ClosureTransformer<T> implements Transformer<T, T> {
 
     /**
      * Factory method that performs validation.

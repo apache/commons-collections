@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.functors;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
@@ -24,15 +23,17 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that calls a Factory and returns the result.
+ * <p>
+ * Note: Serializable was removed in 4.5 to complete the COLLECTIONS-580
+ * deserialization mitigation. This class bridges Factory→Transformer and
+ * must not be serializable to prevent deserialization gadget chains.
+ * </p>
  *
  * @param <T> the type of the input to the function.
  * @param <R> the type of the result of the function.
  * @since 3.0
  */
-public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable {
-
-    /** Serial version UID */
-    private static final long serialVersionUID = -6817674502475353160L;
+public class FactoryTransformer<T, R> implements Transformer<T, R> {
 
     /**
      * Factory method that performs validation.
