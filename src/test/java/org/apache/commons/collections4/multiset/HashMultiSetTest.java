@@ -16,7 +16,12 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.InvalidObjectException;
+
 import org.apache.commons.collections4.MultiSet;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractMultiSetTest} for exercising the
@@ -37,6 +42,19 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     public MultiSet<T> makeObject() {
         return new HashMultiSet<>();
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveCount() throws Exception {
+        final int marker = 0x11223344;
+        final HashMultiSet<String> set = new HashMultiSet<>();
+        set.add("Y", marker);
+        final byte[] byteArray = serialize(set);
+        for (final int count : new int[] {0, -7}) {
+            final byte[] bytes = byteArray.clone();
+            replaceInt(bytes, marker, count);
+            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
+        }
     }
 
 //    void testCreate() throws Exception {

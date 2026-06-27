@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -135,6 +136,17 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
+    void testFailedUniqueAddDoesNotPolluteDecoratedCollection() {
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(new ArrayList<>());
+        indexed.add("01");
+
+        assertThrows(IllegalArgumentException.class, () -> indexed.add("1"));
+        assertEquals(1, indexed.size());
+        assertEquals(asList("01"), new ArrayList<>(indexed));
+        assertEquals("01", indexed.get(1));
+    }
+
+    @Test
     void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
         final Collection<String> original = new ArrayList<>();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
@@ -152,6 +164,17 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("1", indexed.get(1));
         assertEquals("2", indexed.get(2));
         assertEquals("3", indexed.get(3));
+    }
+
+    @Test
+    void testRemovePreservesRemainingValuesWithSameTransformedKey() {
+        @SuppressWarnings("unchecked")
+        final IndexedCollection<Integer, String> indexed = (IndexedCollection<Integer, String>) decorateCollection(new ArrayList<>());
+        indexed.add("01");
+        indexed.add("1");
+        indexed.remove("01");
+        assertEquals("1", indexed.get(1));
+        assertNotNull(indexed.values(1));
     }
 
 }

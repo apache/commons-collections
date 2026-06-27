@@ -23,6 +23,13 @@ import java.util.Objects;
  * <p>
  * <em>See implementation notes for {@link BitMapExtractor} and {@link IndexExtractor}.</em>
  * </p>
+ * <p>
+ * The {@code merge} operations enable bit indexes one at a time and are not atomic. If an index is out of
+ * range an {@link IllegalArgumentException} is raised, but indexes processed before the bad one may already
+ * have been enabled. By design the filter is not rolled back: such an exception signals misuse with bad
+ * indexes and must not be ignored. A filter that throws during a merge should be considered invalid, since
+ * it may hold bits that do not correspond to any valid hashed value.
+ * </p>
  *
  * @param <T> The BloomFilter type.
  * @see BitMapExtractor

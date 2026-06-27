@@ -24,11 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InvalidObjectException;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -41,6 +38,8 @@ import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for ReferenceMap.
@@ -290,23 +289,23 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      */
     @Test
     void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
-
         final ReferenceMap<String, String> serializeMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
         serializeMap.put("KEY", "VALUE");
+        final ReferenceMap<String, String> deserializedMap = serializeDeserialize(serializeMap);
+        assertEquals(1, deserializedMap.size());
+        assertEquals(serializeMap.data.length, deserializedMap.data.length);
+    }
 
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ObjectOutputStream out = new ObjectOutputStream(baos)) {
-            out.writeObject(serializeMap);
-        }
-
-        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        try (ObjectInputStream in = new ObjectInputStream(bais)) {
-            @SuppressWarnings("unchecked")
-            final ReferenceMap<String, String> deserializedMap = (ReferenceMap<String, String>) in.readObject();
-            assertEquals(1, deserializedMap.size());
-            assertEquals(serializeMap.data.length, deserializedMap.data.length);
-        }
-
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractReferenceMap.doReadObject
+     * (its own override) must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final ReferenceMap<K, V> map = new ReferenceMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     /**

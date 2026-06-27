@@ -50,6 +50,7 @@ import org.apache.commons.collections4.map.AbstractMapTest;
 import org.apache.commons.collections4.multiset.AbstractMultiSetTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -64,6 +65,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 
+    @Nested
     public class MultiValuedMapAsMapTest extends AbstractMapTest<Map<K, Collection<V>>, K, Collection<V>> {
 
         @Override
@@ -175,6 +177,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapEntriesTest extends AbstractCollectionTest<Entry<K, V>> {
 
         @SuppressWarnings("unchecked")
@@ -247,6 +250,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     }
 
+    @Nested
     public class MultiValuedMapKeySetTest extends AbstractSetTest<K> {
 
         @SuppressWarnings("unchecked")
@@ -291,6 +295,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapKeysTest extends AbstractMultiSetTest<K> {
 
         @Override
@@ -348,6 +353,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         }
     }
 
+    @Nested
     public class MultiValuedMapValuesTest extends AbstractCollectionTest<V> {
 
         @Override

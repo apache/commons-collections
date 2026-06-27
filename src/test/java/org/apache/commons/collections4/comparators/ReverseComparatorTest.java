@@ -18,10 +18,6 @@ package org.apache.commons.collections4.comparators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -78,15 +74,7 @@ class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
     @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         final Comparator<?> comp = new ReverseComparator<>(new ComparableComparator<>());
-
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(comp);
-        out.close();
-
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        final Object dest = in.readObject();
-        in.close();
+        final Object dest = serializeDeserialize(comp);
         assertEquals(comp, dest, "obj != deserialize(serialize(obj))");
     }
 

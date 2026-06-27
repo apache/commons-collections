@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +32,10 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * JUnit tests.
@@ -41,6 +45,7 @@ import org.junit.jupiter.api.Test;
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
+    @Nested
     public class ListViewTest extends AbstractListTest<K> {
 
         @Override
@@ -112,6 +117,18 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     public LinkedMap<K, V> makeObject() {
         return new LinkedMap<>();
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final LinkedMap<K, V> map = new LinkedMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

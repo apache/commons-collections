@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -205,19 +206,8 @@ class MultiKeyTest {
     @Test
     void testEqualsAfterSerializationOfDerivedClass() throws IOException, ClassNotFoundException {
         final DerivedMultiKey<?> mk = new DerivedMultiKey<>("A", "B");
-
-        // serialize
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(baos);
-        out.writeObject(mk);
-        out.close();
-
         // deserialize
-        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-        final ObjectInputStream in = new ObjectInputStream(bais);
-        final DerivedMultiKey<?> mk2 = (DerivedMultiKey<?>) in.readObject();
-        in.close();
-
+        final DerivedMultiKey<?> mk2 = AbstractObjectTest.serializeDeserialize(mk);
         assertEquals(mk.hashCode(), mk2.hashCode());
     }
 

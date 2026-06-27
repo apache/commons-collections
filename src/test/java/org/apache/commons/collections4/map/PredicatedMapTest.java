@@ -21,12 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.InvalidObjectException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +45,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> testPredicate = String.class::isInstance;
 
-    protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
-        final Predicate<? super V> valuePredicate) {
+    protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {
         return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);
     }
 
@@ -64,6 +65,16 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     @SuppressWarnings("unchecked")
+    void testDeserializeRejectsEntryFailingPredicate() throws Exception {
+        final PredicatedMap<K, V> map = (PredicatedMap<K, V>) decorateMap(new HashMap<>(), NotNullPredicate.notNullPredicate(), null);
+        // a crafted stream can carry an entry that never passed put(); mimic it by
+        // writing one straight into the decorated map
+        map.decorated().put(null, (V) "value");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     void testEntrySet() {
         Map<K, V> map = makeTestMap();
         assertNotNull(map.entrySet(), "returned entryset should not be null");
@@ -77,31 +88,21 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     void testPut() {
         final Map<K, V> map = makeTestMap();
-        assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)),
-                "Illegal value should raise IllegalArgument");
-
-        assertThrows(IllegalArgumentException.class, () -> map.put((K) Integer.valueOf(3), (V) "Hi"),
-                "Illegal key should raise IllegalArgument");
-
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) "Hi", (V) Integer.valueOf(3)), "Illegal value should raise IllegalArgument");
+        assertThrows(IllegalArgumentException.class, () -> map.put((K) Integer.valueOf(3), (V) "Hi"), "Illegal key should raise IllegalArgument");
         assertFalse(map.containsKey(Integer.valueOf(3)));
         assertFalse(map.containsValue(Integer.valueOf(3)));
-
         final Map<K, V> map2 = new HashMap<>();
         map2.put((K) "A", (V) "a");
         map2.put((K) "B", (V) "b");
         map2.put((K) "C", (V) "c");
         map2.put((K) "c", (V) Integer.valueOf(3));
-
-        assertThrows(IllegalArgumentException.class, () -> map.putAll(map2),
-                "Illegal value should raise IllegalArgument");
-
+        assertThrows(IllegalArgumentException.class, () -> map.putAll(map2), "Illegal value should raise IllegalArgument");
         map.put((K) "E", (V) "e");
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
         Map.Entry<K, V> entry = iterator.next();
         final Map.Entry<K, V> finalEntry = entry;
-        assertThrows(IllegalArgumentException.class, () -> finalEntry.setValue((V) Integer.valueOf(3)),
-                "Illegal value should raise IllegalArgument");
-
+        assertThrows(IllegalArgumentException.class, () -> finalEntry.setValue((V) Integer.valueOf(3)), "Illegal value should raise IllegalArgument");
         map.put((K) "F", (V) "f");
         iterator = map.entrySet().iterator();
         entry = iterator.next();

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,6 +36,17 @@ import org.junit.jupiter.api.Test;
  * @param <V> the value type.
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
+
+    @Nested
+    public class MapValuesTest extends AbstractMapTest.MapValuesTest {
+        @Test
+        @Override
+        public void testUnsupportedRemove() {
+            resetFull();
+            assertThrows(UnsupportedOperationException.class, () -> getCollection().remove(null));
+            verify();
+        }
+    }
 
     /** Used as a flag in MapMutator tests */
     private boolean pass;
@@ -58,6 +70,11 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Override
+    public boolean isValuesRemoveSupported() {
+        return false;
     }
 
     @Override

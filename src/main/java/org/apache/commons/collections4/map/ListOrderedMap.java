@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -25,6 +26,7 @@ import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -687,6 +689,9 @@ public class ListOrderedMap<K, V>
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
+        if (insertOrder.size() != map.size() || !new HashSet<>(insertOrder).equals(map.keySet())) {
+            throw new InvalidObjectException("Inconsistent ListOrderedMap deserialized: key order does not match the map keys");
+        }
     }
 
     /**

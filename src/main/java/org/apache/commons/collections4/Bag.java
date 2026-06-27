@@ -57,7 +57,7 @@ public interface Bag<E> extends Collection<E> {
      * <p>
      * Since this method always increases the size of the bag,
      * according to the {@link Collection#add(Object)} contract, it
-     * should always return {@code true}.  Since it sometimes returns
+     * should always return {@code true}. Since it sometimes returns
      * {@code false}, this method violates the contract.
      * </p>
      *
@@ -85,7 +85,7 @@ public interface Bag<E> extends Collection<E> {
     /**
      * <em>(Violation)</em>
      * Returns {@code true} if the bag contains all elements in
-     * the given collection, respecting cardinality.  That is, if the
+     * the given collection, respecting cardinality. That is, if the
      * given collection {@code coll} contains {@code n} copies
      * of a given object, calling {@link #getCount(Object)} on that object must
      * be {@code &gt;= n} for all {@code n} in {@code coll}.
@@ -157,7 +157,7 @@ public interface Bag<E> extends Collection<E> {
     /**
      * <em>(Violation)</em>
      * Remove all elements represented in the given collection,
-     * respecting cardinality.  That is, if the given collection
+     * respecting cardinality. That is, if the given collection
      * {@code coll} contains {@code n} copies of a given object,
      * the bag will have {@code n} fewer copies, assuming the bag
      * had at least {@code n} copies to begin with.
@@ -178,10 +178,10 @@ public interface Bag<E> extends Collection<E> {
     /**
      * <em>(Violation)</em>
      * Remove any members of the bag that are not in the given
-     * collection, respecting cardinality.  That is, if the given
+     * collection, respecting cardinality. That is, if the given
      * collection {@code coll} contains {@code n} copies of a
-     * given object and the bag has {@code m &gt; n} copies, then
-     * delete {@code m - n} copies from the bag.  In addition, if
+     * given object and the bag has {@code m > n} copies, then
+     * delete {@code m - n} copies from the bag. In addition, if
      * {@code e} is an object in the bag but
      * {@code !coll.contains(e)}, then remove {@code e} and any
      * of its copies.

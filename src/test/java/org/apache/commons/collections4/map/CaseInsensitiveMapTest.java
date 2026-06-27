@@ -18,8 +18,10 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InvalidObjectException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,6 +29,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
@@ -44,6 +48,18 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     @Override
     public CaseInsensitiveMap<K, V> makeObject() {
         return new CaseInsensitiveMap<>();
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

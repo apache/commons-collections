@@ -39,6 +39,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -68,6 +69,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 
+    @Nested
     public class BagUniqueSetTest extends AbstractSetTest<T> {
 
         @Override
@@ -711,4 +713,23 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         }
     }
 
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testBagRetainAllOtherHasMoreCopies() {
+        if (!isAddSupported()) {
+            return;
+        }
+        final Bag<T> bag = makeObject();
+        bag.add((T) "A", 2);
+        bag.add((T) "B", 3);
+        final Bag<T> other = makeObject();
+        other.add((T) "A", 5);
+        other.add((T) "B", 10);
+        bag.retainAll(other);
+        // When other has MORE copies, we should keep ALL of ours (the intersection keeps min)
+        assertEquals(2, bag.getCount("A"), "Should keep 2 copies of A when other has 5");
+        assertEquals(3, bag.getCount("B"), "Should keep 3 copies of B when other has 10");
+        assertEquals(5, bag.size(), "Should have 5 total items");
+    }
 }

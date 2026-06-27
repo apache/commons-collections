@@ -47,7 +47,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     private static final long serialVersionUID = 2412805092710877986L;
 
     /**
-     * Factory method to create a synchronized collection.
+     * Creates a synchronized collection.
      *
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
@@ -66,7 +66,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     protected final Object lock;
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
      * @param collection  the collection to decorate, must not be null
      * @throws NullPointerException if the collection is null
@@ -77,7 +77,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     /**
-     * Constructor that wraps (not copies).
+     * Constructs and wraps (not copies).
      *
      * @param collection  the collection to decorate, must not be null
      * @param lock  the lock object to use, must not be null

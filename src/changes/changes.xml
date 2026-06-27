@@ -24,6 +24,7 @@
   <body>
   <release version="4.6.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">[javadoc] Document that BloomFilter merge operations are non-atomic and a filter that throws during a merge should be considered invalid.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry.toReference(ReferenceStrength, T, int) now throws IllegalArgumentException instead of Error.</action>
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Factory; this will be deprecated in 5.0 in favor of java.util.function.Supplier.</action>
     <action type="fix" dev="ggregory" due-to="Eric Hubert, Gary Gregory">Remove deprecation annotation of org.apache.commons.collections4.Predicate; this will be deprecated in 5.0 in favor of java.util.function.Predicate.</action>
@@ -46,18 +47,35 @@
     <action type="fix" dev="ggregory" due-to="Partha Protim Paul" issue="COLLECTIONS-886">[javadoc] CompositeSet.addComposited(Set) does not throw NullPointerException when null is passed #675.</action>
     <action type="fix" dev="ggregory" due-to="Partha Paul, Gary Gregory" issue="COLLECTIONS-887">ConcurrentReferenceHashMap.remove(key), remove(key, value), replace(key, value), and replace(key, oldValue, newValue) throw NullPointerException inconsistently.</action>
     <action type="fix" dev="ggregory" due-to="Marc Carter, Gary Gregory" issue="COLLECTIONS-888">PatriciaTrie incompatible with Java 21 (JEP 431 Sequenced Collections).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Reject non-positive entry count in bag/multiset doReadObject (#679).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix most Junit 5 nested tests (#681).</action>
+    <action type="fix" dev="ggregory" due-to="Suhyeon Park, Gary Gregory" issue="COLLECTIONS-881">MultiMapUtils.getXXX ensure safe copy (#669).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Re-validate entries in PredicatedMap/PredicatedCollection readObject (#682).</action>
+    <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-889">IndexedCollection.remove(Object) removes all values for a non-unique index key.</action>
+    <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-890">TransformIterator throws NullPointerException when its transformer is null.</action>
+    <action type="fix" dev="ggregory" due-to="Ruiqi Dong, Gary Gregory" issue="COLLECTIONS-892">IndexedCollection.add(Object) mutates unique indexed collections before rejecting duplicate keys.</action>
+    <action type="fix" dev="ggregory" due-to="Maxim Safronov, Gary Gregory" issue="COLLECTIONS-878">MapUtils.invertMap() improves HashMap construction (#652).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Validate order and uniqueness invariants in decorator readObject() (#684).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">TransformIterator now fail-fast on a null Iterator (#686).</action>
+    <action type="fix" dev="ggregory" due-to="sankalp suman, Ben Manes" issue="COLLECTIONS-884">[COLLECTIONS-884] Fix JUnit 5 test discovery for Map EntrySet and Values views (#689).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Reject non-positive maxSize in LRUMap.doReadObject() (#690).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Document non-atomic merge semantics for BloomFilter (#695).</action>
+    <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Fix AbstractMapBag.retainAll removing all copies when the other bag has more (#692).</action>
+    <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Fix integer overflow in SetOperations.cosineSimilarity (#693).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <!-- UPDATE -->
-    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 100 #612, #645, #662, #663.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 102 #612, #645, #662, #663.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM).</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.easymock:easymock from 5.5.0 to 5.6.0 #617.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #625.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.19.0 to 2.22.0.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.18.0 to 1.22.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump doxia.module.markdown.version from 2.0.0 to 2.1.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump com.google.guava:guava-testlib from 33.5.0-jre to 33.6.0-jre (#680)..</action>
   </release>
   <release version="4.5.0" date="2025-04-19" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->

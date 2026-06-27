@@ -36,6 +36,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections4.map.AbstractIterableMapTest;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -46,6 +47,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
+    @Nested
     public class BidiMapEntrySetTest extends MapEntrySetTest {
 
         public BidiMapEntrySetTest() {
@@ -108,6 +110,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
+    @Nested
     public class BidiMapIteratorTest extends AbstractMapIteratorTest<K, V> {
 
         @Override
@@ -157,11 +160,15 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     }
 
-    public class InverseBidiMapTest extends AbstractBidiMapTest<V, K> {
+    public abstract class InverseBidiMap extends AbstractBidiMapTest<V, K> {
 
         final AbstractBidiMapTest<K, V> main;
 
-        public InverseBidiMapTest(final AbstractBidiMapTest<K, V> main) {
+        public InverseBidiMap() {
+            this.main = AbstractBidiMapTest.this;
+        }
+
+        public InverseBidiMap(final AbstractBidiMapTest<K, V> main) {
             this.main = main;
         }
 
@@ -241,7 +248,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     public BulkTest bulkTestInverseMap() {
-        return new InverseBidiMapTest(this);
+        return new InverseBidiMap(this) {
+        };
     }
 
     @Override

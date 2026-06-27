@@ -16,7 +16,12 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.InvalidObjectException;
+
 import org.apache.commons.collections4.Bag;
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
@@ -37,6 +42,19 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     @Override
     public Bag<T> makeObject() {
         return new HashBag<>();
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveCount() throws Exception {
+        final int marker = 0x11223344;
+        final HashBag<String> bag = new HashBag<>();
+        bag.add("X", marker);
+        final byte[] byteArray = serialize(bag);
+        for (final int count : new int[] { 0, -7 }) {
+            final byte[] bytes = byteArray.clone();
+            replaceInt(bytes, marker, count);
+            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
+        }
     }
 
 //    void testCreate() throws Exception {

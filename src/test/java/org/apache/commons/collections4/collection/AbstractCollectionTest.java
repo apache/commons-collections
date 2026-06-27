@@ -24,10 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -258,6 +254,20 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             }
             fail(msg + ": array 2 does not have object: " + o);
         }
+    }
+
+    protected static void replaceInt(final byte[] bytes, final int from, final int to) {
+        for (int i = 0; i + 4 <= bytes.length; i++) {
+            if (((bytes[i] & 0xFF) << 24 | (bytes[i + 1] & 0xFF) << 16
+                    | (bytes[i + 2] & 0xFF) << 8 | bytes[i + 3] & 0xFF) == from) {
+                bytes[i] = (byte) (to >>> 24);
+                bytes[i + 1] = (byte) (to >>> 16);
+                bytes[i + 2] = (byte) (to >>> 8);
+                bytes[i + 3] = (byte) to;
+                return;
+            }
+        }
+        throw new IllegalStateException("marker not found in stream");
     }
 
     /**
@@ -1269,28 +1279,14 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - EMPTY Collection");
             }
         }
         obj = makeFullCollection();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - FULL Collection");
             }
@@ -1302,7 +1298,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  raise <code>UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedAdd() {
+    public void testUnsupportedAdd() {
         if (isAddSupported()) {
             return;
         }
@@ -1339,7 +1335,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     @Test
-    void testUnsupportedRemove() {
+    public void testUnsupportedRemove() {
         if (isRemoveSupported()) {
             return;
         }

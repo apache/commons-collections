@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.map;
 
 import java.io.IOException;
+import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
@@ -943,6 +944,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         loadFactor = in.readFloat();
+        if (loadFactor <= 0.0f || Float.isNaN(loadFactor)) {
+            throw new InvalidObjectException("Load factor must be greater than 0");
+        }
         final int capacity = in.readInt();
         final int size = in.readInt();
         init();

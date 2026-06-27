@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -86,8 +87,30 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    protected E getListIteratorAddSetValue() {
+        return (E) Long.valueOf(1000);
+    }
+
+    @Override
+    protected boolean isListIteratorSetSupported() {
+        return false;
+    }
+
+    @Override
     public List<E> makeObject() {
         return new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
+    }
+
+    @Test
+    void testDeserializeRejectsDuplicateInBackingList() throws Exception {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
+        list.add("alpha");
+        list.add("beta");
+        // push a duplicate straight onto the decorated list, bypassing the uniqueness set
+        list.decorated().add("alpha");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(list));
+
     }
 
     @Test

@@ -22,9 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.math.BigInteger;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
@@ -53,11 +52,8 @@ class TransformedSplitMapTest extends BulkTest {
                 TransformedSplitMap.transformingMap(new HashMap<>(),
                                                     NOPTransformer.<String>nopTransformer(),
                                                     NOPTransformer.<String>nopTransformer());
-
-        final ObjectInputStream in = new ObjectInputStream(Files.newInputStream(Paths.get(TEST_DATA_PATH + "/TransformedSplitMap.emptyCollection.version4.obj")));
-        final Object readObject = in.readObject();
-        in.close();
-
+        final Path path = Paths.get(TEST_DATA_PATH + "/TransformedSplitMap.emptyCollection.version4.obj");
+        final Object readObject = deserialize(path);
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
         assertTrue(readMap.isEmpty(), "Map should be empty");
         assertEquals(map.entrySet(), readMap.entrySet());
@@ -71,11 +67,8 @@ class TransformedSplitMapTest extends BulkTest {
         map.put("c", "d");
         map.put("e", "f");
         map.put("g", "h");
-
-        final ObjectInputStream in = new ObjectInputStream(Files.newInputStream(Paths.get(TEST_DATA_PATH + "TransformedSplitMap.fullCollection.version4.obj")));
-        final Object readObject = in.readObject();
-        in.close();
-
+        final Path path = Paths.get(TEST_DATA_PATH + "TransformedSplitMap.fullCollection.version4.obj");
+        final Object readObject = deserialize(path);
         final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
         assertFalse(readMap.isEmpty(), "Map should not be empty");
         assertEquals(map.entrySet(), readMap.entrySet());

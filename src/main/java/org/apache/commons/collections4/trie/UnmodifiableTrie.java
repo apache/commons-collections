@@ -29,6 +29,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
+import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 
 /**
  * An unmodifiable {@link Trie}.
@@ -99,7 +100,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return Collections.unmodifiableSet(delegate.entrySet());
+        return UnmodifiableEntrySet.unmodifiableEntrySet(delegate.entrySet());
     }
 
     @Override

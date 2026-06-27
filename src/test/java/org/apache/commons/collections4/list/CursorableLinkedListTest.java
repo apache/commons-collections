@@ -1144,17 +1144,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         for (int i = 0; i < 10000; i++) {
             list.add((E) Integer.valueOf(i));
         }
-
-        final java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
-        final java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);
-        out.writeObject(list);
-        out.flush();
-        out.close();
-
-        final java.io.ByteArrayInputStream bufin = new java.io.ByteArrayInputStream(buf.toByteArray());
-        final java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
-        final Object list2 = in.readObject();
-
+        final Object list2 = serializeDeserialize(list);
         assertNotSame(list, list2);
         assertEquals(list2, list);
         assertEquals(list, list2);
@@ -1274,17 +1264,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "C");
         list.add((E) "D");
         list.add((E) "E");
-
-        final java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
-        final java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);
-        out.writeObject(list);
-        out.flush();
-        out.close();
-
-        final java.io.ByteArrayInputStream bufIn = new java.io.ByteArrayInputStream(buf.toByteArray());
-        final java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufIn);
-        final Object list2 = in.readObject();
-
+        final Object list2 = serializeDeserialize(list);
         assertNotSame(list, list2);
         assertEquals(list2, list);
         assertEquals(list, list2);
@@ -1298,16 +1278,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "C");
         list.add((E) "D");
         list.add((E) "E");
-        final java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
-        final java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);
-        out.writeObject(list);
-        out.flush();
-        out.close();
-
-        final java.io.ByteArrayInputStream bufin = new java.io.ByteArrayInputStream(buf.toByteArray());
-        final java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
-        final Object list2 = in.readObject();
-
+        final Object list2 = serializeDeserialize(list);
         assertNotSame(list, list2);
         assertEquals(list2, list);
         assertEquals(list, list2);

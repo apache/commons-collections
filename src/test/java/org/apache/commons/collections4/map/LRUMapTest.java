@@ -25,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.InvalidObjectException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +37,8 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * JUnit tests.
@@ -163,6 +167,18 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     public LRUMap<K, V> makeObject() {
         return new LRUMap<>();
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final LRUMap<K, V> map = new LRUMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test
@@ -308,6 +324,18 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12), "initialSize must not be larger than maxSize");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, -1, 0.75f, false), "initialSize must not be negative");
         assertThrows(IllegalArgumentException.class, () -> new LRUMap<K, V>(10, 12, 0.75f, false), "initialSize must not be larger than maxSize");
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveMaxSize() throws Exception {
+        final LRUMap<String, String> map = new LRUMap<>(3);
+        map.put("a", "1");
+        final Field maxSizeField = LRUMap.class.getDeclaredField("maxSize");
+        maxSizeField.setAccessible(true);
+        for (final int maxSize : new int[] {0, -7}) {
+            maxSizeField.setInt(map, maxSize);
+            assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
+        }
     }
 
     @Test

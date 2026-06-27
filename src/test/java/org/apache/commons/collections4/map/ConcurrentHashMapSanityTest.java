@@ -19,6 +19,9 @@ package org.apache.commons.collections4.map;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
 /**
  * A sanity test for the test framework.
  *
@@ -48,6 +51,17 @@ public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<Concurren
     @Override
     public boolean isTestSerialization() {
         return false;
+    }
+
+    @Nested
+    public class MapEntrySetTest extends AbstractMapTest.MapEntrySetTest {
+        @Test
+        @Override
+        public void testUnsupportedAdd() {
+            resetEmpty();
+            // ConcurrentHashMap.entrySet() supports add.
+            getCollection().add(getFullNonNullElements()[0]);
+        }
     }
 
     @Override

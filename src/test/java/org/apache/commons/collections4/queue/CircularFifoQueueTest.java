@@ -416,26 +416,14 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         b.add((E) "a");
         assertEquals(1, b.size());
         assertTrue(b.contains("a"));
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        new ObjectOutputStream(bos).writeObject(b);
-
-        final CircularFifoQueue<E> b2 = (CircularFifoQueue<E>) new ObjectInputStream(
-            new ByteArrayInputStream(bos.toByteArray())).readObject();
-
+        final CircularFifoQueue<E> b2 = serializeDeserialize(b);
         assertEquals(1, b2.size());
         assertTrue(b2.contains("a"));
         b2.add((E) "b");
         assertEquals(2, b2.size());
         assertTrue(b2.contains("a"));
         assertTrue(b2.contains("b"));
-
-        bos = new ByteArrayOutputStream();
-        new ObjectOutputStream(bos).writeObject(b2);
-
-        final CircularFifoQueue<E> b3 = (CircularFifoQueue<E>) new ObjectInputStream(
-            new ByteArrayInputStream(bos.toByteArray())).readObject();
-
+        final CircularFifoQueue<E> b3 = serializeDeserialize(b2);
         assertEquals(2, b3.size());
         assertTrue(b3.contains("a"));
         assertTrue(b3.contains("b"));
