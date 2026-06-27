@@ -455,16 +455,6 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         assertThrows(InvalidObjectException.class, () -> deserialize(negative));
     }
 
-    private static byte[] serialize(final Object obj) throws Exception {
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        new ObjectOutputStream(bos).writeObject(obj);
-        return bos.toByteArray();
-    }
-
-    private static Object deserialize(final byte[] data) throws Exception {
-        return new ObjectInputStream(new ByteArrayInputStream(data)).readObject();
-    }
-
     private static int indexOfInt(final byte[] data, final int value) {
         final byte[] needle = {(byte) (value >>> 24), (byte) (value >>> 16), (byte) (value >>> 8), (byte) value};
         for (int i = 0; i <= data.length - 4; i++) {
