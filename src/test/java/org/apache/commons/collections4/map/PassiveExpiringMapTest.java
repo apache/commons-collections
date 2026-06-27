@@ -264,37 +264,30 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         map.put("a", "b");
         map.put("c", "d");
         assertEquals(2, map.size());
-
         // Cache the views in SynchronizedMap before they expire
         final Collection<Map.Entry<String, String>> entrySet = map.entrySet();
         final Collection<String> keySet = map.keySet();
         final Collection<String> values = map.values();
-
         Thread.sleep(100L);
-
         // entrySet iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, entrySet.size());
+            assertTrue(entrySet.isEmpty());
         }
-
         map.put("a", "b");
         map.put("c", "d");
         assertEquals(2, map.size());
         Thread.sleep(100L);
-
         // keySet iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, keySet.size());
+            assertTrue(keySet.isEmpty());
         }
-
         map.put("a", "b");
         map.put("c", "d");
         assertEquals(2, map.size());
         Thread.sleep(100L);
-
         // values iterator triggers expiration
         synchronized (map) {
-            assertEquals(0, values.size());
+            assertTrue(values.isEmpty());
         }
     }
 
@@ -304,7 +297,6 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         map.put("a", "b");
         map.put("c", "d");
         map.put("e", "f");
-
         // Remove via entrySet iterator
         final Iterator<Map.Entry<String, String>> entryIter = map.entrySet().iterator();
         assertTrue(entryIter.hasNext());
@@ -312,20 +304,33 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         final String removedKey = entry.getKey();
         entryIter.remove();
         assertFalse(map.containsKey(removedKey));
-
         // Remove via keySet iterator
         final Iterator<String> keyIter = map.keySet().iterator();
         assertTrue(keyIter.hasNext());
         final String key = keyIter.next();
         keyIter.remove();
         assertFalse(map.containsKey(key));
-
         // Remove via values iterator
         final Iterator<String> valIter = map.values().iterator();
         assertTrue(valIter.hasNext());
         final String val = valIter.next();
         valIter.remove();
         assertFalse(map.containsValue(val));
+    }
+
+    @Test
+    void testCollectionViewNullInputs() {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(10000L);
+        map.put("a", "b");
+        // entrySet
+        assertFalse(map.entrySet().removeAll(null));
+        assertFalse(map.entrySet().retainAll(null));
+        // keySet
+        assertFalse(map.keySet().removeAll(null));
+        assertFalse(map.keySet().retainAll(null));
+        // values
+        assertFalse(map.values().removeAll(null));
+        assertFalse(map.values().retainAll(null));
     }
 
 }
