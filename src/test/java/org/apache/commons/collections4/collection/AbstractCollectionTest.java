@@ -1283,14 +1283,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            final Object dest = in.readObject();
-            in.close();
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals(obj, dest, "obj != deserialize(serialize(obj)) - EMPTY Collection");
             }
@@ -1301,7 +1294,6 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             final ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);
             out.close();
-
             final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             final Object dest = in.readObject();
             in.close();
