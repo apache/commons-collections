@@ -38,21 +38,16 @@ class SwitchTransformerMapMutatesTest {
         final Transformer<String, String> defaultTransformer = ConstantTransformer.constantTransformer("default");
         final Transformer<String, String> transformer = ConstantTransformer.constantTransformer("value");
         final Predicate<String> predicate = NullPredicate.INSTANCE;
-
         @SuppressWarnings("unchecked")
         final Map<Predicate<String>, Transformer<String, String>> map = new LinkedHashMap<>();
         map.put(null, defaultTransformer);
         map.put(predicate, transformer);
-
         final int sizeBefore = map.size();
-        assertEquals(2, sizeBefore, "map should have 2 entries before call");
-
+        assertEquals(2, sizeBefore);
         // Call the factory method
         SwitchTransformer.switchTransformer(map);
-
         // The map should NOT have been mutated - null key must still be present
         final int sizeAfter = map.size();
-        assertEquals(sizeBefore, sizeAfter,
-                "switchTransformer must not mutate the input map; expected size " + sizeBefore + " but got " + sizeAfter);
+        assertEquals(sizeBefore, sizeAfter, "switchTransformer must not mutate the input map; expected size");
     }
 }
