@@ -339,4 +339,21 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         assertFalse(map.values().retainAll(null));
     }
 
+    @Test
+    void testCollectionViewIteratorExpiration() throws InterruptedException {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(50L);
+        map.put("a", "b");
+
+        final Collection<Map.Entry<String, String>> entrySet = map.entrySet();
+        final Collection<String> keySet = map.keySet();
+        final Collection<String> values = map.values();
+
+        Thread.sleep(100L);
+
+        // The iterators should trigger expiration and not return any elements
+        assertFalse(entrySet.iterator().hasNext());
+        assertFalse(keySet.iterator().hasNext());
+        assertFalse(values.iterator().hasNext());
+    }
+
 }
