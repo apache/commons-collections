@@ -37,8 +37,7 @@ class SwitchTransformerMapMutatesTest {
     void testSwitchTransformerMapDoesNotMutateInput() {
         final Transformer<String, String> defaultTransformer = ConstantTransformer.constantTransformer("default");
         final Transformer<String, String> transformer = ConstantTransformer.constantTransformer("value");
-        final Predicate<String> predicate = NullPredicate.INSTANCE;
-        @SuppressWarnings("unchecked")
+        final Predicate<String> predicate = NullPredicate.nullPredicate();
         final Map<Predicate<String>, Transformer<String, String>> map = new LinkedHashMap<>();
         map.put(null, defaultTransformer);
         map.put(predicate, transformer);
