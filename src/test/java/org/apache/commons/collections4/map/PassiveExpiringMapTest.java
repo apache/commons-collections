@@ -272,6 +272,8 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         // entrySet iterator triggers expiration
         synchronized (map) {
             assertTrue(entrySet.isEmpty());
+            assertTrue(keySet.isEmpty());
+            assertTrue(values.isEmpty());
         }
         map.put("a", "b");
         map.put("c", "d");
@@ -279,7 +281,9 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         Thread.sleep(100L);
         // keySet iterator triggers expiration
         synchronized (map) {
+            assertTrue(entrySet.isEmpty());
             assertTrue(keySet.isEmpty());
+            assertTrue(values.isEmpty());
         }
         map.put("a", "b");
         map.put("c", "d");
@@ -287,6 +291,8 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         Thread.sleep(100L);
         // values iterator triggers expiration
         synchronized (map) {
+            assertTrue(entrySet.isEmpty());
+            assertTrue(keySet.isEmpty());
             assertTrue(values.isEmpty());
         }
     }
