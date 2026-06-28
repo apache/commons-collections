@@ -59,6 +59,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
      * <p>
      * This factory creates a transformer that just returns the input object when
      * the predicate is false.
+     * </p>
      *
      * @param <T>  input and output type for the transformer
      * @param predicate  predicate to switch on

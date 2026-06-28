@@ -37,6 +37,7 @@ public class ForClosure<T> implements Closure<T> {
      * <p>
      * A null closure or zero count returns the {@code NOPClosure}.
      * A count of one returns the specified closure.
+     * </p>
      *
      * @param <E> the type that the closure acts on
      * @param count  the number of times to execute the closure

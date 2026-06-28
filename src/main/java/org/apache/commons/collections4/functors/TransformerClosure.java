@@ -37,6 +37,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      * Factory method that performs validation.
      * <p>
      * A null transformer will return the {@code NOPClosure}.
+     * </p>
      *
      * @param <E> the type that the closure acts on
      * @param transformer  the transformer to call, null means nop

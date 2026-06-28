@@ -39,6 +39,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * <p>
      * This factory creates a closure that performs no action when
      * the predicate is false.
+     * </p>
      *
      * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
@@ -84,6 +85,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * <p>
      * This constructor creates a closure that performs no action when
      * the predicate is false.
+     * </p>
      *
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null

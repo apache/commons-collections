@@ -45,6 +45,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      * closure is called. The default closure is set in the map with a
      * null key. The ordering is that of the iterator() method on the entryset
      * collection of the map.
+     * </p>
      *
      * @param <E> the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
