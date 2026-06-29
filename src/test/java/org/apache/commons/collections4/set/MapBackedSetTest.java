@@ -35,6 +35,11 @@ public class MapBackedSetTest<E> extends AbstractSetTest<E> {
         return MapBackedSet.mapBackedSet(new HashedMap<>());
     }
 
+    @Override
+    protected int getIterationBehaviour() {
+        return UNORDERED;
+    }
+
 //    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/MapBackedSet.emptyCollection.version4.obj");

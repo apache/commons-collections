@@ -1225,13 +1225,20 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                 "toArray(null) should raise NPE");
         verify();
 
+        final List<E> expectedList = new ArrayList<>();
+        for (final E element : getCollection()) {
+            expectedList.add(element);
+        }
+
         array = getCollection().toArray(ArrayUtils.EMPTY_OBJECT_ARRAY);
         a = getCollection().toArray();
 
         if ((getIterationBehaviour() & UNORDERED) != 0) {
-            assertUnorderedArrayEquals(array, a, "toArray(Object[]) and toArray()");
+            assertUnorderedArrayEquals(expectedList.toArray(), array, "toArray(Object[]) and iterator");
+            assertUnorderedArrayEquals(expectedList.toArray(), a, "toArray() and iterator");
         } else {
-            assertEquals(Arrays.asList(array), Arrays.asList(a), "toArrays should be equal");
+            assertEquals(expectedList, Arrays.asList(array), "toArray(Object[]) and iterator order should match");
+            assertEquals(expectedList, Arrays.asList(a), "toArray() and iterator order should match");
         }
         // Figure out if they're all the same class
         // TODO: It'd be nicer to detect a common superclass
@@ -1253,11 +1260,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                 "toArray(Object[]) should return correct array type");
 
         if ((getIterationBehaviour() & UNORDERED) != 0) {
-            assertUnorderedArrayEquals(array, getCollection().toArray(), "type-specific toArray(T[]) and toArray()");
+            assertUnorderedArrayEquals(expectedList.toArray(), array, "type-specific toArray(T[]) and iterator");
         } else {
-            assertEquals(Arrays.asList(array),
-                    Arrays.asList(getCollection().toArray()),
-                    "type-specific toArrays should be equal");
+            assertEquals(expectedList, Arrays.asList(array),
+                    "type-specific toArray(T[]) and iterator order should match");
         }
         verify();
     }

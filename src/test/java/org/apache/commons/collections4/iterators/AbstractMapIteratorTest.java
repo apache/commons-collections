@@ -70,6 +70,18 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      */
     public abstract Map<K, V> getMap();
 
+    @Override
+    protected int getIterationBehaviour() {
+        final Map<K, V> map = getMap();
+        if (map instanceof org.apache.commons.collections4.OrderedMap || map instanceof java.util.SortedMap
+                || map instanceof java.util.LinkedHashMap
+                || map.getClass().getSimpleName().contains("Linked")
+                || map.getClass().getSimpleName().contains("Ordered")) {
+            return 0;
+        }
+        return org.apache.commons.collections4.collection.AbstractCollectionTest.UNORDERED;
+    }
+
     /**
      * Tests whether the get operation on the map structurally modifies the map,
      * such as with LRUMap. Default is false.

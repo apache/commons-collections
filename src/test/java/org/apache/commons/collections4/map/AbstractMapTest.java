@@ -626,7 +626,14 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
-        return 0;
+        final Map<K, V> map = getMap();
+        if (map instanceof org.apache.commons.collections4.OrderedMap || map instanceof java.util.SortedMap
+                || map instanceof java.util.LinkedHashMap
+                || map.getClass().getSimpleName().contains("Linked")
+                || map.getClass().getSimpleName().contains("Ordered")) {
+            return 0;
+        }
+        return AbstractCollectionTest.UNORDERED;
     }
 
     /**

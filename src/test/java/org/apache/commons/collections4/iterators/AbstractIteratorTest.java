@@ -112,6 +112,10 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         assertNotNull(it.toString());
     }
 
+    protected int getIterationBehaviour() {
+        return 0;
+    }
+
     /**
      * Tests {@link Iterator#forEachRemaining(java.util.function.Consumer)}.
      */
@@ -121,7 +125,11 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         final Iterator<E> it = makeObject();
         final List<E> actual = new ArrayList<>();
         it.forEachRemaining(actual::add);
-        assertEquals(expected, actual);
+        if (getIterationBehaviour() == org.apache.commons.collections4.collection.AbstractCollectionTest.UNORDERED) {
+            assertEquals(new org.apache.commons.collections4.bag.HashBag<>(expected), new org.apache.commons.collections4.bag.HashBag<>(actual));
+        } else {
+            assertEquals(expected, actual);
+        }
     }
 
     /**
