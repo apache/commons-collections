@@ -47,7 +47,7 @@ import java.util.Iterator;
  * function as an empty iterator.
  * </p>
  *
- * @param <E> the type of elements in this iterator.
+ * @param <E> The type of elements in this iterator.
  * @since 4.0
  */
 public abstract class LazyIteratorChain<E> implements Iterator<E> {

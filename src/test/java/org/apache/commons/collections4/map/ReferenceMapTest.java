@@ -44,8 +44,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 /**
  * Tests for ReferenceMap.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

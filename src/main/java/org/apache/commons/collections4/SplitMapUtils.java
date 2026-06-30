@@ -217,8 +217,8 @@ public class SplitMapUtils {
      * If {@code get} implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise, an {@link Unmodifiable} {@link IterableMap} will be returned.
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @param get to wrap, must not be null
      * @return {@link IterableMap}
      * @throws NullPointerException if the argument is null
@@ -241,8 +241,8 @@ public class SplitMapUtils {
      * it is recommended that the result of #put(K, V) be discarded as it likely will not
      * match {@code V} at runtime.
      *
-     * @param <K> the key type
-     * @param <V> the element type
+     * @param <K> The key type
+     * @param <V> The element type
      * @param put to wrap, must not be null
      * @return {@link Map}
      * @throws NullPointerException if the argument is null

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated bag.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public abstract class AbstractBagDecorator<E>

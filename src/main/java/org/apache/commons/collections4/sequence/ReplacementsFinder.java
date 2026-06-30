@@ -43,7 +43,7 @@ import java.util.List;
  * interface to process the sub-sequences.
  * </p>
  *
- * @param <T> the type of the input to the visit operations.
+ * @param <T> The type of the input to the visit operations.
  * @see ReplacementsHandler
  * @see EditScript
  * @see SequencesComparator

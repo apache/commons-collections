@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Serializable subclass of AbstractSetDecorator.
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.1
  */
 public abstract class AbstractSerializableSetDecorator<E>

@@ -138,7 +138,7 @@ public class ListUtils {
      * Returns either the passed in list, or if the list is {@code null},
      * the value of {@code defaultList}.
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @param list  the list, possibly {@code null}
      * @param defaultList  the returned values if list is {@code null}
      * @return an empty list if the argument is {@code null}
@@ -152,7 +152,7 @@ public class ListUtils {
      * Returns an immutable empty list if the argument is {@code null},
      * or the argument itself otherwise.
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @param list the list, possibly {@code null}
      * @return an empty list if the argument is {@code null}
      */
@@ -260,7 +260,7 @@ public class ListUtils {
      * Returns a new list containing all elements that are contained in
      * both given lists.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list1  the first list
      * @param list2  the second list
      * @return  the intersection of those two lists
@@ -368,7 +368,7 @@ public class ListUtils {
      * and third element are all set to {@code null}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
      * @return a lazy list backed by the given list
@@ -401,7 +401,7 @@ public class ListUtils {
      * and third element are all set to {@code null}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to make lazy, must not be null
      * @param transformer  the transformer for creating new objects, must not be null
      * @return a lazy list backed by the given list
@@ -490,7 +490,7 @@ public class ListUtils {
      * Adapted from https://github.com/google/guava
      * </p>
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @param list  the list to return consecutive sublists of
      * @param size  the desired size of each sublist (the last may be smaller)
      * @return a list of consecutive sublists
@@ -515,7 +515,7 @@ public class ListUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to predicate, must not be null
      * @param predicate  the predicate for the list, must not be null
      * @return a predicated list backed by the given list
@@ -602,7 +602,7 @@ public class ListUtils {
      * A {@code null} predicate matches no elements.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
@@ -622,7 +622,7 @@ public class ListUtils {
      * If the input predicate is {@code null}, the result is an empty list.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param inputCollection the collection to get the input from, may not be null
      * @param predicate the predicate to use, may be null
      * @return the elements <strong>not</strong> matching the predicate (new list)
@@ -646,7 +646,7 @@ public class ListUtils {
      * one occurrence.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list1  the list to subtract from
      * @param list2  the list to subtract
      * @return a new list containing the results
@@ -667,7 +667,7 @@ public class ListUtils {
      * Returns the sum of the given lists.  This is their intersection
      * subtracted from their union.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list1  the first list
      * @param list2  the second list
      * @return  a new list containing the sum of those lists
@@ -696,7 +696,7 @@ public class ListUtils {
      * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
      * @throws NullPointerException if the list is null
@@ -722,7 +722,7 @@ public class ListUtils {
      * If you want that behavior, see {@link TransformedList#transformedList}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null
      * @return a transformed list backed by the given list
@@ -738,7 +738,7 @@ public class ListUtils {
      * first list.  The {@link List#addAll(Collection)} operation is
      * used to append the two given lists into a new list.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list1  the first list
      * @param list2  the second list
      * @return a new list containing the union of those lists

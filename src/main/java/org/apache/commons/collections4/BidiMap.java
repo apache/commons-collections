@@ -38,8 +38,8 @@ import java.util.Set;
  * duplicate keys. See the {@link #put} method description for more information.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public interface BidiMap<K, V> extends IterableMap<K, V> {

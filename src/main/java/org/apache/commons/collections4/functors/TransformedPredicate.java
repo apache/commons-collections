@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Transformer;
  * Predicate implementation that transforms the given object before invoking
  * another {@code Predicate}.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.1
  */
 public final class TransformedPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
@@ -37,7 +37,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Creates the predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param transformer  the transformer to call
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate

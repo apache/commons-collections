@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit tests.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpiringMap<K, V>, K, V> {
 

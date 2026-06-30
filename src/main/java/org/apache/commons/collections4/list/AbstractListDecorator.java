@@ -28,7 +28,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated list.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.0
  */
 public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E> implements List<E> {

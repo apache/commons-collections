@@ -22,8 +22,8 @@ package org.apache.commons.collections4;
  * This iterator allows both forward and reverse iteration through the map.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIterator<K> {

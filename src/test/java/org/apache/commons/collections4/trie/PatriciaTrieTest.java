@@ -49,7 +49,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link PatriciaTrie}.
  *
- * @param <V> the value type.
+ * @param <V> The value type.
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 

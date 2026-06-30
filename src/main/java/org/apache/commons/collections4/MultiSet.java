@@ -29,7 +29,7 @@ import java.util.Set;
  * calling {@link #uniqueSet()} would return {@code {a, b, c}}.
  * </p>
  *
- * @param <E> the type held in the multiset
+ * @param <E> The type held in the multiset
  * @since 4.1
  */
 public interface MultiSet<E> extends Collection<E> {

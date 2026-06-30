@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the ReverseListIterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 

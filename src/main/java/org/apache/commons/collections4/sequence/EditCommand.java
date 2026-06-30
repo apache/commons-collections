@@ -41,7 +41,7 @@ package org.apache.commons.collections4.sequence;
  * and the {@code equals} method is specialized.
  * </p>
  *
- * @param <T> the type of object to apply this command.
+ * @param <T> The type of object to apply this command.
  * @see SequencesComparator
  * @see EditScript
  * @since 4.0

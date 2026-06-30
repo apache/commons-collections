@@ -52,7 +52,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * needed to transform the first sequence into the second one.
  * </p>
  *
- * @param <T> the type of elements in the lists.
+ * @param <T> The type of elements in the lists.
  * @see EditScript
  * @see EditCommand
  * @see CommandVisitor

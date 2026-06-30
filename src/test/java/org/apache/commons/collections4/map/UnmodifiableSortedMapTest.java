@@ -30,8 +30,8 @@ import org.junit.jupiter.api.Test;
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableSortedMap} implementation.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

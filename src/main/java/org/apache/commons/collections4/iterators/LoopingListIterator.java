@@ -37,7 +37,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * ConcurrentModificationException.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.2
  */
 public class LoopingListIterator<E> implements ResettableListIterator<E> {

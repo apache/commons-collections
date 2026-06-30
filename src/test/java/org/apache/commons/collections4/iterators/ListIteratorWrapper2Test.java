@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the ListIteratorWrapper to ensure that it behaves as expected when wrapping a ListIterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 

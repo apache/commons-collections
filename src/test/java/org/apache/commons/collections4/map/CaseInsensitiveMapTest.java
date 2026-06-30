@@ -35,8 +35,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

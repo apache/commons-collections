@@ -63,8 +63,8 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * by concurrent threads without synchronization.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.2
  * @deprecated Since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
  */
@@ -74,7 +74,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Inner class that provides a simple reflection factory.
      *
-     * @param <T> the type of results supplied by this supplier.
+     * @param <T> The type of results supplied by this supplier.
      */
     private static final class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
 

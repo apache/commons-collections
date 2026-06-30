@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the UnmodifiableOrderedMapIterator.
  *
- * @param <K> the type of the keys in the maps tested.
- * @param <V> the type of the values in the maps tested.
+ * @param <K> The type of the keys in the maps tested.
+ * @param <V> The type of the values in the maps tested.
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 

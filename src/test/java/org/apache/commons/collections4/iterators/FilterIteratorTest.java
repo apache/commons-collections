@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the filter iterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 

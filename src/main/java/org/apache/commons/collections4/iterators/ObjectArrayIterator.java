@@ -31,7 +31,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * back to the start if required.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.0
  */
 public class ObjectArrayIterator<E> implements ResettableIterator<E> {

@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 /**
  * Extends {@link Iterator} with additional default methods.
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.5.0-M3
  */
 public interface IteratorOperations<E> extends Iterator<E> {
@@ -60,7 +60,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
      * Adds the remaining elements in the iterator to a new {@link Collection} provided by the supplier. This method consumes the iterator.
      *
      * @param collectionSupplier supplies a collection target.
-     * @param <C> the collection type.
+     * @param <C> The collection type.
      * @return a new Collection containing the remaining elements of this instance.
      */
     default <C extends Collection<E>> C toCollection(final Supplier<C> collectionSupplier) {

@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
  * overriding the supportsXxx() methods if necessary.
  * </p>
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 

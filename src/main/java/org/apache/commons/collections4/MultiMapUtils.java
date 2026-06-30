@@ -52,8 +52,8 @@ public class MultiMapUtils {
     /**
      * Returns an immutable empty {@code MultiValuedMap} if the argument is {@code null}, or the argument itself otherwise.
      *
-     * @param <K> the type of key in the map.
-     * @param <V> the type of value in the map.
+     * @param <K> The type of key in the map.
+     * @param <V> The type of value in the map.
      * @param map the map, may be null.
      * @return an empty {@link MultiValuedMap} if the argument is null.
      */
@@ -65,8 +65,8 @@ public class MultiMapUtils {
     /**
      * Returns immutable EMPTY_MULTI_VALUED_MAP with generic type safety.
      *
-     * @param <K> the type of key in the map.
-     * @param <V> the type of value in the map.
+     * @param <K> The type of key in the map.
+     * @param <V> The type of value in the map.
      * @return immutable and empty {@code MultiValuedMap}.
      */
     @SuppressWarnings("unchecked")
@@ -78,8 +78,8 @@ public class MultiMapUtils {
     /**
      * Gets a Collection from {@code MultiValuedMap} in a null-safe manner.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
      * @return the Collection in the {@link MultiValuedMap}, or null if input map is null.
@@ -91,8 +91,8 @@ public class MultiMapUtils {
     /**
      * Gets a Bag from {@code MultiValuedMap} in a null-safe manner.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
      * @return a new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null.
@@ -104,8 +104,8 @@ public class MultiMapUtils {
     /**
      * Gets a List from {@code MultiValuedMap} in a null-safe manner.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
      * @return a new List containing the values from the {@link MultiValuedMap}, or null if input map is null.
@@ -117,8 +117,8 @@ public class MultiMapUtils {
     /**
      * Gets a Set from {@code MultiValuedMap} in a null-safe manner.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
      * @return a new Set containing the values from the {@link MultiValuedMap}, or null if input map is null.
@@ -164,8 +164,8 @@ public class MultiMapUtils {
     /**
      * Creates a {@link ListValuedMap} with an {@link java.util.ArrayList ArrayList} as collection class to store the values mapped to a key.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @return a new {@code ListValuedMap}.
      */
     public static <K, V> ListValuedMap<K, V> newListValuedHashMap() {
@@ -175,8 +175,8 @@ public class MultiMapUtils {
     /**
      * Creates a {@link SetValuedMap} with an {@link java.util.HashSet HashSet} as collection class to store the values mapped to a key.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @return a new {@link SetValuedMap}.
      */
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
@@ -213,8 +213,8 @@ public class MultiMapUtils {
     /**
      * Returns an {@code UnmodifiableMultiValuedMap} backed by the given map.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to decorate, must not be null.
      * @return an unmodifiable {@link MultiValuedMap} backed by the provided map.
      * @throws NullPointerException if map is null.

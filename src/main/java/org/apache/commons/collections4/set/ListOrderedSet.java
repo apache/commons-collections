@@ -57,7 +57,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public class ListOrderedSet<E>
@@ -119,7 +119,7 @@ public class ListOrderedSet<E>
      * altering the specified list.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list the list to decorate, must not be null
      * @return a new ordered set
      * @throws NullPointerException if list is null
@@ -139,7 +139,7 @@ public class ListOrderedSet<E>
      * An {@code ArrayList} is used to retain order.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set the set to decorate, must not be null
      * @return a new ordered set
      * @throws NullPointerException if set is null
@@ -155,7 +155,7 @@ public class ListOrderedSet<E>
      * The list and set must both be empty.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set the set to decorate, must be empty and not null
      * @param list the list to decorate, must be empty and not null
      * @return a new ordered set

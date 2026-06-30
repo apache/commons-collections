@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Predicate;
  * threw an exception.
  * </p>
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
@@ -48,7 +48,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * If the collection is size one, then that predicate is returned.
      * </p>
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the {@code all} predicate
      * @throws NullPointerException if the predicates array is null
@@ -72,7 +72,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * If the array is size one, then that predicate is returned.
      * </p>
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the {@code all} predicate
      * @throws NullPointerException if the predicates array is null

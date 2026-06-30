@@ -365,7 +365,7 @@ public class CollectionUtils {
      *
      * @param obj the object to find the cardinality of
      * @param collection the {@link Iterable} to search
-     * @param <O> the type of object that the {@link Iterable} may contain.
+     * @param <O> The type of object that the {@link Iterable} may contain.
      * @return the number of occurrences of obj in coll
      * @throws NullPointerException if collection is null
      * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
@@ -686,7 +686,7 @@ public class CollectionUtils {
      * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
-     * @param <T> the type of object to lookup in {@code coll1}.
+     * @param <T> The type of object to lookup in {@code coll1}.
      * @param coll1  the first collection, must not be {@code null}.
      * @param coll2  the second collection, must not be {@code null}.
      * @return {@code true} iff the intersection of the collections is non-empty.
@@ -749,7 +749,7 @@ public class CollectionUtils {
      *
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
-     * @param <O> the generic type that is able to represent the types contained
+     * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
      * @return the symmetric difference of the two collections
      * @throws NullPointerException if either collection is null
@@ -768,7 +768,7 @@ public class CollectionUtils {
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
      *
      * @see #EMPTY_COLLECTION
-     * @param <T> the element type
+     * @param <T> The element type
      * @return immutable empty collection
      * @since 4.0
      */
@@ -781,7 +781,7 @@ public class CollectionUtils {
      * Returns an immutable empty collection if the argument is {@code null},
      * or the argument itself otherwise.
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @param collection the collection, possibly {@code null}
      * @return an empty collection if the argument is {@code null}
      */
@@ -979,7 +979,7 @@ public class CollectionUtils {
      *
      * @param iterable  the {@link Iterable} to get a value from
      * @param index  the index to get
-     * @param <T> the type of object in the {@link Iterable}.
+     * @param <T> The type of object in the {@link Iterable}.
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
@@ -1000,7 +1000,7 @@ public class CollectionUtils {
      *
      * @param iterator  the iterator to get a value from
      * @param index  the index to get
-     * @param <T> the type of object in the {@link Iterator}
+     * @param <T> The type of object in the {@link Iterator}
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
@@ -1162,7 +1162,7 @@ public class CollectionUtils {
      *
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
-     * @param <O> the generic type that is able to represent the types contained
+     * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
      * @return the intersection of the two collections
      * @throws NullPointerException if either collection is null
@@ -1443,7 +1443,7 @@ public class CollectionUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <C> the type of objects in the Collection.
+     * @param <C> The type of objects in the Collection.
      * @param collection  the collection to predicate, must not be null
      * @param predicate  the predicate for the collection, must not be null
      * @return a predicated collection backed by the given collection
@@ -1502,7 +1502,7 @@ public class CollectionUtils {
      * modified without changing the object itself.
      * </p>
      *
-     * @param <E> the type of object the {@link Collection} contains
+     * @param <E> The type of object the {@link Collection} contains
      * @param collection the collection from which items are removed (in the returned collection)
      * @param remove the items to be removed from the returned collection
      * @param equator the Equator used for testing equality
@@ -1641,7 +1641,7 @@ public class CollectionUtils {
      * modified without changing the object itself.
      * </p>
      *
-     * @param <E> the type of object the {@link Collection} contains
+     * @param <E> The type of object the {@link Collection} contains
      * @param collection the collection whose contents are the target of the {@code retainAll} operation
      * @param retain the collection containing the elements to be retained in the returned collection
      * @param equator the Equator used for testing equality
@@ -1946,7 +1946,7 @@ public class CollectionUtils {
      *
      * @param a  the collection to subtract from, must not be null
      * @param b  the collection to subtract, must not be null
-     * @param <O> the generic type that is able to represent the types contained
+     * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
      * @return a new collection with the results
      * @see Collection#removeAll
@@ -1975,7 +1975,7 @@ public class CollectionUtils {
      * @param b  the collection to subtract, must not be null
      * @param p  the condition used to determine which elements of <em>b</em> are
      *        subtracted.
-     * @param <O> the generic type that is able to represent the types contained
+     * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
      * @return a new collection with the results
      * @throws NullPointerException if either collection or p is null
@@ -2083,7 +2083,7 @@ public class CollectionUtils {
      * If you want that behavior, see {@link TransformedCollection#transformedCollection}.
      * </p>
      *
-     * @param <E> the type of object the {@link Collection} contains
+     * @param <E> The type of object the {@link Collection} contains
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null
      * @return a transformed collection backed by the given collection
@@ -2107,7 +2107,7 @@ public class CollectionUtils {
      *
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
-     * @param <O> the generic type that is able to represent the types contained
+     * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
      * @return the union of the two collections
      * @throws NullPointerException if either collection is null

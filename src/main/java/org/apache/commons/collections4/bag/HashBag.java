@@ -34,7 +34,7 @@ import java.util.HashMap;
  * {@link Collection} interface specification.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
  */
 public class HashBag<E> extends AbstractMapBag<E> implements Serializable {

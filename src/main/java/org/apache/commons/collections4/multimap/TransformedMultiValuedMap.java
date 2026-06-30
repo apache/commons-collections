@@ -37,8 +37,8 @@ import org.apache.commons.collections4.Transformer;
  * <strong>Note that TransformedMultiValuedMap is not synchronized and is not thread-safe.</strong>
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.1
  */
 public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecorator<K, V> {
@@ -55,8 +55,8 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * {@link #transformingMap(MultiValuedMap, Transformer, Transformer)}.
      * </p>
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
@@ -84,8 +84,8 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * {@link #transformedMap(MultiValuedMap, Transformer, Transformer)}.
      * </p>
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion

@@ -19,7 +19,7 @@ package org.apache.commons.collections4.iterators;
 /**
  * Test the ArrayListIterator class with primitives.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 

@@ -42,7 +42,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this collection
+ * @param <E> The type of elements in this collection
  * @since 3.0
  */
 public class FixedSizeList<E>
@@ -72,7 +72,7 @@ public class FixedSizeList<E>
     /**
      * Factory method to create a fixed size list.
      *
-     * @param <E> the type of the elements in the list
+     * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new fixed size list
      * @throws NullPointerException if list is null

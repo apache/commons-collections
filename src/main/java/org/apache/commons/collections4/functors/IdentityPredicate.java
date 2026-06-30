@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if the input is the same object
  * as the one stored in this predicate.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class IdentityPredicate<T> extends AbstractPredicate<T> implements Serializable {
@@ -35,7 +35,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
     /**
      * Creates the identity predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param object  the object to compare to
      * @return the predicate
      */

@@ -35,7 +35,7 @@ import org.apache.commons.collections4.set.TransformedSet;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E> {
@@ -51,7 +51,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * will be transformed by this method.
      * Contrast this with {@link #transformingBag(Bag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
@@ -77,7 +77,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag

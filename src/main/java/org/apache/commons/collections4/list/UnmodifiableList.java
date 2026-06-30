@@ -35,7 +35,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.0
  */
 public final class UnmodifiableList<E>
@@ -48,7 +48,7 @@ public final class UnmodifiableList<E>
     /**
      * Factory method to create an unmodifiable list.
      *
-     * @param <E> the type of the elements in the list
+     * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new unmodifiable list
      * @throws NullPointerException if list is null

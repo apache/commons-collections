@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Abstract class for quantification predicates, for example All, Any, None.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 4.0
  */
 public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {

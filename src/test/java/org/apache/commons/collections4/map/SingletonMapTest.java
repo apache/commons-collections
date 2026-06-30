@@ -30,8 +30,8 @@ import org.junit.jupiter.api.Test;
 /**
  * JUnit tests.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

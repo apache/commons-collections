@@ -30,7 +30,7 @@ import java.util.function.Supplier;
  * a copy of a prototype or a new instance.
  * </p>
  *
- * @param <T> the type of results supplied by this supplier.
+ * @param <T> The type of results supplied by this supplier.
  * @since 2.1
  * This will be deprecated in 5.0 in favor of {@link Supplier}.
  */

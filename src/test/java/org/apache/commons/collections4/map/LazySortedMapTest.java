@@ -37,8 +37,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Extension of {@link LazyMapTest} for exercising the {@link LazySortedMap} implementation.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {

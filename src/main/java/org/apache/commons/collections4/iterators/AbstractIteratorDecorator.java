@@ -24,7 +24,7 @@ import java.util.Iterator;
  * All methods are forwarded to the decorated iterator.
  * </p>
  *
- * @param <E> the type of the iterator being decorated.
+ * @param <E> The type of the iterator being decorated.
  * @since 3.0
  */
 public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIteratorDecorator<E, E> {

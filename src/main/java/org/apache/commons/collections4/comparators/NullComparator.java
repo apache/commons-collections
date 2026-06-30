@@ -26,7 +26,7 @@ import org.apache.commons.collections4.ComparatorUtils;
  * A Comparator that will compare nulls to be either lower or higher than
  * other objects.
  *
- * @param <E> the type of objects compared by this comparator
+ * @param <E> The type of objects compared by this comparator
  * @since 2.0
  */
 public class NullComparator<E> implements Comparator<E>, Serializable {

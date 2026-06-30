@@ -43,8 +43,8 @@ import java.util.Collection;
  * as they were defined in the superinterface {@code Map} anyway.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 2.0
  * @deprecated Since 4.1, use {@link MultiValuedMap} instead
  */

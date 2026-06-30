@@ -34,7 +34,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * </p>
  * <pre>Queue queue = PredicatedQueue.predicatedQueue(new UnboundedFifoQueue(), NotNullPredicate.INSTANCE);</pre>
  *
- * @param <E> the type of elements held in this queue
+ * @param <E> The type of elements held in this queue
  * @since 4.0
  */
 public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue<E> {
@@ -48,7 +48,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * If there are any elements already in the queue being decorated, they
      * are validated.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param Queue  the queue to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated queue

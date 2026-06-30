@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 4.1
  */
 public final class UnmodifiableNavigableSet<E>
@@ -47,7 +47,7 @@ public final class UnmodifiableNavigableSet<E>
     /**
      * Factory method to create an unmodifiable set.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable {@link NavigableSet}
      * @throws NullPointerException if set is null

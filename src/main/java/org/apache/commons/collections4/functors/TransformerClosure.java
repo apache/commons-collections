@@ -25,7 +25,7 @@ import org.apache.commons.collections4.Transformer;
  * Closure implementation that calls a Transformer using the input object
  * and ignore the result.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class TransformerClosure<T> implements Closure<T>, Serializable {
@@ -39,7 +39,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      * A null transformer will return the {@code NOPClosure}.
      * </p>
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param transformer  the transformer to call, null means nop
      * @return the {@code transformer} closure
      */

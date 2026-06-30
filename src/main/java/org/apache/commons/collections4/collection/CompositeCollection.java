@@ -39,7 +39,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * strategy is provided then add and remove are unsupported.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 3.0
  */
 public class CompositeCollection<E> implements Collection<E>, Serializable {
@@ -47,7 +47,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Pluggable strategy to handle changes to the composite.
      *
-     * @param <E> the element being held in the collection
+     * @param <E> The element being held in the collection
      */
     public interface CollectionMutator<E> extends Serializable {
 

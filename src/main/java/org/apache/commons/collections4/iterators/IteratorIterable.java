@@ -63,7 +63,7 @@ import org.apache.commons.collections4.ResettableIterator;
  *   Iterable&lt;Integer&gt; iterable = new IteratorIterable&lt;Integer&gt;(iterator, true);
  * </pre>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.0
  */
 public class IteratorIterable<E> implements Iterable<E> {

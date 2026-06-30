@@ -38,7 +38,7 @@ import org.apache.commons.collections4.Predicate;
  *                                              NotNullPredicate.notNullPredicate());
  * </pre>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 4.1
  */
 public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements NavigableSet<E> {
@@ -52,7 +52,7 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
      * If there are any elements already in the set being decorated, they
      * are validated.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated navigable set.

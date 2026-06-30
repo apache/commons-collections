@@ -26,8 +26,8 @@ import org.apache.commons.collections4.MapIterator;
  * All methods are forwarded to the decorated map iterator.
  * </p>
  *
- * @param <K> the type of keys
- * @param <V> the type of mapped values
+ * @param <K> The type of keys
+ * @param <V> The type of mapped values
  * @since 3.0
  */
 public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {

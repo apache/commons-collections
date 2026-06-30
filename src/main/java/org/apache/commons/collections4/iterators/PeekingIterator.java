@@ -27,7 +27,7 @@ import java.util.Objects;
  * {@link #peek()} or {@link #element()}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.0
  */
 public class PeekingIterator<E> implements Iterator<E> {

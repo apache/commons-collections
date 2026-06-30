@@ -133,9 +133,9 @@ import org.junit.jupiter.api.Test;
  * {@link #isAllowDuplicateValues()} and have it return {@code false}
  * </p>
  *
- * @param <M> the Map type.
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <M> The Map type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends AbstractObjectTest {
 
@@ -497,8 +497,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Creates a new Map Entry that is independent of the first and the map.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     public static <K, V> Map.Entry<K, V> cloneMapEntry(final Map.Entry<K, V> entry) {
         final HashMap<K, V> map = new HashMap<>();

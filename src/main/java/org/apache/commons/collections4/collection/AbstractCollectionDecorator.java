@@ -53,7 +53,7 @@ import java.util.function.Predicate;
  * AbstractListDecorator, to preserve equality behavior, or override equals directly.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 3.0
  */
 public abstract class AbstractCollectionDecorator<E>

@@ -24,8 +24,8 @@ package org.apache.commons.collections4;
  * two get methods.
  * </p>
  *
- * @param <K> the type of the key
- * @param <V> the type of the value
+ * @param <K> The type of the key
+ * @param <V> The type of the value
  * @since 3.0
  */
 public interface KeyValue<K, V> {

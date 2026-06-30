@@ -30,7 +30,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * use the Integer form to remove objects.
  * </p>
  *
- * @param <E> the type of elements held in this queue
+ * @param <E> The type of elements held in this queue
  * @since 4.0
  */
 public class TransformedQueue<E> extends TransformedCollection<E> implements Queue<E> {
@@ -46,7 +46,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * will be transformed by this method.
      * Contrast this with {@link #transformingQueue(Queue, Transformer)}.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Queue
@@ -75,7 +75,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * are NOT transformed.
      * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Queue

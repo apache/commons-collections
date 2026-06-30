@@ -27,7 +27,7 @@ import java.util.function.Predicate;
  * processRemaining} method can be called to execute the @{code test} with a
  * {@code null} value for each remaining {@code idx} value.
  *
- * @param <T> the type of object being compared.
+ * @param <T> The type of object being compared.
  */
 class CountingPredicate<T> implements Predicate<T> {
     private int idx;

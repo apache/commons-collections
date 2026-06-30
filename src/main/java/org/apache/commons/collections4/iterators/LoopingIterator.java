@@ -35,7 +35,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * implementations will throw a ConcurrentModificationException.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.0
  */
 public class LoopingIterator<E> implements ResettableIterator<E> {

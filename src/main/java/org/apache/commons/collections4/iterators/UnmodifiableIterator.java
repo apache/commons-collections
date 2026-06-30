@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Unmodifiable;
  * Calling {@link #remove()} throws {@link UnsupportedOperationException}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @param <T> The wrapped Iterator type.
  * @since 3.0
  */

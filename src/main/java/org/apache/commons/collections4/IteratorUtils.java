@@ -130,7 +130,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator over an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @return an iterator over the array
      * @throws NullPointerException if array is null
@@ -142,7 +142,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator over the end part of an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return an iterator over part of the array
@@ -157,7 +157,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator over part of an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @param end  the index to finish iterating at
@@ -177,7 +177,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @return an iterator over the array
      * @throws IllegalArgumentException if the array is not an array
@@ -194,7 +194,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return an iterator over part of the array
@@ -214,7 +214,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @param end  the index to finish iterating at
@@ -230,7 +230,7 @@ public class IteratorUtils {
     /**
      * Gets a list iterator over an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @return a list iterator over the array
      * @throws NullPointerException if array is null
@@ -242,7 +242,7 @@ public class IteratorUtils {
     /**
      * Gets a list iterator over the end part of an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return a list iterator over part of the array
@@ -256,7 +256,7 @@ public class IteratorUtils {
     /**
      * Gets a list iterator over part of an object array.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @param end  the index to finish iterating at
@@ -276,7 +276,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @return a list iterator over the array
      * @throws IllegalArgumentException if the array is not an array
@@ -293,7 +293,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return a list iterator over part of the array
@@ -312,7 +312,7 @@ public class IteratorUtils {
      * The primitives will be wrapped in the appropriate wrapper class.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @param end  the index to finish iterating at
@@ -328,7 +328,7 @@ public class IteratorUtils {
     /**
      * Gets an enumeration that wraps an iterator.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, may not be null
      * @return a new enumeration
      * @throws NullPointerException if iterator is null
@@ -341,7 +341,7 @@ public class IteratorUtils {
      * Gets an {@link Iterable} that wraps an iterator.  The returned {@link Iterable} can be
      * used for a single iteration.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, may not be null
      * @return a new, single use {@link Iterable}
      * @throws NullPointerException if iterator is null
@@ -354,7 +354,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator that provides an iterator view of the given enumeration.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param enumeration  the enumeration to use, may not be null
      * @return a new iterator
      * @throws NullPointerException if enumeration is null
@@ -367,7 +367,7 @@ public class IteratorUtils {
      * Gets an iterator that provides an iterator view of the given enumeration
      * that will remove elements from the specified collection.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param enumeration  the enumeration to use, may not be null
      * @param removeCollection  the collection to remove elements from, may not be null
      * @return a new iterator
@@ -383,7 +383,7 @@ public class IteratorUtils {
      * Gets an iterable that wraps an iterator.  The returned iterable can be
      * used for multiple iterations.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, may not be null
      * @return a new, multiple use iterable
      * @throws NullPointerException if iterator is null
@@ -397,7 +397,7 @@ public class IteratorUtils {
      * Decorates the specified iterator to return at most the given number
      * of elements.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to decorate
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
@@ -418,7 +418,7 @@ public class IteratorUtils {
      * {@code offset}, incurring O(n) time.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to decorate
      * @param offset  the index of the first element of the decorated iterator to return
      * @param max  the maximum number of elements returned by this iterator
@@ -436,7 +436,7 @@ public class IteratorUtils {
      * Gets an iterator that iterates through a collections of {@link Iterator}s
      * one after another.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterators  the iterators to use, not null or empty or contain nulls
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators collection is null or contains a null
@@ -450,7 +450,7 @@ public class IteratorUtils {
      * Gets an iterator that iterates through an array of {@link Iterator}s
      * one after another.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterators  the iterators to use, not null or empty or contain nulls
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators array is null or contains a null
@@ -463,7 +463,7 @@ public class IteratorUtils {
      * Gets an iterator that iterates through two {@link Iterator}s
      * one after another.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator1  the first iterator to use, not null
      * @param iterator2  the second iterator to use, not null
      * @return a combination iterator over the iterators
@@ -509,7 +509,7 @@ public class IteratorUtils {
      * The comparator is optional. If null is specified then natural order is used.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param comparator  the comparator to use, may be null for natural order
      * @param iterators  the iterators to use, not null or empty or contain nulls
      * @return a combination iterator over the iterators
@@ -536,7 +536,7 @@ public class IteratorUtils {
      * The comparator is optional. If null is specified then natural order is used.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param comparator  the comparator to use, may be null for natural order
      * @param iterators  the iterators to use, not null or empty or contain nulls
      * @return a combination iterator over the iterators
@@ -562,7 +562,7 @@ public class IteratorUtils {
      * The comparator is optional. If null is specified then natural order is used.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param comparator  the comparator to use, may be null for natural order
      * @param iterator1  the first iterators to use, not null
      * @param iterator2  the first iterators to use, not null
@@ -584,7 +584,7 @@ public class IteratorUtils {
      * A {@code null} or empty iterator returns false.
      * </p>
      *
-     * @param <E> the type of object the {@link Iterator} contains
+     * @param <E> The type of object the {@link Iterator} contains
      * @param iterator  the iterator to check, may be null
      * @param object  the object to check
      * @return true if the object is contained in the iterator, false otherwise
@@ -600,7 +600,7 @@ public class IteratorUtils {
      * This iterator is a valid iterator object that will iterate over nothing.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @return an iterator over nothing
      */
     public static <E> ResettableIterator<E> emptyIterator() {
@@ -614,7 +614,7 @@ public class IteratorUtils {
      * over nothing.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @return a list iterator over nothing
      */
     public static <E> ResettableListIterator<E> emptyListIterator() {
@@ -628,8 +628,8 @@ public class IteratorUtils {
      * over nothing.
      * </p>
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @return a map iterator over nothing
      */
     public static <K, V> MapIterator<K, V> emptyMapIterator() {
@@ -643,7 +643,7 @@ public class IteratorUtils {
      * over nothing.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @return an ordered iterator over nothing
      */
     public static <E> OrderedIterator<E> emptyOrderedIterator() {
@@ -657,8 +657,8 @@ public class IteratorUtils {
      * over nothing.
      * </p>
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @return a map iterator over nothing
      */
     public static <K, V> OrderedMapIterator<K, V> emptyOrderedMapIterator() {
@@ -672,7 +672,7 @@ public class IteratorUtils {
      * filtering predicate.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @param predicate  the predicate to use as a filter, not null
      * @return a new filtered iterator
@@ -692,7 +692,7 @@ public class IteratorUtils {
      * filtering predicate.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param listIterator  the list iterator to use, not null
      * @param predicate  the predicate to use as a filter, not null
      * @return a new filtered iterator
@@ -712,7 +712,7 @@ public class IteratorUtils {
      * A {@code null} or empty iterator returns null.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to search, may be null
      * @param predicate  the predicate to use, must not be null
      * @return the first element of the iterator which matches the predicate or null if none could be found
@@ -760,7 +760,7 @@ public class IteratorUtils {
      * {@code 0} exceeds the number of entries) as a side effect of this method.
      * </p>
      *
-     * @param <E> the type of object in the {@link Iterator}
+     * @param <E> The type of object in the {@link Iterator}
      * @param iterator the iterator to get a value from
      * @return the first object
      * @throws IndexOutOfBoundsException if the request is invalid
@@ -773,7 +773,7 @@ public class IteratorUtils {
     /**
      * Applies the closure to each element of the provided iterator.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, may be null
      * @param closure  the closure to apply to each element, may not be null
      * @throws NullPointerException if closure is null
@@ -794,7 +794,7 @@ public class IteratorUtils {
      * If the input iterator is null no change is made.
      * </p>
      *
-     * @param <E> the type of object the {@link Iterator} contains
+     * @param <E> The type of object the {@link Iterator} contains
      * @param iterator  the iterator to get the input from, may be null
      * @param closure  the closure to perform, may not be null
      * @return the last element in the iterator, or null if iterator is null or empty
@@ -935,7 +935,7 @@ public class IteratorUtils {
      * A {@code null} or empty iterator returns -1.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to search, may be null
      * @param predicate  the predicate to use, may not be null
      * @return the index of the first element which matches the predicate or -1 if none matches
@@ -978,7 +978,7 @@ public class IteratorUtils {
      * to start with.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param collection  the collection to iterate over, not null
      * @return a new looping iterator
      * @throws NullPointerException if the collection is null
@@ -994,7 +994,7 @@ public class IteratorUtils {
      * enough times to empty the list, or if the list is empty to start with.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param list  the list to iterate over, not null
      * @return a new looping iterator
      * @throws NullPointerException if the list is null
@@ -1010,7 +1010,7 @@ public class IteratorUtils {
      * A {@code null} or empty iterator returns true.
      * </p>
      *
-     * @param <E> the type of object the {@link Iterator} contains
+     * @param <E> The type of object the {@link Iterator} contains
      * @param iterator  the {@link Iterator} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if every element of the collection matches the predicate or if the
@@ -1038,7 +1038,7 @@ public class IteratorUtils {
      * A {@code null} or empty iterator returns false.
      * </p>
      *
-     * @param <E> the type of object the {@link Iterator} contains
+     * @param <E> The type of object the {@link Iterator} contains
      * @param iterator  the {@link Iterator} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if any element of the collection matches the predicate, false otherwise
@@ -1138,7 +1138,7 @@ public class IteratorUtils {
      * more efficient (and convenient) than using nested for loops to extract a list.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param root  the root object to start iterating from, null results in an empty iterator
      * @param transformer  the transformer to use, see above, null uses no effect transformer
      * @return a new object graph iterator
@@ -1152,7 +1152,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator that supports one-element lookahead.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to decorate, not null
      * @return a peeking iterator
      * @throws NullPointerException if the iterator is null
@@ -1165,7 +1165,7 @@ public class IteratorUtils {
     /**
      * Gets an iterator that supports pushback of elements.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to decorate, not null
      * @return a pushback iterator
      * @throws NullPointerException if the iterator is null
@@ -1182,7 +1182,7 @@ public class IteratorUtils {
      * the specified object.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param object  the single object over which to iterate
      * @return a singleton iterator over the object
      */
@@ -1197,7 +1197,7 @@ public class IteratorUtils {
      * the specified object.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param object  the single object over which to iterate
      * @return a singleton list iterator over the object
      */
@@ -1229,7 +1229,7 @@ public class IteratorUtils {
     /**
      * Decorates the specified iterator to skip the first N elements.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to decorate
      * @param offset  the first number of elements to skip
      * @return a new skipping iterator
@@ -1244,7 +1244,7 @@ public class IteratorUtils {
     /**
      * Creates a stream on the given Iterable.
      *
-     * @param <E> the type of elements in the Iterable.
+     * @param <E> The type of elements in the Iterable.
      * @param iterable the Iterable to stream or null.
      * @return a new Stream or {@link Stream#empty()} if the Iterable is null.
      * @since 4.5.0-M3
@@ -1256,7 +1256,7 @@ public class IteratorUtils {
     /**
      * Creates a stream on the given Iterator.
      *
-     * @param <E> the type of elements in the Iterator.
+     * @param <E> The type of elements in the Iterator.
      * @param iterator the Iterator to stream or null.
      * @return a new Stream or {@link Stream#empty()} if the Iterator is null.
      * @since 4.5.0-M3
@@ -1289,7 +1289,7 @@ public class IteratorUtils {
      * created. At the end, this is converted to an array.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @param arrayClass  the class of array to create
      * @return an array of the iterator contents
@@ -1312,7 +1312,7 @@ public class IteratorUtils {
      * created. At the end, the list is returned.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @return a list of the iterator contents
      * @throws NullPointerException if iterator parameter is null
@@ -1328,7 +1328,7 @@ public class IteratorUtils {
      * created. At the end, the list is returned.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @param estimatedSize  the initial size of the ArrayList
      * @return a list of the iterator contents
@@ -1349,7 +1349,7 @@ public class IteratorUtils {
      * cached, permitting all required operations of ListIterator.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, may not be null
      * @return a new iterator
      * @throws NullPointerException if iterator parameter is null
@@ -1366,7 +1366,7 @@ public class IteratorUtils {
      * created. At the end, the set is returned.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @return a set of the iterator contents
      * @throws NullPointerException if iterator parameter is null
@@ -1383,7 +1383,7 @@ public class IteratorUtils {
      * created. At the end, the set is returned.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to use, not null
      * @param estimatedSize  the initial size of the HashSet
      * @return a list of the iterator contents
@@ -1407,7 +1407,7 @@ public class IteratorUtils {
      * converted to strings as by {@code String.valueOf(Object)}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to convert to a string, may be null
      * @return a string representation of {@code iterator}
      * @since 4.1
@@ -1427,7 +1427,7 @@ public class IteratorUtils {
      * converted to strings as by using the provided {@code transformer}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to convert to a string, may be null
      * @param transformer  the transformer used to get a string representation of an element
      * @return a string representation of {@code iterator}
@@ -1449,7 +1449,7 @@ public class IteratorUtils {
      * strings as by using the provided {@code transformer}.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to convert to a string, may be null
      * @param transformer  the transformer used to get a string representation of an element
      * @param delimiter  the string to delimit elements
@@ -1490,8 +1490,8 @@ public class IteratorUtils {
      * iterator is unaffected by the transformation.
      * </p>
      *
-     * @param <I> the input type
-     * @param <O> the output type
+     * @param <I> The input type
+     * @param <O> The output type
      * @param iterator  the iterator to use, not null
      * @param transformer  the transform to use, not null
      * @return a new transforming iterator
@@ -1510,7 +1510,7 @@ public class IteratorUtils {
      * will always throw an {@link UnsupportedOperationException} for
      * the {@link Iterator#remove} method.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterator  the iterator to make immutable
      * @return an immutable version of the iterator
      */
@@ -1524,7 +1524,7 @@ public class IteratorUtils {
      * the {@link Iterator#remove}, {@link ListIterator#add} and
      * {@link ListIterator#set} methods.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param listIterator  the iterator to make immutable
      * @return an immutable version of the iterator
      */
@@ -1537,8 +1537,8 @@ public class IteratorUtils {
      * will always throw an {@link UnsupportedOperationException} for
      * the {@link Iterator#remove}, {@link MapIterator#setValue(Object)} methods.
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @param mapIterator  the iterator to make immutable
      * @return an immutable version of the iterator
      */
@@ -1549,7 +1549,7 @@ public class IteratorUtils {
     /**
      * Returns an iterator that interleaves elements from the decorated iterators.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param iterators  the array of iterators to interleave
      * @return an iterator, interleaving the decorated iterators
      * @throws NullPointerException if any iterator is null
@@ -1562,7 +1562,7 @@ public class IteratorUtils {
     /**
      * Returns an iterator that interleaves elements from the decorated iterators.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param a  the first iterator to interleave
      * @param b  the second iterator to interleave
      * @return an iterator, interleaving the decorated iterators
@@ -1577,7 +1577,7 @@ public class IteratorUtils {
     /**
      * Returns an iterator that interleaves elements from the decorated iterators.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param a  the first iterator to interleave
      * @param b  the second iterator to interleave
      * @param c  the third iterator to interleave

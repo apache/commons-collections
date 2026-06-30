@@ -51,7 +51,7 @@ import java.util.Queue;
  * the queue.
  * </p>
  *
- * @param <E> the type of elements in this iterator.
+ * @param <E> The type of elements in this iterator.
  * @since 2.1
  */
 public class IteratorChain<E> implements Iterator<E> {

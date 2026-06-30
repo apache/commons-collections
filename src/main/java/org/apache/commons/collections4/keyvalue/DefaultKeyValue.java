@@ -29,8 +29,8 @@ import org.apache.commons.collections4.KeyValue;
  * itself as a key or value.
  * </p>
  *
- * @param <K> the type of keys
- * @param <V> the type of values
+ * @param <K> The type of keys
+ * @param <V> The type of values
  * @since 3.0
  */
 public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {

@@ -26,8 +26,8 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that will call one of two closures based on whether a predicate evaluates
  * as true or false.
  *
- * @param <T> the type of the input to the function.
- * @param <R> the type of the result of the function.
+ * @param <T> The type of the input to the function.
+ * @param <R> The type of the result of the function.
  * @since 4.1
  */
 public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {

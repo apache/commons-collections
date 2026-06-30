@@ -73,8 +73,8 @@ import java.io.Serializable;
  * extensible and provides a {@code MapIterator}.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @see java.lang.ref.Reference
  * @since 3.0 (previously in main package v2.1)
  */

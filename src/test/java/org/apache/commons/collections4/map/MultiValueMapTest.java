@@ -40,8 +40,8 @@ import org.junit.jupiter.api.Test;
 /**
  * TestMultiValueMap.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 @Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {

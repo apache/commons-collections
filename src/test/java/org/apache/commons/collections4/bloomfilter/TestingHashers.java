@@ -49,7 +49,7 @@ public class TestingHashers {
 
     /**
      * Enables all bits in the filter.
-     * @param <T> the Bloom filter type.
+     * @param <T> The Bloom filter type.
      * @param filter the Bloom filter to populate
      * @return {@code filter} for chaining
      */
@@ -69,7 +69,7 @@ public class TestingHashers {
 
     /**
      * Enables all bits in a range (inclusive).
-     * @param <T> the Bloom filter type.
+     * @param <T> The Bloom filter type.
      * @param filter the Bloom filter to populate
      * @param start the starting bit to enable.
      * @param end the last bit to enable.

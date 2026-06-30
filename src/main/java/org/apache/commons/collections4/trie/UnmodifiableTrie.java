@@ -34,8 +34,8 @@ import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 /**
  * An unmodifiable {@link Trie}.
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  */
 public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodifiable {

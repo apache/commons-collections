@@ -33,7 +33,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public class TransformedSet<E> extends TransformedCollection<E> implements Set<E> {
@@ -49,7 +49,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * will be transformed by this method.
      * Contrast this with {@link #transformingSet(Set, Transformer)}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed set
@@ -76,7 +76,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * are NOT transformed.
      * Contrast this with {@link #transformedSet(Set, Transformer)}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed set

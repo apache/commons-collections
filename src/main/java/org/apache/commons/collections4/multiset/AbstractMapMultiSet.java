@@ -37,7 +37,7 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  * number of occurrences of that element in the multiset.
  * </p>
  *
- * @param <E> the type held in the multiset.
+ * @param <E> The type held in the multiset.
  * @since 4.1
  */
 public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
@@ -45,7 +45,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Inner class EntrySetIterator.
      *
-     * @param <E> the element type.
+     * @param <E> The element type.
      */
     protected static class EntrySetIterator<E> implements Iterator<Entry<E>> {
 
@@ -166,7 +166,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Inner class MultiSetEntry.
      *
-     * @param <E> the key type.
+     * @param <E> The key type.
      */
     protected static class MultiSetEntry<E> extends AbstractEntry<E> {
 
@@ -229,7 +229,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Inner class UniqueSetIterator.
      *
-     * @param <E> the element type.
+     * @param <E> The element type.
      */
     protected static class UniqueSetIterator<E> extends AbstractIteratorDecorator<E> {
 
@@ -539,7 +539,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * If the input array has more elements than are in the multiset,
      * trailing elements will be set to null.
      *
-     * @param <T> the type of the array elements
+     * @param <T> The type of the array elements
      * @param array the array to populate
      * @return an array of all of this multiset's elements
      * @throws ArrayStoreException if the runtime type of the specified array is not

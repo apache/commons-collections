@@ -19,7 +19,7 @@ package org.apache.commons.collections4.iterators;
 /**
  * Tests the ObjectArrayListIterator class.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ObjectArrayListIterator2Test<E> extends AbstractListIteratorTest<E> {
 

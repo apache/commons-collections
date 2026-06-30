@@ -21,8 +21,8 @@ import org.apache.commons.collections4.OrderedMapIterator;
 /**
  * Provides an implementation of an empty ordered map iterator.
  *
- * @param <K> the type of keys
- * @param <V> the type of mapped values
+ * @param <K> The type of keys
+ * @param <V> The type of mapped values
  * @since 3.1
  */
 public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V>
@@ -39,8 +39,8 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
     /**
      * Gets a typed instance of the iterator.
      *
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K> The key type
+     * @param <V> The value type
      * @return {@link OrderedMapIterator}&lt;K, V&gt;
      */
     public static <K, V> OrderedMapIterator<K, V> emptyOrderedMapIterator() {

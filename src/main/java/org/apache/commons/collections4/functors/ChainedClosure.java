@@ -25,7 +25,7 @@ import org.apache.commons.collections4.Closure;
 /**
  * Closure implementation that chains the specified closures together.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class ChainedClosure<T> implements Closure<T>, Serializable {
@@ -36,7 +36,7 @@ public class ChainedClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory method that performs validation and copies the parameter array.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
      * @return the {@code chained} closure
      * @throws NullPointerException if the closures array is null
@@ -55,7 +55,7 @@ public class ChainedClosure<T> implements Closure<T>, Serializable {
      * result into the next closure. The ordering is that of the iterator()
      * method on the collection.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the {@code chained} closure
      * @throws NullPointerException if the closures collection is null

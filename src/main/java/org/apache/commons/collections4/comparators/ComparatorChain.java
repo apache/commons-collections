@@ -48,7 +48,7 @@ import java.util.Objects;
  * multiple comparisons after all the setup operations are complete.
  * </p>
  *
- * @param <E> the type of objects compared by this comparator
+ * @param <E> The type of objects compared by this comparator
  * @since 2.0
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {

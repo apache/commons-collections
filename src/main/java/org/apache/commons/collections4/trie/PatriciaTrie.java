@@ -55,7 +55,7 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * are suited only to variable length keys.
  * </p>
  *
- * @param <V> the type of the values in this map
+ * @param <V> The type of the values in this map
  * @see <a href="https://en.wikipedia.org/wiki/Radix_tree">Radix Tree</a>
  * @see <a href="https://users.monash.edu/~lloyd/tildeAlgDS/Tree/PATRICIA/">PATRICIA</a>
  * @see <a href="https://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>

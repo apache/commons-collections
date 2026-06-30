@@ -25,8 +25,8 @@ import org.junit.jupiter.api.Test;
 /**
  * A sanity test for the test framework.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<ConcurrentHashMap<K, V>, K, V> {
 

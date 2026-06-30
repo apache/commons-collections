@@ -36,7 +36,7 @@ public class EnumerationUtils {
      * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
      * single iteration.
      *
-     * @param <T> the element type
+     * @param <T> The element type
      * @param enumeration the enumeration to use, may not be null
      * @return a new, single use {@link Iterable}
      * @since 4.5.0-M1
@@ -55,7 +55,7 @@ public class EnumerationUtils {
      *
      * @param e  the enumeration to get a value from
      * @param index  the index to get
-     * @param <T> the type of object in the {@link Enumeration}
+     * @param <T> The type of object in the {@link Enumeration}
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
@@ -80,7 +80,7 @@ public class EnumerationUtils {
      * <p>As the enumeration is traversed, an ArrayList of its values is
      * created. The new list is returned.</p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param enumeration  the enumeration to traverse, which should not be {@code null}.
      * @return a list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is {@code null}.
@@ -110,7 +110,7 @@ public class EnumerationUtils {
      * <p>As the enumeration is traversed, an HashSet of its values is
      * created. The new set is returned.</p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param enumeration  the enumeration to traverse, which should not be {@code null}.
      * @return a set containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.

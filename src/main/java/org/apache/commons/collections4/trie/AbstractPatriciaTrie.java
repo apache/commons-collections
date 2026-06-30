@@ -40,8 +40,8 @@ import org.apache.commons.collections4.Trie;
  * This class implements the base PATRICIA algorithm and everything that
  * is related to the {@link Map} interface.
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  */
 public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
@@ -980,8 +980,8 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     protected static class TrieEntry<K, V> extends BasicEntry<K, V> {
 

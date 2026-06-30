@@ -52,8 +52,8 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * and the flawed {@code createMap} method is ignored.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
@@ -62,8 +62,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     /**
      * Inner class MapIterator.
      *
-     * @param <K> the type of the keys.
-     * @param <V> the type of the values.
+     * @param <K> The type of the keys.
+     * @param <V> The type of the values.
      */
     protected static class BidiOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
 
@@ -169,8 +169,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     /**
      * Internal sorted map view.
      *
-     * @param <K> the type of the keys.
-     * @param <V> the type of the values.
+     * @param <K> The type of the keys.
+     * @param <V> The type of the values.
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
 

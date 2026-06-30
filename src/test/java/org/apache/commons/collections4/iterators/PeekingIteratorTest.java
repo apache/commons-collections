@@ -35,7 +35,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the PeekingIterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 

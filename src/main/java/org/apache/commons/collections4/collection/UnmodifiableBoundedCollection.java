@@ -42,7 +42,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of elements in this collection
+ * @param <E> The type of elements in this collection
  * @since 3.0
  */
 public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
@@ -54,7 +54,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     /**
      * Creates an unmodifiable bounded collection.
      *
-     * @param <E> the type of the elements in the collection.
+     * @param <E> The type of the elements in the collection.
      * @param coll  the {@code BoundedCollection} to decorate, must not be null.
      * @return a new unmodifiable bounded collection.
      * @throws NullPointerException if {@code coll} is {@code null}.
@@ -76,7 +76,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * to find a suitable BoundedCollection.
      * </p>
      *
-     * @param <E> the type of the elements in the collection.
+     * @param <E> The type of the elements in the collection.
      * @param collection  the {@code BoundedCollection} to decorate, must not be null.
      * @return a new unmodifiable bounded collection.
      * @throws NullPointerException if coll is null.

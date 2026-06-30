@@ -19,8 +19,8 @@ package org.apache.commons.collections4.iterators;
 /**
  * Provides an implementation of an empty map iterator.
  *
- * @param <K> the type of keys
- * @param <V> the type of mapped values
+ * @param <K> The type of keys
+ * @param <V> The type of mapped values
  * @since 4.0
  */
 public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterator<K> {

@@ -30,7 +30,7 @@ import org.apache.commons.collections4.Transformer;
  * use the Integer form to remove objects.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 4.1
  */
 public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implements NavigableSet<E> {
@@ -46,7 +46,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * will be transformed by this method.
      * Contrast this with {@link #transformingNavigableSet(NavigableSet, Transformer)}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link NavigableSet}
@@ -74,7 +74,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * are NOT transformed.
      * Contrast this with {@link #transformedNavigableSet(NavigableSet, Transformer)}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link NavigableSet}

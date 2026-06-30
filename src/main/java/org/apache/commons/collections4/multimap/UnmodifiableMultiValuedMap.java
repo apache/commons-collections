@@ -37,8 +37,8 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <K> the type of key elements
- * @param <V> the type of value elements
+ * @param <K> The type of key elements
+ * @param <V> The type of value elements
  * @since 4.1
  */
 public final class UnmodifiableMultiValuedMap<K, V>
@@ -53,8 +53,8 @@ public final class UnmodifiableMultiValuedMap<K, V>
      * If the map passed in is already unmodifiable, it is returned.
      * </p>
      *
-     * @param <K> the type of key elements
-     * @param <V> the type of value elements
+     * @param <K> The type of key elements
+     * @param <V> The type of value elements
      * @param map  the map to decorate, may not be null
      * @return an unmodifiable MultiValuedMap
      * @throws NullPointerException if map is null

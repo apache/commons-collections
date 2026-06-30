@@ -47,7 +47,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * for more details.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public class CompositeSet<E> implements Set<E>, Serializable {
@@ -55,7 +55,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Defines callbacks for mutation operations.
      *
-     * @param <E> the type of the elements in this instance.
+     * @param <E> The type of the elements in this instance.
      */
     public interface SetMutator<E> extends Serializable {
 

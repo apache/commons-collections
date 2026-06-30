@@ -31,7 +31,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * back to the start if required.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @see org.apache.commons.collections4.iterators.ObjectArrayIterator
  * @see java.util.Iterator
  * @see java.util.ListIterator

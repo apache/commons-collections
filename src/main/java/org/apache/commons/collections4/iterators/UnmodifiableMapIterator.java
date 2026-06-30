@@ -27,8 +27,8 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <K> the type of keys
- * @param <V> the type of mapped values
+ * @param <K> The type of keys
+ * @param <V> The type of mapped values
  * @since 3.0
  */
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {

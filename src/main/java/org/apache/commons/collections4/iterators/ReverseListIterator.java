@@ -35,7 +35,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * continues. The previous methods work similarly.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.2
  */
 public class ReverseListIterator<E> implements ResettableListIterator<E> {

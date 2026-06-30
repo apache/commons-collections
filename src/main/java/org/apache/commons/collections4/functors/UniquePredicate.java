@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true the first time an object is
  * passed into the predicate.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class UniquePredicate<T>  extends AbstractPredicate<T> implements Serializable {
@@ -37,7 +37,7 @@ public final class UniquePredicate<T>  extends AbstractPredicate<T> implements S
     /**
      * Creates the predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */

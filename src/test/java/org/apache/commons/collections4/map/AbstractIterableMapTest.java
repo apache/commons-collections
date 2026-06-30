@@ -32,8 +32,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link IterableMap}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<IterableMap<K, V>, K, V> {
 

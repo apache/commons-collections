@@ -26,7 +26,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated set.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorator<E> implements

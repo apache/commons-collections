@@ -35,7 +35,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type held in the multiset
+ * @param <E> The type held in the multiset
  * @since 4.1
  */
 public final class UnmodifiableMultiSet<E>

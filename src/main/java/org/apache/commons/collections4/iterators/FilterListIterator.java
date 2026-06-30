@@ -28,7 +28,7 @@ import org.apache.commons.collections4.Predicate;
  * those elements that match the specified {@link Predicate Predicate}.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 2.0
  */
 public class FilterListIterator<E> implements ListIterator<E> {

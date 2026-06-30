@@ -63,8 +63,8 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * methods exposed.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> implements OrderedMap<K, V> {
@@ -72,8 +72,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * EntrySet iterator.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     protected static class EntrySetIterator<K, V> extends LinkIterator<K, V> implements
             OrderedIterator<Map.Entry<K, V>>, ResettableIterator<Map.Entry<K, V>> {
@@ -101,7 +101,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * KeySet iterator.
      *
-     * @param <K> the key type.
+     * @param <K> The key type.
      */
     protected static class KeySetIterator<K> extends LinkIterator<K, Object> implements
             OrderedIterator<K>, ResettableIterator<K> {
@@ -136,8 +136,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * to provide the necessary access.
      * </p>
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     protected static class LinkEntry<K, V> extends HashEntry<K, V> {
 
@@ -163,8 +163,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Base Iterator that iterates in link order.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     protected abstract static class LinkIterator<K, V> {
 
@@ -288,8 +288,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * MapIterator implementation.
      *
-     * @param <K> the key type.
-     * @param <V> the value type.
+     * @param <K> The key type.
+     * @param <V> The value type.
      */
     protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
             OrderedMapIterator<K, V>, ResettableIterator<K> {
@@ -344,7 +344,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Values iterator.
      *
-     * @param <V> the value type.
+     * @param <V> The value type.
      */
     protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
             OrderedIterator<V>, ResettableIterator<V> {

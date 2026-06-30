@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test the ArrayListIterator class.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 

@@ -39,7 +39,7 @@ import java.util.Collection;
  * <strong>Note that this implementation is not synchronized.</strong>
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.0
  * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21
  */

@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Test;
  * protected methods from AbstractCollectionTest.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator
+ * @param <E> The type of elements returned by this iterator
  */
 public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 

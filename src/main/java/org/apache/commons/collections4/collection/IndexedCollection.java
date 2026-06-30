@@ -40,8 +40,8 @@ import org.apache.commons.collections4.map.MultiValueMap;
  * the {@link Collection}.
  * </p>
  *
- * @param <K> the type of object in the index.
- * @param <C> the type of object in the collection.
+ * @param <K> The type of object in the index.
+ * @param <C> The type of object in the collection.
  * @since 4.0
  */
 public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {

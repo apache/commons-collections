@@ -20,8 +20,8 @@ package org.apache.commons.collections4.map;
 /**
  * Tests {@link ConcurrentReferenceHashMap}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class ConcurrentReferenceHashMapDefaultsTest<K, V> extends AbstractConcurrentReferenceHashMapTest<K, V> {
 

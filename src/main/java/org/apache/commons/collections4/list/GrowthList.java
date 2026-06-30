@@ -54,7 +54,7 @@ import java.util.List;
  * can be used together by decorating twice.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @see LazyList
  * @since 3.2
  */
@@ -66,7 +66,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Factory method to create a growth list.
      *
-     * @param <E> the type of the elements in the list
+     * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new growth list
      * @throws NullPointerException if list is null

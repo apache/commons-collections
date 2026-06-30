@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the PushbackIterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 

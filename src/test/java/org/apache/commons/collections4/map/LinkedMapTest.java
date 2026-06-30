@@ -40,8 +40,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 /**
  * JUnit tests.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

@@ -25,7 +25,7 @@ import java.util.Objects;
  * All methods are forwarded to the decorated list iterator.
  * </p>
  *
- * @param <E> the type of elements in this iterator.
+ * @param <E> The type of elements in this iterator.
  * @since 3.0
  */
 public class AbstractListIteratorDecorator<E> implements ListIterator<E> {

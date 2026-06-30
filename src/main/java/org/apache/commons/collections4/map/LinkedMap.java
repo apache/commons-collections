@@ -64,8 +64,8 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * exceptions when accessed by concurrent threads without synchronization.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializable, Cloneable {

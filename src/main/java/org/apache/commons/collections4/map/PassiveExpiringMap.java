@@ -56,8 +56,8 @@ import java.util.concurrent.TimeUnit;
  * synchronization.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  */
 public class PassiveExpiringMap<K, V>
@@ -69,8 +69,8 @@ public class PassiveExpiringMap<K, V>
      * that returns an expiration time that is a
      * constant about of time in the future from the current time.
      *
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @param <K> The type of the keys in the map
+     * @param <V> The type of the values in the map
      * @since 4.0
      */
     public static class ConstantTimeToLiveExpirationPolicy<K, V>
@@ -155,8 +155,8 @@ public class PassiveExpiringMap<K, V>
     /**
      * A policy to determine the expiration time for key-value entries.
      *
-     * @param <K> the key object type.
-     * @param <V> the value object type
+     * @param <K> The key object type.
+     * @param <V> The value object type
      * @since 4.0
      */
     @FunctionalInterface

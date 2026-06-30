@@ -24,7 +24,7 @@ import org.apache.commons.collections4.FunctorException;
 /**
  * Closure implementation that always throws an exception.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public final class ExceptionClosure<T> implements Closure<T>, Serializable {
@@ -39,7 +39,7 @@ public final class ExceptionClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
-     * @param <T> the type of the input to the operation.
+     * @param <T> The type of the input to the operation.
      * @return the singleton instance
      * @since 3.1
      */

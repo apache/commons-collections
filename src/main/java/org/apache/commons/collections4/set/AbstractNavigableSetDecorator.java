@@ -25,7 +25,7 @@ import java.util.NavigableSet;
  * Methods are forwarded directly to the decorated set.
  * </p>
  *
- * @param <E> the type of the elements in the navigable set
+ * @param <E> The type of the elements in the navigable set
  * @since 4.1
  */
 public abstract class AbstractNavigableSetDecorator<E>

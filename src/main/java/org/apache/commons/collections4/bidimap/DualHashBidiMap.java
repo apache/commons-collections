@@ -38,8 +38,8 @@ import org.apache.commons.collections4.BidiMap;
  * and the flawed {@code createMap} method is ignored.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {

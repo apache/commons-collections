@@ -36,8 +36,8 @@ import java.util.Set;
  * But, you might want that loophole, so this class is kept simple.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, V> {

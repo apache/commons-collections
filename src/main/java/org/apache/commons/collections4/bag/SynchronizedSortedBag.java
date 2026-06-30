@@ -32,7 +32,7 @@ import org.apache.commons.collections4.SortedBag;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements SortedBag<E> {
@@ -43,7 +43,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     /**
      * Factory method to create a synchronized sorted bag.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized SortedBag
      * @throws NullPointerException if bag is null

@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Predicate implementation that returns the result of a transformer.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class TransformerPredicate<T> extends AbstractPredicate<T> implements Serializable {
@@ -37,7 +37,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Creates the predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param transformer  the transformer to decorate
      * @return the predicate
      * @throws NullPointerException if the transformer is null

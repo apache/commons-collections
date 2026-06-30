@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Serializable subclass of AbstractListDecorator.
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.1
  */
 public abstract class AbstractSerializableListDecorator<E> extends AbstractListDecorator<E> {

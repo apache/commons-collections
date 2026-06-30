@@ -36,8 +36,8 @@ import java.util.function.Predicate;
  * Exceptions include {@code BidiMap} implementations, as they require unique values.
  * </p>
  *
- * @param <E> the type of the elements in this set
- * @param <V> the dummy value type in this map
+ * @param <E> The type of the elements in this set
+ * @param <V> The dummy value type in this map
  * @since 3.1
  */
 public final class MapBackedSet<E, V> implements Set<E>, Serializable {
@@ -48,8 +48,8 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     /**
      * Factory method to create a set from a map.
      *
-     * @param <E> the element type
-     * @param <V> the dummy value type in the map
+     * @param <E> The element type
+     * @param <V> The dummy value type in the map
      * @param map  the map to decorate, must not be null
      * @return a new map backed set
      * @throws NullPointerException if map is null
@@ -62,8 +62,8 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     /**
      * Factory method to create a set from a map.
      *
-     * @param <E> the element type
-     * @param <V> the dummy value type in the map
+     * @param <E> The element type
+     * @param <V> The dummy value type in the map
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
      * @return a new map backed set

@@ -19,8 +19,8 @@ package org.apache.commons.collections4;
 /**
  * The "read" subset of the {@link java.util.Map} interface.
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  * @see Put
  */

@@ -35,8 +35,8 @@ import org.apache.commons.collections4.MultiValuedMap;
  * to extensions such as synchronized and unmodifiable behavior.
  * </p>
  *
- * @param <K> the type of key elements
- * @param <V> the type of value elements
+ * @param <K> The type of key elements
+ * @param <V> The type of value elements
  * @since 4.1
  */
 public abstract class AbstractMultiValuedMapDecorator<K, V>

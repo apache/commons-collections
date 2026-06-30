@@ -36,7 +36,7 @@ import org.apache.commons.collections4.Bag;
  * </p>
  *
  * @see Bag
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 4.0
  */
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {
@@ -47,7 +47,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * Factory method to create a bag that complies to the Collection contract.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a Bag that complies to the Collection contract
      * @throws NullPointerException if bag is null

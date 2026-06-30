@@ -37,7 +37,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in this set
+ * @param <E> The type of the elements in this set
  * @since 3.0
  */
 public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> {
@@ -51,7 +51,7 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * If there are any elements already in the set being decorated, they
      * are validated.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a decorated set

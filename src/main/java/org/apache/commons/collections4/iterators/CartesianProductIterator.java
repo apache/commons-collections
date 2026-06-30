@@ -65,7 +65,7 @@ import java.util.Objects;
  * infinite.
  * </p>
  *
- * @param <E> the type of the objects being permuted
+ * @param <E> The type of the objects being permuted
  * @since 4.5.0-M3
  */
 public class CartesianProductIterator<E> implements Iterator<List<E>> {

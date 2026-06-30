@@ -43,7 +43,7 @@ import java.util.Objects;
  * String localizedText = (String) map.get(multiKey);
  * </pre>
  *
- * @param <K> the type of keys
+ * @param <K> The type of keys
  * @since 3.0
  */
 public class MultiKey<K> implements Serializable {

@@ -28,8 +28,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link ConcurrentReferenceHashMap}.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractConcurrentReferenceHashMapTest<K, V> extends AbstractMapTest<ConcurrentReferenceHashMap<K, V>, K, V> {
 

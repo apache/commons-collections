@@ -84,8 +84,8 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * provide synchronized access to a {@code ReferenceMap}.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @see java.lang.ref.Reference
  * @since 3.1 (extracted from ReferenceMap in 3.0)
  */
@@ -194,8 +194,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * the mapping is stale and should be removed.
      * </p>
      *
-     * @param <K> the type of the keys
-     * @param <V> the type of the values
+     * @param <K> The type of the keys
+     * @param <V> The type of the values
      * @since 3.1
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
@@ -353,7 +353,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * Constructs a reference of the given type to the given referent.
          * The reference is registered with the queue for later purging.
          *
-         * @param <T> the type of the referenced object
+         * @param <T> The type of the referenced object
          * @param type  HARD, SOFT or WEAK
          * @param referent  the object to refer to
          * @param hash  the hash code of the <em>key</em> of the mapping;

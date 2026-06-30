@@ -45,7 +45,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.0
  */
 public class PredicatedList<E> extends PredicatedCollection<E> implements List<E> {
@@ -86,7 +86,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * If there are any elements already in the list being decorated, they
      * are validated.
      *
-     * @param <T> the type of the elements in the list
+     * @param <T> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated list

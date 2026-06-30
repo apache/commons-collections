@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation calls the closure whose predicate returns true,
  * like a switch statement.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class SwitchClosure<T> implements Closure<T>, Serializable {
@@ -47,7 +47,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      * collection of the map.
      * </p>
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
      * @return the {@code switch} closure
      * @throws NullPointerException if the map is null
@@ -77,7 +77,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory method that performs validation and copies the parameter arrays.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop

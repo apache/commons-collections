@@ -30,7 +30,7 @@ import java.util.function.Supplier;
  * {@link ClosureUtils}. These include method invocation and for/while loops.
  * </p>
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 1.0
  * This will be deprecated in 5.0 in favor of {@link Supplier}.
  */

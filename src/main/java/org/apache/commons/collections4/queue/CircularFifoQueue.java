@@ -48,7 +48,7 @@ import org.apache.commons.collections4.BoundedCollection;
  * This queue prevents null objects from being added.
  * </p>
  *
- * @param <E> the type of elements in this collection
+ * @param <E> The type of elements in this collection
  * @since 4.0
  */
 public class CircularFifoQueue<E> extends AbstractCollection<E>

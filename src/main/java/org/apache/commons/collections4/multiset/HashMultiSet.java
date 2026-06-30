@@ -32,7 +32,7 @@ import java.util.HashMap;
  * of an object to be added or removed at once.
  * </p>
  *
- * @param <E> the type held in the multiset
+ * @param <E> The type held in the multiset
  * @since 4.1
  */
 public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializable {

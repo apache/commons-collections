@@ -36,8 +36,8 @@ import org.apache.commons.collections4.map.AbstractMapDecorator;
  * But, you might want that loophole, so this class is kept simple.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public abstract class AbstractBidiMapDecorator<K, V>

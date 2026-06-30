@@ -44,8 +44,8 @@ import java.util.Set;
  * {@code coll} will be a collection containing "A", "B", "C".
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.1
  */
 public interface MultiValuedMap<K, V> {

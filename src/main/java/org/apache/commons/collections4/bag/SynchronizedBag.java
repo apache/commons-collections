@@ -32,7 +32,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag<E> {
@@ -62,7 +62,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
     /**
      * Factory method to create a synchronized bag.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized Bag
      * @throws NullPointerException if bag is null

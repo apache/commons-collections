@@ -47,7 +47,7 @@ import java.util.Objects;
  * This class is Serializable from Commons Collections 4.0.
  * </p>
  *
- * @param <T> the type of objects compared by this comparator
+ * @param <T> The type of objects compared by this comparator
  * @since 3.0
  */
 public class FixedOrderComparator<T> implements Comparator<T>, Serializable {

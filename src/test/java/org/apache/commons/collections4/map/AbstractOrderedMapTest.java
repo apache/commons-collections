@@ -40,8 +40,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests {@link OrderedMap}.
  *
- * @param <K> the type of the keys in the maps tested.
- * @param <V> the type of the values in the maps tested.
+ * @param <K> The type of the keys in the maps tested.
+ * @param <V> The type of the values in the maps tested.
  */
 public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

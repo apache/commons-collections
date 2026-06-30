@@ -116,8 +116,8 @@ import java.util.function.Supplier;
  * assistance from members of JCP JSR-166, and Hazelcast.
  * </p>
  *
- * @param <K> the type of keys maintained by this map.
- * @param <V> the type of mapped values.
+ * @param <K> The type of keys maintained by this map.
+ * @param <V> The type of mapped values.
  */
 public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> {
 
@@ -139,8 +139,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * <li>value reference type: {@link ReferenceType#STRONG}</li>
      * </ul>
      *
-     * @param <K> the type of keys.
-     * @param <V> the type of values.
+     * @param <K> The type of keys.
+     * @param <V> The type of values.
      */
     public static class Builder<K, V> implements Supplier<ConcurrentReferenceHashMap<K, V>> {
 
@@ -679,8 +679,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * As a guide, all critical volatile reads and writes to the count field are marked in code comments.
      * </p>
      *
-     * @param <K> the type of keys maintained by this Segment.
-     * @param <V> the type of mapped values.
+     * @param <K> The type of keys maintained by this Segment.
+     * @param <V> The type of mapped values.
      */
     private static final class Segment<K, V> extends ReentrantLock {
 
@@ -1377,8 +1377,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * <li>value reference type: {@link ReferenceType#STRONG}</li>
      * </ul>
      *
-     * @param <K> the type of keys.
-     * @param <V> the type of values.
+     * @param <K> The type of keys.
+     * @param <V> The type of values.
      * @return a new Builder.
      */
     public static <K, V> Builder<K, V> builder() {

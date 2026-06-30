@@ -25,8 +25,8 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that returns the value held in a specified map
  * using the input parameter as a key.
  *
- * @param <T> the type of the input to the function.
- * @param <R> the type of the result of the function.
+ * @param <T> The type of the input to the function.
+ * @param <R> The type of the result of the function.
  * @since 3.0
  */
 public final class MapTransformer<T, R> implements Transformer<T, R>, Serializable {

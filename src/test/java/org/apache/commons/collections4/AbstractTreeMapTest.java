@@ -27,8 +27,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests TreeMap.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<TreeMap<K, V>, K, V> {
 

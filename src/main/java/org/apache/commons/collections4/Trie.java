@@ -21,8 +21,8 @@ import java.util.SortedMap;
 /**
  * Defines the interface for a prefix tree, an ordered tree data structure. For more information, see <a href="https://en.wikipedia.org/wiki/Trie">Tries</a>.
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  */
 public interface Trie<K, V> extends IterableSortedMap<K, V> {

@@ -42,7 +42,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * number of occurrences of that element in the bag.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0 (previously DefaultMapBag v2.0)
  */
 public abstract class AbstractMapBag<E> implements Bag<E> {
@@ -554,7 +554,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * If the input array has more elements than are in the bag,
      * trailing elements will be set to null.
      *
-     * @param <T> the type of the array elements
+     * @param <T> The type of the array elements
      * @param array the array to populate
      * @return an array of all of this bag's elements
      * @throws ArrayStoreException if the runtime type of the specified array is not

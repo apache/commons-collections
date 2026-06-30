@@ -22,8 +22,8 @@ import java.util.HashMap;
 /**
  * A sanity test for the test framework.
  *
- * @param <K> the key type.
- * @param <V> the value type.
+ * @param <K> The key type.
+ * @param <V> The value type.
  */
 public class HashMapSanityTest<K, V> extends AbstractMapTest<HashMap<K, V>, K, V> {
 

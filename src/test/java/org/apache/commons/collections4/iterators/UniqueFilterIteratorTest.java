@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the UniqueFilterIterator class.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 

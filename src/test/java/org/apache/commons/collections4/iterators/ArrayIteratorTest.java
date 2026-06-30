@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 

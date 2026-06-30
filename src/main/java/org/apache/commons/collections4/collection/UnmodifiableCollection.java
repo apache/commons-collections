@@ -32,7 +32,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 3.0
  */
 public final class UnmodifiableCollection<E>
@@ -48,7 +48,7 @@ public final class UnmodifiableCollection<E>
      * If the collection passed in is already unmodifiable, it is returned.
      * </p>
      *
-     * @param <T> the type of the elements in the collection.
+     * @param <T> The type of the elements in the collection.
      * @param coll  the collection to decorate, must not be null.
      * @return an unmodifiable collection.
      * @throws NullPointerException if collection is null.

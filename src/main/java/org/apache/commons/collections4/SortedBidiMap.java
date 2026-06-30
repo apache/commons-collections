@@ -27,8 +27,8 @@ import java.util.SortedMap;
  * a key to be looked up from a value with equal performance.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> The type of the keys in the map
+ * @param <V> The type of the values in the map
  * @since 3.0
  */
 public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, V> {

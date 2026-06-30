@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if the input is null.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class NullIsTruePredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
@@ -35,7 +35,7 @@ public final class NullIsTruePredicate<T> extends AbstractPredicate<T> implement
     /**
      * Creates the null true predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws NullPointerException if the predicate is null

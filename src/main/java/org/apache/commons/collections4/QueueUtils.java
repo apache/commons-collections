@@ -40,7 +40,7 @@ public class QueueUtils {
     /**
      * Gets an empty {@code Queue}.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @return an empty {@link Queue}
      */
     @SuppressWarnings("unchecked") // OK, empty queue is compatible with any type
@@ -57,7 +57,7 @@ public class QueueUtils {
      * as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to predicate, must not be null
      * @param predicate  the predicate used to evaluate new elements, must not be null
      * @return a predicated queue
@@ -89,7 +89,7 @@ public class QueueUtils {
      * Failure to follow this advice may result in non-deterministic behavior.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param queue the queue to synchronize, must not be null
      * @return a synchronized queue backed by that queue
      * @throws NullPointerException if the queue is null
@@ -111,7 +111,7 @@ public class QueueUtils {
      * If you want that behavior, see {@link TransformedQueue#transformedQueue}.
      * </p>
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to predicate, must not be null
      * @param transformer  the transformer for the queue, must not be null
      * @return a transformed queue backed by the given queue
@@ -124,7 +124,7 @@ public class QueueUtils {
     /**
      * Returns an unmodifiable queue backed by the given queue.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to make unmodifiable, must not be null
      * @return an unmodifiable queue backed by that queue
      * @throws NullPointerException if the queue is null

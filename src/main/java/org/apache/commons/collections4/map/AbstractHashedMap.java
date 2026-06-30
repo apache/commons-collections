@@ -59,8 +59,8 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * This extends clause will be removed in v5.0.
  * </p>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.0
  */
 public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements IterableMap<K, V> {
@@ -68,8 +68,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * EntrySet implementation.
      *
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @param <K> The type of the keys in the map
+     * @param <V> The type of the values in the map
      */
     protected static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
 
@@ -127,8 +127,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * EntrySet iterator.
      *
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @param <K> The type of the keys in the map
+     * @param <V> The type of the values in the map
      */
     protected static class EntrySetIterator<K, V> extends HashIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 
@@ -156,8 +156,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * to provide the necessary access.
      * </p>
      *
-     * @param <K> the type of the keys
-     * @param <V> the type of the values
+     * @param <K> The type of the keys
+     * @param <V> The type of the values
      */
     protected static class HashEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
 
@@ -240,8 +240,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Base Iterator.
      *
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @param <K> The type of the keys in the map
+     * @param <V> The type of the values in the map
      */
     protected abstract static class HashIterator<K, V> {
 
@@ -348,8 +348,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * MapIterator implementation.
      *
-     * @param <K> the type of the keys in the map
-     * @param <V> the type of the values in the map
+     * @param <K> The type of the keys in the map
+     * @param <V> The type of the values in the map
      */
     protected static class HashMapIterator<K, V> extends HashIterator<K, V> implements MapIterator<K, V> {
 
@@ -398,7 +398,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * KeySet implementation.
      *
-     * @param <K> the type of elements maintained by this set
+     * @param <K> The type of elements maintained by this set
      */
     protected static class KeySet<K> extends AbstractSet<K> {
 
@@ -445,7 +445,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * KeySet iterator.
      *
-     * @param <K> the type of elements maintained by this set
+     * @param <K> The type of elements maintained by this set
      */
     protected static class KeySetIterator<K> extends HashIterator<K, Object> implements Iterator<K> {
 
@@ -468,7 +468,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Values implementation.
      *
-     * @param <V> the type of elements maintained by this collection
+     * @param <V> The type of elements maintained by this collection
      */
     protected static class Values<V> extends AbstractCollection<V> {
 
@@ -508,7 +508,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Values iterator.
      *
-     * @param <V> the type of elements maintained by this collection
+     * @param <V> The type of elements maintained by this collection
      */
     protected static class ValuesIterator<V> extends HashIterator<Object, V> implements Iterator<V> {
 

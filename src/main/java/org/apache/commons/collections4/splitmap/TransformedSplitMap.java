@@ -57,10 +57,10 @@ import org.apache.commons.collections4.map.LinkedMap;
  * {@link org.apache.commons.collections4.Get Get} generalizations.
  * </p>
  *
- * @param <J> the type of the keys to put in this map
- * @param <K> the type of the keys to get in this map
- * @param <U> the type of the values to put in this map
- * @param <V> the type of the values to get in this map
+ * @param <J> The type of the keys to put in this map
+ * @param <K> The type of the keys to get in this map
+ * @param <U> The type of the values to put in this map
+ * @param <V> The type of the values to get in this map
  * @since 4.0
  * @see org.apache.commons.collections4.SplitMapUtils#readableMap(org.apache.commons.collections4.Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)

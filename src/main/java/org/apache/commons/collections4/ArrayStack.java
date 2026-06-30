@@ -38,7 +38,7 @@ import java.util.EmptyStackException;
  * removed {@code Buffer} interface anymore.
  * </p>
  *
- * @param <E> the type of elements in this list
+ * @param <E> The type of elements in this list
  * @see java.util.Stack
  * @since 1.0
  * @deprecated Use {@link java.util.ArrayDeque} instead (available from Java 1.6)

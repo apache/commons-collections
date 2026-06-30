@@ -55,7 +55,7 @@ import java.util.ListIterator;
  * <strong>Note that this implementation is not synchronized.</strong>
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @see java.util.LinkedList
  * @since 1.0
  * @deprecated parent {@link AbstractLinkedList} is source incompatible with List methods added in Java 21
@@ -67,7 +67,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * An extended {@code ListIterator} that allows concurrent changes to
      * the underlying list.
      *
-     * @param <E> the type of elements in this cursor.
+     * @param <E> The type of elements in this cursor.
      */
     public static class Cursor<E> extends AbstractLinkedList.LinkedListIterator<E> {
 
@@ -241,7 +241,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * A cursor for the sublist based on LinkedSubListIterator.
      *
-     * @param <E> the type of elements in this cursor.
+     * @param <E> The type of elements in this cursor.
      * @since 3.2
      */
     protected static class SubCursor<E> extends Cursor<E> {

@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public class TransformedSortedBag<E> extends TransformedBag<E> implements SortedBag<E> {
@@ -49,7 +49,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedBag(SortedBag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag
@@ -77,7 +77,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag

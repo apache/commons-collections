@@ -38,7 +38,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 3.0
  */
 public final class UnmodifiableBag<E>
@@ -52,7 +52,7 @@ public final class UnmodifiableBag<E>
      * <p>
      * If the bag passed in is already unmodifiable, it is returned.
      *
-     * @param <E> the type of the elements in the bag
+     * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable Bag
      * @throws NullPointerException if bag is null

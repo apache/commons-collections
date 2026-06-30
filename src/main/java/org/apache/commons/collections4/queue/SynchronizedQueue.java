@@ -27,7 +27,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * loop.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 4.2
  */
 public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Queue<E> {

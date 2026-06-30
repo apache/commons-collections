@@ -34,7 +34,7 @@ import java.util.Objects;
  * before that position.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 4.1
  */
 public class BoundedIterator<E> implements Iterator<E> {

@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if either of the predicates return true.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class OrPredicate<T> extends AbstractPredicate<T> implements PredicateDecorator<T>, Serializable {
@@ -35,7 +35,7 @@ public final class OrPredicate<T> extends AbstractPredicate<T> implements Predic
     /**
      * Creates the predicate.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
      * @return the {@code and} predicate

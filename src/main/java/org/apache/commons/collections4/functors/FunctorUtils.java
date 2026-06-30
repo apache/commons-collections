@@ -51,7 +51,7 @@ final class FunctorUtils {
      * suppression.
      * </p>
      *
-     * @param <T> the type of object the returned predicate should "accept"
+     * @param <T> The type of object the returned predicate should "accept"
      * @param predicate the predicate to coerce.
      * @return the coerced predicate.
      */
@@ -68,8 +68,8 @@ final class FunctorUtils {
      * suppression.
      * </p>
      *
-     * @param <I> the type of object the returned transformer should "accept"
-     * @param <O> the type of object the returned transformer should "produce"
+     * @param <I> The type of object the returned transformer should "accept"
+     * @param <O> The type of object the returned transformer should "produce"
      * @param transformer the transformer to coerce.
      * @return the coerced transformer.
      */

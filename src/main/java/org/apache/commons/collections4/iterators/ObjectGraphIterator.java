@@ -77,7 +77,7 @@ import org.apache.commons.collections4.Transformer;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * </p>
  *
- * @param <E> the type of elements returned by this iterator.
+ * @param <E> The type of elements returned by this iterator.
  * @since 3.1
  */
 public class ObjectGraphIterator<E> implements Iterator<E> {

@@ -50,7 +50,7 @@ import java.util.function.Supplier;
  * </ol>
  *
  *
- * @param <T> the {@link BloomFilter} type.
+ * @param <T> The {@link BloomFilter} type.
  * @since 4.5.0-M1
  */
 public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtractor {
@@ -58,7 +58,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Builds new instances of {@link LayerManager}.
      *
-     * @param <T> the {@link BloomFilter} type.
+     * @param <T> The {@link BloomFilter} type.
      */
     public static class Builder<T extends BloomFilter<T>> implements Supplier<LayerManager<T>> {
 

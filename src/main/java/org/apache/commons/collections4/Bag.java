@@ -41,7 +41,7 @@ import java.util.Set;
  * it has been decided to maintain backwards compatibility instead.
  * </p>
  *
- * @param <E> the type of elements in this bag
+ * @param <E> The type of elements in this bag
  * @since 2.0
  */
 public interface Bag<E> extends Collection<E> {

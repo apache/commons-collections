@@ -26,7 +26,7 @@ import java.util.SortedSet;
  * Methods are forwarded directly to the decorated set.
  * </p>
  *
- * @param <E> the type of the elements in the sorted set
+ * @param <E> The type of the elements in the sorted set
  * @since 3.0
  */
 public abstract class AbstractSortedSetDecorator<E>

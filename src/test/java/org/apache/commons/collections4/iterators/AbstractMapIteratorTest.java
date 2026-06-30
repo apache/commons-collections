@@ -40,8 +40,8 @@ import org.junit.jupiter.api.Test;
  * overriding the supportsXxx() methods if necessary.
  * </p>
  *
- * @param <K> the type of the keys in the maps tested.
- * @param <V> the type of the values in the maps tested.
+ * @param <K> The type of the keys in the maps tested.
+ * @param <V> The type of the values in the maps tested.
  */
 public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest<K> {
 

@@ -29,8 +29,8 @@ import org.apache.commons.collections4.KeyValue;
  * map, however this will probably mess up any iterators.
  * </p>
  *
- * @param <K> the type of keys
- * @param <V> the type of mapped values
+ * @param <K> The type of keys
+ * @param <V> The type of mapped values
  * @since 3.0
  */
 public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Serializable {

@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Predicate implementation that returns true if the input is null.
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 3.0
  */
 public final class NullPredicate<T> extends AbstractPredicate<T> implements Serializable {
@@ -38,7 +38,7 @@ public final class NullPredicate<T> extends AbstractPredicate<T> implements Seri
     /**
      * Factory returning the singleton instance.
      *
-     * @param <T> the type that the predicate queries
+     * @param <T> The type that the predicate queries
      * @return the singleton instance
      * @since 3.1
      */

@@ -22,7 +22,7 @@ import org.apache.commons.collections4.map.AbstractOrderedMapTest;
 /**
  * JUnit test of the OrderedMap interface of a PatriciaTrie.
  *
- * @param <V> the value type.
+ * @param <V> The value type.
  */
 public class PatriciaTrie2Test<V> extends AbstractOrderedMapTest<String, V> {
 

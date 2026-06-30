@@ -27,8 +27,8 @@ import org.apache.commons.collections4.Trie;
  * This class provides some basic {@link Trie} functionality and
  * utility methods for actual bitwise {@link Trie} implementations.
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 4.0
  */
 public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
@@ -37,8 +37,8 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     /**
      * A basic implementation of {@link Entry}.
      *
-     * @param <K> the type of the keys in this entry.
-     * @param <V> the type of the values in this entry.
+     * @param <K> The type of the keys in this entry.
+     * @param <V> The type of the values in this entry.
      */
     abstract static class BasicEntry<K, V> implements Map.Entry<K, V>, Serializable {
 

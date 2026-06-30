@@ -30,7 +30,7 @@ package org.apache.commons.collections4;
  * or, not, method invocation and null testing.
  * </p>
  *
- * @param <T> the type of the input to the predicate.
+ * @param <T> The type of the input to the predicate.
  * @since 1.0
  * This will be deprecated in 5.0 in favor of {@link java.util.function.Predicate}.
  */

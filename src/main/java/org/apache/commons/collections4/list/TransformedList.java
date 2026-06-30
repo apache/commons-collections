@@ -36,7 +36,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the list.
+ * @param <E> The type of the elements in the list.
  * @since 3.0
  */
 public class TransformedList<E> extends TransformedCollection<E> implements List<E> {
@@ -78,7 +78,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * will be transformed by this method.
      * Contrast this with {@link #transformingList(List, Transformer)}.
      *
-     * @param <E> the type of the elements in the list
+     * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed List
@@ -106,7 +106,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * are NOT transformed.
      * Contrast this with {@link #transformedList(List, Transformer)}.
      *
-     * @param <E> the type of the elements in the list
+     * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed list

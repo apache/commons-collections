@@ -33,7 +33,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <E> the type of elements held in this queue
+ * @param <E> The type of elements held in this queue
  * @since 4.0
  */
 public final class UnmodifiableQueue<E>
@@ -48,7 +48,7 @@ public final class UnmodifiableQueue<E>
      * <p>
      * If the queue passed in is already unmodifiable, it is returned.
      *
-     * @param <E> the type of the elements in the queue
+     * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @return an unmodifiable Queue
      * @throws NullPointerException if queue is null

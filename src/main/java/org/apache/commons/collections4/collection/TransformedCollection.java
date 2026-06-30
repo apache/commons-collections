@@ -35,7 +35,7 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the collection.
+ * @param <E> The type of the elements in the collection.
  * @since 3.0
  */
 public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
@@ -52,7 +52,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * Contrast this with {@link #transformingCollection(Collection, Transformer)}.
      * </p>
      *
-     * @param <E> the type of the elements in the collection.
+     * @param <E> The type of the elements in the collection.
      * @param collection  the collection to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
      * @return a new transformed Collection.
@@ -83,7 +83,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
      * </p>
      *
-     * @param <E> the type of the elements in the collection.
+     * @param <E> The type of the elements in the collection.
      * @param coll  the collection to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
      * @return a new transformed collection.

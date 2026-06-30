@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the ObjectArrayIterator.
  *
- * @param <E> the type of elements tested by this iterator.
+ * @param <E> The type of elements tested by this iterator.
  */
 public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 

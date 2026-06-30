@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Predicate;
  * for more details.
  * </p>
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class WhileClosure<T> implements Closure<T> {
@@ -39,7 +39,7 @@ public class WhileClosure<T> implements Closure<T> {
     /**
      * Factory method that performs validation.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once

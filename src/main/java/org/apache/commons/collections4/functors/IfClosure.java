@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * Closure implementation acts as an if statement calling one or other closure
  * based on a predicate.
  *
- * @param <T> the type of the input to the operation.
+ * @param <T> The type of the input to the operation.
  * @since 3.0
  */
 public class IfClosure<T> implements Closure<T>, Serializable {
@@ -41,7 +41,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * the predicate is false.
      * </p>
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @return the {@code if} closure
@@ -55,7 +55,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Factory method that performs validation.
      *
-     * @param <E> the type that the closure acts on
+     * @param <E> The type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false

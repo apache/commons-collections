@@ -57,8 +57,8 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * <li>the {@code KeyValue} interface (just cast - no object creation)</li>
  * </ul>
  *
- * @param <K> the type of the keys in this map
- * @param <V> the type of the values in this map
+ * @param <K> The type of the keys in this map
+ * @param <V> The type of the values in this map
  * @since 3.1
  */
 public class SingletonMap<K, V>
@@ -152,7 +152,7 @@ public class SingletonMap<K, V>
      * Values implementation for the SingletonMap.
      * This class is needed as values is a view that must update as the map updates.
      *
-     * @param <V> the type of the values in this set.
+     * @param <V> The type of the values in this set.
      */
     static class SingletonValues<V> extends AbstractSet<V> implements Serializable {
         private static final long serialVersionUID = -3689524741863047872L;

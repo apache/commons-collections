@@ -38,7 +38,7 @@ public class MultiSetUtils {
     /**
      * Gets an empty {@code MultiSet}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @return an empty MultiSet
      */
     @SuppressWarnings("unchecked") // OK, empty multiset is compatible with any type
@@ -56,7 +56,7 @@ public class MultiSetUtils {
      * objects.
      * </p>
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param multiset the multiset to predicate, must not be null
      * @param predicate the predicate for the multiset, must not be null
      * @return a predicated multiset backed by the given multiset
@@ -88,7 +88,7 @@ public class MultiSetUtils {
      *
      * Failure to follow this advice may result in non-deterministic behavior.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param multiset the multiset to synchronize, must not be null
      * @return a synchronized multiset backed by that multiset
      * @throws NullPointerException if the MultiSet is null
@@ -101,7 +101,7 @@ public class MultiSetUtils {
      * Returns an unmodifiable view of the given multiset. Any modification attempts
      * to the returned multiset will raise an {@link UnsupportedOperationException}.
      *
-     * @param <E> the element type
+     * @param <E> The element type
      * @param multiset the multiset whose unmodifiable view is to be returned, must not be null
      * @return an unmodifiable view of that multiset
      * @throws NullPointerException if the MultiSet is null

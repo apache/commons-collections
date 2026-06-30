@@ -37,7 +37,7 @@ import java.util.List;
  * method is specialized.
  * </p>
  *
- * @param <T> the type of object to apply commands.
+ * @param <T> The type of object to apply commands.
  * @see SequencesComparator
  * @see EditCommand
  * @see CommandVisitor

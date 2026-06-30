@@ -38,7 +38,7 @@ import java.util.function.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> the type of the elements in the collection
+ * @param <E> The type of the elements in the collection
  * @since 3.0
  */
 public class SynchronizedCollection<E> implements Collection<E>, Serializable {
@@ -49,7 +49,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Creates a synchronized collection.
      *
-     * @param <T> the type of the elements in the collection
+     * @param <T> The type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return a new synchronized collection
      * @throws NullPointerException if collection is null

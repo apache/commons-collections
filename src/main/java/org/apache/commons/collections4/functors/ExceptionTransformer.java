@@ -24,8 +24,8 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that always throws an exception.
  *
- * @param <T> the type of the input to the function.
- * @param <R> the type of the result of the function.
+ * @param <T> The type of the input to the function.
+ * @param <R> The type of the result of the function.
  * @since 3.0
  */
 public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Serializable {
