@@ -92,7 +92,10 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             if (!canRemove) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
+            final int count = last.getCount();
             decorated.remove();
+            parent.size -= count;
+            parent.modCount++;
             last = null;
             canRemove = false;
         }
@@ -267,7 +270,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
             }
             final int count = parent.getCount(lastElement);
             super.remove();
-            parent.remove(lastElement, count);
+            parent.size -= count;
+            parent.modCount++;
             lastElement = null;
             canRemove = false;
         }
