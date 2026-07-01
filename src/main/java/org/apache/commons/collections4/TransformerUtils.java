@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -372,12 +373,14 @@ public class TransformerUtils {
             final Map<I, Transformer<I, O>> objectsAndTransformers) {
 
         Objects.requireNonNull(objectsAndTransformers, "objectsAndTransformers");
-        final Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
-        final int size = objectsAndTransformers.size();
+        // copy so the caller's map is not mutated
+        final Map<I, Transformer<I, O>> objects = new LinkedHashMap<>(objectsAndTransformers);
+        final Transformer<? super I, ? extends O> def = objects.remove(null);
+        final int size = objects.size();
         final Transformer<? super I, ? extends O>[] trs = new Transformer[size];
         final Predicate<I>[] preds = new Predicate[size];
         int i = 0;
-        for (final Map.Entry<I, Transformer<I, O>> entry : objectsAndTransformers.entrySet()) {
+        for (final Map.Entry<I, Transformer<I, O>> entry : objects.entrySet()) {
             preds[i] = EqualPredicate.<I>equalPredicate(entry.getKey());
             trs[i++] = entry.getValue();
         }

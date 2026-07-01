@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -324,12 +325,14 @@ public class ClosureUtils {
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> switchMapClosure(final Map<? extends E, Closure<E>> objectsAndClosures) {
         Objects.requireNonNull(objectsAndClosures, "objectsAndClosures");
-        final Closure<? super E> def = objectsAndClosures.remove(null);
-        final int size = objectsAndClosures.size();
+        // copy so the caller's map is not mutated
+        final Map<? extends E, Closure<E>> objects = new LinkedHashMap<>(objectsAndClosures);
+        final Closure<? super E> def = objects.remove(null);
+        final int size = objects.size();
         final Closure<? super E>[] trs = new Closure[size];
         final Predicate<E>[] preds = new Predicate[size];
         int i = 0;
-        for (final Map.Entry<? extends E, Closure<E>> entry : objectsAndClosures.entrySet()) {
+        for (final Map.Entry<? extends E, Closure<E>> entry : objects.entrySet()) {
             preds[i] = EqualPredicate.<E>equalPredicate(entry.getKey());
             trs[i] = entry.getValue();
             i++;

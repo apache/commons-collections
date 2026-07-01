@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -57,16 +58,17 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
         Objects.requireNonNull(predicatesAndClosures, "predicatesAndClosures");
-        // convert to array like this to guarantee iterator() ordering
-        final Closure<? super E> defaultClosure = predicatesAndClosures.remove(null);
-        final int size = predicatesAndClosures.size();
+        // copy so the caller's map is not mutated; LinkedHashMap preserves iterator() ordering
+        final Map<Predicate<E>, Closure<E>> entries = new LinkedHashMap<>(predicatesAndClosures);
+        final Closure<? super E> defaultClosure = entries.remove(null);
+        final int size = entries.size();
         if (size == 0) {
             return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
         }
         final Closure<E>[] closures = new Closure[size];
         final Predicate<E>[] preds = new Predicate[size];
         int i = 0;
-        for (final Map.Entry<Predicate<E>, Closure<E>> entry : predicatesAndClosures.entrySet()) {
+        for (final Map.Entry<Predicate<E>, Closure<E>> entry : entries.entrySet()) {
             preds[i] = entry.getKey();
             closures[i] = entry.getValue();
             i++;

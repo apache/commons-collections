@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -307,6 +308,22 @@ class ClosureUtilsTest {
         assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchMapClosure(new HashMap<>()));
 
         assertThrows(NullPointerException.class, () -> ClosureUtils.switchMapClosure(null));
+    }
+
+    @Test
+    void testSwitchClosureDoesNotMutateInputMap() {
+        final Closure<String> def = new MockClosure<>();
+        final Map<Predicate<String>, Closure<String>> predicateMap = new HashMap<>();
+        predicateMap.put(null, def);
+        predicateMap.put(EqualPredicate.equalPredicate("HELLO"), new MockClosure<>());
+        ClosureUtils.switchClosure(predicateMap);
+        assertTrue(predicateMap.containsKey(null));
+
+        final Map<String, Closure<String>> objectMap = new HashMap<>();
+        objectMap.put(null, def);
+        objectMap.put("HELLO", new MockClosure<>());
+        ClosureUtils.switchMapClosure(objectMap);
+        assertTrue(objectMap.containsKey(null));
     }
 
     @Test
