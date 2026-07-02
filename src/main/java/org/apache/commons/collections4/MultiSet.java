@@ -49,7 +49,7 @@ public interface MultiSet<E> extends Collection<E> {
          * <p>
          * More formally, two entries {@code e1} and {@code e2} represent the same mapping if
          * </p>
-         * 
+         *
          * <pre>
          * (e1.getElement() == null ? e2.getElement() == null : e1.getElement().equals(e2.getElement())) &amp;&amp; (e1.getCount() == e2.getCount())
          * </pre>
@@ -79,7 +79,7 @@ public interface MultiSet<E> extends Collection<E> {
          * <p>
          * The hash code of a multiset entry {@code e} is defined to be:
          * </p>
-         * 
+         *
          * <pre>
          *      (e==null ? 0 : e.hashCode()) ^ noOccurrences)
          * </pre>
