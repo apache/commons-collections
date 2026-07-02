@@ -44,9 +44,12 @@ class SwitchTransformerMapMutatesTest {
         final int sizeBefore = map.size();
         assertEquals(2, sizeBefore);
         // Call the factory method
-        SwitchTransformer.switchTransformer(map);
+        final Transformer<String, String> result = SwitchTransformer.switchTransformer(map);
         // The map should NOT have been mutated - null key must still be present
         final int sizeAfter = map.size();
         assertEquals(sizeBefore, sizeAfter, "switchTransformer must not mutate the input map; expected size");
+        // The returned transformer must still route via the copied map
+        assertEquals("value", result.transform(null));
+        assertEquals("default", result.transform("other"));
     }
 }

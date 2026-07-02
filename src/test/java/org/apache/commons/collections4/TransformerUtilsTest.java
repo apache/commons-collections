@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -282,6 +283,17 @@ class TransformerUtilsTest {
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.switchMapTransformer(map));
 
         assertThrows(NullPointerException.class, () -> TransformerUtils.switchMapTransformer(null));
+    }
+
+    @Test
+    void testSwitchMapTransformerDoesNotMutateInputMap() {
+        final Map<String, Transformer<String, String>> map = new HashMap<>();
+        map.put(null, TransformerUtils.constantTransformer("default"));
+        map.put("HELLO", TransformerUtils.constantTransformer("A"));
+        final Transformer<String, String> transformer = TransformerUtils.switchMapTransformer(map);
+        assertTrue(map.containsKey(null));
+        assertEquals("A", transformer.transform("HELLO"));
+        assertEquals("default", transformer.transform("WORLD"));
     }
 
     @Test
