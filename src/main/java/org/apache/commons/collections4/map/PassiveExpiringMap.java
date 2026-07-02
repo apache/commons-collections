@@ -27,6 +27,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
+
+import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
+import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
+import org.apache.commons.collections4.set.AbstractSetDecorator;
 
 /**
  * Decorates a {@code Map} to evict expired entries once their expiration
@@ -359,7 +364,7 @@ public class PassiveExpiringMap<K, V>
     @Override
     public Set<Entry<K, V>> entrySet() {
         removeAllExpired(now());
-        return super.entrySet();
+        return new EntrySet(super.entrySet());
     }
 
     /**
@@ -408,7 +413,7 @@ public class PassiveExpiringMap<K, V>
     @Override
     public Set<K> keySet() {
         removeAllExpired(now());
-        return super.keySet();
+        return new KeySet(super.keySet());
     }
 
     /**
@@ -519,7 +524,7 @@ public class PassiveExpiringMap<K, V>
     @Override
     public Collection<V> values() {
         removeAllExpired(now());
-        return super.values();
+        return new ValuesCollection(super.values());
     }
 
     /**
@@ -532,5 +537,430 @@ public class PassiveExpiringMap<K, V>
         throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
+    }
+
+    private final class EntrySet extends AbstractSetDecorator<Entry<K, V>> {
+
+        /** Generated serial version ID. */
+        private static final long serialVersionUID = 1L;
+
+        private EntrySet(final Set<Entry<K, V>> set) {
+            super(set);
+        }
+
+        @Override
+        public Iterator<Entry<K, V>> iterator() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return new EntrySetIterator(super.iterator());
+        }
+
+        @Override
+        public int size() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.isEmpty();
+        }
+
+        @Override
+        public boolean contains(final Object object) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.contains(object);
+        }
+
+        @Override
+        public boolean remove(final Object object) {
+            if (object instanceof Map.Entry) {
+                final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) object;
+                final Object key = entry.getKey();
+                if (PassiveExpiringMap.this.containsKey(key)) {
+                    final Object value = PassiveExpiringMap.this.get(key);
+                    if (Objects.equals(value, entry.getValue())) {
+                        PassiveExpiringMap.this.remove(key);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            if (size() > coll.size()) {
+                for (final Object obj : coll) {
+                    changed |= remove(obj);
+                }
+            } else {
+                final Iterator<?> it = iterator();
+                while (it.hasNext()) {
+                    if (coll.contains(it.next())) {
+                        it.remove();
+                        changed = true;
+                    }
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean retainAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            final Iterator<?> it = iterator();
+            while (it.hasNext()) {
+                if (!coll.contains(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean removeIf(final Predicate<? super Entry<K, V>> filter) {
+            Objects.requireNonNull(filter);
+            boolean changed = false;
+            final Iterator<Entry<K, V>> it = iterator();
+            while (it.hasNext()) {
+                if (filter.test(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public void clear() {
+            PassiveExpiringMap.this.clear();
+        }
+
+        @Override
+        public Object[] toArray() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(final T[] array) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray(array);
+        }
+
+        @Override
+        public boolean containsAll(final Collection<?> coll) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.containsAll(coll);
+        }
+    }
+
+    private final class EntrySetIterator extends AbstractIteratorDecorator<Entry<K, V>> {
+        private Entry<K, V> lastReturned;
+
+        private EntrySetIterator(final Iterator<Entry<K, V>> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public Entry<K, V> next() {
+            lastReturned = super.next();
+            return lastReturned;
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            if (lastReturned != null) {
+                PassiveExpiringMap.this.expirationMap.remove(lastReturned.getKey());
+                lastReturned = null;
+            }
+        }
+    }
+
+    private final class KeySet extends AbstractSetDecorator<K> {
+
+        /** Generated serial version ID. */
+        private static final long serialVersionUID = 1L;
+
+        private KeySet(final Set<K> set) {
+            super(set);
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return new KeySetIterator(PassiveExpiringMap.this.entrySet().iterator());
+        }
+
+        @Override
+        public int size() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.isEmpty();
+        }
+
+        @Override
+        public boolean contains(final Object key) {
+            PassiveExpiringMap.this.removeIfExpired(key, PassiveExpiringMap.this.now());
+            return super.contains(key);
+        }
+
+        @Override
+        public boolean remove(final Object key) {
+            final boolean hasKey = contains(key);
+            if (hasKey) {
+                PassiveExpiringMap.this.remove(key);
+            }
+            return hasKey;
+        }
+
+        @Override
+        public boolean removeAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            if (size() > coll.size()) {
+                for (final Object obj : coll) {
+                    changed |= remove(obj);
+                }
+            } else {
+                final Iterator<?> it = iterator();
+                while (it.hasNext()) {
+                    if (coll.contains(it.next())) {
+                        it.remove();
+                        changed = true;
+                    }
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean retainAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            final Iterator<?> it = iterator();
+            while (it.hasNext()) {
+                if (!coll.contains(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean removeIf(final Predicate<? super K> filter) {
+            Objects.requireNonNull(filter);
+            boolean changed = false;
+            final Iterator<K> it = iterator();
+            while (it.hasNext()) {
+                if (filter.test(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public void clear() {
+            PassiveExpiringMap.this.clear();
+        }
+
+        @Override
+        public Object[] toArray() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(final T[] array) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray(array);
+        }
+
+        @Override
+        public boolean containsAll(final Collection<?> coll) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.containsAll(coll);
+        }
+    }
+
+    private final class KeySetIterator implements Iterator<K> {
+        private final Iterator<Entry<K, V>> iterator;
+
+        private KeySetIterator(final Iterator<Entry<K, V>> iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public K next() {
+            return iterator.next().getKey();
+        }
+
+        @Override
+        public void remove() {
+            iterator.remove();
+        }
+    }
+
+    private final class ValuesCollection extends AbstractCollectionDecorator<V> {
+
+        /** Generated serial version ID. */
+        private static final long serialVersionUID = 1L;
+
+        private ValuesCollection(final Collection<V> coll) {
+            super(coll);
+        }
+
+        @Override
+        public Iterator<V> iterator() {
+            return new ValuesIterator(PassiveExpiringMap.this.entrySet().iterator());
+        }
+
+        @Override
+        public int size() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.isEmpty();
+        }
+
+        @Override
+        public boolean contains(final Object value) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.contains(value);
+        }
+
+        @Override
+        public boolean remove(final Object value) {
+            final Iterator<V> it = iterator();
+            while (it.hasNext()) {
+                if (Objects.equals(it.next(), value)) {
+                    it.remove();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            final Iterator<?> it = iterator();
+            while (it.hasNext()) {
+                if (coll.contains(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean retainAll(final Collection<?> coll) {
+            if (coll == null) {
+                return false;
+            }
+            boolean changed = false;
+            final Iterator<?> it = iterator();
+            while (it.hasNext()) {
+                if (!coll.contains(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public boolean removeIf(final Predicate<? super V> filter) {
+            Objects.requireNonNull(filter);
+            boolean changed = false;
+            final Iterator<V> it = iterator();
+            while (it.hasNext()) {
+                if (filter.test(it.next())) {
+                    it.remove();
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        @Override
+        public void clear() {
+            PassiveExpiringMap.this.clear();
+        }
+
+        @Override
+        public Object[] toArray() {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray();
+        }
+
+        @Override
+        public <T> T[] toArray(final T[] array) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.toArray(array);
+        }
+
+        @Override
+        public boolean containsAll(final Collection<?> coll) {
+            PassiveExpiringMap.this.removeAllExpired(PassiveExpiringMap.this.now());
+            return super.containsAll(coll);
+        }
+    }
+
+    private final class ValuesIterator implements Iterator<V> {
+        private final Iterator<Entry<K, V>> iterator;
+
+        private ValuesIterator(final Iterator<Entry<K, V>> iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public V next() {
+            return iterator.next().getValue();
+        }
+
+        @Override
+        public void remove() {
+            iterator.remove();
+        }
     }
 }

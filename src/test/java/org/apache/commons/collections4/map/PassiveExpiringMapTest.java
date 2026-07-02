@@ -23,7 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -253,6 +256,104 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<PassiveExpirin
         assertNotNull(map.get("a"));
         Thread.sleep(2 * timeout);
         assertNull(map.get("a"));
+    }
+
+    @Test
+    void testCollectionsSynchronizedMapExpiration() throws InterruptedException {
+        final Map<String, String> map = Collections.synchronizedMap(new PassiveExpiringMap<>(50L));
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        // Cache the views in SynchronizedMap before they expire
+        final Collection<Map.Entry<String, String>> entrySet = map.entrySet();
+        final Collection<String> keySet = map.keySet();
+        final Collection<String> values = map.values();
+        Thread.sleep(100L);
+        // entrySet iterator triggers expiration
+        synchronized (map) {
+            assertTrue(entrySet.isEmpty());
+            assertTrue(keySet.isEmpty());
+            assertTrue(values.isEmpty());
+        }
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        Thread.sleep(100L);
+        // keySet iterator triggers expiration
+        synchronized (map) {
+            assertTrue(entrySet.isEmpty());
+            assertTrue(keySet.isEmpty());
+            assertTrue(values.isEmpty());
+        }
+        map.put("a", "b");
+        map.put("c", "d");
+        assertEquals(2, map.size());
+        Thread.sleep(100L);
+        // values iterator triggers expiration
+        synchronized (map) {
+            assertTrue(entrySet.isEmpty());
+            assertTrue(keySet.isEmpty());
+            assertTrue(values.isEmpty());
+        }
+    }
+
+    @Test
+    void testCollectionViewRemoval() {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(10000L);
+        map.put("a", "b");
+        map.put("c", "d");
+        map.put("e", "f");
+        // Remove via entrySet iterator
+        final Iterator<Map.Entry<String, String>> entryIter = map.entrySet().iterator();
+        assertTrue(entryIter.hasNext());
+        final Map.Entry<String, String> entry = entryIter.next();
+        final String removedKey = entry.getKey();
+        entryIter.remove();
+        assertFalse(map.containsKey(removedKey));
+        // Remove via keySet iterator
+        final Iterator<String> keyIter = map.keySet().iterator();
+        assertTrue(keyIter.hasNext());
+        final String key = keyIter.next();
+        keyIter.remove();
+        assertFalse(map.containsKey(key));
+        // Remove via values iterator
+        final Iterator<String> valIter = map.values().iterator();
+        assertTrue(valIter.hasNext());
+        final String val = valIter.next();
+        valIter.remove();
+        assertFalse(map.containsValue(val));
+    }
+
+    @Test
+    void testCollectionViewNullInputs() {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(10000L);
+        map.put("a", "b");
+        // entrySet
+        assertFalse(map.entrySet().removeAll(null));
+        assertFalse(map.entrySet().retainAll(null));
+        // keySet
+        assertFalse(map.keySet().removeAll(null));
+        assertFalse(map.keySet().retainAll(null));
+        // values
+        assertFalse(map.values().removeAll(null));
+        assertFalse(map.values().retainAll(null));
+    }
+
+    @Test
+    void testCollectionViewIteratorExpiration() throws InterruptedException {
+        final PassiveExpiringMap<String, String> map = new PassiveExpiringMap<>(50L);
+        map.put("a", "b");
+
+        final Collection<Map.Entry<String, String>> entrySet = map.entrySet();
+        final Collection<String> keySet = map.keySet();
+        final Collection<String> values = map.values();
+
+        Thread.sleep(100L);
+
+        // The iterators should trigger expiration and not return any elements
+        assertFalse(entrySet.iterator().hasNext());
+        assertFalse(keySet.iterator().hasNext());
+        assertFalse(values.iterator().hasNext());
     }
 
 }
