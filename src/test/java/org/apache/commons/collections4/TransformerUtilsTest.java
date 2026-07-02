@@ -290,8 +290,10 @@ class TransformerUtilsTest {
         final Map<String, Transformer<String, String>> map = new HashMap<>();
         map.put(null, TransformerUtils.constantTransformer("default"));
         map.put("HELLO", TransformerUtils.constantTransformer("A"));
-        TransformerUtils.switchMapTransformer(map);
+        final Transformer<String, String> transformer = TransformerUtils.switchMapTransformer(map);
         assertTrue(map.containsKey(null));
+        assertEquals("A", transformer.transform("HELLO"));
+        assertEquals("default", transformer.transform("WORLD"));
     }
 
     @Test
