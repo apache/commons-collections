@@ -579,18 +579,18 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A", 3);
         multiset.add((T) "B", 2);
-
         final Iterator<T> unique = multiset.uniqueSet().iterator();
         final T removed = unique.next();
         final int removedCount = multiset.getCount(removed);
         unique.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
         assertEquals(5 - removedCount, multiset.size());
         assertFalse(multiset.contains(removed));
         assertEquals(multiset.size(), multiset.toArray().length);
-
         final Iterator<MultiSet.Entry<T>> entries = multiset.entrySet().iterator();
         entries.next();
         entries.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
         assertEquals(0, multiset.size());
         assertTrue(multiset.isEmpty());
         assertEquals(0, multiset.toArray().length);
