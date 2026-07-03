@@ -590,9 +590,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             if (size() > coll.size()) {
                 for (final Object obj : coll) {
@@ -612,9 +610,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -730,9 +726,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             if (size() > coll.size()) {
                 for (final Object obj : coll) {
@@ -752,9 +746,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -873,9 +865,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -889,9 +879,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            if (coll == null) {
-                return false;
-            }
+            Objects.requireNonNull(coll);
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
