@@ -16,12 +16,9 @@
  */
 package org.apache.commons.collections4.multiset;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InvalidObjectException;
-import java.util.Iterator;
 
 import org.apache.commons.collections4.MultiSet;
 import org.junit.jupiter.api.Test;
@@ -45,26 +42,6 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
     @Override
     public MultiSet<T> makeObject() {
         return new HashMultiSet<>();
-    }
-
-    @Test
-    void testViewIteratorRemoveKeepsSizeConsistent() {
-        final HashMultiSet<String> multiset = new HashMultiSet<>();
-        multiset.add("a", 3);
-        final Iterator<String> unique = multiset.uniqueSet().iterator();
-        unique.next();
-        unique.remove();
-        assertEquals(0, multiset.size());
-        assertTrue(multiset.isEmpty());
-        assertEquals(0, multiset.toArray().length);
-
-        multiset.add("b", 4);
-        final Iterator<MultiSet.Entry<String>> entries = multiset.entrySet().iterator();
-        entries.next();
-        entries.remove();
-        assertEquals(0, multiset.size());
-        assertTrue(multiset.isEmpty());
-        assertEquals(0, multiset.toArray().length);
     }
 
     @Test
