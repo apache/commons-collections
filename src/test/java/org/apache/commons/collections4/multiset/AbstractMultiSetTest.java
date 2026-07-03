@@ -570,6 +570,34 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
+    void testMultiSetViewIteratorRemoveKeepsSizeConsistent() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+        // removing through uniqueSet()/entrySet() drops the whole entry, so
+        // size() must fall by that entry's count and the views stay consistent
+        final MultiSet<T> multiset = makeObject();
+        multiset.add((T) "A", 3);
+        multiset.add((T) "B", 2);
+
+        final Iterator<T> unique = multiset.uniqueSet().iterator();
+        final T removed = unique.next();
+        final int removedCount = multiset.getCount(removed);
+        unique.remove();
+        assertEquals(5 - removedCount, multiset.size());
+        assertFalse(multiset.contains(removed));
+        assertEquals(multiset.size(), multiset.toArray().length);
+
+        final Iterator<MultiSet.Entry<T>> entries = multiset.entrySet().iterator();
+        entries.next();
+        entries.remove();
+        assertEquals(0, multiset.size());
+        assertTrue(multiset.isEmpty());
+        assertEquals(0, multiset.toArray().length);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     void testMultiSetRemove() {
         if (!isRemoveSupported()) {
             return;
