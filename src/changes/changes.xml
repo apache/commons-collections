@@ -66,6 +66,7 @@
     <action type="fix" dev="ggregory" due-to="Vasiliy Mikhailov, Gary Gregory">Do not mutate the input map in SwitchTransformer.switchTransformer (#696).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Do not mutate the input map in SwitchClosure.switchClosure, ClosureUtils.switchMapClosure and TransformerUtils.switchMapTransformer (#700).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix stale size in AbstractMapMultiSet view iterator remove (#701).</action>
+    <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Stop ExtendedMessageFormat seekNonWs reading past the pattern end (#1740).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
