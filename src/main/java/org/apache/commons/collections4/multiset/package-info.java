@@ -24,6 +24,7 @@
  * </p>
  * <ul>
  *   <li>HashMultiSet - implementation that uses a HashMap to store the data</li>
+ *   <li>TreeMultiSet - implementation that uses a TreeMap to store the data</li>
  * </ul>
  * <p>
  * The following decorators are provided in the package:
