@@ -110,6 +110,20 @@ class SortedPropertiesTest {
     }
 
     @Test
+    void testComputeToNullRemovesKey() {
+        final SortedProperties orderedProperties = new SortedProperties();
+        orderedProperties.put("a", "1");
+        orderedProperties.put("b", "2");
+        // A remapping to null removes the mapping; the ordered key view must follow.
+        orderedProperties.compute("a", (k, v) -> null);
+        assertFalse(orderedProperties.containsKey("a"));
+        assertFalse(orderedProperties.keySet().contains("a"));
+        assertEquals(1, orderedProperties.size());
+        assertEquals("[b]", orderedProperties.keySet().toString());
+        assertEquals("{b=2}", orderedProperties.toString());
+    }
+
+    @Test
     void testEntrySet() {
         final SortedProperties sortedProperties = new SortedProperties();
         final char first = 'Z';
@@ -211,6 +225,19 @@ class SortedPropertiesTest {
             sortedProperties.merge("key" + i, "value" + i, (k, v) -> v);
         }
         assertAscendingOrder(sortedProperties);
+    }
+
+    @Test
+    void testMergeToNullRemovesKey() {
+        final SortedProperties orderedProperties = new SortedProperties();
+        orderedProperties.put("a", "1");
+        orderedProperties.put("b", "2");
+        // A remapping to null removes the mapping; the ordered key view must follow.
+        orderedProperties.merge("a", "x", (oldVal, newVal) -> null);
+        assertFalse(orderedProperties.containsKey("a"));
+        assertFalse(orderedProperties.keySet().contains("a"));
+        assertEquals(1, orderedProperties.size());
+        assertEquals("{b=2}", orderedProperties.toString());
     }
 
     @Test
