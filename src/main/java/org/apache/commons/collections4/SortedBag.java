@@ -21,8 +21,15 @@ import java.util.Comparator;
 /**
  * Defines a type of {@code Bag} that maintains a sorted order among
  * its unique representative members.
+ * <p>
+ * The {@link SortedMultiSet} interface provides the same functionality
+ * while complying with the {@link java.util.Collection Collection}
+ * contract, and should be preferred for new code; see the {@link Bag}
+ * documentation for migration notes.
+ * </p>
  *
  * @param <E> The type of elements in this bag
+ * @see SortedMultiSet
  * @since 2.0
  */
 public interface SortedBag<E> extends Bag<E> {

@@ -73,6 +73,7 @@
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
     <action type="add" issue="COLLECTIONS-893" dev="paulk" due-to="Paul King">Add SortedMultiSet interface, TreeMultiSet implementation, sorted multiset decorators, and MultiSetUtils factory methods, giving MultiSet feature parity with SortedBag/TreeBag.</action>
+    <action type="add" issue="COLLECTIONS-893" dev="paulk" due-to="Paul King">Add MultiSetUtils.containsOccurrences/removeOccurrences/retainOccurrences providing Bag's cardinality-respecting semantics under explicit names, and Bag-to-MultiSet migration notes in the Bag javadoc.</action>
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump org.apache.commons:commons-parent from 81 to 102 #612, #645, #662, #663.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644.</action>

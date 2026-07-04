@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.apache.commons.collections4.multiset.PredicatedMultiSet;
 import org.apache.commons.collections4.multiset.PredicatedSortedMultiSet;
@@ -48,6 +51,34 @@ public class MultiSetUtils {
     @SuppressWarnings("rawtypes") // OK, empty multiset is compatible with any type
     public static final SortedMultiSet EMPTY_SORTED_MULTISET =
         UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(new TreeMultiSet<>());
+
+    /**
+     * Returns {@code true} if {@code superMultiSet} contains at least as many
+     * occurrences of each element as {@code subMultiSet} does; in other words,
+     * whether {@code subMultiSet} is a sub-multiset of {@code superMultiSet}.
+     * <p>
+     * This method provides the cardinality-respecting behavior of
+     * {@link Bag#containsAll(java.util.Collection)} under an explicitly named
+     * method. To compare against a plain collection, wrap it first, for example
+     * {@code containsOccurrences(multiSet, new HashMultiSet<>(coll))}.
+     * </p>
+     *
+     * @param superMultiSet the multiset to check against, must not be null
+     * @param subMultiSet the multiset whose occurrences must all be present, must not be null
+     * @return {@code true} if {@code superMultiSet} contains all occurrences in {@code subMultiSet}
+     * @throws NullPointerException if either MultiSet is null
+     * @since 4.6.0
+     */
+    public static boolean containsOccurrences(final MultiSet<?> superMultiSet, final MultiSet<?> subMultiSet) {
+        Objects.requireNonNull(superMultiSet, "superMultiSet");
+        Objects.requireNonNull(subMultiSet, "subMultiSet");
+        for (final MultiSet.Entry<?> entry : subMultiSet.entrySet()) {
+            if (superMultiSet.getCount(entry.getElement()) < entry.getCount()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Gets an empty {@code MultiSet}.
@@ -114,6 +145,77 @@ public class MultiSetUtils {
     public static <E> SortedMultiSet<E> predicatedSortedMultiSet(final SortedMultiSet<E> multiset,
             final Predicate<? super E> predicate) {
         return PredicatedSortedMultiSet.predicatedSortedMultiSet(multiset, predicate);
+    }
+
+    /**
+     * For each occurrence of an element in {@code occurrencesToRemove}, removes
+     * one occurrence of that element from {@code multiSetToModify}, if present.
+     * That is, if {@code occurrencesToRemove} contains {@code n} occurrences of
+     * an element, {@code multiSetToModify} will have {@code n} fewer occurrences,
+     * assuming it had at least {@code n} to begin with.
+     * <p>
+     * This method provides the cardinality-respecting behavior of
+     * {@link Bag#removeAll(java.util.Collection)} under an explicitly named
+     * method. To remove the occurrences of a plain collection, wrap it first,
+     * for example {@code removeOccurrences(multiSet, new HashMultiSet<>(coll))}.
+     * </p>
+     *
+     * @param multiSetToModify the multiset to remove occurrences from, must not be null
+     * @param occurrencesToRemove the occurrences to remove, must not be null
+     * @return {@code true} if {@code multiSetToModify} was changed as a result of this operation
+     * @throws NullPointerException if either MultiSet is null
+     * @since 4.6.0
+     */
+    public static boolean removeOccurrences(final MultiSet<?> multiSetToModify, final MultiSet<?> occurrencesToRemove) {
+        Objects.requireNonNull(multiSetToModify, "multiSetToModify");
+        Objects.requireNonNull(occurrencesToRemove, "occurrencesToRemove");
+        if (multiSetToModify == occurrencesToRemove) {
+            final boolean changed = !multiSetToModify.isEmpty();
+            multiSetToModify.clear();
+            return changed;
+        }
+        boolean changed = false;
+        for (final MultiSet.Entry<?> entry : occurrencesToRemove.entrySet()) {
+            if (multiSetToModify.remove(entry.getElement(), entry.getCount()) > 0) {
+                changed = true;
+            }
+        }
+        return changed;
+    }
+
+    /**
+     * Modifies {@code multiSetToModify} so that no element has more occurrences
+     * than it has in {@code occurrencesToRetain}. That is, if
+     * {@code occurrencesToRetain} contains {@code n} occurrences of an element
+     * and {@code multiSetToModify} has {@code m > n} occurrences, {@code m - n}
+     * occurrences are removed; elements not contained in
+     * {@code occurrencesToRetain} are removed entirely.
+     * <p>
+     * This method provides the cardinality-respecting behavior of
+     * {@link Bag#retainAll(java.util.Collection)} under an explicitly named
+     * method. To retain the occurrences of a plain collection, wrap it first,
+     * for example {@code retainOccurrences(multiSet, new HashMultiSet<>(coll))}.
+     * </p>
+     *
+     * @param <E> The element type
+     * @param multiSetToModify the multiset to limit occurrences in, must not be null
+     * @param occurrencesToRetain the occurrences to retain, must not be null
+     * @return {@code true} if {@code multiSetToModify} was changed as a result of this operation
+     * @throws NullPointerException if either MultiSet is null
+     * @since 4.6.0
+     */
+    public static <E> boolean retainOccurrences(final MultiSet<E> multiSetToModify, final MultiSet<?> occurrencesToRetain) {
+        Objects.requireNonNull(multiSetToModify, "multiSetToModify");
+        Objects.requireNonNull(occurrencesToRetain, "occurrencesToRetain");
+        boolean changed = false;
+        for (final E element : new ArrayList<>(multiSetToModify.uniqueSet())) {
+            final int retainCount = occurrencesToRetain.getCount(element);
+            if (multiSetToModify.getCount(element) > retainCount) {
+                multiSetToModify.setCount(element, retainCount);
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     /**
