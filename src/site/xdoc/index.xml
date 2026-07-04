@@ -29,7 +29,7 @@
 The <a href="https://docs.oracle.com/javase/tutorial/collections/">Java Collections Framework</a>
 was a major addition in Java 1.2.
 It added many powerful data structures that accelerate development of most significant Java applications.
-Since that time it has become the recognised standard for collection handling in Java.
+Since that time it has become the recognized standard for collection handling in Java.
 </p>
 <p>
 Commons-Collections seek to build upon the JDK classes by providing new interfaces, implementations and utilities.
