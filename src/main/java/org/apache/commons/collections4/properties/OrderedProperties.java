@@ -66,6 +66,8 @@ public class OrderedProperties extends Properties {
         final Object compute = super.compute(key, remappingFunction);
         if (compute != null) {
             orderedKeys.add(key);
+        } else {
+            orderedKeys.remove(key);
         }
         return compute;
     }
@@ -123,8 +125,13 @@ public class OrderedProperties extends Properties {
     @Override
     public synchronized Object merge(final Object key, final Object value,
             final BiFunction<? super Object, ? super Object, ? extends Object> remappingFunction) {
-        orderedKeys.add(key);
-        return super.merge(key, value, remappingFunction);
+        final Object merge = super.merge(key, value, remappingFunction);
+        if (merge != null) {
+            orderedKeys.add(key);
+        } else {
+            orderedKeys.remove(key);
+        }
+        return merge;
     }
 
     @Override
