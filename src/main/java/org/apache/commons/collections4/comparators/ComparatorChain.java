@@ -263,10 +263,10 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        if (null != comparatorChain) {
+        if (comparatorChain != null) {
             hash ^= comparatorChain.hashCode();
         }
-        if (null != orderingBits) {
+        if (orderingBits != null) {
             hash ^= orderingBits.hashCode();
         }
         return hash;

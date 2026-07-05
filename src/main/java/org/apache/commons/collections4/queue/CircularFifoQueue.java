@@ -386,7 +386,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
         }
 
         final E element = elements[start];
-        if (null != element) {
+        if (element != null) {
             elements[start++] = null;
 
             if (start >= maxElements) {

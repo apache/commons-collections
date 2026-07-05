@@ -107,7 +107,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     @Override
     public boolean equals(final Object object) {
         return this == object ||
-               null != object && object.getClass().equals(this.getClass());
+               object != null && object.getClass().equals(this.getClass());
     }
 
     /**
