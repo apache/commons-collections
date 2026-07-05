@@ -1141,7 +1141,7 @@ public class CollectionUtils {
     public static <E> int hashCode(final Collection<? extends E> collection,
             final Equator<? super E> equator) {
         Objects.requireNonNull(equator, "equator");
-        if (null == collection) {
+        if (collection == null) {
             return 0;
         }
         int hashCode = 1;

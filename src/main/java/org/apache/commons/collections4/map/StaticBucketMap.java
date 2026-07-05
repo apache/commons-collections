@@ -688,7 +688,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             while (n != null) {
                 if (Objects.equals(n.key, key)) {
                     // Remove this node from the linked list of nodes.
-                    if (null == prev) {
+                    if (prev == null) {
                         // This node was the head, set the next node to be the new head.
                         buckets[hash] = n.next;
                     } else {

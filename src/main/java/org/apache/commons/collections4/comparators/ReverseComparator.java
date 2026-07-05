@@ -94,7 +94,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
         if (this == object) {
             return true;
         }
-        if (null == object) {
+        if (object == null) {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
