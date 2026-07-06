@@ -482,11 +482,13 @@ class MapUtilsTest {
     void testGetIntValue() {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
+        in.put("big", 1000);
 
         assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
+        assertEquals(1000, MapUtils.getIntValue(in, "big", key -> 0), 0);
+        assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", key -> Integer.MAX_VALUE), 0);
         assertEquals(Integer.MIN_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MIN_VALUE), 0);
         assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
