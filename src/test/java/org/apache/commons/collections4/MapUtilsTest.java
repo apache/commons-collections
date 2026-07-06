@@ -482,11 +482,13 @@ class MapUtilsTest {
     void testGetIntValue() {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
+        in.put("big", 1000);
 
         assertEquals(2, MapUtils.getIntValue(in, "key", 0), 0);
         assertEquals(2, MapUtils.getIntValue(in, "key"), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey", 0), 0);
-        assertEquals(0, MapUtils.getIntValue(in, "noKey", key -> 0), 0);
+        assertEquals(1000, MapUtils.getIntValue(in, "big", key -> 0), 0);
+        assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", key -> Integer.MAX_VALUE), 0);
         assertEquals(Integer.MIN_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MIN_VALUE), 0);
         assertEquals(Integer.MAX_VALUE, MapUtils.getIntValue(in, "noKey", Integer.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getIntValue(in, "noKey"), 0);
@@ -587,7 +589,7 @@ class MapUtilsTest {
         assertEquals(val, MapUtils.getShortValue(in, "key", val), 0);
         assertEquals(val, MapUtils.getShortValue(in, "key"), 0);
         assertEquals(val, MapUtils.getShortValue(in, "noKey", val), 0);
-        assertEquals(val, MapUtils.getShortValue(in, "noKey", key -> val), 0);
+        assertEquals(1000, MapUtils.getShortValue(in, "noKey", key -> (short) 1000), 0);
         assertEquals(Short.MIN_VALUE, MapUtils.getShortValue(in, "noKey", Short.MIN_VALUE), 0);
         assertEquals(Short.MAX_VALUE, MapUtils.getShortValue(in, "noKey", Short.MAX_VALUE), 0);
         assertEquals(0, MapUtils.getShortValue(in, "noKey"), 0);

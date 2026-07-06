@@ -738,7 +738,7 @@ public class MapUtils {
      */
     public static <K> int getIntValue(final Map<? super K, ?> map, final K key,
             final Function<K, Integer> defaultFunction) {
-        return applyDefaultFunction(map, key, MapUtils::getInteger, defaultFunction, 0).byteValue();
+        return applyDefaultFunction(map, key, MapUtils::getInteger, defaultFunction, 0).intValue();
     }
 
     /**
