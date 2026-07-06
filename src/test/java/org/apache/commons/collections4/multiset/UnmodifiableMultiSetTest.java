@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -93,7 +94,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     void testEntrySet() {
         final MultiSet<E> multiset = makeFullCollection();
         final MultiSet<E> unmodifiableMultiSet = UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
-        assertSame(unmodifiableMultiSet.entrySet().size(), multiset.entrySet().size());
+        assertEquals(multiset.entrySet(), unmodifiableMultiSet.entrySet());
     }
 
     @Test

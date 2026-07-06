@@ -115,6 +115,11 @@ class MultiSetUtilsTest {
         assertEquals(0, multiSet.size());
         assertFalse(MultiSetUtils.removeOccurrences(multiSet, multiSet), "Empty multiset is unchanged");
 
+        multiSet.addAll(Arrays.asList(fullArray));
+        assertTrue(MultiSetUtils.removeOccurrences(multiSet, MultiSetUtils.unmodifiableMultiSet(multiSet)),
+                "Removing a view of itself clears the multiset");
+        assertEquals(0, multiSet.size());
+
         assertThrows(NullPointerException.class, () -> MultiSetUtils.removeOccurrences(null, multiSet),
                 "Expecting NPE");
         assertThrows(NullPointerException.class, () -> MultiSetUtils.removeOccurrences(multiSet, null),

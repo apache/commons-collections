@@ -175,7 +175,9 @@ public class MultiSetUtils {
             return changed;
         }
         boolean changed = false;
-        for (final MultiSet.Entry<?> entry : occurrencesToRemove.entrySet()) {
+        // snapshot the entries to avoid ConcurrentModificationException when
+        // occurrencesToRemove is a view backed by multiSetToModify
+        for (final MultiSet.Entry<?> entry : new ArrayList<>(occurrencesToRemove.entrySet())) {
             if (multiSetToModify.remove(entry.getElement(), entry.getCount()) > 0) {
                 changed = true;
             }
