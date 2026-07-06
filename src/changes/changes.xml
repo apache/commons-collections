@@ -71,6 +71,7 @@
     <action type="fix" dev="ggregory" due-to="Javid Khan, Gary Gregory">Stop ExtendedMessageFormat seekNonWs reading past the pattern end (#1740).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Remove stale keys in OrderedProperties compute and merge (#702).</action>
     <action type="fix" dev="ggregory" due-to="sankalp suman, Gary Gregory" issue="COLLECTIONS-776">Fix expiration bypass in PassiveExpiringMap when wrapped in SynchronizedMap (#694).</action>
+    <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix MapUtils.getIntValue(Map, K, Function) returning a byte (#704).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
