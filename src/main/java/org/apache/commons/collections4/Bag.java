@@ -49,7 +49,7 @@ import java.util.Set;
  * </p>
  * <ul>
  *   <li>{@code bag.add(e)} becomes {@code multiSet.add(e)}
- *       (which always returns {@code true}, per the {@code Collection} contract)</li>
+ *       (which always returns {@code true}, per the {@code MultiSet} contract)</li>
  *   <li>{@code bag.getCount(e)} becomes {@code multiSet.getCount(e)}</li>
  *   <li>{@code bag.remove(e)}, which removes all copies, becomes
  *       {@code multiSet.setCount(e, 0)}</li>
