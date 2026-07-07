@@ -206,12 +206,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         modCount++;
         if (nCopies > 0) {
             final MutableInteger mut = map.get(object);
-            size += nCopies;
+            size = (int) Math.min((long) size + nCopies, Integer.MAX_VALUE);
             if (mut == null) {
                 map.put(object, new MutableInteger(nCopies));
                 return true;
             }
-            mut.value += nCopies;
+            mut.value = (int) Math.min((long) mut.value + nCopies, Integer.MAX_VALUE);
         }
         return false;
     }

@@ -313,11 +313,11 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         if (occurrences > 0) {
             modCount++;
-            size += occurrences;
+            size = (int) Math.min((long) size + occurrences, Integer.MAX_VALUE);
             if (mut == null) {
                 map.put(object, new MutableInteger(occurrences));
             } else {
-                mut.value += occurrences;
+                mut.value = (int) Math.min((long) mut.value + occurrences, Integer.MAX_VALUE);
             }
         }
         return oldCount;

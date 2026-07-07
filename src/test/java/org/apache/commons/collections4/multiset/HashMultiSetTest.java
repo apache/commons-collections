@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.multiset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InvalidObjectException;
@@ -55,6 +56,17 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
             replaceInt(bytes, marker, count);
             assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
         }
+    }
+
+    @Test
+    void testAddClampsCountAndSizeToIntegerMaxValue() {
+        final HashMultiSet<String> set = new HashMultiSet<>();
+        set.add("X", Integer.MAX_VALUE);
+        set.add("X", 1);
+        assertEquals(Integer.MAX_VALUE, set.getCount("X"));
+        assertEquals(Integer.MAX_VALUE, set.size());
+        set.add("Y", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, set.size());
     }
 
 //    void testCreate() throws Exception {
