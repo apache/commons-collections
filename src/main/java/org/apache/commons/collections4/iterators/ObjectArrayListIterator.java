@@ -88,11 +88,10 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     }
 
     /**
-     * This iterator does not support modification of its backing array's size, and so will
-     * always throw an {@link UnsupportedOperationException} when this method is invoked.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @param obj  the object to add
-     * @throws UnsupportedOperationException always thrown.
+     * @param obj Ignored.
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void add(final E obj) {
