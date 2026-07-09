@@ -343,6 +343,11 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             it.remove();
         }
 
+        /**
+         * {@inheritDoc}
+         *
+         * @throws UnsupportedOperationException always, as this method is not supported by the iterator.
+         */
         @Override
         public V setValue(final V value) {
             if (current == null) {
@@ -742,6 +747,13 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         return getMap().keySet();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The returned map iterator's {@link MapIterator#setValue(Object)} method is not supported
+     * and will throw an {@link UnsupportedOperationException}.
+     * </p>
+     */
     @Override
     public MapIterator<K, V> mapIterator() {
         if (isEmpty()) {
