@@ -215,8 +215,7 @@ public final class UnmodifiableList<E>
 
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
-        final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new UnmodifiableList<>(sub);
+        return new UnmodifiableList<>(decorated().subList(fromIndex, toIndex));
     }
 
 }
