@@ -96,9 +96,9 @@ public class PushbackIterator<E> implements Iterator<E> {
     }
 
     /**
-     * This iterator will always throw an {@link UnsupportedOperationException}.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void remove() {
