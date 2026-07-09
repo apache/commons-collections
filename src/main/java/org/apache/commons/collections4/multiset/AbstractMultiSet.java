@@ -258,6 +258,13 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return true;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @param occurrences Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public int add(final E object, final int occurrences) {
         throw new UnsupportedOperationException();
@@ -428,6 +435,13 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
         return remove(object, 1) != 0;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @param occurrences Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public int remove(final Object object, final int occurrences) {
         throw new UnsupportedOperationException();
