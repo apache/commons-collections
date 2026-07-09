@@ -526,6 +526,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return navigatePrevious().getValue();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public K setValue(final K value) {
             throw new UnsupportedOperationException();
@@ -871,6 +876,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return navigatePrevious().getKey();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V setValue(final V value) {
             throw new UnsupportedOperationException();

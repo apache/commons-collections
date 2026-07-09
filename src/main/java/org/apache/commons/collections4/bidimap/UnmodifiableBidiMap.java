@@ -74,6 +74,11 @@ public final class UnmodifiableBidiMap<K, V>
         super((BidiMap<K, V>) map);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -106,21 +111,41 @@ public final class UnmodifiableBidiMap<K, V>
         return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public K removeValue(final Object value) {
         throw new UnsupportedOperationException();
