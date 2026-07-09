@@ -96,11 +96,22 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         return iterator.previous();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param value Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V setValue(final V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
