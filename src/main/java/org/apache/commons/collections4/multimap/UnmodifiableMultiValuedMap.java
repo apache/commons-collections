@@ -84,6 +84,11 @@ public final class UnmodifiableMultiValuedMap<K, V>
         return UnmodifiableMap.unmodifiableMap(decorated().asMap());
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -114,31 +119,69 @@ public final class UnmodifiableMultiValuedMap<K, V>
         return UnmodifiableMapIterator.unmodifiableMapIterator(decorated().mapIterator());
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @param values Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean putAll(final K key, final Iterable<? extends V> values) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param map Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean putAll(final Map<? extends K, ? extends V> map) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param map Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public Collection<V> remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @param item Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean removeMapping(final Object key, final Object item) {
         throw new UnsupportedOperationException();
