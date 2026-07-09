@@ -40,8 +40,34 @@ import java.util.Set;
  * In an ideal world, the interface would be changed to fix the problems, however
  * it has been decided to maintain backwards compatibility instead.
  * </p>
+ * <p>
+ * The {@link MultiSet} interface, added in version 4.1, provides the same
+ * functionality while complying with the {@link Collection} contract, and
+ * should be preferred for new code. Existing code can migrate as follows,
+ * with the cardinality-respecting behavior preserved through explicitly
+ * named methods:
+ * </p>
+ * <ul>
+ *   <li>{@code bag.add(e)} becomes {@code multiSet.add(e)}
+ *       (which always returns {@code true}, per the {@code MultiSet} contract)</li>
+ *   <li>{@code bag.getCount(e)} becomes {@code multiSet.getCount(e)}</li>
+ *   <li>{@code bag.remove(e)}, which removes all copies, becomes
+ *       {@code multiSet.setCount(e, 0)}</li>
+ *   <li>{@code bag.containsAll(coll)} becomes
+ *       {@code MultiSetUtils.containsOccurrences(multiSet, new HashMultiSet<>(coll))}</li>
+ *   <li>{@code bag.removeAll(coll)} becomes
+ *       {@code MultiSetUtils.removeOccurrences(multiSet, new HashMultiSet<>(coll))}</li>
+ *   <li>{@code bag.retainAll(coll)} becomes
+ *       {@code MultiSetUtils.retainOccurrences(multiSet, new HashMultiSet<>(coll))}</li>
+ *   <li>{@link SortedBag} and {@code TreeBag} become {@link SortedMultiSet}
+ *       and {@code TreeMultiSet}</li>
+ *   <li>the {@code CollectionBag} and {@code CollectionSortedBag} wrappers are
+ *       not needed, as a {@code MultiSet} already complies with the
+ *       {@code Collection} contract</li>
+ * </ul>
  *
  * @param <E> The type of elements in this bag
+ * @see MultiSet
  * @since 2.0
  */
 public interface Bag<E> extends Collection<E> {

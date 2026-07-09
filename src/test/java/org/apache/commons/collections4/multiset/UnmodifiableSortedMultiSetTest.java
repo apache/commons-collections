@@ -23,38 +23,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 
-import org.apache.commons.collections4.MultiSet;
+import org.apache.commons.collections4.SortedMultiSet;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
 /**
- * Extension of {@link AbstractMultiSetTest} for exercising the
- * {@link UnmodifiableMultiSet} implementation.
+ * Extension of {@link AbstractSortedMultiSetTest} for exercising the
+ * {@link UnmodifiableSortedMultiSet} implementation.
  */
-public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
-
-    @Override
-    public MultiSet<E> getCollection() {
-        return super.getCollection();
-    }
+public class UnmodifiableSortedMultiSetTest<E> extends AbstractSortedMultiSetTest<E> {
 
     @Override
     public String getCompatibilityVersion() {
-        return "4.1";
-    }
-
-    @Override
-    protected int getIterationBehaviour() {
-        return UNORDERED;
+        return "4.6";
     }
 
     @Override
     public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isNullSupported() {
         return false;
     }
 
@@ -64,50 +49,50 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
     }
 
     @Override
-    public MultiSet<E> makeFullCollection() {
-        final MultiSet<E> multiset = new HashMultiSet<>();
+    public SortedMultiSet<E> makeFullCollection() {
+        final SortedMultiSet<E> multiset = new TreeMultiSet<>();
         multiset.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        return UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset);
     }
 
     @Override
-    public MultiSet<E> makeObject() {
-        return UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
+    public SortedMultiSet<E> makeObject() {
+        return UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(new TreeMultiSet<>());
     }
 
     @Test
     void testAdd() {
-        final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        final SortedMultiSet<E> multiset = makeFullCollection();
+        final SortedMultiSet<E> unmodifiableMultiSet = UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.add((E) "One", 1));
     }
 
     @Test
     void testDecorateFactory() {
-        final MultiSet<E> multiset = makeFullCollection();
-        assertSame(multiset, UnmodifiableMultiSet.unmodifiableMultiSet(multiset));
+        final SortedMultiSet<E> multiset = makeFullCollection();
+        assertSame(multiset, UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset));
 
-        assertThrows(NullPointerException.class, () -> UnmodifiableMultiSet.unmodifiableMultiSet(null));
+        assertThrows(NullPointerException.class, () -> UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(null));
     }
 
     @Test
     void testEntrySet() {
-        final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet = UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        final SortedMultiSet<E> multiset = makeFullCollection();
+        final SortedMultiSet<E> unmodifiableMultiSet = UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset);
         assertEquals(multiset.entrySet(), unmodifiableMultiSet.entrySet());
     }
 
     @Test
     void testRemove() {
-        final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        final SortedMultiSet<E> multiset = makeFullCollection();
+        final SortedMultiSet<E> unmodifiableMultiSet = UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.remove("One", 1));
     }
 
     @Test
     void testSetCount() {
-        final MultiSet<E> multiset = makeFullCollection();
-        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        final SortedMultiSet<E> multiset = makeFullCollection();
+        final SortedMultiSet<E> unmodifiableMultiSet = UnmodifiableSortedMultiSet.unmodifiableSortedMultiSet(multiset);
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableMultiSet.setCount((E) "One", 2));
     }
 
@@ -119,9 +104,9 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
 //    void testCreate() throws Exception {
 //        MultiSet<E> multiset = makeObject();
-//        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/UnmodifiableMultiSet.emptyCollection.version4.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/org/apache/commons/collections4/data/test/UnmodifiableSortedMultiSet.emptyCollection.version4.6.obj");
 //        multiset = makeFullCollection();
-//        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/UnmodifiableMultiSet.fullCollection.version4.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/org/apache/commons/collections4/data/test/UnmodifiableSortedMultiSet.fullCollection.version4.6.obj");
 //    }
 
 }

@@ -19,23 +19,16 @@ package org.apache.commons.collections4;
 import java.util.Comparator;
 
 /**
- * Defines a type of {@code Bag} that maintains a sorted order among
+ * Defines a type of {@code MultiSet} that maintains a sorted order among
  * its unique representative members.
- * <p>
- * The {@link SortedMultiSet} interface provides the same functionality
- * while complying with the {@link java.util.Collection Collection}
- * contract, and should be preferred for new code; see the {@link Bag}
- * documentation for migration notes.
- * </p>
  *
- * @param <E> The type of elements in this bag
- * @see SortedMultiSet
- * @since 2.0
+ * @param <E> The type held in the multiset
+ * @since 4.6.0
  */
-public interface SortedBag<E> extends Bag<E> {
+public interface SortedMultiSet<E> extends MultiSet<E> {
 
     /**
-     * Returns the comparator associated with this sorted set, or null
+     * Returns the comparator associated with this sorted multiset, or null
      * if it uses its elements' natural ordering.
      *
      * @return the comparator in use, or null if natural ordering
@@ -45,14 +38,14 @@ public interface SortedBag<E> extends Bag<E> {
     /**
      * Returns the first (lowest) member.
      *
-     * @return the first element in the sorted bag
+     * @return the first element in the sorted multiset
      */
     E first();
 
     /**
      * Returns the last (highest) member.
      *
-     * @return the last element in the sorted bag
+     * @return the last element in the sorted multiset
      */
     E last();
 
