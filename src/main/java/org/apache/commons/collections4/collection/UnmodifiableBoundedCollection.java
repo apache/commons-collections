@@ -116,16 +116,31 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         super((BoundedCollection<E>) coll);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -151,17 +166,30 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         return decorated().maxSize();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
      * @since 4.4
      */
     @Override
@@ -169,6 +197,11 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
