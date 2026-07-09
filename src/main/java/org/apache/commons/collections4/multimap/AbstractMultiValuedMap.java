@@ -285,6 +285,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             super(key, value);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param value Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V setValue(final V value) {
             throw new UnsupportedOperationException();
