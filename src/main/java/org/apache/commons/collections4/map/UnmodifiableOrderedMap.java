@@ -92,14 +92,12 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        final Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
+        return UnmodifiableEntrySet.unmodifiableEntrySet(super.entrySet());
     }
 
     @Override
     public Set<K> keySet() {
-        final Set<K> set = super.keySet();
-        return UnmodifiableSet.unmodifiableSet(set);
+        return UnmodifiableSet.unmodifiableSet(super.keySet());
     }
 
     @Override
@@ -158,8 +156,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
 
     @Override
     public Collection<V> values() {
-        final Collection<V> coll = super.values();
-        return UnmodifiableCollection.unmodifiableCollection(coll);
+        return UnmodifiableCollection.unmodifiableCollection(super.values());
     }
 
     /**
