@@ -50,6 +50,12 @@ public final class UnmodifiableEntrySet<K, V>
             super(entry);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param value Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V setValue(final V value) {
             throw new UnsupportedOperationException();
@@ -65,11 +71,21 @@ public final class UnmodifiableEntrySet<K, V>
             super(iterator);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public Map.Entry<K, V> next() {
             return new UnmodifiableEntry(getIterator().next());
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void remove() {
             throw new UnsupportedOperationException();
@@ -106,16 +122,33 @@ public final class UnmodifiableEntrySet<K, V>
         super(set);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean add(final Map.Entry<K, V> object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean addAll(final Collection<? extends Map.Entry<K, V>> coll) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -126,17 +159,33 @@ public final class UnmodifiableEntrySet<K, V>
         return new UnmodifiableEntrySetIterator(decorated().iterator());
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param object Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param filter Ignored.
+     * @throws UnsupportedOperationException Always thrown.
      * @since 4.4
      */
     @Override
@@ -144,6 +193,12 @@ public final class UnmodifiableEntrySet<K, V>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param coll Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
