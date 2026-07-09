@@ -78,6 +78,11 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = tmpTrie;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -164,16 +169,35 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.previousKey(key);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @param value Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param m Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void putAll(final Map<? extends K, ? extends V> m) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
