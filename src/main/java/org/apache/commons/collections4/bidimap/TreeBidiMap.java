@@ -529,6 +529,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Always throws {@link UnsupportedOperationException}.
          *
+         * @param value Ignored.
          * @throws UnsupportedOperationException Always thrown.
          */
         @Override
@@ -879,6 +880,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Always throws {@link UnsupportedOperationException}.
          *
+         * @param value Ignored.
          * @throws UnsupportedOperationException Always thrown.
          */
         @Override

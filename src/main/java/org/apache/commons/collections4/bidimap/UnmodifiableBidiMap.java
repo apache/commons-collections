@@ -114,6 +114,8 @@ public final class UnmodifiableBidiMap<K, V>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param key Ignored.
+     * @param value Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -124,6 +126,7 @@ public final class UnmodifiableBidiMap<K, V>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param mapToCopy Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -134,6 +137,7 @@ public final class UnmodifiableBidiMap<K, V>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param key Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -144,6 +148,7 @@ public final class UnmodifiableBidiMap<K, V>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param value Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override

@@ -76,6 +76,12 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         this.iterator = iterator;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param obj Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void add(final E obj) {
         throw new UnsupportedOperationException("add() is not supported");
@@ -111,11 +117,22 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         return iterator.previousIndex();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param ignored Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void set(final E ignored) {
         throw new UnsupportedOperationException("set() is not supported");

@@ -78,6 +78,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param object Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -88,6 +89,8 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param object Ignored.
+     * @param count Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -98,6 +101,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param coll Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -137,6 +141,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param object Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -147,6 +152,8 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param object Ignored.
+     * @param count Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -157,6 +164,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param coll Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
@@ -167,6 +175,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param filter Ignored.
      * @throws UnsupportedOperationException Always thrown.
      * @since 4.4
      */
@@ -178,6 +187,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
+     * @param coll Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
