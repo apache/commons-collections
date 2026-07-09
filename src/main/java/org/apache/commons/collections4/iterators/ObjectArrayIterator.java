@@ -155,9 +155,9 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Throws {@link UnsupportedOperationException}.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void remove() {
