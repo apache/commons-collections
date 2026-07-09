@@ -127,6 +127,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             last = null;
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param object Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void set(final E object) {
             throw new UnsupportedOperationException("ListIterator does not support set");
