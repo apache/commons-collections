@@ -82,6 +82,11 @@ public final class UnmodifiableMap<K, V>
         super((Map<K, V>) map);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException();
@@ -109,11 +114,24 @@ public final class UnmodifiableMap<K, V>
         return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @param value Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param mapToCopy Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
@@ -133,6 +151,12 @@ public final class UnmodifiableMap<K, V>
         map = (Map<K, V>) in.readObject();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
