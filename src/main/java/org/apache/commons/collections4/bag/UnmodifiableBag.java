@@ -190,8 +190,7 @@ public final class UnmodifiableBag<E>
 
     @Override
     public Set<E> uniqueSet() {
-        final Set<E> set = decorated().uniqueSet();
-        return UnmodifiableSet.<E>unmodifiableSet(set);
+        return UnmodifiableSet.<E>unmodifiableSet(decorated().uniqueSet());
     }
 
     /**
