@@ -44,6 +44,11 @@ public class SplitMapUtils {
             this.get = get;
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void clear() {
             throw new UnsupportedOperationException();
@@ -103,13 +108,26 @@ public class SplitMapUtils {
             return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param key Ignored.
+         * @param value Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V put(final K key, final V value) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param map Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
-        public void putAll(final Map<? extends K, ? extends V> t) {
+        public void putAll(final Map<? extends K, ? extends V> map) {
             throw new UnsupportedOperationException();
         }
 
@@ -141,16 +159,33 @@ public class SplitMapUtils {
             put.clear();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param key Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean containsKey(final Object key) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param value Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean containsValue(final Object value) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public Set<Map.Entry<K, V>> entrySet() {
             throw new UnsupportedOperationException();
@@ -164,6 +199,12 @@ public class SplitMapUtils {
             return obj instanceof WrappedPut && ((WrappedPut<?, ?>) obj).put.equals(put);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param key Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V get(final Object key) {
             throw new UnsupportedOperationException();
@@ -174,11 +215,21 @@ public class SplitMapUtils {
             return "WrappedPut".hashCode() << 4 | put.hashCode();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean isEmpty() {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public Set<K> keySet() {
             throw new UnsupportedOperationException();
@@ -195,16 +246,32 @@ public class SplitMapUtils {
             put.putAll(t);
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param key Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V remove(final Object key) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public int size() {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public Collection<V> values() {
             throw new UnsupportedOperationException();
