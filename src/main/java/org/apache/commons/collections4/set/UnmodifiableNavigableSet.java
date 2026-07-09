@@ -114,14 +114,12 @@ public final class UnmodifiableNavigableSet<E>
 
     @Override
     public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> head = decorated().headSet(toElement);
-        return UnmodifiableSortedSet.unmodifiableSortedSet(head);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(decorated().headSet(toElement));
     }
 
     @Override
     public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
-        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
-        return unmodifiableNavigableSet(head);
+        return unmodifiableNavigableSet(decorated().headSet(toElement, inclusive));
     }
 
     @Override
@@ -212,27 +210,23 @@ public final class UnmodifiableNavigableSet<E>
     @Override
     public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
             final boolean toInclusive) {
-        final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
-        return unmodifiableNavigableSet(sub);
+        return unmodifiableNavigableSet(decorated().subSet(fromElement, fromInclusive, toElement, toInclusive));
     }
 
     // SortedSet
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
-        final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
-        return UnmodifiableSortedSet.unmodifiableSortedSet(sub);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(decorated().subSet(fromElement, toElement));
     }
 
     @Override
     public SortedSet<E> tailSet(final E fromElement) {
-        final SortedSet<E> tail = decorated().tailSet(fromElement);
-        return UnmodifiableSortedSet.unmodifiableSortedSet(tail);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(decorated().tailSet(fromElement));
     }
 
     @Override
     public NavigableSet<E> tailSet(final E fromElement, final boolean inclusive) {
-        final NavigableSet<E> tail = decorated().tailSet(fromElement, inclusive);
-        return unmodifiableNavigableSet(tail);
+        return unmodifiableNavigableSet(decorated().tailSet(fromElement, inclusive));
     }
 
     /**
