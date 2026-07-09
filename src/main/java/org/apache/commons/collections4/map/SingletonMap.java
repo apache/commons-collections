@@ -121,6 +121,11 @@ public class SingletonMap<K, V>
             return parent.getKey();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void remove() {
             throw new UnsupportedOperationException();
@@ -162,6 +167,11 @@ public class SingletonMap<K, V>
             this.parent = parent;
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void clear() {
             throw new UnsupportedOperationException();
@@ -248,7 +258,9 @@ public class SingletonMap<K, V>
     }
 
     /**
-     * Unsupported operation.
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void clear() {
@@ -533,11 +545,10 @@ public class SingletonMap<K, V>
     }
 
     /**
-     * Unsupported operation.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @param key  the mapping to remove
-     * @return the value mapped to the removed key, null if key not in map
-     * @throws UnsupportedOperationException always
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public V remove(final Object key) {
