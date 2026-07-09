@@ -81,6 +81,11 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
             this.parent = parent;
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public void clear() {
             throw new UnsupportedOperationException();
@@ -126,22 +131,44 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
             return UnmodifiableListIterator.unmodifiableListIterator(super.listIterator(fromIndex));
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param index Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public K remove(final int index) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param obj Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean remove(final Object obj) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param coll Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean removeAll(final Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
 
         /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param filter Ignored.
+         * @throws UnsupportedOperationException Always thrown.
          * @since 4.4
          */
         @Override
@@ -149,6 +176,12 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param coll Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public boolean retainAll(final Collection<?> coll) {
             throw new UnsupportedOperationException();
