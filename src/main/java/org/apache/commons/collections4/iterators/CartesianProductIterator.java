@@ -149,6 +149,11 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
         throw new IllegalStateException("reached unreachable code");
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove");
