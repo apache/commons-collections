@@ -90,6 +90,11 @@ public class FixedSizeSortedMap<K, V>
         super(map);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void clear() {
         throw new UnsupportedOperationException("Map is fixed size");
@@ -158,6 +163,12 @@ public class FixedSizeSortedMap<K, V>
         map = (Map<K, V>) in.readObject(); // (1)
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @param key Ignored.
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException("Map is fixed size");
