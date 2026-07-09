@@ -94,8 +94,7 @@ public final class UnmodifiableMap<K, V>
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        final Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
+        return UnmodifiableEntrySet.unmodifiableEntrySet(super.entrySet());
     }
 
     @Override
@@ -164,8 +163,7 @@ public final class UnmodifiableMap<K, V>
 
     @Override
     public Collection<V> values() {
-        final Collection<V> coll = super.values();
-        return UnmodifiableCollection.unmodifiableCollection(coll);
+        return UnmodifiableCollection.unmodifiableCollection(super.values());
     }
 
     /**
