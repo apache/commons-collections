@@ -106,8 +106,7 @@ public final class UnmodifiableSortedSet<E>
 
     @Override
     public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> head = decorated().headSet(toElement);
-        return unmodifiableSortedSet(head);
+        return unmodifiableSortedSet(decorated().headSet(toElement));
     }
 
     @Override
@@ -174,14 +173,12 @@ public final class UnmodifiableSortedSet<E>
 
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
-        final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
-        return unmodifiableSortedSet(sub);
+        return unmodifiableSortedSet(decorated().subSet(fromElement, toElement));
     }
 
     @Override
     public SortedSet<E> tailSet(final E fromElement) {
-        final SortedSet<E> tail = decorated().tailSet(fromElement);
-        return unmodifiableSortedSet(tail);
+        return unmodifiableSortedSet(decorated().tailSet(fromElement));
     }
 
     /**
