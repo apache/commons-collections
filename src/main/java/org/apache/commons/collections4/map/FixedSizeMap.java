@@ -166,8 +166,7 @@ public class FixedSizeMap<K, V>
 
     @Override
     public Collection<V> values() {
-        final Collection<V> coll = map.values();
-        return UnmodifiableCollection.unmodifiableCollection(coll);
+        return UnmodifiableCollection.unmodifiableCollection(map.values());
     }
 
     /**
