@@ -82,6 +82,11 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
         return iterator.next();
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     // TODO This method can be removed in 5.0 since it's implemented as a default method in Iterator.
     @Override
     public void remove() {
