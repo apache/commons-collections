@@ -44,10 +44,10 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Add always throws {@link UnsupportedOperationException}.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @param obj  the object to add
-     * @throws UnsupportedOperationException always
+     * @param obj Ignored.
+     * @throws UnsupportedOperationException Always thrown.
      */
     @Override
     public void add(final E obj) {
