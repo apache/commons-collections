@@ -152,6 +152,11 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         return result;
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
