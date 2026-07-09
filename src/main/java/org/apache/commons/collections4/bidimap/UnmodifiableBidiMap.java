@@ -153,8 +153,7 @@ public final class UnmodifiableBidiMap<K, V>
 
     @Override
     public Set<V> values() {
-        final Set<V> set = super.values();
-        return UnmodifiableSet.unmodifiableSet(set);
+        return UnmodifiableSet.unmodifiableSet(super.values());
     }
 
 }
