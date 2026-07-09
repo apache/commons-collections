@@ -121,8 +121,7 @@ public final class UnmodifiableMultiSet<E>
 
     @Override
     public Set<MultiSet.Entry<E>> entrySet() {
-        final Set<MultiSet.Entry<E>> set = decorated().entrySet();
-        return UnmodifiableSet.unmodifiableSet(set);
+        return UnmodifiableSet.unmodifiableSet(decorated().entrySet());
     }
 
     @Override
@@ -215,8 +214,7 @@ public final class UnmodifiableMultiSet<E>
 
     @Override
     public Set<E> uniqueSet() {
-        final Set<E> set = decorated().uniqueSet();
-        return UnmodifiableSet.unmodifiableSet(set);
+        return UnmodifiableSet.unmodifiableSet(decorated().uniqueSet());
     }
 
     /**
