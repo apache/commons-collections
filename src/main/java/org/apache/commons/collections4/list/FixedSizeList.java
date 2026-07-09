@@ -82,6 +82,11 @@ public class FixedSizeList<E>
         return new FixedSizeList<>(list);
     }
 
+    /**
+     * Always throws {@link UnsupportedOperationException}.
+     *
+     * @throws UnsupportedOperationException Always thrown.
+     */
     private static UnsupportedOperationException unsupportedOperationException() {
         return new UnsupportedOperationException("List is fixed size");
     }
