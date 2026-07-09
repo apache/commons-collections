@@ -565,6 +565,12 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
             return this;
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param value Ignored.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V setValue(final V value) {
             throw new UnsupportedOperationException();
