@@ -141,11 +141,10 @@ public interface MultiValuedMap<K, V> {
     Collection<V> get(K key);
 
     /**
-     * Returns a new MultiValuedMap with inverted mappings.
-     * The new multimap will have a value-to-key mapping
-     * for each key-to-value mapping in the original.
+     * Always throws {@link UnsupportedOperationException}.
      *
-     * @return a new MultiValuedMap with inverted mappings
+     * @return Always throws {@link UnsupportedOperationException}.
+     * @throws UnsupportedOperationException Always thrown.
      * @since 4.6.0
      */
     default MultiValuedMap<V, K> inverted() {
