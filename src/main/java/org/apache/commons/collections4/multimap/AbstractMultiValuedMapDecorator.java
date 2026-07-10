@@ -130,13 +130,6 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
         return decorated().keySet();
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * The returned map iterator's {@link MapIterator#setValue(Object)} method is not supported
-     * and will throw an {@link UnsupportedOperationException}.
-     * </p>
-     */
     @Override
     public MapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
