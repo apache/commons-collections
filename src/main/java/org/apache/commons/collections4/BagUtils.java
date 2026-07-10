@@ -32,7 +32,9 @@ import org.apache.commons.collections4.bag.UnmodifiableSortedBag;
  * Provides utility methods and decorators for {@link Bag} and {@link SortedBag} instances.
  *
  * @since 2.1
+ * @deprecated Since 4.6.0, use {@link MultiSetUtils} instead.
  */
+@Deprecated
 public class BagUtils {
 
     /**

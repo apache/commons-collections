@@ -536,6 +536,7 @@ public class IterableUtils {
      * @param obj  the object to find the cardinality of
      * @return the number of occurrences of obj in iterable
      */
+    @SuppressWarnings("deprecation") // Bag is supported until removed
     public static <E, T extends E> int frequency(final Iterable<E> iterable, final T obj) {
         if (iterable instanceof Set<?>) {
             return ((Set<E>) iterable).contains(obj) ? 1 : 0;

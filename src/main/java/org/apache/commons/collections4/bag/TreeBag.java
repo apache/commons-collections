@@ -52,7 +52,9 @@ import org.apache.commons.collections4.SortedBag;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.TreeMultiSet} instead.
  */
+@Deprecated
 public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Serializable {
 
     /** Serial version lock */

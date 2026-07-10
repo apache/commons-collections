@@ -36,5 +36,10 @@
  *   <li>Transformed - transforms each element added to the bag</li>
  *   <li>Collection - ensures compliance with the java.util.Collection contract</li>
  * </ul>
+ * <p>
+ * This package is deprecated since 4.6.0; use the
+ * {@link org.apache.commons.collections4.multiset} package instead. See the
+ * {@link org.apache.commons.collections4.Bag Bag} Javadoc for migration notes.
+ * </p>
  */
 package org.apache.commons.collections4.bag;

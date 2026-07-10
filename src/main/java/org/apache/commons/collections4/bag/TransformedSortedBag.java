@@ -35,7 +35,9 @@ import org.apache.commons.collections4.Transformer;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.TransformedSortedMultiSet} instead.
  */
+@Deprecated
 public class TransformedSortedBag<E> extends TransformedBag<E> implements SortedBag<E> {
 
     /** Serialization version */

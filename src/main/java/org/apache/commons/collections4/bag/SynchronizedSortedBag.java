@@ -34,7 +34,9 @@ import org.apache.commons.collections4.SortedBag;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.SynchronizedSortedMultiSet} instead.
  */
+@Deprecated
 public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
