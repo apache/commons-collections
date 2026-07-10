@@ -465,15 +465,16 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * <p>
      * This implementation calls {@code size()} on each set.
      *
-     * @return total number of elements in all contained containers
+     * @return total number of elements in all contained containers, or
+     *         {@code Integer.MAX_VALUE} if the total exceeds it
      */
     @Override
     public int size() {
-        int size = 0;
+        long size = 0;
         for (final Set<E> item : all) {
             size += item.size();
         }
-        return size;
+        return (int) Math.min(size, Integer.MAX_VALUE);
     }
 
     /**

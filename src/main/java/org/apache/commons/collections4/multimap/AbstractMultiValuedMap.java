@@ -903,11 +903,11 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         // but this requires that all modifications of the multimap
         // (including the wrapped collections and entry/value
         // collections) are tracked.
-        int size = 0;
+        long size = 0;
         for (final Collection<V> col : getMap().values()) {
             size += col.size();
         }
-        return size;
+        return (int) Math.min(size, Integer.MAX_VALUE);
     }
 
     @Override

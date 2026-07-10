@@ -21,9 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -233,6 +236,28 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         map.addComposited(buildOne());
         assertTrue(pass);
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        final CompositeMap<String, String> map = new CompositeMap<>(maxSizeMap(), maxSizeMap());
+        assertEquals(Integer.MAX_VALUE, map.size());
+    }
+
+    /** An empty-iterating map that reports {@code Integer.MAX_VALUE} mappings. */
+    private static Map<String, String> maxSizeMap() {
+        return new AbstractMap<String, String>() {
+
+            @Override
+            public Set<Map.Entry<String, String>> entrySet() {
+                return Collections.emptySet();
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
     }
 
 //    void testCreate() throws Exception {

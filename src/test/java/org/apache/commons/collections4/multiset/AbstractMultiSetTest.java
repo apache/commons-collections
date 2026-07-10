@@ -692,6 +692,39 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     }
 
     @Test
+    void testMultiSetSizeClampsToIntegerMaxValue() {
+        final List<MultiSet.Entry<String>> entries = Arrays.asList(maxCountEntry("A"), maxCountEntry("B"));
+        final MultiSet<String> multiset = new AbstractMultiSet<String>() {
+
+            @Override
+            protected Iterator<MultiSet.Entry<String>> createEntrySetIterator() {
+                return entries.iterator();
+            }
+
+            @Override
+            protected int uniqueElements() {
+                return entries.size();
+            }
+        };
+        assertEquals(Integer.MAX_VALUE, multiset.size());
+    }
+
+    private static MultiSet.Entry<String> maxCountEntry(final String element) {
+        return new AbstractMultiSet.AbstractEntry<String>() {
+
+            @Override
+            public int getCount() {
+                return Integer.MAX_VALUE;
+            }
+
+            @Override
+            public String getElement() {
+                return element;
+            }
+        };
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testMultiSetToArray() {
         if (!isAddSupported()) {
