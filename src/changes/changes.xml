@@ -74,6 +74,7 @@
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix MapUtils.getIntValue(Map, K, Function) returning a byte (#704).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-893">Bring (Collection compliant) MultiSet family to (non-compliant) Bag parity (#703).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Sol Thiessen, Gary Gregory" issue="COLLECTIONS-894">TreeBag documentation should explicitly warn about infinite loop as a result of concurrent writes (#707).</action>
+    <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-896">Add TransformedMultiSet plus fill minor gaps for MultiSet vs. Bags (#708).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
