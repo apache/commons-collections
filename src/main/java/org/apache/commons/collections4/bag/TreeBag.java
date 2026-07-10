@@ -40,6 +40,15 @@ import org.apache.commons.collections4.SortedBag;
  * copies of an object to be added or removed at once. It is important to read the interface
  * Javadoc carefully as several methods violate the {@link Collection} interface specification.
  * </p>
+ * <p>
+ * <strong>Note that TreeBag is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this bag from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this bag using
+ * {@link org.apache.commons.collections4.BagUtils#synchronizedSortedBag(SortedBag)}.
+ * Unsynchronized concurrent modification can corrupt the structure of the backing
+ * {@link TreeMap}, and a malformed tree may cause subsequent operations, including
+ * reads, to enter an infinite loop.
+ * </p>
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)

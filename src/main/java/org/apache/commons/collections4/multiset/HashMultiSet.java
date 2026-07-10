@@ -31,6 +31,16 @@ import java.util.HashMap;
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once.
  * </p>
+ * <p>
+ * <strong>Note that HashMultiSet is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this multiset from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this multiset using
+ * {@link org.apache.commons.collections4.MultiSetUtils#synchronizedMultiSet(org.apache.commons.collections4.MultiSet)
+ * MultiSetUtils.synchronizedMultiSet(MultiSet)}.
+ * Unsynchronized concurrent modification can corrupt the structure of the backing
+ * {@link HashMap}, which may cause subsequent operations to throw exceptions,
+ * return incorrect results, or loop indefinitely.
+ * </p>
  *
  * @param <E> The type held in the multiset
  * @since 4.1
