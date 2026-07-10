@@ -30,7 +30,7 @@ import org.apache.commons.collections4.Transformer;
  * use the Integer form to remove objects.
  * </p>
  *
- * @param <E> The type held in the multiset
+ * @param <E> The type held in the multiset.
  * @since 4.6.0
  */
 public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> implements SortedMultiSet<E> {
@@ -45,12 +45,13 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
      * If there are any elements already in the multiset being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedMultiSet(SortedMultiSet, Transformer)}.
+     * </p>
      *
-     * @param <E> The type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedMultiSet
-     * @throws NullPointerException if multiset or transformer is null
+     * @param <E> The type of the elements in the multiset.
+     * @param multiset  the multiset to decorate, must not be null.
+     * @param transformer  the transformer to use for conversion, must not be null.
+     * @return a new transformed SortedMultiSet.
+     * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedSortedMultiSet<E> transformedSortedMultiSet(final SortedMultiSet<E> multiset,
             final Transformer<? super E, ? extends E> transformer) {
@@ -72,12 +73,13 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
      * If there are any elements already in the multiset being decorated, they
      * are NOT transformed. Contrast this with
      * {@link #transformedSortedMultiSet(SortedMultiSet, Transformer)}.
+     * </p>
      *
-     * @param <E> The type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedMultiSet
-     * @throws NullPointerException if multiset or transformer is null
+     * @param <E> The type of the elements in the multiset.
+     * @param multiset  the multiset to decorate, must not be null.
+     * @param transformer  the transformer to use for conversion, must not be null.
+     * @return a new transformed SortedMultiSet.
+     * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedSortedMultiSet<E> transformingSortedMultiSet(final SortedMultiSet<E> multiset,
             final Transformer<? super E, ? extends E> transformer) {
@@ -89,10 +91,11 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
      * <p>
      * If there are any elements already in the multiset being decorated, they
      * are NOT transformed.
+     * </p>
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
-     * @throws NullPointerException if multiset or transformer is null
+     * @param multiset  the multiset to decorate, must not be null.
+     * @param transformer  the transformer to use for conversion, must not be null.
+     * @throws NullPointerException if multiset or transformer is null.
      */
     protected TransformedSortedMultiSet(final SortedMultiSet<E> multiset,
             final Transformer<? super E, ? extends E> transformer) {
@@ -112,7 +115,7 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
     /**
      * Gets the decorated sorted multiset.
      *
-     * @return the decorated sorted multiset
+     * @return the decorated sorted multiset.
      */
     protected SortedMultiSet<E> getSortedMultiSet() {
         return (SortedMultiSet<E>) decorated();
