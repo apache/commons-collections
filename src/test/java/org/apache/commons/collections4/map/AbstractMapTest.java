@@ -54,7 +54,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.Map}.
+ * Tests {@link Map}.
  * <p>
  * The forces at work here are similar to those in {@link AbstractCollectionTest}. If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the {@link #makeObject()} method.

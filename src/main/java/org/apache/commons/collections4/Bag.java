@@ -238,7 +238,7 @@ public interface Bag<E> extends Collection<E> {
     /**
      * Returns a {@link Set} of unique elements in the Bag.
      * <p>
-     * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * Uniqueness constraints are the same as those in {@link Set}.
      * </p>
      *
      * @return the Set of unique Bag elements

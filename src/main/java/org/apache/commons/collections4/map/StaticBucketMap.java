@@ -20,6 +20,8 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -30,7 +32,7 @@ import org.apache.commons.collections4.KeyValue;
 
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
- * {@link java.util.Map} that performs well in a highly
+ * {@link Map} that performs well in a highly
  * thread-contentious environment.
  * <p>
  * The map supports very efficient
@@ -79,13 +81,13 @@ import org.apache.commons.collections4.KeyValue;
  * <p>
  * The iterators returned by the collection views of this class are <em>not</em>
  * fail-fast.  They will <em>never</em> raise a
- * {@link java.util.ConcurrentModificationException}.  Keys and values
+ * {@link ConcurrentModificationException}.  Keys and values
  * added to the map after the iterator is created do not necessarily appear
  * during iteration.  Similarly, the iterator does not necessarily fail to
  * return keys and values that were removed after the iterator was created.
  * </p>
  * <p>
- * Finally, unlike {@link java.util.HashMap}-style implementations, this
+ * Finally, unlike {@link HashMap}-style implementations, this
  * class <em>never</em> rehashes the map.  The number of buckets is fixed
  * at construction time and never altered.  Performance may degrade if
  * you do not allocate enough buckets upfront.
@@ -94,7 +96,7 @@ import org.apache.commons.collections4.KeyValue;
  * The {@link #atomic(Runnable)} method is provided to allow atomic iterations
  * and bulk operations; however, overuse of {@link #atomic(Runnable) atomic}
  * will basically result in a map that's slower than an ordinary synchronized
- * {@link java.util.HashMap}.
+ * {@link HashMap}.
  * </p>
  * <p>
  * Use this class if you do not require reliable bulk operations and

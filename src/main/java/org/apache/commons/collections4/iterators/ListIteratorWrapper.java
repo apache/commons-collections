@@ -24,13 +24,14 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
  * Converts an {@link Iterator} into a {@link ResettableListIterator}.
  * For plain {@code Iterator}s this is accomplished by caching the returned
  * elements.  This class can also be used to simply add
- * {@link org.apache.commons.collections4.ResettableIterator ResettableIterator}
+ * {@link ResettableIterator ResettableIterator}
  * functionality to a given {@link ListIterator}.
  * <p>
  * The {@code ListIterator} interface has additional useful methods

@@ -23,9 +23,11 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.collections4.Get;
 import org.apache.commons.collections4.Put;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.map.LinkedMap;
+import org.apache.commons.collections4.map.TransformedMap;
 
 /**
  * Decorates another {@link Map} to transform objects that are added.
@@ -45,16 +47,16 @@ import org.apache.commons.collections4.map.LinkedMap;
  * </p>
  * <p>
  * The "put" and "get" type constraints of this class are mutually independent;
- * contrast with {@link org.apache.commons.collections4.map.TransformedMap} which,
+ * contrast with {@link TransformedMap} which,
  * by virtue of its implementing {@link Map}&lt;K, V&gt;, must be constructed in such
  * a way that its read and write parameters are generalized to a common (super-)type.
  * In practice this would often mean {@code &gt;Object, Object&gt;}, defeating
  * much of the usefulness of having parameterized types.
  * </p>
  * <p>
- * On the downside, this class is not drop-in compatible with {@link java.util.Map}
+ * On the downside, this class is not drop-in compatible with {@link Map}
  * but is intended to be worked with either directly or by {@link Put} and
- * {@link org.apache.commons.collections4.Get Get} generalizations.
+ * {@link Get Get} generalizations.
  * </p>
  *
  * @param <J> The type of the keys to put in this map

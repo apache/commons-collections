@@ -1619,7 +1619,7 @@ public class MapUtils {
      * allows you to build a map from an object array of various possible styles.
      * </p>
      * <p>
-     * If the first entry in the object array implements {@link Map.Entry} or {@link KeyValue} then the key
+     * If the first entry in the object array implements {@link Entry} or {@link KeyValue} then the key
      * and value are added from that object. If the first entry in the object array is an object array itself, then it
      * is assumed that index 0 in the sub-array is the key and index 1 is the value. Otherwise, the array is treated as
      * keys and values in alternate indices.
@@ -1744,7 +1744,7 @@ public class MapUtils {
      * }
      * </pre>
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in {@link Collections Collections}.
      * </p>
      *
      * @param <K> The key type
@@ -1772,7 +1772,7 @@ public class MapUtils {
      * }
      * </pre>
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in {@link Collections Collections}.
      * </p>
      *
      * @param <K> The key type

@@ -18,15 +18,16 @@ package org.apache.commons.collections4.trie;
 
 import java.util.Map;
 
+import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 
 /**
  * Implements a PATRICIA Trie (Practical Algorithm to Retrieve Information
  * Coded in Alphanumeric).
  * <p>
- * A PATRICIA {@link org.apache.commons.collections4.Trie} is a compressed
- * {@link org.apache.commons.collections4.Trie}. Instead of storing
- * all data at the edges of the {@link org.apache.commons.collections4.Trie}
+ * A PATRICIA {@link Trie} is a compressed
+ * {@link Trie}. Instead of storing
+ * all data at the edges of the {@link Trie}
  * (and having empty internal nodes), PATRICIA stores data in every node.
  * This allows for very efficient traversal, insert, delete, predecessor,
  * successor, prefix, range, and {@link #select(Object)}
@@ -42,15 +43,15 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * the given key, instead of comparing the entire key to another key.
  * </p>
  * <p>
- * The {@link org.apache.commons.collections4.Trie} can return operations in
+ * The {@link Trie} can return operations in
  * lexicographical order using the 'prefixMap', 'submap', or 'iterator' methods.
- * The {@link org.apache.commons.collections4.Trie} can also
+ * The {@link Trie} can also
  * scan for items that are 'bitwise' (using an XOR metric) by the 'select' method.
  * Bitwise closeness is determined by the {@link KeyAnalyzer} returning true or
  * false for a bit being set or not in a given key.
  * </p>
  * <p>
- * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
+ * This PATRICIA {@link Trie} supports both variable
  * length &amp; fixed length keys. Some methods, such as {@link org.apache.commons.collections4.Trie#prefixMap(Object)}
  * are suited only to variable length keys.
  * </p>

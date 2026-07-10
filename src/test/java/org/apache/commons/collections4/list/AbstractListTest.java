@@ -42,7 +42,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.List}.
+ * Tests {@link List}.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject} method.
@@ -222,7 +222,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Invokes all the methods on the given sublist to make sure they raise
-     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     * a {@link ConcurrentModificationException ConcurrentModificationException}.
      */
     protected void failFastAll(final List<E> list) {
         final Method[] methods = List.class.getMethods();
@@ -233,7 +233,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * Invokes the given method on the given sublist to make sure it raises
-     * a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
+     * a {@link ConcurrentModificationException ConcurrentModificationException}.
      *
      * Unless the method happens to be the equals() method, in which case
      * the test is skipped. There seems to be a bug in
@@ -1103,7 +1103,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * Tests that a sublist raises a {@link ConcurrentModificationException ConcurrentModificationException}
      * if elements are added to the original list.
      */
     @Test
@@ -1138,7 +1138,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
-     * Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
+     * Tests that a sublist raises a {@link ConcurrentModificationException ConcurrentModificationException}
      * if elements are removed from the original list.
      */
     @Test

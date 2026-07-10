@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Queue;
 
 /**
  * Decorates an iterator to support one-element lookahead while iterating.
@@ -143,7 +144,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * {@link #element()} instead.
      * </p>
      * <p>
-     * The rationale behind this is to follow the {@link java.util.Queue} interface which uses the same terminology.
+     * The rationale behind this is to follow the {@link Queue} interface which uses the same terminology.
      * </p>
      * <p>
      * Note that if the underlying iterator is a {@link FilterIterator} or a {@link FilterListIterator}, the underlying predicate will <em>not</em> be tested if

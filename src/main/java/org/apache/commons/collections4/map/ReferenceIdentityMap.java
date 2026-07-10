@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.ref.Reference;
+import java.util.Map;
 
 /**
  * A {@code Map} implementation that allows mappings to be
@@ -41,7 +42,7 @@ import java.lang.ref.Reference;
  * </p>
  * <p>
  * This map is similar to
- * {@link org.apache.commons.collections4.map.ReferenceMap ReferenceMap}.
+ * {@link ReferenceMap ReferenceMap}.
  * It differs in that keys and values in this class are compared using {@code ==}.
  * </p>
  * <p>
@@ -49,7 +50,7 @@ import java.lang.ref.Reference;
  * As a general rule, don't compare this map to other maps.
  * </p>
  * <p>
- * This {@link java.util.Map Map} implementation does <em>not</em> allow null elements.
+ * This {@link Map Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>

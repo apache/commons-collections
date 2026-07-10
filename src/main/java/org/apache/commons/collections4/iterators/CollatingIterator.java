@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import org.apache.commons.collections4.comparators.ComparableComparator;
 import org.apache.commons.collections4.list.UnmodifiableList;
 
 /**
@@ -345,7 +346,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * would like to use the natural sort order (or, in other words,
      * if the elements in the iterators are implementing the
      * {@link Comparable} interface), then use the
-     * {@link org.apache.commons.collections4.comparators.ComparableComparator}.
+     * {@link ComparableComparator}.
      *
      * @param comp the {@link Comparator} to set
      * @throws IllegalStateException if iteration has started

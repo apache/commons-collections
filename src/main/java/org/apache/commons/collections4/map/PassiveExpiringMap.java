@@ -70,7 +70,7 @@ public class PassiveExpiringMap<K, V>
     implements Serializable {
 
     /**
-     * A {@link org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy ExpirationPolicy}
+     * A {@link ExpirationPolicy ExpirationPolicy}
      * that returns an expiration time that is a
      * constant about of time in the future from the current time.
      *

@@ -27,6 +27,7 @@ import java.util.function.Predicate;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
+import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -40,7 +41,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
- * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.UnmodifiableMultiSet} instead.
+ * @deprecated Since 4.6.0, use {@link UnmodifiableMultiSet} instead.
  */
 @Deprecated
 public final class UnmodifiableBag<E>

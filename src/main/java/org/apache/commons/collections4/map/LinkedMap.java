@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections4.list.UnmodifiableList;
@@ -38,7 +39,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * In this implementation order is maintained by original insertion.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the
- * {@link org.apache.commons.collections4.MapIterator MapIterator}
+ * {@link MapIterator MapIterator}
  * functionality, additional convenience methods and allowing
  * bidirectional iteration. It also implements {@code OrderedMap}.
  * In addition, non-interface methods are provided to access the map by index.

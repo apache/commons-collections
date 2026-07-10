@@ -93,7 +93,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /**
          * The modification count that the list is expected to have. If the list
          * doesn't have this count, then a
-         * {@link java.util.ConcurrentModificationException} may be thrown by
+         * {@link ConcurrentModificationException} may be thrown by
          * the operations.
          */
         protected int expectedModCount;

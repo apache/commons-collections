@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.collection.CompositeCollection;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.list.UnmodifiableList;
@@ -41,7 +42,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * </p>
  * <p>
  * From version 4.0, this class does not extend
- * {@link org.apache.commons.collections4.collection.CompositeCollection CompositeCollection}
+ * {@link CompositeCollection CompositeCollection}
  * anymore due to its input restrictions (only accepts Sets).
  * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-424">COLLECTIONS-424</a>
  * for more details.

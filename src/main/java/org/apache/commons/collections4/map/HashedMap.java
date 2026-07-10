@@ -22,12 +22,14 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapIterator;
+
 /**
  * A {@code Map} implementation that is a general purpose alternative
  * to {@code HashMap}.
  * <p>
  * This implementation improves on the JDK1.4 HashMap by adding the
- * {@link org.apache.commons.collections4.MapIterator MapIterator}
+ * {@link MapIterator MapIterator}
  * functionality and many methods for subclassing.
  * </p>
  * <p>

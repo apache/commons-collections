@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.ref.Reference;
+import java.util.Map;
 
 /**
  * A {@code Map} implementation that allows mappings to be
@@ -30,7 +32,7 @@ import java.io.Serializable;
  * If non-hard references are used, then the garbage collector can remove
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
  * running low. For information on how the different reference types behave,
- * see {@link java.lang.ref.Reference Reference}.
+ * see {@link Reference Reference}.
  * </p>
  * <p>
  * Different types of references can be specified for keys and values.
@@ -43,11 +45,11 @@ import java.io.Serializable;
  * </p>
  * <p>
  * This map is similar to
- * {@link org.apache.commons.collections4.map.ReferenceIdentityMap ReferenceIdentityMap}.
+ * {@link ReferenceIdentityMap ReferenceIdentityMap}.
  * It differs in that keys and values in this class are compared using {@code equals()}.
  * </p>
  * <p>
- * This {@link java.util.Map Map} implementation does <em>not</em> allow null elements.
+ * This {@link Map Map} implementation does <em>not</em> allow null elements.
  * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>

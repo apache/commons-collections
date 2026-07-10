@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.MapIterator;
@@ -64,7 +65,7 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * </p>
  * <p>
  * This solution keeps minimizes the data storage by holding data only once.
- * The red-black algorithm is based on {@link java.util.TreeMap}, but has been modified
+ * The red-black algorithm is based on {@link TreeMap}, but has been modified
  * to simultaneously map a tree node by key and by value. This doubles the
  * cost of put operations (but so does using two TreeMaps), and nearly doubles
  * the cost of remove operations (there is a savings in that the lookup of the

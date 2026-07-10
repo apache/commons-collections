@@ -17,12 +17,13 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.collections4.KeyValue;
 
 /**
- * A restricted implementation of {@link java.util.Map.Entry Map.Entry} that prevents
- * the {@link java.util.Map.Entry Map.Entry} contract from being broken.
+ * A restricted implementation of {@link Entry Map.Entry} that prevents
+ * the {@link Entry Map.Entry} contract from being broken.
  *
  * @param <K> The type of keys
  * @param <V> The type of mapped values

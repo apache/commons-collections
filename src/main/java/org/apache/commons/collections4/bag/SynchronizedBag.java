@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
+import org.apache.commons.collections4.multiset.SynchronizedMultiSet;
 
 /**
  * Decorates another {@link Bag} to synchronize its behavior
@@ -34,7 +35,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
- * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.SynchronizedMultiSet} instead.
+ * @deprecated Since 4.6.0, use {@link SynchronizedMultiSet} instead.
  */
 @Deprecated
 public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag<E> {

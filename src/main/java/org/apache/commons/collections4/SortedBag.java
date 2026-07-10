@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.Collection;
 import java.util.Comparator;
-
 /**
  * Defines a type of {@code Bag} that maintains a sorted order among
  * its unique representative members.
  * <p>
  * The {@link SortedMultiSet} interface provides the same functionality
- * while complying with the {@link java.util.Collection Collection}
+ * while complying with the {@link Collection Collection}
  * contract, and should be preferred for new code; see the {@link Bag}
  * documentation for migration notes.
  * </p>

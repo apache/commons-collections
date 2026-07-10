@@ -17,12 +17,13 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.Unmodifiable;
 
 /**
- * A {@link java.util.Map.Entry Map.Entry} that throws
+ * A {@link Entry Map.Entry} that throws
  * UnsupportedOperationException when {@code setValue} is called.
  *
  * @param <K> The type of keys

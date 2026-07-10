@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiFunction;
@@ -58,11 +60,11 @@ import java.util.function.Supplier;
  * and adjustable expected concurrency for updates.
  * <p>
  * This map is designed around specific advanced use-cases. If there is any doubt whether this map is for you, you most likely should be using
- * {@link java.util.concurrent.ConcurrentHashMap} instead.
+ * {@link ConcurrentHashMap} instead.
  * </p>
  * <p>
  * This map supports strong, weak, and soft keys and values. By default, keys are weak, and values are strong. Such a configuration offers similar behavior to
- * {@link java.util.WeakHashMap}, entries of this map are periodically removed once their corresponding keys are no longer referenced outside of this map. In
+ * {@link WeakHashMap}, entries of this map are periodically removed once their corresponding keys are no longer referenced outside of this map. In
  * other words, this map will not prevent a key from being discarded by the garbage collector. Once a key has been discarded by the collector, the corresponding
  * entry is no longer visible to this map; however, the entry may occupy space until a future map operation decides to reclaim it. For this reason, summary
  * functions such as {@code size} and {@code isEmpty} might return a value greater than the observed number of entries. In order to support a high level of
@@ -80,11 +82,11 @@ import java.util.function.Supplier;
  * non-strong values may disappear before their corresponding key.
  * </p>
  * <p>
- * While this map does allow the use of both strong keys and values, it is recommended you use {@link java.util.concurrent.ConcurrentHashMap} for such a
+ * While this map does allow the use of both strong keys and values, it is recommended you use {@link ConcurrentHashMap} for such a
  * configuration, since it is optimized for that case.
  * </p>
  * <p>
- * Just like {@link java.util.concurrent.ConcurrentHashMap}, this class obeys the same functional specification as {@link Hashtable}, and includes versions of
+ * Just like {@link ConcurrentHashMap}, this class obeys the same functional specification as {@link Hashtable}, and includes versions of
  * methods corresponding to each method of {@code Hashtable}. However, even though all operations are thread-safe, retrieval operations do <em>not</em> entail
  * locking, and there is <em>not</em> any support for locking the entire map in a way that prevents all access. This class is fully interoperable with
  * {@code Hashtable} in programs that rely on its thread safety but not on its synchronization details.

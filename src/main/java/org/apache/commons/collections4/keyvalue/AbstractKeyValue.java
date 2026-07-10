@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4.keyvalue;
 
-import org.apache.commons.collections4.KeyValue;
+import java.util.Map.Entry;
 
+import org.apache.commons.collections4.KeyValue;
 /**
  * Abstract pair class to assist with creating {@code KeyValue}
- * and {@link java.util.Map.Entry Map.Entry} implementations.
+ * and {@link Entry Map.Entry} implementations.
  *
  * @param <K> The type of keys
  * @param <V> The type of values

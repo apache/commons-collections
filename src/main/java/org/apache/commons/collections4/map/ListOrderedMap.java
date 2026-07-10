@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -64,13 +65,13 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * </p>
  * <p>
  * <strong>Note that ListOrderedMap doesn't work with
- * {@link java.util.IdentityHashMap IdentityHashMap}, {@link CaseInsensitiveMap},
- * or similar maps that violate the general contract of {@link java.util.Map}.</strong>
+ * {@link IdentityHashMap IdentityHashMap}, {@link CaseInsensitiveMap},
+ * or similar maps that violate the general contract of {@link Map}.</strong>
  * The {@code ListOrderedMap} (or, more precisely, the underlying {@code List})
  * is relying on {@link Object#equals(Object) equals()}. This is fine, as long as the
  * decorated {@code Map} is also based on {@link Object#equals(Object) equals()},
  * and {@link Object#hashCode() hashCode()}, which
- * {@link java.util.IdentityHashMap IdentityHashMap}, and
+ * {@link IdentityHashMap IdentityHashMap}, and
  * {@link CaseInsensitiveMap} don't: The former uses {@code ==}, and
  * the latter uses {@link Object#equals(Object) equals()} on a lower-cased
  * key.

@@ -47,7 +47,7 @@ import org.apache.commons.collections4.Trie;
 public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     /**
-     * A range view of the {@link org.apache.commons.collections4.Trie}.
+     * A range view of the {@link Trie}.
      */
     private abstract class AbstractRangeMap extends AbstractMap<K, V>
             implements SortedMap<K, V> {
@@ -290,7 +290,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * This is an entry set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#entrySet()}.
+     * This is an entry set view of the {@link Trie} as returned by {@link Map#entrySet()}.
      */
     private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
@@ -344,7 +344,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * This is a key set view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#keySet()}.
+     * This is a key set view of the {@link Trie} as returned by {@link Map#keySet()}.
      */
     private final class KeySet extends AbstractSet<K> {
 
@@ -387,7 +387,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * A prefix {@link RangeEntrySet} view of the {@link org.apache.commons.collections4.Trie}.
+     * A prefix {@link RangeEntrySet} view of the {@link Trie}.
      */
     private final class PrefixRangeEntrySet extends RangeEntrySet {
 
@@ -535,7 +535,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * A submap used for prefix views over the {@link org.apache.commons.collections4.Trie}.
+     * A submap used for prefix views over the {@link Trie}.
      */
     private final class PrefixRangeMap extends AbstractRangeMap {
 
@@ -607,7 +607,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
          * This method does two things. It determines the FROM
          * and TO range of the {@link PrefixRangeMap} and the number
          * of elements in the range. This method must be called every
-         * time the {@link org.apache.commons.collections4.Trie} has changed.
+         * time the {@link Trie} has changed.
          */
         private int fixup() {
             // The trie has changed since we last found our toKey / fromKey
@@ -978,7 +978,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
+     * A {@link Trie} is a set of {@link TrieEntry} nodes.
      *
      * @param <K> The key type.
      * @param <V> The value type.
@@ -1107,7 +1107,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * An {@link OrderedMapIterator} for a {@link org.apache.commons.collections4.Trie}.
+     * An {@link OrderedMapIterator} for a {@link Trie}.
      */
     private final class TrieMapIterator extends AbstractTrieIterator<K> implements OrderedMapIterator<K, V> {
 
@@ -1178,7 +1178,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * This is a value view of the {@link org.apache.commons.collections4.Trie} as returned by {@link Map#values()}.
+     * This is a value view of the {@link Trie} as returned by {@link Map#values()}.
      */
     private final class Values extends AbstractCollection<V> {
 
@@ -1234,7 +1234,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         return next != null && next.bitIndex <= from.bitIndex && !next.isEmpty();
     }
 
-    /** The root node of the {@link org.apache.commons.collections4.Trie}. */
+    /** The root node of the {@link Trie}. */
     private transient TrieEntry<K, V> root = new TrieEntry<>(null, null, -1);
 
     /**
@@ -1248,11 +1248,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
 
     private transient volatile Set<Map.Entry<K, V>> entrySet;
 
-    /** The current size of the {@link org.apache.commons.collections4.Trie}. */
+    /** The current size of the {@link Trie}. */
     private transient int size;
 
     /**
-     * The number of times this {@link org.apache.commons.collections4.Trie} has been modified.
+     * The number of times this {@link Trie} has been modified.
      * It's used to detect concurrent modifications and fail-fast the {@link Iterator}s.
      */
     protected transient int modCount;
@@ -1267,8 +1267,8 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Constructs a new {@link org.apache.commons.collections4.Trie} using the given {@link KeyAnalyzer} and initializes the
-     * {@link org.apache.commons.collections4.Trie} with the values from the provided {@link Map}.
+     * Constructs a new {@link Trie} using the given {@link KeyAnalyzer} and initializes the
+     * {@link Trie} with the values from the provided {@link Map}.
      *
      * @param keyAnalyzer  the {@link KeyAnalyzer}.
      * @param map The source map.
@@ -1279,7 +1279,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Adds the given {@link TrieEntry} to the {@link org.apache.commons.collections4.Trie}.
+     * Adds the given {@link TrieEntry} to the {@link Trie}.
      */
     TrieEntry<K, V> addEntry(final TrieEntry<K, V> entry, final int lengthInBits) {
         TrieEntry<K, V> current = root.left;
@@ -1414,7 +1414,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * A helper method to decrement the {@link org.apache.commons.collections4.Trie} size and increment the modification counter.
+     * A helper method to decrement the {@link Trie} size and increment the modification counter.
      */
     void decrementSize() {
         size--;
@@ -1430,12 +1430,12 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the first entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * Returns the first entry the {@link Trie} is storing.
      * <p>
      * This is implemented by going always to the left until we encounter a valid uplink. That uplink is the first key.
      * </p>
      *
-     * @return the first entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * @return the first entry the {@link Trie} is storing.
      * @since 4.6.0
      */
     public TrieEntry<K, V> firstEntry() {
@@ -1596,14 +1596,14 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Gets a view of this {@link org.apache.commons.collections4.Trie} of all elements that are prefixed
+     * Gets a view of this {@link Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
      * <p>
      * The view that this returns is optimized to have a very efficient
      * {@link Iterator}. The {@link SortedMap#firstKey()},
      * {@link SortedMap#lastKey()} &amp; {@link Map#size()} methods must
      * iterate over all possible values in order to determine the results.
-     * This information is cached until the PATRICIA {@link org.apache.commons.collections4.Trie} changes.
+     * This information is cached until the PATRICIA {@link Trie} changes.
      * All other methods (except {@link Iterator}) must compare the given
      * key to the prefix to ensure that it is within the range of the view.
      * The {@link Iterator}'s remove method must also relocate the subtree
@@ -1613,7 +1613,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * @param key  the key to use in the search
      * @param offsetInBits  the prefix offset
      * @param lengthInBits  the number of significant prefix bits
-     * @return a {@link SortedMap} view of this {@link org.apache.commons.collections4.Trie} with all elements whose
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
      *   key is prefixed by the search key
      */
     private SortedMap<K, V> getPrefixMapByBits(final K key, final int offsetInBits, final int lengthInBits) {
@@ -1700,7 +1700,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * A helper method to increment the {@link org.apache.commons.collections4.Trie} size and the modification counter.
+     * A helper method to increment the {@link Trie} size and the modification counter.
      */
     void incrementSize() {
         size++;
@@ -1716,13 +1716,13 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the last entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * Returns the last entry the {@link Trie} is storing.
      *
      * <p>
      * This is implemented by going always to the right until we encounter a valid uplink. That uplink is the last key.
      * </p>
      *
-     * @return the last entry the {@link org.apache.commons.collections4.Trie} is storing.
+     * @return the last entry the {@link Trie} is storing.
      * @since 4.6.0
      */
     public TrieEntry<K, V> lastEntry() {
@@ -2129,7 +2129,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Removes a single entry from the {@link org.apache.commons.collections4.Trie}.
+     * Removes a single entry from the {@link Trie}.
      *
      * If we found a Key (Entry h) then figure out if it's
      * an internal (hard to remove) or external Entry (easy
@@ -2149,7 +2149,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Removes an external entry from the {@link org.apache.commons.collections4.Trie}.
+     * Removes an external entry from the {@link Trie}.
      *
      * If it's an external Entry then just remove it.
      * This is very easy and straight forward.
@@ -2181,7 +2181,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Removes an internal entry from the {@link org.apache.commons.collections4.Trie}.
+     * Removes an internal entry from the {@link Trie}.
      *
      * If it's an internal Entry then "good luck" with understanding
      * this code. The Idea is essentially that Entry p takes Entry h's
@@ -2264,7 +2264,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     }
 
     /**
-     * Returns the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR
+     * Returns the {@link Entry} whose key is closest in a bitwise XOR
      * metric to the given key. This is NOT lexicographic closeness.
      * For example, given the keys:
      *
@@ -2274,12 +2274,12 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * <li>L = 1001100</li>
      * </ol>
      *
-     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR metric
+     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
      *   to the provided key
      */
     public Map.Entry<K, V> select(final K key) {
@@ -2303,7 +2303,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * <li>L = 1001100</li>
      * </ol>
      *
-     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -2355,7 +2355,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * <li>L = 1001100</li>
      * </ol>
      *
-     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *

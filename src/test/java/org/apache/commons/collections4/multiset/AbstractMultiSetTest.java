@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract test class for {@link org.apache.commons.collections4.MultiSet MultiSet}
+ * Abstract test class for {@link MultiSet MultiSet}
  * methods and contracts.
  * <p>
  * To use, simply extend this class, and implement

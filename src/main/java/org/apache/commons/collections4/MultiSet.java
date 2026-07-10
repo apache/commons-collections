@@ -241,7 +241,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Returns a {@link Set} of unique elements in the MultiSet.
      * <p>
-     * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * Uniqueness constraints are the same as those in {@link Set}.
      * </p>
      * <p>
      * The returned set is backed by this multiset, so any change to either is immediately reflected in the other. Only removal operations are supported, in

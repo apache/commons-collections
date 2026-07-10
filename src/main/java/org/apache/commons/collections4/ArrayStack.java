@@ -16,11 +16,13 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.Stack;
 
 /**
- * An implementation of the {@link java.util.Stack} API that is based on an
+ * An implementation of the {@link Stack} API that is based on an
  * {@code ArrayList} instead of a {@code Vector}, so it is not
  * synchronized to protect against multithreaded access.  The implementation
  * is therefore operates faster in environments where you do not need to
@@ -41,7 +43,7 @@ import java.util.EmptyStackException;
  * @param <E> The type of elements in this list
  * @see java.util.Stack
  * @since 1.0
- * @deprecated Use {@link java.util.ArrayDeque} instead (available from Java 1.6)
+ * @deprecated Use {@link ArrayDeque} instead (available from Java 1.6)
  */
 @Deprecated
 public class ArrayStack<E> extends ArrayList<E> {
@@ -70,7 +72,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Return {@code true} if this stack is currently empty.
      * <p>
-     * This method exists for compatibility with {@link java.util.Stack}.
+     * This method exists for compatibility with {@link Stack}.
      * New users of this class should use {@code isEmpty} instead.
      * </p>
      *

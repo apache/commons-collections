@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.apache.commons.collections4.multiset.HashMultiSet;
+
 /**
  * Implements {@code Bag}, using a {@link HashMap} to provide the
  * data storage. This is the standard implementation of a bag.
@@ -46,7 +48,7 @@ import java.util.HashMap;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
- * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.HashMultiSet} instead.
+ * @deprecated Since 4.6.0, use {@link HashMultiSet} instead.
  */
 @Deprecated
 public class HashBag<E> extends AbstractMapBag<E> implements Serializable {

@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
+import org.apache.commons.collections4.multiset.AbstractMultiSetDecorator;
 
 /**
  * Decorates another {@code Bag} to provide additional behavior.
@@ -29,7 +30,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
- * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.AbstractMultiSetDecorator} instead.
+ * @deprecated Since 4.6.0, use {@link AbstractMultiSetDecorator} instead.
  */
 @Deprecated
 public abstract class AbstractBagDecorator<E>

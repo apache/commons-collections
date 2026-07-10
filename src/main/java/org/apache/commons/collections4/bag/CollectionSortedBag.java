@@ -23,13 +23,14 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections4.SortedBag;
+import org.apache.commons.collections4.SortedMultiSet;
 
 /**
  * Decorates another {@link SortedBag} to comply with the Collection contract.
  *
  * @param <E> The type of elements in this bag
  * @since 4.0
- * @deprecated Since 4.6.0, no longer needed; a {@link org.apache.commons.collections4.SortedMultiSet} already complies with the {@link java.util.Collection} contract.
+ * @deprecated Since 4.6.0, no longer needed; a {@link SortedMultiSet} already complies with the {@link Collection} contract.
  */
 @Deprecated
 public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> {

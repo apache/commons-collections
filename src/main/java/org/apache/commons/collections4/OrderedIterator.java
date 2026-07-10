@@ -17,9 +17,9 @@
 package org.apache.commons.collections4;
 
 import java.util.Iterator;
-
+import java.util.ListIterator;
 /**
- * Defines an iterator that operates over an ordered container. Subset of {@link java.util.ListIterator}.
+ * Defines an iterator that operates over an ordered container. Subset of {@link ListIterator}.
  * <p>
  * This iterator allows both forward and reverse iteration through the container.
  * </p>

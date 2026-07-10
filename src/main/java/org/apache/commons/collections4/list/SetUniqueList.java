@@ -33,6 +33,7 @@ import java.util.function.Predicate;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
+import org.apache.commons.collections4.set.ListOrderedSet;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -46,7 +47,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * function correctly.
  * </p>
  * <p>
- * The {@link org.apache.commons.collections4.set.ListOrderedSet ListOrderedSet}
+ * The {@link ListOrderedSet ListOrderedSet}
  * class provides an alternative approach, by wrapping an existing Set and
  * retaining insertion order in the iterator.
  * </p>

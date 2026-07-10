@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
+import org.apache.commons.collections4.functors.NullPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.commons.collections4.iterators.UniqueFilterIterator;
@@ -292,7 +293,7 @@ public class IterableUtils {
      * <p>
      * A {@code null} or empty iterable returns false.
      * A {@code null} object will not be passed to the equator, instead a
-     * {@link org.apache.commons.collections4.functors.NullPredicate NullPredicate}
+     * {@link NullPredicate NullPredicate}
      * will be used.
      * </p>
      *

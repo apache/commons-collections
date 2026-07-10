@@ -17,13 +17,14 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
 /**
  * Provides a base decorator that allows additional functionality to be
- * added to a {@link java.util.Map.Entry Map.Entry}.
+ * added to a {@link Entry Map.Entry}.
  *
  * @param <K> The type of keys
  * @param <V> The type of mapped values

@@ -21,13 +21,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.collections4.Get;
 import org.apache.commons.collections4.IterableGet;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 
 /**
  * {@link IterableGet} that uses a {@link Map}&lt;K, V&gt; for the
- * {@link org.apache.commons.collections4.Get Get}&lt;K, V&gt; implementation.
+ * {@link Get Get}&lt;K, V&gt; implementation.
  *
  * @param <K> The type of the keys in this map
  * @param <V> The type of the values in this map

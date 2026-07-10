@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.collections4.BoundedMap;
+import org.apache.commons.collections4.MapIterator;
 
 /**
  * A {@code Map} implementation with a fixed maximum size which removes
@@ -40,7 +41,7 @@ import org.apache.commons.collections4.BoundedMap;
  * of modifying the map's iteration order and thus invalidating any
  * iterators currently in use.  It is therefore suggested that iterations
  * over an {@link LRUMap} instance access entry values only through a
- * {@link org.apache.commons.collections4.MapIterator MapIterator} or {@link #entrySet()} iterator.
+ * {@link MapIterator MapIterator} or {@link #entrySet()} iterator.
  * </p>
  * <p>
  * The map implements {@code OrderedMap} and entries may be queried using

@@ -17,11 +17,12 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 /**
  * Abstract Pair class to assist with creating correct
- * {@link java.util.Map.Entry Map.Entry} implementations.
+ * {@link Entry Map.Entry} implementations.
  *
  * @param <K> The type of keys
  * @param <V> The type of mapped values

@@ -18,12 +18,13 @@ package org.apache.commons.collections4.keyvalue;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
 /**
- * A {@link java.util.Map.Entry Map.Entry} tied to a map underneath.
+ * A {@link Entry Map.Entry} tied to a map underneath.
  * <p>
  * This can be used to enable a map entry to make changes on the underlying
  * map, however this will probably mess up any iterators.

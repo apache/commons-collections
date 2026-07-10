@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.MultiSet;
 
 /**
  * Decorates another {@link Bag} to comply with the Collection contract.
@@ -38,7 +39,7 @@ import org.apache.commons.collections4.Bag;
  * @see Bag
  * @param <E> The type of elements in this bag
  * @since 4.0
- * @deprecated Since 4.6.0, no longer needed; a {@link org.apache.commons.collections4.MultiSet} already complies with the {@link Collection} contract.
+ * @deprecated Since 4.6.0, no longer needed; a {@link MultiSet} already complies with the {@link Collection} contract.
  */
 @Deprecated
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {

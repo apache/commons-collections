@@ -18,14 +18,16 @@ package org.apache.commons.collections4.comparators;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
 /**
  * A {@link Comparator Comparator} that compares {@link Comparable Comparable}
  * objects.
  * <p>
  * This Comparator is useful, for example, for enforcing the natural order in
- * custom implementations of {@link java.util.SortedSet SortedSet} and
- * {@link java.util.SortedMap SortedMap}.
+ * custom implementations of {@link SortedSet SortedSet} and
+ * {@link SortedMap SortedMap}.
  * </p>
  * <p>
  * Note: In the 2.0 and 2.1 releases of Commons Collections, this class would

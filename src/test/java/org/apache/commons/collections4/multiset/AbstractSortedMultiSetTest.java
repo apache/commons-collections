@@ -27,7 +27,7 @@ import org.apache.commons.collections4.bag.TreeBag;
 
 /**
  * Abstract test class for
- * {@link org.apache.commons.collections4.SortedMultiSet SortedMultiSet}
+ * {@link SortedMultiSet SortedMultiSet}
  * methods and contracts.
  */
 public abstract class AbstractSortedMultiSetTest<T> extends AbstractMultiSetTest<T> {
@@ -79,7 +79,7 @@ public abstract class AbstractSortedMultiSetTest<T> extends AbstractMultiSetTest
     }
 
     /**
-     * Returns an empty sorted, {@link java.util.Collection}-compliant
+     * Returns an empty sorted, {@link Collection}-compliant
      * collection for use in modification testing.
      *
      * @return a confirmed empty collection

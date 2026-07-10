@@ -19,8 +19,10 @@ package org.apache.commons.collections4.trie;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.apache.commons.collections4.Trie;
+
 /**
- * Defines the interface to analyze {@link org.apache.commons.collections4.Trie Trie} keys on a bit level.
+ * Defines the interface to analyze {@link Trie Trie} keys on a bit level.
  * {@link KeyAnalyzer}'s methods return the length of the key in bits, whether or not a bit is set,
  * and bits per element in the key.
  * <p>

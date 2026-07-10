@@ -32,6 +32,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FunctorException;
 import org.apache.commons.collections4.MultiMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
@@ -66,7 +67,7 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * @param <K> The type of the keys in this map
  * @param <V> The type of the values in this map
  * @since 3.2
- * @deprecated Since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
+ * @deprecated Since 4.1, use {@link MultiValuedMap MultiValuedMap} instead
  */
 @Deprecated
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {

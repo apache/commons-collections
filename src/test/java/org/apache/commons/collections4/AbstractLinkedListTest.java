@@ -29,7 +29,7 @@ import org.apache.commons.collections4.list.AbstractListTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests base {@link java.util.LinkedList} methods and contracts.
+ * Tests base {@link LinkedList} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement the {@link #makeObject()} method.
  * </p>

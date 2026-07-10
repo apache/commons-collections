@@ -41,12 +41,16 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
+import org.apache.commons.collections4.bag.AbstractBagTest;
+import org.apache.commons.collections4.list.AbstractListTest;
+import org.apache.commons.collections4.map.AbstractMapTest;
+import org.apache.commons.collections4.set.AbstractSetTest;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.Collection}.
+ * Tests {@link Collection}.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to
@@ -95,7 +99,7 @@ import org.junit.jupiter.api.Test;
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
  * <em>confirmed</em> collection implementation.  A confirmed collection
- * implementation is something like {@link java.util.ArrayList}, which is
+ * implementation is something like {@link ArrayList}, which is
  * known to conform exactly to its collection interface's contract.  After the
  * operation takes place on both your collection implementation and the
  * confirmed collection implementation, the two collections are compared to see
@@ -116,7 +120,7 @@ import org.junit.jupiter.api.Test;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link org.apache.commons.collections4.map.AbstractMapTest AbstractTestMap}
+ * views of a map, {@link AbstractMapTest AbstractTestMap}
  * would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * </p>
@@ -133,9 +137,9 @@ import org.junit.jupiter.api.Test;
  * that's compatible with your collection implementation.
  * </p>
  * <p>
- * If you're extending {@link org.apache.commons.collections4.list.AbstractListTest AbstractListTest},
- * {@link org.apache.commons.collections4.set.AbstractSetTest AbstractTestSet},
- * or {@link org.apache.commons.collections4.bag.AbstractBagTest AbstractBagTest},
+ * If you're extending {@link AbstractListTest AbstractListTest},
+ * {@link AbstractSetTest AbstractTestSet},
+ * or {@link AbstractBagTest AbstractBagTest},
  * you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.
@@ -513,8 +517,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      * Returns a confirmed empty collection.
-     * For instance, an {@link java.util.ArrayList} for lists or a
-     * {@link java.util.HashSet} for sets.
+     * For instance, an {@link ArrayList} for lists or a
+     * {@link HashSet} for sets.
      *
      * @return a confirmed empty collection
      */
@@ -522,8 +526,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      * Returns a confirmed full collection.
-     * For instance, an {@link java.util.ArrayList} for lists or a
-     * {@link java.util.HashSet} for sets.  The returned collection
+     * For instance, an {@link ArrayList} for lists or a
+     * {@link HashSet} for sets.  The returned collection
      * should contain the elements returned by {@link #getFullElements()}.
      *
      * @return a confirmed full collection

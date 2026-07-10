@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -34,7 +35,7 @@ import java.util.ListIterator;
  * <p>
  * This implementation supports all of the optional {@link List} operations.
  * It extends {@code AbstractLinkedList} and thus provides the
- * stack/queue/dequeue operations available in {@link java.util.LinkedList}.
+ * stack/queue/dequeue operations available in {@link LinkedList}.
  * </p>
  * <p>
  * The main feature of this class is the ability to modify the list and the

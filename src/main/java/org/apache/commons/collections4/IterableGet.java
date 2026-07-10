@@ -16,8 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.Map;
 /**
- * The "read" subset of the {@link java.util.Map} interface.
+ * The "read" subset of the {@link Map} interface.
  *
  * @param <K> The type of the keys in this map
  * @param <V> The type of the values in this map

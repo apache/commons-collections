@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.TreeMap;
+import java.util.function.BiPredicate;
 import java.util.function.IntPredicate;
 
 /**
@@ -47,7 +48,7 @@ public interface CellExtractor extends IndexExtractor {
      * Returns {@code true} if processing should continue, {@code false} otherwise.
      *
      * <p>Note: This is a functional interface as a specialization of
-     * {@link java.util.function.BiPredicate} for {@code int}.</p>
+     * {@link BiPredicate} for {@code int}.</p>
      */
     @FunctionalInterface
     interface CellPredicate {

@@ -17,16 +17,17 @@
 package org.apache.commons.collections4.iterators;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * Implements an {@link java.util.Iterator Iterator} over any array.
+ * Implements an {@link Iterator Iterator} over any array.
  * <p>
  * The array can be either an array of object or of primitives. If you know
  * that you have an object array, the
- * {@link org.apache.commons.collections4.iterators.ObjectArrayIterator ObjectArrayIterator}
+ * {@link ObjectArrayIterator ObjectArrayIterator}
  * class is a better choice, as it will perform better.
  * </p>
  * <p>

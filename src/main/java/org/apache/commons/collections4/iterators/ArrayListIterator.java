@@ -17,12 +17,13 @@
 package org.apache.commons.collections4.iterators;
 
 import java.lang.reflect.Array;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * Implements a {@link java.util.ListIterator} over an array.
+ * Implements a {@link ListIterator} over an array.
  * <p>
  * The array can be either an array of object or of primitives. If you know
  * that you have an object array, the {@link ObjectArrayListIterator}
@@ -183,9 +184,9 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * to {@link #next()} of {@link #previous()}.
      * </p>
      * <p>
-     * <strong>Note:</strong> {@link java.util.ListIterator} implementations that support
+     * <strong>Note:</strong> {@link ListIterator} implementations that support
      * {@code add()} and {@code remove()} only allow {@code set()} to be called
-     * once per call to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
+     * once per call to {@code next()} or {@code previous} (see the {@link ListIterator}
      * Javadoc for more details). Since this implementation does
      * not support {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.

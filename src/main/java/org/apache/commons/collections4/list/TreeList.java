@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -72,7 +73,7 @@ public class TreeList<E> extends AbstractList<E> {
      * Implements an AVLNode which keeps the offset updated.
      * <p>
      * This node contains the real work.
-     * TreeList is just there to implement {@link java.util.List}.
+     * TreeList is just there to implement {@link List}.
      * The nodes don't know the index of the object they are holding.  They
      * do know however their position relative to their parent node.
      * This allows to calculate the index of a node while traversing the tree.
@@ -792,7 +793,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * The modification count that the list is expected to have. If the list
          * doesn't have this count, then a
-         * {@link java.util.ConcurrentModificationException} may be thrown by
+         * {@link ConcurrentModificationException} may be thrown by
          * the operations.
          */
         private int expectedModCount;

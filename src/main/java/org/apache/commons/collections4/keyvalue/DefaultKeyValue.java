@@ -17,13 +17,14 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
 /**
  * A mutable {@code KeyValue} pair that does not implement
- * {@link java.util.Map.Entry Map.Entry}.
+ * {@link Entry Map.Entry}.
  * <p>
  * Note that a {@code DefaultKeyValue} instance may not contain
  * itself as a key or value.

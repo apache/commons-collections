@@ -179,7 +179,7 @@ public class MultiMapUtils {
     }
 
     /**
-     * Creates a {@link ListValuedMap} with an {@link java.util.ArrayList ArrayList} as collection class to store the values mapped to a key.
+     * Creates a {@link ListValuedMap} with an {@link ArrayList ArrayList} as collection class to store the values mapped to a key.
      *
      * @param <K> The key type.
      * @param <V> The value type.
@@ -190,7 +190,7 @@ public class MultiMapUtils {
     }
 
     /**
-     * Creates a {@link SetValuedMap} with an {@link java.util.HashSet HashSet} as collection class to store the values mapped to a key.
+     * Creates a {@link SetValuedMap} with an {@link HashSet HashSet} as collection class to store the values mapped to a key.
      *
      * @param <K> The key type.
      * @param <V> The value type.

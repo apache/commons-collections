@@ -21,6 +21,7 @@ import java.util.Set;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollection;
+import org.apache.commons.collections4.multiset.PredicatedMultiSet;
 
 /**
  * Decorates another {@link Bag} to validate that additions
@@ -42,7 +43,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
- * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.PredicatedMultiSet} instead.
+ * @deprecated Since 4.6.0, use {@link PredicatedMultiSet} instead.
  */
 @Deprecated
 public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> {

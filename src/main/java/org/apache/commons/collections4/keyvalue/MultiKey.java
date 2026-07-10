@@ -19,6 +19,7 @@ package org.apache.commons.collections4.keyvalue;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -303,7 +304,7 @@ public class MultiKey<K> implements Serializable {
      * This value is computed once and then cached, so elements should not
      * change their hash codes once created (note that this is the same
      * constraint that would be used if the individual keys elements were
-     * themselves {@link java.util.Map Map} keys).
+     * themselves {@link Map Map} keys).
      * </p>
      *
      * @return the hash code

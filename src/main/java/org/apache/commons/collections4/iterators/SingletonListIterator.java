@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * {@code SingletonIterator} is an {@link java.util.ListIterator} over a single
+ * {@code SingletonIterator} is an {@link ListIterator} over a single
  * object instance.
  *
  * @param <E> The type of elements returned by this iterator.

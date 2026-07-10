@@ -31,7 +31,7 @@ import org.apache.commons.collections4.BulkTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link java.util.SortedMap}.
+ * Tests {@link SortedMap}.
  *
  * @param <K> The key type.
  * @param <V> The value type.
