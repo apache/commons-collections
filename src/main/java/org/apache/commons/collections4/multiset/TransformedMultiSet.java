@@ -149,8 +149,7 @@ public class TransformedMultiSet<E> extends TransformedCollection<E> implements 
 
     @Override
     public Set<E> uniqueSet() {
-        final Set<E> set = getMultiSet().uniqueSet();
-        return TransformedSet.<E>transformingSet(set, transformer);
+        return TransformedSet.<E>transformingSet(getMultiSet().uniqueSet(), transformer);
     }
 
 }
