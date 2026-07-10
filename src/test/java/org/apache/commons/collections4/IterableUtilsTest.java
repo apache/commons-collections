@@ -39,6 +39,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.EqualPredicate;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -423,6 +424,17 @@ class IterableUtilsTest {
         assertEquals(1, IterableUtils.frequency(bag, "C"));
         assertEquals(0, IterableUtils.frequency(bag, "D"));
         assertEquals(2, IterableUtils.frequency(bag, "E"));
+
+        final MultiSet<String> multiSet = new HashMultiSet<>();
+        multiSet.add("A", 3);
+        multiSet.add("C");
+        multiSet.add("E");
+        multiSet.add("E");
+        assertEquals(3, IterableUtils.frequency(multiSet, "A"));
+        assertEquals(0, IterableUtils.frequency(multiSet, "B"));
+        assertEquals(1, IterableUtils.frequency(multiSet, "C"));
+        assertEquals(0, IterableUtils.frequency(multiSet, "D"));
+        assertEquals(2, IterableUtils.frequency(multiSet, "E"));
     }
 
     @Test

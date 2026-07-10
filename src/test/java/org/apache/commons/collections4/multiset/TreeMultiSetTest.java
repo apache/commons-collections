@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Arrays;
+
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.SortedMultiSet;
 import org.junit.jupiter.api.Test;
@@ -48,6 +50,16 @@ public class TreeMultiSetTest<T> extends AbstractSortedMultiSetTest<T> {
         multiset.add((T) "B");
         multiset.add((T) "D");
         return multiset;
+    }
+
+    @Test
+    void testConstructorFromIterable() {
+        final Iterable<String> iterable = () -> Arrays.asList("b", "a", "b").iterator();
+        final SortedMultiSet<String> multiset = new TreeMultiSet<>(iterable);
+        assertEquals(3, multiset.size());
+        assertEquals(2, multiset.getCount("b"));
+        assertEquals("a", multiset.first());
+        assertEquals("b", multiset.last());
     }
 
     @Test

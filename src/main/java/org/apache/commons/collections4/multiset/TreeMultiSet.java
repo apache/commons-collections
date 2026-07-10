@@ -78,6 +78,15 @@ public class TreeMultiSet<E> extends AbstractMapMultiSet<E> implements SortedMul
     }
 
     /**
+     * Constructs a multiset containing all the members of the given Iterable.
+     *
+     * @param iterable an iterable to copy into this multiset.
+     */
+    public TreeMultiSet(final Iterable<? extends E> iterable) {
+        super(new TreeMap<>(), iterable);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws IllegalArgumentException if the object to be added does not implement

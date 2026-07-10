@@ -28,6 +28,7 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.collections4.multimap.TransformedMultiValuedMap;
 import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 
 /**
  * Provides utility methods and decorators for {@link MultiValuedMap} instances.
@@ -112,6 +113,20 @@ public class MultiMapUtils {
      */
     public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
         return map != null ? new ArrayList<>(map.get(key)) : null;
+    }
+
+    /**
+     * Gets a MultiSet from {@code MultiValuedMap} in a null-safe manner.
+     *
+     * @param <K> The key type.
+     * @param <V> The value type.
+     * @param map the {@link MultiValuedMap} to use.
+     * @param key the key to look up.
+     * @return a new MultiSet containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @since 4.6.0
+     */
+    public static <K, V> MultiSet<V> getValuesAsMultiSet(final MultiValuedMap<K, V> map, final K key) {
+        return map != null ? new HashMultiSet<>(map.get(key)) : null;
     }
 
     /**

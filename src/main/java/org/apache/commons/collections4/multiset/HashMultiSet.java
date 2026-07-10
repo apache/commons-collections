@@ -58,6 +58,16 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     }
 
     /**
+     * Constructs a multiset containing all the members of the given Iterable.
+     *
+     * @param iterable an iterable to copy into this multiset.
+     * @since 4.6.0
+     */
+    public HashMultiSet(final Iterable<? extends E> iterable) {
+        super(new HashMap<>(), iterable);
+    }
+
+    /**
      * Deserializes the multiset in using a custom routine.
      *
      * @param in the input stream

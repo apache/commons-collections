@@ -302,6 +302,19 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         this.map = map;
     }
 
+    /**
+     * Constructs a new instance that assigns the specified Map as the backing store. The map
+     * must be empty and non-null. The multiset is filled from the iterable elements.
+     *
+     * @param map the map to assign.
+     * @param iterable the iterable of elements to add.
+     * @since 4.6.0
+     */
+    protected AbstractMapMultiSet(final Map<E, MutableInteger> map, final Iterable<? extends E> iterable) {
+        this(map);
+        iterable.forEach(this::add);
+    }
+
     @Override
     public int add(final E object, final int occurrences) {
         if (occurrences < 0) {

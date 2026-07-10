@@ -32,6 +32,7 @@
  * <ul>
  *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added</li>
  *   <li>Synchronized - synchronizes method access for multithreaded environments</li>
+ *   <li>Transformed  - transforms elements as they are added</li>
  *   <li>Unmodifiable - ensures the multiset cannot be altered</li>
  * </ul>
  */
