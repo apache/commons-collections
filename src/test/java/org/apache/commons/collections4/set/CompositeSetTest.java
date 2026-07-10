@@ -21,8 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.AbstractSet;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -178,6 +181,29 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
         set.remove("3");
         assertFalse(one.contains("3"));
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        final CompositeSet<String> set = new CompositeSet<>(maxSizeSet());
+        set.addComposited(maxSizeSet());
+        assertEquals(Integer.MAX_VALUE, set.size());
+    }
+
+    /** An empty-iterating set that reports {@code Integer.MAX_VALUE} elements. */
+    private static Set<String> maxSizeSet() {
+        return new AbstractSet<String>() {
+
+            @Override
+            public Iterator<String> iterator() {
+                return Collections.emptyIterator();
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
     }
 
     @Test

@@ -1280,6 +1280,23 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     }
 
     @Test
+    void testSizeClampsToIntegerMaxValue() {
+        // bag-valued map: value collection sizes are counts, so the total is cheap to grow past Integer.MAX_VALUE
+        final AbstractMultiValuedMap<String, String> map = new AbstractMultiValuedMap<String, String>(new HashMap<>()) {
+
+            @Override
+            protected Collection<String> createCollection() {
+                return new HashBag<>();
+            }
+        };
+        map.put("k1", "v1");
+        map.put("k2", "v2");
+        ((HashBag<String>) map.getMap().get("k1")).add("v1", Integer.MAX_VALUE - 1);
+        ((HashBag<String>) map.getMap().get("k2")).add("v2", Integer.MAX_VALUE - 1);
+        assertEquals(Integer.MAX_VALUE, map.size());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testSize_Key() {
         final MultiValuedMap<K, V> map = makeFullMap();

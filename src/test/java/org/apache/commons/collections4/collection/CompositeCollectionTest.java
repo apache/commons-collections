@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.apache.commons.collections4.bag.HashBag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -422,6 +423,16 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         set.add((E) "b");
         c.addComposited(set);
         assertEquals(set.size(), c.size());
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        final HashBag<String> one = new HashBag<>();
+        one.add("A", Integer.MAX_VALUE);
+        final HashBag<String> two = new HashBag<>();
+        two.add("B", Integer.MAX_VALUE);
+        final CompositeCollection<String> composite = new CompositeCollection<>(one, two);
+        assertEquals(Integer.MAX_VALUE, composite.size());
     }
 
     @Test

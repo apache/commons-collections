@@ -536,11 +536,11 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      */
     @Override
     public int size() {
-        int size = 0;
+        long size = 0;
         for (int i = composite.length - 1; i >= 0; --i) {
             size += composite[i].size();
         }
-        return size;
+        return (int) Math.min(size, Integer.MAX_VALUE);
     }
 
     /**
