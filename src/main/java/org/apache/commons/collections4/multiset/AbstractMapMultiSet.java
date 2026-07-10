@@ -280,8 +280,8 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /** The map to use to store the data. */
     private transient Map<E, MutableInteger> map;
 
-    /** The current total size of the multiset. */
-    private transient int size;
+    /** The current total size of the multiset; kept exact past {@link Integer#MAX_VALUE}, {@link #size()} saturates */
+    private transient long size;
 
     /** The modification count for fail fast iterators. */
     private transient int modCount;
@@ -326,11 +326,13 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         if (occurrences > 0) {
             modCount++;
-            size += occurrences;
             if (mut == null) {
                 map.put(object, new MutableInteger(occurrences));
+                size += occurrences;
             } else {
-                mut.value += occurrences;
+                final int applied = Math.min(occurrences, Integer.MAX_VALUE - mut.value);
+                mut.value += applied;
+                size += applied;
             }
         }
         return oldCount;
@@ -523,13 +525,14 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     }
 
     /**
-     * Returns the number of elements in this multiset.
+     * Returns the number of elements in this multiset, or {@code Integer.MAX_VALUE}
+     * if the multiset contains more than {@code Integer.MAX_VALUE} elements.
      *
      * @return current size of the multiset.
      */
     @Override
     public int size() {
-        return size;
+        return (int) Math.min(size, Integer.MAX_VALUE);
     }
 
     /**

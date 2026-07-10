@@ -68,6 +68,24 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
         }
     }
 
+    @Test
+    void testAddClampsCountAndSizeToIntegerMaxValue() {
+        final HashMultiSet<String> set = new HashMultiSet<>();
+        set.add("X", Integer.MAX_VALUE);
+        set.add("X", 1);
+        assertEquals(Integer.MAX_VALUE, set.getCount("X"));
+        assertEquals(Integer.MAX_VALUE, set.size());
+        set.add("Y", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, set.size());
+        // true size is 2 * Integer.MAX_VALUE - 2 after this, so size() must stay saturated
+        set.remove("X", 2);
+        assertEquals(Integer.MAX_VALUE - 2, set.getCount("X"));
+        assertEquals(Integer.MAX_VALUE, set.size());
+        // size() only drops below Integer.MAX_VALUE once the true size does
+        set.remove("Y", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE - 2, set.size());
+    }
+
 //    void testCreate() throws Exception {
 //        MultiSet<T> multiset = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) multiset, "src/test/resources/data/test/HashMultiSet.emptyCollection.version4.1.obj");

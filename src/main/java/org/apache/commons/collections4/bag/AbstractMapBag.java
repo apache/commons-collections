@@ -146,8 +146,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /** The map to use to store the data */
     private transient Map<E, MutableInteger> map;
 
-    /** The current total size of the bag */
-    private int size;
+    /** The current total size of the bag; kept exact past {@link Integer#MAX_VALUE}, {@link #size()} saturates */
+    private long size;
 
     /** The modification count for fail fast iterators */
     private transient int modCount;
@@ -196,6 +196,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     /**
      * Adds a new element to the bag, incrementing its count in the map.
+     * The count of an element saturates at {@code Integer.MAX_VALUE}; copies
+     * that would take it past that limit are not added.
      *
      * @param object the object to search for
      * @param nCopies the number of copies to add
@@ -206,12 +208,14 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         modCount++;
         if (nCopies > 0) {
             final MutableInteger mut = map.get(object);
-            size += nCopies;
             if (mut == null) {
                 map.put(object, new MutableInteger(nCopies));
+                size += nCopies;
                 return true;
             }
-            mut.value += nCopies;
+            final int applied = Math.min(nCopies, Integer.MAX_VALUE - mut.value);
+            mut.value += applied;
+            size += applied;
         }
         return false;
     }
@@ -523,13 +527,14 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     }
 
     /**
-     * Returns the number of elements in this bag.
+     * Returns the number of elements in this bag, or {@code Integer.MAX_VALUE}
+     * if the bag contains more than {@code Integer.MAX_VALUE} elements.
      *
      * @return current size of the bag
      */
     @Override
     public int size() {
-        return size;
+        return (int) Math.min(size, Integer.MAX_VALUE);
     }
 
     /**
