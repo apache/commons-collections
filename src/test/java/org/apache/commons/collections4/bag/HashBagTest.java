@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.bag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InvalidObjectException;
@@ -55,6 +56,25 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
             replaceInt(bytes, marker, count);
             assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
         }
+    }
+
+    @Test
+    void testAddClampsCountAndSizeToIntegerMaxValue() {
+        final HashBag<String> bag = new HashBag<>();
+        bag.add("X", Integer.MAX_VALUE - 1);
+        bag.add("Y", Integer.MAX_VALUE - 1);
+        assertEquals(Integer.MAX_VALUE, bag.size());
+        bag.add("X", 10);
+        assertEquals(Integer.MAX_VALUE, bag.getCount("X"));
+        assertEquals(Integer.MAX_VALUE, bag.size());
+        assertEquals(2, bag.uniqueSet().size());
+        // true size is 2 * Integer.MAX_VALUE - 11 after this, so size() must stay saturated
+        bag.remove("X", 10);
+        assertEquals(Integer.MAX_VALUE - 10, bag.getCount("X"));
+        assertEquals(Integer.MAX_VALUE, bag.size());
+        // size() only drops below Integer.MAX_VALUE once the true size does
+        bag.remove("Y");
+        assertEquals(Integer.MAX_VALUE - 10, bag.size());
     }
 
 //    void testCreate() throws Exception {
