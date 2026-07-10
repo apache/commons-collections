@@ -27,6 +27,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.list.UnmodifiableList;
@@ -430,11 +431,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     @Override
     public int size() {
-        long size = 0;
-        for (final Collection<E> item : all) {
-            size += item.size();
-        }
-        return (int) Math.min(size, Integer.MAX_VALUE);
+        return IterableUtils.sumSizesToInt(all);
     }
 
     /**

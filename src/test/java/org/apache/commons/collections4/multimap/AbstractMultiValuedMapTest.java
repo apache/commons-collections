@@ -1293,6 +1293,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         map.put("k2", "v2");
         ((HashBag<String>) map.getMap().get("k1")).add("v1", Integer.MAX_VALUE - 1);
         ((HashBag<String>) map.getMap().get("k2")).add("v2", Integer.MAX_VALUE - 1);
+        ((HashBag<String>) map.getMap().get("k1")).add("v1", Integer.MAX_VALUE - 1);
         assertEquals(Integer.MAX_VALUE, map.size());
     }
 

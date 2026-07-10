@@ -26,6 +26,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.ToIntFunction;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.NullPredicate;
@@ -925,6 +926,44 @@ public class IterableUtils {
                 return IteratorUtils.skippingIterator(iterable.iterator(), elementsToSkip);
             }
         };
+    }
+
+    /**
+     * Returns the sum of the sizes of the collections in the given iterable.
+     * <p>
+     * Integer overflow is capped at {@link Integer#MAX_VALUE}.
+     * </p>
+     *
+     * @param <E>  The element type of the collections in the iterable.
+     * @param iterable the iterable of collections to sum the sizes of, must not be null.
+     * @return the sum of the sizes of the collections in the iterable, capped at {@link Integer#MAX_VALUE}.
+     * @since 4.6.0
+     */
+    public static <E> int sumSizesToInt(final Iterable<? extends Collection<E>> iterable) {
+        return sumToInt(iterable, Collection::size);
+    }
+
+    /**
+     * Returns the sum of the integer values produced by applying the given function to each element in the iterable.
+     * <p>
+     * Integer overflow is capped at {@link Integer#MAX_VALUE}.
+     * </p>
+     *
+     * @param <C>           The type of the elements in the iterable.
+     * @param iterable      The iterable of elements to sum the integer values of, must not be null.
+     * @param toIntFunction The function to apply to each element to produce an integer value, must not be null.
+     * @return the sum of the integer values produced by applying the function to each element in the iterable, capped at {@link Integer#MAX_VALUE}.
+     */
+    private static <C extends Collection<?>> int sumToInt(final Iterable<C> iterable, final ToIntFunction<C> toIntFunction) {
+        int size = 0;
+        try {
+            for (final C item : iterable) {
+                size = Math.addExact(size, toIntFunction.applyAsInt(item));
+            }
+        } catch (final ArithmeticException e) {
+            size = Integer.MAX_VALUE;
+        }
+        return size;
     }
 
     /**

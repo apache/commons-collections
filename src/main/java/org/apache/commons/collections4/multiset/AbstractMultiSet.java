@@ -475,16 +475,20 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Returns the number of elements in this multiset.
      *
-     * @return current size of the multiset, or {@code Integer.MAX_VALUE}
-     *         if the total exceeds it
+     * @return current size of the multiset, or {@code Integer.MAX_VALUE} if the total exceeds it.
      */
     @Override
     public int size() {
-        long totalSize = 0;
-        for (final Entry<E> entry : entrySet()) {
-            totalSize += entry.getCount();
+        // TODO reuse IterableUtils.sum(Iterable, ToIntFunction)
+        int size = 0;
+        try {
+            for (final Entry<E> entry : entrySet()) {
+                size = Math.addExact(size, entry.getCount());
+            }
+        } catch (final ArithmeticException e) {
+            size = Integer.MAX_VALUE;
         }
-        return (int) Math.min(totalSize, Integer.MAX_VALUE);
+        return size;
     }
 
     /**
