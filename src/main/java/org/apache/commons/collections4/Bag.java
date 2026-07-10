@@ -69,7 +69,9 @@ import java.util.Set;
  * @param <E> The type of elements in this bag
  * @see MultiSet
  * @since 2.0
+ * @deprecated Since 4.6.0, use {@link MultiSet} instead; see the migration notes above.
  */
+@Deprecated
 public interface Bag<E> extends Collection<E> {
 
     /**

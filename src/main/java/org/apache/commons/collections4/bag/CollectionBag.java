@@ -38,7 +38,9 @@ import org.apache.commons.collections4.Bag;
  * @see Bag
  * @param <E> The type of elements in this bag
  * @since 4.0
+ * @deprecated Since 4.6.0, no longer needed; a {@link org.apache.commons.collections4.MultiSet} already complies with the {@link Collection} contract.
  */
+@Deprecated
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {
 
     /** Serialization version */

@@ -42,7 +42,9 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.PredicatedMultiSet} instead.
  */
+@Deprecated
 public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> {
 
     /** Serialization version */

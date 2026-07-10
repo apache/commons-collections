@@ -155,7 +155,9 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @return a new predicated bag.
+         * @deprecated Since 4.6.0, use {@link #createPredicatedMultiSet()} instead.
          */
+        @Deprecated
         public Bag<E> createPredicatedBag() {
             return createPredicatedBag(new HashBag<>());
         }
@@ -172,7 +174,9 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * @return the decorated bag.
          * @throws NullPointerException if bag is null.
          * @throws IllegalArgumentException if bag contains invalid elements.
+         * @deprecated Since 4.6.0, use {@link #createPredicatedMultiSet(MultiSet)} instead.
          */
+        @Deprecated
         public Bag<E> createPredicatedBag(final Bag<E> bag) {
             Objects.requireNonNull(bag, "bag");
             final PredicatedBag<E> predicatedBag = PredicatedBag.predicatedBag(bag, predicate);

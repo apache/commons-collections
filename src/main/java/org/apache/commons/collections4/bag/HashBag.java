@@ -46,7 +46,9 @@ import java.util.HashMap;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.HashMultiSet} instead.
  */
+@Deprecated
 public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
 
     /** Serial version lock */

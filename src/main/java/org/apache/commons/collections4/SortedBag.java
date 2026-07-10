@@ -31,7 +31,9 @@ import java.util.Comparator;
  * @param <E> The type of elements in this bag
  * @see SortedMultiSet
  * @since 2.0
+ * @deprecated Since 4.6.0, use {@link SortedMultiSet} instead; see the {@link Bag} Javadoc for migration notes.
  */
+@Deprecated
 public interface SortedBag<E> extends Bag<E> {
 
     /**

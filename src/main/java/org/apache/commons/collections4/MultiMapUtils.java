@@ -97,7 +97,9 @@ public class MultiMapUtils {
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
      * @return a new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @deprecated Since 4.6.0, use {@link #getValuesAsMultiSet(MultiValuedMap, Object)} instead.
      */
+    @Deprecated
     public static <K, V> Bag<V> getValuesAsBag(final MultiValuedMap<K, V> map, final K key) {
         return map != null ? new HashBag<>(map.get(key)) : null;
     }

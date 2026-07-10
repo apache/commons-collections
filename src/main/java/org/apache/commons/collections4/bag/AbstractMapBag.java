@@ -44,7 +44,9 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously DefaultMapBag v2.0)
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.AbstractMapMultiSet} instead.
  */
+@Deprecated
 public abstract class AbstractMapBag<E> implements Bag<E> {
 
     /**

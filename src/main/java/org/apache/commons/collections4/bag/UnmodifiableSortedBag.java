@@ -40,7 +40,9 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.UnmodifiableSortedMultiSet} instead.
  */
+@Deprecated
 public final class UnmodifiableSortedBag<E>
         extends AbstractSortedBagDecorator<E> implements Unmodifiable {
 

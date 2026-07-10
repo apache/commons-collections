@@ -34,7 +34,9 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  *
  * @param <E> The type of elements in this bag
  * @since 3.0
+ * @deprecated Since 4.6.0, use {@link org.apache.commons.collections4.multiset.SynchronizedMultiSet} instead.
  */
+@Deprecated
 public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag<E> {
 
     /**
