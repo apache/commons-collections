@@ -40,6 +40,15 @@ import org.apache.commons.collections4.SortedMultiSet;
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once.
  * </p>
+ * <p>
+ * <strong>Note that TreeMultiSet is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this multiset from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this multiset using
+ * {@link org.apache.commons.collections4.MultiSetUtils#synchronizedSortedMultiSet(SortedMultiSet)}.
+ * Unsynchronized concurrent modification can corrupt the structure of the backing
+ * {@link TreeMap}, and a malformed tree may cause subsequent operations, including
+ * reads, to enter an infinite loop.
+ * </p>
  *
  * @param <E> The type held in the multiset
  * @since 4.6.0

@@ -33,6 +33,16 @@ import java.util.HashMap;
  * interface Javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
  * </p>
+ * <p>
+ * <strong>Note that HashBag is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this bag from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this bag using
+ * {@link org.apache.commons.collections4.BagUtils#synchronizedBag(org.apache.commons.collections4.Bag)
+ * BagUtils.synchronizedBag(Bag)}.
+ * Unsynchronized concurrent modification can corrupt the structure of the backing
+ * {@link HashMap}, which may cause subsequent operations to throw exceptions,
+ * return incorrect results, or loop indefinitely.
+ * </p>
  *
  * @param <E> The type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
