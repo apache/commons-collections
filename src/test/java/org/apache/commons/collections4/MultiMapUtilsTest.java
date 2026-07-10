@@ -37,6 +37,7 @@ import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 import org.apache.commons.collections4.multimap.LinkedHashSetValuedLinkedHashMap;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -130,6 +131,39 @@ class MultiMapUtilsTest {
         final List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
         list.add("v4");
         assertFalse(map.containsMapping("key1", "v4"));
+    }
+
+    @Test
+    void testGetValuesAsMultiSet() {
+        assertNull(MultiMapUtils.getValuesAsMultiSet(null, "key1"));
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<>();
+        for (final String val : values) {
+            map.put("key1", val);
+            map.put("key1", val);
+        }
+        final MultiSet<String> multiSet = MultiMapUtils.getValuesAsMultiSet(map, "key1");
+        assertEquals(6, multiSet.size());
+        for (final String val : values) {
+            assertTrue(multiSet.contains(val));
+            assertEquals(2, multiSet.getCount(val));
+        }
+        assertTrue(MultiMapUtils.getValuesAsMultiSet(map, null).isEmpty());
+        assertTrue(MultiMapUtils.getValuesAsMultiSet(map, "MISSING_KEY").isEmpty());
+    }
+
+    @Test
+    void testGetValuesAsMultiSetIsSafeCopy() {
+        final String[] values = { "v1", "v2", "v3" };
+        final MultiValuedMap<String, String> mockMap = createMock(MultiValuedMap.class);
+        final MultiSet<String> multiSetToReturn = new HashMultiSet<>();
+        multiSetToReturn.addAll(Arrays.asList(values));
+        expect(mockMap.get("key1")).andReturn(multiSetToReturn);
+        replay(mockMap);
+        final MultiSet<String> multiSet = MultiMapUtils.getValuesAsMultiSet(mockMap, "key1");
+        multiSet.add("v4");
+        assertFalse(multiSetToReturn.contains("v4"));
+        verify(mockMap);
     }
 
     @Test

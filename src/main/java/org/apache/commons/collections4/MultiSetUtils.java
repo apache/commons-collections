@@ -24,6 +24,8 @@ import org.apache.commons.collections4.multiset.PredicatedMultiSet;
 import org.apache.commons.collections4.multiset.PredicatedSortedMultiSet;
 import org.apache.commons.collections4.multiset.SynchronizedMultiSet;
 import org.apache.commons.collections4.multiset.SynchronizedSortedMultiSet;
+import org.apache.commons.collections4.multiset.TransformedMultiSet;
+import org.apache.commons.collections4.multiset.TransformedSortedMultiSet;
 import org.apache.commons.collections4.multiset.TreeMultiSet;
 import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 import org.apache.commons.collections4.multiset.UnmodifiableSortedMultiSet;
@@ -279,6 +281,56 @@ public class MultiSetUtils {
      */
     public static <E> SortedMultiSet<E> synchronizedSortedMultiSet(final SortedMultiSet<E> multiset) {
         return SynchronizedSortedMultiSet.synchronizedSortedMultiSet(multiset);
+    }
+
+    /**
+     * Returns a transformed multiset backed by the given multiset.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * MultiSet. It is important not to use the original multiset after invoking this
+     * method, as it is a backdoor for adding untransformed objects.
+     * </p>
+     * <p>
+     * Existing entries in the specified multiset will not be transformed.
+     * If you want that behavior, see
+     * {@link TransformedMultiSet#transformedMultiSet(MultiSet, Transformer)}.
+     * </p>
+     *
+     * @param <E> The element type
+     * @param multiset the multiset to transform, must not be null
+     * @param transformer the transformer for the multiset, must not be null
+     * @return a transformed multiset backed by the given multiset
+     * @throws NullPointerException if the MultiSet or Transformer is null
+     * @since 4.6.0
+     */
+    public static <E> MultiSet<E> transformingMultiSet(final MultiSet<E> multiset,
+            final Transformer<? super E, ? extends E> transformer) {
+        return TransformedMultiSet.transformingMultiSet(multiset, transformer);
+    }
+
+    /**
+     * Returns a transformed sorted multiset backed by the given multiset.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * MultiSet. It is important not to use the original multiset after invoking this
+     * method, as it is a backdoor for adding untransformed objects.
+     * </p>
+     * <p>
+     * Existing entries in the specified multiset will not be transformed.
+     * If you want that behavior, see
+     * {@link TransformedSortedMultiSet#transformedSortedMultiSet(SortedMultiSet, Transformer)}.
+     * </p>
+     *
+     * @param <E> The element type
+     * @param multiset the sorted multiset to transform, must not be null
+     * @param transformer the transformer for the multiset, must not be null
+     * @return a transformed sorted multiset backed by the given multiset
+     * @throws NullPointerException if the SortedMultiSet or Transformer is null
+     * @since 4.6.0
+     */
+    public static <E> SortedMultiSet<E> transformingSortedMultiSet(final SortedMultiSet<E> multiset,
+            final Transformer<? super E, ? extends E> transformer) {
+        return TransformedSortedMultiSet.transformingSortedMultiSet(multiset, transformer);
     }
 
     /**

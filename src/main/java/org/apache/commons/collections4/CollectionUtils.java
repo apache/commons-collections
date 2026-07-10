@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
@@ -40,11 +39,12 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.PermutationIterator;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
  * <p>
- * Various utility methods might put the input objects into a Set/Map/Bag. In case
+ * Various utility methods might put the input objects into a Set/Map/MultiSet. In case
  * the input objects override {@link Object#equals(Object)}, it is mandatory that
  * the general contract of the {@link Object#hashCode()} method is maintained.
  * </p>
@@ -64,14 +64,14 @@ public class CollectionUtils {
     private static class CardinalityHelper<O> {
 
         static boolean equals(final Collection<?> a, final Collection<?> b) {
-            return new HashBag<>(a).equals(new HashBag<>(b));
+            return new HashMultiSet<>(a).equals(new HashMultiSet<>(b));
         }
 
         /** Contains the cardinality for each object in collection A. */
-        final Bag<O> cardinalityA;
+        final MultiSet<O> cardinalityA;
 
         /** Contains the cardinality for each object in collection B. */
-        final Bag<O> cardinalityB;
+        final MultiSet<O> cardinalityB;
 
         /**
          * Creates a new CardinalityHelper for two collections.
@@ -80,8 +80,8 @@ public class CollectionUtils {
          * @param b  the second collection
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = new HashBag<>(a);
-            cardinalityB = new HashBag<>(b);
+            cardinalityA = new HashMultiSet<>(a);
+            cardinalityB = new HashMultiSet<>(b);
         }
 
         /**
@@ -104,7 +104,7 @@ public class CollectionUtils {
             return getFreq(key, cardinalityB);
         }
 
-        private int getFreq(final Object key, final Bag<?> freqMap) {
+        private int getFreq(final Object key, final MultiSet<?> freqMap) {
             return freqMap.getCount(key);
         }
 
@@ -1989,14 +1989,14 @@ public class CollectionUtils {
         Objects.requireNonNull(b, "b");
         Objects.requireNonNull(p, "p");
         final ArrayList<O> list = new ArrayList<>();
-        final HashBag<O> bag = new HashBag<>();
+        final HashMultiSet<O> multiSet = new HashMultiSet<>();
         for (final O element : b) {
             if (p.test(element)) {
-                bag.add(element);
+                multiSet.add(element);
             }
         }
         for (final O element : a) {
-            if (!bag.remove(element, 1)) {
+            if (multiSet.remove(element, 1) == 0) {
                 list.add(element);
             }
         }

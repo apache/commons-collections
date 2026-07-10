@@ -25,13 +25,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
 import org.apache.commons.collections4.list.FixedSizeList;
 import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;
 import org.apache.commons.collections4.list.TransformedList;
 import org.apache.commons.collections4.list.UnmodifiableList;
+import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.apache.commons.collections4.sequence.CommandVisitor;
 import org.apache.commons.collections4.sequence.EditScript;
 import org.apache.commons.collections4.sequence.SequencesComparator;
@@ -654,9 +654,9 @@ public class ListUtils {
      */
     public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
         final ArrayList<E> result = new ArrayList<>();
-        final HashBag<E> bag = new HashBag<>(list2);
+        final HashMultiSet<E> multiSet = new HashMultiSet<>(list2);
         for (final E e : list1) {
-            if (!bag.remove(e, 1)) {
+            if (multiSet.remove(e, 1) == 0) {
                 result.add(e);
             }
         }

@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 
 import org.apache.commons.collections4.multiset.HashMultiSet;
+import org.apache.commons.collections4.multiset.TreeMultiSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -158,6 +159,40 @@ class MultiSetUtilsTest {
         final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
         assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#transformingMultiSet(MultiSet, org.apache.commons.collections4.Transformer)}.
+     */
+    @Test
+    void testTransformingMultiSet() {
+        final MultiSet<String> transformed = MultiSetUtils.transformingMultiSet(new HashMultiSet<>(), String::toUpperCase);
+        transformed.add("a");
+        assertEquals(1, transformed.getCount("A"));
+        assertEquals(0, transformed.getCount("a"));
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.<String>transformingMultiSet(null, String::toUpperCase),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.transformingMultiSet(multiSet, null),
+                "Expecting NPE");
+    }
+
+    /**
+     * Tests {@link MultiSetUtils#transformingSortedMultiSet(SortedMultiSet, org.apache.commons.collections4.Transformer)}.
+     */
+    @Test
+    void testTransformingSortedMultiSet() {
+        final SortedMultiSet<String> transformed = MultiSetUtils.transformingSortedMultiSet(new TreeMultiSet<>(), String::toUpperCase);
+        transformed.add("b");
+        transformed.add("a");
+        assertEquals(2, transformed.size());
+        assertEquals("A", transformed.first());
+        assertEquals("B", transformed.last());
+
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.<String>transformingSortedMultiSet(null, String::toUpperCase),
+                "Expecting NPE");
+        assertThrows(NullPointerException.class, () -> MultiSetUtils.transformingSortedMultiSet(new TreeMultiSet<>(), null),
+                "Expecting NPE");
     }
 
     /**

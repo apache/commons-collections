@@ -540,6 +540,9 @@ public class IterableUtils {
         if (iterable instanceof Set<?>) {
             return ((Set<E>) iterable).contains(obj) ? 1 : 0;
         }
+        if (iterable instanceof MultiSet<?>) {
+            return ((MultiSet<E>) iterable).getCount(obj);
+        }
         if (iterable instanceof Bag<?>) {
             return ((Bag<E>) iterable).getCount(obj);
         }
