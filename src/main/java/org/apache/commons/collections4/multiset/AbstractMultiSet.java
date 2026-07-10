@@ -479,7 +479,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public int size() {
-        // TODO reuse IterableUtils.sum(Iterable, ToIntFunction)
+        // TODO reuse IterableUtils.sumToInt(Iterable, ToIntFunction)
         int size = 0;
         try {
             for (final Entry<E> entry : entrySet()) {

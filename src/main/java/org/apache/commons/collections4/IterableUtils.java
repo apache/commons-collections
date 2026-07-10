@@ -958,7 +958,9 @@ public class IterableUtils {
         int size = 0;
         try {
             for (final C item : iterable) {
-                size = Math.addExact(size, toIntFunction.applyAsInt(item));
+                if (item != null) {
+                    size = Math.addExact(size, toIntFunction.applyAsInt(item));
+                }
             }
         } catch (final ArithmeticException e) {
             size = Integer.MAX_VALUE;
