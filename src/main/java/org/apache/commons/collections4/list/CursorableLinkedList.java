@@ -84,8 +84,8 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Constructs a new cursor.
          *
-         * @param parent  the parent list
-         * @param index  the index to start from
+         * @param parent  The parent list
+         * @param index  The index to start from
          */
         protected Cursor(final CursorableLinkedList<E> parent, final int index) {
             super(parent, index);
@@ -96,7 +96,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * Adds an object to the list.
          * The object added here will be the new 'previous' in the iterator.
          *
-         * @param obj  the object to add
+         * @param obj  The object to add
          */
         @Override
         public void add(final E obj) {
@@ -164,7 +164,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Handle event from the list when a node has changed.
          *
-         * @param node  the node that changed
+         * @param node  The node that changed
          */
         protected void nodeChanged(final Node<E> node) {
             // do nothing
@@ -173,7 +173,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Handle event from the list when a node has been added.
          *
-         * @param node  the node that was added
+         * @param node  The node that was added
          */
         protected void nodeInserted(final Node<E> node) {
             if (node.previous == current || next.previous == node) {
@@ -186,7 +186,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Handle event from the list when a node has been removed.
          *
-         * @param node  the node that was removed
+         * @param node  The node that was removed
          */
         protected void nodeRemoved(final Node<E> node) {
             if (node == next && node == current) {
@@ -253,8 +253,8 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Constructs a new cursor.
          *
-         * @param sub  the sub list
-         * @param index  the index to start from
+         * @param sub  The sub list
+         * @param index  The index to start from
          */
         protected SubCursor(final LinkedSubList<E> sub, final int index) {
             super((CursorableLinkedList<E>) sub.parent, index + sub.offset);
@@ -307,7 +307,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Constructor that copies the specified collection
      *
-     * @param coll  the collection to copy
+     * @param coll  The collection to copy
      */
     public CursorableLinkedList(final Collection<? extends E> coll) {
         super(coll);
@@ -330,7 +330,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Informs all of my registered cursors that the specified
      * element was changed.
      *
-     * @param node  the node that was changed
+     * @param node  The node that was changed
      */
     protected void broadcastNodeChanged(final Node<E> node) {
         final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
@@ -349,7 +349,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Informs all of my registered cursors that the specified
      * element was just added to my list.
      *
-     * @param node  the node that was changed
+     * @param node  The node that was changed
      */
     protected void broadcastNodeInserted(final Node<E> node) {
         final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
@@ -368,7 +368,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * Informs all of my registered cursors that the specified
      * element was just removed from my list.
      *
-     * @param node  the node that was changed
+     * @param node  The node that was changed
      */
     protected void broadcastNodeRemoved(final Node<E> node) {
         final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
@@ -386,8 +386,8 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Creates a list iterator for the sublist.
      *
-     * @param subList  the sublist to get an iterator for
-     * @param fromIndex  the index to start from, relative to the sublist
+     * @param subList  The sublist to get an iterator for
+     * @param fromIndex  The index to start from, relative to the sublist
      * @return The list iterator for the sublist
      */
     @Override
@@ -446,7 +446,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * The {@link #listIterator(int)} method returns the same as this method, and can
      * be cast to a {@code Cursor} if the {@code close} method is required.
      *
-     * @param fromIndex  the index to start from
+     * @param fromIndex  The index to start from
      * @return A new cursor iterator
      * @throws IndexOutOfBoundsException if the index is out of range
      *      (index &lt; 0 || index &gt; size()).
@@ -514,7 +514,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * the cursor automatically adjusts to the change (invalidating the
      * last returned value such that it cannot be removed).
      *
-     * @param fromIndex  the index to start from
+     * @param fromIndex  The index to start from
      * @return A new cursor iterator
      */
     @Override
@@ -525,7 +525,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Deserializes the data held in this object to the stream specified.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -537,7 +537,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Registers a cursor to be notified of changes to this list.
      *
-     * @param cursor  the cursor to register
+     * @param cursor  The cursor to register
      */
     protected void registerCursor(final Cursor<E> cursor) {
         // We take this opportunity to clean the cursors list
@@ -564,7 +564,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Removes the specified node from the list.
      *
-     * @param node  the node to remove
+     * @param node  The node to remove
      * @throws NullPointerException if {@code node} is null
      */
     @Override
@@ -576,7 +576,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Deregisters a cursor from the list to be notified of changes.
      *
-     * @param cursor  the cursor to deregister
+     * @param cursor  The cursor to deregister
      */
     protected void unregisterCursor(final Cursor<E> cursor) {
         for (final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
@@ -612,7 +612,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

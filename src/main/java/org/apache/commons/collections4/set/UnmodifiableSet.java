@@ -47,7 +47,7 @@ public final class UnmodifiableSet<E>
      * Factory method to create an unmodifiable set.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @return A new unmodifiable set
      * @throws NullPointerException if set is null
      * @since 4.0
@@ -64,7 +64,7 @@ public final class UnmodifiableSet<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     @SuppressWarnings("unchecked") // safe to upcast

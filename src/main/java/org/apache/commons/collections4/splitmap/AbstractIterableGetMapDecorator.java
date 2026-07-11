@@ -48,7 +48,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * Create a new AbstractSplitMapDecorator.
      *
-     * @param map the map to decorate, must not be null
+     * @param map The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     public AbstractIterableGetMapDecorator(final Map<K, V> map) {

@@ -56,7 +56,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if the map is null
      */
     protected AbstractMapDecorator(final Map<K, V> map) {

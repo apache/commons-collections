@@ -64,8 +64,8 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
     /**
      * Compares two objects in reverse order.
      *
-     * @param obj1  the first object to compare
-     * @param obj2  the second object to compare
+     * @param obj1  The first object to compare
+     * @param obj2  The second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
     @Override
@@ -85,7 +85,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * Subclasses may want to override this behavior to remain consistent
      * with the {@link Comparator#equals(Object) equals} contract.
      *
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      * @return true if equal
      * @since 3.0
      */

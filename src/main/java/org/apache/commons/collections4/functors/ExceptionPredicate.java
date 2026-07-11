@@ -65,7 +65,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     /**
      * Evaluates the predicate always throwing an exception.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return never
      * @throws FunctorException always
      */

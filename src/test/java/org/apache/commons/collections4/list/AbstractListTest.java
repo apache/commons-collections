@@ -169,8 +169,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Traverses to the beginning of the given iterator.
      *
-     * @param iter  the iterator to traverse
-     * @param i     the starting index
+     * @param iter  The iterator to traverse
+     * @param i     The starting index
      */
     private void backwardTest(final ListIterator<E> iter, int i) {
         final List<E> list = getCollection();
@@ -240,8 +240,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * java.util.AbstractList.subList(int,int).equals(Object) -- it never
      * raises a ConcurrentModificationException.
      *
-     * @param list the sublist to test
-     * @param m the method to invoke
+     * @param list The sublist to test
+     * @param m The method to invoke
      */
     protected void failFastMethod(final List<E> list, final Method m) {
         if (m.getName().equals("equals")) {
@@ -274,8 +274,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Traverses to the end of the given iterator.
      *
-     * @param iter  the iterator to traverse
-     * @param i     the starting index
+     * @param iter  The iterator to traverse
+     * @param i     The starting index
      */
     private void forwardTest(final ListIterator<E> iter, int i) {
         final List<E> list = getCollection();

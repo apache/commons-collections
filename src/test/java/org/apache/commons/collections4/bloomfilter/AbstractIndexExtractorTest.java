@@ -43,7 +43,7 @@ public abstract class AbstractIndexExtractorTest {
         /**
          * Adds the value to the list.
          *
-         * @param value the value
+         * @param value The value
          * @return true if the list was modified
          */
         boolean add(final int value) {

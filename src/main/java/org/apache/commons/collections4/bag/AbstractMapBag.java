@@ -64,7 +64,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         /**
          * Constructs a new instance.
          *
-         * @param parent the parent bag
+         * @param parent The parent bag
          */
         BagIterator(final AbstractMapBag<E> parent) {
             this.parent = parent;
@@ -126,7 +126,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         /**
          * Constructs a new instance.
          *
-         * @param value the initial value
+         * @param value The initial value
          */
         MutableInteger(final int value) {
             this.value = value;
@@ -168,7 +168,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Constructor that assigns the specified Map as the backing store. The map
      * must be empty and non-null.
      *
-     * @param map the map to assign
+     * @param map The map to assign
      */
     protected AbstractMapBag(final Map<E, MutableInteger> map) {
         this.map = Objects.requireNonNull(map, "map");
@@ -178,7 +178,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Constructs a new instance that assigns the specified Map as the backing store. The map
      * must be empty and non-null. The bag is filled from the iterable elements.
      *
-     * @param map the map to assign.
+     * @param map The map to assign.
      * @param iterable The bag is filled from these iterable elements.
      */
     protected AbstractMapBag(final Map<E, MutableInteger> map, final Iterable<? extends E> iterable) {
@@ -189,7 +189,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Adds a new element to the bag, incrementing its count in the underlying map.
      *
-     * @param object the object to add
+     * @param object The object to add
      * @return {@code true} if the object was not already in the {@code uniqueSet}
      */
     @Override
@@ -202,8 +202,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * The count of an element saturates at {@code Integer.MAX_VALUE}; copies
      * that would take it past that limit are not added.
      *
-     * @param object the object to search for
-     * @param nCopies the number of copies to add
+     * @param object The object to search for
+     * @param nCopies The number of copies to add
      * @return {@code true} if the object was not already in the {@code uniqueSet}
      */
     @Override
@@ -226,7 +226,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Invokes {@link #add(Object)} for each element in the given collection.
      *
-     * @param coll the collection to add
+     * @param coll The collection to add
      * @return {@code true} if this call changed the bag
      */
     @Override
@@ -253,7 +253,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Determines if the bag contains the given element by checking if the
      * underlying map contains the element as a key.
      *
-     * @param object the object to search for
+     * @param object The object to search for
      * @return true if the bag contains the given element
      */
     @Override
@@ -265,7 +265,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Returns {@code true} if the bag contains all elements in the given
      * collection, respecting cardinality.
      *
-     * @param other the bag to check against
+     * @param other The bag to check against
      * @return {@code true} if the Bag contains all the collection
      */
     boolean containsAll(final Bag<?> other) {
@@ -280,7 +280,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Determines if the bag contains the given elements.
      *
-     * @param coll the collection to check against
+     * @param coll The collection to check against
      * @return {@code true} if the Bag contains all the collection
      */
     @Override
@@ -294,8 +294,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Reads the map in using a custom routine.
      *
-     * @param map the map to use
-     * @param in the input stream
+     * @param map The map to use
+     * @param in The input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
@@ -319,7 +319,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Writes the map out using a custom routine.
      *
-     * @param out the output stream
+     * @param out The output stream
      * @throws IOException any of the usual I/O related exceptions
      */
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
@@ -334,7 +334,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Compares this Bag to another. This Bag equals another Bag if it contains
      * the same number of occurrences of the same elements.
      *
-     * @param object the Bag to compare to
+     * @param object The Bag to compare to
      * @return true if equal
      */
     @Override
@@ -361,7 +361,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Gets the number of occurrence of the given element in this bag by
      * looking up its count in the underlying map.
      *
-     * @param object the object to search for
+     * @param object The object to search for
      * @return The number of occurrences of the object, zero if not found
      */
     @Override
@@ -427,7 +427,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Removes all copies of the specified object from the bag.
      *
-     * @param object the object to remove
+     * @param object The object to remove
      * @return true if the bag changed
      */
     @Override
@@ -445,8 +445,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Removes a specified number of copies of an object from the bag.
      *
-     * @param object the object to remove
-     * @param nCopies the number of copies to remove
+     * @param object The object to remove
+     * @param nCopies The number of copies to remove
      * @return true if the bag changed
      */
     @Override
@@ -473,7 +473,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Removes objects from the bag according to their count in the specified
      * collection.
      *
-     * @param coll the collection to use
+     * @param coll The collection to use
      * @return true if the bag changed
      */
     @Override
@@ -493,7 +493,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * cardinality.
      *
      * @see #retainAll(Collection)
-     * @param other the bag to retain
+     * @param other The bag to retain
      * @return {@code true} if this call changed the collection
      */
     boolean retainAll(final Bag<?> other) {
@@ -518,7 +518,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Remove any members of the bag that are not in the given bag, respecting
      * cardinality.
      *
-     * @param coll the collection to retain
+     * @param coll The collection to retain
      * @return true if this call changed the collection
      */
     @Override
@@ -563,7 +563,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * trailing elements will be set to null.
      *
      * @param <T> The type of the array elements
-     * @param array the array to populate
+     * @param array The array to populate
      * @return An array of all of this bag's elements
      * @throws ArrayStoreException if the runtime type of the specified array is not
      *   a supertype of the runtime type of the elements in this list

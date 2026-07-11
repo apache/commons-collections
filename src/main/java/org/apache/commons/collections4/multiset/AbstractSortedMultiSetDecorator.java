@@ -44,7 +44,7 @@ public abstract class AbstractSortedMultiSetDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, must not be null
+     * @param multiset  The multiset to decorate, must not be null
      * @throws NullPointerException if multiset is null
      */
     protected AbstractSortedMultiSetDecorator(final SortedMultiSet<E> multiset) {

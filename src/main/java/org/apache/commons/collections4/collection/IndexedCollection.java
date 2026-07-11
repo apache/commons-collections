@@ -56,8 +56,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *
      * @param <K>            the index object type.
      * @param <C>            the collection type.
-     * @param coll           the decorated {@link Collection}.
-     * @param keyTransformer the {@link Transformer} for generating index keys.
+     * @param coll           The decorated {@link Collection}.
+     * @param keyTransformer The {@link Transformer} for generating index keys.
      * @return The created {@link IndexedCollection}.
      */
     public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
@@ -72,8 +72,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *
      * @param <K>            the index object type.
      * @param <C>            the collection type.
-     * @param coll           the decorated {@link Collection}.
-     * @param keyTransformer the {@link Transformer} for generating index keys.
+     * @param coll           The decorated {@link Collection}.
+     * @param keyTransformer The {@link Transformer} for generating index keys.
      * @return The created {@link IndexedCollection}.
      */
     public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
@@ -133,7 +133,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Provides checking for adding the index.
      *
-     * @param object the object to index.
+     * @param object The object to index.
      * @throws IllegalArgumentException if the object maps to an existing key and the index
      *   enforces a uniqueness constraint.
      */
@@ -218,7 +218,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Removes an object from the index.
      *
-     * @param object the object to remove
+     * @param object The object to remove
      */
     private void removeFromIndex(final C object) {
         index.removeMapping(keyTransformer.apply(object), object);

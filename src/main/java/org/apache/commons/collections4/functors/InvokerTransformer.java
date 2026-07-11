@@ -43,7 +43,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param methodName  the method name to call
+     * @param methodName  The method name to call
      * @return An invoker transformer
      * @throws NullPointerException if methodName is null
      * @since 3.1
@@ -57,9 +57,9 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param methodName  the method name to call
-     * @param paramTypes  the parameter types of the method
-     * @param args  the arguments to pass to the method
+     * @param methodName  The method name to call
+     * @param paramTypes  The parameter types of the method
+     * @param args  The arguments to pass to the method
      * @return An invoker transformer
      * @throws NullPointerException if methodName is null
      * @throws IllegalArgumentException if paramTypes does not match args
@@ -90,7 +90,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
     /**
      * Constructor for no arg instance.
      *
-     * @param methodName  the method to call
+     * @param methodName  The method to call
      */
     private InvokerTransformer(final String methodName) {
         iMethodName = methodName;
@@ -104,9 +104,9 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      * <p>
      * Note: from 4.0, the input parameters will be cloned
      *
-     * @param methodName  the method to call
-     * @param paramTypes  the constructor parameter types
-     * @param args  the constructor arguments
+     * @param methodName  The method to call
+     * @param paramTypes  The constructor parameter types
+     * @param args  The constructor arguments
      */
     public InvokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args) {
         iMethodName = methodName;
@@ -117,7 +117,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
     /**
      * Transforms the input to result by invoking a method on the input.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result, null if null input
      */
     @Override

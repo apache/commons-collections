@@ -64,7 +64,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Returns a FilterIterator that blocks
      * all of its elements
      *
-     * @param i      the Iterator to "filter"
+     * @param i      The Iterator to "filter"
      * @return "filtered" iterator
      */
     protected FilterIterator<E> makeBlockAllFilter(final Iterator<E> i) {
@@ -100,7 +100,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * Returns a FilterIterator that does not filter
      * any of its elements
      *
-     * @param i      the Iterator to "filter"
+     * @param i      The Iterator to "filter"
      * @return "filtered" iterator
      */
     protected FilterIterator<E> makePassThroughFilter(final Iterator<E> i) {

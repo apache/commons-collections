@@ -49,7 +49,7 @@ public final class TestUtils {
      * that support serialization.
      * </p>
      *
-     * @param msg the identifying message for the {@code AssertionError}.
+     * @param msg The identifying message for the {@code AssertionError}.
      * @param o object that will be tested.
      * @throws IOException Thrown on test failure.
      * @throws ClassNotFoundException Thrown on test failure.

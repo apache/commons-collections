@@ -54,8 +54,8 @@ public class PredicatedSortedMultiSet<E> extends PredicatedMultiSet<E> implement
      * are validated.
      *
      * @param <E> The type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @return A new predicated SortedMultiSet
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
@@ -72,8 +72,8 @@ public class PredicatedSortedMultiSet<E> extends PredicatedMultiSet<E> implement
      * are validated.
      * </p>
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
      */

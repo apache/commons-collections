@@ -59,7 +59,7 @@ public interface Get<K, V> {
     /**
      * Gets a value at a given key.
      *
-     * @param key the key whose associated value is to be returned
+     * @param key The key whose associated value is to be returned
      * @return The value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key
      * @see Map#get(Object)
      */

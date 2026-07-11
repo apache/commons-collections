@@ -38,7 +38,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param entry  the {@code Map.Entry} to decorate, must not be null
+     * @param entry  The {@code Map.Entry} to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
     public AbstractMapEntryDecorator(final Map.Entry<K, V> entry) {

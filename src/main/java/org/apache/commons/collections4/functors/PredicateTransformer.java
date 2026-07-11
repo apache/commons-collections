@@ -37,7 +37,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * Factory method that performs validation.
      *
      * @param <T>  the input type
-     * @param predicate  the predicate to call, not null
+     * @param predicate  The predicate to call, not null
      * @return The {@code predicate} transformer
      * @throws IllegalArgumentException if the predicate is null
      */
@@ -55,7 +55,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * Constructor that performs no validation.
      * Use {@code predicateTransformer} if you want that.
      *
-     * @param predicate  the predicate to call, not null
+     * @param predicate  The predicate to call, not null
      */
     public PredicateTransformer(final Predicate<? super T> predicate) {
         iPredicate = predicate;
@@ -74,7 +74,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     /**
      * Transforms the input to result by calling a predicate.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

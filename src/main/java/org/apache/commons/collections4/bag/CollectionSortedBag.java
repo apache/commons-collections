@@ -42,7 +42,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * Factory method to create a sorted bag that complies to the Collection contract.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the sorted bag to decorate, must not be null
+     * @param bag  The sorted bag to decorate, must not be null
      * @return A SortedBag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      */
@@ -53,7 +53,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the sorted bag to decorate, must not be null
+     * @param bag  The sorted bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     public CollectionSortedBag(final SortedBag<E> bag) {
@@ -91,7 +91,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
@@ -141,7 +141,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

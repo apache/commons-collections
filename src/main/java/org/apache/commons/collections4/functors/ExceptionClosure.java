@@ -56,7 +56,7 @@ public final class ExceptionClosure<T> implements Closure<T>, Serializable {
     /**
      * Always throw an exception.
      *
-     * @param input  the input object
+     * @param input  The input object
      * @throws FunctorException always
      */
     @Override

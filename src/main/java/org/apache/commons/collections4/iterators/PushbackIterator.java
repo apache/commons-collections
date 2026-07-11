@@ -44,7 +44,7 @@ public class PushbackIterator<E> implements Iterator<E> {
      * </p>
      *
      * @param <E>  the element type
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return A new peeking iterator
      * @throws NullPointerException if the iterator is null
      */
@@ -67,7 +67,7 @@ public class PushbackIterator<E> implements Iterator<E> {
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      */
     public PushbackIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -89,7 +89,7 @@ public class PushbackIterator<E> implements Iterator<E> {
      * Calling {@link #next()} immediately afterwards will return exactly this element.
      * </p>
      *
-     * @param item  the element to push back to the iterator
+     * @param item  The element to push back to the iterator
      */
     public void pushback(final E item) {
         items.push(item);

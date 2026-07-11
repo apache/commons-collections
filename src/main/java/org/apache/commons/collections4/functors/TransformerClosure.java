@@ -40,7 +40,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      * </p>
      *
      * @param <E> The type that the closure acts on
-     * @param transformer  the transformer to call, null means nop
+     * @param transformer  The transformer to call, null means nop
      * @return The {@code transformer} closure
      */
     public static <E> Closure<E> transformerClosure(final Transformer<? super E, ?> transformer) {
@@ -57,7 +57,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      * Constructor that performs no validation.
      * Use {@code transformerClosure} if you want that.
      *
-     * @param transformer  the transformer to call, not null
+     * @param transformer  The transformer to call, not null
      */
     public TransformerClosure(final Transformer<? super T, ?> transformer) {
         iTransformer = transformer;
@@ -66,7 +66,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
     /**
      * Executes the closure by calling the decorated transformer.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

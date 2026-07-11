@@ -52,7 +52,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     /**
      * Constructor that wraps a list.
      *
-     * @param list  the list to create a reversed iterator for
+     * @param list  The list to create a reversed iterator for
      * @throws NullPointerException if the list is null
      */
     public ReverseListIterator(final List<E> list) {
@@ -63,7 +63,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     /**
      * Adds a new element to the list between the next and previous elements.
      *
-     * @param obj  the object to add
+     * @param obj  The object to add
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */
@@ -171,7 +171,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     /**
      * Replaces the last returned element.
      *
-     * @param obj  the object to set
+     * @param obj  The object to set
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */

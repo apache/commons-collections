@@ -100,7 +100,7 @@ public final class UnmodifiableEntrySet<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @return A new unmodifiable entry set
      * @throws NullPointerException if set is null
      * @since 4.0
@@ -115,7 +115,7 @@ public final class UnmodifiableEntrySet<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     private UnmodifiableEntrySet(final Set<Map.Entry<K, V>> set) {

@@ -40,7 +40,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * </p>
      *
      * @param <E>      the element type
-     * @param iterator the iterator to decorate
+     * @param iterator The iterator to decorate
      * @return A new peeking iterator
      * @throws NullPointerException if the iterator is null
      */
@@ -69,7 +69,7 @@ public class PeekingIterator<E> implements Iterator<E> {
     /**
      * Constructs a new instance.
      *
-     * @param iterator the iterator to decorate
+     * @param iterator The iterator to decorate
      */
     public PeekingIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;

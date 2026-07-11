@@ -49,7 +49,7 @@ public final class UnmodifiableList<E>
      * Factory method to create an unmodifiable list.
      *
      * @param <E> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @return A new unmodifiable list
      * @throws NullPointerException if list is null
      * @since 4.0
@@ -66,7 +66,7 @@ public final class UnmodifiableList<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @throws NullPointerException if list is null
      */
     @SuppressWarnings("unchecked") // safe to upcast

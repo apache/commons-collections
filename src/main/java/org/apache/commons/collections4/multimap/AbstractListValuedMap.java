@@ -233,7 +233,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     /**
      * A constructor that wraps, not copies
      *
-     * @param map  the map to wrap, must not be null
+     * @param map  The map to wrap, must not be null
      * @throws NullPointerException if the map is null
      */
     protected AbstractListValuedMap(final Map<K, ? extends List<V>> map) {
@@ -252,7 +252,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * Gets the list of values associated with the specified key. This would
      * return an empty list in case the mapping is not present
      *
-     * @param key  the key to retrieve
+     * @param key  The key to retrieve
      * @return The {@code List} of values, will return an empty {@link List} for no mapping
      */
     @Override
@@ -272,7 +272,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * A subsequent {@code get(Object)} would return an empty list.
      * </p>
      *
-     * @param key  the key to remove values from
+     * @param key  The key to remove values from
      * @return The {@code List} of values removed, will return an empty,
      *   unmodifiable list for no mapping found.
      */

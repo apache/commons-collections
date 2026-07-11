@@ -37,7 +37,7 @@ public class EnumerationUtils {
      * single iteration.
      *
      * @param <T> The element type
-     * @param enumeration the enumeration to use, may not be null
+     * @param enumeration The enumeration to use, may not be null
      * @return A new, single use {@link Iterable}
      * @since 4.5.0-M1
      */
@@ -53,8 +53,8 @@ public class EnumerationUtils {
      * {@code index} exceeds the number of entries) as a side effect of this method.
      * </p>
      *
-     * @param e  the enumeration to get a value from
-     * @param index  the index to get
+     * @param e  The enumeration to get a value from
+     * @param index  The index to get
      * @param <T> The type of object in the {@link Enumeration}
      * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -81,7 +81,7 @@ public class EnumerationUtils {
      * created. The new list is returned.</p>
      *
      * @param <E> The element type
-     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
+     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
      * @return A list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
@@ -93,7 +93,7 @@ public class EnumerationUtils {
      * Override toList(Enumeration) for StringTokenizer as it implements Enumeration&lt;Object&gt;
      * for the sake of backward compatibility.
      *
-     * @param stringTokenizer  the tokenizer to convert to a {@link List}&lt;{@link String}&gt;
+     * @param stringTokenizer  The tokenizer to convert to a {@link List}&lt;{@link String}&gt;
      * @return A list containing all tokens of the given StringTokenizer
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
@@ -111,7 +111,7 @@ public class EnumerationUtils {
      * created. The new set is returned.</p>
      *
      * @param <E> The element type
-     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
+     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
      * @return A set containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      * @since 4.5.0-M4

@@ -29,8 +29,8 @@ class BitMapsTest {
     /**
      * Assert the {@link BitMaps#mod(long, int)} method functions as an unsigned modulus.
      *
-     * @param dividend the dividend
-     * @param divisor the divisor
+     * @param dividend The dividend
+     * @param divisor The divisor
      */
     private void assertMod(final long dividend, final int divisor) {
         assertTrue(divisor > 0 && divisor <= Integer.MAX_VALUE,

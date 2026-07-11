@@ -77,7 +77,7 @@ public class TransformerUtils {
      * The transformer returns the input object.
      *
      * @param <T>  the input/output type
-     * @param closure  the closure to run each time in the transformer, not null
+     * @param closure  The closure to run each time in the transformer, not null
      * @return The transformer
      * @throws NullPointerException if the closure is null
      * @see ClosureTransformer
@@ -92,7 +92,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param factory  the factory to run each time in the transformer, not null
+     * @param factory  The factory to run each time in the transformer, not null
      * @return The transformer
      * @throws NullPointerException if the factory is null
      * @see FactoryTransformer
@@ -106,7 +106,7 @@ public class TransformerUtils {
      * The transformer will return either {@link Boolean#TRUE} or {@link Boolean#FALSE}.
      *
      * @param <T>  the input type
-     * @param predicate  the predicate to run each time in the transformer, not null
+     * @param predicate  The predicate to run each time in the transformer, not null
      * @return The transformer
      * @throws NullPointerException if the predicate is null
      * @see PredicateTransformer
@@ -121,7 +121,7 @@ public class TransformerUtils {
      * method on the collection.
      *
      * @param <T>  the input/output type
-     * @param transformers  a collection of transformers to chain
+     * @param transformers  A collection of transformers to chain
      * @return The transformer
      * @throws NullPointerException if the transformers collection or any of the transformers is null
      * @see ChainedTransformer
@@ -136,7 +136,7 @@ public class TransformerUtils {
      * result into the next transformer.
      *
      * @param <T>  the input/output type
-     * @param transformers  an array of transformers to chain
+     * @param transformers  An array of transformers to chain
      * @return The transformer
      * @throws NullPointerException if the transformers array or any of the transformers is null
      * @see ChainedTransformer
@@ -169,7 +169,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param constantToReturn  the constant object to return each time in the transformer
+     * @param constantToReturn  The constant object to return each time in the transformer
      * @return The transformer.
      * @see ConstantTransformer
      */
@@ -196,9 +196,9 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param predicate  the predicate to switch on
-     * @param trueTransformer  the transformer called if the predicate is true
-     * @param falseTransformer  the transformer called if the predicate is false
+     * @param predicate  The predicate to switch on
+     * @param trueTransformer  The transformer called if the predicate is true
+     * @param falseTransformer  The transformer called if the predicate is false
      * @return The transformer
      * @throws NullPointerException if either the predicate or transformer is null
      * @see IfTransformer
@@ -215,8 +215,8 @@ public class TransformerUtils {
      * otherwise the input object is returned unchanged.
      *
      * @param <T>  the input / output type
-     * @param predicate  the predicate to switch on
-     * @param trueTransformer  the transformer called if the predicate is true
+     * @param predicate  The predicate to switch on
+     * @param trueTransformer  The transformer called if the predicate is true
      * @return The transformer
      * @throws NullPointerException if either the predicate or transformer is null
      * @see IfTransformer
@@ -245,7 +245,7 @@ public class TransformerUtils {
      *
      * @param <T>  the output type
      * @param paramTypes  parameter types for the constructor, can be null
-     * @param args  the arguments to pass to the constructor, can be null
+     * @param args  The arguments to pass to the constructor, can be null
      * @return The transformer
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @see InstantiateTransformer
@@ -268,7 +268,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param methodName  the method name to call on the input object, may not be null
+     * @param methodName  The method name to call on the input object, may not be null
      * @return The transformer
      * @throws NullPointerException if the methodName is null.
      * @see InvokerTransformer
@@ -284,9 +284,9 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param methodName  the name of the method
-     * @param paramTypes  the parameter types
-     * @param args  the arguments
+     * @param methodName  The name of the method
+     * @param paramTypes  The parameter types
+     * @param args  The arguments
      * @return The transformer
      * @throws NullPointerException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
@@ -303,7 +303,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param map  the map to use to transform the objects
+     * @param map  The map to use to transform the objects
      * @return The transformer, or {@link ConstantTransformer#nullTransformer()} if the
      *   {@code map} is {@code null}
      * @see MapTransformer
@@ -362,7 +362,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param objectsAndTransformers  a map of objects to transformers
+     * @param objectsAndTransformers  A map of objects to transformers
      * @return The transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
@@ -402,7 +402,7 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param predicatesAndTransformers  a map of predicates to transformers
+     * @param predicatesAndTransformers  A map of predicates to transformers
      * @return The transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
@@ -420,9 +420,9 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param predicate  the predicate to switch on
-     * @param trueTransformer  the transformer called if the predicate is true
-     * @param falseTransformer  the transformer called if the predicate is false
+     * @param predicate  The predicate to switch on
+     * @param trueTransformer  The transformer called if the predicate is true
+     * @param falseTransformer  The transformer called if the predicate is false
      * @return The transformer
      * @throws NullPointerException if either the predicate or transformer is null
      * @see SwitchTransformer
@@ -445,8 +445,8 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param predicates  an array of predicates to check
-     * @param transformers  an array of transformers to call
+     * @param predicates  An array of predicates to check
+     * @param transformers  An array of transformers to call
      * @return The transformer
      * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
@@ -467,9 +467,9 @@ public class TransformerUtils {
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param predicates  an array of predicates to check
-     * @param transformers  an array of transformers to call
-     * @param defaultTransformer  the default to call if no predicate matches, null means return null
+     * @param predicates  An array of predicates to check
+     * @param transformers  An array of transformers to call
+     * @param defaultTransformer  The default to call if no predicate matches, null means return null
      * @return The transformer
      * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null

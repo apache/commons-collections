@@ -49,9 +49,9 @@ public class EnhancedDoubleHasher implements Hasher {
     /**
      * Convert bytes to big-endian long filling with zero bytes as necessary.
      *
-     * @param byteArray the byte array to extract the values from.
-     * @param offset the offset to start extraction from.
-     * @param len the length of the extraction, may be longer than 8.
+     * @param byteArray The byte array to extract the values from.
+     * @param offset The offset to start extraction from.
+     * @param len The length of the extraction, may be longer than 8.
      * @return
      */
     private static long toLong(final byte[] byteArray, final int offset, final int len) {
@@ -92,7 +92,7 @@ public class EnhancedDoubleHasher implements Hasher {
      * This ensures that small arrays generate the largest possible increment and initial values.
      * </p>
      *
-     * @param buffer the buffer to extract the longs from.
+     * @param buffer The buffer to extract the longs from.
      * @throws IllegalArgumentException is buffer length is zero.
      */
     public EnhancedDoubleHasher(final byte[] buffer) {

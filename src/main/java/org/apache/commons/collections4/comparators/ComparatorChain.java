@@ -186,8 +186,8 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Perform comparisons on the Objects as per
      * Comparator.compare(o1, o2).
      *
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
+     * @param o1  The first object to compare
+     * @param o2  The second object to compare
      * @return -1, 0, or 1
      * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
      */
@@ -233,7 +233,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Subclasses may want to override this behavior to remain consistent
      * with the {@link Comparator#equals(Object)} contract.
      *
-     * @param object  the object to compare with
+     * @param object  The object to compare with
      * @return true if equal
      * @since 3.0
      */

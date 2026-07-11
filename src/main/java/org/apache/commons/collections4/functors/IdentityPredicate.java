@@ -36,7 +36,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
      * Creates the identity predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      * @return The predicate
      */
     public static <T> Predicate<T> identityPredicate(final T object) {
@@ -53,7 +53,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
      * Constructor that performs no validation.
      * Use {@code identityPredicate} if you want that.
      *
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      */
     public IdentityPredicate(final T object) {
         iValue = object;
@@ -73,7 +73,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
      * Evaluates the predicate returning true if the input object is identical to
      * the stored object.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if input is the same object as the stored value
      */
     @Override

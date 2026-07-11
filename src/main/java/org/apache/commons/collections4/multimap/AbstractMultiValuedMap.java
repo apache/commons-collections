@@ -591,7 +591,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to wrap, must not be null
+     * @param map  The map to wrap, must not be null
      * @throws NullPointerException if the map is null
      */
     @SuppressWarnings("unchecked")
@@ -635,7 +635,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Reads the map in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class cannot be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
@@ -659,7 +659,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Writes the map out using a custom routine.
      *
-     * @param out the output stream
+     * @param out The output stream
      * @throws IOException any of the usual I/O related exceptions
      */
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
@@ -693,7 +693,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * Gets the collection of values associated with the specified key. This
      * would return an empty collection in case the mapping is not present
      *
-     * @param key the key to retrieve
+     * @param key The key to retrieve
      * @return The {@code Collection} of values, will return an empty {@code Collection} for no mapping
      */
     @Override
@@ -757,8 +757,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * Unlike a normal {@code Map} the previous value is not replaced.
      * Instead the new value is added to the collection stored against the key.
      *
-     * @param key the key to store against
-     * @param value the value to add to the collection at the key
+     * @param key The key to store against
+     * @param value The value to add to the collection at the key
      * @return The value added if the map changed and null if the map did not change
      */
     @Override
@@ -778,8 +778,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Adds Iterable values to the collection associated with the specified key.
      *
-     * @param key the key to store against
-     * @param values the values to add to the collection at the key, may not be null
+     * @param key The key to store against
+     * @param values The values to add to the collection at the key, may not be null
      * @return true if this map changed
      * @throws NullPointerException if values is null
      */
@@ -844,7 +844,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * <p>
      * A subsequent {@code get(Object)} would return an empty collection.
      *
-     * @param key  the key to remove values from
+     * @param key  The key to remove values from
      * @return The {@code Collection} of values removed, will return an
      *   empty, unmodifiable collection for no mapping found
      */
@@ -862,8 +862,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * If the last value for a key is removed, an empty collection would be
      * returned from a subsequent {@link #get(Object)}.
      *
-     * @param key the key to remove from
-     * @param value the value to remove
+     * @param key The key to remove from
+     * @param value The value to remove
      * @return true if the mapping was removed, false otherwise
      */
     @Override
@@ -884,7 +884,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * <p>
      * <strong>NOTE:</strong> this method should only be used during deserialization
      *
-     * @param map the map to wrap
+     * @param map The map to wrap
      */
     @SuppressWarnings("unchecked")
     protected void setMap(final Map<K, ? extends Collection<V>> map) {

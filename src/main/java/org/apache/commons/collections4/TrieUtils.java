@@ -30,7 +30,7 @@ public class TrieUtils {
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param trie  the trie to make unmodifiable, must not be null
+     * @param trie  The trie to make unmodifiable, must not be null
      * @return An unmodifiable trie backed by the given trie
      * @throws NullPointerException if trie is null
      * @see java.util.Collections#unmodifiableMap(java.util.Map)

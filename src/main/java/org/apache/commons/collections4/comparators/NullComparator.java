@@ -61,7 +61,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * two non-{@code null} objects, the {@link ComparableComparator} is
      * used.
      *
-     * @param nullsAreHigh a {@code true} value indicates that
+     * @param nullsAreHigh A {@code true} value indicates that
      * {@code null} should be compared as higher than a
      * non-{@code null} object.  A {@code false} value indicates
      * that {@code null} should be compared as lower than a
@@ -77,7 +77,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * non-{@code null} objects, the specified {@link Comparator} is
      * used.
      *
-     * @param nonNullComparator the comparator to use when comparing two
+     * @param nonNullComparator The comparator to use when comparing two
      * non-{@code null} objects.  This argument cannot be
      * {@code null}
      * @throws NullPointerException if {@code nonNullComparator} is
@@ -93,10 +93,10 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * two non-{@code null} objects, the specified {@link Comparator} is
      * used.
      *
-     * @param nonNullComparator the comparator to use when comparing two
+     * @param nonNullComparator The comparator to use when comparing two
      * non-{@code null} objects. This argument cannot be
      * {@code null}
-     * @param nullsAreHigh a {@code true} value indicates that
+     * @param nullsAreHigh A {@code true} value indicates that
      * {@code null} should be compared as higher than a
      * non-{@code null} object.  A {@code false} value indicates
      * that {@code null} should be compared as lower than a
@@ -118,8 +118,8 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * underlying comparator specified in the constructor (or the default) is
      * used to compare the non-{@code null} objects.
      *
-     * @param o1  the first object to compare
-     * @param o2  the object to compare it to.
+     * @param o1  The first object to compare
+     * @param o2  The object to compare it to.
      * @return {@code -1} if {@code o1} is "lower" than (less than,
      * before, etc.) {@code o2}; {@code 1} if {@code o1} is
      * "higher" than (greater than, after, etc.) {@code o2}; or
@@ -143,7 +143,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * Determines whether the specified object represents a comparator that is
      * equal to this comparator.
      *
-     * @param obj  the object to compare this comparator with.
+     * @param obj  The object to compare this comparator with.
      * @return {@code true} if the specified object is a NullComparator
      * with equivalent {@code null} comparison behavior
      * (i.e. {@code null} high or low) and with equivalent underlying

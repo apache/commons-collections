@@ -40,7 +40,7 @@ public interface Predicate<T> extends java.util.function.Predicate<T> {
     /**
      * Use the specified parameter to perform a test that returns true or false.
      *
-     * @param object  the object to evaluate, should not be changed
+     * @param object  The object to evaluate, should not be changed
      * @return true or false
      * @throws ClassCastException (runtime) if the input is the wrong class
      * @throws IllegalArgumentException (runtime) if the input is invalid

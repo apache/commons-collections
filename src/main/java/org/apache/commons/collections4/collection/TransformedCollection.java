@@ -53,8 +53,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * </p>
      *
      * @param <E> The type of the elements in the collection.
-     * @param collection  the collection to decorate, must not be null.
-     * @param transformer  the transformer to use for conversion, must not be null.
+     * @param collection  The collection to decorate, must not be null.
+     * @param transformer  The transformer to use for conversion, must not be null.
      * @return A new transformed Collection.
      * @throws NullPointerException if collection or transformer is null.
      * @since 4.0
@@ -84,8 +84,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * </p>
      *
      * @param <E> The type of the elements in the collection.
-     * @param coll  the collection to decorate, must not be null.
-     * @param transformer  the transformer to use for conversion, must not be null.
+     * @param coll  The collection to decorate, must not be null.
+     * @param transformer  The transformer to use for conversion, must not be null.
      * @return A new transformed collection.
      * @throws NullPointerException if collection or transformer is null.
      * @since 4.0
@@ -105,8 +105,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * are NOT transformed.
      * </p>
      *
-     * @param collection  the collection to decorate, must not be null.
-     * @param transformer  the transformer to use for conversion, must not be null.
+     * @param collection  The collection to decorate, must not be null.
+     * @param transformer  The transformer to use for conversion, must not be null.
      * @throws NullPointerException if collection or transformer is null.
      */
     protected TransformedCollection(final Collection<E> collection, final Transformer<? super E, ? extends E> transformer) {
@@ -130,7 +130,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param coll  the collection to transform.
+     * @param coll  The collection to transform.
      * @return A transformed object.
      */
     protected Collection<E> transform(final Collection<? extends E> coll) {
@@ -147,7 +147,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param object  the object to transform.
+     * @param object  The object to transform.
      * @return A transformed object.
      */
     protected E transform(final E object) {

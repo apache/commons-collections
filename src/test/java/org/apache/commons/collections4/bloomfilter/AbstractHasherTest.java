@@ -41,7 +41,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
     /**
      * A method to get the number of items in a hasher. Mostly applies to
      * Collections of hashers.
-     * @param hasher the hasher to check.
+     * @param hasher The hasher to check.
      * @return The number of hashers in the hasher
      */
     protected abstract int getHasherSize(Hasher hasher);

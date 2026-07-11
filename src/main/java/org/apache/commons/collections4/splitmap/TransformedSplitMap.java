@@ -83,9 +83,9 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * @param <K>  the output key type
      * @param <U>  the input value type
      * @param <V>  the output value type
-     * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, must not be null
-     * @param valueTransformer the transformer to use for value conversion, must not be null
+     * @param map The map to decorate, must not be null
+     * @param keyTransformer The transformer to use for key conversion, must not be null
+     * @param valueTransformer The transformer to use for value conversion, must not be null
      * @return A new transformed map
      * @throws NullPointerException if map or either of the transformers is null
      */
@@ -107,9 +107,9 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
      *
-     * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, must not be null
-     * @param valueTransformer the transformer to use for value conversion, must not be null
+     * @param map The map to decorate, must not be null
+     * @param keyTransformer The transformer to use for key conversion, must not be null
+     * @param valueTransformer The transformer to use for value conversion, must not be null
      * @throws NullPointerException if map or either of the transformers is null
      */
     protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
@@ -122,7 +122,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Override to transform the value when using {@code setValue}.
      *
-     * @param value the value to transform
+     * @param value The value to transform
      * @return The transformed value
      */
     protected V checkSetValue(final U value) {
@@ -147,7 +147,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -163,7 +163,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param object the object to transform
+     * @param object The object to transform
      * @return The transformed object
      */
     protected K transformKey(final J object) {
@@ -175,7 +175,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param map the map to transform
+     * @param map The map to transform
      * @return The transformed object
      */
     @SuppressWarnings("unchecked")
@@ -196,7 +196,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param object the object to transform
+     * @param object The object to transform
      * @return The transformed object
      */
     protected V transformValue(final U object) {
@@ -206,7 +206,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

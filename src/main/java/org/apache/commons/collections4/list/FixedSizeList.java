@@ -73,7 +73,7 @@ public class FixedSizeList<E>
      * Factory method to create a fixed size list.
      *
      * @param <E> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @return A new fixed size list
      * @throws NullPointerException if list is null
      * @since 4.0
@@ -94,7 +94,7 @@ public class FixedSizeList<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @throws NullPointerException if list is null
      */
     protected FixedSizeList(final List<E> list) {

@@ -44,7 +44,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * Factory method that performs validation.
      *
      * @param <T>  the type of the constant
-     * @param constantToReturn  the constant object to return each time in the factory
+     * @param constantToReturn  The constant object to return each time in the factory
      * @return The {@code constant} factory.
      */
     public static <T> Factory<T> constantFactory(final T constantToReturn) {
@@ -61,7 +61,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * Constructor that performs no validation.
      * Use {@code constantFactory} if you want that.
      *
-     * @param constantToReturn  the constant to return each time
+     * @param constantToReturn  The constant to return each time
      */
     public ConstantFactory(final T constantToReturn) {
         iConstant = constantToReturn;

@@ -60,7 +60,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         /**
          * Called when the CompositeMap.put() method is invoked.
          *
-         * @param map  the CompositeMap which is being modified
+         * @param map  The CompositeMap which is being modified
          * @param composited  array of Maps in the CompositeMap being modified
          * @param key  key with which the specified value is to be associated.
          * @param value  value to be associated with the specified key.
@@ -84,7 +84,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
         /**
          * Called when the CompositeMap.putAll() method is invoked.
          *
-         * @param map  the CompositeMap which is being modified
+         * @param map  The CompositeMap which is being modified
          * @param composited  array of Maps in the CompositeMap being modified
          * @param mapToAdd  Mappings to be stored in this CompositeMap
          * @throws UnsupportedOperationException if not defined
@@ -103,11 +103,11 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
          * Called when adding a new Composited Map results in a
          * key collision.
          *
-         * @param composite  the CompositeMap with the collision
-         * @param existing  the Map already in the composite which contains the
+         * @param composite  The CompositeMap with the collision
+         * @param existing  The Map already in the composite which contains the
          *        offending key
-         * @param added  the Map being added
-         * @param intersect  the intersection of the keysets of the existing and added maps
+         * @param added  The Map being added
+         * @param intersect  The intersection of the keysets of the existing and added maps
          */
         void resolveCollision(CompositeMap<K, V> composite, Map<K, V> existing,
                 Map<K, V> added, Collection<K> intersect);
@@ -137,7 +137,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * Create a new CompositeMap which composites all of the Map instances in the
      * argument. It copies the argument array, it does not use it directly.
      *
-     * @param composite  the Maps to be composited
+     * @param composite  The Maps to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
     public CompositeMap(final Map<K, V>... composite) {
@@ -147,8 +147,8 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Create a new CompositeMap with two composited Map instances.
      *
-     * @param one  the first Map to be composited
-     * @param two  the second Map to be composited
+     * @param one  The first Map to be composited
+     * @param two  The second Map to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
     @SuppressWarnings("unchecked")
@@ -159,8 +159,8 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Create a new CompositeMap with two composited Map instances.
      *
-     * @param one  the first Map to be composited
-     * @param two  the second Map to be composited
+     * @param one  The first Map to be composited
+     * @param two  The second Map to be composited
      * @param mutator  MapMutator to be used for mutation operations
      */
     @SuppressWarnings("unchecked")
@@ -187,7 +187,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Add an additional Map to the composite.
      *
-     * @param map  the Map to be added to the composite
+     * @param map  The Map to be added to the composite
      * @throws IllegalArgumentException if there is a key collision and there is no
      *         MapMutator set to handle it.
      */
@@ -301,7 +301,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Checks if this Map equals another as per the Map specification.
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if the maps are equal
      */
     @Override
@@ -500,7 +500,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Remove a Map from the composite.
      *
-     * @param map  the Map to be removed from the composite
+     * @param map  The Map to be removed from the composite
      * @return The removed Map or {@code null} if map is not in the composite
      */
     @SuppressWarnings("unchecked")
@@ -521,7 +521,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Specify the MapMutator to be used by mutation operations.
      *
-     * @param mutator  the MapMutator to be used for mutation delegation
+     * @param mutator  The MapMutator to be used for mutation delegation
      */
     public void setMutator(final MapMutator<K, V> mutator) {
         this.mutator = mutator;

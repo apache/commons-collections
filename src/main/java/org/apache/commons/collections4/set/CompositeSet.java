@@ -64,9 +64,9 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         /**
          * Called when an object is to be added to the composite.
          *
-         * @param composite  the CompositeSet being changed
+         * @param composite  The CompositeSet being changed
          * @param sets  all of the Set instances in this CompositeSet
-         * @param obj  the object being added
+         * @param obj  The object being added
          * @return true if the collection is changed
          * @throws UnsupportedOperationException if add is unsupported
          * @throws ClassCastException if the object cannot be added due to its type
@@ -78,9 +78,9 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         /**
          * Called when a collection is to be added to the composite.
          *
-         * @param composite  the CompositeSet being changed
+         * @param composite  The CompositeSet being changed
          * @param sets  all of the Set instances in this CompositeSet
-         * @param coll  the collection being added
+         * @param coll  The collection being added
          * @return true if the collection is changed
          * @throws UnsupportedOperationException if add is unsupported
          * @throws ClassCastException if the object cannot be added due to its type
@@ -98,10 +98,10 @@ public class CompositeSet<E> implements Set<E>, Serializable {
          * If {@code added} and {@code existing} still have any intersects
          * after this method returns an IllegalArgumentException will be thrown.
          *
-         * @param comp  the CompositeSet being modified
-         * @param existing  the Set already existing in the composite
-         * @param added  the Set being added to the composite
-         * @param intersects  the intersection of the existing and added sets
+         * @param comp  The CompositeSet being modified
+         * @param existing  The Set already existing in the composite
+         * @param added  The Set being added to the composite
+         * @param intersects  The intersection of the existing and added sets
          */
         void resolveCollision(CompositeSet<E> comp,
                                      Set<E> existing,
@@ -127,7 +127,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Creates a CompositeSet with just {@code set} composited.
      *
-     * @param set  the initial set in the composite
+     * @param set  The initial set in the composite
      */
     public CompositeSet(final Set<E> set) {
         addComposited(set);
@@ -136,7 +136,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Creates a composite set with sets as the initial set of composited Sets.
      *
-     * @param sets  the initial sets in the composite
+     * @param sets  The initial sets in the composite
      */
     public CompositeSet(final Set<E>... sets) {
         addComposited(sets);
@@ -146,7 +146,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * Adds an object to the collection, throwing UnsupportedOperationException
      * unless a SetMutator strategy is specified.
      *
-     * @param obj  the object to add
+     * @param obj  The object to add
      * @return {@code true} if the collection was modified
      * @throws UnsupportedOperationException if SetMutator hasn't been set or add is unsupported
      * @throws ClassCastException if the object cannot be added due to its type
@@ -166,7 +166,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * Adds a collection of elements to this composite, throwing
      * UnsupportedOperationException unless a SetMutator strategy is specified.
      *
-     * @param coll  the collection to add
+     * @param coll  The collection to add
      * @return true if the composite was modified
      * @throws UnsupportedOperationException if SetMutator hasn't been set or add is unsupported
      * @throws ClassCastException if the object cannot be added due to its type
@@ -185,7 +185,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Adds a Set to this composite.
      *
-     * @param set  the set to add
+     * @param set  The set to add
      * @throws IllegalArgumentException if a SetMutator is set, but fails to resolve a collision
      * @throws UnsupportedOperationException if there is no SetMutator set
      * @see SetMutator
@@ -213,7 +213,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Adds these Sets to the list of sets in this composite
      *
-     * @param sets  the Sets to be appended to the composite
+     * @param sets  The Sets to be appended to the composite
      */
     public void addComposited(final Set<E>... sets) {
         if (sets != null) {
@@ -226,8 +226,8 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Adds these Sets to the list of sets in this composite.
      *
-     * @param set1  the first Set to be appended to the composite
-     * @param set2  the second Set to be appended to the composite
+     * @param set1  The first Set to be appended to the composite
+     * @param set2  The second Set to be appended to the composite
      */
     public void addComposited(final Set<E> set1, final Set<E> set2) {
         addComposited(set1);
@@ -253,7 +253,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * <p>
      * This implementation calls {@code contains()} on each set.
      *
-     * @param obj  the object to search for
+     * @param obj  The object to search for
      * @return true if obj is contained in any of the contained sets
      */
     @Override
@@ -272,7 +272,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * This implementation calls {@code contains()} for each element in the
      * specified collection.
      *
-     * @param coll  the collection to check for
+     * @param coll  The collection to check for
      * @return true if all elements contained
      */
     @Override
@@ -393,7 +393,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * <p>
      * This implementation calls {@code removeAll} on each collection.
      *
-     * @param coll  the collection to remove
+     * @param coll  The collection to remove
      * @return true if the composite was modified
      * @throws UnsupportedOperationException if removeAll is unsupported
      */
@@ -439,7 +439,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * <p>
      * This implementation calls {@code retainAll()} on each collection.
      *
-     * @param coll  the collection to remove
+     * @param coll  The collection to remove
      * @return true if the composite was modified
      * @throws UnsupportedOperationException if retainAll is unsupported
      */
@@ -455,7 +455,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Specify a SetMutator strategy instance to handle changes.
      *
-     * @param mutator  the mutator to use
+     * @param mutator  The mutator to use
      */
     public void setMutator(final SetMutator<E> mutator) {
         this.mutator = mutator;
@@ -494,7 +494,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * See {@code Collection} interface for full details.
      *
      * @param <T>  the type of the elements in the collection
-     * @param array  the array to use, populating if possible
+     * @param array  The array to use, populating if possible
      * @return An array of all the elements in the collection
      */
     @Override

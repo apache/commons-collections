@@ -50,8 +50,8 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * Contrast this with {@link #transformingSet(Set, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed set
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
@@ -77,8 +77,8 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * Contrast this with {@link #transformedSet(Set, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed set
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
@@ -94,8 +94,8 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      *
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if set or transformer is null
      */
     protected TransformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {

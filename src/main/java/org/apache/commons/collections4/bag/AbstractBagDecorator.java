@@ -50,7 +50,7 @@ public abstract class AbstractBagDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     protected AbstractBagDecorator(final Bag<E> bag) {

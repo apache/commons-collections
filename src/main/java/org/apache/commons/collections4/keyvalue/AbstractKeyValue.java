@@ -38,8 +38,8 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Constructs a new pair with the specified key and given value.
      *
-     * @param key  the key for the entry, may be null
-     * @param value  the value for the entry, may be null
+     * @param key  The key for the entry, may be null
+     * @param value  The value for the entry, may be null
      */
     protected AbstractKeyValue(final K key, final V value) {
         this.key = key;

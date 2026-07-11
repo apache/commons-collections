@@ -40,7 +40,7 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
      * </p>
      *
      * @param <E>  the element type
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return A new unmodifiable iterator
      * @throws NullPointerException if the iterator is null
      */
@@ -66,7 +66,7 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate.
+     * @param iterator  The iterator to decorate.
      */
     private UnmodifiableIterator(final T iterator) {
         this.iterator = iterator;

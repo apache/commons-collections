@@ -54,7 +54,7 @@ public class BagUtils {
      * Returns a bag that complies to the Collection contract, backed by the given bag.
      *
      * @param <E> The element type
-     * @param bag the bag to decorate, must not be null
+     * @param bag The bag to decorate, must not be null
      * @return A Bag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      * @since 4.0
@@ -96,8 +96,8 @@ public class BagUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param bag the bag to predicate, must not be null
-     * @param predicate the predicate for the bag, must not be null
+     * @param bag The bag to predicate, must not be null
+     * @param predicate The predicate for the bag, must not be null
      * @return A predicated bag backed by the given bag
      * @throws NullPointerException if the Bag or Predicate is null
      */
@@ -117,8 +117,8 @@ public class BagUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param bag the sorted bag to predicate, must not be null
-     * @param predicate the predicate for the bag, must not be null
+     * @param bag The sorted bag to predicate, must not be null
+     * @param predicate The predicate for the bag, must not be null
      * @return A predicated bag backed by the given bag
      * @throws NullPointerException if the SortedBag or Predicate is null
      */
@@ -150,7 +150,7 @@ public class BagUtils {
      * Failure to follow this advice may result in non-deterministic behavior.
      *
      * @param <E> The element type
-     * @param bag the bag to synchronize, must not be null
+     * @param bag The bag to synchronize, must not be null
      * @return A synchronized bag backed by that bag
      * @throws NullPointerException if the Bag is null
      */
@@ -181,7 +181,7 @@ public class BagUtils {
      * Failure to follow this advice may result in non-deterministic behavior.
      *
      * @param <E> The element type
-     * @param bag the bag to synchronize, must not be null
+     * @param bag The bag to synchronize, must not be null
      * @return A synchronized bag backed by that bag
      * @throws NullPointerException if the SortedBag is null
      */
@@ -202,8 +202,8 @@ public class BagUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param bag the bag to predicate, must not be null
-     * @param transformer the transformer for the bag, must not be null
+     * @param bag The bag to predicate, must not be null
+     * @param transformer The transformer for the bag, must not be null
      * @return A transformed bag backed by the given bag
      * @throws NullPointerException if the Bag or Transformer is null
      */
@@ -225,8 +225,8 @@ public class BagUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param bag the bag to predicate, must not be null
-     * @param transformer the transformer for the bag, must not be null
+     * @param bag The bag to predicate, must not be null
+     * @param transformer The transformer for the bag, must not be null
      * @return A transformed bag backed by the given bag
      * @throws NullPointerException if the Bag or Transformer is null
      */
@@ -240,7 +240,7 @@ public class BagUtils {
      * to the returned bag will raise an {@link UnsupportedOperationException}.
      *
      * @param <E> The element type
-     * @param bag the bag whose unmodifiable view is to be returned, must not be null
+     * @param bag The bag whose unmodifiable view is to be returned, must not be null
      * @return An unmodifiable view of that bag
      * @throws NullPointerException if the Bag is null
      */
@@ -254,7 +254,7 @@ public class BagUtils {
      * {@link UnsupportedOperationException}.
      *
      * @param <E> The element type
-     * @param bag the bag whose unmodifiable view is to be returned, must not be null
+     * @param bag The bag whose unmodifiable view is to be returned, must not be null
      * @return An unmodifiable view of that bag
      * @throws NullPointerException if the SortedBag is null
      */

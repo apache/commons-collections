@@ -55,8 +55,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * Contrast this with {@link #transformingBag(Bag, Transformer)}.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
@@ -81,8 +81,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
@@ -97,8 +97,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
      *
-     * @param bag  the bag to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if bag or transformer is null
      */
     protected TransformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {

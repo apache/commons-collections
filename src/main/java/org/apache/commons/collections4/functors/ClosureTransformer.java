@@ -38,7 +38,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * Factory method that performs validation.
      *
      * @param <T>  the type of the object to transform
-     * @param closure  the closure to call, not null
+     * @param closure  The closure to call, not null
      * @return The {@code closure} transformer
      * @throws NullPointerException if the closure is null
      */
@@ -53,7 +53,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * Constructor that performs no validation.
      * Use {@code closureTransformer} if you want that.
      *
-     * @param closure  the closure to call, not null
+     * @param closure  The closure to call, not null
      */
     public ClosureTransformer(final Closure<? super T> closure) {
         iClosure = closure;
@@ -72,7 +72,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Transforms the input to result by executing a closure.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

@@ -55,7 +55,7 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
     /**
      * Do nothing.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

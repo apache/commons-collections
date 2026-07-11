@@ -60,7 +60,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     /**
      * Constructs a multiset containing all the members of the given collection.
      *
-     * @param coll  a collection to copy into this multiset
+     * @param coll  A collection to copy into this multiset
      */
     public HashMultiSet(final Collection<? extends E> coll) {
         this();
@@ -70,7 +70,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     /**
      * Constructs a multiset containing all the members of the given Iterable.
      *
-     * @param iterable an iterable to copy into this multiset.
+     * @param iterable An iterable to copy into this multiset.
      * @since 4.6.0
      */
     public HashMultiSet(final Iterable<? extends E> iterable) {
@@ -80,7 +80,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     /**
      * Deserializes the multiset in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -93,7 +93,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

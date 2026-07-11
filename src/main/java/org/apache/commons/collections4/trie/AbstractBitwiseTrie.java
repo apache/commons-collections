@@ -138,7 +138,7 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     /**
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
      *
-     * @param keyAnalyzer  the {@link KeyAnalyzer} to use
+     * @param keyAnalyzer  The {@link KeyAnalyzer} to use
      */
     protected AbstractBitwiseTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         this.keyAnalyzer = Objects.requireNonNull(keyAnalyzer, "keyAnalyzer");

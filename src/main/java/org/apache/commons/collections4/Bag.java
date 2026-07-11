@@ -89,7 +89,7 @@ public interface Bag<E> extends Collection<E> {
      * {@code false}, this method violates the contract.
      * </p>
      *
-     * @param object  the object to add
+     * @param object  The object to add
      * @return {@code true} if the object was not already in the {@code uniqueSet}
      */
     @Override
@@ -103,8 +103,8 @@ public interface Bag<E> extends Collection<E> {
      * {@link #uniqueSet()} and report its count as {@code nCopies}.
      * </p>
      *
-     * @param object  the object to add
-     * @param nCopies  the number of copies to add
+     * @param object  The object to add
+     * @param nCopies  The number of copies to add
      * @return {@code true} if the object was not already in the {@code uniqueSet}
      * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
@@ -125,7 +125,7 @@ public interface Bag<E> extends Collection<E> {
      * in the given collection.
      * </p>
      *
-     * @param coll  the collection to check against
+     * @param coll  The collection to check against
      * @return {@code true} if the Bag contains all the collection
      */
     @Override
@@ -136,7 +136,7 @@ public interface Bag<E> extends Collection<E> {
      * object currently in the bag. If the object does not exist in the
      * bag, return 0.
      *
-     * @param object  the object to search for
+     * @param object  The object to search for
      * @return The number of occurrences of the object, zero if not found
      */
     int getCount(Object object);
@@ -163,7 +163,7 @@ public interface Bag<E> extends Collection<E> {
      * given object, not <em>all</em> occurrences.
      * </p>
      *
-     * @param object  the object to remove
+     * @param object  The object to remove
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -176,8 +176,8 @@ public interface Bag<E> extends Collection<E> {
      * copies in the Bag, no error is thrown.
      * </p>
      *
-     * @param object  the object to remove
-     * @param nCopies  the number of copies to remove
+     * @param object  The object to remove
+     * @param nCopies  The number of copies to remove
      * @return {@code true} if this call changed the collection
      */
     boolean remove(Object object, int nCopies);
@@ -197,7 +197,7 @@ public interface Bag<E> extends Collection<E> {
      * given collection.
      * </p>
      *
-     * @param coll  the collection to remove
+     * @param coll  The collection to remove
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -221,7 +221,7 @@ public interface Bag<E> extends Collection<E> {
      * given collection.
      * </p>
      *
-     * @param coll  the collection to retain
+     * @param coll  The collection to retain
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -253,7 +253,7 @@ public interface Bag<E> extends Collection<E> {
 //     * the same elements.
 //     * This equals definition is compatible with the Set interface.
 //     *
-//     * @param obj  the Bag to compare to
+//     * @param obj  The Bag to compare to
 //     * @return true if equal
 //     */
 //    boolean equals(Object obj);

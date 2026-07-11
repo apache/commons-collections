@@ -76,7 +76,7 @@ public class ComparatorUtils {
      * collection is exhausted.
      *
      * @param <E>  the object type to compare
-     * @param comparators  the comparators to use, not null or empty or containing nulls
+     * @param comparators  The comparators to use, not null or empty or containing nulls
      * @return A {@link ComparatorChain} formed from the input comparators
      * @throws NullPointerException if comparators collection is null or contains a null
      * @throws ClassCastException if the comparators collection contains the wrong object type
@@ -92,7 +92,7 @@ public class ComparatorUtils {
      * in sequence until one returns not equal or the array is exhausted.
      *
      * @param <E>  the object type to compare
-     * @param comparators  the comparators to use, not null or empty or containing nulls
+     * @param comparators  The comparators to use, not null or empty or containing nulls
      * @return A {@link ComparatorChain} formed from the input comparators
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
@@ -111,9 +111,9 @@ public class ComparatorUtils {
      * returns equal.
      *
      * @param <E>  the object type to compare
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
-     * @param comparator  the sort order to use
+     * @param o1  The first object to compare
+     * @param o2  The second object to compare
+     * @param comparator  The sort order to use
      * @return  the larger of the two objects
      */
     @SuppressWarnings("unchecked")
@@ -131,9 +131,9 @@ public class ComparatorUtils {
      * returns equal.
      *
      * @param <E>  the object type to compare
-     * @param o1  the first object to compare
-     * @param o2  the second object to compare
-     * @param comparator  the sort order to use
+     * @param o1  The first object to compare
+     * @param o2  The second object to compare
+     * @param comparator  The sort order to use
      * @return  the smaller of the two objects
      */
     @SuppressWarnings("unchecked")
@@ -165,7 +165,7 @@ public class ComparatorUtils {
      * </p>
      *
      * @param <E>  the object type to compare
-     * @param comparator the comparator that wants to allow nulls
+     * @param comparator The comparator that wants to allow nulls
      * @return  a version of that comparator that allows nulls
      * @see NullComparator
      */
@@ -186,7 +186,7 @@ public class ComparatorUtils {
      * </p>
      *
      * @param <E>  the object type to compare
-     * @param comparator the comparator that wants to allow nulls
+     * @param comparator The comparator that wants to allow nulls
      * @return  a version of that comparator that allows nulls
      * @see NullComparator
      */
@@ -202,7 +202,7 @@ public class ComparatorUtils {
      * Gets a comparator that reverses the order of the given comparator.
      *
      * @param <E>  the object type to compare
-     * @param comparator  the comparator to reverse
+     * @param comparator  The comparator to reverse
      * @return  a comparator that reverses the order of the input comparator
      * @see ReverseComparator
      */
@@ -220,8 +220,8 @@ public class ComparatorUtils {
      *
      * @param <I>  the input object type of the transformed comparator
      * @param <O>  the object type of the decorated comparator
-     * @param comparator  the sort order to use
-     * @param transformer  the transformer to use
+     * @param comparator  The sort order to use
+     * @param transformer  The transformer to use
      * @return  a comparator that transforms its input objects before comparing them
      * @see  TransformingComparator
      */

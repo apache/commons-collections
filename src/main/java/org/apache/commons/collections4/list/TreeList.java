@@ -111,7 +111,7 @@ public class TreeList<E> extends AbstractList<E> {
          * <p>
          * The collection must be nonempty.
          *
-         * @param coll  a nonempty collection
+         * @param coll  A nonempty collection
          */
         private AVLNode(final Collection<? extends E> coll) {
             this(coll.iterator(), 0, coll.size() - 1, 0, null, null);
@@ -120,10 +120,10 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Constructs a new node with a relative position.
          *
-         * @param relativePosition  the relative position of the node
-         * @param obj  the value for the node
-         * @param rightFollower the node with the value following this one
-         * @param leftFollower the node with the value leading this one
+         * @param relativePosition  The relative position of the node
+         * @param obj  The value for the node
+         * @param rightFollower The node with the value following this one
+         * @param leftFollower The node with the value leading this one
          */
         private AVLNode(final int relativePosition, final E obj,
                         final AVLNode<E> rightFollower, final AVLNode<E> leftFollower) {
@@ -144,17 +144,17 @@ public class TreeList<E> extends AbstractList<E> {
          * {@code e} already points at element {@code start}.
          * </p>
          *
-         * @param iterator  an iterator over the collection, which should already point
+         * @param iterator  An iterator over the collection, which should already point
          *          to the element at index {@code start} within the collection
-         * @param start  the index of the first element in the collection that
+         * @param start  The index of the first element in the collection that
          *          should be in this subtree
-         * @param end  the index of the last element in the collection that
+         * @param end  The index of the last element in the collection that
          *          should be in this subtree
          * @param absolutePositionOfParent  absolute position of this node's
          *          parent, or 0 if this node is the root
-         * @param prev  the {@code AVLNode} corresponding to element (start - 1)
+         * @param prev  The {@code AVLNode} corresponding to element (start - 1)
          *          of the collection, or null if start is 0
-         * @param next  the {@code AVLNode} corresponding to element (end + 1)
+         * @param next  The {@code AVLNode} corresponding to element (end + 1)
          *          of the collection, or null if end is the last element of the collection
          */
         private AVLNode(final Iterator<? extends E> iterator, final int start, final int end,
@@ -631,8 +631,8 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Sets the left field to the node, or the previous node if that is null
          *
-         * @param node  the new left subtree node
-         * @param previous  the previous node in the linked list
+         * @param node  The new left subtree node
+         * @param previous  The previous node in the linked list
          */
         private void setLeft(final AVLNode<E> node, final AVLNode<E> previous) {
             leftIsPrevious = node == null;
@@ -655,8 +655,8 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Sets the right field to the node, or the next node if that is null
          *
-         * @param node  the new left subtree node
-         * @param next  the next node in the linked list
+         * @param node  The new left subtree node
+         * @param next  The next node in the linked list
          */
         private void setRight(final AVLNode<E> node, final AVLNode<E> next) {
             rightIsNext = node == null;
@@ -667,7 +667,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Sets the value.
          *
-         * @param obj  the value to store
+         * @param obj  The value to store
          */
         void setValue(final E obj) {
             this.value = obj;
@@ -676,8 +676,8 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Stores the node and its children into the array specified.
          *
-         * @param array the array to be filled
-         * @param index the index of this node
+         * @param array The array to be filled
+         * @param index The index of this node
          */
         void toArray(final Object[] array, final int index) {
             array[index] = value;
@@ -801,8 +801,8 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Create a ListIterator for a list.
          *
-         * @param parent  the parent list
-         * @param fromIndex  the index to start at
+         * @param parent  The parent list
+         * @param fromIndex  The index to start at
          */
         protected TreeListIterator(final TreeList<E> parent, final int fromIndex) {
             checkInterval(fromIndex, 0, parent.size(), parent.size());
@@ -921,10 +921,10 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Checks whether the index is valid.
      *
-     * @param index  the index to check.
-     * @param startIndex  the first allowed index.
-     * @param endIndex  the last allowed index.
-     * @param endIndex  the size.
+     * @param index  The index to check.
+     * @param startIndex  The first allowed index.
+     * @param endIndex  The last allowed index.
+     * @param endIndex  The size.
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     private static void checkInterval(final int index, final int startIndex, final int endIndex, final int size) {
@@ -948,7 +948,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Constructs a new empty list that copies the specified collection.
      *
-     * @param coll  the collection to copy
+     * @param coll  The collection to copy
      * @throws NullPointerException if the collection is null
      */
     public TreeList(final Collection<? extends E> coll) {
@@ -961,8 +961,8 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Adds a new element to the list.
      *
-     * @param index  the index to add before
-     * @param obj  the element to add
+     * @param index  The index to add before
+     * @param obj  The element to add
      */
     @Override
     public void add(final int index, final E obj) {
@@ -984,7 +984,7 @@ public class TreeList<E> extends AbstractList<E> {
      * the size of this list and n is the size of {@code c}.
      * </p>
      *
-     * @param c  the collection to be added to this list
+     * @param c  The collection to be added to this list
      * @return {@code true} if this list changed as a result of the call
      * @throws NullPointerException if the specified collection contains a
      *         null element and this collection does not permit null elements,
@@ -1005,9 +1005,9 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Checks whether the index is valid.
      *
-     * @param index  the index to check
-     * @param startIndex  the first allowed index
-     * @param endIndex  the last allowed index
+     * @param index  The index to check
+     * @param startIndex  The first allowed index
+     * @param endIndex  The last allowed index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     private void checkInterval(final int index, final int startIndex, final int endIndex) {
@@ -1027,7 +1027,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Searches for the presence of an object in the list.
      *
-     * @param object  the object to check
+     * @param object  The object to check
      * @return true if the object is found
      */
     @Override
@@ -1038,7 +1038,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets the element at the specified index.
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The element at the specified index
      */
     @Override
@@ -1050,7 +1050,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Searches for the index of an object in the list.
      *
-     * @param object  the object to search
+     * @param object  The object to search
      * @return The index of the object, -1 if not found
      */
     @Override
@@ -1087,7 +1087,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets a ListIterator over the list.
      *
-     * @param fromIndex  the index to start from.
+     * @param fromIndex  The index to start from.
      * @return The new iterator.
      */
     @Override
@@ -1100,7 +1100,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Removes the element at the specified index.
      *
-     * @param index  the index to remove
+     * @param index  The index to remove
      * @return The previous object at that index
      */
     @Override
@@ -1116,8 +1116,8 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Sets the element at the specified index.
      *
-     * @param index  the index to set
-     * @param obj  the object to store at the specified index
+     * @param index  The index to set
+     * @param obj  The object to store at the specified index
      * @return The previous object at that index
      * @throws IndexOutOfBoundsException if the index is invalid
      */

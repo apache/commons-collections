@@ -54,7 +54,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * as {@code get(Object)}.
      * </p>
      *
-     * @param value  the value to find the key for
+     * @param value  The value to find the key for
      * @return The mapped key, or {@code null} if not found
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
@@ -96,8 +96,8 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *  map.put("C","B");  // contains C mapped to B, key A is removed
      * </pre>
      *
-     * @param key  the key to store
-     * @param value  the value to store
+     * @param key  The key to store
+     * @param value  The value to store
      * @return The previous value mapped to this key
      * @throws UnsupportedOperationException if the {@code put} method is not supported
      * @throws ClassCastException (optional) if the map limits the type of the
@@ -121,7 +121,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * as {@code remove(Object)}.
      * </p>
      *
-     * @param value  the value to find the key-value pair for
+     * @param value  The value to find the key-value pair for
      * @return The key that was removed, {@code null} if nothing removed
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate

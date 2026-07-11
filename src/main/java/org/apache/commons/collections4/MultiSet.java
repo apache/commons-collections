@@ -97,7 +97,7 @@ public interface MultiSet<E> extends Collection<E> {
      * {@link #uniqueSet()} and report its count as 1.
      * </p>
      *
-     * @param object the object to add.
+     * @param object The object to add.
      * @return {@code true} always, as the size of the MultiSet is increased in any case.
      */
     @Override
@@ -110,8 +110,8 @@ public interface MultiSet<E> extends Collection<E> {
      * {@link #uniqueSet()} and report its count as {@code occurrences}.
      * </p>
      *
-     * @param object      the object to add.
-     * @param occurrences the number of occurrences to add, may be zero, in which case no change is made to the multiset.
+     * @param object      The object to add.
+     * @param occurrences The number of occurrences to add, may be zero, in which case no change is made to the multiset.
      * @return The number of occurrences of the object in the multiset before this operation; possibly zero.
      * @throws IllegalArgumentException if occurrences is negative.
      */
@@ -120,7 +120,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Returns {@code true} if the MultiSet contains at least one occurrence for each element contained in the given collection.
      *
-     * @param coll the collection to check against.
+     * @param coll The collection to check against.
      * @return {@code true} if the MultiSet contains all the collection.
      */
     @Override
@@ -142,7 +142,7 @@ public interface MultiSet<E> extends Collection<E> {
      * This MultiSet equals another object if it is also a MultiSet that contains the same number of occurrences of the same elements.
      * </p>
      *
-     * @param obj the object to compare to.
+     * @param obj The object to compare to.
      * @return true if equal.
      */
     @Override
@@ -151,7 +151,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Gets the number of occurrences of the given object currently in the MultiSet. If the object does not exist in the multiset, return 0.
      *
-     * @param object the object to search for.
+     * @param object The object to search for.
      * @return The number of occurrences of the object, zero if not found.
      */
     int getCount(Object object);
@@ -180,7 +180,7 @@ public interface MultiSet<E> extends Collection<E> {
      * If the number of occurrences after this operation is reduced to zero, the object will be removed from the {@link #uniqueSet()}.
      * </p>
      *
-     * @param object the object to remove.
+     * @param object The object to remove.
      * @return {@code true} if this call changed the collection.
      */
     @Override
@@ -192,8 +192,8 @@ public interface MultiSet<E> extends Collection<E> {
      * If the number of occurrences to remove is greater than the actual number of occurrences in the multiset, the object will be removed from the multiset.
      * </p>
      *
-     * @param object      the object to remove.
-     * @param occurrences the number of occurrences to remove, may be zero, in which case no change is made to the multiset.
+     * @param object      The object to remove.
+     * @param occurrences The number of occurrences to remove, may be zero, in which case no change is made to the multiset.
      * @return The number of occurrences of the object in the multiset before the operation; possibly zero.
      * @throws IllegalArgumentException if occurrences is negative.
      */
@@ -202,7 +202,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Remove all occurrences of all elements from this MultiSet represented in the given collection.
      *
-     * @param coll the collection of elements to remove.
+     * @param coll The collection of elements to remove.
      * @return {@code true} if this call changed the multiset.
      */
     @Override
@@ -211,7 +211,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Remove any elements of this MultiSet that are not contained in the given collection.
      *
-     * @param coll the collection of elements to retain.
+     * @param coll The collection of elements to retain.
      * @return {@code true} if this call changed the multiset.
      */
     @Override
@@ -223,8 +223,8 @@ public interface MultiSet<E> extends Collection<E> {
      * If the provided count is zero, the object will be removed from the {@link #uniqueSet()}.
      * </p>
      *
-     * @param object the object to update.
-     * @param count  the number of occurrences of the object.
+     * @param object The object to update.
+     * @param count  The number of occurrences of the object.
      * @return The number of occurrences of the object before this operation, zero if the object was not contained in the multiset.
      * @throws IllegalArgumentException if count is negative.
      */

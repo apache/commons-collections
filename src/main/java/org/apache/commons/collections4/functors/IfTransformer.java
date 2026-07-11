@@ -130,7 +130,7 @@ public class IfTransformer<T, R> implements Transformer<T, R>, Serializable {
     /**
      * Transforms the input using the true or false transformer based to the result of the predicate.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

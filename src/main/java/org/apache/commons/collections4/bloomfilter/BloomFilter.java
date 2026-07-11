@@ -77,7 +77,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * Returns {@code true} if this filter contains the bits specified in the bit maps produced by the
      * bitMapExtractor.
      *
-     * @param bitMapExtractor the {@code BitMapExtractor} to provide the bit maps.
+     * @param bitMapExtractor The {@code BitMapExtractor} to provide the bit maps.
      * @return {@code true} if this filter is enabled for all bits specified by the bit maps
      */
     default boolean contains(final BitMapExtractor bitMapExtractor) {
@@ -92,7 +92,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * {@code other} filter. Using the bit representations this is
      * effectively {@code (this AND other) == other}.</p>
      *
-     * @param other the other Bloom filter
+     * @param other The other Bloom filter
      * @return true if all enabled bits in the other filter are enabled in this filter.
      */
     default boolean contains(final BloomFilter<?> other) {
@@ -107,7 +107,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * identified by the {@code hasher}. Using the bit map representations this is
      * effectively {@code (this AND hasher) == hasher}.</p>
      *
-     * @param hasher the hasher to provide the indexes
+     * @param hasher The hasher to provide the indexes
      * @return true if this filter is enabled for all bits specified by the hasher
      */
     default boolean contains(final Hasher hasher) {
@@ -122,7 +122,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * <p>Specifically this returns {@code true} if this filter is enabled for all bit indexes
      * identified by the {@code IndexExtractor}.</p>
      *
-     * @param indexExtractor the IndexExtractor to provide the indexes
+     * @param indexExtractor The IndexExtractor to provide the indexes
      * @return {@code true} if this filter is enabled for all bits specified by the IndexExtractor
      */
     boolean contains(IndexExtractor indexExtractor);

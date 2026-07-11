@@ -47,7 +47,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param constantToReturn  the constant object to return each time in the factory
+     * @param constantToReturn  The constant object to return each time in the factory
      * @return The {@code constant} factory.
      */
     public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
@@ -75,7 +75,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
      * Constructor that performs no validation.
      * Use {@code constantTransformer} if you want that.
      *
-     * @param constantToReturn  the constant to return each time
+     * @param constantToReturn  The constant to return each time
      */
     public ConstantTransformer(final R constantToReturn) {
         iConstant = constantToReturn;
@@ -121,7 +121,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
     /**
      * Transforms the input by ignoring it and returning the stored constant instead.
      *
-     * @param input  the input object which is ignored
+     * @param input  The input object which is ignored
      * @return The stored constant
      */
     @Override

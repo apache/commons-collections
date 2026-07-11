@@ -36,7 +36,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     /**
      * Constructor that decorates the specified iterator.
      *
-     * @param iterator  the iterator to decorate, must not be null
+     * @param iterator  The iterator to decorate, must not be null
      * @throws NullPointerException if the iterator is null
      */
     public AbstractListIteratorDecorator(final ListIterator<E> iterator) {

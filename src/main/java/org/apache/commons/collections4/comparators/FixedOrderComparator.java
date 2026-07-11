@@ -102,7 +102,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * <p>
      * The list is copied, so later changes will not affect the comparator.
      *
-     * @param items  the items that the comparator can compare in order
+     * @param items  The items that the comparator can compare in order
      * @throws NullPointerException if the list is null
      */
     public FixedOrderComparator(final List<T> items) {
@@ -117,7 +117,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * <p>
      * The array is copied, so later changes will not affect the comparator.
      *
-     * @param items  the items that the comparator can compare in order
+     * @param items  The items that the comparator can compare in order
      * @throws NullPointerException if the array is null
      */
     public FixedOrderComparator(final T... items) {
@@ -131,7 +131,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * If the item is already known to the Comparator, its old position is
      * replaced with the new position.
      *
-     * @param obj  the item to be added to the Comparator.
+     * @param obj  The item to be added to the Comparator.
      * @return true if obj has been added for the first time, false if
      *  it was already known to the Comparator.
      * @throws UnsupportedOperationException if a comparison has already been made
@@ -145,9 +145,9 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     /**
      * Adds a new item, which compares as equal to the given existing item.
      *
-     * @param existingObj  an item already in the Comparator's set of
+     * @param existingObj  An item already in the Comparator's set of
      *  known objects
-     * @param newObj  an item to be added to the Comparator's set of
+     * @param newObj  An item to be added to the Comparator's set of
      *  known objects
      * @return true if newObj has been added for the first time, false if
      *  it was already known to the Comparator.
@@ -183,8 +183,8 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * in the case of an unrecognized object. This is not specified in the
      * Comparator interface, but is the most appropriate exception.
      *
-     * @param obj1  the first object to compare
-     * @param obj2  the second object to compare
+     * @param obj1  The first object to compare
+     * @param obj2  The second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws IllegalArgumentException if obj1 or obj2 are not known
      *  to this Comparator and an alternative behavior has not been set
@@ -256,7 +256,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     /**
      * Sets the behavior for comparing unknown objects.
      *
-     * @param unknownObjectBehavior  the flag for unknown behavior -
+     * @param unknownObjectBehavior  The flag for unknown behavior -
      * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
      * @throws UnsupportedOperationException if a comparison has been performed
      * @throws NullPointerException if unknownObjectBehavior is null

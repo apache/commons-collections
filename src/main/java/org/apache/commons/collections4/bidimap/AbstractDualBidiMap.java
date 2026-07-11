@@ -68,7 +68,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param parent  the parent map
+         * @param parent  The parent map
          */
         protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
             this.parent = parent;
@@ -162,7 +162,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param parent  the parent BidiMap
+         * @param parent  The parent BidiMap
          */
         protected EntrySet(final AbstractDualBidiMap<K, V> parent) {
             super(parent.normalMap.entrySet(), parent);
@@ -212,8 +212,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param iterator  the iterator to decorate
-         * @param parent  the parent map
+         * @param iterator  The iterator to decorate
+         * @param parent  The parent map
          */
         protected EntrySetIterator(final Iterator<Map.Entry<K, V>> iterator, final AbstractDualBidiMap<K, V> parent) {
             super(iterator);
@@ -254,7 +254,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param parent  the parent BidiMap
+         * @param parent  The parent BidiMap
          */
         @SuppressWarnings("unchecked")
         protected KeySet(final AbstractDualBidiMap<K, ?> parent) {
@@ -301,8 +301,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param iterator  the iterator to decorate
-         * @param parent  the parent map
+         * @param iterator  The iterator to decorate
+         * @param parent  The parent map
          */
         protected KeySetIterator(final Iterator<K> iterator, final AbstractDualBidiMap<K, ?> parent) {
             super(iterator);
@@ -343,8 +343,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param entry  the entry to decorate
-         * @param parent  the parent map
+         * @param entry  The entry to decorate
+         * @param parent  The parent map
          */
         protected MapEntry(final Map.Entry<K, V> entry, final AbstractDualBidiMap<K, V> parent) {
             super(entry);
@@ -377,7 +377,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param parent  the parent BidiMap
+         * @param parent  The parent BidiMap
          */
         @SuppressWarnings("unchecked")
         protected Values(final AbstractDualBidiMap<?, V> parent) {
@@ -424,8 +424,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param iterator  the iterator to decorate
-         * @param parent  the parent map
+         * @param iterator  The iterator to decorate
+         * @param parent  The parent map
          */
         @SuppressWarnings("unchecked")
         protected ValuesIterator(final Iterator<V> iterator, final AbstractDualBidiMap<?, V> parent) {
@@ -470,8 +470,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         /**
          * Constructs a new instance.
          *
-         * @param coll  the collection view being decorated
-         * @param parent  the parent BidiMap
+         * @param coll  The collection view being decorated
+         * @param parent  The parent BidiMap
          */
         protected View(final Collection<E> coll, final AbstractDualBidiMap<K, V> parent) {
             super(coll);
@@ -608,8 +608,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * If you choose to do this then the subclass constructor must populate
      * the {@code maps[]} instance variable itself.
      *
-     * @param normalMap  the normal direction map
-     * @param reverseMap  the reverse direction map
+     * @param normalMap  The normal direction map
+     * @param reverseMap  The reverse direction map
      * @since 3.1
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap) {
@@ -623,9 +623,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Constructs a map that decorates the specified maps,
      * used by the subclass {@code createBidiMap} implementation.
      *
-     * @param normalMap  the normal direction map
-     * @param reverseMap  the reverse direction map
-     * @param inverseBidiMap  the inverse BidiMap
+     * @param normalMap  The normal direction map
+     * @param reverseMap  The reverse direction map
+     * @param inverseBidiMap  The inverse BidiMap
      */
     protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap,
                                   final BidiMap<V, K> inverseBidiMap) {
@@ -653,8 +653,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * Creates a new instance of the subclass.
      *
-     * @param normalMap  the normal direction map
-     * @param reverseMap  the reverse direction map
+     * @param normalMap  The normal direction map
+     * @param reverseMap  The reverse direction map
      * @param inverseMap  this map, which is the inverse in the new map
      * @return The bidi map
      */
@@ -664,7 +664,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Creates an entry set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return The entrySet iterator
      */
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
@@ -675,7 +675,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Creates a key set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return The keySet iterator
      */
     protected Iterator<K> createKeySetIterator(final Iterator<K> iterator) {
@@ -686,7 +686,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Creates a values iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return The values iterator
      */
     protected Iterator<V> createValuesIterator(final Iterator<V> iterator) {

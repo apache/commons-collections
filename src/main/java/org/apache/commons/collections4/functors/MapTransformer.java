@@ -42,7 +42,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param map the map, not cloned
+     * @param map The map, not cloned
      * @return The transformer
      */
     public static <I, O> Transformer<I, O> mapTransformer(final Map<? super I, ? extends O> map) {
@@ -59,7 +59,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
      * Constructor that performs no validation.
      * Use {@code mapTransformer} if you want that.
      *
-     * @param map  the map to use for lookup, not cloned
+     * @param map  The map to use for lookup, not cloned
      */
     private MapTransformer(final Map<? super T, ? extends R> map) {
         iMap = map;
@@ -78,7 +78,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
     /**
      * Transforms the input to result by looking it up in a {@code Map}.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

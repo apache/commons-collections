@@ -65,8 +65,8 @@ public class MultiSetUtils {
      * {@code containsOccurrences(multiSet, new HashMultiSet<>(coll))}.
      * </p>
      *
-     * @param superMultiSet the multiset to check against, must not be null
-     * @param subMultiSet the multiset whose occurrences must all be present, must not be null
+     * @param superMultiSet The multiset to check against, must not be null
+     * @param subMultiSet The multiset whose occurrences must all be present, must not be null
      * @return {@code true} if {@code superMultiSet} contains all occurrences in {@code subMultiSet}
      * @throws NullPointerException if either MultiSet is null
      * @since 4.6.0
@@ -116,8 +116,8 @@ public class MultiSetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param multiset the multiset to predicate, must not be null
-     * @param predicate the predicate for the multiset, must not be null
+     * @param multiset The multiset to predicate, must not be null
+     * @param predicate The predicate for the multiset, must not be null
      * @return A predicated multiset backed by the given multiset
      * @throws NullPointerException if the MultiSet or Predicate is null
      */
@@ -138,8 +138,8 @@ public class MultiSetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param multiset the sorted multiset to predicate, must not be null
-     * @param predicate the predicate for the multiset, must not be null
+     * @param multiset The sorted multiset to predicate, must not be null
+     * @param predicate The predicate for the multiset, must not be null
      * @return A predicated sorted multiset backed by the given sorted multiset
      * @throws NullPointerException if the SortedMultiSet or Predicate is null
      * @since 4.6.0
@@ -162,8 +162,8 @@ public class MultiSetUtils {
      * for example {@code removeOccurrences(multiSet, new HashMultiSet<>(coll))}.
      * </p>
      *
-     * @param multiSetToModify the multiset to remove occurrences from, must not be null
-     * @param occurrencesToRemove the occurrences to remove, must not be null
+     * @param multiSetToModify The multiset to remove occurrences from, must not be null
+     * @param occurrencesToRemove The occurrences to remove, must not be null
      * @return {@code true} if {@code multiSetToModify} was changed as a result of this operation
      * @throws NullPointerException if either MultiSet is null
      * @since 4.6.0
@@ -202,8 +202,8 @@ public class MultiSetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param multiSetToModify the multiset to limit occurrences in, must not be null
-     * @param occurrencesToRetain the occurrences to retain, must not be null
+     * @param multiSetToModify The multiset to limit occurrences in, must not be null
+     * @param occurrencesToRetain The occurrences to retain, must not be null
      * @return {@code true} if {@code multiSetToModify} was changed as a result of this operation
      * @throws NullPointerException if either MultiSet is null
      * @since 4.6.0
@@ -244,7 +244,7 @@ public class MultiSetUtils {
      * Failure to follow this advice may result in non-deterministic behavior.
      *
      * @param <E> The element type
-     * @param multiset the multiset to synchronize, must not be null
+     * @param multiset The multiset to synchronize, must not be null
      * @return A synchronized multiset backed by that multiset
      * @throws NullPointerException if the MultiSet is null
      */
@@ -274,7 +274,7 @@ public class MultiSetUtils {
      * Failure to follow this advice may result in non-deterministic behavior.
      *
      * @param <E> The element type
-     * @param multiset the sorted multiset to synchronize, must not be null
+     * @param multiset The sorted multiset to synchronize, must not be null
      * @return A synchronized sorted multiset backed by that multiset
      * @throws NullPointerException if the SortedMultiSet is null
      * @since 4.6.0
@@ -297,8 +297,8 @@ public class MultiSetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param multiset the multiset to transform, must not be null
-     * @param transformer the transformer for the multiset, must not be null
+     * @param multiset The multiset to transform, must not be null
+     * @param transformer The transformer for the multiset, must not be null
      * @return A transformed multiset backed by the given multiset
      * @throws NullPointerException if the MultiSet or Transformer is null
      * @since 4.6.0
@@ -322,8 +322,8 @@ public class MultiSetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param multiset the sorted multiset to transform, must not be null
-     * @param transformer the transformer for the multiset, must not be null
+     * @param multiset The sorted multiset to transform, must not be null
+     * @param transformer The transformer for the multiset, must not be null
      * @return A transformed sorted multiset backed by the given multiset
      * @throws NullPointerException if the SortedMultiSet or Transformer is null
      * @since 4.6.0
@@ -338,7 +338,7 @@ public class MultiSetUtils {
      * to the returned multiset will raise an {@link UnsupportedOperationException}.
      *
      * @param <E> The element type
-     * @param multiset the multiset whose unmodifiable view is to be returned, must not be null
+     * @param multiset The multiset whose unmodifiable view is to be returned, must not be null
      * @return An unmodifiable view of that multiset
      * @throws NullPointerException if the MultiSet is null
      */
@@ -352,7 +352,7 @@ public class MultiSetUtils {
      * {@link UnsupportedOperationException}.
      *
      * @param <E> The element type
-     * @param multiset the sorted multiset whose unmodifiable view is to be returned, must not be null
+     * @param multiset The sorted multiset whose unmodifiable view is to be returned, must not be null
      * @return An unmodifiable view of that sorted multiset
      * @throws NullPointerException if the SortedMultiSet is null
      * @since 4.6.0

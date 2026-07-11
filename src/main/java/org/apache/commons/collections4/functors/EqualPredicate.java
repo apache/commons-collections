@@ -38,7 +38,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      * Creates the predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      * @return The predicate
      */
     public static <T> Predicate<T> equalPredicate(final T object) {
@@ -52,8 +52,8 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      * Creates the identity predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param object  the object to compare to
-     * @param equator  the equator to use for comparison
+     * @param object  The object to compare to
+     * @param equator  The equator to use for comparison
      * @return The predicate
      * @since 4.0
      */
@@ -74,7 +74,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      * Constructor that performs no validation.
      * Use {@code equalPredicate} if you want that.
      *
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      */
     public EqualPredicate(final T object) {
         // do not use the DefaultEquator to keep backwards compatibility
@@ -86,8 +86,8 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      * Constructor that performs no validation.
      * Use {@code equalPredicate} if you want that.
      *
-     * @param test  the object to compare to
-     * @param equator  the equator to use for comparison
+     * @param test  The object to compare to
+     * @param equator  The equator to use for comparison
      * @since 4.0
      */
     public EqualPredicate(final T test, final Equator<T> equator) {
@@ -108,7 +108,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
     /**
      * Evaluates the predicate returning true if the input equals the stored value.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if input object equals stored value
      */
     @Override

@@ -38,7 +38,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     /**
      * Constructs a new {@code SingletonListIterator}.
      *
-     * @param object  the single object to return from the iterator
+     * @param object  The single object to return from the iterator
      */
     public SingletonListIterator(final E object) {
         this.object = object;
@@ -168,7 +168,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     /**
      * Sets sets the value of the singleton.
      *
-     * @param object  the object to set
+     * @param object  The object to set
      * @throws IllegalStateException if {@code next} has not been called
      *          or the object has been removed
      */

@@ -44,7 +44,7 @@ public abstract class AbstractNavigableSetDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     protected AbstractNavigableSetDecorator(final NavigableSet<E> set) {

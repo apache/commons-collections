@@ -64,7 +64,7 @@ public final class TruePredicate<T> extends AbstractPredicate<T> implements Seri
     /**
      * Evaluates the predicate returning true always.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true always
      */
     @Override

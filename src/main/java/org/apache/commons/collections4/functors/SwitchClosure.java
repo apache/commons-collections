@@ -49,7 +49,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      * </p>
      *
      * @param <E> The type that the closure acts on
-     * @param predicatesAndClosures  a map of predicates to closures
+     * @param predicatesAndClosures  A map of predicates to closures
      * @return The {@code switch} closure
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any closure in the map is null
@@ -82,7 +82,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      * @param <E> The type that the closure acts on
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls
-     * @param defaultClosure  the closure to use if no match, null means nop
+     * @param defaultClosure  The closure to use if no match, null means nop
      * @return The {@code chained} closure
      * @throws NullPointerException if array is null
      * @throws NullPointerException if any element in the array is null
@@ -118,7 +118,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      * @param clone  if {@code true} the input arguments will be cloned
      * @param predicates  array of predicates, no nulls
      * @param closures  matching array of closures, no nulls
-     * @param defaultClosure  the closure to use if no match, null means nop
+     * @param defaultClosure  The closure to use if no match, null means nop
      */
     private SwitchClosure(final boolean clone, final Predicate<? super T>[] predicates,
                           final Closure<? super T>[] closures, final Closure<? super T> defaultClosure) {
@@ -133,7 +133,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
      *
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls
-     * @param defaultClosure  the closure to use if no match, null means nop
+     * @param defaultClosure  The closure to use if no match, null means nop
      */
     public SwitchClosure(final Predicate<? super T>[] predicates, final Closure<? super T>[] closures,
                          final Closure<? super T> defaultClosure) {
@@ -143,7 +143,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
     /**
      * Executes the closure whose matching predicate returns true
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

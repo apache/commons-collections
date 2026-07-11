@@ -387,7 +387,7 @@ public class ListOrderedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @return A new list ordered map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -412,7 +412,7 @@ public class ListOrderedMap<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     protected ListOrderedMap(final Map<K, V> map) {
@@ -479,7 +479,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the key at the specified index.
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -490,7 +490,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the value at the specified index.
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -501,7 +501,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the index of the specified key.
      *
-     * @param key  the key to find the index of
+     * @param key  The key to find the index of
      * @return The index, or -1 if not found
      */
     public int indexOf(final Object key) {
@@ -560,7 +560,7 @@ public class ListOrderedMap<K, V>
      * Gets the next key to the one specified using insert order.
      * This method performs a list search to find the key and is O(n).
      *
-     * @param key  the key to find previous for
+     * @param key  The key to find previous for
      * @return The next key, null if no match or at start
      */
     @Override
@@ -576,7 +576,7 @@ public class ListOrderedMap<K, V>
      * Gets the previous key to the one specified using insert order.
      * This method performs a list search to find the key and is O(n).
      *
-     * @param key  the key to find previous for
+     * @param key  The key to find previous for
      * @return The previous key, null if no match or at start
      */
     @Override
@@ -602,9 +602,9 @@ public class ListOrderedMap<K, V>
      * would have been inserted had the remove not occurred.
      * </p>
      *
-     * @param index  the index at which the mapping should be inserted
-     * @param key  the key
-     * @param value  the value
+     * @param index  The index at which the mapping should be inserted
+     * @param key  The key
+     * @param value  The value
      * @return The value previously mapped to the key
      * @throws IndexOutOfBoundsException if the index is out of range [0, size]
      * @since 3.2
@@ -647,8 +647,8 @@ public class ListOrderedMap<K, V>
      * Puts the values contained in a supplied Map into the Map starting at
      * the specified index.
      *
-     * @param index the index in the Map to start at.
-     * @param map the Map containing the entries to be added.
+     * @param index The index in the Map to start at.
+     * @param map The Map containing the entries to be added.
      * @throws IndexOutOfBoundsException if the index is out of range [0, size]
      */
     public void putAll(int index, final Map<? extends K, ? extends V> map) {
@@ -681,7 +681,7 @@ public class ListOrderedMap<K, V>
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -698,7 +698,7 @@ public class ListOrderedMap<K, V>
     /**
      * Removes the element at the specified index.
      *
-     * @param index  the index of the object to remove
+     * @param index  The index of the object to remove
      * @return The removed value, or {@code null} if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -719,8 +719,8 @@ public class ListOrderedMap<K, V>
     /**
      * Sets the value at the specified index.
      *
-     * @param index  the index of the value to set
-     * @param value  the new value to set
+     * @param index  The index of the value to set
+     * @param value  The new value to set
      * @return The previous value at that index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.2
@@ -795,7 +795,7 @@ public class ListOrderedMap<K, V>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

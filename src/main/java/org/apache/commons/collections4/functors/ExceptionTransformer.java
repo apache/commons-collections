@@ -67,7 +67,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
     /**
      * Transforms the input to result by cloning it.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return never
      * @throws FunctorException always
      */

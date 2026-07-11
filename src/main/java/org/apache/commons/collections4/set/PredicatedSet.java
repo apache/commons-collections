@@ -52,8 +52,8 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * are validated.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @return A decorated set
      * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
@@ -69,8 +69,8 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * If there are any elements already in the set being decorated, they
      * are validated.
      *
-     * @param set  the set to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */

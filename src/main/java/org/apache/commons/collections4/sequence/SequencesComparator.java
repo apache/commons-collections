@@ -159,7 +159,7 @@ public class SequencesComparator<T> {
      *
      * @param sequence1  first sequence to be compared
      * @param sequence2  second sequence to be compared
-     * @param equator  the equator to use for testing object equality
+     * @param equator  The equator to use for testing object equality
      */
     public SequencesComparator(final List<T> sequence1, final List<T> sequence2, final Equator<? super T> equator) {
         this.sequence1 = sequence1;
@@ -174,11 +174,11 @@ public class SequencesComparator<T> {
     /**
      * Build an edit script.
      *
-     * @param start1  the start of the first sequence to be compared
-     * @param end1  the end of the first sequence to be compared
-     * @param start2  the start of the second sequence to be compared
-     * @param end2  the end of the second sequence to be compared
-     * @param script the edited script
+     * @param start1  The start of the first sequence to be compared
+     * @param end1  The end of the first sequence to be compared
+     * @param start2  The start of the second sequence to be compared
+     * @param end2  The end of the second sequence to be compared
+     * @param script The edited script
      */
     private void buildScript(final int start1, final int end1, final int start2, final int end2,
                              final EditScript<T> script) {
@@ -222,10 +222,10 @@ public class SequencesComparator<T> {
     /**
      * Build a snake.
      *
-     * @param start  the value of the start of the snake
-     * @param diag  the value of the diagonal of the snake
-     * @param end1  the value of the end of the first sequence to be compared
-     * @param end2  the value of the end of the second sequence to be compared
+     * @param start  The value of the start of the snake
+     * @param diag  The value of the diagonal of the snake
+     * @param end1  The value of the end of the first sequence to be compared
+     * @param end2  The value of the end of the second sequence to be compared
      * @return The snake built
      */
     private Snake buildSnake(final int start, final int diag, final int end1, final int end2) {
@@ -248,10 +248,10 @@ public class SequencesComparator<T> {
      * <a href="https://web.archive.org/web/20040719035900/http%3A//www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
      * An O(ND) Difference Algorithm and Its Variations</a>.
      *
-     * @param start1  the start of the first sequence to be compared
-     * @param end1  the end of the first sequence to be compared
-     * @param start2  the start of the second sequence to be compared
-     * @param end2  the end of the second sequence to be compared
+     * @param start1  The start of the first sequence to be compared
+     * @param end1  The end of the first sequence to be compared
+     * @param start2  The start of the second sequence to be compared
+     * @param end2  The end of the second sequence to be compared
      * @return The middle snake
      */
     private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2) {

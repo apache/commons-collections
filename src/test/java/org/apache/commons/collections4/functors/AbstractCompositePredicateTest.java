@@ -35,7 +35,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates a new {@code TestCompositePredicate}.
      *
-     * @param testValue the value which the mock predicates should expect to see (may be null).
+     * @param testValue The value which the mock predicates should expect to see (may be null).
      */
     protected AbstractCompositePredicateTest(final T testValue) {
         super(testValue);
@@ -44,7 +44,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param mockReturnValues the return values for the mock predicates, or null if that mock is not expected
+     * @param mockReturnValues The return values for the mock predicates, or null if that mock is not expected
      *                         to be called
      *
      * @return A predicate to test.
@@ -60,7 +60,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param predicates the argument to {@code getInstance}.
+     * @param predicates The argument to {@code getInstance}.
      * @return A predicate to test.
      */
     protected abstract Predicate<T> getPredicateInstance(Collection<Predicate<T>> predicates);
@@ -68,7 +68,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Creates an instance of the predicate to test.
      *
-     * @param predicates the arguments to {@code getInstance}.
+     * @param predicates The arguments to {@code getInstance}.
      * @return A predicate to test.
      */
     protected abstract Predicate<T> getPredicateInstance(Predicate<? super T>... predicates);

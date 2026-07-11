@@ -891,8 +891,8 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Utility methods to create an array of Map.Entry objects out of the given key and value arrays.
      *
-     * @param keys   the array of keys
-     * @param values the array of values
+     * @param keys   The array of keys
+     * @param values The array of values
      * @return An array of Map.Entry of those keys to those values
      */
     @SuppressWarnings("unchecked")

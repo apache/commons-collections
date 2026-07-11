@@ -80,8 +80,8 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * This method is equivalent to:
      * <pre>((Comparable)obj1).compareTo(obj2)</pre>
      *
-     * @param obj1  the first object to compare
-     * @param obj2  the second object to compare
+     * @param obj1  The first object to compare
+     * @param obj2  The second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws NullPointerException if <em>obj1</em> is {@code null},
      *         or when {@code ((Comparable)obj1).compareTo(obj2)} does
@@ -102,7 +102,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * {@code this.getClass()}. Subclasses may want to override this behavior to remain
      * consistent with the {@link Comparator#equals(Object)} contract.
      *
-     * @param object  the object to compare with
+     * @param object  The object to compare with
      * @return {@code true} if equal
      * @since 3.0
      */

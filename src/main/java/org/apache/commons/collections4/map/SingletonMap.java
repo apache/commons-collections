@@ -213,8 +213,8 @@ public class SingletonMap<K, V>
     /**
      * Constructor specifying the key and value.
      *
-     * @param key  the key to use
-     * @param value  the value to use
+     * @param key  The key to use
+     * @param value  The value to use
      */
     public SingletonMap(final K key, final V value) {
         this.key = key;
@@ -224,7 +224,7 @@ public class SingletonMap<K, V>
     /**
      * Constructor specifying the key and value as a {@code KeyValue}.
      *
-     * @param keyValue  the key value pair to use
+     * @param keyValue  The key value pair to use
      */
     public SingletonMap(final KeyValue<K, V> keyValue) {
         this.key = keyValue.getKey();
@@ -234,7 +234,7 @@ public class SingletonMap<K, V>
     /**
      * Constructor specifying the key and value as a {@code MapEntry}.
      *
-     * @param mapEntry  the mapEntry to use
+     * @param mapEntry  The mapEntry to use
      */
     public SingletonMap(final Map.Entry<? extends K, ? extends V> mapEntry) {
         this.key = mapEntry.getKey();
@@ -244,7 +244,7 @@ public class SingletonMap<K, V>
     /**
      * Constructor copying elements from another map.
      *
-     * @param map  the map to copy, must be size 1
+     * @param map  The map to copy, must be size 1
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the size is not 1
      */
@@ -285,7 +285,7 @@ public class SingletonMap<K, V>
     /**
      * Checks whether the map contains the specified key.
      *
-     * @param key  the key to search for
+     * @param key  The key to search for
      * @return true if the map contains the key
      */
     @Override
@@ -296,7 +296,7 @@ public class SingletonMap<K, V>
     /**
      * Checks whether the map contains the specified value.
      *
-     * @param value  the value to search for
+     * @param value  The value to search for
      * @return true if the map contains the key
      */
     @Override
@@ -320,7 +320,7 @@ public class SingletonMap<K, V>
     /**
      * Compares this map with another.
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal
      */
     @Override
@@ -352,7 +352,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the value mapped to the key specified.
      *
-     * @param key  the key
+     * @param key  The key
      * @return The mapped value, null if no match
      */
     @Override
@@ -407,7 +407,7 @@ public class SingletonMap<K, V>
     /**
      * Compares the specified key to the stored key.
      *
-     * @param key  the key to compare
+     * @param key  The key to compare
      * @return true if equal
      */
     protected boolean isEqualKey(final Object key) {
@@ -417,7 +417,7 @@ public class SingletonMap<K, V>
     /**
      * Compares the specified value to the stored value.
      *
-     * @param value  the value to compare
+     * @param value  The value to compare
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value) {
@@ -477,7 +477,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the next key after the key specified, always null.
      *
-     * @param key  the next key
+     * @param key  The next key
      * @return null always
      */
     @Override
@@ -488,7 +488,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the previous key before the key specified, always null.
      *
-     * @param key  the next key
+     * @param key  The next key
      * @return null always
      */
     @Override
@@ -503,8 +503,8 @@ public class SingletonMap<K, V>
      * is fixed size.
      * </p>
      *
-     * @param key  the key to set, must be the key of the map
-     * @param value  the value to set
+     * @param key  The key to set, must be the key of the map
+     * @param value  The value to set
      * @return The value previously mapped to this key, null if none
      * @throws IllegalArgumentException if the key does not match
      */
@@ -524,7 +524,7 @@ public class SingletonMap<K, V>
      * IllegalArgumentException is thrown.
      * </p>
      *
-     * @param map  the map to add, must be size 0 or 1, and the key must match
+     * @param map  The map to add, must be size 0 or 1, and the key must match
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the key does not match
      */
@@ -558,7 +558,7 @@ public class SingletonMap<K, V>
     /**
      * Sets the value.
      *
-     * @param value  the new value to set
+     * @param value  The new value to set
      * @return The old value
      */
     public V setValue(final V value) {

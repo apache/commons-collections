@@ -52,7 +52,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections4.functors.ConstantFactory
      * @param <T> The type that the factory creates
-     * @param constantToReturn  the constant object to return each time in the factory
+     * @param constantToReturn  The constant object to return each time in the factory
      * @return The {@code constant} factory.
      */
     public static <T> Factory<T> constantFactory(final T constantToReturn) {
@@ -77,7 +77,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections4.functors.InstantiateFactory
      * @param <T> The type that the factory creates
-     * @param classToInstantiate  the Class to instantiate each time in the factory
+     * @param classToInstantiate  The Class to instantiate each time in the factory
      * @return The {@code reflection} factory
      * @throws NullPointerException if the classToInstantiate is null
      */
@@ -91,9 +91,9 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections4.functors.InstantiateFactory
      * @param <T> The type that the factory creates
-     * @param classToInstantiate  the Class to instantiate each time in the factory
+     * @param classToInstantiate  The Class to instantiate each time in the factory
      * @param paramTypes  parameter types for the constructor, can be null
-     * @param args  the arguments to pass to the constructor, can be null
+     * @param args  The arguments to pass to the constructor, can be null
      * @return The {@code reflection} factory
      * @throws NullPointerException if the classToInstantiate is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
@@ -129,7 +129,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections4.functors.PrototypeFactory
      * @param <T> The type that the factory creates
-     * @param prototype  the object to clone each time in the factory
+     * @param prototype  The object to clone each time in the factory
      * @return The {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned

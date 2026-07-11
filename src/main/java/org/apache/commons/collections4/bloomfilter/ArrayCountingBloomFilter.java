@@ -94,7 +94,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Constructs an empty counting Bloom filter with the specified shape.
      *
-     * @param shape the shape of the filter
+     * @param shape The shape of the filter
      */
     public ArrayCountingBloomFilter(final Shape shape) {
         Objects.requireNonNull(shape, "shape");
@@ -112,8 +112,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Add to the cell for the bit index.
      *
-     * @param idx the index
-     * @param addend the amount to add
+     * @param idx The index
+     * @param addend The amount to add
      * @return {@code true} always.
      */
     private boolean add(final int idx, final int addend) {
@@ -273,8 +273,8 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Subtracts from the cell for the bit index.
      *
-     * @param idx the index
-     * @param subtrahend the amount to subtract
+     * @param idx The index
+     * @param subtrahend The amount to subtract
      * @return {@code true} always.
      */
     private boolean subtract(final int idx, final int subtrahend) {

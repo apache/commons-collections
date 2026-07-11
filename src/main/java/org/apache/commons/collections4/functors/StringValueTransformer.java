@@ -65,7 +65,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     /**
      * Transforms the input to result by calling {@code String.valueOf}.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

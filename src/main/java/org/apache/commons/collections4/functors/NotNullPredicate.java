@@ -64,7 +64,7 @@ public final class NotNullPredicate<T> extends AbstractPredicate<T> implements S
     /**
      * Evaluates the predicate returning true if the object does not equal null.
      *
-     * @param object  the object to evaluate
+     * @param object  The object to evaluate
      * @return true if not null
      */
     @Override

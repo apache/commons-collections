@@ -67,9 +67,9 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyPredicate  the predicate to validate the keys, null means no check
-     * @param valuePredicate  the predicate to validate to values, null means no check
+     * @param map  The map to decorate, must not be null
+     * @param keyPredicate  The predicate to validate the keys, null means no check
+     * @param valuePredicate  The predicate to validate to values, null means no check
      * @return A new predicated sorted map
      * @throws NullPointerException if the map is null
      * @since 4.0
@@ -82,9 +82,9 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
-     * @param keyPredicate  the predicate to validate the keys, null means no check
-     * @param valuePredicate  the predicate to validate to values, null means no check
+     * @param map  The map to decorate, must not be null
+     * @param keyPredicate  The predicate to validate the keys, null means no check
+     * @param valuePredicate  The predicate to validate to values, null means no check
      * @throws NullPointerException if the map is null
      */
     protected PredicatedSortedMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,

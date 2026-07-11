@@ -113,7 +113,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Executes the true or false closure according to the result of the predicate.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

@@ -84,7 +84,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
         /**
          * Sets the Consumer that cleans the list of Bloom filters.
          *
-         * @param cleanup the Consumer that will modify the list of filters removing out
+         * @param cleanup The Consumer that will modify the list of filters removing out
          *                dated or stale filters.
          * @return {@code this} instance.
          */
@@ -142,7 +142,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
          * exceeds maxSize.
          *
          * @param <T> Type of BloomFilter.
-         * @param maxSize the maximum number of filters for the list. Must be greater
+         * @param maxSize The maximum number of filters for the list. Must be greater
          *                than 0
          * @return A Consumer suitable for the LayerManager {@code cleanup} parameter.
          * @throws IllegalArgumentException if {@code maxSize <= 0}.
@@ -199,7 +199,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
          * the current target.
          *
          * @param <T> Type of BloomFilter.
-         * @param breakAt the number of filters to merge into each filter in the list.
+         * @param breakAt The number of filters to merge into each filter in the list.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code breakAt <= 0}
          */
@@ -239,7 +239,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
          * {@code ExtendCheck.advanceOnSaturation(shape.estimateMaxN()) }</p>
          *
          * @param <T> Type of BloomFilter.
-         * @param maxN the maximum number of estimated items in the filter.
+         * @param maxN The maximum number of estimated items in the filter.
          * @return A Predicate suitable for the LayerManager {@code extendCheck} parameter.
          * @throws IllegalArgumentException if {@code maxN <= 0}
          */
@@ -292,11 +292,11 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
     /**
      * Constructs a new instance.
      *
-     * @param filterSupplier the non-null supplier of new Bloom filters to add the list
+     * @param filterSupplier The non-null supplier of new Bloom filters to add the list
      *                       when necessary.
      * @param extendCheck    The non-null predicate that checks if a new filter should be
      *                       added to the list.
-     * @param filterCleanup  the non-null consumer that removes any old filters from the
+     * @param filterCleanup  The non-null consumer that removes any old filters from the
      *                       list.
      * @param initialize     true if the filter list should be initialized.
      */
@@ -373,7 +373,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * Gets the Bloom filter at the specified depth. The filter at depth 0 is the
      * oldest filter.
      *
-     * @param depth the depth at which the desired filter is to be found.
+     * @param depth The depth at which the desired filter is to be found.
      * @return The filter.
      * @throws NoSuchElementException if depth is not in the range
      *                                [0,filters.size())
@@ -440,7 +440,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * Executes a Bloom filter Predicate on each Bloom filter in the manager in
      * depth order. Oldest filter first.
      *
-     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
+     * @param bloomFilterPredicate The predicate to evaluate each Bloom filter with.
      * @return {@code false} when the a filter fails the predicate test. Returns
      *         {@code true} if all filters pass the test.
      */

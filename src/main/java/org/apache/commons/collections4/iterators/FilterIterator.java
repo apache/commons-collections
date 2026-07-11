@@ -57,7 +57,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
      * Constructs a new {@code FilterIterator} that will not function
      * until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public FilterIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -67,8 +67,8 @@ public class FilterIterator<E> implements IteratorOperations<E> {
      * Constructs a new {@code FilterIterator} that will use the
      * given iterator and predicate.
      *
-     * @param iterator  the iterator to use
-     * @param predicate  the predicate to use, null accepts all values.
+     * @param iterator  The iterator to use
+     * @param predicate  The predicate to use, null accepts all values.
      */
     public FilterIterator(final Iterator<? extends E> iterator, final Predicate<? super E> predicate) {
         this.iterator = iterator;
@@ -149,7 +149,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public void setIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -176,7 +176,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
     /**
      * Sets the predicate this the iterator to use where null accepts all values.
      *
-     * @param predicate  the predicate to use, null accepts all values.
+     * @param predicate  The predicate to use, null accepts all values.
      */
     public void setPredicate(final Predicate<? super E> predicate) {
         this.predicate = safePredicate(predicate);

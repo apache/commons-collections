@@ -48,7 +48,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     /**
      * Constructs a new instance.
      *
-     * @param map  the map to iterate over
+     * @param map  The map to iterate over
      */
     public EntrySetMapIterator(final Map<K, V> map) {
         this.map = map;
@@ -141,7 +141,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     /**
      * Sets the value associated with the current key.
      *
-     * @param value  the new value
+     * @param value  The new value
      * @return The previous value
      * @throws UnsupportedOperationException if setValue is not supported by the map
      * @throws IllegalStateException if {@code next()} has not yet been called

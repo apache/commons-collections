@@ -127,8 +127,8 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed after adding to the MultiKey.
      * </p>
      *
-     * @param key1  the first key
-     * @param key2  the second key
+     * @param key1  The first key
+     * @param key2  The second key
      */
     public MultiKey(final K key1, final K key2) {
         this(newArray(key1, key2), false);
@@ -141,9 +141,9 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed after adding to the MultiKey.
      * </p>
      *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
+     * @param key1  The first key
+     * @param key2  The second key
+     * @param key3  The third key
      */
     public MultiKey(final K key1, final K key2, final K key3) {
         this(newArray(key1, key2, key3), false);
@@ -156,10 +156,10 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed after adding to the MultiKey.
      * </p>
      *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
+     * @param key1  The first key
+     * @param key2  The second key
+     * @param key3  The third key
+     * @param key4  The fourth key
      */
     public MultiKey(final K key1, final K key2, final K key3, final K key4) {
         this(newArray(key1, key2, key3, key4), false);
@@ -172,11 +172,11 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed after adding to the MultiKey.
      * </p>
      *
-     * @param key1  the first key
-     * @param key2  the second key
-     * @param key3  the third key
-     * @param key4  the fourth key
-     * @param key5  the fifth key
+     * @param key1  The first key
+     * @param key2  The second key
+     * @param key3  The third key
+     * @param key4  The fourth key
+     * @param key5  The fifth key
      */
     public MultiKey(final K key1, final K key2, final K key3, final K key4, final K key5) {
         this(newArray(key1, key2, key3, key4, key5), false);
@@ -192,7 +192,7 @@ public class MultiKey<K> implements Serializable {
      * This is equivalent to {@code new MultiKey(keys, true)}.
      * </p>
      *
-     * @param keys  the array of keys, not null
+     * @param keys  The array of keys, not null
      * @throws NullPointerException if the key array is null
      */
     public MultiKey(final K[] keys) {
@@ -221,7 +221,7 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed after adding to the MultiKey.
      * </p>
      *
-     * @param keys  the array of keys, not null
+     * @param keys  The array of keys, not null
      * @param makeClone  true to clone the array, false to assign it
      * @throws NullPointerException if the key array is null
      * @since 3.1
@@ -235,7 +235,7 @@ public class MultiKey<K> implements Serializable {
     /**
      * Calculate the hash code of the instance using the provided keys.
      *
-     * @param keys the keys to calculate the hash code for
+     * @param keys The keys to calculate the hash code for
      */
     private void calculateHashCode(final Object[] keys) {
         int total = 0;
@@ -254,7 +254,7 @@ public class MultiKey<K> implements Serializable {
      * same number of keys which are also equal.
      * </p>
      *
-     * @param other  the other object to compare to
+     * @param other  The other object to compare to
      * @return true if equal
      */
     @Override
@@ -276,7 +276,7 @@ public class MultiKey<K> implements Serializable {
      * If it is not then it must not be changed.
      * </p>
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The key at the index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.1

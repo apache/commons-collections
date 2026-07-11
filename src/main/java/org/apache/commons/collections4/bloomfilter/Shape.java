@@ -101,8 +101,8 @@ public final class Shape {
      * Calculates the number of hash functions given numberOfItems and numberOfBits.
      * This is a method so that the calculation is consistent across all constructors.
      *
-     * @param numberOfItems the number of items in the filter.
-     * @param numberOfBits the number of bits in the filter.
+     * @param numberOfItems The number of items in the filter.
+     * @param numberOfBits The number of bits in the filter.
      * @return The optimal number of hash functions.
      * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
      */
@@ -128,7 +128,7 @@ public final class Shape {
      * performed once upon construction.
      * </p>
      *
-     * @param probability the probability
+     * @param probability The probability
      * @throws IllegalArgumentException if the probability is {@code >= 1.0}.
      */
     private static void checkCalculatedProbability(final double probability) {
@@ -144,7 +144,7 @@ public final class Shape {
     /**
      * Checks number of bits is strictly positive.
      *
-     * @param numberOfBits the number of bits
+     * @param numberOfBits The number of bits
      * @return The number of bits
      * @throws IllegalArgumentException if the number of bits is {@code < 1}.
      */
@@ -158,7 +158,7 @@ public final class Shape {
     /**
      * Checks number of hash functions is strictly positive.
      *
-     * @param numberOfHashFunctions the number of hash functions
+     * @param numberOfHashFunctions The number of hash functions
      * @return The number of hash functions
      * @throws IllegalArgumentException if the number of hash functions is {@code < 1}.
      */
@@ -172,7 +172,7 @@ public final class Shape {
     /**
      * Checks number of items is strictly positive.
      *
-     * @param numberOfItems the number of items
+     * @param numberOfItems The number of items
      * @return The number of items
      * @throws IllegalArgumentException if the number of items is {@code < 1}.
      */
@@ -186,7 +186,7 @@ public final class Shape {
     /**
      * Checks the probability is in the range 0.0, exclusive, to 1.0, exclusive.
      *
-     * @param probability the probability
+     * @param probability The probability
      * @throws IllegalArgumentException if the probability is not in the range {@code (0, 1)}
      */
     private static void checkProbability(final double probability) {
@@ -406,7 +406,7 @@ public final class Shape {
      * <li> if cardinality &gt; numberOfBits, then result is NaN.</li>
      * </ul>
      *
-     * @param cardinality the number of enabled  bits also known as the hamming value.
+     * @param cardinality The number of enabled  bits also known as the hamming value.
      * @return An estimate of the number of items in the Bloom filter.
      */
     public double estimateN(final int cardinality) {
@@ -449,7 +449,7 @@ public final class Shape {
      * Thus, this returns the worst-case false positive probability for a filter that has not
      * exceeded its expected number of items.</p>
      *
-     * @param numberOfItems the number of items hashed into the Bloom filter.
+     * @param numberOfItems The number of items hashed into the Bloom filter.
      * @return The probability of false positives.
      */
     public double getProbability(final int numberOfItems) {
@@ -474,7 +474,7 @@ public final class Shape {
      * necessary to store the cardinality as indexes is less than the estimated memory for bit maps,
      * the cardinality is determined to be {@code sparse}.</p>
      *
-     * @param cardinality the cardinality to check.
+     * @param cardinality The cardinality to check.
      * @return true if the cardinality is sparse within the shape.
      */
     public boolean isSparse(final int cardinality) {

@@ -80,7 +80,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Constructs a new {@code FilterListIterator} that will not
      * function until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -89,8 +89,8 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Constructs a new {@code FilterListIterator}.
      *
-     * @param iterator  the iterator to use
-     * @param predicate  the predicate to use
+     * @param iterator  The iterator to use
+     * @param predicate  The predicate to use
      */
     public FilterListIterator(final ListIterator<? extends E> iterator, final Predicate<? super E> predicate) {
         this.iterator = iterator;
@@ -101,7 +101,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Constructs a new {@code FilterListIterator} that will not function
      * until {@link #setListIterator(ListIterator) setListIterator} is invoked.
      *
-     * @param predicate  the predicate to use.
+     * @param predicate  The predicate to use.
      */
     public FilterListIterator(final Predicate<? super E> predicate) {
         this.predicate = predicate;
@@ -213,7 +213,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
      *
-     * @param iterator  the iterator to use
+     * @param iterator  The iterator to use
      */
     public void setListIterator(final ListIterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -249,7 +249,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Sets the predicate this the iterator to use.
      *
-     * @param predicate  the transformer to use
+     * @param predicate  The transformer to use
      */
     public void setPredicate(final Predicate<? super E> predicate) {
         this.predicate = predicate;

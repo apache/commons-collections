@@ -50,7 +50,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * Creates a synchronized collection.
      *
      * @param <T> The type of the elements in the collection
-     * @param coll  the collection to decorate, must not be null
+     * @param coll  The collection to decorate, must not be null
      * @return A new synchronized collection
      * @throws NullPointerException if collection is null
      * @since 4.0
@@ -68,7 +68,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null
+     * @param collection  The collection to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
     protected SynchronizedCollection(final Collection<E> collection) {
@@ -79,8 +79,8 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null
-     * @param lock  the lock object to use, must not be null
+     * @param collection  The collection to decorate, must not be null
+     * @param lock  The lock object to use, must not be null
      * @throws NullPointerException if the collection or lock is null
      */
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {

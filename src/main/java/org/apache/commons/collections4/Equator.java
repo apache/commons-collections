@@ -34,8 +34,8 @@ public interface Equator<T> {
     /**
      * Evaluates the two arguments for their equality.
      *
-     * @param o1 the first object to be equated.
-     * @param o2 the second object to be equated.
+     * @param o1 The first object to be equated.
+     * @param o2 The second object to be equated.
      * @return whether the two objects are equal.
      */
     boolean equate(T o1, T o2);
@@ -46,7 +46,7 @@ public interface Equator<T> {
      * Equator (and so must also delegate their {@link Object#hashCode() hashCode()} method), or for implementations
      * of {@link HashedMap} that use an Equator for the key objects.
      *
-     * @param o the object to calculate the hash for.
+     * @param o The object to calculate the hash for.
      * @return The hash of the object.
      */
     int hash(T o);

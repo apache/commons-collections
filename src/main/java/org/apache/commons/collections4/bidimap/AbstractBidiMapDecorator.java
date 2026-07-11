@@ -46,7 +46,7 @@ public abstract class AbstractBidiMapDecorator<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
     protected AbstractBidiMapDecorator(final BidiMap<K, V> map) {

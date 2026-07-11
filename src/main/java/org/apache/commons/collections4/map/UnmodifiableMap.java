@@ -57,7 +57,7 @@ public final class UnmodifiableMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @return A new unmodifiable map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -74,7 +74,7 @@ public final class UnmodifiableMap<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
@@ -139,7 +139,7 @@ public final class UnmodifiableMap<K, V>
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -169,7 +169,7 @@ public final class UnmodifiableMap<K, V>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

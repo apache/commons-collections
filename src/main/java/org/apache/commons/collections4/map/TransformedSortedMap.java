@@ -63,9 +63,9 @@ public class TransformedSortedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
-     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  The transformer to use for value conversion, null means no transformation
      * @return A new transformed sorted map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -93,9 +93,9 @@ public class TransformedSortedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the predicate to validate the keys, null means no transformation
-     * @param valueTransformer  the predicate to validate to values, null means no transformation
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The predicate to validate the keys, null means no transformation
+     * @param valueTransformer  The predicate to validate to values, null means no transformation
      * @return A new transformed sorted map
      * @throws NullPointerException if the map is null
      * @since 4.0
@@ -113,9 +113,9 @@ public class TransformedSortedMap<K, V>
      * are NOT transformed.
      * </p>
      *
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the predicate to validate the keys, null means no transformation
-     * @param valueTransformer  the predicate to validate to values, null means no transformation
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The predicate to validate the keys, null means no transformation
+     * @param valueTransformer  The predicate to validate to values, null means no transformation
      * @throws NullPointerException if the map is null
      */
     protected TransformedSortedMap(final SortedMap<K, V> map,

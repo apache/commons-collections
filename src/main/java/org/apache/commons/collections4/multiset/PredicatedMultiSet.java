@@ -55,8 +55,8 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      * are validated.
      *
      * @param <E> The type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @return A new predicated MultiSet
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
@@ -73,8 +73,8 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      * are validated.
      * </p>
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if multiset or predicate is null
      * @throws IllegalArgumentException if the multiset contains invalid elements
      */

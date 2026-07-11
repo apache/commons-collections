@@ -206,7 +206,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the initial capacity. The implementation performs internal sizing to accommodate this many elements.
          *
-         * @param initialCapacity the initial capacity.
+         * @param initialCapacity The initial capacity.
          * @return {@code this} instance.
          */
         public Builder<K, V> setInitialCapacity(final int initialCapacity) {
@@ -217,7 +217,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the reference type to use for keys.
          *
-         * @param keyReferenceType the reference type to use for keys.
+         * @param keyReferenceType The reference type to use for keys.
          * @return {@code this} instance.
          */
         public Builder<K, V> setKeyReferenceType(final ReferenceType keyReferenceType) {
@@ -228,7 +228,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the load factor factor, used to control resizing. Resizing may be performed when the average number of elements per bin exceeds this threshold.
          *
-         * @param loadFactor the load factor factor, used to control resizing
+         * @param loadFactor The load factor factor, used to control resizing
          * @return {@code this} instance.
          */
         public Builder<K, V> setLoadFactor(final float loadFactor) {
@@ -239,7 +239,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the behavioral options.
          *
-         * @param options the behavioral options.
+         * @param options The behavioral options.
          * @return {@code this} instance.
          */
         public Builder<K, V> setOptions(final EnumSet<Option> options) {
@@ -250,7 +250,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the values to load into a new map.
          *
-         * @param sourceMap the values to load into a new map.
+         * @param sourceMap The values to load into a new map.
          * @return {@code this} instance.
          */
         public Builder<K, V> setSourceMap(final Map<? extends K, ? extends V> sourceMap) {
@@ -261,7 +261,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         /**
          * Sets the reference type to use for values.
          *
-         * @param valueReferenceType the reference type to use for values.
+         * @param valueReferenceType The reference type to use for values.
          * @return {@code this} instance.
          */
         public Builder<K, V> setValueReferenceType(final ReferenceType valueReferenceType) {
@@ -1438,14 +1438,14 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * Behavioral changing options such as {@link Option#IDENTITY_COMPARISONS} can also be specified.
      * </p>
      *
-     * @param initialCapacity  the initial capacity. The implementation performs internal sizing to accommodate this many elements.
-     * @param loadFactor       the load factor threshold, used to control resizing. Resizing may be performed when the average number of elements per bin
+     * @param initialCapacity  The initial capacity. The implementation performs internal sizing to accommodate this many elements.
+     * @param loadFactor       The load factor threshold, used to control resizing. Resizing may be performed when the average number of elements per bin
      *                         exceeds this threshold.
-     * @param concurrencyLevel the estimated number of concurrently updating threads. The implementation performs internal sizing to try to accommodate this
+     * @param concurrencyLevel The estimated number of concurrently updating threads. The implementation performs internal sizing to try to accommodate this
      *                         many threads.
-     * @param keyType          the reference type to use for keys.
-     * @param valueType        the reference type to use for values.
-     * @param options          the behavioral options.
+     * @param keyType          The reference type to use for keys.
+     * @param valueType        The reference type to use for values.
+     * @param options          The behavioral options.
      * @throws IllegalArgumentException if the initial capacity is negative or the load factor or concurrencyLevel are nonpositive.
      */
     private ConcurrentReferenceHashMap(int initialCapacity, final float loadFactor, int concurrencyLevel, final ReferenceType keyType,
@@ -1774,7 +1774,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     /**
      * Removes the key (and its corresponding value) from this map. This method does nothing if the key is not in the map.
      *
-     * @param key the key that needs to be removed
+     * @param key The key that needs to be removed
      * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}
      * @throws NullPointerException if the specified key is null
      */
@@ -1827,7 +1827,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     /**
      * Returns the segment that should be used for key with given hash
      *
-     * @param hash the hash code for the key
+     * @param hash The hash code for the key
      * @return The segment
      */
     private Segment<K, V> segmentFor(final int hash) {

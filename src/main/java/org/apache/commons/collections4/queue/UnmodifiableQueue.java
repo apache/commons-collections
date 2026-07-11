@@ -49,7 +49,7 @@ public final class UnmodifiableQueue<E>
      * If the queue passed in is already unmodifiable, it is returned.
      *
      * @param <E> The type of the elements in the queue
-     * @param queue  the queue to decorate, must not be null
+     * @param queue  The queue to decorate, must not be null
      * @return An unmodifiable Queue
      * @throws NullPointerException if queue is null
      */
@@ -65,7 +65,7 @@ public final class UnmodifiableQueue<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param queue  the queue to decorate, must not be null
+     * @param queue  The queue to decorate, must not be null
      * @throws NullPointerException if queue is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
@@ -134,7 +134,7 @@ public final class UnmodifiableQueue<E>
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an I/O error occurs while reading from the input stream
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
@@ -202,7 +202,7 @@ public final class UnmodifiableQueue<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

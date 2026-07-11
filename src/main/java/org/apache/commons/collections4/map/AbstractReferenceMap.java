@@ -206,11 +206,11 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Creates a new entry object for the ReferenceMap.
          *
-         * @param parent  the parent map
-         * @param next  the next entry in the hash bucket
-         * @param hashCode  the hash code of the key
-         * @param key  the key
-         * @param value  the value
+         * @param parent  The parent map
+         * @param next  The next entry in the hash bucket
+         * @param hashCode  The hash code of the key
+         * @param key  The key
+         * @param value  The value
          */
         public ReferenceEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next,
                               final int hashCode, final K key, final V value) {
@@ -227,7 +227,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * {@code isEqualValue} on the main map for comparison.
          * </p>
          *
-         * @param obj  the other map entry to compare to
+         * @param obj  The other map entry to compare to
          * @return true if equal, false if not
          */
         @Override
@@ -313,7 +313,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Purges the specified reference
          *
-         * @param ref  the reference to purge
+         * @param ref  The reference to purge
          * @return true or false
          */
         protected boolean purge(final Reference<?> ref) {
@@ -335,7 +335,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Sets the value of the entry.
          *
-         * @param value  the object to store
+         * @param value  The object to store
          * @return The previous value
          */
         @Override
@@ -355,8 +355,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          *
          * @param <T> The type of the referenced object
          * @param type  HARD, SOFT or WEAK
-         * @param referent  the object to refer to
-         * @param hash  the hash code of the <em>key</em> of the mapping;
+         * @param referent  The object to refer to
+         * @param hash  The hash code of the <em>key</em> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
          * @return The reference to the object
@@ -522,7 +522,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Resolve enum from int.
          *
-         * @param value  the int value
+         * @param value  The int value
          * @return ReferenceType
          * @throws IllegalArgumentException if the specified value is invalid.
          */
@@ -686,16 +686,16 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Constructs a new empty map with the specified reference types,
      * load factor and initial capacity.
      *
-     * @param keyType  the type of reference to use for keys;
+     * @param keyType  The type of reference to use for keys;
      *   must be {@link ReferenceStrength#HARD HARD},
      *   {@link ReferenceStrength#SOFT SOFT},
      *   {@link ReferenceStrength#WEAK WEAK}
-     * @param valueType  the type of reference to use for values;
+     * @param valueType  The type of reference to use for values;
      *   must be {@link ReferenceStrength#HARD},
      *   {@link ReferenceStrength#SOFT SOFT},
      *   {@link ReferenceStrength#WEAK WEAK}
-     * @param capacity  the initial capacity for the map
-     * @param loadFactor  the load factor for the map
+     * @param capacity  The initial capacity for the map
+     * @param loadFactor  The load factor for the map
      * @param purgeValues  should the value be automatically purged when the
      *   key is garbage collected
      */
@@ -722,7 +722,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Checks whether the map contains the specified key.
      *
-     * @param key  the key to search for
+     * @param key  The key to search for
      * @return true if the map contains the key
      */
     @Override
@@ -738,7 +738,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Checks whether the map contains the specified value.
      *
-     * @param value  the value to search for
+     * @param value  The value to search for
      * @return true if the map contains the value
      */
     @Override
@@ -753,10 +753,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Creates a ReferenceEntry instead of a HashEntry.
      *
-     * @param next  the next entry in sequence
-     * @param hashCode  the hash code to use
-     * @param key  the key to store
-     * @param value  the value to store
+     * @param next  The next entry in sequence
+     * @param hashCode  The hash code to use
+     * @param key  The key to store
+     * @param value  The value to store
      * @return The newly created entry
      */
     @Override
@@ -813,7 +813,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * before {@code put()} or {@code calculateThreshold()} will work correctly.
      * </p>
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -869,7 +869,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * what must be serialized here, if anything.
      * </p>
      *
-     * @param out  the output stream
+     * @param out  The output stream
      * @throws IOException if an error occurs while writing to the stream
      */
     @Override
@@ -905,7 +905,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Gets the value mapped to the key specified.
      *
-     * @param key  the key
+     * @param key  The key
      * @return The mapped value, null if no match
      */
     @Override
@@ -921,7 +921,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Gets the entry mapped to the key specified.
      *
-     * @param key  the key
+     * @param key  The key
      * @return The entry, null if no match
      */
     @Override
@@ -936,8 +936,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Gets the hash code for a MapEntry.
      * Subclasses can override this, for example to use the identityHashCode.
      *
-     * @param key  the key to get a hash code for, may be null
-     * @param value  the value to get a hash code for, may be null
+     * @param key  The key to get a hash code for, may be null
+     * @param value  The value to get a hash code for, may be null
      * @return The hash code, as per the MapEntry specification
      */
     protected int hashEntry(final Object key, final Object value) {
@@ -971,8 +971,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * before comparison.
      * </p>
      *
-     * @param key1  the first key to compare passed in from outside
-     * @param key2  the second key extracted from the entry via {@code entry.key}
+     * @param key1  The first key to compare passed in from outside
+     * @param key2  The second key extracted from the entry via {@code entry.key}
      * @return true if equal
      */
     @Override
@@ -985,7 +985,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Provided protected read-only access to the key type.
      *
-     * @param type the type to check against.
+     * @param type The type to check against.
      * @return true if keyType has the specified type
      */
     protected boolean isKeyType(final ReferenceStrength type) {
@@ -995,7 +995,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Provided protected read-only access to the value type.
      *
-     * @param type the type to check against.
+     * @param type The type to check against.
      * @return true if valueType has the specified type
      */
     protected boolean isValueType(final ReferenceStrength type) {
@@ -1046,7 +1046,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Purges the specified reference.
      *
-     * @param ref  the reference to purge
+     * @param ref  The reference to purge
      */
     protected void purge(final Reference<?> ref) {
         // The hashCode of the reference is the hashCode of the
@@ -1101,8 +1101,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Puts a key-value mapping into this map.
      * Neither the key nor the value may be null.
      *
-     * @param key  the key to add, must not be null
-     * @param value  the value to add, must not be null
+     * @param key  The key to add, must not be null
+     * @param value  The value to add, must not be null
      * @return The value previously mapped to this key, null if none
      * @throws NullPointerException if either the key or value is null
      */
@@ -1117,7 +1117,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Removes the specified mapping from this map.
      *
-     * @param key  the mapping to remove
+     * @param key  The mapping to remove
      * @return The value mapped to the removed key, null if key not in map
      */
     @Override

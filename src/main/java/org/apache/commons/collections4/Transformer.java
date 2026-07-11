@@ -53,7 +53,7 @@ public interface Transformer<T, R> extends Function<T, R> {
      * The input object SHOULD be left unchanged.
      * </p>
      *
-     * @param input  the object to be transformed, should be left unchanged
+     * @param input  The object to be transformed, should be left unchanged
      * @return A transformed object
      * @throws ClassCastException (runtime) if the input is the wrong class
      * @throws IllegalArgumentException (runtime) if the input is invalid

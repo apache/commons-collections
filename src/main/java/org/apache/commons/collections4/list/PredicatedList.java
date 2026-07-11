@@ -58,7 +58,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         /**
          * Create a new predicated list iterator.
          *
-         * @param iterator  the list iterator to decorate
+         * @param iterator  The list iterator to decorate
          */
         protected PredicatedListIterator(final ListIterator<E> iterator) {
             super(iterator);
@@ -87,8 +87,8 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * are validated.
      *
      * @param <T> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @return A new predicated list
      * @throws NullPointerException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
@@ -104,8 +104,8 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * If there are any elements already in the list being decorated, they
      * are validated.
      *
-     * @param list  the list to decorate, must not be null
-     * @param predicate  the predicate to use for validation, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param predicate  The predicate to use for validation, must not be null
      * @throws NullPointerException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
      */

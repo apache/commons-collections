@@ -75,7 +75,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates an empty version of the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
+     * @param shape The shape of the filter.
      * @return A BloomFilter implementation.
      */
     protected abstract T createEmptyFilter(Shape shape);
@@ -83,7 +83,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
+     * @param shape The shape of the filter.
      * @param extractor A BitMap extractor to build the filter with.
      * @return A BloomFilter implementation.
      */
@@ -96,8 +96,8 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
-     * @param hasher the hasher to use to create the filter.
+     * @param shape The shape of the filter.
+     * @param hasher The hasher to use to create the filter.
      * @return A BloomFilter implementation.
      */
     protected final T createFilter(final Shape shape, final Hasher hasher) {
@@ -109,7 +109,7 @@ public abstract class AbstractBloomFilterTest<T extends BloomFilter> {
     /**
      * Creates the BloomFilter implementation we are testing.
      *
-     * @param shape the shape of the filter.
+     * @param shape The shape of the filter.
      * @param extractor An Index extractor to build the filter with.
      * @return A BloomFilter implementation.
      */

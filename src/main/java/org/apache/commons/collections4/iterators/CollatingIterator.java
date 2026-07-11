@@ -76,7 +76,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
      *
-     * @param comp the comparator to use to sort; must not be null,
+     * @param comp The comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      */
     public CollatingIterator(final Comparator<? super E> comp) {
@@ -88,9 +88,9 @@ public class CollatingIterator<E> implements Iterator<E> {
      * specified comparator to provide ordered iteration over the collection of
      * iterators.
      *
-     * @param comp the comparator to use to sort; must not be null,
+     * @param comp The comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
-     * @param iterators the collection of iterators
+     * @param iterators The collection of iterators
      * @throws NullPointerException if the iterators collection is or contains null
      * @throws ClassCastException if the iterators collection contains an
      *   element that's not an {@link Iterator}
@@ -108,9 +108,9 @@ public class CollatingIterator<E> implements Iterator<E> {
      * capacity. Child iterators will have to be manually added using the
      * {@link #addIterator(Iterator)} method.
      *
-     * @param comp the comparator to use to sort; must not be null,
+     * @param comp The comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
-     * @param initIterCapacity the initial capacity for the internal list of
+     * @param initIterCapacity The initial capacity for the internal list of
      *   child iterators
      */
     public CollatingIterator(final Comparator<? super E> comp, final int initIterCapacity) {
@@ -123,10 +123,10 @@ public class CollatingIterator<E> implements Iterator<E> {
      * specified comparator to provide ordered iteration over the two given
      * iterators.
      *
-     * @param comp the comparator to use to sort; must not be null,
+     * @param comp The comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
-     * @param a the first child ordered iterator
-     * @param b the second child ordered iterator
+     * @param a The first child ordered iterator
+     * @param b The second child ordered iterator
      * @throws NullPointerException if either iterator is null
      */
     public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E> a,
@@ -141,9 +141,9 @@ public class CollatingIterator<E> implements Iterator<E> {
      * specified comparator to provide ordered iteration over the array of
      * iterators.
      *
-     * @param comp the comparator to use to sort; must not be null,
+     * @param comp The comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
-     * @param iterators the array of iterators
+     * @param iterators The array of iterators
      * @throws NullPointerException if iterators array is or contains null
      */
     public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E>[] iterators) {
@@ -156,7 +156,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Adds the given {@link Iterator} to the iterators being collated.
      *
-     * @param iterator the iterator to add to the collation, must not be null
+     * @param iterator The iterator to add to the collation, must not be null
      * @throws IllegalStateException if iteration has started
      * @throws NullPointerException if the iterator is null
      */
@@ -348,7 +348,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * {@link Comparable} interface), then use the
      * {@link ComparableComparator}.
      *
-     * @param comp the {@link Comparator} to set
+     * @param comp The {@link Comparator} to set
      * @throws IllegalStateException if iteration has started
      */
     public void setComparator(final Comparator<? super E> comp) {

@@ -61,7 +61,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Constructs a new empty {@code ArrayStack} with an initial size.
      *
-     * @param initialSize  the initial size to use
+     * @param initialSize  The initial size to use
      * @throws IllegalArgumentException  if the specified initial size
      *  is negative
      */
@@ -100,7 +100,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      * Returns the n'th item down (zero-relative) from the top of this
      * stack without removing it.
      *
-     * @param n  the number of items down to go
+     * @param n  The number of items down to go
      * @return The n'th item on the stack, zero relative
      * @throws EmptyStackException  if there are not enough items on the
      *  stack to satisfy this request
@@ -131,7 +131,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      * Pushes a new item onto the top of this stack. The pushed item is also
      * returned. This is equivalent to calling {@code add}.
      *
-     * @param item  the item to be added
+     * @param item  The item to be added
      * @return The item just pushed
      */
     public E push(final E item) {
@@ -147,7 +147,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      * {@code equals()} method is used to compare to the items
      * in this stack.
      *
-     * @param object  the object to be searched for
+     * @param object  The object to be searched for
      * @return The 1-based depth into the stack of the object, or -1 if not found
      */
     public int search(final Object object) {

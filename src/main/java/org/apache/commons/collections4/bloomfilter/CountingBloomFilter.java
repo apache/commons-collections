@@ -67,7 +67,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param other the CellExtractor to add.
+     * @param other The CellExtractor to add.
      * @return {@code true} if the addition was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
@@ -84,7 +84,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Determines the maximum number of times the BitMapExtractor could have been merged into this counting filter.
      *
-     * @param bitMapExtractor the BitMapExtractor to provide the indices.
+     * @param bitMapExtractor The BitMapExtractor to provide the indices.
      * @return The maximum number of times the BitMapExtractor could have been inserted.
      */
     default int getMaxInsert(final BitMapExtractor bitMapExtractor) {
@@ -105,7 +105,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Determines the maximum number of times the Bloom filter could have been merged into this counting filter.
      *
-     * @param bloomFilter the Bloom filter the check for.
+     * @param bloomFilter The Bloom filter the check for.
      * @return The maximum number of times the Bloom filter could have been inserted.
      */
     default int getMaxInsert(final BloomFilter<?> bloomFilter) {
@@ -115,7 +115,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Determines the maximum number of times the Cell Extractor could have been added.
      *
-     * @param cellExtractor the extractor of cells.
+     * @param cellExtractor The extractor of cells.
      * @return The maximum number of times the CellExtractor could have been inserted.
      */
     int getMaxInsert(CellExtractor cellExtractor);
@@ -123,7 +123,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Determines the maximum number of times the Hasher could have been merged into this counting filter.
      *
-     * @param hasher the Hasher to provide the indices.
+     * @param hasher The Hasher to provide the indices.
      * @return The maximum number of times the hasher could have been inserted.
      */
     default int getMaxInsert(final Hasher hasher) {
@@ -136,7 +136,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * To determine how many times an indexExtractor could have been added create a CellExtractor from the indexExtractor and check that
      * </p>
      *
-     * @param indexExtractor the extractor to drive the count check.
+     * @param indexExtractor The extractor to drive the count check.
      * @return The maximum number of times the IndexExtractor could have been inserted.
      * @see #getMaxInsert(CellExtractor)
      */
@@ -172,7 +172,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapExtractor the BitMapExtractor
+     * @param bitMapExtractor The BitMapExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)
@@ -192,7 +192,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param other the other Bloom filter
+     * @param other The other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)
@@ -210,7 +210,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param hasher the hasher
+     * @param hasher The hasher
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)
@@ -235,7 +235,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * <li>Implementations should throw {@code IllegalArgumentException} and no other exception on bad input.</li>
      * </ul>
      *
-     * @param indexExtractor the IndexExtractor
+     * @param indexExtractor The IndexExtractor
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)
@@ -259,7 +259,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param bitMapExtractor the BitMapExtractor to provide the indexes
+     * @param bitMapExtractor The BitMapExtractor to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
@@ -278,7 +278,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param other the other Bloom filter
+     * @param other The other Bloom filter
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
@@ -295,7 +295,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return {@code true} if the filter is valid after the operation.</p>
      *
-     * @param hasher the hasher to provide the indexes
+     * @param hasher The hasher to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
@@ -316,7 +316,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * <p>Note: If indices that are returned multiple times should be decremented multiple times convert the IndexExtractor
      * to a CellExtractor and subtract that.</p>
      *
-     * @param indexExtractor the IndexExtractor to provide the indexes
+     * @param indexExtractor The IndexExtractor to provide the indexes
      * @return {@code true} if the removal was successful and the state is valid
      * @see #isValid()
      * @see #subtract(CellExtractor)
@@ -340,7 +340,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      *
      * <p>This method will return true if the filter is valid after the operation.</p>
      *
-     * @param other the CellExtractor to subtract.
+     * @param other The CellExtractor to subtract.
      * @return {@code true} if the subtraction was successful and the state is valid
      * @see #isValid()
      * @see #add(CellExtractor)

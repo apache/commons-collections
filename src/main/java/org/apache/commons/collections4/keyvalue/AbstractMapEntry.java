@@ -33,8 +33,8 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
     /**
      * Constructs a new entry with the given key and given value.
      *
-     * @param key  the key for the entry, may be null
-     * @param value  the value for the entry, may be null
+     * @param key  The key for the entry, may be null
+     * @param value  The value for the entry, may be null
      */
     protected AbstractMapEntry(final K key, final V value) {
         super(key, value);
@@ -45,7 +45,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal key and value
      */
     @Override
@@ -80,7 +80,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * This {@code Map.Entry} is not connected to a Map, so only the
      * local data is changed.
      *
-     * @param value  the new value
+     * @param value  The new value
      * @return The previous value
      */
     @Override

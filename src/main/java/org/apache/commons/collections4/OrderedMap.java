@@ -57,7 +57,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the next key after the one specified.
      *
-     * @param key  the key to search for next from
+     * @param key  The key to search for next from
      * @return The next key, null if no match or at end
      */
     K nextKey(K key);
@@ -65,7 +65,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the previous key before the one specified.
      *
-     * @param key  the key to search for previous from
+     * @param key  The key to search for previous from
      * @return The previous key, null if no match or at start
      */
     K previousKey(K key);

@@ -48,7 +48,7 @@ public final class UnmodifiableNavigableSet<E>
      * Factory method to create an unmodifiable set.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @return A new unmodifiable {@link NavigableSet}
      * @throws NullPointerException if set is null
      */
@@ -62,7 +62,7 @@ public final class UnmodifiableNavigableSet<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     private UnmodifiableNavigableSet(final NavigableSet<E> set) {
@@ -152,7 +152,7 @@ public final class UnmodifiableNavigableSet<E>
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -232,7 +232,7 @@ public final class UnmodifiableNavigableSet<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

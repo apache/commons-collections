@@ -577,7 +577,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      * Sets the collection.
      *
-     * @param collection the Collection<E> to set
+     * @param collection The Collection<E> to set
      */
     public void setCollection(final Collection<E> collection) {
         this.collection = collection;
@@ -586,7 +586,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      * Sets the confirmed.
      *
-     * @param confirmed the Collection<E> to set
+     * @param confirmed The Collection<E> to set
      */
     public void setConfirmed(final Collection<E> confirmed) {
         this.confirmed = confirmed;

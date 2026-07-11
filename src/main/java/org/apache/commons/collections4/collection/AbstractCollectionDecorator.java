@@ -76,7 +76,7 @@ public abstract class AbstractCollectionDecorator<E>
     /**
      * Constructs and wraps (not copies).
      *
-     * @param collection  the collection to decorate, must not be null.
+     * @param collection  The collection to decorate, must not be null.
      * @throws NullPointerException if the collection is null.
      */
     protected AbstractCollectionDecorator(final Collection<E> collection) {
@@ -157,7 +157,7 @@ public abstract class AbstractCollectionDecorator<E>
      * <strong>NOTE:</strong> this method should only be used during deserialization.
      * </p>
      *
-     * @param collection  the decorated collection.
+     * @param collection  The decorated collection.
      */
     protected void setCollection(final Collection<E> collection) {
         this.collection = collection;

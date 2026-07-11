@@ -35,7 +35,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     /**
      * Creates the identity predicate.
      *
-     * @param type  the type to check for, may not be null
+     * @param type  The type to check for, may not be null
      * @return The predicate
      * @throws NullPointerException if the class is null
      */
@@ -50,7 +50,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
      * Constructor that performs no validation.
      * Use {@code instanceOfPredicate} if you want that.
      *
-     * @param type  the type to check for
+     * @param type  The type to check for
      */
     public InstanceofPredicate(final Class<?> type) {
         iType = type;
@@ -69,7 +69,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     /**
      * Evaluates the predicate returning true if the input object is of the correct type.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if input is of stored type
      */
     @Override

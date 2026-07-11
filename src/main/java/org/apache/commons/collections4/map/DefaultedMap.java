@@ -81,8 +81,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use to create entries, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param factory  The factory to use to create entries, must not be null
      * @return A new defaulting map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
@@ -102,8 +102,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param transformer  the transformer to use as a factory to create entries, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param transformer  The transformer to use as a factory to create entries, must not be null
      * @return A new defaulting map
      * @throws NullPointerException if map or transformer is null
      * @since 4.0
@@ -121,8 +121,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param defaultValue  the default value to return when the key is not found
+     * @param map  The map to decorate, must not be null
+     * @param defaultValue  The default value to return when the key is not found
      * @return A new defaulting map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -137,8 +137,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
-     * @param defaultValueTransformer  the value transformer to use
+     * @param map  The map to decorate, must not be null
+     * @param defaultValueTransformer  The value transformer to use
      * @throws NullPointerException if map or transformer is null
      */
     protected DefaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> defaultValueTransformer) {
@@ -163,7 +163,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * unknown key is requested.
      * </p>
      *
-     * @param defaultValue  the default value to return when the key is not found
+     * @param defaultValue  The default value to return when the key is not found
      */
     public DefaultedMap(final V defaultValue) {
         this(ConstantTransformer.constantTransformer(defaultValue));
@@ -181,7 +181,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -194,7 +194,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

@@ -116,8 +116,8 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      * Creates the comparator predicate
      *
      * @param <T> The type that the predicate queries
-     * @param object  the object to compare to
-     * @param comparator  the comparator to use for comparison
+     * @param object  The object to compare to
+     * @param comparator  The comparator to use for comparison
      * @return The predicate
      * @throws NullPointerException if comparator is null
      */
@@ -129,9 +129,9 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      * Creates the comparator predicate
      *
      * @param <T> The type that the predicate queries
-     * @param object  the object to compare to
-     * @param comparator  the comparator to use for comparison
-     * @param criterion  the criterion to use to evaluate comparison
+     * @param object  The object to compare to
+     * @param comparator  The comparator to use for comparison
+     * @param criterion  The criterion to use to evaluate comparison
      * @return The predicate
      * @throws NullPointerException if comparator or criterion is null
      */
@@ -154,9 +154,9 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      * Constructor that performs no validation.
      * Use {@code comparatorPredicate} if you want that.
      *
-     * @param object  the object to compare to
-     * @param comparator  the comparator to use for comparison
-     * @param criterion  the criterion to use to evaluate comparison
+     * @param object  The object to compare to
+     * @param comparator  The comparator to use for comparison
+     * @param criterion  The criterion to use to evaluate comparison
      */
     public ComparatorPredicate(final T object, final Comparator<T> comparator, final Criterion criterion) {
         this.object = object;
@@ -177,7 +177,7 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      *
      * @see org.apache.commons.collections4.Predicate#test(Object)
      * @see java.util.Comparator#compare(Object first, Object second)
-     * @param target  the target object to compare to
+     * @param target  The target object to compare to
      * @return {@code true} if the comparison succeeds according to the selected criterion
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */

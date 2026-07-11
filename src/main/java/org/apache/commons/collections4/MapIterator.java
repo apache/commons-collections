@@ -101,7 +101,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
     /**
      * Sets the value associated with the current key (optional operation).
      *
-     * @param value  the new value
+     * @param value  The new value
      * @return The previous value
      * @throws UnsupportedOperationException if setValue is not supported by the map
      * @throws IllegalStateException if {@code next()} has not yet been called

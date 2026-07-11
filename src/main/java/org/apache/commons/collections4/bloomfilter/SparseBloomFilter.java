@@ -58,7 +58,7 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     /**
      * Adds the index to the indices.
      *
-     * @param idx the index to add.
+     * @param idx The index to add.
      * @return {@code true} always
      */
     private boolean add(final int idx) {

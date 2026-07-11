@@ -53,7 +53,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * the original source, so the Collection must be passed in.
      * </p>
      *
-     * @param collection  the collection to wrap
+     * @param collection  The collection to wrap
      * @throws NullPointerException if the collection is null
      */
     public LoopingIterator(final Collection<? extends E> collection) {

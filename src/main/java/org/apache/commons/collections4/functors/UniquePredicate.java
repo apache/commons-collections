@@ -59,7 +59,7 @@ public final class UniquePredicate<T>  extends AbstractPredicate<T> implements S
      * Evaluates the predicate returning true if the input object hasn't been
      * received yet.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if this is the first time the object is seen
      */
     @Override

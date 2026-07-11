@@ -127,8 +127,8 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * Compares two non-{@code null} {@code Boolean} objects
      * according to the value of {@link #sortsTrueFirst()}.
      *
-     * @param b1  the first boolean to compare
-     * @param b2  the second boolean to compare
+     * @param b1  The first boolean to compare
+     * @param b2  The second boolean to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws NullPointerException when either argument {@code null}
      */
@@ -149,7 +149,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * iff {@code <em>that</em>} is a {@link BooleanComparator}
      * whose value of {@link #sortsTrueFirst()} is equal to mine.
      *
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      * @return true if equal
      */
     @Override

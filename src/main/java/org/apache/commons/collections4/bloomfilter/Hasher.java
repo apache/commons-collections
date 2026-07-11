@@ -43,7 +43,7 @@ public interface Hasher {
      * Duplicates indices for a single item may be produced.
      * </p>
      *
-     * @param shape the shape of the desired Bloom filter.
+     * @param shape The shape of the desired Bloom filter.
      * @return The iterator of integers
      */
     IndexExtractor indices(Shape shape);

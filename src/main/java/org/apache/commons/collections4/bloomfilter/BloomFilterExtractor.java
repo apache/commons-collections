@@ -132,7 +132,7 @@ public interface BloomFilterExtractor {
     /**
      * Executes a Bloom filter Predicate on each Bloom filter in the collection. The ordering of the Bloom filters is not specified by this interface.
      *
-     * @param bloomFilterPredicate the predicate to evaluate each Bloom filter with.
+     * @param bloomFilterPredicate The predicate to evaluate each Bloom filter with.
      * @return {@code false} when the first filter fails the predicate test. Returns {@code true} if all filters pass the test.
      */
     boolean processBloomFilters(Predicate<BloomFilter> bloomFilterPredicate);

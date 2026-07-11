@@ -58,8 +58,8 @@ public class QueueUtils {
      * </p>
      *
      * @param <E> The type of the elements in the queue
-     * @param queue  the queue to predicate, must not be null
-     * @param predicate  the predicate used to evaluate new elements, must not be null
+     * @param queue  The queue to predicate, must not be null
+     * @param predicate  The predicate used to evaluate new elements, must not be null
      * @return A predicated queue
      * @throws NullPointerException if the queue or predicate is null
      */
@@ -90,7 +90,7 @@ public class QueueUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param queue the queue to synchronize, must not be null
+     * @param queue The queue to synchronize, must not be null
      * @return A synchronized queue backed by that queue
      * @throws NullPointerException if the queue is null
      * @since 4.2
@@ -112,8 +112,8 @@ public class QueueUtils {
      * </p>
      *
      * @param <E> The type of the elements in the queue
-     * @param queue  the queue to predicate, must not be null
-     * @param transformer  the transformer for the queue, must not be null
+     * @param queue  The queue to predicate, must not be null
+     * @param transformer  The transformer for the queue, must not be null
      * @return A transformed queue backed by the given queue
      * @throws NullPointerException if the queue or transformer is null
      */
@@ -125,7 +125,7 @@ public class QueueUtils {
      * Returns an unmodifiable queue backed by the given queue.
      *
      * @param <E> The type of the elements in the queue
-     * @param queue  the queue to make unmodifiable, must not be null
+     * @param queue  The queue to make unmodifiable, must not be null
      * @return An unmodifiable queue backed by that queue
      * @throws NullPointerException if the queue is null
      */

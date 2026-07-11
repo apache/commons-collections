@@ -51,7 +51,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     /**
      * Constructor that wraps (not copies).
      *
-     * @param queue  the queue to decorate, must not be null
+     * @param queue  The queue to decorate, must not be null
      * @throws NullPointerException if queue is null
      */
     protected AbstractQueueDecorator(final Queue<E> queue) {

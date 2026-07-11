@@ -38,7 +38,7 @@ public class FunctorException extends RuntimeException {
      * Constructs a new {@code FunctorException} with specified
      * detail message.
      *
-     * @param msg  the error message.
+     * @param msg  The error message.
      */
     public FunctorException(final String msg) {
         super(msg);
@@ -48,8 +48,8 @@ public class FunctorException extends RuntimeException {
      * Constructs a new {@code FunctorException} with specified
      * detail message and nested {@code Throwable} root cause.
      *
-     * @param msg        the error message.
-     * @param rootCause  the exception or error that caused this exception
+     * @param msg        The error message.
+     * @param rootCause  The exception or error that caused this exception
      *                   to be thrown.
      */
     public FunctorException(final String msg, final Throwable rootCause) {
@@ -60,7 +60,7 @@ public class FunctorException extends RuntimeException {
      * Constructs a new {@code FunctorException} with specified
      * nested {@code Throwable} root cause.
      *
-     * @param rootCause  the exception or error that caused this exception
+     * @param rootCause  The exception or error that caused this exception
      *                   to be thrown.
      */
     public FunctorException(final Throwable rootCause) {

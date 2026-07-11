@@ -47,7 +47,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
      * Factory method to create a synchronized sorted bag.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @return A new synchronized SortedBag
      * @throws NullPointerException if bag is null
      * @since 4.0
@@ -59,8 +59,8 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
-     * @param lock  the lock to use, must not be null
+     * @param bag  The bag to decorate, must not be null
+     * @param lock  The lock to use, must not be null
      * @throws NullPointerException if bag or lock is null
      */
     protected SynchronizedSortedBag(final Bag<E> bag, final Object lock) {
@@ -70,7 +70,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     protected SynchronizedSortedBag(final SortedBag<E> bag) {

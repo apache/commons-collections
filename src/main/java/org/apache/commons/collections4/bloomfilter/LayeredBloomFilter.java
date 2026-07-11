@@ -89,8 +89,8 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Constructs a new instance.
      *
-     * @param shape        the Shape of the enclosed Bloom filters
-     * @param layerManager the LayerManager to manage the layers.
+     * @param shape        The Shape of the enclosed Bloom filters
+     * @param layerManager The LayerManager to manage the layers.
      */
     public LayeredBloomFilter(final Shape shape, final LayerManager<T> layerManager) {
         this.shape = shape;
@@ -132,7 +132,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * If the {@code other} is a BloomFilterExtractor each filter within the {@code other} is checked to see if it exits within this filter.
      * </p>
      *
-     * @param other the other Bloom filter
+     * @param other The other Bloom filter
      * @return {@code true} if this filter contains the other filter.
      */
     @Override
@@ -143,7 +143,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Returns {@code true} if each filter within the {@code bloomFilterExtractor} exits within this filter.
      *
-     * @param bloomFilterExtractor the BloomFilterExtractor that provides the filters to check for.
+     * @param bloomFilterExtractor The BloomFilterExtractor that provides the filters to check for.
      * @return {@code true} if this filter contains all of the filters contained in the {@code bloomFilterExtractor}.
      */
     public boolean contains(final BloomFilterExtractor bloomFilterExtractor) {
@@ -178,7 +178,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Creates a Bloom filter from a BitMapExtractor.
      *
-     * @param bitMapExtractor the BitMapExtractor to create the filter from.
+     * @param bitMapExtractor The BitMapExtractor to create the filter from.
      * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final BitMapExtractor bitMapExtractor) {
@@ -190,7 +190,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Creates a Bloom filter from a Hasher.
      *
-     * @param hasher the hasher to create the filter from.
+     * @param hasher The hasher to create the filter from.
      * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final Hasher hasher) {
@@ -202,7 +202,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Creates a Bloom filter from an IndexExtractor.
      *
-     * @param indexExtractor the IndexExtractor to create the filter from.
+     * @param indexExtractor The IndexExtractor to create the filter from.
      * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final IndexExtractor indexExtractor) {
@@ -227,7 +227,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Finds the layers in which the BitMapExtractor is found.
      *
-     * @param bitMapExtractor the BitMapExtractor to search for.
+     * @param bitMapExtractor The BitMapExtractor to search for.
      * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final BitMapExtractor bitMapExtractor) {
@@ -239,7 +239,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Finds the layers in which the Bloom filter is found.
      *
-     * @param bf the Bloom filter to search for.
+     * @param bf The Bloom filter to search for.
      * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final BloomFilter bf) {
@@ -251,7 +251,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Finds the layers in which the Hasher is found.
      *
-     * @param hasher the Hasher to search for.
+     * @param hasher The Hasher to search for.
      * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final Hasher hasher) {
@@ -263,7 +263,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Finds the layers in which the IndexExtractor is found.
      *
-     * @param indexExtractor the Index extractor to search for.
+     * @param indexExtractor The Index extractor to search for.
      * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final IndexExtractor indexExtractor) {
@@ -287,7 +287,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Gets the Bloom filter at the specified depth
      *
-     * @param depth the depth of the filter to return.
+     * @param depth The depth of the filter to return.
      * @return The Bloom filter at the specified depth.
      * @throws NoSuchElementException if depth is not in the range [0,getDepth())
      */
@@ -349,7 +349,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Processes the Bloom filters in depth order with the most recent filters first. Each filter is passed to the predicate in turn. The function exits on the
      * first {@code false} returned by the predicate.
      *
-     * @param bloomFilterPredicate the predicate to execute.
+     * @param bloomFilterPredicate The predicate to execute.
      * @return {@code true} if all filters passed the predicate, {@code false} otherwise.
      */
     @Override

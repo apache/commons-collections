@@ -97,7 +97,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterator will iterate through each one of the input iterators in turn.
      * </p>
      *
-     * @param iteratorQueue the collection of iterators, not null
+     * @param iteratorQueue The collection of iterators, not null
      * @throws NullPointerException if iterators collection is or contains null
      * @throws ClassCastException if iterators collection doesn't contain an
      * iterator
@@ -120,7 +120,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterators after using this constructor.
      * </p>
      *
-     * @param iterator the first child iterator in the IteratorChain, not null
+     * @param iterator The first child iterator in the IteratorChain, not null
      * @throws NullPointerException if the iterator is null
      */
     public IteratorChain(final Iterator<? extends E> iterator) {
@@ -134,7 +134,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * will iterate through each one of the input iterators in turn.
      * </p>
      *
-     * @param iteratorQueue the array of iterators, not null
+     * @param iteratorQueue The array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
     public IteratorChain(final Iterator<? extends E>... iteratorQueue) {
@@ -150,8 +150,8 @@ public class IteratorChain<E> implements Iterator<E> {
      * iterate through each one of the input iterators in turn.
      * </p>
      *
-     * @param first the first child iterator in the IteratorChain, not null
-     * @param second the second child iterator in the IteratorChain, not null
+     * @param first The first child iterator in the IteratorChain, not null
+     * @param second The second child iterator in the IteratorChain, not null
      * @throws NullPointerException if either iterator is null
      */
     public IteratorChain(final Iterator<? extends E> first, final Iterator<? extends E> second) {

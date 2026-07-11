@@ -51,7 +51,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param map  a map of predicates to transformers
+     * @param map  A map of predicates to transformers
      * @return The {@code switch} transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
@@ -92,7 +92,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * @param <O>  the output type
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means return null
+     * @param defaultTransformer  The transformer to use if no match, null means return null
      * @return The {@code chained} transformer
      * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
@@ -129,7 +129,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * @param clone  if {@code true} the input arguments will be cloned
      * @param predicates  array of predicates, no nulls
      * @param transformers  matching array of transformers, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means return null
+     * @param defaultTransformer  The transformer to use if no match, null means return null
      */
     private SwitchTransformer(final boolean clone, final Predicate<? super T>[] predicates,
                              final Transformer<? super T, ? extends R>[] transformers,
@@ -146,7 +146,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      *
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means return null
+     * @param defaultTransformer  The transformer to use if no match, null means return null
      */
     public SwitchTransformer(final Predicate<? super T>[] predicates,
             final Transformer<? super T, ? extends R>[] transformers,
@@ -188,7 +188,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * Transforms the input to result by calling the transformer whose matching
      * predicate returns true.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

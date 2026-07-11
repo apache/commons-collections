@@ -120,7 +120,7 @@ public class ListOrderedSet<E>
      * </p>
      *
      * @param <E> The element type
-     * @param list the list to decorate, must not be null
+     * @param list The list to decorate, must not be null
      * @return A new ordered set
      * @throws NullPointerException if list is null
      * @since 4.0
@@ -140,7 +140,7 @@ public class ListOrderedSet<E>
      * </p>
      *
      * @param <E> The element type
-     * @param set the set to decorate, must not be null
+     * @param set The set to decorate, must not be null
      * @return A new ordered set
      * @throws NullPointerException if set is null
      * @since 4.0
@@ -156,8 +156,8 @@ public class ListOrderedSet<E>
      * </p>
      *
      * @param <E> The element type
-     * @param set the set to decorate, must be empty and not null
-     * @param list the list to decorate, must be empty and not null
+     * @param set The set to decorate, must be empty and not null
+     * @param list The list to decorate, must be empty and not null
      * @return A new ordered set
      * @throws NullPointerException if set or list is null
      * @throws IllegalArgumentException if either the set or list is not empty
@@ -189,7 +189,7 @@ public class ListOrderedSet<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set the set to decorate, must not be null
+     * @param set The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     protected ListOrderedSet(final Set<E> set) {
@@ -204,8 +204,8 @@ public class ListOrderedSet<E>
      * The set and list must both be correctly initialized to the same elements.
      * </p>
      *
-     * @param set the set to decorate, must not be null
-     * @param list the list to decorate, must not be null
+     * @param set The set to decorate, must not be null
+     * @param list The list to decorate, must not be null
      * @throws NullPointerException if set or list is null
      */
     protected ListOrderedSet(final Set<E> set, final List<E> list) {
@@ -227,8 +227,8 @@ public class ListOrderedSet<E>
      * contained in this ordered set (optional operation). Shifts the element
      * currently at this position and any subsequent elements to the right.
      *
-     * @param index the index at which the element is to be inserted
-     * @param object the element to be inserted
+     * @param index The index at which the element is to be inserted
+     * @param object The element to be inserted
      * @see List#add(int, Object)
      */
     public void add(final int index, final E object) {
@@ -253,8 +253,8 @@ public class ListOrderedSet<E>
      * element currently at the position and all subsequent elements to the
      * right.
      *
-     * @param index the position to insert the elements
-     * @param coll the collection containing the elements to be inserted
+     * @param index The position to insert the elements
+     * @param coll The collection containing the elements to be inserted
      * @return {@code true} if this ordered set changed as a result of the call
      * @see List#addAll(int, Collection)
      */
@@ -296,7 +296,7 @@ public class ListOrderedSet<E>
     /**
      * Gets the element at the specified position in this ordered set.
      *
-     * @param index the position of the element in the ordered {@link Set}.
+     * @param index The position of the element in the ordered {@link Set}.
      * @return The element at position {@code index}
      * @see List#get(int)
      */
@@ -308,7 +308,7 @@ public class ListOrderedSet<E>
      * Returns the index of the first occurrence of the specified element in
      * ordered set.
      *
-     * @param object the element to search for
+     * @param object The element to search for
      * @return The index of the first occurrence of the object, or {@code -1} if
      *         this ordered set does not contain this object
      * @see List#indexOf(Object)
@@ -326,7 +326,7 @@ public class ListOrderedSet<E>
      * Removes the element at the specified position from the ordered set.
      * Shifts any subsequent elements to the left.
      *
-     * @param index the index of the element to be removed
+     * @param index The index of the element to be removed
      * @return The element that has been remove from the ordered set
      * @see List#remove(int)
      */
@@ -420,7 +420,7 @@ public class ListOrderedSet<E>
      * Deserializes the set and re-checks that the iteration order matches the
      * decorated set, as the constructors guarantee.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if a class read from the stream cannot be loaded
      */

@@ -41,9 +41,9 @@ public class InstantiateFactory<T> implements Factory<T> {
      * Factory method that performs validation.
      *
      * @param <T>  the type the factory creates
-     * @param classToInstantiate  the class to instantiate, not null
-     * @param paramTypes  the constructor parameter types, cloned
-     * @param args  the constructor arguments, cloned
+     * @param classToInstantiate  The class to instantiate, not null
+     * @param paramTypes  The constructor parameter types, cloned
+     * @param args  The constructor arguments, cloned
      * @return A new instantiate factory
      * @throws NullPointerException if classToInstantiate is null
      * @throws IllegalArgumentException if paramTypes does not match args
@@ -80,7 +80,7 @@ public class InstantiateFactory<T> implements Factory<T> {
      * Constructor that performs no validation.
      * Use {@code instantiateFactory} if you want that.
      *
-     * @param classToInstantiate  the class to instantiate
+     * @param classToInstantiate  The class to instantiate
      */
     public InstantiateFactory(final Class<T> classToInstantiate) {
         iClassToInstantiate = classToInstantiate;
@@ -93,9 +93,9 @@ public class InstantiateFactory<T> implements Factory<T> {
      * Constructor that performs no validation.
      * Use {@code instantiateFactory} if you want that.
      *
-     * @param classToInstantiate  the class to instantiate
-     * @param paramTypes  the constructor parameter types, cloned
-     * @param args  the constructor arguments, cloned
+     * @param classToInstantiate  The class to instantiate
+     * @param paramTypes  The constructor parameter types, cloned
+     * @param args  The constructor arguments, cloned
      */
     public InstantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
         iClassToInstantiate = classToInstantiate;

@@ -51,7 +51,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration of the specified iterators.
      *
-     * @param iterators  the array of iterators
+     * @param iterators  The array of iterators
      * @throws NullPointerException if any iterator is null
      */
     public ZippingIterator(final Iterator<? extends E>... iterators) {
@@ -68,8 +68,8 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
      *
-     * @param a  the first child iterator
-     * @param b  the second child iterator
+     * @param a  The first child iterator
+     * @param b  The second child iterator
      * @throws NullPointerException if either iterator is null
      */
     @SuppressWarnings("unchecked")
@@ -81,9 +81,9 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the three given iterators.
      *
-     * @param a  the first child iterator
-     * @param b  the second child iterator
-     * @param c  the third child iterator
+     * @param a  The first child iterator
+     * @param b  The second child iterator
+     * @param c  The third child iterator
      * @throws NullPointerException if either iterator is null
      */
     @SuppressWarnings("unchecked")

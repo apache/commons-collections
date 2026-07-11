@@ -96,8 +96,8 @@ public interface MultiValuedMap<K, V> {
     /**
      * Checks whether the map contains a mapping for the specified key and value.
      *
-     * @param key  the key to search for
-     * @param value  the value to search for
+     * @param key  The key to search for
+     * @param value  The value to search for
      * @return true if the map contains the value
      */
     boolean containsMapping(Object key, Object value);
@@ -105,7 +105,7 @@ public interface MultiValuedMap<K, V> {
     /**
      * Checks whether the map contains at least one mapping for the specified value.
      *
-     * @param value  the value to search for
+     * @param value  The value to search for
      * @return true if the map contains the value
      * @throws NullPointerException if the value is null and null values are not supported
      *   by the used collection types (optional)
@@ -133,7 +133,7 @@ public interface MultiValuedMap<K, V> {
      * {@code MultiValuedMap} and vice-versa.
      * </p>
      *
-     * @param key  the key to retrieve
+     * @param key  The key to retrieve
      * @return The {@code Collection} of values, implementations should
      *   return an empty collection for no mapping
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
@@ -217,8 +217,8 @@ public interface MultiValuedMap<K, V> {
      * has been increased because of this operation.
      * </p>
      *
-     * @param key  the key to store against
-     * @param value  the value to add to the collection at the key
+     * @param key  The key to store against
+     * @param value  The value to add to the collection at the key
      * @return true if the map changed as a result of this put operation, or false
      *   if the map already contained the key-value mapping and the collection
      *   type does not allow duplicate values, for example when using a Set
@@ -233,8 +233,8 @@ public interface MultiValuedMap<K, V> {
     /**
      * Adds a mapping to the specified key for all values contained in the given Iterable.
      *
-     * @param key  the key to store against
-     * @param values  the values to add to the collection at the key, may not be null
+     * @param key  The key to store against
+     * @param values  The values to add to the collection at the key, may not be null
      * @return true if the map changed as a result of this operation
      * @throws NullPointerException if the specified iterable is null, or if this map
      *   does not permit null keys or values, and the specified key or values contain
@@ -300,7 +300,7 @@ public interface MultiValuedMap<K, V> {
      * key, an empty, unmodifiable collection will be returned.
      * </p>
      *
-     * @param key  the key to remove values from
+     * @param key  The key to remove values from
      * @return The values that were removed
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
@@ -318,8 +318,8 @@ public interface MultiValuedMap<K, V> {
      * an empty collection from a subsequent {@code get(Object)}.
      * </p>
      *
-     * @param key  the key to remove from
-     * @param item  the item to remove
+     * @param key  The key to remove from
+     * @param item  The item to remove
      * @return true if the mapping was removed, false otherwise
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws NullPointerException if the key or value is null and null is invalid (optional)

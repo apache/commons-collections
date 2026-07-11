@@ -64,7 +64,7 @@ public final class NullPredicate<T> extends AbstractPredicate<T> implements Seri
     /**
      * Evaluates the predicate returning true if the input is null.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if input is null
      */
     @Override

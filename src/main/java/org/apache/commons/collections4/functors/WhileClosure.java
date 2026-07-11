@@ -40,8 +40,8 @@ public class WhileClosure<T> implements Closure<T> {
      * Factory method that performs validation.
      *
      * @param <E> The type that the closure acts on
-     * @param predicate  the predicate used to evaluate when the loop terminates, not null
-     * @param closure  the closure to execute, not null
+     * @param predicate  The predicate used to evaluate when the loop terminates, not null
+     * @param closure  The closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      * @return The {@code while} closure
      * @throws NullPointerException if the predicate or closure is null
@@ -65,8 +65,8 @@ public class WhileClosure<T> implements Closure<T> {
      * Constructor that performs no validation.
      * Use {@code whileClosure} if you want that.
      *
-     * @param predicate  the predicate used to evaluate when the loop terminates, not null
-     * @param closure  the closure to execute, not null
+     * @param predicate  The predicate used to evaluate when the loop terminates, not null
+     * @param closure  The closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
     public WhileClosure(final Predicate<? super T> predicate, final Closure<? super T> closure, final boolean doLoop) {
@@ -78,7 +78,7 @@ public class WhileClosure<T> implements Closure<T> {
     /**
      * Executes the closure until the predicate is false.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

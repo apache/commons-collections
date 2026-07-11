@@ -50,7 +50,7 @@ public class TestingHashers {
     /**
      * Enables all bits in the filter.
      * @param <T> The Bloom filter type.
-     * @param filter the Bloom filter to populate
+     * @param filter The Bloom filter to populate
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateEntireFilter(final T filter) {
@@ -70,9 +70,9 @@ public class TestingHashers {
     /**
      * Enables all bits in a range (inclusive).
      * @param <T> The Bloom filter type.
-     * @param filter the Bloom filter to populate
-     * @param start the starting bit to enable.
-     * @param end the last bit to enable.
+     * @param filter The Bloom filter to populate
+     * @param start The starting bit to enable.
+     * @param end The last bit to enable.
      * @return {@code filter} for chaining
      */
     public static <T extends BloomFilter> T populateRange(final T filter, final int start, final int end) {

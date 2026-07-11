@@ -39,7 +39,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @param factory  the factory to call, not null
+     * @param factory  The factory to call, not null
      * @return The {@code factory} transformer
      * @throws NullPointerException if the factory is null
      */
@@ -54,7 +54,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
      * Constructor that performs no validation.
      * Use {@code factoryTransformer} if you want that.
      *
-     * @param factory  the factory to call, not null
+     * @param factory  The factory to call, not null
      */
     public FactoryTransformer(final Factory<? extends R> factory) {
         iFactory = factory;
@@ -74,7 +74,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
      * Transforms the input by ignoring the input and returning the result of
      * calling the decorated factory.
      *
-     * @param input  the input object to transform
+     * @param input  The input object to transform
      * @return The transformed result
      */
     @Override

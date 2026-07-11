@@ -52,7 +52,7 @@ public final class UnmodifiableSortedMultiSet<E>
      * </p>
      *
      * @param <E>  the type of the elements in the multiset
-     * @param multiset  the multiset to decorate, may not be null
+     * @param multiset  The multiset to decorate, may not be null
      * @return An unmodifiable SortedMultiSet
      * @throws NullPointerException if multiset is null
      */
@@ -68,7 +68,7 @@ public final class UnmodifiableSortedMultiSet<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, may not be null
+     * @param multiset  The multiset to decorate, may not be null
      * @throws NullPointerException if multiset is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
@@ -110,7 +110,7 @@ public final class UnmodifiableSortedMultiSet<E>
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
@@ -160,7 +160,7 @@ public final class UnmodifiableSortedMultiSet<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

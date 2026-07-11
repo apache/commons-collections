@@ -37,7 +37,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     /**
      * Constructs a new instance.
      *
-     * @param set  the list to decorate, must not be null
+     * @param set  The list to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     protected AbstractSerializableSetDecorator(final Set<E> set) {
@@ -47,7 +47,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     /**
      * Deserializes the set in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -60,7 +60,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

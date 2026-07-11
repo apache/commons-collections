@@ -51,7 +51,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Factory method to create a bag that complies to the Collection contract.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @return A Bag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      */
@@ -62,7 +62,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     public CollectionBag(final Bag<E> bag) {
@@ -75,7 +75,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Since this method always increases the size of the bag, it will always return {@code true}.
      * </p>
      *
-     * @param object the object to add
+     * @param object The object to add
      * @return {@code true}, always
      * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
@@ -91,8 +91,8 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Since this method always increases the size of the bag, it
      * will always return {@code true}.
      *
-     * @param object  the object to add
-     * @param count  the number of copies to add
+     * @param object  The object to add
+     * @param count  The number of copies to add
      * @return {@code true}, always
      * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
      */
@@ -119,7 +119,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * if the given collection {@code coll} contains at least one of
      * every object contained in this object.
      *
-     * @param coll  the collection to check against
+     * @param coll  The collection to check against
      * @return {@code true} if the Bag contains at least one of every object in the collection
      */
     @Override
@@ -130,7 +130,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * Reads the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
@@ -149,7 +149,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * bag contains no occurrence anymore of the object after this operation.
      * </p>
      *
-     * @param object  the object to remove
+     * @param object  The object to remove
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -163,7 +163,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * <strong>not</strong> respecting cardinality. That is, remove <em>all</em>
      * occurrences of every object contained in the given collection.
      *
-     * @param coll  the collection to remove
+     * @param coll  The collection to remove
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -195,7 +195,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * a fast (for example O(1)) implementation of {@link Collection#contains(Object)}.
      * </p>
      *
-     * @param coll  the collection to retain
+     * @param coll  The collection to retain
      * @return {@code true} if this call changed the collection
      */
     @Override
@@ -218,7 +218,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     /**
      * Writes the collection out using a custom routine.
      *
-     * @param out  the output stream
+     * @param out  The output stream
      * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

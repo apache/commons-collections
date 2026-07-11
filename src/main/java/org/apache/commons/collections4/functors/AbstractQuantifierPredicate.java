@@ -37,7 +37,7 @@ public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T
     /**
      * Constructor that performs no validation.
      *
-     * @param predicates  the predicates to check, not cloned, not null
+     * @param predicates  The predicates to check, not cloned, not null
      */
     public AbstractQuantifierPredicate(final Predicate<? super T>... predicates) {
         iPredicates = predicates;

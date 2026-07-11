@@ -47,7 +47,7 @@ public class SingletonIterator<E>
      * Constructs a new {@code SingletonIterator} where {@code remove}
      * is a permitted operation.
      *
-     * @param object  the single object to return from the iterator
+     * @param object  The single object to return from the iterator
      */
     public SingletonIterator(final E object) {
         this(object, true);
@@ -57,7 +57,7 @@ public class SingletonIterator<E>
      * Constructs a new {@code SingletonIterator} optionally choosing if
      * {@code remove} is a permitted operation.
      *
-     * @param object  the single object to return from the iterator
+     * @param object  The single object to return from the iterator
      * @param removeAllowed  true if remove is allowed
      * @since 3.1
      */

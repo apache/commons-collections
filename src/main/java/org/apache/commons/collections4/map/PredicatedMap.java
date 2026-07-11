@@ -68,9 +68,9 @@ public class PredicatedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyPredicate  the predicate to validate the keys, null means no check
-     * @param valuePredicate  the predicate to validate to values, null means no check
+     * @param map  The map to decorate, must not be null
+     * @param keyPredicate  The predicate to validate the keys, null means no check
+     * @param valuePredicate  The predicate to validate to values, null means no check
      * @return A new predicated map
      * @throws NullPointerException if the map is null
      * @since 4.0
@@ -90,9 +90,9 @@ public class PredicatedMap<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
-     * @param keyPredicate  the predicate to validate the keys, null means no check
-     * @param valuePredicate  the predicate to validate to values, null means no check
+     * @param map  The map to decorate, must not be null
+     * @param keyPredicate  The predicate to validate the keys, null means no check
+     * @param valuePredicate  The predicate to validate to values, null means no check
      * @throws NullPointerException if the map is null
      */
     protected PredicatedMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
@@ -106,7 +106,7 @@ public class PredicatedMap<K, V>
     /**
      * Override to validate an object set into the map via {@code setValue}.
      *
-     * @param value  the value to validate
+     * @param value  The value to validate
      * @return The value itself
      * @throws IllegalArgumentException if invalid
      * @since 3.1
@@ -147,7 +147,7 @@ public class PredicatedMap<K, V>
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -169,8 +169,8 @@ public class PredicatedMap<K, V>
     /**
      * Validates a key value pair.
      *
-     * @param key  the key to validate
-     * @param value  the value to validate
+     * @param key  The key to validate
+     * @param value  The value to validate
      * @throws IllegalArgumentException if invalid
      */
     protected void validate(final K key, final V value) {
@@ -185,7 +185,7 @@ public class PredicatedMap<K, V>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

@@ -75,7 +75,7 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
      * Creates an empty LinkedHashSetValuedHashMap with the default initial
      * map capacity (16) and the specified initial set capacity.
      *
-     * @param initialSetCapacity  the initial capacity used for value collections
+     * @param initialSetCapacity  The initial capacity used for value collections
      */
     public LinkedHashSetValuedLinkedHashMap(final int initialSetCapacity) {
         this(DEFAULT_INITIAL_MAP_CAPACITY, initialSetCapacity);
@@ -85,8 +85,8 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
      * Creates an empty LinkedHashSetValuedHashMap with the specified initial
      * map and list capacities.
      *
-     * @param initialMapCapacity  the initial hashmap capacity
-     * @param initialSetCapacity  the initial capacity used for value collections
+     * @param initialMapCapacity  The initial hashmap capacity
+     * @param initialSetCapacity  The initial capacity used for value collections
      */
     public LinkedHashSetValuedLinkedHashMap(final int initialMapCapacity, final int initialSetCapacity) {
         super(new LinkedHashMap<>(initialMapCapacity));
@@ -96,7 +96,7 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
     /**
      * Creates an LinkedHashSetValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code Map} to copy into this map
+     * @param map A {@code Map} to copy into this map
      */
     public LinkedHashSetValuedLinkedHashMap(final Map<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_SET_CAPACITY);
@@ -106,7 +106,7 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
     /**
      * Creates an LinkedHashSetValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code MultiValuedMap} to copy into this map
+     * @param map A {@code MultiValuedMap} to copy into this map
      */
     public LinkedHashSetValuedLinkedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_SET_CAPACITY);
@@ -139,7 +139,7 @@ public class LinkedHashSetValuedLinkedHashMap<K, V> extends AbstractSetValuedMap
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

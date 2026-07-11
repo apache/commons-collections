@@ -67,7 +67,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * Factory method to create a growth list.
      *
      * @param <E> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @return A new growth list
      * @throws NullPointerException if list is null
      * @since 4.0
@@ -86,7 +86,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Constructor that uses an ArrayList internally.
      *
-     * @param initialCapacity  the initial capacity of the ArrayList
+     * @param initialCapacity  The initial capacity of the ArrayList
      * @throws IllegalArgumentException if initial capacity is invalid
      */
     public GrowthList(final int initialCapacity) {
@@ -96,7 +96,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Constructor that wraps (not copies).
      *
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @throws NullPointerException if list is null
      */
     protected GrowthList(final List<E> list) {
@@ -115,8 +115,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * If the index is less than zero, the underlying list is called, which
      * will probably throw an IndexOutOfBoundsException.
      *
-     * @param index  the index to add at
-     * @param element  the object to add at the specified index
+     * @param index  The index to add at
+     * @param element  The object to add at the specified index
      * @throws UnsupportedOperationException if the underlying list doesn't implement set
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
@@ -142,8 +142,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * If the index is less than zero, the underlying list is called, which
      * will probably throw an IndexOutOfBoundsException.
      *
-     * @param index  the index to add at
-     * @param coll  the collection to add at the specified index
+     * @param index  The index to add at
+     * @param coll  The collection to add at the specified index
      * @return true if the list changed
      * @throws UnsupportedOperationException if the underlying list doesn't implement set
      * @throws ClassCastException if the underlying list rejects the element
@@ -172,8 +172,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * If the index is less than zero, the underlying list is called, which
      * will probably throw an IndexOutOfBoundsException.
      *
-     * @param index  the index to set
-     * @param element  the object to set at the specified index
+     * @param index  The index to set
+     * @param element  The object to set at the specified index
      * @return The object previously at that index
      * @throws UnsupportedOperationException if the underlying list doesn't implement set
      * @throws ClassCastException if the underlying list rejects the element

@@ -53,7 +53,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
      * </p>
      *
      * @param <T> The type of object returned from the iterator.
-     * @param stream the Stream to create an iterator from.
+     * @param stream The Stream to create an iterator from.
      * @return An Extended iterator on the {@code stream} iterator.
      */
     public static <T> ExtendedIterator<T> create(final Stream<T> stream) {
@@ -103,7 +103,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
     /**
      * Initialize this wrapping with the given base iterator and remove-control.
      *
-     * @param base          the base iterator that this iterator wraps
+     * @param base          The base iterator that this iterator wraps
      * @param throwOnRemove true if .remove() must throw an exception
      */
     private ExtendedIterator(final Iterator<? extends T> base, final boolean throwOnRemove) {
@@ -114,7 +114,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
     /**
      * Chains the {@code other} iterator to the end of this one.
      *
-     * @param other the other iterator to extend this iterator with.
+     * @param other The other iterator to extend this iterator with.
      * @return A new iterator returning the contents of {@code this} iterator followed by the contents of {@code other} iterator.
      * @param <X> The type of object returned from the other iterator.
      */

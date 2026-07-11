@@ -55,7 +55,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @return A new ordered map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -72,7 +72,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
@@ -132,7 +132,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
     /**
      * Deseializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -162,7 +162,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

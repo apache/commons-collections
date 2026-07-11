@@ -57,9 +57,9 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      *
      * @param <K> The key type
      * @param <V> The value type
-     * @param map  the MultiValuedMap to decorate, may not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no conversion
-     * @param valueTransformer  the transformer to use for value conversion, null means no conversion
+     * @param map  The MultiValuedMap to decorate, may not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no conversion
+     * @param valueTransformer  The transformer to use for value conversion, null means no conversion
      * @return A new transformed MultiValuedMap
      * @throws NullPointerException if map is null
      */
@@ -86,9 +86,9 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      *
      * @param <K> The key type
      * @param <V> The value type
-     * @param map  the MultiValuedMap to decorate, may not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no conversion
-     * @param valueTransformer  the transformer to use for value conversion, null means no conversion
+     * @param map  The MultiValuedMap to decorate, may not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no conversion
+     * @param valueTransformer  The transformer to use for value conversion, null means no conversion
      * @return A new transformed MultiValuedMap
      * @throws NullPointerException if map is null
      */
@@ -111,9 +111,9 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * are NOT transformed.
      * </p>
      *
-     * @param map  the MultiValuedMap to decorate, may not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no conversion
-     * @param valueTransformer  the transformer to use for value conversion, null means no conversion
+     * @param map  The MultiValuedMap to decorate, may not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no conversion
+     * @param valueTransformer  The transformer to use for value conversion, null means no conversion
      * @throws NullPointerException if map is null
      */
     protected TransformedMultiValuedMap(final MultiValuedMap<K, V> map,
@@ -164,7 +164,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param object  the object to transform
+     * @param object  The object to transform
      * @return The transformed object
      */
     protected K transformKey(final K object) {
@@ -180,7 +180,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param object  the object to transform
+     * @param object  The object to transform
      * @return The transformed object
      */
     protected V transformValue(final V object) {

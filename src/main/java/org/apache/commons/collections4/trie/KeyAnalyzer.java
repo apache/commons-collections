@@ -98,12 +98,12 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
      * key at 'offsetInBits' and goes for 'lengthInBits' bits, and compares to the other key starting
      * at 'otherOffsetInBits' and going for 'otherLengthInBits' bits.
      *
-     * @param key  the key to use
-     * @param offsetInBits  the bit offset in the key
-     * @param lengthInBits  the maximum key length in bits to use
-     * @param other  the other key to use
-     * @param otherOffsetInBits  the bit offset in the other key
-     * @param otherLengthInBits  the maximum key length in bits for the other key
+     * @param key  The key to use
+     * @param offsetInBits  The bit offset in the key
+     * @param lengthInBits  The maximum key length in bits to use
+     * @param other  The other key to use
+     * @param otherOffsetInBits  The bit offset in the other key
+     * @param otherLengthInBits  The maximum key length in bits for the other key
      * @return The bit index where the key and other first differ
      */
     public abstract int bitIndex(K key, int offsetInBits, int lengthInBits,
@@ -133,9 +133,9 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     /**
      * Returns whether or not a bit is set.
      *
-     * @param key  the key to check, may not be null
-     * @param bitIndex  the bit index to check
-     * @param lengthInBits  the maximum key length in bits to check
+     * @param key  The key to check, may not be null
+     * @param bitIndex  The bit index to check
+     * @param lengthInBits  The maximum key length in bits to check
      * @return {@code true} if the bit is set in the given key and
      *   {@code bitIndex} &lt; {@code lengthInBits}, {@code false} otherwise.
      */
@@ -144,10 +144,10 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     /**
      * Determines whether or not the given prefix (from offset to length) is a prefix of the given key.
      *
-     * @param prefix  the prefix to check
-     * @param offsetInBits  the bit offset in the key
-     * @param lengthInBits  the maximum key length in bits to use
-     * @param key  the key to check
+     * @param prefix  The prefix to check
+     * @param offsetInBits  The bit offset in the key
+     * @param lengthInBits  The maximum key length in bits to use
+     * @param key  The key to check
      * @return {@code true} if this is a valid prefix for the given key
      */
     public abstract boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
@@ -155,7 +155,7 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
     /**
      * Returns the length of the Key in bits.
      *
-     * @param key  the key
+     * @param key  The key
      * @return The bit length of the key
      */
     public abstract int lengthInBits(K key);

@@ -32,8 +32,8 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Generates an array of integers.
-     * @param size the size of the array
-     * @param bound the upper bound (exclusive) of the values in the array.
+     * @param size The size of the array
+     * @param bound The upper bound (exclusive) of the values in the array.
      * @return An array of int.
      */
     public static int[] generateIntArray(final int size, final int bound) {
@@ -42,7 +42,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Creates a sorted unique array of ints.
-     * @param ary the array to sort and make unique
+     * @param ary The array to sort and make unique
      * @return The sorted unique array.
      */
     public static int[] unique(final int[] ary) {
@@ -51,7 +51,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
 
     /**
      * Creates a BitSet of indices.
-     * @param ary the array
+     * @param ary The array
      * @return The set.
      */
     public static BitSet uniqueSet(final int[] ary) {

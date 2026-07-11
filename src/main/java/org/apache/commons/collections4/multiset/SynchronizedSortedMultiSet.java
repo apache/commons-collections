@@ -40,7 +40,7 @@ public class SynchronizedSortedMultiSet<E> extends SynchronizedMultiSet<E> imple
      * Factory method to create a synchronized sorted multiset.
      *
      * @param <E> The type of the elements in the multiset
-     * @param multiset  the multiset to decorate, must not be null
+     * @param multiset  The multiset to decorate, must not be null
      * @return A new synchronized SortedMultiSet
      * @throws NullPointerException if multiset is null
      */
@@ -51,7 +51,7 @@ public class SynchronizedSortedMultiSet<E> extends SynchronizedMultiSet<E> imple
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, must not be null
+     * @param multiset  The multiset to decorate, must not be null
      * @throws NullPointerException if multiset is null
      */
     protected SynchronizedSortedMultiSet(final SortedMultiSet<E> multiset) {
@@ -61,8 +61,8 @@ public class SynchronizedSortedMultiSet<E> extends SynchronizedMultiSet<E> imple
     /**
      * Constructor that wraps (not copies).
      *
-     * @param multiset  the multiset to decorate, must not be null
-     * @param lock  the lock to use, must not be null
+     * @param multiset  The multiset to decorate, must not be null
+     * @param lock  The lock to use, must not be null
      * @throws NullPointerException if multiset or lock is null
      */
     protected SynchronizedSortedMultiSet(final SortedMultiSet<E> multiset, final Object lock) {

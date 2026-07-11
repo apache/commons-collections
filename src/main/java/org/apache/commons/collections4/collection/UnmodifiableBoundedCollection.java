@@ -55,7 +55,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * Creates an unmodifiable bounded collection.
      *
      * @param <E> The type of the elements in the collection.
-     * @param coll  the {@code BoundedCollection} to decorate, must not be null.
+     * @param coll  The {@code BoundedCollection} to decorate, must not be null.
      * @return A new unmodifiable bounded collection.
      * @throws NullPointerException if {@code coll} is {@code null}.
      * @since 4.0
@@ -77,7 +77,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * </p>
      *
      * @param <E> The type of the elements in the collection.
-     * @param collection  the {@code BoundedCollection} to decorate, must not be null.
+     * @param collection  The {@code BoundedCollection} to decorate, must not be null.
      * @return A new unmodifiable bounded collection.
      * @throws NullPointerException if coll is null.
      * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}.
@@ -108,7 +108,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     /**
      * Constructs and wraps (not copies).
      *
-     * @param coll  the collection to decorate, must not be null.
+     * @param coll  The collection to decorate, must not be null.
      * @throws NullPointerException if coll is null.
      */
     @SuppressWarnings("unchecked") // safe to upcast

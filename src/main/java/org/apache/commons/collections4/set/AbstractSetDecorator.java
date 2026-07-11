@@ -46,7 +46,7 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
     /**
      * Constructor that wraps (not copies).
      *
-     * @param set  the set to decorate, must not be null
+     * @param set  The set to decorate, must not be null
      * @throws NullPointerException if set is null
      */
     protected AbstractSetDecorator(final Set<E> set) {

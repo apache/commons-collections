@@ -48,8 +48,8 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     /**
      * Constructs a new entry with the given Map and key.
      *
-     * @param map  the map
-     * @param key  the key
+     * @param map  The map
+     * @param key  The key
      */
     public TiedMapEntry(final Map<K, V> map, final K key) {
         this.map = map;
@@ -61,7 +61,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal key and value
      */
     @Override
@@ -115,7 +115,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     /**
      * Sets the value associated with the key direct onto the map.
      *
-     * @param value  the new value
+     * @param value  The new value
      * @return The old value
      * @throws IllegalArgumentException if the value is set to this map entry
      */

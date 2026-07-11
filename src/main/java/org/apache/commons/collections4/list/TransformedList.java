@@ -49,7 +49,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         /**
          * Create a new transformed list iterator.
          *
-         * @param iterator  the list iterator to decorate
+         * @param iterator  The list iterator to decorate
          */
         protected TransformedListIterator(final ListIterator<E> iterator) {
             super(iterator);
@@ -79,8 +79,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * Contrast this with {@link #transformingList(List, Transformer)}.
      *
      * @param <E> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed List
      * @throws NullPointerException if list or transformer is null
      * @since 4.0
@@ -107,8 +107,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * Contrast this with {@link #transformedList(List, Transformer)}.
      *
      * @param <E> The type of the elements in the list
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed list
      * @throws NullPointerException if list or transformer is null
      * @since 4.0
@@ -124,8 +124,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * If there are any elements already in the list being decorated, they
      * are NOT transformed.
      *
-     * @param list  the list to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param list  The list to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if list or transformer is null
      */
     protected TransformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {

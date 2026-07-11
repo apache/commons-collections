@@ -76,7 +76,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * Creates an empty ArrayListValuedHashMap with the default initial
      * map capacity (16) and the specified initial list capacity.
      *
-     * @param initialListCapacity  the initial capacity used for value collections
+     * @param initialListCapacity  The initial capacity used for value collections
      */
     public ArrayListValuedHashMap(final int initialListCapacity) {
         this(DEFAULT_INITIAL_MAP_CAPACITY, initialListCapacity);
@@ -86,8 +86,8 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * Creates an empty ArrayListValuedHashMap with the specified initial
      * map and list capacities.
      *
-     * @param initialMapCapacity  the initial hashmap capacity
-     * @param initialListCapacity  the initial capacity used for value collections
+     * @param initialMapCapacity  The initial hashmap capacity
+     * @param initialListCapacity  The initial capacity used for value collections
      */
     public ArrayListValuedHashMap(final int initialMapCapacity, final int initialListCapacity) {
         super(new HashMap<>(initialMapCapacity));
@@ -97,7 +97,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code Map} to copy into this map
+     * @param map A {@code Map} to copy into this map
      */
     public ArrayListValuedHashMap(final Map<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);
@@ -107,7 +107,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a {@code MultiValuedMap} to copy into this map
+     * @param map A {@code MultiValuedMap} to copy into this map
      */
     public ArrayListValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);
@@ -150,7 +150,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

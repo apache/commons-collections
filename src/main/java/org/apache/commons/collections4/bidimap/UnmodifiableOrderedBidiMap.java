@@ -46,7 +46,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      *
      * @param <K> The key type
      * @param <V> The value type
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @return An unmodifiable OrderedBidiMap
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -67,7 +67,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast

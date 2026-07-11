@@ -43,8 +43,8 @@ public abstract class AbstractCountingBloomFilterTest<T extends CountingBloomFil
      * Assert the counts match the expected values. Values are for indices starting
      * at 0. Assert the cardinality equals the number of non-zero counts.
      *
-     * @param bf the bloom filter
-     * @param expected the expected counts
+     * @param bf The bloom filter
+     * @param expected The expected counts
      */
     private static void assertCounts(final CountingBloomFilter bf, final int[] expected) {
         final Map<Integer, Integer> m = new HashMap<>();

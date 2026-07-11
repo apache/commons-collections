@@ -72,7 +72,7 @@ public class SetUtils {
          * Copies the contents of this view into the provided set.
          *
          * @param <S> The set type
-         * @param set  the set for copying the contents
+         * @param set  The set for copying the contents
          */
         public <S extends Set<E>> void copyInto(final S set) {
             CollectionUtils.addAll(set, this);
@@ -126,8 +126,8 @@ public class SetUtils {
      *
      * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the set to subtract from, must not be null
-     * @param setB  the set to subtract, must not be null
+     * @param setA  The set to subtract from, must not be null
+     * @param setB  The set to subtract, must not be null
      * @return A view of the relative complement of the two sets
      * @since 4.1
      */
@@ -163,8 +163,8 @@ public class SetUtils {
      *
      * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
      * @return A view of the symmetric difference of the two sets
      * @since 4.1
      */
@@ -203,7 +203,7 @@ public class SetUtils {
      * or the argument itself otherwise.
      *
      * @param <T> The element type
-     * @param set the set, possibly {@code null}
+     * @param set The set, possibly {@code null}
      * @return An empty set if the argument is {@code null}
      */
     public static <T> Set<T> emptyIfNull(final Set<T> set) {
@@ -242,7 +242,7 @@ public class SetUtils {
      *
      * @param <T> The element type
      * @see java.util.Set#hashCode()
-     * @param set  the set to calculate the hash code for, may be null
+     * @param set  The set to calculate the hash code for, may be null
      * @return The hash code
      */
     public static <T> int hashCodeForSet(final Collection<T> set) {
@@ -264,7 +264,7 @@ public class SetUtils {
      * null}, then the method returns {@code null}.
      *
      * @param <E> The element type
-     * @param items the elements that make up the new set
+     * @param items The elements that make up the new set
      * @return A set
      * @since 4.3
      */
@@ -284,8 +284,8 @@ public class SetUtils {
      *
      * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
      * @return A view of the intersection of the two sets
      * @since 4.1
      */
@@ -333,8 +333,8 @@ public class SetUtils {
      * </blockquote>
      *
      * @see java.util.Set
-     * @param set1  the first set, may be null
-     * @param set2  the second set, may be null
+     * @param set1  The first set, may be null
+     * @param set2  The second set, may be null
      * @return whether the sets are equal by value comparison
      */
     public static boolean isEqualSet(final Collection<?> set1, final Collection<?> set2) {
@@ -382,7 +382,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to order, must not be null
+     * @param set  The set to order, must not be null
      * @return An ordered set backed by the given set
      * @throws NullPointerException if the set is null
      */
@@ -400,8 +400,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the navigable set to predicate, must not be null
-     * @param predicate  the predicate for the navigable set, must not be null
+     * @param set  The navigable set to predicate, must not be null
+     * @param predicate  The predicate for the navigable set, must not be null
      * @return A predicated navigable set backed by the given navigable set
      * @throws NullPointerException if the set or predicate is null
      * @since 4.1
@@ -421,8 +421,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to predicate, must not be null
-     * @param predicate  the predicate for the set, must not be null
+     * @param set  The set to predicate, must not be null
+     * @param predicate  The predicate for the set, must not be null
      * @return A predicated set backed by the given set
      * @throws NullPointerException if the set or predicate is null
      */
@@ -440,8 +440,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the sorted set to predicate, must not be null
-     * @param predicate  the predicate for the sorted set, must not be null
+     * @param set  The sorted set to predicate, must not be null
+     * @param predicate  The predicate for the sorted set, must not be null
      * @return A predicated sorted set backed by the given sorted set
      * @throws NullPointerException if the set or predicate is null
      */
@@ -472,7 +472,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to synchronize, must not be null
+     * @param set  The set to synchronize, must not be null
      * @return A synchronized set backed by the given set
      * @throws NullPointerException if the set is null
      */
@@ -502,7 +502,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the sorted set to synchronize, must not be null
+     * @param set  The sorted set to synchronize, must not be null
      * @return A synchronized set backed by the given set
      * @throws NullPointerException if the set is null
      */
@@ -523,8 +523,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the navigable set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
+     * @param set  The navigable set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
      * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      * @since 4.1
@@ -547,8 +547,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
+     * @param set  The set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
      * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      */
@@ -570,8 +570,8 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
+     * @param set  The set to transform, must not be null
+     * @param transformer  The transformer for the set, must not be null
      * @return A transformed set backed by the given set
      * @throws NullPointerException if the set or transformer is null
      */
@@ -590,8 +590,8 @@ public class SetUtils {
      *
      * @param <E> The generic type that is able to represent the types contained
      *   in both input sets.
-     * @param setA  the first set, must not be null
-     * @param setB  the second set, must not be null
+     * @param setA  The first set, must not be null
+     * @param setB  The second set, must not be null
      * @return A view of the union of the two set
      * @throws NullPointerException if either input set is null
      * @since 4.1
@@ -632,7 +632,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the navigable set to make unmodifiable, must not be null
+     * @param set  The navigable set to make unmodifiable, must not be null
      * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      * @since 4.1
@@ -646,7 +646,7 @@ public class SetUtils {
      * null}, then the method returns {@code null}.
      *
      * @param <E> The element type
-     * @param items the elements that make up the new set
+     * @param items The elements that make up the new set
      * @return A set
      * @since 4.3
      */
@@ -664,7 +664,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the set to make unmodifiable, must not be null
+     * @param set  The set to make unmodifiable, must not be null
      * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      */
@@ -679,7 +679,7 @@ public class SetUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param set  the sorted set to make unmodifiable, must not be null
+     * @param set  The sorted set to make unmodifiable, must not be null
      * @return An unmodifiable set backed by the given set
      * @throws NullPointerException if the set is null
      */

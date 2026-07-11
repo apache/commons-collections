@@ -222,7 +222,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Constructs a new, empty map with the specified initial capacity.
      *
-     * @param initialCapacity  the initial capacity
+     * @param initialCapacity  The initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
      */
     public LinkedMap(final int initialCapacity) {
@@ -233,8 +233,8 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Constructs a new, empty map with the specified initial capacity and
      * load factor.
      *
-     * @param initialCapacity  the initial capacity
-     * @param loadFactor  the load factor
+     * @param initialCapacity  The initial capacity
+     * @param loadFactor  The load factor
      * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
@@ -245,7 +245,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Constructor copying elements from another map.
      *
-     * @param map  the map to copy
+     * @param map  The map to copy
      * @throws NullPointerException if the map is null
      */
     public LinkedMap(final Map<? extends K, ? extends V> map) {
@@ -286,7 +286,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Gets the key at the specified index.
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -297,7 +297,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Gets the value at the specified index.
      *
-     * @param index  the index to retrieve
+     * @param index  The index to retrieve
      * @return The value at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -308,7 +308,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Gets the index of the specified key.
      *
-     * @param key  the key to find the index of
+     * @param key  The key to find the index of
      * @return The index, or -1 if not found
      */
     public int indexOf(Object key) {
@@ -325,7 +325,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -337,7 +337,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Removes the element at the specified index.
      *
-     * @param index  the index of the object to remove
+     * @param index  The index of the object to remove
      * @return The previous value corresponding the {@code key},
      *  or {@code null} if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -349,7 +349,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

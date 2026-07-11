@@ -60,7 +60,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
         /**
          * Create a new AbstractSortedMapDecorator.SortedMapIterator.
          *
-         * @param entrySet  the entrySet to iterate
+         * @param entrySet  The entrySet to iterate
          */
         protected SortedMapIterator(final Set<Map.Entry<K, V>> entrySet) {
             super(entrySet);
@@ -104,7 +104,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if the map is null
      */
     public AbstractSortedMapDecorator(final SortedMap<K, V> map) {

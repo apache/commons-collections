@@ -34,8 +34,8 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
     /**
      * Constructs a new entry with the specified key and given value.
      *
-     * @param key  the key for the entry, may be null
-     * @param value  the value for the entry, may be null
+     * @param key  The key for the entry, may be null
+     * @param value  The value for the entry, may be null
      */
     public DefaultMapEntry(final K key, final V value) {
         super(key, value);
@@ -44,7 +44,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
     /**
      * Constructs a new entry from the specified {@code KeyValue}.
      *
-     * @param pair  the pair to copy, must not be null
+     * @param pair  The pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
     public DefaultMapEntry(final KeyValue<? extends K, ? extends V> pair) {
@@ -54,7 +54,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
     /**
      * Constructs a new entry from the specified {@code Map.Entry}.
      *
-     * @param entry  the entry to copy, must not be null
+     * @param entry  The entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
     public DefaultMapEntry(final Map.Entry<? extends K, ? extends V> entry) {

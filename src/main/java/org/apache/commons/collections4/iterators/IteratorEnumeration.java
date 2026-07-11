@@ -42,7 +42,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
      * Constructs a new {@code IteratorEnumeration} that will use the given
      * iterator.
      *
-     * @param iterator the iterator to use
+     * @param iterator The iterator to use
      */
     public IteratorEnumeration(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
@@ -82,7 +82,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     /**
      * Sets the underlying iterator.
      *
-     * @param iterator the new underlying iterator
+     * @param iterator The new underlying iterator
      */
     public void setIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;

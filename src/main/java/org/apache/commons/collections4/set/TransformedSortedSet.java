@@ -50,8 +50,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * Contrast this with {@link #transformingSortedSet(SortedSet, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed {@link SortedSet}
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
@@ -79,8 +79,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed {@link SortedSet}
      * @throws NullPointerException if set or transformer is null
      * @since 4.0
@@ -96,8 +96,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      *
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if set or transformer is null
      */
     protected TransformedSortedSet(final SortedSet<E> set, final Transformer<? super E, ? extends E> transformer) {

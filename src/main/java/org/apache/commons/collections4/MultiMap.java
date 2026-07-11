@@ -58,7 +58,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * This cannot be mandated due to backwards compatibility of this interface.
      * </p>
      *
-     * @param value  the value to search for
+     * @param value  The value to search for
      * @return true if the map contains the value
      * @throws ClassCastException if the value is of an invalid type
      * @throws NullPointerException if the value is null and null value are invalid
@@ -82,7 +82,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Implementations may choose to return a clone of the internal collection.
      * </p>
      *
-     * @param key  the key to retrieve
+     * @param key  The key to retrieve
      * @return The {@code Collection} of values, implementations should
      *  return {@code null} for no mapping, but may return an empty collection
      * @throws ClassCastException if the key is of an invalid type
@@ -100,8 +100,8 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * collection dependent on implementation.
      * </p>
      *
-     * @param key  the key to store against
-     * @param value  the value to add to the collection at the key
+     * @param key  The key to store against
+     * @param value  The value to add to the collection at the key
      * @return typically the value added if the map changed and null if the map did not change
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key or value is of an invalid type
@@ -118,7 +118,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * {@code get(Object)}, however they may choose to return an empty collection.
      * </p>
      *
-     * @param key  the key to remove values from
+     * @param key  The key to remove values from
      * @return The {@code Collection} of values removed, implementations should
      *  return {@code null} for no mapping found, but may return an empty collection
      * @throws UnsupportedOperationException if the map is unmodifiable
@@ -140,8 +140,8 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * they may choose to return an empty collection.
      * </p>
      *
-     * @param key  the key to remove from
-     * @param item  the item to remove
+     * @param key  The key to remove from
+     * @param item  The item to remove
      * @return {@code true} if the mapping was removed, {@code false} otherwise
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key or value is of an invalid type

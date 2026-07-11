@@ -50,7 +50,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
      * Constructs a new {@code EnumerationIterator} that provides
      * an iterator view of the given enumeration.
      *
-     * @param enumeration  the enumeration to use
+     * @param enumeration  The enumeration to use
      */
     public EnumerationIterator(final Enumeration<? extends E> enumeration) {
         this(enumeration, null);
@@ -60,8 +60,8 @@ public class EnumerationIterator<E> implements Iterator<E> {
      * Constructs a new {@code EnumerationIterator} that will remove
      * elements from the specified collection.
      *
-     * @param enumeration  the enumeration to use
-     * @param collection  the collection to remove elements from
+     * @param enumeration  The enumeration to use
+     * @param collection  The collection to remove elements from
      */
     public EnumerationIterator(final Enumeration<? extends E> enumeration, final Collection<? super E> collection) {
         this.enumeration = enumeration;
@@ -125,7 +125,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     /**
      * Sets the underlying enumeration.
      *
-     * @param enumeration  the new underlying enumeration
+     * @param enumeration  The new underlying enumeration
      */
     public void setEnumeration(final Enumeration<? extends E> enumeration) {
         this.enumeration = enumeration;

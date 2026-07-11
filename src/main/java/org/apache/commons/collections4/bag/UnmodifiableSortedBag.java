@@ -56,7 +56,7 @@ public final class UnmodifiableSortedBag<E>
      * If the bag passed in is already unmodifiable, it is returned.
      *
      * @param <E> The type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @return An unmodifiable SortedBag
      * @throws NullPointerException if bag is null
      * @since 4.0
@@ -71,7 +71,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  The bag to decorate, must not be null
      * @throws NullPointerException if bag is null
      */
     private UnmodifiableSortedBag(final SortedBag<E> bag) {
@@ -130,7 +130,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Deserializes the collection in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
@@ -207,7 +207,7 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

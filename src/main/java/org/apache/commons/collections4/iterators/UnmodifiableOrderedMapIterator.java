@@ -39,7 +39,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      * @return A new unmodifiable ordered map iterator
      * @throws NullPointerException if the iterator is null
      */
@@ -60,7 +60,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
     /**
      * Constructs a new instance.
      *
-     * @param iterator  the iterator to decorate
+     * @param iterator  The iterator to decorate
      */
     private UnmodifiableOrderedMapIterator(final OrderedMapIterator<K, ? extends V> iterator) {
         this.iterator = iterator;

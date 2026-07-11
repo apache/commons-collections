@@ -64,7 +64,7 @@ public final class FalsePredicate<T> extends AbstractPredicate<T> implements Ser
     /**
      * Evaluates the predicate returning false always.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return false always
      */
     @Override

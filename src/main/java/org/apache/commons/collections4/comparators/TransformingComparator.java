@@ -62,7 +62,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      * Constructs an instance with the given Transformer and Comparator.
      *
      * @param transformer  what will transform the arguments to {@code compare}
-     * @param decorated  the decorated Comparator
+     * @param decorated  The decorated Comparator
      */
     public TransformingComparator(final Transformer<? super I, ? extends O> transformer,
                                   final Comparator<O> decorated) {
@@ -73,8 +73,8 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     /**
      * Returns the result of comparing the values from the transform operation.
      *
-     * @param obj1  the first object to transform then compare
-     * @param obj2  the second object to transform then compare
+     * @param obj1  The first object to transform then compare
+     * @param obj2  The second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
     @Override
@@ -93,7 +93,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      * iff {@code <em>that</em>} is a {@link TransformingComparator}
      * whose attributes are equal to mine.
      *
-     * @param object  the object to compare to
+     * @param object  The object to compare to
      * @return true if equal
      */
     @Override

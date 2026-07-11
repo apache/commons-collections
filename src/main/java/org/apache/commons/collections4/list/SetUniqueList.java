@@ -150,7 +150,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * kept). A {@code HashSet} is used for the set behavior.
      *
      * @param <E>  the element type
-     * @param list  the list to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @return A new {@link SetUniqueList}
      * @throws NullPointerException if list is null
      * @since 4.0
@@ -175,8 +175,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <p>
      * The set and list must both be correctly initialized to the same elements.
      *
-     * @param set  the set to decorate, must not be null
-     * @param list  the list to decorate, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param list  The list to decorate, must not be null
      * @throws NullPointerException if set or list is null
      */
     protected SetUniqueList(final List<E> list, final Set<E> set) {
@@ -191,7 +191,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * method returns {@code true} always. However, this class may return
      * {@code false} because of the {@code Set} behavior.
      *
-     * @param object  the object to add
+     * @param object  The object to add
      * @return true if object was added
      */
     @Override
@@ -214,8 +214,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the element is always inserted. This may not happen with this
      * implementation.
      *
-     * @param index  the index to insert at
-     * @param object  the object to add
+     * @param index  The index to insert at
+     * @param object  The object to add
      */
     @Override
     public void add(final int index, final E object) {
@@ -236,7 +236,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
-     * @param coll  the collection to add in iterator order
+     * @param coll  The collection to add in iterator order
      * @return true if this collection changed
      */
     @Override
@@ -255,8 +255,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
-     * @param index  the index to insert at
-     * @param coll  the collection to add in iterator order
+     * @param index  The index to insert at
+     * @param coll  The collection to add in iterator order
      * @return true if this collection changed
      */
     @Override
@@ -299,8 +299,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Create a new {@link Set} with the same type as the provided {@code set}
      * and populate it with all elements of {@code list}.
      *
-     * @param set  the {@link Set} to be used as return type, must not be null
-     * @param list  the {@link List} to populate the {@link Set}
+     * @param set  The {@link Set} to be used as return type, must not be null
+     * @param list  The {@link List} to populate the {@link Set}
      * @return A new {@link Set} populated with all elements of the provided
      *   {@link List}
      */
@@ -403,8 +403,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * duplicate is removed. If the object is not already in the list then a
      * normal set occurs. If it is present, then the old version is removed.
      *
-     * @param index  the index to insert at
-     * @param object  the object to set
+     * @param index  The index to insert at
+     * @param object  The object to set
      * @return The previous object
      */
     @Override
@@ -441,7 +441,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Deserializes the list and re-checks the no-duplicate invariant the
      * constructors guarantee.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if a class read from the stream cannot be loaded
      */

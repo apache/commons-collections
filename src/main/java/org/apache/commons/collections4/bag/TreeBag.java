@@ -73,7 +73,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * Constructs a {@link TreeBag} containing all the members of the
      * specified collection.
      *
-     * @param coll the collection to copy into the bag
+     * @param coll The collection to copy into the bag
      */
     public TreeBag(final Collection<? extends E> coll) {
         this();
@@ -84,7 +84,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * Constructs an empty bag that maintains order on its unique representative
      * members according to the given {@link Comparator}.
      *
-     * @param comparator the comparator to use
+     * @param comparator The comparator to use
      */
     public TreeBag(final Comparator<? super E> comparator) {
         super(new TreeMap<>(comparator));
@@ -93,7 +93,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Constructs a bag containing all the members of the given Iterable.
      *
-     * @param iterable an iterable to copy into this bag.
+     * @param iterable An iterable to copy into this bag.
      * @since 4.5.0-M3
      */
     public TreeBag(final Iterable<? extends E> iterable) {
@@ -141,7 +141,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Deserializes the bag in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -155,7 +155,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

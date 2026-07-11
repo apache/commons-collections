@@ -1260,7 +1260,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
      *
-     * @param keyAnalyzer  the {@link KeyAnalyzer}.
+     * @param keyAnalyzer  The {@link KeyAnalyzer}.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         super(keyAnalyzer);
@@ -1270,7 +1270,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer} and initializes the
      * {@link Trie} with the values from the provided {@link Map}.
      *
-     * @param keyAnalyzer  the {@link KeyAnalyzer}.
+     * @param keyAnalyzer  The {@link KeyAnalyzer}.
      * @param map The source map.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer, final Map<? extends K, ? extends V> map) {
@@ -1610,9 +1610,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * that contains the prefixes if the entry holding the subtree is
      * removed or changes. Changing the subtree takes O(K) time.
      *
-     * @param key  the key to use in the search
-     * @param offsetInBits  the prefix offset
-     * @param lengthInBits  the number of significant prefix bits
+     * @param key  The key to use in the search
+     * @param offsetInBits  The prefix offset
+     * @param lengthInBits  The number of significant prefix bits
      * @return A {@link SortedMap} view of this {@link Trie} with all elements whose
      *   key is prefixed by the search key
      */
@@ -1972,7 +1972,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      *          - If node.parent.left is not uplink from node.parent:
      *              - Follow right path for first right child from node.parent.left
      *
-     * @param start  the start entry
+     * @param start  The start entry
      */
     TrieEntry<K, V> previousEntry(final TrieEntry<K, V> start) {
         if (start.predecessor == null) {
@@ -2278,7 +2278,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
-     * @param key  the key to use in the search
+     * @param key  The key to use in the search
      * @return The {@link Entry} whose key is closest in a bitwise XOR metric
      *   to the provided key
      */
@@ -2307,7 +2307,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
-     * @param key  the key to use in the search
+     * @param key  The key to use in the search
      * @return The key that is closest in a bitwise XOR metric to the provided key
      */
     public K selectKey(final K key) {
@@ -2359,7 +2359,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
-     * @param key  the key to use in the search
+     * @param key  The key to use in the search
      * @return The value whose key is closest in a bitwise XOR metric
      * to the provided key
      */
@@ -2455,7 +2455,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

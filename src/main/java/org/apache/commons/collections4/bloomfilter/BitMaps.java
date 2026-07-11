@@ -36,7 +36,7 @@ public class BitMaps {
      * </p>
      *
      * @param bitMaps  The array of bit maps.
-     * @param bitIndex the index of the bit to locate.
+     * @param bitIndex The index of the bit to locate.
      * @return {@code true} if the bit is enabled, {@code false} otherwise.
      * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
@@ -54,7 +54,7 @@ public class BitMaps {
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
-     * @param bitIndex the bit index (assumed to be positive)
+     * @param bitIndex The bit index (assumed to be positive)
      * @return The filter bit
      */
     public static long getLongBit(final int bitIndex) {
@@ -75,7 +75,7 @@ public class BitMaps {
      * <p><em>The divide is performed using bit shifts. If the input is negative the behavior
      * is not defined.</em></p>
      *
-     * @param bitIndex the bit index (assumed to be positive)
+     * @param bitIndex The bit index (assumed to be positive)
      * @return The index of the bit map in an array of bit maps.
      */
     public static int getLongIndex(final int bitIndex) {
@@ -97,8 +97,8 @@ public class BitMaps {
      *
      * <p><em>If the divisor is negative the behavior is not defined.</em></p>
      *
-     * @param dividend an unsigned long value to calculate the modulus of.
-     * @param divisor the divisor for the modulus calculation, must be strictly positive.
+     * @param dividend An unsigned long value to calculate the modulus of.
+     * @param divisor The divisor for the modulus calculation, must be strictly positive.
      * @return The remainder or modulus value.
      * @throws ArithmeticException if the divisor is zero
      * @see Long#remainderUnsigned(long, long)
@@ -118,7 +118,7 @@ public class BitMaps {
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
-     * @param numberOfBits the number of bits to store in the array of bit maps.
+     * @param numberOfBits The number of bits to store in the array of bit maps.
      * @return A new bitmap.
      */
     static long[] newBitMap(final int numberOfBits) {
@@ -128,7 +128,7 @@ public class BitMaps {
     /**
      * Creates a new bitmap for given shape parameter.
      *
-     * @param shape the shape.
+     * @param shape The shape.
      * @return A new bitmap.
      */
     static long[] newBitMap(final Shape shape) {
@@ -140,7 +140,7 @@ public class BitMaps {
      *
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
-     * @param numberOfBits the number of bits to store in the array of bit maps.
+     * @param numberOfBits The number of bits to store in the array of bit maps.
      * @return The number of bit maps necessary.
      */
     public static int numberOfBitMaps(final int numberOfBits) {
@@ -150,7 +150,7 @@ public class BitMaps {
     /**
      * Calculates the number of bit maps (longs) required for the shape parameter.
      *
-     * @param shape the shape.
+     * @param shape The shape.
      * @return The number of bit maps necessary.
      */
     static int numberOfBitMaps(final Shape shape) {
@@ -162,7 +162,7 @@ public class BitMaps {
      * <p><em>Does not perform range checking</em></p>
      *
      * @param bitMaps  The array of bit maps.
-     * @param bitIndex the index of the bit to set.
+     * @param bitIndex The index of the bit to set.
      * @throws IndexOutOfBoundsException if bitIndex specifies a bit not in the range being tracked.
      */
     public static void set(final long[] bitMaps, final int bitIndex) {

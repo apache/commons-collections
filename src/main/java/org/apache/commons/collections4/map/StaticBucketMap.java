@@ -365,7 +365,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * thread contention.  The more buckets the fewer chances for thread
      * contention.
      *
-     * @param numBuckets  the number of buckets for this map
+     * @param numBuckets  The number of buckets for this map
      */
     @SuppressWarnings("unchecked")
     public StaticBucketMap(final int numBuckets) {
@@ -413,7 +413,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * monitor. If you have twenty thousand buckets in your map, then the recursive method will be invoked twenty thousand times. You have been warned.
      * </p>
      *
-     * @param runnable the code to execute atomically
+     * @param runnable The code to execute atomically
      */
     public void atomic(final Runnable runnable) {
         atomic(Objects.requireNonNull(runnable, "runnable"), 0);
@@ -446,7 +446,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Checks if the map contains the specified key.
      *
-     * @param key  the key to check
+     * @param key  The key to check
      * @return true if found
      */
     @Override
@@ -470,7 +470,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Checks if the map contains the specified value.
      *
-     * @param value  the value to check
+     * @param value  The value to check
      * @return true if found
      */
     @Override
@@ -504,7 +504,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Compares this map to another, as per the Map specification.
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal
      */
     @Override
@@ -522,7 +522,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the value associated with the key.
      *
-     * @param key  the key to retrieve
+     * @param key  The key to retrieve
      * @return The associated value
      */
     @Override
@@ -616,8 +616,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Puts a new key value mapping into the map.
      *
-     * @param key  the key to use
-     * @param value  the value to use
+     * @param key  The key to use
+     * @param value  The value to use
      * @return The previous mapping for the key
      */
     @Override
@@ -664,7 +664,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Puts all the entries from the specified map into this map.
      * This operation is <strong>not atomic</strong> and may have undesired effects.
      *
-     * @param map  the map of entries to add
+     * @param map  The map of entries to add
      */
     @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
@@ -676,7 +676,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Removes the specified key from the map.
      *
-     * @param key  the key to remove
+     * @param key  The key to remove
      * @return The previous value at this key
      */
     @Override

@@ -87,8 +87,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to limit, may not be null
-     * @param maxSize  the maximum number of elements, must not be negative
+     * @param iterable  The iterable to limit, may not be null
+     * @param maxSize  The maximum number of elements, must not be negative
      * @return A bounded view on the specified iterable
      * @throws IllegalArgumentException if maxSize is negative
      * @throws NullPointerException if iterable is null
@@ -120,7 +120,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterables  the iterables to combine, may not be null
+     * @param iterables  The iterables to combine, may not be null
      * @return A new iterable, combining the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -155,8 +155,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
+     * @param a  The first iterable, may not be null
+     * @param b  The second iterable, may not be null
      * @return A new iterable, combining the provided iterables
      * @throws NullPointerException if either a or b is null
      */
@@ -179,9 +179,9 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
-     * @param c  the third iterable, may not be null
+     * @param a  The first iterable, may not be null
+     * @param b  The second iterable, may not be null
+     * @param c  The third iterable, may not be null
      * @return A new iterable, combining the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -205,10 +205,10 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
-     * @param c  the third iterable, may not be null
-     * @param d  the fourth iterable, may not be null
+     * @param a  The first iterable, may not be null
+     * @param b  The second iterable, may not be null
+     * @param c  The third iterable, may not be null
+     * @param d  The fourth iterable, may not be null
      * @return A new iterable, combining the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -223,7 +223,7 @@ public class IterableUtils {
     /**
      * Fail-fast check for null arguments.
      *
-     * @param iterables  the iterables to check
+     * @param iterables  The iterables to check
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {
@@ -243,10 +243,10 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param comparator  the comparator defining an ordering over the elements,
+     * @param comparator  The comparator defining an ordering over the elements,
      *   may be null, in which case natural ordering will be used
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
+     * @param a  The first iterable, may not be null
+     * @param b  The second iterable, may not be null
      * @return A filtered view on the specified iterable
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -271,8 +271,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param a  the first iterable, must not be null
-     * @param b  the second iterable, must not be null
+     * @param a  The first iterable, must not be null
+     * @param b  The second iterable, must not be null
      * @return A filtered view on the specified iterable
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -299,9 +299,9 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param iterable  the iterable to check, may be null
-     * @param object  the object to check
-     * @param equator  the equator to use to check, may not be null
+     * @param iterable  The iterable to check, may be null
+     * @param object  The object to check
+     * @param equator  The equator to use to check, may not be null
      * @return true if the object is contained in the iterable, false otherwise
      * @throws NullPointerException if equator is null
      */
@@ -318,8 +318,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param iterable  the iterable to check, may be null
-     * @param object  the object to check
+     * @param iterable  The iterable to check, may be null
+     * @param object  The object to check
      * @return true if the object is contained in the iterable, false otherwise
      */
     public static <E> boolean contains(final Iterable<E> iterable, final Object object) {
@@ -336,8 +336,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param input  the {@link Iterable} to get the input from, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param input  The {@link Iterable} to get the input from, may be null
+     * @param predicate  The predicate to use, may not be null
      * @return The number of matches for the predicate in the collection
      * @throws NullPointerException if predicate is null
      */
@@ -350,7 +350,7 @@ public class IterableUtils {
      * Finds and returns the List of duplicate elements in the given collection.
      *
      * @param <E> The type of elements in the collection.
-     * @param iterable the list to test, must not be null.
+     * @param iterable The list to test, must not be null.
      * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
@@ -365,7 +365,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of elements in the collection.
-     * @param iterable the list to test, must not be null.
+     * @param iterable The list to test, must not be null.
      * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
@@ -377,7 +377,7 @@ public class IterableUtils {
      * Finds and returns the set of duplicate elements in the given collection.
      *
      * @param <E> The type of elements in the collection.
-     * @param iterable the list to test, must not be null.
+     * @param iterable The list to test, must not be null.
      * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
@@ -390,8 +390,8 @@ public class IterableUtils {
      *
      * @param <C> The type of Collection.
      * @param <E> The type of elements in the Collection.
-     * @param iterable the list to test, must not be null.
-     * @param duplicates the list to test, must not be null.
+     * @param iterable The list to test, must not be null.
+     * @param duplicates The list to test, must not be null.
      * @return The set of duplicate elements, may be empty.
      */
     static <C extends Collection<E>, E> C duplicateSet(final Iterable<E> iterable, final C duplicates) {
@@ -407,7 +407,7 @@ public class IterableUtils {
      * or the argument itself otherwise.
      *
      * @param <E> The element type
-     * @param iterable  the iterable, may be null
+     * @param iterable  The iterable, may be null
      * @return An empty iterable if the argument is null
      */
     public static <E> Iterable<E> emptyIfNull(final Iterable<E> iterable) {
@@ -433,7 +433,7 @@ public class IterableUtils {
      * or {@code iterable.iterator()} otherwise.
      *
      * @param <E> The element type
-     * @param iterable  the iterable, possibly {@code null}
+     * @param iterable  The iterable, possibly {@code null}
      * @return An empty iterator if the argument is {@code null}
      */
     private static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
@@ -449,8 +449,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to filter, may not be null
-     * @param predicate  the predicate used to filter elements, may not be null
+     * @param iterable  The iterable to filter, may not be null
+     * @param predicate  The predicate used to filter elements, may not be null
      * @return A filtered view on the specified iterable
      * @throws NullPointerException if either iterable or predicate is null
      */
@@ -473,8 +473,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to search, may be null
-     * @param predicate  the predicate to use, must not be null
+     * @param iterable  The iterable to search, may be null
+     * @param predicate  The predicate to use, must not be null
      * @return The first element of the iterable which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      */
@@ -493,7 +493,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <T> The type of object in the {@link Iterable}.
-     * @param iterable  the {@link Iterable} to get a value from, may be null
+     * @param iterable  The {@link Iterable} to get a value from, may be null
      * @return The first object
      * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2
@@ -506,8 +506,8 @@ public class IterableUtils {
      * Applies the closure to each element of the provided iterable.
      *
      * @param <E> The element type
-     * @param iterable  the iterator to use, may be null
-     * @param closure  the closure to apply to each element, may not be null
+     * @param iterable  The iterator to use, may be null
+     * @param closure  The closure to apply to each element, may not be null
      * @throws NullPointerException if closure is null
      */
     public static <E> void forEach(final Iterable<E> iterable, final Closure<? super E> closure) {
@@ -521,8 +521,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param iterable  the iterable to get the input from, may be null
-     * @param closure  the closure to perform, may not be null
+     * @param iterable  The iterable to get the input from, may be null
+     * @param closure  The closure to perform, may not be null
      * @return The last element in the iterable, or null if iterable is null or empty
      */
     public static <E> E forEachButLast(final Iterable<E> iterable, final Closure<? super E> closure) {
@@ -534,8 +534,8 @@ public class IterableUtils {
      *
      * @param <E> The element type that the {@link Iterable} may contain
      * @param <T> The element type of the object to find
-     * @param iterable  the {@link Iterable} to search
-     * @param obj  the object to find the cardinality of
+     * @param iterable  The {@link Iterable} to search
+     * @param obj  The object to find the cardinality of
      * @return The number of occurrences of obj in iterable
      */
     @SuppressWarnings("deprecation") // Bag is supported until removed
@@ -560,8 +560,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <T> The type of object in the {@link Iterable}.
-     * @param iterable  the {@link Iterable} to get a value from, may be null
-     * @param index  the index to get
+     * @param iterable  The {@link Iterable} to get a value from, may be null
+     * @param index  The index to get
      * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
@@ -581,8 +581,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to search, may be null
-     * @param predicate  the predicate to use, must not be null
+     * @param iterable  The iterable to search, may be null
+     * @param predicate  The predicate to use, must not be null
      * @return The index of the first element which matches the predicate or -1 if none matches
      * @throws NullPointerException if predicate is null
      */
@@ -596,7 +596,7 @@ public class IterableUtils {
      * A {@code null} iterable returns true.
      * </p>
      *
-     * @param iterable  the {@link Iterable to use}, may be null
+     * @param iterable  The {@link Iterable to use}, may be null
      * @return true if the iterable is null or empty, false otherwise
      */
     public static boolean isEmpty(final Iterable<?> iterable) {
@@ -618,7 +618,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to loop, may not be null
+     * @param iterable  The iterable to loop, may not be null
      * @return A view of the iterable, providing an infinite loop over its elements
      * @throws NullPointerException if iterable is null
      */
@@ -647,8 +647,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param iterable  the {@link Iterable} to use, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param iterable  The {@link Iterable} to use, may be null
+     * @param predicate  The predicate to use, may not be null
      * @return true if every element of the collection matches the predicate or if the
      *   collection is empty, false otherwise
      * @throws NullPointerException if predicate is null
@@ -664,8 +664,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The type of object the {@link Iterable} contains
-     * @param iterable  the {@link Iterable} to use, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param iterable  The {@link Iterable} to use, may be null
+     * @param predicate  The predicate to use, may not be null
      * @return true if any element of the collection matches the predicate, false otherwise
      * @throws NullPointerException if predicate is null
      */
@@ -707,9 +707,9 @@ public class IterableUtils {
      *
      * @param <O>  the type of object the {@link Iterable} contains
      * @param <R>  the type of the output {@link Collection}
-     * @param iterable  the collection to get the input from, may be null
-     * @param partitionFactory  the factory used to create the output collections
-     * @param predicates  the predicates to use, may not be null
+     * @param iterable  The collection to get the input from, may be null
+     * @param partitionFactory  The factory used to create the output collections
+     * @param predicates  The predicates to use, may not be null
      * @return A list containing the output collections
      * @throws NullPointerException if any predicate is null
      */
@@ -791,8 +791,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <O>  the type of object the {@link Iterable} contains
-     * @param iterable  the iterable to partition, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param iterable  The iterable to partition, may be null
+     * @param predicate  The predicate to use, may not be null
      * @return A list containing the output collections
      * @throws NullPointerException if predicate is null
      */
@@ -837,8 +837,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <O>  the type of object the {@link Iterable} contains
-     * @param iterable  the collection to get the input from, may be null
-     * @param predicates  the predicates to use, may not be null
+     * @param iterable  The collection to get the input from, may be null
+     * @param predicates  The predicates to use, may not be null
      * @return A list containing the output collections
      * @throws NullPointerException if any predicate is null
      */
@@ -863,7 +863,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to use, may not be null
+     * @param iterable  The iterable to use, may not be null
      * @return A reversed view of the specified iterable
      * @throws NullPointerException if iterable is null
      * @see ReverseListIterator
@@ -887,7 +887,7 @@ public class IterableUtils {
      * A {@code null} or empty iterator returns {@code 0}.
      * </p>
      *
-     * @param iterable  the iterable to check, may be null
+     * @param iterable  The iterable to check, may be null
      * @return The number of elements contained in the iterable
      */
     public static int size(final Iterable<?> iterable) {
@@ -908,8 +908,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to use, may not be null
-     * @param elementsToSkip  the number of elements to skip from the start, must not be negative
+     * @param iterable  The iterable to use, may not be null
+     * @param elementsToSkip  The number of elements to skip from the start, must not be negative
      * @return A view of the specified iterable, skipping the first N elements
      * @throws IllegalArgumentException if elementsToSkip is negative
      * @throws NullPointerException if iterable is null
@@ -935,7 +935,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E>  The element type of the collections in the iterable.
-     * @param iterable the iterable of collections to sum the sizes of, must not be null.
+     * @param iterable The iterable of collections to sum the sizes of, must not be null.
      * @return The sum of the sizes of the collections in the iterable, capped at {@link Integer#MAX_VALUE}.
      * @since 4.6.0
      */
@@ -972,7 +972,7 @@ public class IterableUtils {
      * Gets a new list with the contents of the provided iterable.
      *
      * @param <E> The element type
-     * @param iterable  the iterable to use, may be null
+     * @param iterable  The iterable to use, may be null
      * @return A list of the iterator contents
      */
     public static <E> List<E> toList(final Iterable<E> iterable) {
@@ -989,7 +989,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to convert to a string, may be null
+     * @param iterable  The iterable to convert to a string, may be null
      * @return A string representation of {@code iterable}
      */
     public static <E> String toString(final Iterable<E> iterable) {
@@ -1006,8 +1006,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to convert to a string, may be null
-     * @param transformer  the transformer used to get a string representation of an element
+     * @param iterable  The iterable to convert to a string, may be null
+     * @param transformer  The transformer used to get a string representation of an element
      * @return A string representation of {@code iterable}
      * @throws NullPointerException if {@code transformer} is null
      */
@@ -1027,11 +1027,11 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to convert to a string, may be null
-     * @param transformer  the transformer used to get a string representation of an element
-     * @param delimiter  the string to delimit elements
-     * @param prefix  the prefix, prepended to the string representation
-     * @param suffix  the suffix, appended to the string representation
+     * @param iterable  The iterable to convert to a string, may be null
+     * @param transformer  The transformer used to get a string representation of an element
+     * @param delimiter  The string to delimit elements
+     * @param prefix  The prefix, prepended to the string representation
+     * @param suffix  The suffix, appended to the string representation
      * @return A string representation of {@code iterable}
      * @throws NullPointerException if either transformer, delimiter, prefix or suffix is null
      */
@@ -1054,8 +1054,8 @@ public class IterableUtils {
      *
      * @param <I>  the input element type
      * @param <O>  the output element type
-     * @param iterable  the iterable to transform, may not be null
-     * @param transformer  the transformer, must not be null
+     * @param iterable  The iterable to transform, may not be null
+     * @param transformer  The transformer, must not be null
      * @return A transformed view of the specified iterable
      * @throws NullPointerException if either iterable or transformer is null
      */
@@ -1080,7 +1080,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to use, may not be null
+     * @param iterable  The iterable to use, may not be null
      * @return A unique view of the specified iterable
      * @throws NullPointerException if iterable is null
      */
@@ -1101,7 +1101,7 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param iterable  the iterable to use, may not be null
+     * @param iterable  The iterable to use, may not be null
      * @return An unmodifiable view of the specified iterable
      * @throws NullPointerException if iterable is null
      */
@@ -1126,8 +1126,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E> The element type
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
+     * @param a  The first iterable, may not be null
+     * @param b  The second iterable, may not be null
      * @return A new iterable, interleaving the provided iterables
      * @throws NullPointerException if either a or b is null
      */
@@ -1154,8 +1154,8 @@ public class IterableUtils {
      * </p>
      *
      * @param <E>    the element type
-     * @param first  the first iterable, may not be null
-     * @param others the array of iterables to interleave, may not be null
+     * @param first  The first iterable, may not be null
+     * @param others The array of iterables to interleave, may not be null
      * @return A new iterable, interleaving the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */

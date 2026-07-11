@@ -52,7 +52,7 @@ public class DefaultAbstractLinkedListJava21Test<E> extends AbstractListTest<E> 
         /**
          * Serializes this object to an ObjectOutputStream.
          *
-         * @param out the target ObjectOutputStream.
+         * @param out The target ObjectOutputStream.
          * @throws IOException thrown when an I/O errors occur writing to the target stream.
          */
         private void writeObject(final ObjectOutputStream out) throws IOException {

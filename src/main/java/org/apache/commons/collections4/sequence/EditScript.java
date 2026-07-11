@@ -123,7 +123,7 @@ public class EditScript<T> {
      * commands in order and call the appropriate method as each command is
      * encountered.
      *
-     * @param visitor  the visitor that will visit all commands in turn
+     * @param visitor  The visitor that will visit all commands in turn
      */
     public void visit(final CommandVisitor<T> visitor) {
         for (final EditCommand<T> command : commands) {

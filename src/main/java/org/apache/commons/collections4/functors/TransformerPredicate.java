@@ -38,7 +38,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
      * Creates the predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param transformer  the transformer to decorate
+     * @param transformer  The transformer to decorate
      * @return The predicate
      * @throws NullPointerException if the transformer is null
      */
@@ -53,7 +53,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
      * Constructor that performs no validation.
      * Use {@code transformerPredicate} if you want that.
      *
-     * @param transformer  the transformer to decorate
+     * @param transformer  The transformer to decorate
      */
     public TransformerPredicate(final Transformer<? super T, Boolean> transformer) {
         iTransformer = transformer;
@@ -72,7 +72,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Evaluates the predicate returning the result of the decorated transformer.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if decorated transformer returns Boolean.TRUE
      * @throws FunctorException if the transformer returns an invalid type
      */

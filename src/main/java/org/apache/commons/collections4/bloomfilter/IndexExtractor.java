@@ -36,7 +36,7 @@ public interface IndexExtractor {
     /**
      * Creates an IndexExtractor from a {@code BitMapExtractor}.
      *
-     * @param bitMapExtractor the {@code BitMapExtractor}
+     * @param bitMapExtractor The {@code BitMapExtractor}
      * @return A new {@code IndexExtractor}.
      */
     static IndexExtractor fromBitMapExtractor(final BitMapExtractor bitMapExtractor) {
@@ -66,7 +66,7 @@ public interface IndexExtractor {
     /**
      * Creates an IndexExtractor from an array of integers.
      *
-     * @param values the index values
+     * @param values The index values
      * @return An IndexExtractor that uses the values.
      */
     static IndexExtractor fromIndexArray(final int... values) {
@@ -132,7 +132,7 @@ public interface IndexExtractor {
      *
      * <p>Indices ordering and uniqueness is not guaranteed.</p>
      *
-     * @param predicate the action to be performed for each non-zero bit index.
+     * @param predicate The action to be performed for each non-zero bit index.
      * @return {@code true} if all indexes return true from consumer, {@code false} otherwise.
      * @throws NullPointerException if the specified action is null
      */

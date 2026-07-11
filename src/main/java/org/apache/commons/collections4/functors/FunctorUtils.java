@@ -52,7 +52,7 @@ final class FunctorUtils {
      * </p>
      *
      * @param <T> The type of object the returned predicate should "accept"
-     * @param predicate the predicate to coerce.
+     * @param predicate The predicate to coerce.
      * @return The coerced predicate.
      */
     @SuppressWarnings("unchecked")
@@ -70,7 +70,7 @@ final class FunctorUtils {
      *
      * @param <I> The type of object the returned transformer should "accept"
      * @param <O> The type of object the returned transformer should "produce"
-     * @param transformer the transformer to coerce.
+     * @param transformer The transformer to coerce.
      * @return The coerced transformer.
      */
     @SuppressWarnings("unchecked")
@@ -81,7 +81,7 @@ final class FunctorUtils {
     /**
      * Clones the consumers to ensure that the internal references can't be updated.
      *
-     * @param consumers  the consumers to copy.
+     * @param consumers  The consumers to copy.
      * @return The cloned consumers.
      */
     @SuppressWarnings("unchecked")
@@ -94,7 +94,7 @@ final class FunctorUtils {
      * Due to the {@link Predicate#test(T)} method, Predicate<? super T> is
      * able to be coerced to Predicate<T> without casting issues.
      *
-     * @param predicates  the predicates to copy
+     * @param predicates  The predicates to copy
      * @return The cloned predicates
      */
     @SuppressWarnings("unchecked")
@@ -105,7 +105,7 @@ final class FunctorUtils {
     /**
      * Copy method.
      *
-     * @param transformers  the transformers to copy
+     * @param transformers  The transformers to copy
      * @return A clone of the transformers
      */
     @SuppressWarnings("unchecked")
@@ -116,7 +116,7 @@ final class FunctorUtils {
     /**
      * Validate the predicates to ensure that all is well.
      *
-     * @param predicates  the predicates to validate
+     * @param predicates  The predicates to validate
      * @return predicate array
      */
     static <T> Predicate<? super T>[] validate(final Collection<? extends java.util.function.Predicate<? super T>> predicates) {
@@ -138,7 +138,7 @@ final class FunctorUtils {
     /**
      * Validates the consumers to ensure that all is well.
      *
-     * @param consumers  the consumers to validate.
+     * @param consumers  The consumers to validate.
      */
     static void validate(final Consumer<?>... consumers) {
         Objects.requireNonNull(consumers, "consumers");
@@ -152,7 +152,7 @@ final class FunctorUtils {
     /**
      * Validate method
      *
-     * @param functions  the transformers to validate
+     * @param functions  The transformers to validate
      */
     static void validate(final Function<?, ?>... functions) {
         Objects.requireNonNull(functions, "functions");
@@ -166,7 +166,7 @@ final class FunctorUtils {
     /**
      * Validate the predicates to ensure that all is well.
      *
-     * @param predicates  the predicates to validate
+     * @param predicates  The predicates to validate
      */
     static void validate(final java.util.function.Predicate<?>... predicates) {
         Objects.requireNonNull(predicates, "predicates");

@@ -78,7 +78,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
     /**
      * A constructor that wraps, not copies
      *
-     * @param map  the map to wrap, must not be null
+     * @param map  The map to wrap, must not be null
      * @throws NullPointerException if the map is null
      */
     protected AbstractSetValuedMap(final Map<K, ? extends Set<V>> map) {
@@ -97,7 +97,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * Gets the set of values associated with the specified key. This would
      * return an empty set in case the mapping is not present
      *
-     * @param key  the key to retrieve
+     * @param key  The key to retrieve
      * @return The {@code Set} of values, will return an empty
      *   {@code Set} for no mapping
      */
@@ -118,7 +118,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * A subsequent {@code get(Object)} would return an empty set.
      * </p>
      *
-     * @param key the key to remove values from
+     * @param key The key to remove values from
      * @return The {@code Set} of values removed, will return an empty,
      *   unmodifiable set for no mapping found.
      */

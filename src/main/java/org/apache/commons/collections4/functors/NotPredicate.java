@@ -36,7 +36,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
      * Creates the not predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param predicate  the predicate to decorate, not null
+     * @param predicate  The predicate to decorate, not null
      * @return The predicate
      * @throws NullPointerException if the predicate is null
      */
@@ -51,7 +51,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
      * Constructor that performs no validation.
      * Use {@code notPredicate} if you want that.
      *
-     * @param predicate  the predicate to call after the null check
+     * @param predicate  The predicate to call after the null check
      */
     public NotPredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
@@ -72,7 +72,7 @@ public final class NotPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Evaluates the predicate returning the opposite to the stored predicate.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if predicate returns false
      */
     @Override

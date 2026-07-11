@@ -47,8 +47,8 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * Contrast this with {@link #transformingNavigableSet(NavigableSet, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed {@link NavigableSet}
      * @throws NullPointerException if set or transformer is null
      */
@@ -75,8 +75,8 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * Contrast this with {@link #transformedNavigableSet(NavigableSet, Transformer)}.
      *
      * @param <E> The element type
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @return A new transformed {@link NavigableSet}
      * @throws NullPointerException if set or transformer is null
      */
@@ -91,8 +91,8 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      *
-     * @param set  the set to decorate, must not be null
-     * @param transformer  the transformer to use for conversion, must not be null
+     * @param set  The set to decorate, must not be null
+     * @param transformer  The transformer to use for conversion, must not be null
      * @throws NullPointerException if set or transformer is null
      */
     protected TransformedNavigableSet(final NavigableSet<E> set,

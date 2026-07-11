@@ -56,7 +56,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * passed in and a reference to it held.
      * </p>
      *
-     * @param list the list to wrap
+     * @param list The list to wrap
      * @throws NullPointerException if the list is null
      */
     public LoopingListIterator(final List<E> list) {
@@ -77,7 +77,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * that supports it.
      * </p>
      *
-     * @param obj  the element to insert
+     * @param obj  The element to insert
      * @throws UnsupportedOperationException if the add method is not
      *  supported by the iterator implementation of the underlying list
      */
@@ -256,7 +256,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * that supports it.
      * </p>
      *
-     * @param obj  the element with which to replace the last element returned
+     * @param obj  The element with which to replace the last element returned
      * @throws UnsupportedOperationException if the set method is not
      *  supported by the iterator implementation of the underlying list
      */

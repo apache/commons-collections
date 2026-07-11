@@ -78,7 +78,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Constructs a new {@code ListIteratorWrapper} that will wrap
      * the given iterator.
      *
-     * @param iterator  the iterator to wrap
+     * @param iterator  The iterator to wrap
      * @throws NullPointerException if the iterator is null
      */
     public ListIteratorWrapper(final Iterator<? extends E> iterator) {
@@ -89,7 +89,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
-     * @param obj  the object to add
+     * @param obj  The object to add
      * @throws UnsupportedOperationException if the underlying iterator is not of
      * type {@link ListIterator}
      */
@@ -253,7 +253,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Throws {@link UnsupportedOperationException}
      * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
-     * @param obj  the object to set
+     * @param obj  The object to set
      * @throws UnsupportedOperationException if the underlying iterator is not of
      * type {@link ListIterator}
      */

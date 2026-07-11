@@ -66,9 +66,9 @@ public class TransformedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
-     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  The transformer to use for value conversion, null means no transformation
      * @return A new transformed map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -95,9 +95,9 @@ public class TransformedMap<K, V>
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
-     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  The transformer to use for value conversion, null means no transformation
      * @return A new transformed map
      * @throws NullPointerException if map is null
      * @since 4.0
@@ -121,9 +121,9 @@ public class TransformedMap<K, V>
      * are NOT transformed.
      * </p>
      *
-     * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no conversion
-     * @param valueTransformer  the transformer to use for value conversion, null means no conversion
+     * @param map  The map to decorate, must not be null
+     * @param keyTransformer  The transformer to use for key conversion, null means no conversion
+     * @param valueTransformer  The transformer to use for value conversion, null means no conversion
      * @throws NullPointerException if map is null
      */
     protected TransformedMap(final Map<K, V> map, final Transformer<? super K, ? extends K> keyTransformer,
@@ -136,7 +136,7 @@ public class TransformedMap<K, V>
     /**
      * Override to transform the value when using {@code setValue}.
      *
-     * @param value  the value to transform
+     * @param value  The value to transform
      * @return The transformed value
      * @since 3.1
      */
@@ -172,7 +172,7 @@ public class TransformedMap<K, V>
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -188,7 +188,7 @@ public class TransformedMap<K, V>
      * <p>
      * The transformer itself may throw an exception if necessary.
      *
-     * @param object  the object to transform
+     * @param object  The object to transform
      * @return The transformed object
      */
     protected K transformKey(final K object) {
@@ -204,7 +204,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param map  the map to transform
+     * @param map  The map to transform
      * @return The transformed object
      */
     @SuppressWarnings("unchecked")
@@ -226,7 +226,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      * </p>
      *
-     * @param object  the object to transform
+     * @param object  The object to transform
      * @return The transformed object
      */
     protected V transformValue(final V object) {
@@ -239,7 +239,7 @@ public class TransformedMap<K, V>
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

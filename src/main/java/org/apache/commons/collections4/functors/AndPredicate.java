@@ -36,8 +36,8 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
      * Creates the predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param predicate1  the first predicate to check, not null
-     * @param predicate2  the second predicate to check, not null
+     * @param predicate1  The first predicate to check, not null
+     * @param predicate2  The second predicate to check, not null
      * @return The {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
@@ -57,8 +57,8 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
      * Constructor that performs no validation.
      * Use {@code andPredicate} if you want that.
      *
-     * @param predicate1  the first predicate to check, not null
-     * @param predicate2  the second predicate to check, not null
+     * @param predicate1  The first predicate to check, not null
+     * @param predicate2  The second predicate to check, not null
      */
     public AndPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         iPredicate1 = predicate1;
@@ -80,7 +80,7 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Evaluates the predicate returning true if both predicates return true.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if both decorated predicates return true
      */
     @Override

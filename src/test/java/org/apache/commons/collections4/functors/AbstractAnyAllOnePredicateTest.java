@@ -33,7 +33,7 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
     /**
      * Creates a new {@code TestCompositePredicate}.
      *
-     * @param testValue the value which the mock predicates should expect to see (may be null).
+     * @param testValue The value which the mock predicates should expect to see (may be null).
      */
     protected AbstractAnyAllOnePredicateTest(final T testValue) {
         super(testValue);

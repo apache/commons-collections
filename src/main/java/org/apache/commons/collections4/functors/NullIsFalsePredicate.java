@@ -36,7 +36,7 @@ public final class NullIsFalsePredicate<T> extends AbstractPredicate<T> implemen
      * Creates the null false predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param predicate  the predicate to decorate, not null
+     * @param predicate  The predicate to decorate, not null
      * @return The predicate
      * @throws NullPointerException if the predicate is null
      */
@@ -51,7 +51,7 @@ public final class NullIsFalsePredicate<T> extends AbstractPredicate<T> implemen
      * Constructor that performs no validation.
      * Use {@code nullIsFalsePredicate} if you want that.
      *
-     * @param predicate  the predicate to call after the null check
+     * @param predicate  The predicate to call after the null check
      */
     public NullIsFalsePredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
@@ -73,7 +73,7 @@ public final class NullIsFalsePredicate<T> extends AbstractPredicate<T> implemen
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if decorated predicate returns true, false if input is null
      */
     @Override

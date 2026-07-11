@@ -31,8 +31,8 @@ public interface LongBiPredicate {
     /**
      * A function that takes to long arguments and returns a boolean.
      *
-     * @param x the first long argument.
-     * @param y the second long argument.
+     * @param x The first long argument.
+     * @param y The second long argument.
      * @return true or false.
      */
     boolean test(long x, long y);

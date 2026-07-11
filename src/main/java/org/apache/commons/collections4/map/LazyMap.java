@@ -77,8 +77,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param factory  The factory to use, must not be null
      * @return A new lazy map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
@@ -92,8 +92,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param factory  The factory to use, must not be null
      * @return A new lazy map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
@@ -108,8 +108,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param factory  The factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
     protected LazyMap(final Map<K, V> map, final Factory<? extends V> factory) {
@@ -120,8 +120,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param map  The map to decorate, must not be null
+     * @param factory  The factory to use, must not be null
      * @throws NullPointerException if map or factory is null
      */
     protected LazyMap(final Map<K, V> map, final Transformer<? super K, ? extends V> factory) {
@@ -145,7 +145,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in  the input stream
+     * @param in  The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @since 3.1
@@ -159,7 +159,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      * @since 3.1
      */

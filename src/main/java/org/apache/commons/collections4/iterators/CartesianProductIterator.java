@@ -88,7 +88,7 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
     /**
      * Constructs a new {@code CartesianProductIterator} instance with given iterables.
      *
-     * @param iterables the iterables to create the Cartesian product from
+     * @param iterables The iterables to create the Cartesian product from
      * @throws NullPointerException if any of the iterables is null
      */
     @SafeVarargs

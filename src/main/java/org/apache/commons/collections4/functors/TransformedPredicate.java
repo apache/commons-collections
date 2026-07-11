@@ -38,8 +38,8 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      * Creates the predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param transformer  the transformer to call
-     * @param predicate  the predicate to call with the result of the transform
+     * @param transformer  The transformer to call
+     * @param predicate  The predicate to call with the result of the transform
      * @return The predicate
      * @throws NullPointerException if the transformer or the predicate is null
      */
@@ -59,8 +59,8 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      * Constructor that performs no validation.
      * Use {@code transformedPredicate} if you want that.
      *
-     * @param transformer  the transformer to use
-     * @param predicate  the predicate to decorate
+     * @param transformer  The transformer to use
+     * @param predicate  The predicate to decorate
      */
     public TransformedPredicate(final Transformer<? super T, ? extends T> transformer,
                                 final Predicate<? super T> predicate) {
@@ -93,7 +93,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      * Evaluates the predicate returning the result of the decorated predicate
      * once the input has been transformed
      *
-     * @param object  the input object which will be transformed
+     * @param object  The input object which will be transformed
      * @return true if decorated predicate returns true
      */
     @Override

@@ -156,7 +156,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param map  The map to decorate, must not be null
      * @throws NullPointerException if map is null
      */
     protected AbstractInputCheckedMapDecorator(final Map<K, V> map) {
@@ -173,7 +173,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * This implementation returns the input value.
      * </p>
      *
-     * @param value  the value to check
+     * @param value  The value to check
      * @return The input value
      * @throws UnsupportedOperationException if the map may not be changed by setValue
      * @throws IllegalArgumentException if the specified value is invalid

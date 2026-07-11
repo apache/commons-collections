@@ -249,7 +249,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
          * As a consequence, all subsequent call to {@link #getKey()},
          * {@link #setValue(Object)} and {@link #getValue()} will fail.
          *
-         * @param removed the new value of the removed flag
+         * @param removed The new value of the removed flag
          */
         void setRemoved(final boolean removed) {
             this.removed = removed;
@@ -553,7 +553,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Constructor copying elements from another map.
      *
-     * @param map  the map to copy
+     * @param map  The map to copy
      * @throws NullPointerException if the map is null
      */
     public Flat3Map(final Map<? extends K, ? extends V> map) {
@@ -600,7 +600,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Checks whether the map contains the specified key.
      *
-     * @param key  the key to search for
+     * @param key  The key to search for
      * @return true if the map contains the key
      */
     @Override
@@ -646,7 +646,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Checks whether the map contains the specified value.
      *
-     * @param value  the value to search for
+     * @param value  The value to search for
      * @return true if the map contains the key
      */
     @Override
@@ -749,7 +749,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Compares this map with another.
      *
-     * @param obj  the object to compare to
+     * @param obj  The object to compare to
      * @return true if equal
      */
     @Override
@@ -802,7 +802,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Gets the value mapped to the key specified.
      *
-     * @param key  the key
+     * @param key  The key
      * @return The mapped value, null if no match
      */
     @Override
@@ -924,8 +924,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Puts a key-value mapping into this map.
      *
-     * @param key  the key to add
-     * @param value  the value to add
+     * @param key  The key to add
+     * @param value  The value to add
      * @return The value previously mapped to this key, null if none
      */
     @Override
@@ -1008,7 +1008,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Puts all the values from the specified map into this map.
      *
-     * @param map  the map to add
+     * @param map  The map to add
      * @throws NullPointerException if the map is null
      */
     @Override
@@ -1034,7 +1034,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Deserializes the map in using a custom routine.
      *
-     * @param in the input stream
+     * @param in The input stream
      * @throws IOException if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
@@ -1053,7 +1053,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Removes the specified mapping from this map.
      *
-     * @param key  the mapping to remove
+     * @param key  The mapping to remove
      * @return The value mapped to the removed key, null if key not in map
      */
     @Override
@@ -1269,7 +1269,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Serializes this object to an ObjectOutputStream.
      *
-     * @param out the target ObjectOutputStream.
+     * @param out The target ObjectOutputStream.
      * @throws IOException thrown when an I/O errors occur writing to the target stream.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {

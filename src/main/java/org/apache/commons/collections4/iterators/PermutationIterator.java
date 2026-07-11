@@ -72,7 +72,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
     /**
      * Standard constructor for this class.
      *
-     * @param collection  the collection to generate permutations for
+     * @param collection  The collection to generate permutations for
      * @throws NullPointerException if coll is null
      */
     public PermutationIterator(final Collection<? extends E> collection) {

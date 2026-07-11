@@ -40,8 +40,8 @@ public class ForClosure<T> implements Closure<T> {
      * </p>
      *
      * @param <E> The type that the closure acts on
-     * @param count  the number of times to execute the closure
-     * @param closure  the closure to execute, not null
+     * @param count  The number of times to execute the closure
+     * @param closure  The closure to execute, not null
      * @return The {@code for} closure
      */
     @SuppressWarnings("unchecked")
@@ -65,8 +65,8 @@ public class ForClosure<T> implements Closure<T> {
      * Constructor that performs no validation.
      * Use {@code forClosure} if you want that.
      *
-     * @param count  the number of times to execute the closure
-     * @param closure  the closure to execute, not null
+     * @param count  The number of times to execute the closure
+     * @param closure  The closure to execute, not null
      */
     public ForClosure(final int count, final Closure<? super T> closure) {
         iCount = count;
@@ -76,7 +76,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Executes the closure {@code count} times.
      *
-     * @param input  the input object
+     * @param input  The input object
      */
     @Override
     public void execute(final T input) {

@@ -37,7 +37,7 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
      * Creates the null exception predicate.
      *
      * @param <T> The type that the predicate queries
-     * @param predicate  the predicate to decorate, not null
+     * @param predicate  The predicate to decorate, not null
      * @return The predicate
      * @throws NullPointerException if the predicate is null
      */
@@ -52,7 +52,7 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
      * Constructor that performs no validation.
      * Use {@code nullIsExceptionPredicate} if you want that.
      *
-     * @param predicate  the predicate to call after the null check
+     * @param predicate  The predicate to call after the null check
      */
     public NullIsExceptionPredicate(final Predicate<? super T> predicate) {
         iPredicate = predicate;
@@ -74,7 +74,7 @@ public final class NullIsExceptionPredicate<T> extends AbstractPredicate<T> impl
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
      *
-     * @param object  the input object
+     * @param object  The input object
      * @return true if decorated predicate returns true
      * @throws FunctorException if input is null
      */
