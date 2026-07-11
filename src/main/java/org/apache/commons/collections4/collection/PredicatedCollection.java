@@ -154,7 +154,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * or add more elements afterwards. Further changes will not propagate to the returned bag.
          * </p>
          *
-         * @return a new predicated bag.
+         * @return A new predicated bag.
          * @deprecated Since 4.6.0, use {@link #createPredicatedMultiSet()} instead.
          */
         @Deprecated
@@ -191,7 +191,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * or add more elements afterwards. Further changes will not propagate to the returned list.
          * </p>
          *
-         * @return a new predicated list.
+         * @return A new predicated list.
          */
         public List<E> createPredicatedList() {
             return createPredicatedList(new ArrayList<>());
@@ -224,7 +224,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * or add more elements afterwards. Further changes will not propagate to the returned multiset.
          * </p>
          *
-         * @return a new predicated multiset.
+         * @return A new predicated multiset.
          */
         public MultiSet<E> createPredicatedMultiSet() {
             return createPredicatedMultiSet(new HashMultiSet<>());
@@ -257,7 +257,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * or add more elements afterwards. Further changes will not propagate to the returned queue.
          * </p>
          *
-         * @return a new predicated queue.
+         * @return A new predicated queue.
          */
         public Queue<E> createPredicatedQueue() {
             return createPredicatedQueue(new LinkedList<>());
@@ -290,7 +290,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * or add more elements afterwards. Further changes will not propagate to the returned set.
          * </p>
          *
-         * @return a new predicated set.
+         * @return A new predicated set.
          */
         public Set<E> createPredicatedSet() {
             return createPredicatedSet(new HashSet<>());
@@ -319,7 +319,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         /**
          * Returns an unmodifiable collection containing all rejected elements.
          *
-         * @return an unmodifiable collection.
+         * @return An unmodifiable collection.
          */
         public Collection<E> rejectedElements() {
             return Collections.unmodifiableCollection(rejected);
@@ -335,7 +335,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      *
      * @param <E>  the element type.
      * @param predicate  the predicate to use.
-     * @return a new Builder for predicated collections.
+     * @return A new Builder for predicated collections.
      * @since 4.1
      */
     public static <E> Builder<E> builder(final Predicate<? super E> predicate) {
@@ -346,7 +346,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * Returns a Builder with a NotNullPredicate.
      *
      * @param <E>  the element type.
-     * @return a new Builder for predicated collections that ignores null values.
+     * @return A new Builder for predicated collections that ignores null values.
      * @since 4.1
      */
     public static <E> Builder<E> notNullBuilder() {
@@ -363,7 +363,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param <T> The type of the elements in the collection.
      * @param coll  the collection to decorate, must not be null.
      * @param predicate  the predicate to use for validation, must not be null.
-     * @return a new predicated collection.
+     * @return A new predicated collection.
      * @throws NullPointerException if collection or predicate is null.
      * @throws IllegalArgumentException if the collection contains invalid elements.
      * @since 4.0

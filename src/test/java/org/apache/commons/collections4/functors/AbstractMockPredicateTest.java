@@ -56,7 +56,7 @@ public abstract class AbstractMockPredicateTest<T> {
      * Creates a single mock predicate.
      *
      * @param returnValue the return value for the mock predicate, or null if the mock is not expected to be called.
-     * @return a single mock predicate.
+     * @return A single mock predicate.
      */
     @SuppressWarnings({"boxing"})
     protected final Predicate<T> createMockPredicate(final Boolean returnValue) {

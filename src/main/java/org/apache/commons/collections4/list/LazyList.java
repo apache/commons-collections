@@ -76,7 +76,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
-     * @return a new lazy list
+     * @return A new lazy list
      * @throws NullPointerException if list or factory is null
      * @since 4.0
      */
@@ -90,7 +90,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for creation, must not be null
-     * @return a new lazy list
+     * @return A new lazy list
      * @throws NullPointerException if list or transformer is null
      * @since 4.4
      */

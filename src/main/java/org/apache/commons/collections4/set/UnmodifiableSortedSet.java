@@ -51,7 +51,7 @@ public final class UnmodifiableSortedSet<E>
      *
      * @param <E> The element type
      * @param set  the set to decorate, must not be null
-     * @return a new unmodifiable {@link SortedSet}
+     * @return A new unmodifiable {@link SortedSet}
      * @throws NullPointerException if set is null
      * @since 4.0
      */

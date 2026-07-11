@@ -171,7 +171,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object)}.
      *
-     * @return a hash code for this comparator.
+     * @return A hash code for this comparator.
      */
     @Override
     public int hashCode() {

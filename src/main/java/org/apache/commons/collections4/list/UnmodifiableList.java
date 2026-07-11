@@ -50,7 +50,7 @@ public final class UnmodifiableList<E>
      *
      * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
-     * @return a new unmodifiable list
+     * @return A new unmodifiable list
      * @throws NullPointerException if list is null
      * @since 4.0
      */

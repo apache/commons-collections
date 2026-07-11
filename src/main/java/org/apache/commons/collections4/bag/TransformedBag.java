@@ -57,7 +57,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Bag
+     * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
@@ -83,7 +83,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Bag
+     * @return A new transformed Bag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */

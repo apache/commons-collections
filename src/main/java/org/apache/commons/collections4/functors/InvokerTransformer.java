@@ -44,7 +44,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      * @param <I>  the input type
      * @param <O>  the output type
      * @param methodName  the method name to call
-     * @return an invoker transformer
+     * @return An invoker transformer
      * @throws NullPointerException if methodName is null
      * @since 3.1
      */
@@ -60,7 +60,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      * @param methodName  the method name to call
      * @param paramTypes  the parameter types of the method
      * @param args  the arguments to pass to the method
-     * @return an invoker transformer
+     * @return An invoker transformer
      * @throws NullPointerException if methodName is null
      * @throws IllegalArgumentException if paramTypes does not match args
      */

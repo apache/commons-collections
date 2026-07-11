@@ -52,7 +52,7 @@ public final class UnmodifiableMultiSet<E>
      *
      * @param <E>  the type of the elements in the multiset
      * @param multiset  the multiset to decorate, may not be null
-     * @return an unmodifiable MultiSet
+     * @return An unmodifiable MultiSet
      * @throws NullPointerException if multiset is null
      */
     public static <E> MultiSet<E> unmodifiableMultiSet(final MultiSet<? extends E> multiset) {

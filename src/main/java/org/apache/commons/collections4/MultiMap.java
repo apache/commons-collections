@@ -170,7 +170,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * This cannot be mandated due to backwards compatibility of this interface.
      * </p>
      *
-     * @return a collection view of the values contained in this map
+     * @return A collection view of the values contained in this map
      */
     @Override
     Collection<Object> values();

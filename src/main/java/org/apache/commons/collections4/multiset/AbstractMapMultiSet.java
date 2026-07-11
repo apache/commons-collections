@@ -538,7 +538,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     /**
      * Returns an array of all of this multiset's elements.
      *
-     * @return an array of all of this multiset's elements.
+     * @return An array of all of this multiset's elements.
      */
     @Override
     public Object[] toArray() {
@@ -560,7 +560,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      *
      * @param <T>   The type of the array elements.
      * @param array the array to populate.
-     * @return an array of all of this multiset's elements.
+     * @return An array of all of this multiset's elements.
      * @throws ArrayStoreException  if the runtime type of the specified array is not a supertype of the runtime type of the elements in this list.
      * @throws NullPointerException if the specified array is null.
      */

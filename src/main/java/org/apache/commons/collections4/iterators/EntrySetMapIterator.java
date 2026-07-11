@@ -159,7 +159,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     /**
      * Gets the iterator as a String.
      *
-     * @return a string version of the iterator
+     * @return A string version of the iterator
      */
     @Override
     public String toString() {

@@ -52,7 +52,7 @@ public class TransformedMultiSet<E> extends TransformedCollection<E> implements 
      * @param <E> The type of the elements in the multiset.
      * @param multiset  the multiset to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed MultiSet.
+     * @return A new transformed MultiSet.
      * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedMultiSet<E> transformedMultiSet(final MultiSet<E> multiset,
@@ -80,7 +80,7 @@ public class TransformedMultiSet<E> extends TransformedCollection<E> implements 
      * @param <E> The type of the elements in the multiset.
      * @param multiset  the multiset to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed MultiSet.
+     * @return A new transformed MultiSet.
      * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedMultiSet<E> transformingMultiSet(final MultiSet<E> multiset,

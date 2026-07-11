@@ -61,7 +61,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
      *
      * @param collectionSupplier supplies a collection target.
      * @param <C> The collection type.
-     * @return a new Collection containing the remaining elements of this instance.
+     * @return A new Collection containing the remaining elements of this instance.
      */
     default <C extends Collection<E>> C toCollection(final Supplier<C> collectionSupplier) {
         return addTo(collectionSupplier.get());
@@ -70,7 +70,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
     /**
      * Adds the remaining elements in the iterator to a new {@link List}. This method consumes the iterator.
      *
-     * @return a new List containing the remaining elements of this instance.
+     * @return A new List containing the remaining elements of this instance.
      */
     default List<E> toList() {
         return toCollection(ArrayList::new);
@@ -79,7 +79,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
     /**
      * Adds the remaining elements in the iterator to a new {@link Set}. This method consumes the iterator.
      *
-     * @return a new Set containing the remaining elements of this instance.
+     * @return A new Set containing the remaining elements of this instance.
      */
     default Set<E> toSet() {
         return toCollection(HashSet::new);

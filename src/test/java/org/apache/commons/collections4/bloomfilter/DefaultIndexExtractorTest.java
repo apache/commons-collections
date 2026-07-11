@@ -34,7 +34,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
      * Generates an array of integers.
      * @param size the size of the array
      * @param bound the upper bound (exclusive) of the values in the array.
-     * @return an array of int.
+     * @return An array of int.
      */
     public static int[] generateIntArray(final int size, final int bound) {
         return ThreadLocalRandom.current().ints(size, 0, bound).toArray();

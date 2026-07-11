@@ -92,7 +92,7 @@ public final class IndexFilter {
      *
      * @param shape The shape that is being generated.
      * @param consumer The consumer to accept the values.
-     * @return an IndexFilter optimized for the specified shape.
+     * @return An IndexFilter optimized for the specified shape.
      */
     public static IntPredicate create(final Shape shape, final IntPredicate consumer) {
         return new IndexFilter(shape, consumer)::test;

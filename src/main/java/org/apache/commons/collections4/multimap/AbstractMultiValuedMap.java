@@ -628,7 +628,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Creates a new Collection typed for a given subclass.
      *
-     * @return a new Collection typed for a given subclass.
+     * @return A new Collection typed for a given subclass.
      */
     protected abstract Collection<V> createCollection();
 
@@ -728,7 +728,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * Any method which modifies this multiset like {@code add}, {@code remove},
      * {@link Iterator#remove()} etc throws {@code UnsupportedOperationException}.
      *
-     * @return a bag view of the key mapping contained in this map
+     * @return A bag view of the key mapping contained in this map
      */
     @Override
     public MultiSet<K> keys() {
@@ -917,7 +917,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * <p>
      * Returns a collection containing all the values from all keys.
      *
-     * @return a collection view of the values contained in this map
+     * @return A collection view of the values contained in this map
      */
     @Override
     public Collection<V> values() {

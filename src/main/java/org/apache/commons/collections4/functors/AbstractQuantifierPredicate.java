@@ -46,7 +46,7 @@ public abstract class AbstractQuantifierPredicate<T> extends AbstractPredicate<T
     /**
      * Gets the predicates.
      *
-     * @return a copy of the predicates
+     * @return A copy of the predicates
      * @since 3.1
      */
     @Override

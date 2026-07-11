@@ -40,7 +40,7 @@ public interface Factory<T> extends Supplier<T> {
     /**
      * Create a new object.
      *
-     * @return a new object
+     * @return A new object
      * @throws FunctorException (runtime) if the factory cannot create an object
      */
     T create();

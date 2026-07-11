@@ -52,7 +52,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Implements the abstract superclass method to return the list iterator.
      *
-     * @return an empty iterator
+     * @return An empty iterator
      */
     @Override
     public abstract ListIterator<E> makeEmptyIterator();
@@ -60,7 +60,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     /**
      * Implements the abstract superclass method to return the list iterator.
      *
-     * @return a full iterator
+     * @return A full iterator
      */
     @Override
     public abstract ListIterator<E> makeObject();

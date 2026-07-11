@@ -55,7 +55,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedBag
+     * @return A new transformed SortedBag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
@@ -83,7 +83,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedBag
+     * @return A new transformed SortedBag
      * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */

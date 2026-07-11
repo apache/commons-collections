@@ -63,7 +63,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
      *
      * @param <E> The type of the elements in the multiset
      * @param multiset  the multiset to decorate, must not be null
-     * @return a new synchronized MultiSet
+     * @return A new synchronized MultiSet
      * @throws NullPointerException if multiset is null
      */
     public static <E> SynchronizedMultiSet<E> synchronizedMultiSet(final MultiSet<E> multiset) {

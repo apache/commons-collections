@@ -167,7 +167,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
     /**
      * Gets the predicates.
      *
-     * @return a copy of the predicates
+     * @return A copy of the predicates
      * @since 3.1
      */
     public Predicate<? super T>[] getPredicates() {
@@ -177,7 +177,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
     /**
      * Gets the transformers.
      *
-     * @return a copy of the transformers
+     * @return A copy of the transformers
      * @since 3.1
      */
     public Transformer<? super T, ? extends R>[] getTransformers() {

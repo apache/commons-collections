@@ -53,7 +53,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      *
      * @param trueFirst when {@code true}, sort
      * {@code true} {@code Boolean}s before {@code false}
-     * @return a singleton BooleanComparator instance
+     * @return A singleton BooleanComparator instance
      * @since 4.0
      */
     public static BooleanComparator booleanComparator(final boolean trueFirst) {
@@ -163,7 +163,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
      *
-     * @return a hash code for this comparator.
+     * @return A hash code for this comparator.
      */
     @Override
     public int hashCode() {

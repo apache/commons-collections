@@ -168,7 +168,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Creates a new instance of this {@link LayeredBloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this {@link LayeredBloomFilter}.
+     * @return A copy of this {@link LayeredBloomFilter}.
      */
     @Override
     public LayeredBloomFilter<T> copy() {
@@ -228,7 +228,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Finds the layers in which the BitMapExtractor is found.
      *
      * @param bitMapExtractor the BitMapExtractor to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
+     * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final BitMapExtractor bitMapExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
@@ -240,7 +240,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Finds the layers in which the Bloom filter is found.
      *
      * @param bf the Bloom filter to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
+     * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final BloomFilter bf) {
         final Finder finder = new Finder(bf);
@@ -252,7 +252,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Finds the layers in which the Hasher is found.
      *
      * @param hasher the Hasher to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
+     * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final Hasher hasher) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
@@ -264,7 +264,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Finds the layers in which the IndexExtractor is found.
      *
      * @param indexExtractor the Index extractor to search for.
-     * @return an array of layer indices in which the Bloom filter is found.
+     * @return An array of layer indices in which the Bloom filter is found.
      */
     public int[] find(final IndexExtractor indexExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);

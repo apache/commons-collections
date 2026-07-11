@@ -701,7 +701,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * Subclasses can override this to create a different class.
      *
      * @param value  value of the new node
-     * @return a new node containing the value
+     * @return A new node containing the value
      */
     protected Node<E> createNode(final E value) {
         return new Node<>(value);
@@ -711,7 +711,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * Creates an iterator for the sublist.
      *
      * @param subList  the sublist to get an iterator for
-     * @return a new iterator on the given sublist
+     * @return A new iterator on the given sublist
      */
     protected Iterator<E> createSubListIterator(final LinkedSubList<E> subList) {
         return createSubListListIterator(subList, 0);
@@ -722,7 +722,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      *
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
-     * @return a new list iterator on the given sublist
+     * @return A new list iterator on the given sublist
      */
     protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {
         return new LinkedSubListIterator<>(subList, fromIndex);

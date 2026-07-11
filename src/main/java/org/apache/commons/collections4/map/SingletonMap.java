@@ -270,7 +270,7 @@ public class SingletonMap<K, V>
     /**
      * Clones the map without cloning the key or value.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -580,7 +580,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the map as a String.
      *
-     * @return a string version of the map
+     * @return A string version of the map
      */
     @Override
     public String toString() {

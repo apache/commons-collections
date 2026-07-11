@@ -1613,7 +1613,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * @param key  the key to use in the search
      * @param offsetInBits  the prefix offset
      * @param lengthInBits  the number of significant prefix bits
-     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     * @return A {@link SortedMap} view of this {@link Trie} with all elements whose
      *   key is prefixed by the search key
      */
     private SortedMap<K, V> getPrefixMapByBits(final K key, final int offsetInBits, final int lengthInBits) {

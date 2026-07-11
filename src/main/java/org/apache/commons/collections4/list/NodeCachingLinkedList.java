@@ -149,7 +149,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * {@link #cacheSize} is decreased accordingly. The node that is returned
      * will have {@code null} values for next, previous and element.
      *
-     * @return a node, or {@code null} if there are no nodes in the cache.
+     * @return A node, or {@code null} if there are no nodes in the cache.
      */
     protected Node<E> getNodeFromCache() {
         if (cacheSize == 0) {

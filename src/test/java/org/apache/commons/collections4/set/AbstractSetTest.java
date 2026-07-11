@@ -71,7 +71,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns an empty Set for use in modification testing.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
@@ -81,7 +81,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns a full Set for use in modification testing.
      *
-     * @return a confirmed full collection
+     * @return A confirmed full collection
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
@@ -96,7 +96,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      *
      * Override if your set does not support the add operation.
      *
-     * @return a full set
+     * @return A full set
      */
     @Override
     public Set<E> makeFullCollection() {
@@ -108,7 +108,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
     /**
      * Makes an empty set.  The returned set should have no elements.
      *
-     * @return an empty set
+     * @return An empty set
      */
     @Override
     public abstract Set<E> makeObject();

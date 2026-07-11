@@ -103,7 +103,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
      *
-     * @return a suitable hash code
+     * @return A suitable hash code
      */
     @Override
     public int hashCode() {

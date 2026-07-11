@@ -55,7 +55,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param <E> The type of the elements in the collection.
      * @param collection  the collection to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed Collection.
+     * @return A new transformed Collection.
      * @throws NullPointerException if collection or transformer is null.
      * @since 4.0
      */
@@ -86,7 +86,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param <E> The type of the elements in the collection.
      * @param coll  the collection to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed collection.
+     * @return A new transformed collection.
      * @throws NullPointerException if collection or transformer is null.
      * @since 4.0
      */
@@ -131,7 +131,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * </p>
      *
      * @param coll  the collection to transform.
-     * @return a transformed object.
+     * @return A transformed object.
      */
     protected Collection<E> transform(final Collection<? extends E> coll) {
         final List<E> list = new ArrayList<>(coll.size());
@@ -148,7 +148,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * </p>
      *
      * @param object  the object to transform.
-     * @return a transformed object.
+     * @return A transformed object.
      */
     protected E transform(final E object) {
         return transformer.apply(object);

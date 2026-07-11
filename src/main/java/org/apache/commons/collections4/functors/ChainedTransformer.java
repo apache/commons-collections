@@ -106,7 +106,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Gets the transformers.
      *
-     * @return a copy of the transformers
+     * @return A copy of the transformers
      * @since 3.1
      */
     public Transformer<? super T, ? extends T>[] getTransformers() {

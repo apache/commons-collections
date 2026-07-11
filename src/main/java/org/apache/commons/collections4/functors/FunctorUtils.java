@@ -106,7 +106,7 @@ final class FunctorUtils {
      * Copy method.
      *
      * @param transformers  the transformers to copy
-     * @return a clone of the transformers
+     * @return A clone of the transformers
      */
     @SuppressWarnings("unchecked")
     static <T extends Function<?, ?>> T[] copy(final T... transformers) {

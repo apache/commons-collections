@@ -56,7 +56,7 @@ public final class UnmodifiableMultiValuedMap<K, V>
      * @param <K> The type of key elements
      * @param <V> The type of value elements
      * @param map  the map to decorate, may not be null
-     * @return an unmodifiable MultiValuedMap
+     * @return An unmodifiable MultiValuedMap
      * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked")

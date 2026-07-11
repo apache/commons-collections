@@ -52,7 +52,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      *
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
-     * @return a Bag that complies to the Collection contract
+     * @return A Bag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      */
     public static <E> Bag<E> collectionBag(final Bag<E> bag) {

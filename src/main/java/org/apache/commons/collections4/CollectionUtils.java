@@ -314,7 +314,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to add to, must not be null
      * @param iterable  the iterable of elements to add, must not be null
-     * @return a boolean indicating whether the collection has changed or not.
+     * @return A boolean indicating whether the collection has changed or not.
      * @throws NullPointerException if the collection or iterable is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
@@ -332,7 +332,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to add to, must not be null
      * @param iterator  the iterator of elements to add, must not be null
-     * @return a boolean indicating whether the collection has changed or not.
+     * @return A boolean indicating whether the collection has changed or not.
      * @throws NullPointerException if the collection or iterator is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterator<? extends C> iterator) {
@@ -398,7 +398,7 @@ public class CollectionUtils {
      * @param <O>  the element type
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
-     * @return a new sorted List, containing the elements of Collection a and b
+     * @return A new sorted List, containing the elements of Collection a and b
      * @throws NullPointerException if either collection is null
      * @since 4.0
      */
@@ -419,7 +419,7 @@ public class CollectionUtils {
      * @param b  the second collection, must not be null
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
-     * @return a new sorted List, containing the elements of Collection a and b
+     * @return A new sorted List, containing the elements of Collection a and b
      * @throws NullPointerException if either collection is null
      * @since 4.0
      */
@@ -440,7 +440,7 @@ public class CollectionUtils {
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
      * @param c  the comparator to use for the merge.
-     * @return a new sorted List, containing the elements of Collection a and b
+     * @return A new sorted List, containing the elements of Collection a and b
      * @throws NullPointerException if either collection or the comparator is null
      * @since 4.0
      */
@@ -462,7 +462,7 @@ public class CollectionUtils {
      * @param comparator  the comparator to use for the merge.
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
-     * @return a new sorted List, containing the elements of Collection a and b
+     * @return A new sorted List, containing the elements of Collection a and b
      * @throws NullPointerException if either collection or the comparator is null
      * @since 4.0
      */
@@ -783,7 +783,7 @@ public class CollectionUtils {
      *
      * @param <T> The element type
      * @param collection the collection, possibly {@code null}
-     * @return an empty collection if the argument is {@code null}
+     * @return An empty collection if the argument is {@code null}
      */
     public static <T> Collection<T> emptyIfNull(final Collection<T> collection) {
         return collection == null ? emptyCollection() : collection;
@@ -1420,7 +1420,7 @@ public class CollectionUtils {
      * @see PermutationIterator
      * @param <E>  the element type
      * @param collection  the collection to create permutations for, must not be null
-     * @return an unordered collection of all permutations of the input collection
+     * @return An unordered collection of all permutations of the input collection
      * @throws NullPointerException if collection is null
      * @since 4.0
      */
@@ -1446,7 +1446,7 @@ public class CollectionUtils {
      * @param <C> The type of objects in the Collection.
      * @param collection  the collection to predicate, must not be null
      * @param predicate  the predicate for the collection, must not be null
-     * @return a predicated collection backed by the given collection
+     * @return A predicated collection backed by the given collection
      * @throws NullPointerException if the collection or predicate is null
      */
     public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
@@ -1475,7 +1475,7 @@ public class CollectionUtils {
      * @param <E>  the type of object the {@link Collection} contains
      * @param collection  the collection from which items are removed (in the returned collection)
      * @param remove  the items to be removed from the returned {@code collection}
-     * @return a {@code Collection} containing all the elements of {@code collection} except
+     * @return A {@code Collection} containing all the elements of {@code collection} except
      * any elements that also occur in {@code remove}.
      * @throws NullPointerException if either parameter is null
      * @since 4.0 (method existed in 3.2 but was completely broken)
@@ -1506,7 +1506,7 @@ public class CollectionUtils {
      * @param collection the collection from which items are removed (in the returned collection)
      * @param remove the items to be removed from the returned collection
      * @param equator the Equator used for testing equality
-     * @return a {@code Collection} containing all the elements of {@code collection}
+     * @return A {@code Collection} containing all the elements of {@code collection}
      * except any element that if equal according to the {@code equator}
      * @throws NullPointerException if any of the parameters is null
      * @since 4.1
@@ -1613,7 +1613,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection whose contents are the target of the #retailAll operation
      * @param retain  the collection containing the elements to be retained in the returned collection
-     * @return a {@code Collection} containing all the elements of {@code collection}
+     * @return A {@code Collection} containing all the elements of {@code collection}
      * that occur at least once in {@code retain}.
      * @throws NullPointerException if either parameter is null
      * @since 3.2
@@ -1645,7 +1645,7 @@ public class CollectionUtils {
      * @param collection the collection whose contents are the target of the {@code retainAll} operation
      * @param retain the collection containing the elements to be retained in the returned collection
      * @param equator the Equator used for testing equality
-     * @return a {@code Collection} containing all the elements of {@code collection}
+     * @return A {@code Collection} containing all the elements of {@code collection}
      * that occur at least once in {@code retain} according to the {@code equator}
      * @throws NullPointerException if any of the parameters is null
      * @since 4.1
@@ -1948,7 +1948,7 @@ public class CollectionUtils {
      * @param b  the collection to subtract, must not be null
      * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
-     * @return a new collection with the results
+     * @return A new collection with the results
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b) {
@@ -1977,7 +1977,7 @@ public class CollectionUtils {
      *        subtracted.
      * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
-     * @return a new collection with the results
+     * @return A new collection with the results
      * @throws NullPointerException if either collection or p is null
      * @since 4.0
      * @see Collection#removeAll
@@ -2024,7 +2024,7 @@ public class CollectionUtils {
      *
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to synchronize, must not be null
-     * @return a synchronized collection backed by the given collection
+     * @return A synchronized collection backed by the given collection
      * @throws NullPointerException if the collection is null
      * @deprecated Since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
      */
@@ -2086,7 +2086,7 @@ public class CollectionUtils {
      * @param <E> The type of object the {@link Collection} contains
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null
-     * @return a transformed collection backed by the given collection
+     * @return A transformed collection backed by the given collection
      * @throws NullPointerException if the collection or transformer is null
      */
     public static <E> Collection<E> transformingCollection(final Collection<E> collection,
@@ -2131,7 +2131,7 @@ public class CollectionUtils {
      *
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to make unmodifiable, must not be null
-     * @return an unmodifiable collection backed by the given collection
+     * @return An unmodifiable collection backed by the given collection
      * @throws NullPointerException if the collection is null
      * @deprecated Since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
      */

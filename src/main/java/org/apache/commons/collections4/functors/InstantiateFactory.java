@@ -44,7 +44,7 @@ public class InstantiateFactory<T> implements Factory<T> {
      * @param classToInstantiate  the class to instantiate, not null
      * @param paramTypes  the constructor parameter types, cloned
      * @param args  the constructor arguments, cloned
-     * @return a new instantiate factory
+     * @return A new instantiate factory
      * @throws NullPointerException if classToInstantiate is null
      * @throws IllegalArgumentException if paramTypes does not match args
      */

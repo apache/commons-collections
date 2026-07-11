@@ -101,7 +101,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @param <K>  the key type
      * @param <V>  the value type
      * @param set  the set to decorate, must not be null
-     * @return a new unmodifiable entry set
+     * @return A new unmodifiable entry set
      * @throws NullPointerException if set is null
      * @since 4.0
      */

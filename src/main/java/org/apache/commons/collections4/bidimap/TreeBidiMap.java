@@ -1489,7 +1489,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * from the map. It does not support the add or addAll operations.
      * The returned MapEntry objects do not support setValue.
      *
-     * @return a set view of the values contained in this map.
+     * @return A set view of the values contained in this map.
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -1729,7 +1729,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The set supports element removal, which removes the corresponding mapping
      * from the map. It does not support the add or addAll operations.
      *
-     * @return a set view of the keys contained in this map.
+     * @return A set view of the keys contained in this map.
      */
     @Override
     public Set<K> keySet() {
@@ -2197,7 +2197,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Returns a string version of this Map in standard format.
      *
-     * @return a standard format string version of the map
+     * @return A standard format string version of the map
      */
     @Override
     public String toString() {
@@ -2215,7 +2215,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The set supports element removal, which removes the corresponding mapping
      * from the map. It does not support the add or addAll operations.
      *
-     * @return a set view of the values contained in this map.
+     * @return A set view of the values contained in this map.
      */
     @Override
     public Set<V> values() {

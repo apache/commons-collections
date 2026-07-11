@@ -51,7 +51,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      *
      * @param <T> The type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
-     * @return a new synchronized collection
+     * @return A new synchronized collection
      * @throws NullPointerException if collection is null
      * @since 4.0
      */
@@ -165,7 +165,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * }
      * </pre>
      *
-     * @return an iterator that must be manually synchronized on the collection
+     * @return An iterator that must be manually synchronized on the collection
      */
     @Override
     public Iterator<E> iterator() {

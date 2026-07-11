@@ -86,7 +86,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * @param map the map to decorate, must not be null
      * @param keyTransformer the transformer to use for key conversion, must not be null
      * @param valueTransformer the transformer to use for value conversion, must not be null
-     * @return a new transformed map
+     * @return A new transformed map
      * @throws NullPointerException if map or either of the transformers is null
      */
     public static <J, K, U, V> TransformedSplitMap<J, K, U, V> transformingMap(final Map<K, V> map,

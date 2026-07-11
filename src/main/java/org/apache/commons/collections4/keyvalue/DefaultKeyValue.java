@@ -103,7 +103,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()},
      * however subclasses may override this.
      *
-     * @return a suitable hash code
+     * @return A suitable hash code
      */
     @Override
     public int hashCode() {
@@ -146,7 +146,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     /**
      * Returns a new {@code Map.Entry} object with key and value from this pair.
      *
-     * @return a MapEntry instance
+     * @return A MapEntry instance
      */
     public Map.Entry<K, V> toMapEntry() {
         return new DefaultMapEntry<>(this);

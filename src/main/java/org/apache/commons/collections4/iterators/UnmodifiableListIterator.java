@@ -37,7 +37,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
-     * @return a new unmodifiable list iterator
+     * @return A new unmodifiable list iterator
      * @throws NullPointerException if the iterator is null
      * @deprecated method name has typo in it. Use {@link org.apache.commons.collections4.iterators.UnmodifiableListIterator#unmodifiableListIterator(ListIterator)} instead.
      */
@@ -51,7 +51,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
-     * @return a new unmodifiable list iterator
+     * @return A new unmodifiable list iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <E> ListIterator<E> unmodifiableListIterator(final ListIterator<? extends E> iterator) {

@@ -74,7 +74,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
         /**
          * Builds the layer manager with the specified properties.
          *
-         * @return a new LayerManager.
+         * @return A new LayerManager.
          */
         @Override
         public LayerManager<T> get() {
@@ -348,7 +348,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * The {@code filterSupplier}, {@code extendCheck}, and the {@code filterCleanup} are shared between the copy and this instance.
      * </p>
      *
-     * @return a copy of this {@link LayerManager}.
+     * @return A copy of this {@link LayerManager}.
      */
     public LayerManager<T> copy() {
         final LayerManager<T> newMgr = new LayerManager<>(filterSupplier, extendCheck, filterCleanup, false);

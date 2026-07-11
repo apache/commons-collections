@@ -66,7 +66,7 @@ public class TransformedSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
-     * @return a new transformed sorted map
+     * @return A new transformed sorted map
      * @throws NullPointerException if map is null
      * @since 4.0
      */
@@ -96,7 +96,7 @@ public class TransformedSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
-     * @return a new transformed sorted map
+     * @return A new transformed sorted map
      * @throws NullPointerException if the map is null
      * @since 4.0
      */

@@ -68,7 +68,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
-     * @return a new growth list
+     * @return A new growth list
      * @throws NullPointerException if list is null
      * @since 4.0
      */

@@ -555,7 +555,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#entrySet()}. This method runs through all of the tests in {@link AbstractSetTest}. After modification operations, {@link #verify()}
      * is invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's entry set
+     * @return A {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
         return new MapEntrySetTest();
@@ -565,7 +565,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#keySet()}. This method runs through all of the tests in {@link AbstractSetTest}. After modification operations, {@link #verify()} is
      * invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
+     * @return A {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
         return new MapKeySetTest();
@@ -575,7 +575,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Bulk test {@link Map#values()}. This method runs through all of the tests in {@link AbstractCollectionTest}. After modification operations,
      * {@link #verify()} is invoked to ensure that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's values collection
+     * @return A {@link AbstractCollectionTest} instance for testing the map's values collection
      */
     public BulkTest bulkTestMapValues() {
         return new MapValuesTest();
@@ -882,7 +882,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Override to return a map other than HashMap as the confirmed map.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     public Map<K, V> makeConfirmedMap() {
         return new HashMap<>();
@@ -893,7 +893,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      *
      * @param keys   the array of keys
      * @param values the array of values
-     * @return an array of Map.Entry of those keys to those values
+     * @return An array of Map.Entry of those keys to those values
      */
     @SuppressWarnings("unchecked")
     private Map.Entry<K, V>[] makeEntryArray(final K[] keys, final V[] values) {

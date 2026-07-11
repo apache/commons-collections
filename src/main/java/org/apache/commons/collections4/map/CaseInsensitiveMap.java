@@ -123,7 +123,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     public CaseInsensitiveMap<K, V> clone() {

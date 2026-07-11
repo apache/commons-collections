@@ -116,7 +116,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
      *
-     * @return a hash code for this comparator.
+     * @return A hash code for this comparator.
      * @since 3.0
      */
     @Override

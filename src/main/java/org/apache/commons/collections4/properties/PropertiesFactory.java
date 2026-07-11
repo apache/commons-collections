@@ -299,7 +299,7 @@ public class PropertiesFactory extends AbstractPropertiesFactory<Properties> {
     /**
      * Subclasses override to provide customized properties instances.
      *
-     * @return a new Properties instance.
+     * @return A new Properties instance.
      */
     @Override
     protected Properties createProperties() {

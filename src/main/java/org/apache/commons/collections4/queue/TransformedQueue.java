@@ -49,7 +49,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Queue
+     * @return A new transformed Queue
      * @throws NullPointerException if queue or transformer is null
      * @since 4.0
      */
@@ -78,7 +78,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Queue
+     * @return A new transformed Queue
      * @throws NullPointerException if queue or transformer is null
      */
     public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,

@@ -78,7 +78,7 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
     /**
      * Returns an empty {@link TreeBag} for use in modification testing.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     @Override
     public SortedBag<T> makeConfirmedCollection() {

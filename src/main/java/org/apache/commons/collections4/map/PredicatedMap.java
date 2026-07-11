@@ -71,7 +71,7 @@ public class PredicatedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
-     * @return a new predicated map
+     * @return A new predicated map
      * @throws NullPointerException if the map is null
      * @since 4.0
      */

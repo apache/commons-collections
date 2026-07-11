@@ -70,7 +70,7 @@ public class FixedSizeMap<K, V>
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
-     * @return a new fixed size map
+     * @return A new fixed size map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

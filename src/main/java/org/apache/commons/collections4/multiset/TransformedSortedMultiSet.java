@@ -50,7 +50,7 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
      * @param <E> The type of the elements in the multiset.
      * @param multiset  the multiset to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed SortedMultiSet.
+     * @return A new transformed SortedMultiSet.
      * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedSortedMultiSet<E> transformedSortedMultiSet(final SortedMultiSet<E> multiset,
@@ -78,7 +78,7 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
      * @param <E> The type of the elements in the multiset.
      * @param multiset  the multiset to decorate, must not be null.
      * @param transformer  the transformer to use for conversion, must not be null.
-     * @return a new transformed SortedMultiSet.
+     * @return A new transformed SortedMultiSet.
      * @throws NullPointerException if multiset or transformer is null.
      */
     public static <E> TransformedSortedMultiSet<E> transformingSortedMultiSet(final SortedMultiSet<E> multiset,

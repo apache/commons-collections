@@ -74,7 +74,7 @@ public class FixedSizeList<E>
      *
      * @param <E> The type of the elements in the list
      * @param list  the list to decorate, must not be null
-     * @return a new fixed size list
+     * @return A new fixed size list
      * @throws NullPointerException if list is null
      * @since 4.0
      */

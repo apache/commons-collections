@@ -355,7 +355,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * provide the forward/backward behavior.
      * </p>
      *
-     * @return a new ordered map iterator
+     * @return A new ordered map iterator
      */
     @Override
     public OrderedMapIterator<K, V> mapIterator() {

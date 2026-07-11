@@ -39,13 +39,13 @@ public abstract class AbstractBitMapExtractorTest {
 
     /**
      * Creates a BitMapExtractor without data.
-     * @return a BitMap extractor that has no data.
+     * @return A BitMap extractor that has no data.
      */
     protected abstract BitMapExtractor createEmptyExtractor();
 
     /**
      * Creates a BitMapExtractor with some data.
-     * @return a BitMap extractor with some data
+     * @return A BitMap extractor with some data
      */
     protected abstract BitMapExtractor createExtractor();
 

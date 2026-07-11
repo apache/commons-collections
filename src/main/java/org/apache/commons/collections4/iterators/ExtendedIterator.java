@@ -54,7 +54,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
      *
      * @param <T> The type of object returned from the iterator.
      * @param stream the Stream to create an iterator from.
-     * @return an Extended iterator on the {@code stream} iterator.
+     * @return An Extended iterator on the {@code stream} iterator.
      */
     public static <T> ExtendedIterator<T> create(final Stream<T> stream) {
         return new ExtendedIterator<>(stream.iterator(), true);
@@ -65,7 +65,7 @@ public final class ExtendedIterator<T> implements IteratorOperations<T> {
      *
      * @param <T> The type of object returned from the iterator.
      * @param it The Iterator to wrap.
-     * @return an Extended iterator on {@code it}
+     * @return An Extended iterator on {@code it}
      * @throws UnsupportedOperationException if remove() is called on the resulting iterator.
      */
     public static <T> ExtendedIterator<T> createNoRemove(final Iterator<T> it) {

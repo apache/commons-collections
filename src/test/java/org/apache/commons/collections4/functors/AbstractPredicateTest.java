@@ -39,7 +39,7 @@ public abstract class AbstractPredicateTest {
     }
 
     /**
-     * @return a predicate for general sanity tests.
+     * @return A predicate for general sanity tests.
      */
     protected abstract Predicate<?> generatePredicate();
 

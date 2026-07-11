@@ -520,7 +520,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * For instance, an {@link ArrayList} for lists or a
      * {@link HashSet} for sets.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     public abstract Collection<E> makeConfirmedCollection();
 
@@ -530,7 +530,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * {@link HashSet} for sets.  The returned collection
      * should contain the elements returned by {@link #getFullElements()}.
      *
-     * @return a confirmed full collection
+     * @return A confirmed full collection
      */
     public abstract Collection<E> makeConfirmedFullCollection();
 

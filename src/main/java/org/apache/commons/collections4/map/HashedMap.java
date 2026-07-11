@@ -93,7 +93,7 @@ public class HashedMap<K, V>
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     public HashedMap<K, V> clone() {

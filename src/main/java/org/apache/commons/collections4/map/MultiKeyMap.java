@@ -98,7 +98,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, not null
-     * @return a new multi key map
+     * @return A new multi key map
      * @throws NullPointerException if map is null
      * @throws IllegalArgumentException if the map is not empty
      * @since 4.0
@@ -143,7 +143,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @SuppressWarnings("unchecked")
     @Override

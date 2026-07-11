@@ -375,7 +375,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<Sorted
     /**
      * SortedMap uses TreeMap as its known comparison.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     @Override
     public SortedMap<K, V> makeConfirmedMap() {

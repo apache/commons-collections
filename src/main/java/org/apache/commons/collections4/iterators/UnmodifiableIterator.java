@@ -41,7 +41,7 @@ public final class UnmodifiableIterator<E, T extends Iterator<? extends E>> impl
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
-     * @return a new unmodifiable iterator
+     * @return A new unmodifiable iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <E> Iterator<E> unmodifiableIterator(final Iterator<? extends E> iterator) {

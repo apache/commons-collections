@@ -339,7 +339,7 @@ public class MultiKey<K> implements Serializable {
     /**
      * Gets a debugging string version of the key.
      *
-     * @return a debugging string
+     * @return A debugging string
      */
     @Override
     public String toString() {

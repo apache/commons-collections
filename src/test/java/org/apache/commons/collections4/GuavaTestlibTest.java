@@ -74,7 +74,7 @@ public final class GuavaTestlibTest extends TestCase {
      * @param name name of the test
      * @param factory factory to create new Lists
      * @param features test features used in the tests
-     * @return a JUnit 3, 4 Test Suite
+     * @return A JUnit 3, 4 Test Suite
      */
     private static Test suiteList(final String name, final Supplier<List<String>> factory, final Feature<?>... features) {
         final ListTestSuiteBuilder<String> suite = ListTestSuiteBuilder.using(new TestStringListGenerator() {
@@ -101,7 +101,7 @@ public final class GuavaTestlibTest extends TestCase {
      * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Maps.
      * @param name name of the test
      * @param factory factory to create new Maps
-     * @return a JUnit 3, 4 Test Suite
+     * @return A JUnit 3, 4 Test Suite
      */
     private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory) {
         return MapTestSuiteBuilder.using(new TestStringMapGenerator() {

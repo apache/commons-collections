@@ -53,7 +53,7 @@ public final class UnmodifiableSortedMultiSet<E>
      *
      * @param <E>  the type of the elements in the multiset
      * @param multiset  the multiset to decorate, may not be null
-     * @return an unmodifiable SortedMultiSet
+     * @return An unmodifiable SortedMultiSet
      * @throws NullPointerException if multiset is null
      */
     public static <E> SortedMultiSet<E> unmodifiableSortedMultiSet(final SortedMultiSet<? extends E> multiset) {

@@ -41,7 +41,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      *
      * @param <E>      the element type
      * @param iterator the iterator to decorate
-     * @return a new peeking iterator
+     * @return A new peeking iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <E> PeekingIterator<E> peekingIterator(final Iterator<? extends E> iterator) {

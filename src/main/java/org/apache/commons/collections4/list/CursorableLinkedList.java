@@ -418,7 +418,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * The {@link #listIterator()} method returns the same as this method, and can
      * be cast to a {@code Cursor} if the {@code close} method is required.
      *
-     * @return a new cursor iterator
+     * @return A new cursor iterator
      */
     public CursorableLinkedList.Cursor<E> cursor() {
         return cursor(0);
@@ -447,7 +447,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * be cast to a {@code Cursor} if the {@code close} method is required.
      *
      * @param fromIndex  the index to start from
-     * @return a new cursor iterator
+     * @return A new cursor iterator
      * @throws IndexOutOfBoundsException if the index is out of range
      *      (index &lt; 0 || index &gt; size()).
      */
@@ -474,7 +474,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * a ConcurrentModificationException will occur.
      * The cursor behavior is available via {@link #listIterator()}.
      *
-     * @return a new iterator that does <strong>not</strong> support concurrent modification
+     * @return A new iterator that does <strong>not</strong> support concurrent modification
      */
     @Override
     public Iterator<E> iterator() {
@@ -494,7 +494,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * the cursor automatically adjusts to the change (invalidating the
      * last returned value such that it cannot be removed).
      *
-     * @return a new cursor iterator
+     * @return A new cursor iterator
      */
     @Override
     public ListIterator<E> listIterator() {
@@ -515,7 +515,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * last returned value such that it cannot be removed).
      *
      * @param fromIndex  the index to start from
-     * @return a new cursor iterator
+     * @return A new cursor iterator
      */
     @Override
     public ListIterator<E> listIterator(final int fromIndex) {

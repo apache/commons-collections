@@ -47,7 +47,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @param <K> The key type
      * @param <V> The value type
      * @param map  the map to decorate, must not be null
-     * @return an unmodifiable OrderedBidiMap
+     * @return An unmodifiable OrderedBidiMap
      * @throws NullPointerException if map is null
      * @since 4.0
      */
@@ -99,7 +99,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     /**
      * Gets an unmodifiable view of this map where the keys and values are reversed.
      *
-     * @return an inverted unmodifiable bidirectional map
+     * @return An inverted unmodifiable bidirectional map
      */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         if (inverse == null) {

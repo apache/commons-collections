@@ -447,7 +447,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * operations, {@link #verify()} is invoked to ensure that the map and the
      * other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
+     * @return A {@link AbstractCollectionTest} instance for testing the map's
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapEntries() {
@@ -460,7 +460,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * {@link #verify()} is invoked to ensure that the map and the other
      * collection views are still valid.
      *
-     * @return a {@link AbstractBagTest} instance for testing the map's values
+     * @return A {@link AbstractBagTest} instance for testing the map's values
      *         collection
      */
     public BulkTest bulkTestMultiValuedMapKeys() {
@@ -473,7 +473,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * {@link #verify()} is invoked to ensure that the map and the other
      * collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the map's key set
+     * @return A {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMultiValuedMapKeySet() {
         return new MultiValuedMapKeySetTest();
@@ -485,7 +485,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * operations, {@link #verify()} is invoked to ensure that the map and the
      * other collection views are still valid.
      *
-     * @return a {@link AbstractCollectionTest} instance for testing the map's
+     * @return A {@link AbstractCollectionTest} instance for testing the map's
      *         values collection
      */
     public BulkTest bulkTestMultiValuedMapValues() {
@@ -628,7 +628,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * Override to return a MultiValuedMap other than ArrayListValuedHashMap
      * as the confirmed map.
      *
-     * @return a MultiValuedMap that is known to be valid
+     * @return A MultiValuedMap that is known to be valid
      */
     public MultiValuedMap<K, V> makeConfirmedMap() {
         return new ArrayListValuedHashMap<>();

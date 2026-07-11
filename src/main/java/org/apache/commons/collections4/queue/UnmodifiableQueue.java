@@ -50,7 +50,7 @@ public final class UnmodifiableQueue<E>
      *
      * @param <E> The type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
-     * @return an unmodifiable Queue
+     * @return An unmodifiable Queue
      * @throws NullPointerException if queue is null
      */
     public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {

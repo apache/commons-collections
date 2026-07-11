@@ -49,7 +49,7 @@ public final class UnmodifiableNavigableSet<E>
      *
      * @param <E> The element type
      * @param set  the set to decorate, must not be null
-     * @return a new unmodifiable {@link NavigableSet}
+     * @return A new unmodifiable {@link NavigableSet}
      * @throws NullPointerException if set is null
      */
     public static <E> NavigableSet<E> unmodifiableNavigableSet(final NavigableSet<E> set) {

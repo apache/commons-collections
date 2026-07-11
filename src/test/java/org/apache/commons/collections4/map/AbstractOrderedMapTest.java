@@ -120,7 +120,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     /**
      * OrderedMap uses TreeMap as its known comparison.
      *
-     * @return a map that is known to be valid
+     * @return A map that is known to be valid
      */
     @Override
     public Map<K, V> makeConfirmedMap() {

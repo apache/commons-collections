@@ -49,7 +49,7 @@ public final class UnmodifiableSortedBidiMap<K, V>
      * @param <K> The key type
      * @param <V> The value type
      * @param map  the map to decorate, must not be null
-     * @return an unmodifiable SortedBidiMap
+     * @return An unmodifiable SortedBidiMap
      * @throws NullPointerException if map is null
      * @since 4.0
      */

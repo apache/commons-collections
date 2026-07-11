@@ -66,7 +66,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
      *
-     * @return a suitable hash code
+     * @return A suitable hash code
      */
     @Override
     public int hashCode() {

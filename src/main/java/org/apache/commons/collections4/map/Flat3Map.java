@@ -580,7 +580,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      * @since 3.1
      */
     @Override
@@ -720,7 +720,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * would be poor choices.
      * </p>
      *
-     * @return a new AbstractHashedMap or subclass
+     * @return A new AbstractHashedMap or subclass
      * @since 3.1
      */
     protected AbstractHashedMap<K, V> createDelegateMap() {
@@ -1215,7 +1215,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Gets the map as a String.
      *
-     * @return a string version of the map
+     * @return A string version of the map
      */
     @Override
     public String toString() {

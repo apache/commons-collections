@@ -77,7 +77,7 @@ public class ComparatorUtils {
      *
      * @param <E>  the object type to compare
      * @param comparators  the comparators to use, not null or empty or containing nulls
-     * @return a {@link ComparatorChain} formed from the input comparators
+     * @return A {@link ComparatorChain} formed from the input comparators
      * @throws NullPointerException if comparators collection is null or contains a null
      * @throws ClassCastException if the comparators collection contains the wrong object type
      * @see ComparatorChain
@@ -93,7 +93,7 @@ public class ComparatorUtils {
      *
      * @param <E>  the object type to compare
      * @param comparators  the comparators to use, not null or empty or containing nulls
-     * @return a {@link ComparatorChain} formed from the input comparators
+     * @return A {@link ComparatorChain} formed from the input comparators
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
      */

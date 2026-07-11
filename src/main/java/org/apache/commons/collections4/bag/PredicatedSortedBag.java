@@ -58,7 +58,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @return a new predicated SortedBag
+     * @return A new predicated SortedBag
      * @throws NullPointerException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      * @since 4.0

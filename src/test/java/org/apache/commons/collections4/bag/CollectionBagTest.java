@@ -54,7 +54,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     /**
      * Returns an empty List for use in modification testing.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
@@ -64,7 +64,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     /**
      * Returns a full Set for use in modification testing.
      *
-     * @return a confirmed full collection
+     * @return A confirmed full collection
      */
     @Override
     public Collection<T> makeConfirmedFullCollection() {

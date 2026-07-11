@@ -58,7 +58,7 @@ public final class UnmodifiableMap<K, V>
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
-     * @return a new unmodifiable map
+     * @return A new unmodifiable map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

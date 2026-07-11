@@ -71,7 +71,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns an empty ArrayList.
      *
-     * @return an empty ArrayList
+     * @return An empty ArrayList
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
@@ -81,7 +81,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns a full ArrayList.
      *
-     * @return a full ArrayList
+     * @return A full ArrayList
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
@@ -93,7 +93,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
     /**
      * Returns an empty CircularFifoQueue that won't overflow.
      *
-     * @return an empty CircularFifoQueue
+     * @return An empty CircularFifoQueue
      */
     @Override
     public Queue<E> makeObject() {

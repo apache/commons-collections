@@ -98,7 +98,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns {@link #makeObject()}.
      *
-     * @return an empty queue to be used for testing
+     * @return An empty queue to be used for testing
      */
     @Override
     public abstract Queue<E> makeObject();

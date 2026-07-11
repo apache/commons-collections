@@ -67,7 +67,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      *
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
-     * @return a new synchronized Bag
+     * @return A new synchronized Bag
      * @throws NullPointerException if bag is null
      * @since 4.0
      */

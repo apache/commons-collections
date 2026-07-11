@@ -41,7 +41,7 @@ public class SynchronizedSortedMultiSet<E> extends SynchronizedMultiSet<E> imple
      *
      * @param <E> The type of the elements in the multiset
      * @param multiset  the multiset to decorate, must not be null
-     * @return a new synchronized SortedMultiSet
+     * @return A new synchronized SortedMultiSet
      * @throws NullPointerException if multiset is null
      */
     public static <E> SynchronizedSortedMultiSet<E> synchronizedSortedMultiSet(final SortedMultiSet<E> multiset) {

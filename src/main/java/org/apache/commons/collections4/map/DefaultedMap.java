@@ -83,7 +83,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use to create entries, must not be null
-     * @return a new defaulting map
+     * @return A new defaulting map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
      */
@@ -104,7 +104,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
-     * @return a new defaulting map
+     * @return A new defaulting map
      * @throws NullPointerException if map or transformer is null
      * @since 4.0
      */
@@ -123,7 +123,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param defaultValue  the default value to return when the key is not found
-     * @return a new defaulting map
+     * @return A new defaulting map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

@@ -1387,7 +1387,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      *
      * @param <K> The type of keys.
      * @param <V> The type of values.
-     * @return a new Builder.
+     * @return A new Builder.
      */
     public static <K, V> Builder<K, V> builder() {
         return new Builder<>();

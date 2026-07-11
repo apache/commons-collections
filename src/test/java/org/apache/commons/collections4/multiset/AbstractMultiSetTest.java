@@ -137,7 +137,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the multiset and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the multiset's unique set
+     * @return A {@link AbstractSetTest} instance for testing the multiset's unique set
      */
     public BulkTest bulkTestMultiSetUniqueSet() {
         return new MultiSetUniqueSetTest();

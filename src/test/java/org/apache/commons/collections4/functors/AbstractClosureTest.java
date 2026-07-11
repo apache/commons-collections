@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 public abstract class AbstractClosureTest {
 
     /**
-     * @return a closure for general sanity tests.
+     * @return A closure for general sanity tests.
      */
     protected abstract <T> Closure<T> generateClosure();
 

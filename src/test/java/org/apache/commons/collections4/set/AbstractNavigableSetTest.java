@@ -181,7 +181,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractNavigableSetTest} instance for testing a headset.
+     * @return A {@link AbstractNavigableSetTest} instance for testing a headset.
      */
     public BulkTest bulkTestNavigableSetHeadSet() {
         final int length = getFullElements().length;
@@ -198,7 +198,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractNavigableSetTest} instance for testing a subset.
+     * @return A {@link AbstractNavigableSetTest} instance for testing a subset.
      */
     public BulkTest bulkTestNavigableSetSubSet() {
         final int length = getFullElements().length;
@@ -215,7 +215,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractNavigableSetTest} instance for testing a tailset.
+     * @return A {@link AbstractNavigableSetTest} instance for testing a tailset.
      */
     public BulkTest bulkTestNavigableSetTailSet() {
         final int length = getFullElements().length;
@@ -270,7 +270,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
     /**
      * Returns an empty {@link TreeSet} for use in modification testing.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     @Override
     public NavigableSet<E> makeConfirmedCollection() {

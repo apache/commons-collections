@@ -56,7 +56,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
-     * @return a new unmodifiable sorted map
+     * @return A new unmodifiable sorted map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

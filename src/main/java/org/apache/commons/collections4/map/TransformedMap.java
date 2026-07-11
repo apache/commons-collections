@@ -69,7 +69,7 @@ public class TransformedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
-     * @return a new transformed map
+     * @return A new transformed map
      * @throws NullPointerException if map is null
      * @since 4.0
      */
@@ -98,7 +98,7 @@ public class TransformedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
-     * @return a new transformed map
+     * @return A new transformed map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

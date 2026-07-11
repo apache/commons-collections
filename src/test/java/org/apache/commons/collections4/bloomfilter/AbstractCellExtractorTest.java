@@ -42,14 +42,14 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
 
     /**
      * Creates a CellExtractor without data.
-     * @return a cell extractor that has no data.
+     * @return A cell extractor that has no data.
      */
     @Override
     protected abstract CellExtractor createEmptyExtractor();
 
     /**
      * Creates a CellExtractor with some data.
-     * @return a cell extractor with some data
+     * @return A cell extractor with some data
      */
     @Override
     protected abstract CellExtractor createExtractor();
@@ -61,7 +61,7 @@ public abstract class AbstractCellExtractorTest extends AbstractIndexExtractorTe
 
     /**
      * Creates an array of expected values that aligns with the expected indices entries.
-     * @return an array of expected values.
+     * @return An array of expected values.
      * @see AbstractIndexExtractorTest#getExpectedIndices()
      */
     protected abstract int[] getExpectedValues();

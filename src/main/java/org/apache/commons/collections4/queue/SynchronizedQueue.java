@@ -42,7 +42,7 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
      *            the type of the elements in the queue
      * @param queue
      *            the queue to decorate, must not be null
-     * @return a new synchronized Queue
+     * @return A new synchronized Queue
      * @throws NullPointerException
      *             if queue is null
      */

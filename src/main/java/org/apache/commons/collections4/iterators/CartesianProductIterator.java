@@ -121,7 +121,7 @@ public class CartesianProductIterator<E> implements Iterator<List<E>> {
     /**
      * Returns the next tuple of the input iterables.
      *
-     * @return a list of the input iterables' elements
+     * @return A list of the input iterables' elements
      * @throws NoSuchElementException if there are no more tuples
      */
     @Override

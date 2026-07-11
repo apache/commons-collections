@@ -79,7 +79,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
-     * @return a new lazy map
+     * @return A new lazy map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
      */
@@ -94,7 +94,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
-     * @return a new lazy map
+     * @return A new lazy map
      * @throws NullPointerException if map or factory is null
      * @since 4.0
      */

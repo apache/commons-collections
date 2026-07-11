@@ -892,7 +892,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * An iterator returned entry is valid until {@code next()} is called again.
      * The {@code setValue()} method on the {@code toArray} entries has no effect.
      *
-     * @return a set view of this map's entries
+     * @return A set view of this map's entries
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -1005,7 +1005,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Returns a set view of this map's keys.
      *
-     * @return a set view of this map's keys
+     * @return A set view of this map's keys
      */
     @Override
     public Set<K> keySet() {
@@ -1019,7 +1019,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Gets a MapIterator over the reference map.
      * The iterator only returns valid key/value pairs.
      *
-     * @return a map iterator
+     * @return A map iterator
      */
     @Override
     public MapIterator<K, V> mapIterator() {
@@ -1143,7 +1143,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Returns a collection view of this map's values.
      *
-     * @return a set view of this map's values
+     * @return A set view of this map's values
      */
     @Override
     public Collection<V> values() {

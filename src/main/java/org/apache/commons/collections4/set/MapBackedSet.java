@@ -51,7 +51,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param <E> The element type
      * @param <V> The dummy value type in the map
      * @param map  the map to decorate, must not be null
-     * @return a new map backed set
+     * @return A new map backed set
      * @throws NullPointerException if map is null
      * @since 4.0
      */
@@ -66,7 +66,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param <V> The dummy value type in the map
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
-     * @return a new map backed set
+     * @return A new map backed set
      * @throws NullPointerException if map is null
      * @since 4.0
      */

@@ -141,7 +141,7 @@ public class ListUtils {
      * @param <T> The element type
      * @param list  the list, possibly {@code null}
      * @param defaultList  the returned values if list is {@code null}
-     * @return an empty list if the argument is {@code null}
+     * @return An empty list if the argument is {@code null}
      * @since 4.0
      */
     public static <T> List<T> defaultIfNull(final List<T> list, final List<T> defaultList) {
@@ -154,7 +154,7 @@ public class ListUtils {
      *
      * @param <T> The element type
      * @param list the list, possibly {@code null}
-     * @return an empty list if the argument is {@code null}
+     * @return An empty list if the argument is {@code null}
      */
     public static <T> List<T> emptyIfNull(final List<T> list) {
         return list == null ? Collections.<T>emptyList() : list;
@@ -168,7 +168,7 @@ public class ListUtils {
      *
      * @param <E>  the element type
      * @param list  the list whose size to fix, must not be null
-     * @return a fixed-size list backed by that list
+     * @return A fixed-size list backed by that list
      * @throws NullPointerException  if the List is null
      */
     public static <E> List<E> fixedSizeList(final List<E> list) {
@@ -371,7 +371,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list  the list to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
-     * @return a lazy list backed by the given list
+     * @return A lazy list backed by the given list
      * @throws NullPointerException if the List or Factory is null
      */
     public static <E> List<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
@@ -404,7 +404,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list  the list to make lazy, must not be null
      * @param transformer  the transformer for creating new objects, must not be null
-     * @return a lazy list backed by the given list
+     * @return A lazy list backed by the given list
      * @throws NullPointerException if the List or Transformer is null
      */
     public static <E> List<E> lazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
@@ -493,7 +493,7 @@ public class ListUtils {
      * @param <T> The element type
      * @param list  the list to return consecutive sublists of
      * @param size  the desired size of each sublist (the last may be smaller)
-     * @return a list of consecutive sublists
+     * @return A list of consecutive sublists
      * @throws NullPointerException if list is null
      * @throws IllegalArgumentException if size is not strictly positive
      * @since 4.0
@@ -518,7 +518,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list  the list to predicate, must not be null
      * @param predicate  the predicate for the list, must not be null
-     * @return a predicated list backed by the given list
+     * @return A predicated list backed by the given list
      * @throws NullPointerException if the List or Predicate is null
      */
     public static <E> List<E> predicatedList(final List<E> list, final Predicate<E> predicate) {
@@ -544,7 +544,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
      * @param remove  the items to be removed from the returned {@code collection}
-     * @return a {@code List} containing all the elements of {@code c} except
+     * @return A {@code List} containing all the elements of {@code c} except
      * any elements that also occur in {@code remove}.
      * @throws NullPointerException if either parameter is null
      * @since 3.2
@@ -579,7 +579,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param collection  the collection whose contents are the target of the #retailAll operation
      * @param retain  the collection containing the elements to be retained in the returned collection
-     * @return a {@code List} containing all the elements of {@code c}
+     * @return A {@code List} containing all the elements of {@code c}
      * that occur at least once in {@code retain}.
      * @throws NullPointerException if either parameter is null
      * @since 3.2
@@ -649,7 +649,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list1  the list to subtract from
      * @param list2  the list to subtract
-     * @return a new list containing the results
+     * @return A new list containing the results
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
@@ -698,7 +698,7 @@ public class ListUtils {
      *
      * @param <E> The element type
      * @param list  the list to synchronize, must not be null
-     * @return a synchronized list backed by the given list
+     * @return A synchronized list backed by the given list
      * @throws NullPointerException if the list is null
      */
     public static <E> List<E> synchronizedList(final List<E> list) {
@@ -725,7 +725,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null
-     * @return a transformed list backed by the given list
+     * @return A transformed list backed by the given list
      * @throws NullPointerException if the List or Transformer is null
      */
     public static <E> List<E> transformedList(final List<E> list,
@@ -741,7 +741,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param list1  the first list
      * @param list2  the second list
-     * @return a new list containing the union of those lists
+     * @return A new list containing the union of those lists
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> union(final List<? extends E> list1, final List<? extends E> list2) {
@@ -759,7 +759,7 @@ public class ListUtils {
      *
      * @param <E>  the element type
      * @param list  the list to make unmodifiable, must not be null
-     * @return an unmodifiable list backed by the given list
+     * @return An unmodifiable list backed by the given list
      * @throws NullPointerException if the list is null
      */
     public static <E> List<E> unmodifiableList(final List<? extends E> list) {

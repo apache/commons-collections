@@ -43,7 +43,7 @@ public interface BitMapExtractor {
      * Creates a BitMapExtractor from an array of Long.
      *
      * @param bitMaps the bit maps to return.
-     * @return a BitMapExtractor.
+     * @return A BitMapExtractor.
      */
     static BitMapExtractor fromBitMapArray(final long... bitMaps) {
         return new BitMapExtractor() {

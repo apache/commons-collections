@@ -756,7 +756,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * {@code Cloneable} interface and make this method public.
      * </p>
      *
-     * @return a shallow clone
+     * @return A shallow clone
      * @throws InternalError if {@link AbstractMap#clone()} failed
      */
     @Override
@@ -1448,7 +1448,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /**
      * Gets the map as a String.
      *
-     * @return a string version of the map
+     * @return A string version of the map
      */
     @Override
     public String toString() {

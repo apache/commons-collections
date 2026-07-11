@@ -543,7 +543,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Returns an array of all of this bag's elements.
      *
-     * @return an array of all of this bag's elements
+     * @return An array of all of this bag's elements
      */
     @Override
     public Object[] toArray() {
@@ -564,7 +564,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @param <T> The type of the array elements
      * @param array the array to populate
-     * @return an array of all of this bag's elements
+     * @return An array of all of this bag's elements
      * @throws ArrayStoreException if the runtime type of the specified array is not
      *   a supertype of the runtime type of the elements in this list
      * @throws NullPointerException if the specified array is null
@@ -596,7 +596,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Implement a toString() method suitable for debugging.
      *
-     * @return a debugging toString
+     * @return A debugging toString
      */
     @Override
     public String toString() {

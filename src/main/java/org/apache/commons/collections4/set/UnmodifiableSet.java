@@ -48,7 +48,7 @@ public final class UnmodifiableSet<E>
      *
      * @param <E> The element type
      * @param set  the set to decorate, must not be null
-     * @return a new unmodifiable set
+     * @return A new unmodifiable set
      * @throws NullPointerException if set is null
      * @since 4.0
      */

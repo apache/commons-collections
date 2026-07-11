@@ -70,7 +70,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Creates a new empty FluentIterable.
      *
      * @param <T>  the element type
-     * @return a new empty FluentIterable
+     * @return A new empty FluentIterable
      */
     public static <T> FluentIterable<T> empty() {
         return IterableUtils.EMPTY_ITERABLE;
@@ -87,7 +87,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *
      * @param <T>  the element type
      * @param iterable  the iterable to wrap into a FluentIterable, may not be null
-     * @return a new FluentIterable wrapping the provided iterable
+     * @return A new FluentIterable wrapping the provided iterable
      * @throws NullPointerException if iterable is null
      */
     public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
@@ -106,7 +106,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *
      * @param <T>  the element type
      * @param singleton  the singleton element
-     * @return a new FluentIterable containing the singleton
+     * @return A new FluentIterable containing the singleton
      */
     public static <T> FluentIterable<T> of(final T singleton) {
         return of(IteratorUtils.asIterable(new SingletonIterator<>(singleton, false)));
@@ -120,7 +120,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *
      * @param <T>  the element type
      * @param elements  the elements to be contained in the FluentIterable
-     * @return a new FluentIterable containing the provided elements
+     * @return A new FluentIterable containing the provided elements
      */
     public static <T> FluentIterable<T> of(final T... elements) {
         return of(Arrays.asList(elements));
@@ -182,7 +182,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * elements.
      *
      * @param elements  the elements to append to the iterable
-     * @return a new iterable, combining this iterable with the elements
+     * @return A new iterable, combining this iterable with the elements
      */
     public FluentIterable<E> append(final E... elements) {
         return append(Arrays.asList(elements));
@@ -194,7 +194,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * of the provided iterable.
      *
      * @param other  the other iterable to combine, may not be null
-     * @return a new iterable, combining this iterable with other
+     * @return A new iterable, combining this iterable with other
      * @throws NullPointerException if other is null
      */
     public FluentIterable<E> append(final Iterable<? extends E> other) {
@@ -205,7 +205,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns an Enumeration that will enumerate all elements contained
      * in this iterable.
      *
-     * @return an Enumeration over the elements of this iterable
+     * @return An Enumeration over the elements of this iterable
      */
     public Enumeration<E> asEnumeration() {
         return IteratorUtils.asEnumeration(iterator());
@@ -227,7 +227,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * </p>
      *
      * @param other  the other iterable to collate, may not be null
-     * @return a new iterable, collating this iterable with the other in natural order
+     * @return A new iterable, collating this iterable with the other in natural order
      * @throws NullPointerException if other is null
      * @see org.apache.commons.collections4.iterators.CollatingIterator
      */
@@ -254,7 +254,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @param comparator  the comparator to define an ordering, may be null,
      *   in which case natural ordering will be used
      * @param other  the other iterable to collate, may not be null
-     * @return a new iterable, collating this iterable with the other in natural order
+     * @return A new iterable, collating this iterable with the other in natural order
      * @throws NullPointerException if other is null
      * @see org.apache.commons.collections4.iterators.CollatingIterator
      */
@@ -297,7 +297,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *   FluentIterable.of(someIterable.toList());
      * </pre>
      *
-     * @return a new iterable with the same contents as this iterable
+     * @return A new iterable with the same contents as this iterable
      */
     public FluentIterable<E> eval() {
         return of(toList());
@@ -308,7 +308,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * elements from this iterable matching the provided predicate.
      *
      * @param predicate  the predicate used to filter elements
-     * @return a new iterable, providing a filtered view of this iterable
+     * @return A new iterable, providing a filtered view of this iterable
      * @throws NullPointerException if predicate is null
      */
     public FluentIterable<E> filter(final Predicate<? super E> predicate) {
@@ -359,7 +359,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * the provided maximum number of elements from this iterable.
      *
      * @param maxSize  the maximum number of elements
-     * @return a new iterable, providing a bounded view of this iterable
+     * @return A new iterable, providing a bounded view of this iterable
      * @throws IllegalArgumentException if maxSize is negative
      */
     public FluentIterable<E> limit(final long maxSize) {
@@ -370,7 +370,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will loop infinitely
      * over the elements from this iterable.
      *
-     * @return a new iterable, providing a looping view of this iterable
+     * @return A new iterable, providing a looping view of this iterable
      */
     public FluentIterable<E> loop() {
         return of(IterableUtils.loopingIterable(iterable));
@@ -380,7 +380,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will traverse the
      * elements from this iterable in reverse order.
      *
-     * @return a new iterable, providing a reversed view of this iterable
+     * @return A new iterable, providing a reversed view of this iterable
      */
     public FluentIterable<E> reverse() {
         return of(IterableUtils.reversedIterable(iterable));
@@ -401,7 +401,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * N elements from this iterable.
      *
      * @param elementsToSkip  the number of elements to skip
-     * @return a new iterable, providing a view of this iterable by skipping
+     * @return A new iterable, providing a view of this iterable by skipping
      *   the first N elements
      * @throws IllegalArgumentException if elementsToSkip is negative
      */
@@ -414,7 +414,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * its iterator.
      *
      * @param arrayClass  the class of array to create
-     * @return an array of the iterable contents
+     * @return An array of the iterable contents
      * @throws ArrayStoreException if arrayClass is invalid
      */
     public E[] toArray(final Class<E> arrayClass) {
@@ -428,7 +428,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * The returned list is guaranteed to be mutable.
      * </p>
      *
-     * @return a list of the iterable contents
+     * @return A list of the iterable contents
      */
     public List<E> toList() {
         return IterableUtils.toList(iterable);
@@ -446,7 +446,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *
      * @param <O>  the output element type
      * @param transformer  the transformer applied to each element
-     * @return a new iterable, providing a transformed view of this iterable
+     * @return A new iterable, providing a transformed view of this iterable
      * @throws NullPointerException if transformer is null
      */
     public <O> FluentIterable<O> transform(final Transformer<? super E, ? extends O> transformer) {
@@ -457,7 +457,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will return a unique view
      * of this iterable.
      *
-     * @return a new iterable, providing a unique view of this iterable
+     * @return A new iterable, providing a unique view of this iterable
      */
     public FluentIterable<E> unique() {
         return of(IterableUtils.uniqueIterable(iterable));
@@ -467,7 +467,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will return an unmodifiable
      * view of this iterable.
      *
-     * @return a new iterable, providing an unmodifiable view of this iterable
+     * @return A new iterable, providing an unmodifiable view of this iterable
      */
     public FluentIterable<E> unmodifiable() {
         return of(IterableUtils.unmodifiableIterable(iterable));
@@ -479,7 +479,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * alternating order.
      *
      * @param other  the other iterable to interleave, may not be null
-     * @return a new iterable, interleaving this iterable with others
+     * @return A new iterable, interleaving this iterable with others
      * @throws NullPointerException if other is null
      */
     public FluentIterable<E> zip(final Iterable<? extends E> other) {
@@ -492,7 +492,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * alternating order.
      *
      * @param others  the iterables to interleave, may not be null
-     * @return a new iterable, interleaving this iterable with others
+     * @return A new iterable, interleaving this iterable with others
      * @throws NullPointerException if either of the provided iterables is null
      */
     public FluentIterable<E> zip(final Iterable<? extends E>... others) {

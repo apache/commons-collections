@@ -38,7 +38,7 @@ public class EnumerationUtils {
      *
      * @param <T> The element type
      * @param enumeration the enumeration to use, may not be null
-     * @return a new, single use {@link Iterable}
+     * @return A new, single use {@link Iterable}
      * @since 4.5.0-M1
      */
     public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
@@ -82,7 +82,7 @@ public class EnumerationUtils {
      *
      * @param <E> The element type
      * @param enumeration  the enumeration to traverse, which should not be {@code null}.
-     * @return a list containing all elements of the given enumeration
+     * @return A list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
@@ -94,7 +94,7 @@ public class EnumerationUtils {
      * for the sake of backward compatibility.
      *
      * @param stringTokenizer  the tokenizer to convert to a {@link List}&lt;{@link String}&gt;
-     * @return a list containing all tokens of the given StringTokenizer
+     * @return A list containing all tokens of the given StringTokenizer
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
         final List<String> result = new ArrayList<>(stringTokenizer.countTokens());
@@ -112,7 +112,7 @@ public class EnumerationUtils {
      *
      * @param <E> The element type
      * @param enumeration  the enumeration to traverse, which should not be {@code null}.
-     * @return a set containing all elements of the given enumeration.
+     * @return A set containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      * @since 4.5.0-M4
      */

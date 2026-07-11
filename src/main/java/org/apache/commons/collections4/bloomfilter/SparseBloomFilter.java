@@ -103,7 +103,7 @@ public final class SparseBloomFilter implements BloomFilter<SparseBloomFilter> {
     /**
      * Creates a new instance of this {@link SparseBloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this {@link SparseBloomFilter}.
+     * @return A copy of this {@link SparseBloomFilter}.
      */
     @Override
     public SparseBloomFilter copy() {

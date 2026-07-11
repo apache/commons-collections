@@ -244,7 +244,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Returns an iterator over this queue's elements.
      *
-     * @return an iterator over this queue's elements
+     * @return An iterator over this queue's elements
      */
     @Override
     public Iterator<E> iterator() {

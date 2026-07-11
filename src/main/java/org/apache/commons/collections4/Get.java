@@ -51,7 +51,7 @@ public interface Get<K, V> {
     /**
      * Gets a set view of the mappings contained in this map.
      *
-     * @return a set view of the mappings contained in this map.
+     * @return A set view of the mappings contained in this map.
      * @see Map#entrySet()
      */
     Set<Map.Entry<K, V>> entrySet();
@@ -76,7 +76,7 @@ public interface Get<K, V> {
     /**
      * Gets a view of the keys contained in this map.
      *
-     * @return a set view of the keys contained in this map
+     * @return A set view of the keys contained in this map
      * @see Map#keySet()
      */
     Set<K> keySet();
@@ -101,7 +101,7 @@ public interface Get<K, V> {
     /**
      * Gets a a collection view of the values contained in this map.
      *
-     * @return a collection view of the values contained in this map.
+     * @return A collection view of the values contained in this map.
      * @see Map#values()
      */
     Collection<V> values();

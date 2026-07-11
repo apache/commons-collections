@@ -289,7 +289,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     /**
      * Override to create a full {@code BidiMap} other than the default.
      *
-     * @return a full {@code BidiMap} implementation.
+     * @return A full {@code BidiMap} implementation.
      */
     @Override
     public BidiMap<K, V> makeFullMap() {

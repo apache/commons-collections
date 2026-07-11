@@ -50,7 +50,7 @@ public final class UnmodifiableCollection<E>
      *
      * @param <T> The type of the elements in the collection.
      * @param coll  the collection to decorate, must not be null.
-     * @return an unmodifiable collection.
+     * @return An unmodifiable collection.
      * @throws NullPointerException if collection is null.
      * @since 4.0
      */

@@ -82,7 +82,7 @@ public abstract class AbstractSortedMultiSetTest<T> extends AbstractMultiSetTest
      * Returns an empty sorted, {@link Collection}-compliant
      * collection for use in modification testing.
      *
-     * @return a confirmed empty collection
+     * @return A confirmed empty collection
      */
     @Override
     public Collection<T> makeConfirmedCollection() {

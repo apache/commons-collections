@@ -287,7 +287,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * composites the entry sets from all of the composited maps.
      *
      * @see CompositeSet
-     * @return a set view of the mappings contained in this map.
+     * @return A set view of the mappings contained in this map.
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -389,7 +389,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * composites the key sets from all of the composited maps.
      * </p>
      *
-     * @return a set view of the keys contained in this map.
+     * @return A set view of the keys contained in this map.
      */
     @Override
     public Set<K> keySet() {
@@ -554,7 +554,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * {@code removeAll}, {@code retainAll} and {@code clear} operations.
      * It does not support the add or {@code addAll} operations.
      *
-     * @return a collection view of the values contained in this map.
+     * @return A collection view of the values contained in this map.
      */
     @Override
     public Collection<V> values() {

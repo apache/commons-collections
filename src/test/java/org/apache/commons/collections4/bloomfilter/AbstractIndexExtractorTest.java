@@ -75,13 +75,13 @@ public abstract class AbstractIndexExtractorTest {
 
     /**
      * Creates an extractor without data.
-     * @return an IndexExtractor that has no data.
+     * @return An IndexExtractor that has no data.
      */
     protected abstract IndexExtractor createEmptyExtractor();
 
     /**
      * Creates an extractor with some data.
-     * @return an IndexExtractor with some data
+     * @return An IndexExtractor with some data
      */
     protected abstract IndexExtractor createExtractor();
 
@@ -96,7 +96,7 @@ public abstract class AbstractIndexExtractorTest {
     /**
      * Creates an array of expected indices.
      * The expected indices are dependent upon the extractor created in the {@code createExtractor()} method.
-     * @return an array of expected indices.
+     * @return An array of expected indices.
      */
     protected abstract int[] getExpectedIndices();
 

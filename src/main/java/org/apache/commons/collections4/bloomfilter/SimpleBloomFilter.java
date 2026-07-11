@@ -100,7 +100,7 @@ public final class SimpleBloomFilter implements BloomFilter<SimpleBloomFilter> {
     /**
      * Creates a new instance of this {@link SimpleBloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this {@link SimpleBloomFilter}.
+     * @return A copy of this {@link SimpleBloomFilter}.
      */
     @Override
     public SimpleBloomFilter copy() {

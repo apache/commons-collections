@@ -276,7 +276,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     public LinkedMap<K, V> clone() {

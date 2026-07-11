@@ -60,7 +60,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
-     * @return a new transformed MultiValuedMap
+     * @return A new transformed MultiValuedMap
      * @throws NullPointerException if map is null
      */
     public static <K, V> TransformedMultiValuedMap<K, V> transformedMap(final MultiValuedMap<K, V> map,
@@ -89,7 +89,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
-     * @return a new transformed MultiValuedMap
+     * @return A new transformed MultiValuedMap
      * @throws NullPointerException if map is null
      */
     public static <K, V> TransformedMultiValuedMap<K, V> transformingMap(final MultiValuedMap<K, V> map,

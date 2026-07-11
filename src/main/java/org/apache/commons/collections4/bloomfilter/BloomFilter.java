@@ -130,7 +130,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
     /**
      * Creates a new instance of this {@link BloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this {@link BloomFilter}.
+     * @return A copy of this {@link BloomFilter}.
      */
     T copy();
 
@@ -147,7 +147,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * may be thrown.</em></p>
      *
      * @param other The other Bloom filter
-     * @return an estimate of the number of items in the intersection. If the calculated estimate is larger than Integer.MAX_VALUE then MAX_VALUE is returned.
+     * @return An estimate of the number of items in the intersection. If the calculated estimate is larger than Integer.MAX_VALUE then MAX_VALUE is returned.
      * @throws IllegalArgumentException if the estimated N for the union of the filters is infinite.
      * @see #estimateN()
      * @see Shape
@@ -196,7 +196,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * <li>if cardinality &gt; numberOfBits, then an IllegalArgumentException is thrown.</li>
      * </ul>
      *
-     * @return an estimate of the number of items in the bloom filter.  Will return Integer.MAX_VALUE if the
+     * @return An estimate of the number of items in the bloom filter.  Will return Integer.MAX_VALUE if the
      * estimate is larger than Integer.MAX_VALUE.
      * @throws IllegalArgumentException if the cardinality is &gt; numberOfBits as defined in Shape.
      * @see Shape#estimateN(int)
@@ -225,7 +225,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * may be thrown.</em></p>
      *
      * @param other The other Bloom filter
-     * @return an estimate of the number of items in the union.  Will return Integer.MAX_VALUE if the
+     * @return An estimate of the number of items in the union.  Will return Integer.MAX_VALUE if the
      * estimate is larger than Integer.MAX_VALUE.
      * @see #estimateN()
      * @see Shape

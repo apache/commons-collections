@@ -119,7 +119,7 @@ public class BitMaps {
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
      * @param numberOfBits the number of bits to store in the array of bit maps.
-     * @return a new bitmap.
+     * @return A new bitmap.
      */
     static long[] newBitMap(final int numberOfBits) {
         return new long[numberOfBitMaps(numberOfBits)];
@@ -129,7 +129,7 @@ public class BitMaps {
      * Creates a new bitmap for given shape parameter.
      *
      * @param shape the shape.
-     * @return a new bitmap.
+     * @return A new bitmap.
      */
     static long[] newBitMap(final Shape shape) {
         return newBitMap(shape.getNumberOfBits());

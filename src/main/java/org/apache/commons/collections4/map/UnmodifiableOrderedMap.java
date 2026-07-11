@@ -56,7 +56,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
-     * @return a new ordered map
+     * @return A new ordered map
      * @throws NullPointerException if map is null
      * @since 4.0
      */

@@ -93,7 +93,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Gets a debugging String view of the pair.
      *
-     * @return a String view of the entry
+     * @return A String view of the entry
      */
     @Override
     public String toString() {

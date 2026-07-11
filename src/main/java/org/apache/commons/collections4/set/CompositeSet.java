@@ -356,7 +356,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * <p>
      * This implementation uses an {@code IteratorChain}.
      *
-     * @return an {@code IteratorChain} instance which supports
+     * @return An {@code IteratorChain} instance which supports
      *  {@code remove()}. Iteration occurs over contained collections in
      *  the order they were added, but this behavior should not be relied upon.
      * @see IteratorChain
@@ -477,7 +477,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Returns an array containing all of the elements in this composite.
      *
-     * @return an object array of all the elements in the collection
+     * @return An object array of all the elements in the collection
      */
     @Override
     public Object[] toArray() {
@@ -495,7 +495,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @param <T>  the type of the elements in the collection
      * @param array  the array to use, populating if possible
-     * @return an array of all the elements in the collection
+     * @return An array of all the elements in the collection
      */
     @Override
     @SuppressWarnings("unchecked")

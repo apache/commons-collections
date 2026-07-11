@@ -770,7 +770,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * The iterator implements {@link BidiMapIterator}.
      * This implementation relies on the entrySet iterator.
      *
-     * @return a map iterator
+     * @return A map iterator
      */
     @Override
     public MapIterator<K, V> mapIterator() {

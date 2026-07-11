@@ -56,7 +56,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param <T>  the type of the objects to be created
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
-     * @return an instantiate transformer
+     * @return An instantiate transformer
      * @throws IllegalArgumentException if paramTypes does not match args
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(final Class<?>[] paramTypes,

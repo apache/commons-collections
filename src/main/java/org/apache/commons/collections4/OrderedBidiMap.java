@@ -46,7 +46,7 @@ public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
      * usually by forwarding to {@code inverseOrderedBidiMap()}.
      * </p>
      *
-     * @return an inverted bidirectional map
+     * @return An inverted bidirectional map
      */
     @Override
     OrderedBidiMap<V, K> inverseBidiMap();

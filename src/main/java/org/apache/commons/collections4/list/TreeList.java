@@ -1065,7 +1065,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets an iterator over the list.
      *
-     * @return an iterator over the list
+     * @return An iterator over the list
      */
     @Override
     public Iterator<E> iterator() {

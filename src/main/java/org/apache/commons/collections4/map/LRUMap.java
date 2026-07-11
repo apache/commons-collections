@@ -282,7 +282,7 @@ public class LRUMap<K, V>
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     public LRUMap<K, V> clone() {

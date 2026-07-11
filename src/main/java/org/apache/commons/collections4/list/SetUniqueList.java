@@ -151,7 +151,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param <E>  the element type
      * @param list  the list to decorate, must not be null
-     * @return a new {@link SetUniqueList}
+     * @return A new {@link SetUniqueList}
      * @throws NullPointerException if list is null
      * @since 4.0
      */
@@ -273,7 +273,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Gets an unmodifiable view as a Set.
      *
-     * @return an unmodifiable set view
+     * @return An unmodifiable set view
      */
     public Set<E> asSet() {
         return UnmodifiableSet.unmodifiableSet(set);
@@ -301,7 +301,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param set  the {@link Set} to be used as return type, must not be null
      * @param list  the {@link List} to populate the {@link Set}
-     * @return a new {@link Set} populated with all elements of the provided
+     * @return A new {@link Set} populated with all elements of the provided
      *   {@link List}
      */
     protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {

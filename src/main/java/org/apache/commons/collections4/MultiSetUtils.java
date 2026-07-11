@@ -86,7 +86,7 @@ public class MultiSetUtils {
      * Gets an empty {@code MultiSet}.
      *
      * @param <E> The element type
-     * @return an empty MultiSet
+     * @return An empty MultiSet
      */
     @SuppressWarnings("unchecked") // OK, empty multiset is compatible with any type
     public static <E> MultiSet<E> emptyMultiSet() {
@@ -97,7 +97,7 @@ public class MultiSetUtils {
      * Gets an empty {@code SortedMultiSet}.
      *
      * @param <E> The element type
-     * @return an empty SortedMultiSet
+     * @return An empty SortedMultiSet
      * @since 4.6.0
      */
     @SuppressWarnings("unchecked") // OK, empty multiset is compatible with any type
@@ -118,7 +118,7 @@ public class MultiSetUtils {
      * @param <E> The element type
      * @param multiset the multiset to predicate, must not be null
      * @param predicate the predicate for the multiset, must not be null
-     * @return a predicated multiset backed by the given multiset
+     * @return A predicated multiset backed by the given multiset
      * @throws NullPointerException if the MultiSet or Predicate is null
      */
     public static <E> MultiSet<E> predicatedMultiSet(final MultiSet<E> multiset,
@@ -140,7 +140,7 @@ public class MultiSetUtils {
      * @param <E> The element type
      * @param multiset the sorted multiset to predicate, must not be null
      * @param predicate the predicate for the multiset, must not be null
-     * @return a predicated sorted multiset backed by the given sorted multiset
+     * @return A predicated sorted multiset backed by the given sorted multiset
      * @throws NullPointerException if the SortedMultiSet or Predicate is null
      * @since 4.6.0
      */
@@ -245,7 +245,7 @@ public class MultiSetUtils {
      *
      * @param <E> The element type
      * @param multiset the multiset to synchronize, must not be null
-     * @return a synchronized multiset backed by that multiset
+     * @return A synchronized multiset backed by that multiset
      * @throws NullPointerException if the MultiSet is null
      */
     public static <E> MultiSet<E> synchronizedMultiSet(final MultiSet<E> multiset) {
@@ -275,7 +275,7 @@ public class MultiSetUtils {
      *
      * @param <E> The element type
      * @param multiset the sorted multiset to synchronize, must not be null
-     * @return a synchronized sorted multiset backed by that multiset
+     * @return A synchronized sorted multiset backed by that multiset
      * @throws NullPointerException if the SortedMultiSet is null
      * @since 4.6.0
      */
@@ -299,7 +299,7 @@ public class MultiSetUtils {
      * @param <E> The element type
      * @param multiset the multiset to transform, must not be null
      * @param transformer the transformer for the multiset, must not be null
-     * @return a transformed multiset backed by the given multiset
+     * @return A transformed multiset backed by the given multiset
      * @throws NullPointerException if the MultiSet or Transformer is null
      * @since 4.6.0
      */
@@ -324,7 +324,7 @@ public class MultiSetUtils {
      * @param <E> The element type
      * @param multiset the sorted multiset to transform, must not be null
      * @param transformer the transformer for the multiset, must not be null
-     * @return a transformed sorted multiset backed by the given multiset
+     * @return A transformed sorted multiset backed by the given multiset
      * @throws NullPointerException if the SortedMultiSet or Transformer is null
      * @since 4.6.0
      */
@@ -339,7 +339,7 @@ public class MultiSetUtils {
      *
      * @param <E> The element type
      * @param multiset the multiset whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that multiset
+     * @return An unmodifiable view of that multiset
      * @throws NullPointerException if the MultiSet is null
      */
     public static <E> MultiSet<E> unmodifiableMultiSet(final MultiSet<? extends E> multiset) {
@@ -353,7 +353,7 @@ public class MultiSetUtils {
      *
      * @param <E> The element type
      * @param multiset the sorted multiset whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that sorted multiset
+     * @return An unmodifiable view of that sorted multiset
      * @throws NullPointerException if the SortedMultiSet is null
      * @since 4.6.0
      */

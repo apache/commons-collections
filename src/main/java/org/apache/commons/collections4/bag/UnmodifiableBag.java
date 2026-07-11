@@ -57,7 +57,7 @@ public final class UnmodifiableBag<E>
      *
      * @param <E> The type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
-     * @return an unmodifiable Bag
+     * @return An unmodifiable Bag
      * @throws NullPointerException if bag is null
      * @since 4.0
      */

@@ -48,14 +48,14 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Implement this method to return an iterator over an empty collection.
      *
-     * @return an empty iterator
+     * @return An empty iterator
      */
     public abstract Iterator<E> makeEmptyIterator();
 
     /**
      * Implements the abstract superclass method to return the full iterator.
      *
-     * @return a full iterator
+     * @return A full iterator
      */
     @Override
     public abstract Iterator<E> makeObject();

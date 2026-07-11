@@ -296,7 +296,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Create a new view for the set of entries in this multiset.
      *
-     * @return a view of the set of entries
+     * @return A view of the set of entries
      */
     protected Set<Entry<E>> createEntrySet() {
         return new EntrySet<>(this);
@@ -313,7 +313,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Create a new view for the set of unique elements in this multiset.
      *
-     * @return a view of the set of unique elements
+     * @return A view of the set of unique elements
      */
     protected Set<E> createUniqueSet() {
         return new UniqueSet<>(this);
@@ -494,7 +494,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Implement a toString() method suitable for debugging.
      *
-     * @return a debugging toString
+     * @return A debugging toString
      */
     @Override
     public String toString() {

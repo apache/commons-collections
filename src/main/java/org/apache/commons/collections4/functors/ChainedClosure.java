@@ -115,7 +115,7 @@ public class ChainedClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closures.
      *
-     * @return a copy of the closures
+     * @return A copy of the closures
      * @since 3.1
      */
     public Closure<? super T>[] getClosures() {

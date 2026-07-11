@@ -70,7 +70,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
-     * @return a new predicated sorted map
+     * @return A new predicated sorted map
      * @throws NullPointerException if the map is null
      * @since 4.0
      */

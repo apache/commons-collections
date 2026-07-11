@@ -267,7 +267,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * Gets all elements associated with the given key.
      *
      * @param key  key to look up.
-     * @return a collection of elements found, or null if {@code contains(key) == false}.
+     * @return A collection of elements found, or null if {@code contains(key) == false}.
      */
     @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection
     public Collection<C> values(final K key) {

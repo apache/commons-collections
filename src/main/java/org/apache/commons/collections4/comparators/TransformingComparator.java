@@ -116,7 +116,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
      *
-     * @return a hash code for this comparator.
+     * @return A hash code for this comparator.
      */
     @Override
     public int hashCode() {

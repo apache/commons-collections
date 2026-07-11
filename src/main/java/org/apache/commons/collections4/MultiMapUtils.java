@@ -56,7 +56,7 @@ public class MultiMapUtils {
      * @param <K> The type of key in the map.
      * @param <V> The type of value in the map.
      * @param map the map, may be null.
-     * @return an empty {@link MultiValuedMap} if the argument is null.
+     * @return An empty {@link MultiValuedMap} if the argument is null.
      */
     @SuppressWarnings("unchecked")
     public static <K, V> MultiValuedMap<K, V> emptyIfNull(final MultiValuedMap<K, V> map) {
@@ -96,7 +96,7 @@ public class MultiMapUtils {
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
-     * @return a new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @return A new Bag containing the values from the {@link MultiValuedMap}, or null if input map is null.
      * @deprecated Since 4.6.0, use {@link #getValuesAsMultiSet(MultiValuedMap, Object)} instead.
      */
     @Deprecated
@@ -111,7 +111,7 @@ public class MultiMapUtils {
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
-     * @return a new List containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @return A new List containing the values from the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
         return map != null ? new ArrayList<>(map.get(key)) : null;
@@ -124,7 +124,7 @@ public class MultiMapUtils {
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
-     * @return a new MultiSet containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @return A new MultiSet containing the values from the {@link MultiValuedMap}, or null if input map is null.
      * @since 4.6.0
      */
     public static <K, V> MultiSet<V> getValuesAsMultiSet(final MultiValuedMap<K, V> map, final K key) {
@@ -138,7 +138,7 @@ public class MultiMapUtils {
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
-     * @return a new Set containing the values from the {@link MultiValuedMap}, or null if input map is null.
+     * @return A new Set containing the values from the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
         return map != null ? new HashSet<>(map.get(key)) : null;
@@ -183,7 +183,7 @@ public class MultiMapUtils {
      *
      * @param <K> The key type.
      * @param <V> The value type.
-     * @return a new {@code ListValuedMap}.
+     * @return A new {@code ListValuedMap}.
      */
     public static <K, V> ListValuedMap<K, V> newListValuedHashMap() {
         return new ArrayListValuedHashMap<>();
@@ -194,7 +194,7 @@ public class MultiMapUtils {
      *
      * @param <K> The key type.
      * @param <V> The value type.
-     * @return a new {@link SetValuedMap}.
+     * @return A new {@link SetValuedMap}.
      */
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
         return new HashSetValuedHashMap<>();
@@ -219,7 +219,7 @@ public class MultiMapUtils {
      * @param map              the {@link MultiValuedMap} to transform, must not be null, typically empty.
      * @param keyTransformer   the transformer for the map keys, null means no transformation.
      * @param valueTransformer the transformer for the map values, null means no transformation.
-     * @return a transformed {@code MultiValuedMap} backed by the given map.
+     * @return A transformed {@code MultiValuedMap} backed by the given map.
      * @throws NullPointerException if map is null.
      */
     public static <K, V> MultiValuedMap<K, V> transformedMultiValuedMap(final MultiValuedMap<K, V> map,
@@ -233,7 +233,7 @@ public class MultiMapUtils {
      * @param <K> The key type.
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to decorate, must not be null.
-     * @return an unmodifiable {@link MultiValuedMap} backed by the provided map.
+     * @return An unmodifiable {@link MultiValuedMap} backed by the provided map.
      * @throws NullPointerException if map is null.
      */
     public static <K, V> MultiValuedMap<K, V> unmodifiableMultiValuedMap(final MultiValuedMap<? extends K, ? extends V> map) {

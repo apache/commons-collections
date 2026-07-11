@@ -67,7 +67,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
     /**
      * Subclasses override to provide customized properties instances.
      *
-     * @return a new Properties instance.
+     * @return A new Properties instance.
      */
     protected abstract T createProperties();
 
@@ -76,7 +76,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      *
      * @param classLoader the class loader to use to get the named resource.
      * @param name        the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -90,7 +90,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given file.
      *
      * @param file the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      * @throws FileNotFoundException    Thrown if the file does not exist, is a directory, or cannot be opened for
@@ -106,7 +106,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given input stream.
      *
      * @param inputStream the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -124,7 +124,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      *
      * @param inputStream the location of the properties file.
      * @param propertyFormat The format of the given file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      * @since 4.5.0-M1
@@ -146,7 +146,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given path.
      *
      * @param path the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -160,7 +160,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given reader.
      *
      * @param reader the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -174,7 +174,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given file name.
      *
      * @param name the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -186,7 +186,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given URI.
      *
      * @param uri the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */
@@ -198,7 +198,7 @@ public abstract class AbstractPropertiesFactory<T extends Properties> {
      * Creates and loads properties from the given URL.
      *
      * @param url the location of the properties file.
-     * @return a new properties object.
+     * @return A new properties object.
      * @throws IOException              Thrown if an error occurred reading the input stream.
      * @throws IllegalArgumentException Thrown if the input contains a malformed Unicode escape sequence.
      */

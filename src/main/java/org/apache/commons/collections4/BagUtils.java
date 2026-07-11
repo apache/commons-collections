@@ -55,7 +55,7 @@ public class BagUtils {
      *
      * @param <E> The element type
      * @param bag the bag to decorate, must not be null
-     * @return a Bag that complies to the Collection contract
+     * @return A Bag that complies to the Collection contract
      * @throws NullPointerException if bag is null
      * @since 4.0
      */
@@ -67,7 +67,7 @@ public class BagUtils {
      * Gets an empty {@code Bag}.
      *
      * @param <E> The element type
-     * @return an empty Bag
+     * @return An empty Bag
      */
     @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> Bag<E> emptyBag() {
@@ -78,7 +78,7 @@ public class BagUtils {
      * Gets an empty {@code SortedBag}.
      *
      * @param <E> The element type
-     * @return an empty sorted Bag
+     * @return An empty sorted Bag
      */
     @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> SortedBag<E> emptySortedBag() {
@@ -98,7 +98,7 @@ public class BagUtils {
      * @param <E> The element type
      * @param bag the bag to predicate, must not be null
      * @param predicate the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
+     * @return A predicated bag backed by the given bag
      * @throws NullPointerException if the Bag or Predicate is null
      */
     public static <E> Bag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
@@ -119,7 +119,7 @@ public class BagUtils {
      * @param <E> The element type
      * @param bag the sorted bag to predicate, must not be null
      * @param predicate the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
+     * @return A predicated bag backed by the given bag
      * @throws NullPointerException if the SortedBag or Predicate is null
      */
     public static <E> SortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
@@ -151,7 +151,7 @@ public class BagUtils {
      *
      * @param <E> The element type
      * @param bag the bag to synchronize, must not be null
-     * @return a synchronized bag backed by that bag
+     * @return A synchronized bag backed by that bag
      * @throws NullPointerException if the Bag is null
      */
     public static <E> Bag<E> synchronizedBag(final Bag<E> bag) {
@@ -182,7 +182,7 @@ public class BagUtils {
      *
      * @param <E> The element type
      * @param bag the bag to synchronize, must not be null
-     * @return a synchronized bag backed by that bag
+     * @return A synchronized bag backed by that bag
      * @throws NullPointerException if the SortedBag is null
      */
     public static <E> SortedBag<E> synchronizedSortedBag(final SortedBag<E> bag) {
@@ -204,7 +204,7 @@ public class BagUtils {
      * @param <E> The element type
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
-     * @return a transformed bag backed by the given bag
+     * @return A transformed bag backed by the given bag
      * @throws NullPointerException if the Bag or Transformer is null
      */
     public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
@@ -227,7 +227,7 @@ public class BagUtils {
      * @param <E> The element type
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
-     * @return a transformed bag backed by the given bag
+     * @return A transformed bag backed by the given bag
      * @throws NullPointerException if the Bag or Transformer is null
      */
     public static <E> SortedBag<E> transformingSortedBag(final SortedBag<E> bag,
@@ -241,7 +241,7 @@ public class BagUtils {
      *
      * @param <E> The element type
      * @param bag the bag whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that bag
+     * @return An unmodifiable view of that bag
      * @throws NullPointerException if the Bag is null
      */
     public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
@@ -255,7 +255,7 @@ public class BagUtils {
      *
      * @param <E> The element type
      * @param bag the bag whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that bag
+     * @return An unmodifiable view of that bag
      * @throws NullPointerException if the SortedBag is null
      */
     public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {

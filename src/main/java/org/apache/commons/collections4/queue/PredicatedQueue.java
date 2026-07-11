@@ -51,7 +51,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * @param <E> The type of the elements in the queue
      * @param Queue  the queue to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @return a new predicated queue
+     * @return A new predicated queue
      * @throws NullPointerException if queue or predicate is null
      * @throws IllegalArgumentException if the queue contains invalid elements
      */

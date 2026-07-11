@@ -257,7 +257,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals(Object) equals}.
      *
-     * @return a suitable hash code
+     * @return A suitable hash code
      * @since 3.0
      */
     @Override

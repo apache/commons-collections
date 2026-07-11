@@ -159,7 +159,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closures.
      *
-     * @return a copy of the closures
+     * @return A copy of the closures
      * @since 3.1
      */
     public Closure<? super T>[] getClosures() {
@@ -179,7 +179,7 @@ public class SwitchClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the predicates.
      *
-     * @return a copy of the predicates
+     * @return A copy of the predicates
      * @since 3.1
      */
     public Predicate<? super T>[] getPredicates() {

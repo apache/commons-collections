@@ -75,7 +75,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * method on the inverse map should return the original.
      * </p>
      *
-     * @return an inverted bidirectional map
+     * @return An inverted bidirectional map
      */
     BidiMap<V, K> inverseBidiMap();
 
@@ -144,7 +144,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * {@code retainAll} and {@code clear} operations.  It does not
      * support the {@code add} or {@code addAll} operations.
      *
-     * @return a set view of the values contained in this map
+     * @return A set view of the values contained in this map
      */
     @Override
     Set<V> values();

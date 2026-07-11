@@ -202,7 +202,7 @@ public final class Shape {
      *
      * @param numberOfHashFunctions Number of hash functions to use for each item placed in the filter.
      * @param numberOfBits The number of bits in the filter
-     * @return a valid Shape.
+     * @return A valid Shape.
      * @throws IllegalArgumentException if {@code numberOfHashFunctions < 1} or {@code numberOfBits < 1}
      */
     public static Shape fromKM(final int numberOfHashFunctions, final int numberOfBits) {
@@ -222,7 +222,7 @@ public final class Shape {
      *
      * @param numberOfItems Number of items to be placed in the filter
      * @param numberOfBits The number of bits in the filter
-     * @return a valid Shape.
+     * @return A valid Shape.
      * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
      * the calculated number of hash function is {@code < 1}, or if the actual probability is {@code >= 1.0}
      */
@@ -247,7 +247,7 @@ public final class Shape {
      * @param numberOfItems Number of items to be placed in the filter
      * @param numberOfBits The number of bits in the filter.
      * @param numberOfHashFunctions The number of hash functions in the filter
-     * @return a valid Shape.
+     * @return A valid Shape.
      * @throws IllegalArgumentException if {@code numberOfItems < 1}, {@code numberOfBits < 1},
      * {@code numberOfHashFunctions < 1}, or if the actual probability is {@code >= 1.0}.
      */
@@ -279,7 +279,7 @@ public final class Shape {
      *
      * @param numberOfItems Number of items to be placed in the filter
      * @param probability The desired false-positive probability in the range {@code (0, 1)}
-     * @return a valid Shape
+     * @return A valid Shape
      * @throws IllegalArgumentException if {@code numberOfItems < 1}, if the desired probability
      * is not in the range {@code (0, 1)} or if the actual probability is {@code >= 1.0}.
      */
@@ -316,7 +316,7 @@ public final class Shape {
      * @param probability The desired false-positive probability in the range {@code (0, 1)}
      * @param numberOfBits The number of bits in the filter
      * @param numberOfHashFunctions The number of hash functions in the filter
-     * @return a valid Shape.
+     * @return A valid Shape.
      * @throws IllegalArgumentException if the desired probability is not in the range {@code (0, 1)},
      * {@code numberOfBits < 1}, {@code numberOfHashFunctions < 1}, or the actual
      * probability is {@code >= 1.0}

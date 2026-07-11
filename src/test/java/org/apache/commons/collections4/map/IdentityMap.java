@@ -125,7 +125,7 @@ public class IdentityMap<K, V>
     /**
      * Clones the map without cloning the keys or values.
      *
-     * @return a shallow clone
+     * @return A shallow clone
      */
     @Override
     public IdentityMap<K, V> clone() {

@@ -40,7 +40,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      * @param <K>  the key type
      * @param <V>  the value type
      * @param iterator  the iterator to decorate
-     * @return a new unmodifiable ordered map iterator
+     * @return A new unmodifiable ordered map iterator
      * @throws NullPointerException if the iterator is null
      */
     public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(

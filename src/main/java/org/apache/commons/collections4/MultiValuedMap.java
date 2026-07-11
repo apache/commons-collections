@@ -66,7 +66,7 @@ public interface MultiValuedMap<K, V> {
      * {@link java.util.Map.Entry#setValue(Object) setValue}.
      * </p>
      *
-     * @return a map view of the mappings in this multivalued map
+     * @return A map view of the mappings in this multivalued map
      */
     Map<K, Collection<V>> asMap();
 
@@ -119,7 +119,7 @@ public interface MultiValuedMap<K, V> {
      * in the collection, and vice-versa.
      * </p>
      *
-     * @return a set view of the mappings contained in this map
+     * @return A set view of the mappings contained in this map
      */
     Collection<Entry<K, V>> entries();
 
@@ -169,7 +169,7 @@ public interface MultiValuedMap<K, V> {
      * the multiset.
      * </p>
      *
-     * @return a multiset view of the keys contained in this map
+     * @return A multiset view of the keys contained in this map
      */
     MultiSet<K> keys();
 
@@ -189,7 +189,7 @@ public interface MultiValuedMap<K, V> {
      * the {@code add} or {@code addAll} operations.
      * </p>
      *
-     * @return a set view of the keys contained in this map
+     * @return A set view of the keys contained in this map
      */
     Set<K> keySet();
 
@@ -200,7 +200,7 @@ public interface MultiValuedMap<K, V> {
      * need to access the entries collection or use {@code Map.Entry} objects.
      * </p>
      *
-     * @return a map iterator
+     * @return A map iterator
      */
     MapIterator<K, V> mapIterator();
 
@@ -344,7 +344,7 @@ public interface MultiValuedMap<K, V> {
      * of values from all keys.
      * </p>
      *
-     * @return a collection view of the values contained in this multivalued map
+     * @return A collection view of the values contained in this multivalued map
      */
     Collection<V> values();
 

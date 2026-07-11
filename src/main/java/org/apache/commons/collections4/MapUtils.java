@@ -179,7 +179,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map, possibly {@code null}
-     * @return an empty map if the argument is {@code null}
+     * @return An empty map if the argument is {@code null}
      */
     public static <K, V> Map<K, V> emptyIfNull(final Map<K, V> map) {
         return map == null ? Collections.<K, V>emptyMap() : map;
@@ -192,7 +192,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map whose size to fix, must not be null
-     * @return a fixed-size map backed by that map
+     * @return A fixed-size map backed by that map
      * @throws NullPointerException if the Map is null
      */
     public static <K, V> IterableMap<K, V> fixedSizeMap(final Map<K, V> map) {
@@ -206,7 +206,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map whose size to fix, must not be null
-     * @return a fixed-size map backed by that map
+     * @return A fixed-size map backed by that map
      * @throws NullPointerException if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> fixedSizeSortedMap(final SortedMap<K, V> map) {
@@ -1184,7 +1184,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to invert, must not be null
-     * @return a new HashMap containing the inverted data
+     * @return A new HashMap containing the inverted data
      * @throws NullPointerException if the map is null
      */
     public static <K, V> Map<V, K> invertMap(final Map<K, V> map) {
@@ -1286,7 +1286,7 @@ public class MapUtils {
      * @param <V> The value type
      * @param map the map to make lazy, must not be null
      * @param factory the factory for creating new objects, must not be null
-     * @return a lazy map backed by the given map
+     * @return A lazy map backed by the given map
      * @throws NullPointerException if the Map or Factory is null
      */
     public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map, final Factory<? extends V> factory) {
@@ -1328,7 +1328,7 @@ public class MapUtils {
      * @param <V> The value type
      * @param map the map to make lazy, must not be null
      * @param transformerFactory the factory for creating new objects, must not be null
-     * @return a lazy map backed by the given map
+     * @return A lazy map backed by the given map
      * @throws NullPointerException if the Map or Transformer is null
      */
     public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map,
@@ -1363,7 +1363,7 @@ public class MapUtils {
      * @param <V> The value type
      * @param map the map to make lazy, must not be null
      * @param factory the factory for creating new objects, must not be null
-     * @return a lazy map backed by the given map
+     * @return A lazy map backed by the given map
      * @throws NullPointerException if the SortedMap or Factory is null
      */
     public static <K, V> SortedMap<K, V> lazySortedMap(final SortedMap<K, V> map, final Factory<? extends V> factory) {
@@ -1404,7 +1404,7 @@ public class MapUtils {
      * @param <V> The value type
      * @param map the map to make lazy, must not be null
      * @param transformerFactory the factory for creating new objects, must not be null
-     * @return a lazy map backed by the given map
+     * @return A lazy map backed by the given map
      * @throws NullPointerException if the Map or Transformer is null
      */
     public static <K, V> SortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
@@ -1418,7 +1418,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to decorate
-     * @return a multi-value map backed by the given map which returns ArrayLists of values.
+     * @return A multi-value map backed by the given map which returns ArrayLists of values.
      * @see MultiValueMap
      * @since 3.2
      * @deprecated Since 4.1, use {@link MultiValuedMap} instead
@@ -1437,7 +1437,7 @@ public class MapUtils {
      * @param map the map to decorate
      * @param collectionClass the type of collections to return from the map (must contain public no-arg constructor and
      *        extend Collection)
-     * @return a multi-value map backed by the given map which returns collections of the specified type
+     * @return A multi-value map backed by the given map which returns collections of the specified type
      * @see MultiValueMap
      * @since 3.2
      * @deprecated Since 4.1, use {@link MultiValuedMap} instead
@@ -1457,7 +1457,7 @@ public class MapUtils {
      * @param <C> The collection class type
      * @param map the map to decorate
      * @param collectionFactory a factor which creates collection objects
-     * @return a multi-value map backed by the given map which returns collections created by the specified collection
+     * @return A multi-value map backed by the given map which returns collections created by the specified collection
      *         factory
      * @see MultiValueMap
      * @since 3.2
@@ -1479,7 +1479,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to order, must not be null
-     * @return an ordered map backed by the given map
+     * @return An ordered map backed by the given map
      * @throws NullPointerException if the Map is null
      */
     public static <K, V> OrderedMap<K, V> orderedMap(final Map<K, V> map) {
@@ -1570,7 +1570,7 @@ public class MapUtils {
      * @param map the map to predicate, must not be null
      * @param keyPred the predicate for keys, null means no check
      * @param valuePred the predicate for values, null means no check
-     * @return a predicated map backed by the given map
+     * @return A predicated map backed by the given map
      * @throws NullPointerException if the Map is null
      */
     public static <K, V> IterableMap<K, V> predicatedMap(final Map<K, V> map, final Predicate<? super K> keyPred,
@@ -1592,7 +1592,7 @@ public class MapUtils {
      * @param map the map to predicate, must not be null
      * @param keyPred the predicate for keys, null means no check
      * @param valuePred the predicate for values, null means no check
-     * @return a predicated map backed by the given map
+     * @return A predicated map backed by the given map
      * @throws NullPointerException if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> predicatedSortedMap(final SortedMap<K, V> map,
@@ -1750,7 +1750,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to synchronize, must not be null
-     * @return a synchronized map backed by the given map
+     * @return A synchronized map backed by the given map
      */
     public static <K, V> Map<K, V> synchronizedMap(final Map<K, V> map) {
         return Collections.synchronizedMap(map);
@@ -1778,7 +1778,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to synchronize, must not be null
-     * @return a synchronized map backed by the given map
+     * @return A synchronized map backed by the given map
      * @throws NullPointerException if the map is null
      */
     public static <K, V> SortedMap<K, V> synchronizedSortedMap(final SortedMap<K, V> map) {
@@ -1853,7 +1853,7 @@ public class MapUtils {
      * @param map the map to transform, must not be null, typically empty
      * @param keyTransformer the transformer for the map keys, null means no transformation
      * @param valueTransformer the transformer for the map values, null means no transformation
-     * @return a transformed map backed by the given map
+     * @return A transformed map backed by the given map
      * @throws NullPointerException if the Map is null
      */
     public static <K, V> IterableMap<K, V> transformedMap(final Map<K, V> map,
@@ -1882,7 +1882,7 @@ public class MapUtils {
      * @param map the map to transform, must not be null, typically empty
      * @param keyTransformer the transformer for the map keys, null means no transformation
      * @param valueTransformer the transformer for the map values, null means no transformation
-     * @return a transformed map backed by the given map
+     * @return A transformed map backed by the given map
      * @throws NullPointerException if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> transformedSortedMap(final SortedMap<K, V> map,
@@ -1900,7 +1900,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the map to make unmodifiable, must not be null
-     * @return an unmodifiable map backed by the given map
+     * @return An unmodifiable map backed by the given map
      * @throws NullPointerException if the map is null
      */
     public static <K, V> Map<K, V> unmodifiableMap(final Map<? extends K, ? extends V> map) {
@@ -1916,7 +1916,7 @@ public class MapUtils {
      * @param <K> The key type
      * @param <V> The value type
      * @param map the sorted map to make unmodifiable, must not be null
-     * @return an unmodifiable map backed by the given map
+     * @return An unmodifiable map backed by the given map
      * @throws NullPointerException if the map is null
      */
     public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, ? extends V> map) {

@@ -121,7 +121,7 @@ public class ListOrderedSet<E>
      *
      * @param <E> The element type
      * @param list the list to decorate, must not be null
-     * @return a new ordered set
+     * @return A new ordered set
      * @throws NullPointerException if list is null
      * @since 4.0
      */
@@ -141,7 +141,7 @@ public class ListOrderedSet<E>
      *
      * @param <E> The element type
      * @param set the set to decorate, must not be null
-     * @return a new ordered set
+     * @return A new ordered set
      * @throws NullPointerException if set is null
      * @since 4.0
      */
@@ -158,7 +158,7 @@ public class ListOrderedSet<E>
      * @param <E> The element type
      * @param set the set to decorate, must be empty and not null
      * @param list the list to decorate, must be empty and not null
-     * @return a new ordered set
+     * @return A new ordered set
      * @throws NullPointerException if set or list is null
      * @throws IllegalArgumentException if either the set or list is not empty
      * @since 4.0
@@ -281,7 +281,7 @@ public class ListOrderedSet<E>
     /**
      * Gets an unmodifiable view of the order of the Set.
      *
-     * @return an unmodifiable list view
+     * @return An unmodifiable list view
      */
     public List<E> asList() {
         return UnmodifiableList.unmodifiableList(setOrder);
@@ -408,7 +408,7 @@ public class ListOrderedSet<E>
      * that the decorated Set's toString is not used, so any custom toStrings
      * will be ignored.
      *
-     * @return a string representation of the ordered set
+     * @return A string representation of the ordered set
      */
     // Fortunately List.toString and Set.toString look the same
     @Override

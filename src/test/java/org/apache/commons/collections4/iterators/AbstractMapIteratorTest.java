@@ -58,7 +58,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      * Implement this method to return the confirmed map which contains the same
      * data as the iterator.
      *
-     * @return a full map which can be updated
+     * @return A full map which can be updated
      */
     public abstract Map<K, V> getConfirmedMap();
 
@@ -66,7 +66,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      * Implement this method to return the map which contains the same data as the
      * iterator.
      *
-     * @return a full map which can be updated
+     * @return A full map which can be updated
      */
     public abstract Map<K, V> getMap();
 
@@ -83,7 +83,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     /**
      * Implement this method to return a map iterator over an empty map.
      *
-     * @return an empty iterator
+     * @return An empty iterator
      */
     @Override
     public abstract MapIterator<K, V> makeEmptyIterator();
@@ -91,7 +91,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     /**
      * Implement this method to return a map iterator over a map with elements.
      *
-     * @return a full iterator
+     * @return A full iterator
      */
     @Override
     public abstract MapIterator<K, V> makeObject();

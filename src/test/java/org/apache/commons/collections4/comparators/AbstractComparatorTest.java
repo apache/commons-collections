@@ -61,7 +61,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     /**
      * Implements the abstract superclass method to return the comparator.
      *
-     * @return a full iterator
+     * @return A full iterator
      */
     @Override
     public abstract Comparator<T> makeObject();

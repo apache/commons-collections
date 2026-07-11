@@ -37,7 +37,7 @@ public interface IndexExtractor {
      * Creates an IndexExtractor from a {@code BitMapExtractor}.
      *
      * @param bitMapExtractor the {@code BitMapExtractor}
-     * @return a new {@code IndexExtractor}.
+     * @return A new {@code IndexExtractor}.
      */
     static IndexExtractor fromBitMapExtractor(final BitMapExtractor bitMapExtractor) {
         Objects.requireNonNull(bitMapExtractor, "bitMapExtractor");
@@ -67,7 +67,7 @@ public interface IndexExtractor {
      * Creates an IndexExtractor from an array of integers.
      *
      * @param values the index values
-     * @return an IndexExtractor that uses the values.
+     * @return An IndexExtractor that uses the values.
      */
     static IndexExtractor fromIndexArray(final int... values) {
         return new IndexExtractor() {

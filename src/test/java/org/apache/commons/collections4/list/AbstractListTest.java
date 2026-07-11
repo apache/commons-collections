@@ -377,7 +377,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns {@link #makeObject()}.
      *
-     * @return an empty list to be used for testing
+     * @return An empty list to be used for testing
      */
     @Override
     public abstract List<E> makeObject();

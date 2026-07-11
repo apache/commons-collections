@@ -161,7 +161,7 @@ public final class ArrayCountingBloomFilter implements CountingBloomFilter {
     /**
      * Creates a new instance of this {@link ArrayCountingBloomFilter} with the same properties as the current one.
      *
-     * @return a copy of this BloomFilter.
+     * @return A copy of this BloomFilter.
      */
     @Override
     public ArrayCountingBloomFilter copy() {

@@ -40,7 +40,7 @@ public class SortedPropertiesFactory extends AbstractPropertiesFactory<SortedPro
     /**
      * Subclasses override to provide customized properties instances.
      *
-     * @return a new Properties instance.
+     * @return A new Properties instance.
      */
     @Override
     protected SortedProperties createProperties() {

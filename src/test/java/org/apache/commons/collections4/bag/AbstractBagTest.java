@@ -149,7 +149,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the bag and the other collection views are still valid.
      *
-     * @return a {@link AbstractSetTest} instance for testing the bag's unique set
+     * @return A {@link AbstractSetTest} instance for testing the bag's unique set
      */
     public BulkTest bulkTestBagUniqueSet() {
         return new BagUniqueSetTest();
