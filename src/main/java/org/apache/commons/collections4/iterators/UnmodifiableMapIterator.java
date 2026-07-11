@@ -27,8 +27,8 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
- * @param <K> The type of keys
- * @param <V> The type of mapped values
+ * @param <K> The type of keys.
+ * @param <V> The type of mapped values.
  * @since 3.0
  */
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
@@ -36,11 +36,11 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param iterator  the iterator to decorate
-     * @return a new unmodifiable map iterator
-     * @throws NullPointerException if the iterator is null
+     * @param <K>  The key type.
+     * @param <V>  The value type.
+     * @param iterator  The iterator to decorate.
+     * @return A new unmodifiable map iterator.
+     * @throws NullPointerException If the iterator is null.
      */
     public static <K, V> MapIterator<K, V> unmodifiableMapIterator(
             final MapIterator<? extends K, ? extends V> iterator) {
