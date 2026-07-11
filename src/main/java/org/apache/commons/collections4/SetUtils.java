@@ -243,7 +243,7 @@ public class SetUtils {
      * @param <T> The element type
      * @see java.util.Set#hashCode()
      * @param set  the set to calculate the hash code for, may be null
-     * @return the hash code
+     * @return The hash code
      */
     public static <T> int hashCodeForSet(final Collection<T> set) {
         if (set == null) {

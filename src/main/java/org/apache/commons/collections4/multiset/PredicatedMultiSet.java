@@ -91,7 +91,7 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     /**
      * Gets the decorated multiset.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected MultiSet<E> decorated() {

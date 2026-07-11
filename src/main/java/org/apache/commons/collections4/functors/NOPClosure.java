@@ -39,7 +39,7 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
      * Factory returning the singleton instance.
      *
      * @param <E> The type that the closure acts on
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <E> Closure<E> nopClosure() {
@@ -65,7 +65,7 @@ public final class NOPClosure<T> implements Closure<T>, Serializable {
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

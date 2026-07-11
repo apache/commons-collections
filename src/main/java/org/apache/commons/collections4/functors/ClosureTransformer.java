@@ -39,7 +39,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the type of the object to transform
      * @param closure  the closure to call, not null
-     * @return the {@code closure} transformer
+     * @return The {@code closure} transformer
      * @throws NullPointerException if the closure is null
      */
     public static <T> Transformer<T, T> closureTransformer(final Closure<? super T> closure) {
@@ -62,7 +62,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Gets the closure.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getClosure() {
@@ -73,7 +73,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * Transforms the input to result by executing a closure.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public T transform(final T input) {

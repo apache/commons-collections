@@ -107,7 +107,7 @@ public class InstantiateFactory<T> implements Factory<T> {
     /**
      * Creates an object using the stored constructor.
      *
-     * @return the new object
+     * @return The new object
      */
     @Override
     public T create() {

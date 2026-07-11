@@ -39,7 +39,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
      *
      * @param <T> The type that the predicate queries
      * @param transformer  the transformer to decorate
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if the transformer is null
      */
     public static <T> Predicate<T> transformerPredicate(final Transformer<? super T, Boolean> transformer) {
@@ -62,7 +62,7 @@ public final class TransformerPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Gets the transformer.
      *
-     * @return the transformer
+     * @return The transformer
      * @since 3.1
      */
     public Transformer<? super T, Boolean> getTransformer() {

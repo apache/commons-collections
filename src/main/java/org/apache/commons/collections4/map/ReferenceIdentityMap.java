@@ -176,7 +176,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * </p>
      *
      * @param key  the key to get a hash code for
-     * @return the hash code
+     * @return The hash code
      */
     @Override
     protected int hash(final Object key) {
@@ -191,7 +191,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      *
      * @param key  the key to get a hash code for, may be null
      * @param value  the value to get a hash code for, may be null
-     * @return the hash code, as per the MapEntry specification
+     * @return The hash code, as per the MapEntry specification
      */
     @Override
     protected int hashEntry(final Object key, final Object value) {

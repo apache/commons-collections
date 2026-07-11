@@ -42,7 +42,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <I, O> Transformer<I, O> exceptionTransformer() {
@@ -58,7 +58,7 @@ public final class ExceptionTransformer<T, R> implements Transformer<T, R>, Seri
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

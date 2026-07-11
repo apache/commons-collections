@@ -74,7 +74,7 @@ public abstract class EditCommand<T> {
     /**
      * Gets the object associated with this command.
      *
-     * @return the object on which the command is applied
+     * @return The object on which the command is applied
      */
     protected T getObject() {
         return object;

@@ -60,7 +60,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * when multiple comparable comparators may be used in the same VM.
      *
      * @param <E>  the element type
-     * @return the singleton ComparableComparator
+     * @return The singleton ComparableComparator
      * @since 4.0
      */
     public static <E extends Comparable<? super E>> ComparableComparator<E> comparableComparator() {

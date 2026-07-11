@@ -38,7 +38,7 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
      * @param <T> The type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
-     * @return the {@code and} predicate
+     * @return The {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
@@ -68,7 +68,7 @@ public final class AndPredicate<T> extends AbstractPredicate<T> implements Predi
     /**
      * Gets the two predicates being decorated as an array.
      *
-     * @return the predicates
+     * @return The predicates
      * @since 3.1
      */
     @Override

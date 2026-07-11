@@ -42,7 +42,7 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
      * </p>
      *
      * @param key  the key to retrieve
-     * @return the {@code Set} of values, implementations should return an
+     * @return The {@code Set} of values, implementations should return an
      *   empty {@code Set} for no mapping
      * @throws NullPointerException if the key is null and null keys are invalid
      */
@@ -58,7 +58,7 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
      * </p>
      *
      * @param key  the key to remove values from
-     * @return the {@code Set} of values removed, implementations should
+     * @return The {@code Set} of values removed, implementations should
      *   return null for no mapping found, but may return an empty collection
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws NullPointerException if the key is null and null keys are invalid

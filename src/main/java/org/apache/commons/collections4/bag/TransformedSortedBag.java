@@ -119,7 +119,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
     /**
      * Gets the decorated bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     protected SortedBag<E> getSortedBag() {
         return (SortedBag<E>) decorated();

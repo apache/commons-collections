@@ -30,7 +30,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
-     * @return the cardinality of the {@code AND} of the filters.
+     * @return The cardinality of the {@code AND} of the filters.
      */
     public static int andCardinality(final BitMapExtractor first, final BitMapExtractor second) {
         return cardinality(first, second, (x, y) -> x & y);
@@ -40,7 +40,7 @@ public final class SetOperations {
      * Calculates the cardinality of a BitMapExtractor. By necessity this method will visit each bit map created by the bitMapExtractor.
      *
      * @param bitMapExtractor the extractor to calculate the cardinality for.
-     * @return the cardinality of the bit maps produced by the bitMapExtractor.
+     * @return The cardinality of the bit maps produced by the bitMapExtractor.
      */
     public static int cardinality(final BitMapExtractor bitMapExtractor) {
         final int[] cardinality = new int[1];
@@ -57,7 +57,7 @@ public final class SetOperations {
      * @param first  the first BitMapExtractor
      * @param second the second BitMapExtractor
      * @param op     a long binary operation on where x = {@code first} and y = {@code second} bitmap extractors.
-     * @return the calculated cardinality.
+     * @return The calculated cardinality.
      */
     private static int cardinality(final BitMapExtractor first, final BitMapExtractor second, final LongBinaryOperator op) {
         final int[] cardinality = new int[1];
@@ -77,7 +77,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
-     * @return the jaccard distance.
+     * @return The jaccard distance.
      */
     public static double cosineDistance(final BitMapExtractor first, final BitMapExtractor second) {
         return 1.0 - cosineSimilarity(first, second);
@@ -94,7 +94,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
-     * @return the Cosine similarity.
+     * @return The Cosine similarity.
      */
     public static double cosineSimilarity(final BitMapExtractor first, final BitMapExtractor second) {
         final int numerator = andCardinality(first, second);
@@ -117,7 +117,7 @@ public final class SetOperations {
      *
      * @param first  the first Bloom filter.
      * @param second the second Bloom filter.
-     * @return the Cosine similarity.
+     * @return The Cosine similarity.
      */
     public static double cosineSimilarity(final BloomFilter<?> first, final BloomFilter<?> second) {
         final int numerator = andCardinality(first, second);
@@ -131,7 +131,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
-     * @return the Hamming distance.
+     * @return The Hamming distance.
      */
     public static int hammingDistance(final BitMapExtractor first, final BitMapExtractor second) {
         return xorCardinality(first, second);
@@ -145,7 +145,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
-     * @return the Jaccard distance.
+     * @return The Jaccard distance.
      */
     public static double jaccardDistance(final BitMapExtractor first, final BitMapExtractor second) {
         return 1.0 - jaccardSimilarity(first, second);
@@ -159,7 +159,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor.
-     * @return the Jaccard similarity.
+     * @return The Jaccard similarity.
      */
     public static double jaccardSimilarity(final BitMapExtractor first, final BitMapExtractor second) {
         final int[] cardinality = new int[2];
@@ -177,7 +177,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
-     * @return the cardinality of the {@code OR} of the filters.
+     * @return The cardinality of the {@code OR} of the filters.
      */
     public static int orCardinality(final BitMapExtractor first, final BitMapExtractor second) {
         return cardinality(first, second, (x, y) -> x | y);
@@ -188,7 +188,7 @@ public final class SetOperations {
      *
      * @param first  the first BitMapExtractor.
      * @param second the second BitMapExtractor
-     * @return the cardinality of the {@code XOR} of the filters.
+     * @return The cardinality of the {@code XOR} of the filters.
      */
     public static int xorCardinality(final BitMapExtractor first, final BitMapExtractor second) {
         return cardinality(first, second, (x, y) -> x ^ y);

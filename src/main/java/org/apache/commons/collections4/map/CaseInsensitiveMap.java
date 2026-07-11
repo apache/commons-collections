@@ -137,7 +137,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * Returns {@link AbstractHashedMap#NULL} if key is null.
      *
      * @param key  the key convert
-     * @return the converted key
+     * @return The converted key
      */
     @Override
     protected Object convertKey(final Object key) {

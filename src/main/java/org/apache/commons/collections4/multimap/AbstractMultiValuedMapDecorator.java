@@ -86,7 +86,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
     /**
      * The decorated multivalued map.
      *
-     * @return the map to decorate
+     * @return The map to decorate
      */
     protected MultiValuedMap<K, V> decorated() {
         return map;

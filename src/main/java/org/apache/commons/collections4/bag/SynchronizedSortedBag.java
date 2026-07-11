@@ -94,7 +94,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     /**
      * Gets the bag being decorated.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     protected SortedBag<E> getSortedBag() {
         return (SortedBag<E>) decorated();

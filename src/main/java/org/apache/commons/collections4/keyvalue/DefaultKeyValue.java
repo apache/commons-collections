@@ -115,7 +115,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * Sets the key.
      *
      * @param key  the new key
-     * @return the old key
+     * @return The old key
      * @throws IllegalArgumentException if key is this object
      */
     @Override
@@ -130,7 +130,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     /**
      * Sets the value.
      *
-     * @return the old value of the value
+     * @return The old value of the value
      * @param value the new value
      * @throws IllegalArgumentException if value is this object
      */

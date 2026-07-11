@@ -43,7 +43,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     /**
      * Creates a sorted unique array of ints.
      * @param ary the array to sort and make unique
-     * @return the sorted unique array.
+     * @return The sorted unique array.
      */
     public static int[] unique(final int[] ary) {
         return Arrays.stream(ary).distinct().sorted().toArray();
@@ -52,7 +52,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     /**
      * Creates a BitSet of indices.
      * @param ary the array
-     * @return the set.
+     * @return The set.
      */
     public static BitSet uniqueSet(final int[] ary) {
         final BitSet bs = new BitSet();

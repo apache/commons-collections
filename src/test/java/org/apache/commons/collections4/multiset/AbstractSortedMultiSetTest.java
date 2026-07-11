@@ -35,7 +35,7 @@ public abstract class AbstractSortedMultiSetTest<T> extends AbstractMultiSetTest
     /**
      * Returns the {@link #collection} field cast to a {@link SortedMultiSet}.
      *
-     * @return the collection field as a SortedMultiSet
+     * @return The collection field as a SortedMultiSet
      */
     @Override
     public SortedMultiSet<T> getCollection() {

@@ -374,7 +374,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * oldest filter.
      *
      * @param depth the depth at which the desired filter is to be found.
-     * @return the filter.
+     * @return The filter.
      * @throws NoSuchElementException if depth is not in the range
      *                                [0,filters.size())
      */
@@ -389,7 +389,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * Gets the number of filters in the LayerManager.  In the default LayerManager implementation
      * there is always at least one layer.
      *
-     * @return the current depth.
+     * @return The current depth.
      */
     public final int getDepth() {
         return filters.size();
@@ -399,7 +399,7 @@ public class LayerManager<T extends BloomFilter<T>> implements BloomFilterExtrac
      * Gets the current target filter. If a new filter should be created based on
      * {@code extendCheck} it will be created before this method returns.
      *
-     * @return the current target filter after any extension.
+     * @return The current target filter after any extension.
      */
     public final T getTarget() {
         if (extendCheck.test(this)) {

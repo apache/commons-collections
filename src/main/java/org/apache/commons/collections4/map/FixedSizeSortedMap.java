@@ -108,7 +108,7 @@ public class FixedSizeSortedMap<K, V>
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected SortedMap<K, V> getSortedMap() {
         return (SortedMap<K, V>) map;

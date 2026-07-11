@@ -305,7 +305,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Gets the set mutator to be used for this CompositeSet.
      *
-     * @return the set mutator
+     * @return The set mutator
      */
     protected SetMutator<E> getMutator() {
         return mutator;

@@ -31,21 +31,21 @@ public interface SortedMultiSet<E> extends MultiSet<E> {
      * Returns the comparator associated with this sorted multiset, or null
      * if it uses its elements' natural ordering.
      *
-     * @return the comparator in use, or null if natural ordering
+     * @return The comparator in use, or null if natural ordering
      */
     Comparator<? super E> comparator();
 
     /**
      * Returns the first (lowest) member.
      *
-     * @return the first element in the sorted multiset
+     * @return The first element in the sorted multiset
      */
     E first();
 
     /**
      * Returns the last (highest) member.
      *
-     * @return the last element in the sorted multiset
+     * @return The last element in the sorted multiset
      */
     E last();
 

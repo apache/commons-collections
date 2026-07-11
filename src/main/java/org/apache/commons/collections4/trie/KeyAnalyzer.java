@@ -104,7 +104,7 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
      * @param other  the other key to use
      * @param otherOffsetInBits  the bit offset in the other key
      * @param otherLengthInBits  the maximum key length in bits for the other key
-     * @return the bit index where the key and other first differ
+     * @return The bit index where the key and other first differ
      */
     public abstract int bitIndex(K key, int offsetInBits, int lengthInBits,
                                  K other, int otherOffsetInBits, int otherLengthInBits);
@@ -113,7 +113,7 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
      * Returns the number of bits per element in the key.
      * This is only useful for variable-length keys, such as Strings.
      *
-     * @return the number of bits per element
+     * @return The number of bits per element
      */
     public abstract int bitsPerElement();
 
@@ -156,7 +156,7 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
      * Returns the length of the Key in bits.
      *
      * @param key  the key
-     * @return the bit length of the key
+     * @return The bit length of the key
      */
     public abstract int lengthInBits(K key);
 

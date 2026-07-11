@@ -41,7 +41,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
      *
      * @param <E> The type that the closure acts on
      * @param transformer  the transformer to call, null means nop
-     * @return the {@code transformer} closure
+     * @return The {@code transformer} closure
      */
     public static <E> Closure<E> transformerClosure(final Transformer<? super E, ?> transformer) {
         if (transformer == null) {
@@ -76,7 +76,7 @@ public class TransformerClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the transformer.
      *
-     * @return the transformer
+     * @return The transformer
      * @since 3.1
      */
     public Transformer<? super T, ?> getTransformer() {

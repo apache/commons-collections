@@ -81,7 +81,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * local data is changed.
      *
      * @param value  the new value
-     * @return the previous value
+     * @return The previous value
      */
     @Override
     public V setValue(final V value) { // NOPMD

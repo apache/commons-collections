@@ -258,7 +258,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @param key1  the first key
      * @param key2  the second key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     public V get(final Object key1, final Object key2) {
         final int hashCode = hash(key1, key2);
@@ -278,7 +278,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     public V get(final Object key1, final Object key2, final Object key3) {
         final int hashCode = hash(key1, key2, key3);
@@ -299,7 +299,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key2  the second key
      * @param key3  the third key
      * @param key4  the fourth key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     public V get(final Object key1, final Object key2, final Object key3, final Object key4) {
         final int hashCode = hash(key1, key2, key3, key4);
@@ -321,7 +321,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key3  the third key
      * @param key4  the fourth key
      * @param key5  the fifth key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     public V get(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
         final int hashCode = hash(key1, key2, key3, key4, key5);
@@ -340,7 +340,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @param key1  the first key
      * @param key2  the second key
-     * @return the hash code
+     * @return The hash code
      */
     protected int hash(final Object key1, final Object key2) {
         int h = 0;
@@ -363,7 +363,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
-     * @return the hash code
+     * @return The hash code
      */
     protected int hash(final Object key1, final Object key2, final Object key3) {
         int h = 0;
@@ -390,7 +390,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key2  the second key
      * @param key3  the third key
      * @param key4  the fourth key
-     * @return the hash code
+     * @return The hash code
      */
     protected int hash(final Object key1, final Object key2, final Object key3, final Object key4) {
         int h = 0;
@@ -421,7 +421,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key3  the third key
      * @param key4  the fourth key
      * @param key5  the fifth key
-     * @return the hash code
+     * @return The hash code
      */
     protected int hash(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
         int h = 0;
@@ -541,7 +541,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key4  the fourth key
      * @param key5  the fifth key
      * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
+     * @return The value previously mapped to this combined key, null if none
      */
     public V put(final K key1, final K key2, final K key3, final K key4, final K key5, final V value) {
         final int hashCode = hash(key1, key2, key3, key4, key5);
@@ -567,7 +567,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key3  the third key
      * @param key4  the fourth key
      * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
+     * @return The value previously mapped to this combined key, null if none
      */
     public V put(final K key1, final K key2, final K key3, final K key4, final V value) {
         final int hashCode = hash(key1, key2, key3, key4);
@@ -592,7 +592,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key2  the second key
      * @param key3  the third key
      * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
+     * @return The value previously mapped to this combined key, null if none
      */
     public V put(final K key1, final K key2, final K key3, final V value) {
         final int hashCode = hash(key1, key2, key3);
@@ -616,7 +616,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key1  the first key
      * @param key2  the second key
      * @param value  the value to store
-     * @return the value previously mapped to this combined key, null if none
+     * @return The value previously mapped to this combined key, null if none
      */
     public V put(final K key1, final K key2, final V value) {
         final int hashCode = hash(key1, key2);
@@ -640,7 +640,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @param key  the non-null MultiKey object
      * @param value  the value to store
-     * @return the previous value for the key
+     * @return The previous value for the key
      * @throws NullPointerException if the key is null
      * @throws ClassCastException if the key is not a MultiKey
      */
@@ -792,7 +792,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @param key1  the first key
      * @param key2  the second key
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      * @since 4.0 (previous name: remove(Object, Object))
      */
     public V removeMultiKey(final Object key1, final Object key2) {
@@ -818,7 +818,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      * @since 4.0 (previous name: remove(Object, Object, Object))
      */
     public V removeMultiKey(final Object key1, final Object key2, final Object key3) {
@@ -845,7 +845,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key2  the second key
      * @param key3  the third key
      * @param key4  the fourth key
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      * @since 4.0 (previous name: remove(Object, Object, Object, Object))
      */
     public V removeMultiKey(final Object key1, final Object key2, final Object key3, final Object key4) {
@@ -873,7 +873,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key3  the third key
      * @param key4  the fourth key
      * @param key5  the fifth key
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      * @since 4.0 (previous name: remove(Object, Object, Object, Object, Object))
      */
     public V removeMultiKey(final Object key1, final Object key2, final Object key3,

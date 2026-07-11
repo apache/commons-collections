@@ -104,7 +104,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Implement this method to return the object to test.
      *
-     * @return the object to test.
+     * @return The object to test.
      */
     public abstract Object makeObject();
 
@@ -125,7 +125,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Reads a Serialized or Externalized Object from disk. Useful for creating compatibility tests between different SCM versions of the same class
      *
      * @param path path to the serialized Object.
-     * @return the Object at the given path.
+     * @return The Object at the given path.
      * @throws IOException
      * @throws ClassNotFoundException
      */

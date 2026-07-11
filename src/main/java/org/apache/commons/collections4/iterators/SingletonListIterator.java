@@ -84,7 +84,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
      * <p>
      * This returns the single object if it hasn't been returned yet.
      *
-     * @return the single object
+     * @return The single object
      * @throws NoSuchElementException if the single object has already
      *    been returned
      */
@@ -114,7 +114,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
      * <p>
      * This returns the single object if it has been returned.
      *
-     * @return the single object
+     * @return The single object
      * @throws NoSuchElementException if the single object has not already
      *    been returned
      */

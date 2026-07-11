@@ -39,7 +39,7 @@ public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIter
     /**
      * Gets the previous <em>key</em> from the {@code Map}.
      *
-     * @return the previous key in the iteration
+     * @return The previous key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
     @Override

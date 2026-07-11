@@ -81,7 +81,7 @@ public abstract class AbstractMockPredicateTest<T> {
     /**
      * Gets the value which will be passed to the mock predicates.
      *
-     * @return the test value.
+     * @return The test value.
      */
     protected final T getTestValue() {
         return testValue;

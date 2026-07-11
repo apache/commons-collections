@@ -47,7 +47,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the object type
      * @param transformers  a collection of transformers to chain
-     * @return the {@code chained} transformer
+     * @return The {@code chained} transformer
      * @throws NullPointerException if the transformers collection is null
      * @throws NullPointerException if any transformer in the collection is null
      */
@@ -68,7 +68,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the object type
      * @param transformers  the transformers to chain, copied, no nulls
-     * @return the {@code chained} transformer
+     * @return The {@code chained} transformer
      * @throws NullPointerException if the transformers array is null
      * @throws NullPointerException if any transformer in the array is null
      */
@@ -117,7 +117,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * Transforms the input to result via each decorated transformer
      *
      * @param object  the input object passed to the first transformer
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public T transform(T object) {

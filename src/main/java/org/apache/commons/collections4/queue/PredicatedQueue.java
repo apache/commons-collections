@@ -78,7 +78,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
     /**
      * Gets the queue being decorated.
      *
-     * @return the decorated queue
+     * @return The decorated queue
      */
     @Override
     protected Queue<E> decorated() {
@@ -95,7 +95,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * the predicate.
      *
      * @param object  the object being added
-     * @return the result of adding to the underlying queue
+     * @return The result of adding to the underlying queue
      * @throws IllegalArgumentException if the add is invalid
      */
     @Override

@@ -58,7 +58,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param <C>            the collection type.
      * @param coll           the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
-     * @return the created {@link IndexedCollection}.
+     * @return The created {@link IndexedCollection}.
      */
     public static <K, C> IndexedCollection<K, C> nonUniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
         return new IndexedCollection<>(coll, keyTransformer, MultiValueMap.<K, C>multiValueMap(new HashMap<>()), false);
@@ -74,7 +74,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param <C>            the collection type.
      * @param coll           the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
-     * @return the created {@link IndexedCollection}.
+     * @return The created {@link IndexedCollection}.
      */
     public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
         return new IndexedCollection<>(coll, keyTransformer, MultiValueMap.<K, C>multiValueMap(new HashMap<>()), true);

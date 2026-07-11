@@ -622,7 +622,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Return a flag specifying the iteration behavior of the collection. This is used to change the assertions used by specific tests. The default
      * implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {
@@ -910,7 +910,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
      * Return a new, populated map. The mappings in the map should match the keys and values returned from {@link #getSampleKeys()} and
      * {@link #getSampleValues()}. The default implementation uses makeEmptyMap() and calls {@link #addSampleMappings} to add all the mappings to the map.
      *
-     * @return the map to be tested
+     * @return The map to be tested
      */
     public M makeFullMap() {
         final M m = makeObject();
@@ -921,7 +921,7 @@ public abstract class AbstractMapTest<M extends Map<K, V>, K, V> extends Abstrac
     /**
      * Return a new, empty {@link Map} to be used for testing.
      *
-     * @return the map to be tested
+     * @return The map to be tested
      */
     @Override
     public abstract M makeObject();

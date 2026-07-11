@@ -54,7 +54,7 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
     /**
      * Gets the iterator being decorated.
      *
-     * @return the decorated iterator
+     * @return The decorated iterator
      */
     protected OrderedMapIterator<K, V> getOrderedMapIterator() {
         return iterator;

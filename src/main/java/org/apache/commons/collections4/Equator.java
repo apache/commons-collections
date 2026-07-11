@@ -47,7 +47,7 @@ public interface Equator<T> {
      * of {@link HashedMap} that use an Equator for the key objects.
      *
      * @param o the object to calculate the hash for.
-     * @return the hash of the object.
+     * @return The hash of the object.
      */
     int hash(T o);
 }

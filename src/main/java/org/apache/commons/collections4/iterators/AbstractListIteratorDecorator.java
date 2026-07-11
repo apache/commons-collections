@@ -52,7 +52,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     /**
      * Gets the iterator being decorated.
      *
-     * @return the decorated iterator
+     * @return The decorated iterator
      */
     protected ListIterator<E> getListIterator() {
         return iterator;

@@ -39,7 +39,7 @@ public interface OrderedIterator<E> extends Iterator<E> {
     /**
      * Gets the previous element from the container.
      *
-     * @return the previous element in the iteration
+     * @return The previous element in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
     E previous();

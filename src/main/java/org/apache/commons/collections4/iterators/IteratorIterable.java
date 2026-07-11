@@ -126,7 +126,7 @@ public class IteratorIterable<E> implements Iterable<E> {
     /**
      * Gets the iterator wrapped by this iterable.
      *
-     * @return the iterator
+     * @return The iterator
      */
     @Override
     public Iterator<E> iterator() {

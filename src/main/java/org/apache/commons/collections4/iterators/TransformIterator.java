@@ -67,7 +67,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     /**
      * Gets the iterator this iterator is using.
      *
-     * @return the iterator.
+     * @return The iterator.
      */
     public Iterator<? extends I> getIterator() {
         return iterator;
@@ -76,7 +76,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     /**
      * Gets the transformer this iterator is using.
      *
-     * @return the transformer, may be null.
+     * @return The transformer, may be null.
      */
     public Transformer<? super I, ? extends O> getTransformer() {
         return transformer;
@@ -91,7 +91,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Gets the next object from the iteration, transforming it using the current transformer. If the transformer is null, no transformation occurs and the
      * object from the iterator is returned directly.
      *
-     * @return the next object.
+     * @return The next object.
      * @throws java.util.NoSuchElementException if there are no more elements.
      */
     @Override
@@ -126,7 +126,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Transforms the given object using the transformer. If the transformer is null, the original object is returned as-is.
      *
      * @param source the object to transform, may be null.
-     * @return the transformed object, the original object the transformer is null.
+     * @return The transformed object, the original object the transformer is null.
      */
     @SuppressWarnings("unchecked")
     protected O transform(final I source) {

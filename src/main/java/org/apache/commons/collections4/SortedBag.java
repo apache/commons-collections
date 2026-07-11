@@ -40,21 +40,21 @@ public interface SortedBag<E> extends Bag<E> {
      * Returns the comparator associated with this sorted set, or null
      * if it uses its elements' natural ordering.
      *
-     * @return the comparator in use, or null if natural ordering
+     * @return The comparator in use, or null if natural ordering
      */
     Comparator<? super E> comparator();
 
     /**
      * Returns the first (lowest) member.
      *
-     * @return the first element in the sorted bag
+     * @return The first element in the sorted bag
      */
     E first();
 
     /**
      * Returns the last (highest) member.
      *
-     * @return the last element in the sorted bag
+     * @return The last element in the sorted bag
      */
     E last();
 

@@ -39,7 +39,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      *
      * @param <T> The type that the predicate queries
      * @param object  the object to compare to
-     * @return the predicate
+     * @return The predicate
      */
     public static <T> Predicate<T> equalPredicate(final T object) {
         if (object == null) {
@@ -54,7 +54,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
      * @param <T> The type that the predicate queries
      * @param object  the object to compare to
      * @param equator  the equator to use for comparison
-     * @return the predicate
+     * @return The predicate
      * @since 4.0
      */
     public static <T> Predicate<T> equalPredicate(final T object, final Equator<T> equator) {
@@ -98,7 +98,7 @@ public final class EqualPredicate<T> extends AbstractPredicate<T> implements Ser
     /**
      * Gets the value.
      *
-     * @return the value
+     * @return The value
      * @since 3.1
      */
     public Object getValue() {

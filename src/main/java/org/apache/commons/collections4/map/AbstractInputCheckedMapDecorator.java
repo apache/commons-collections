@@ -174,7 +174,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * </p>
      *
      * @param value  the value to check
-     * @return the input value
+     * @return The input value
      * @throws UnsupportedOperationException if the map may not be changed by setValue
      * @throws IllegalArgumentException if the specified value is invalid
      * @throws ClassCastException if the class of the specified value is invalid

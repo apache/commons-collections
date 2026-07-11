@@ -51,7 +51,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     /**
      * Gets the underlying iterator.
      *
-     * @return the underlying iterator
+     * @return The underlying iterator
      */
     public Iterator<? extends E> getIterator() {
         return iterator;
@@ -70,7 +70,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     /**
      * Returns the next element from the underlying iterator.
      *
-     * @return the next element from the underlying iterator.
+     * @return The next element from the underlying iterator.
      * @throws java.util.NoSuchElementException if the underlying iterator has
      * no more elements
      */

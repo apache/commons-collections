@@ -118,7 +118,7 @@ public class InvokerTransformer<T, R> implements Transformer<T, R> {
      * Transforms the input to result by invoking a method on the input.
      *
      * @param input  the input object to transform
-     * @return the transformed result, null if null input
+     * @return The transformed result, null if null input
      */
     @Override
     @SuppressWarnings("unchecked")

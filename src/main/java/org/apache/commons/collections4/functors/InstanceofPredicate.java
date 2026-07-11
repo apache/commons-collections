@@ -36,7 +36,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
      * Creates the identity predicate.
      *
      * @param type  the type to check for, may not be null
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if the class is null
      */
     public static Predicate<Object> instanceOfPredicate(final Class<?> type) {
@@ -59,7 +59,7 @@ public final class InstanceofPredicate extends AbstractPredicate<Object> impleme
     /**
      * Gets the type to compare to.
      *
-     * @return the type
+     * @return The type
      * @since 3.1
      */
     public Class<?> getType() {

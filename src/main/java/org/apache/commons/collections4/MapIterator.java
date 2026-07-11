@@ -53,7 +53,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * Gets the current key, which is the key returned by the last call
      * to {@code next()}.
      *
-     * @return the current key
+     * @return The current key
      * @throws IllegalStateException if {@code next()} has not yet been called
      */
     K getKey();
@@ -62,7 +62,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * Gets the current value, which is the value associated with the last key
      * returned by {@code next()}.
      *
-     * @return the current value
+     * @return The current value
      * @throws IllegalStateException if {@code next()} has not yet been called
      */
     V getValue();
@@ -78,7 +78,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
     /**
      * Gets the next <em>key</em> from the {@code Map}.
      *
-     * @return the next key in the iteration
+     * @return The next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
     @Override
@@ -102,7 +102,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * Sets the value associated with the current key (optional operation).
      *
      * @param value  the new value
-     * @return the previous value
+     * @return The previous value
      * @throws UnsupportedOperationException if setValue is not supported by the map
      * @throws IllegalStateException if {@code next()} has not yet been called
      * @throws IllegalStateException if {@code remove()} has been called since the

@@ -157,7 +157,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     /**
      * Gets the decorated list.
      *
-     * @return the decorated list
+     * @return The decorated list
      */
     protected List<E> getList() {
         return (List<E>) decorated();

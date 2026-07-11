@@ -146,7 +146,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     /**
      * Returns the {@link #collection} field cast to a {@link MultiSet}.
      *
-     * @return the collection field as a MultiSet
+     * @return The collection field as a MultiSet
      */
     @Override
     public MultiSet<T> getCollection() {
@@ -184,7 +184,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     /**
      * Return a new, empty multiset to used for testing.
      *
-     * @return the multiset to be tested
+     * @return The multiset to be tested
      */
     @Override
     public abstract MultiSet<T> makeObject();

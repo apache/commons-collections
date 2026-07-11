@@ -98,7 +98,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * return an empty set in case the mapping is not present
      *
      * @param key  the key to retrieve
-     * @return the {@code Set} of values, will return an empty
+     * @return The {@code Set} of values, will return an empty
      *   {@code Set} for no mapping
      */
     @Override
@@ -119,7 +119,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * </p>
      *
      * @param key the key to remove values from
-     * @return the {@code Set} of values removed, will return an empty,
+     * @return The {@code Set} of values removed, will return an empty,
      *   unmodifiable set for no mapping found.
      */
     @Override

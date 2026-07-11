@@ -56,7 +56,7 @@ public abstract class AbstractBidiMapDecorator<K, V>
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     @Override
     protected BidiMap<K, V> decorated() {

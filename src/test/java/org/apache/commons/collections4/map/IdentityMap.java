@@ -140,7 +140,7 @@ public class IdentityMap<K, V>
      * @param hashCode  the hash code to use
      * @param key  the key to store
      * @param value  the value to store
-     * @return the newly created entry
+     * @return The newly created entry
      */
     @Override
     protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
@@ -153,7 +153,7 @@ public class IdentityMap<K, V>
      * This implementation uses the identity hash code.
      *
      * @param key  the key to get a hash code for
-     * @return the hash code
+     * @return The hash code
      */
     @Override
     protected int hash(final Object key) {

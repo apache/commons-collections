@@ -121,7 +121,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     /**
      * Returns the next element from a child iterator.
      *
-     * @return the next interleaved element
+     * @return The next interleaved element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
     @Override

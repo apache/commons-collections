@@ -715,7 +715,7 @@ public class IteratorUtils {
      * @param <E> The element type
      * @param iterator  the iterator to search, may be null
      * @param predicate  the predicate to use, must not be null
-     * @return the first element of the iterator which matches the predicate or null if none could be found
+     * @return The first element of the iterator which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      * @since 4.1
      */
@@ -733,7 +733,7 @@ public class IteratorUtils {
      * @param iterator     the iterator to search, may be null.
      * @param predicate    the predicate to use, must not be null.
      * @param defaultValue the default value, may be null.
-     * @return the first element of the iterator which matches the predicate or null if none could be found.
+     * @return The first element of the iterator which matches the predicate or null if none could be found.
      * @throws NullPointerException if predicate is null.
      */
     private static <E> E find(final Iterator<E> iterator, final Predicate<? super E> predicate, final E defaultValue) {
@@ -762,7 +762,7 @@ public class IteratorUtils {
      *
      * @param <E> The type of object in the {@link Iterator}
      * @param iterator the iterator to get a value from
-     * @return the first object
+     * @return The first object
      * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2
      */
@@ -797,7 +797,7 @@ public class IteratorUtils {
      * @param <E> The type of object the {@link Iterator} contains
      * @param iterator  the iterator to get the input from, may be null
      * @param closure  the closure to perform, may not be null
-     * @return the last element in the iterator, or null if iterator is null or empty
+     * @return The last element in the iterator, or null if iterator is null or empty
      * @throws NullPointerException if closure is null
      * @since 4.1
      */
@@ -825,7 +825,7 @@ public class IteratorUtils {
      * @param <E>      the type of object in the {@link Iterator}.
      * @param iterator the iterator to get a value from.
      * @param index    the index to get, 0-based.
-     * @return the object at the specified index.
+     * @return The object at the specified index.
      * @throws IndexOutOfBoundsException if the index is invalid.
      * @since 4.1
      */
@@ -845,7 +845,7 @@ public class IteratorUtils {
      * @param iterator        the iterator to get a value from
      * @param index           the index to get, 0-based.
      * @param defaultSupplier supplies a default value at an index.
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     static <E> E get(final Iterator<E> iterator, final int index, final IntFunction<E> defaultSupplier) {
@@ -938,7 +938,7 @@ public class IteratorUtils {
      * @param <E> The element type
      * @param iterator  the iterator to search, may be null
      * @param predicate  the predicate to use, may not be null
-     * @return the index of the first element which matches the predicate or -1 if none matches
+     * @return The index of the first element which matches the predicate or -1 if none matches
      * @throws NullPointerException if predicate is null
      * @since 4.1
      */
@@ -1212,7 +1212,7 @@ public class IteratorUtils {
      * </p>
      *
      * @param iterator  the iterator to check, may be null
-     * @return the number of elements contained in the iterator
+     * @return The number of elements contained in the iterator
      * @since 4.1
      */
     public static int size(final Iterator<?> iterator) {

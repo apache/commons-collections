@@ -79,7 +79,7 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
     /**
      * Gets the queue being decorated.
      *
-     * @return the decorated queue
+     * @return The decorated queue
      */
     @Override
     protected Queue<E> decorated() {

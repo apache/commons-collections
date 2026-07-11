@@ -59,7 +59,7 @@ public abstract class AbstractSortedMultiSetDecorator<E>
     /**
      * Gets the multiset being decorated.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected SortedMultiSet<E> decorated() {

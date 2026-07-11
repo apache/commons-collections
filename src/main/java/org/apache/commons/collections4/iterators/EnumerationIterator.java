@@ -72,7 +72,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     /**
      * Gets the underlying enumeration.
      *
-     * @return the underlying enumeration
+     * @return The underlying enumeration
      */
     public Enumeration<? extends E> getEnumeration() {
         return enumeration;
@@ -92,7 +92,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     /**
      * Returns the next object from the enumeration.
      *
-     * @return the next object from the enumeration
+     * @return The next object from the enumeration
      * @throws NullPointerException if the enumeration is null
      */
     @Override

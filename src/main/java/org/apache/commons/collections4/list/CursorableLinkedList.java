@@ -140,7 +140,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Gets the index of the next element to be returned.
          *
-         * @return the next index
+         * @return The next index
          */
         @Override
         public int nextIndex() {
@@ -388,7 +388,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      *
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
-     * @return the list iterator for the sublist
+     * @return The list iterator for the sublist
      */
     @Override
     protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {

@@ -57,7 +57,7 @@ public abstract class AbstractIndexExtractorTest {
         /**
          * Convert to an array.
          *
-         * @return the array
+         * @return The array
          */
         int[] toArray() {
             return Arrays.copyOf(data, size);
@@ -87,7 +87,7 @@ public abstract class AbstractIndexExtractorTest {
 
     /**
      * Gets the behavior of the {@link IndexExtractor#asIndexArray()} method.
-     * @return the behavior.
+     * @return The behavior.
      * @see #ORDERED
      * @see #DISTINCT
      */
@@ -103,7 +103,7 @@ public abstract class AbstractIndexExtractorTest {
     /**
      * Gets the behavior of the {@link IndexExtractor#processIndices(IntPredicate)} method.
      * By default returns the value of {@code getAsIndexArrayBehaviour()} method.
-     * @return the behavior.
+     * @return The behavior.
      * @see #ORDERED
      * @see #DISTINCT
      */

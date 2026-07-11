@@ -123,7 +123,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * a new one.
      *
      * @param value  value of the new node
-     * @return the newly created node
+     * @return The newly created node
      */
     @Override
     protected Node<E> createNode(final E value) {
@@ -138,7 +138,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Gets the maximum size of the cache.
      *
-     * @return the maximum cache size
+     * @return The maximum cache size
      */
     protected int getMaximumCacheSize() {
         return maximumCacheSize;

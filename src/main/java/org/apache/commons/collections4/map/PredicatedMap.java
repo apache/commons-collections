@@ -107,7 +107,7 @@ public class PredicatedMap<K, V>
      * Override to validate an object set into the map via {@code setValue}.
      *
      * @param value  the value to validate
-     * @return the value itself
+     * @return The value itself
      * @throws IllegalArgumentException if invalid
      * @since 3.1
      */

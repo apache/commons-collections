@@ -45,7 +45,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> The type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code one} predicate
+     * @return The {@code one} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
@@ -65,7 +65,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> The type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the {@code any} predicate
+     * @return The {@code any} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */

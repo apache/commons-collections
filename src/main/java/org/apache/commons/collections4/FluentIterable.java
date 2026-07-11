@@ -331,7 +331,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * up to the requested position.
      *
      * @param position  the position of the element to return
-     * @return the element
+     * @return The element
      * @throws IndexOutOfBoundsException if the provided position is outside the
      *   valid range of this iterable: [0, size)
      */
@@ -390,7 +390,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns the number of elements that are contained in this iterable.
      * In order to determine the size, an iterator needs to be traversed.
      *
-     * @return the size of this iterable
+     * @return The size of this iterable
      */
     public int size() {
         return IterableUtils.size(iterable);

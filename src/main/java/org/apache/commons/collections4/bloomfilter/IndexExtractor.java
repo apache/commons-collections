@@ -148,7 +148,7 @@ public interface IndexExtractor {
      * <p>The default implementation will filter the indices from this instance
      * and return them in ascending order.</p>
      *
-     * @return the IndexExtractor of unique values.
+     * @return The IndexExtractor of unique values.
      * @throws IndexOutOfBoundsException if any index is less than zero.
      */
     default IndexExtractor uniqueIndices() {

@@ -43,7 +43,7 @@ public class WhileClosure<T> implements Closure<T> {
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure to execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
-     * @return the {@code while} closure
+     * @return The {@code while} closure
      * @throws NullPointerException if the predicate or closure is null
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate,
@@ -93,7 +93,7 @@ public class WhileClosure<T> implements Closure<T> {
     /**
      * Gets the closure.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getClosure() {
@@ -103,7 +103,7 @@ public class WhileClosure<T> implements Closure<T> {
     /**
      * Gets the predicate in use.
      *
-     * @return the predicate
+     * @return The predicate
      * @since 3.1
      */
     public Predicate<? super T> getPredicate() {

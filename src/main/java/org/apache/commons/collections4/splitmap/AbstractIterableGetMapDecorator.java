@@ -68,7 +68,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected Map<K, V> decorated() {
         return map;

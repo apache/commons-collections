@@ -171,7 +171,7 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
     /**
      * Gets the {@link KeyAnalyzer} that constructed the {@link Trie}.
      *
-     * @return the {@link KeyAnalyzer} used by this {@link Trie}
+     * @return The {@link KeyAnalyzer} used by this {@link Trie}
      */
     protected KeyAnalyzer<? super K> getKeyAnalyzer() {
         return keyAnalyzer;

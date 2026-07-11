@@ -1655,7 +1655,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * {@code identityComparisons}.
      *
      * @param key The key to hash.
-     * @return the hash code of the given key.
+     * @return The hash code of the given key.
      * @throws NullPointerException if the specified key is null.
      */
     private int hashOf(final Object key) {
@@ -1734,7 +1734,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      *
      * @param key   key with which the specified value is to be associated
      * @param value value to be associated with the specified key
-     * @return the previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}
+     * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}
      * @throws NullPointerException if the specified key or value is null
      */
     @Override
@@ -1761,7 +1761,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     /**
      * {@inheritDoc}
      *
-     * @return the previous value associated with the specified key, or {@code null} if there was no mapping for the key
+     * @return The previous value associated with the specified key, or {@code null} if there was no mapping for the key
      * @throws NullPointerException if the specified key or value is null
      */
     @Override
@@ -1775,7 +1775,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * Removes the key (and its corresponding value) from this map. This method does nothing if the key is not in the map.
      *
      * @param key the key that needs to be removed
-     * @return the previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}
+     * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}
      * @throws NullPointerException if the specified key is null
      */
     @Override
@@ -1801,7 +1801,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
     /**
      * {@inheritDoc}
      *
-     * @return the previous value associated with the specified key, or {@code null} if there was no mapping for the key
+     * @return The previous value associated with the specified key, or {@code null} if there was no mapping for the key
      * @throws NullPointerException if the specified key or value is null
      */
     @Override
@@ -1828,7 +1828,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * Returns the segment that should be used for key with given hash
      *
      * @param hash the hash code for the key
-     * @return the segment
+     * @return The segment
      */
     private Segment<K, V> segmentFor(final int hash) {
         return segments[hash >>> segmentShift & segmentMask];
@@ -1838,7 +1838,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      * Returns the number of key-value mappings in this map. If the map contains more than {@code Integer.MAX_VALUE} elements, returns
      * {@code Integer.MAX_VALUE}.
      *
-     * @return the number of key-value mappings in this map
+     * @return The number of key-value mappings in this map
      */
     @Override
     public int size() {

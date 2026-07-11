@@ -67,7 +67,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
     /**
      * Gets the list being decorated.
      *
-     * @return the decorated list
+     * @return The decorated list
      */
     @Override
     protected List<E> decorated() {

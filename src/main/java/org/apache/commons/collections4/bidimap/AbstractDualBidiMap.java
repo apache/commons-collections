@@ -656,7 +656,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
      * @param inverseMap  this map, which is the inverse in the new map
-     * @return the bidi map
+     * @return The bidi map
      */
     protected abstract BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseMap);
 
@@ -665,7 +665,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Subclasses can override this to return iterators with different properties.
      *
      * @param iterator  the iterator to decorate
-     * @return the entrySet iterator
+     * @return The entrySet iterator
      */
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
         return new EntrySetIterator<>(iterator, this);
@@ -676,7 +676,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Subclasses can override this to return iterators with different properties.
      *
      * @param iterator  the iterator to decorate
-     * @return the keySet iterator
+     * @return The keySet iterator
      */
     protected Iterator<K> createKeySetIterator(final Iterator<K> iterator) {
         return new KeySetIterator<>(iterator, this);
@@ -687,7 +687,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Subclasses can override this to return iterators with different properties.
      *
      * @param iterator  the iterator to decorate
-     * @return the values iterator
+     * @return The values iterator
      */
     protected Iterator<V> createValuesIterator(final Iterator<V> iterator) {
         return new ValuesIterator<>(iterator, this);
@@ -703,7 +703,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * is thrown (as setValue cannot change the size of the map).
      * </p>
      *
-     * @return the entrySet view
+     * @return The entrySet view
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -753,7 +753,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Changes made on the view are reflected in the map.
      * The set supports remove and clear but not add.
      *
-     * @return the keySet view
+     * @return The keySet view
      */
     @Override
     public Set<K> keySet() {
@@ -832,7 +832,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * Changes made on the view are reflected in the map.
      * The set supports remove and clear but not add.
      *
-     * @return the values view
+     * @return The values view
      */
     @Override
     public Set<V> values() {

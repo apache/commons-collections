@@ -82,7 +82,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * element() or {@link #peek()} has been called after the most recent invocation of {@link #next()}
      * </p>
      *
-     * @return the next element from the iterator
+     * @return The next element from the iterator
      * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}
      */
     public E element() {
@@ -122,7 +122,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * {@link #element()} or {@link #peek()} has been called after the most recent invocation of {@link #next()}.
      * </p>
      *
-     * @return the next element from the iterator
+     * @return The next element from the iterator
      * @throws NoSuchElementException if the iterator is already exhausted according to {@link #hasNext()}.
      */
     @Override
@@ -151,7 +151,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * {@link #element()} or peek() has been called after the most recent invocation of {@link #next()}.
      * </p>
      *
-     * @return the next element from the iterator
+     * @return The next element from the iterator
      */
     public E peek() {
         fill();

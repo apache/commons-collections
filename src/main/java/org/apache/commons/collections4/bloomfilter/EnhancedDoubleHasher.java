@@ -119,7 +119,7 @@ public class EnhancedDoubleHasher implements Hasher {
     /**
      * Gets the increment value for the hash calculation.
      *
-     * @return the increment value for the hash calculation.
+     * @return The increment value for the hash calculation.
      */
     long getIncrement() {
         return increment;
@@ -128,7 +128,7 @@ public class EnhancedDoubleHasher implements Hasher {
     /**
      * Gets the initial value for the hash calculation.
      *
-     * @return the initial value for the hash calculation.
+     * @return The initial value for the hash calculation.
      */
     long getInitial() {
         return initial;

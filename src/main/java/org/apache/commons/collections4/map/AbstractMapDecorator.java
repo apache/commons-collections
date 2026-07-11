@@ -81,7 +81,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected Map<K, V> decorated() {
         return map;

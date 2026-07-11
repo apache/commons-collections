@@ -66,7 +66,7 @@ public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> imp
      * Throws UnsupportedOperationException.
      *
      * @param value  the new value
-     * @return the previous value
+     * @return The previous value
      * @throws UnsupportedOperationException always
      */
     @Override

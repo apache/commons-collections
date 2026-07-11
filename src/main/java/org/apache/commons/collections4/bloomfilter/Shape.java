@@ -103,7 +103,7 @@ public final class Shape {
      *
      * @param numberOfItems the number of items in the filter.
      * @param numberOfBits the number of bits in the filter.
-     * @return the optimal number of hash functions.
+     * @return The optimal number of hash functions.
      * @throws IllegalArgumentException if the calculated number of hash function is {@code < 1}
      */
     private static int calculateNumberOfHashFunctions(final int numberOfItems, final int numberOfBits) {
@@ -145,7 +145,7 @@ public final class Shape {
      * Checks number of bits is strictly positive.
      *
      * @param numberOfBits the number of bits
-     * @return the number of bits
+     * @return The number of bits
      * @throws IllegalArgumentException if the number of bits is {@code < 1}.
      */
     private static int checkNumberOfBits(final int numberOfBits) {
@@ -159,7 +159,7 @@ public final class Shape {
      * Checks number of hash functions is strictly positive.
      *
      * @param numberOfHashFunctions the number of hash functions
-     * @return the number of hash functions
+     * @return The number of hash functions
      * @throws IllegalArgumentException if the number of hash functions is {@code < 1}.
      */
     private static int checkNumberOfHashFunctions(final int numberOfHashFunctions) {
@@ -173,7 +173,7 @@ public final class Shape {
      * Checks number of items is strictly positive.
      *
      * @param numberOfItems the number of items
-     * @return the number of items
+     * @return The number of items
      * @throws IllegalArgumentException if the number of items is {@code < 1}.
      */
     private static int checkNumberOfItems(final int numberOfItems) {
@@ -420,7 +420,7 @@ public final class Shape {
      * Gets the number of bits in the Bloom filter.
      * This is also known as {@code m}.
      *
-     * @return the number of bits in the Bloom filter ({@code m}).
+     * @return The number of bits in the Bloom filter ({@code m}).
      */
     public int getNumberOfBits() {
         return numberOfBits;
@@ -430,7 +430,7 @@ public final class Shape {
      * Gets the number of hash functions used to construct the filter.
      * This is also known as {@code k}.
      *
-     * @return the number of hash functions used to construct the filter ({@code k}).
+     * @return The number of hash functions used to construct the filter ({@code k}).
      */
     public int getNumberOfHashFunctions() {
         return numberOfHashFunctions;
@@ -450,7 +450,7 @@ public final class Shape {
      * exceeded its expected number of items.</p>
      *
      * @param numberOfItems the number of items hashed into the Bloom filter.
-     * @return the probability of false positives.
+     * @return The probability of false positives.
      */
     public double getProbability(final int numberOfItems) {
         if (numberOfItems < 0) {

@@ -56,7 +56,7 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
     /**
      * Gets the set being decorated.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     @Override
     protected Set<E> decorated() {

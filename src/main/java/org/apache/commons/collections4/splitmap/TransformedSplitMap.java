@@ -123,7 +123,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * Override to transform the value when using {@code setValue}.
      *
      * @param value the value to transform
-     * @return the transformed value
+     * @return The transformed value
      */
     protected V checkSetValue(final U value) {
         return valueTransformer.apply(value);
@@ -164,7 +164,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * The transformer itself may throw an exception if necessary.
      *
      * @param object the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected K transformKey(final J object) {
         return keyTransformer.apply(object);
@@ -176,7 +176,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * The transformer itself may throw an exception if necessary.
      *
      * @param map the map to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     @SuppressWarnings("unchecked")
     protected Map<K, V> transformMap(final Map<? extends J, ? extends U> map) {
@@ -197,7 +197,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * The transformer itself may throw an exception if necessary.
      *
      * @param object the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected V transformValue(final U object) {
         return valueTransformer.apply(object);

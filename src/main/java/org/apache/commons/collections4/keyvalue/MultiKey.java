@@ -277,7 +277,7 @@ public class MultiKey<K> implements Serializable {
      * </p>
      *
      * @param index  the index to retrieve
-     * @return the key at the index
+     * @return The key at the index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.1
      */
@@ -292,7 +292,7 @@ public class MultiKey<K> implements Serializable {
      * If they are not then they must not be changed.
      * </p>
      *
-     * @return the individual keys
+     * @return The individual keys
      */
     public K[] getKeys() {
         return keys.clone();
@@ -307,7 +307,7 @@ public class MultiKey<K> implements Serializable {
      * themselves {@link Map Map} keys).
      * </p>
      *
-     * @return the hash code
+     * @return The hash code
      */
     @Override
     public int hashCode() {
@@ -319,7 +319,7 @@ public class MultiKey<K> implements Serializable {
      * keys might have change (hash codes based on the system hash code are
      * only stable for the same process).
      *
-     * @return the instance with recalculated hash code
+     * @return The instance with recalculated hash code
      */
     protected Object readResolve() {
         calculateHashCode(keys);
@@ -329,7 +329,7 @@ public class MultiKey<K> implements Serializable {
     /**
      * Gets the size of the list of keys.
      *
-     * @return the size of the list of keys
+     * @return The size of the list of keys
      * @since 3.1
      */
     public int size() {

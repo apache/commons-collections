@@ -48,7 +48,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
      * @param <I>  the input type
      * @param <O>  the output type
      * @param constantToReturn  the constant object to return each time in the factory
-     * @return the {@code constant} factory.
+     * @return The {@code constant} factory.
      */
     public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
         if (constantToReturn == null) {
@@ -99,7 +99,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
     /**
      * Gets the constant.
      *
-     * @return the constant
+     * @return The constant
      * @since 3.1
      */
     public R getConstant() {
@@ -122,7 +122,7 @@ public class ConstantTransformer<T, R> implements Transformer<T, R>, Serializabl
      * Transforms the input by ignoring it and returning the stored constant instead.
      *
      * @param input  the input object which is ignored
-     * @return the stored constant
+     * @return The stored constant
      */
     @Override
     public R transform(final T input) {

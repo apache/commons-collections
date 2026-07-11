@@ -43,7 +43,7 @@ public interface BoundedCollection<E> extends Collection<E> {
     /**
      * Gets the maximum size of the collection (the bound).
      *
-     * @return the maximum number of elements the collection can hold.
+     * @return The maximum number of elements the collection can hold.
      */
     int maxSize();
 

@@ -135,7 +135,7 @@ public class LazySortedMap<K, V> extends LazyMap<K, V> implements SortedMap<K, V
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected SortedMap<K, V> getSortedMap() {
         return (SortedMap<K, V>) map;

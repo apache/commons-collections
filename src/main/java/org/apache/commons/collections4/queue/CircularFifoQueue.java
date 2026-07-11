@@ -156,7 +156,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Decrements the internal index.
      *
      * @param index  the index to decrement
-     * @return the updated index
+     * @return The updated index
      */
     private int decrement(int index) {
         index--;
@@ -178,7 +178,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Gets the element at the specified position in this queue.
      *
      * @param index the position of the element in the queue
-     * @return the element at position {@code index}
+     * @return The element at position {@code index}
      * @throws NoSuchElementException if the requested position is outside the range [0, size)
      */
     public E get(final int index) {
@@ -197,7 +197,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Increments the internal index.
      *
      * @param index  the index to increment
-     * @return the updated index
+     * @return The updated index
      */
     private int increment(int index) {
         index++;
@@ -313,7 +313,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     /**
      * Gets the maximum size of the collection (the bound).
      *
-     * @return the maximum number of elements the collection can hold
+     * @return The maximum number of elements the collection can hold
      */
     @Override
     public int maxSize() {

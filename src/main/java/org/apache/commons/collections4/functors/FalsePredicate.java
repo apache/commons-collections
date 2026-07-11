@@ -39,7 +39,7 @@ public final class FalsePredicate<T> extends AbstractPredicate<T> implements Ser
      * Gets a typed instance.
      *
      * @param <T> The type that the predicate queries
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 4.0
      */
     public static <T> Predicate<T> falsePredicate() {
@@ -55,7 +55,7 @@ public final class FalsePredicate<T> extends AbstractPredicate<T> implements Ser
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

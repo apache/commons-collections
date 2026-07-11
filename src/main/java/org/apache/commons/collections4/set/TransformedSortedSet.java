@@ -117,7 +117,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     /**
      * Gets the decorated set.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     protected SortedSet<E> getSortedSet() {
         return (SortedSet<E>) decorated();

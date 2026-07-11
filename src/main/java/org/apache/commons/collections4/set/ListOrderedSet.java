@@ -297,7 +297,7 @@ public class ListOrderedSet<E>
      * Gets the element at the specified position in this ordered set.
      *
      * @param index the position of the element in the ordered {@link Set}.
-     * @return the element at position {@code index}
+     * @return The element at position {@code index}
      * @see List#get(int)
      */
     public E get(final int index) {
@@ -309,7 +309,7 @@ public class ListOrderedSet<E>
      * ordered set.
      *
      * @param object the element to search for
-     * @return the index of the first occurrence of the object, or {@code -1} if
+     * @return The index of the first occurrence of the object, or {@code -1} if
      *         this ordered set does not contain this object
      * @see List#indexOf(Object)
      */
@@ -327,7 +327,7 @@ public class ListOrderedSet<E>
      * Shifts any subsequent elements to the left.
      *
      * @param index the index of the element to be removed
-     * @return the element that has been remove from the ordered set
+     * @return The element that has been remove from the ordered set
      * @see List#remove(int)
      */
     public E remove(final int index) {

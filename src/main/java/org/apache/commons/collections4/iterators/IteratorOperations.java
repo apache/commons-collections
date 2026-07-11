@@ -37,7 +37,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
      * Adds the remaining elements in the iterator to an arbitrary {@link Collection}. This method consumes the iterator.
      *
      * @param collection The target collection to add elements to.
-     * @return the given {@code collection}.
+     * @return The given {@code collection}.
      * @param <C> A collection of objects of type {@code <E>}.
      */
     default <C extends Collection<E>> C addTo(final C collection) {
@@ -48,7 +48,7 @@ public interface IteratorOperations<E> extends Iterator<E> {
     /**
      * Returns the next item and removes it from the iterator.
      *
-     * @return the next item from the iterator.
+     * @return The next item from the iterator.
      */
     default E removeNext() {
         final E result = next();

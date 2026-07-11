@@ -79,7 +79,7 @@ public class SynchronizedSortedMultiSet<E> extends SynchronizedMultiSet<E> imple
     /**
      * Gets the multiset being decorated.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected SortedMultiSet<E> decorated() {

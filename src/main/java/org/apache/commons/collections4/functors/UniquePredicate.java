@@ -38,7 +38,7 @@ public final class UniquePredicate<T>  extends AbstractPredicate<T> implements S
      * Creates the predicate.
      *
      * @param <T> The type that the predicate queries
-     * @return the predicate
+     * @return The predicate
      * @throws IllegalArgumentException if the predicate is null
      */
     public static <T> Predicate<T> uniquePredicate() {

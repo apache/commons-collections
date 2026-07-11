@@ -309,7 +309,7 @@ public class SingletonMap<K, V>
      * Changes made via {@code setValue} affect this map.
      * To simply iterate through the entries, use {@link #mapIterator()}.
      *
-     * @return the entrySet view
+     * @return The entrySet view
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -342,7 +342,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the first (and only) key in the map.
      *
-     * @return the key
+     * @return The key
      */
     @Override
     public K firstKey() {
@@ -353,7 +353,7 @@ public class SingletonMap<K, V>
      * Gets the value mapped to the key specified.
      *
      * @param key  the key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     @Override
     public V get(final Object key) {
@@ -366,7 +366,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the key.
      *
-     * @return the key
+     * @return The key
      */
     @Override
     public K getKey() {
@@ -376,7 +376,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the value.
      *
-     * @return the value
+     * @return The value
      */
     @Override
     public V getValue() {
@@ -386,7 +386,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the standard Map hashCode.
      *
-     * @return the hash code defined in the Map interface
+     * @return The hash code defined in the Map interface
      */
     @Override
     public int hashCode() {
@@ -439,7 +439,7 @@ public class SingletonMap<K, V>
      * Changes made to the view affect this map.
      * To simply iterate through the keys, use {@link #mapIterator()}.
      *
-     * @return the keySet view
+     * @return The keySet view
      */
     @Override
     public Set<K> keySet() {
@@ -449,7 +449,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the last (and only) key in the map.
      *
-     * @return the key
+     * @return The key
      */
     @Override
     public K lastKey() {
@@ -505,7 +505,7 @@ public class SingletonMap<K, V>
      *
      * @param key  the key to set, must be the key of the map
      * @param value  the value to set
-     * @return the value previously mapped to this key, null if none
+     * @return The value previously mapped to this key, null if none
      * @throws IllegalArgumentException if the key does not match
      */
     @Override
@@ -559,7 +559,7 @@ public class SingletonMap<K, V>
      * Sets the value.
      *
      * @param value  the new value to set
-     * @return the old value
+     * @return The old value
      */
     public V setValue(final V value) {
         final V old = this.value;
@@ -570,7 +570,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the size of the map, always 1.
      *
-     * @return the size of 1
+     * @return The size of 1
      */
     @Override
     public int size() {
@@ -598,7 +598,7 @@ public class SingletonMap<K, V>
      * Changes made to the view affect this map.
      * To simply iterate through the values, use {@link #mapIterator()}.
      *
-     * @return the values view
+     * @return The values view
      */
     @Override
     public Collection<V> values() {

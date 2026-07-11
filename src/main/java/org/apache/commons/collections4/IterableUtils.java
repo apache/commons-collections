@@ -338,7 +338,7 @@ public class IterableUtils {
      * @param <E> The type of object the {@link Iterable} contains
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may not be null
-     * @return the number of matches for the predicate in the collection
+     * @return The number of matches for the predicate in the collection
      * @throws NullPointerException if predicate is null
      */
     public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
@@ -351,7 +351,7 @@ public class IterableUtils {
      *
      * @param <E> The type of elements in the collection.
      * @param iterable the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
+     * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
     public static <E> List<E> duplicateList(final Iterable<E> iterable) {
@@ -366,7 +366,7 @@ public class IterableUtils {
      *
      * @param <E> The type of elements in the collection.
      * @param iterable the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
+     * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
     public static <E> Set<E> duplicateSequencedSet(final Iterable<E> iterable) {
@@ -378,7 +378,7 @@ public class IterableUtils {
      *
      * @param <E> The type of elements in the collection.
      * @param iterable the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
+     * @return The set of duplicate elements, may be empty.
      * @since 4.5.0-M3
      */
     public static <E> Set<E> duplicateSet(final Iterable<E> iterable) {
@@ -392,7 +392,7 @@ public class IterableUtils {
      * @param <E> The type of elements in the Collection.
      * @param iterable the list to test, must not be null.
      * @param duplicates the list to test, must not be null.
-     * @return the set of duplicate elements, may be empty.
+     * @return The set of duplicate elements, may be empty.
      */
     static <C extends Collection<E>, E> C duplicateSet(final Iterable<E> iterable, final C duplicates) {
         final Set<E> set = new HashSet<>();
@@ -475,7 +475,7 @@ public class IterableUtils {
      * @param <E> The element type
      * @param iterable  the iterable to search, may be null
      * @param predicate  the predicate to use, must not be null
-     * @return the first element of the iterable which matches the predicate or null if none could be found
+     * @return The first element of the iterable which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      */
     public static <E> E find(final Iterable<E> iterable, final Predicate<? super E> predicate) {
@@ -494,7 +494,7 @@ public class IterableUtils {
      *
      * @param <T> The type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
-     * @return the first object
+     * @return The first object
      * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2
      */
@@ -523,7 +523,7 @@ public class IterableUtils {
      * @param <E> The type of object the {@link Iterable} contains
      * @param iterable  the iterable to get the input from, may be null
      * @param closure  the closure to perform, may not be null
-     * @return the last element in the iterable, or null if iterable is null or empty
+     * @return The last element in the iterable, or null if iterable is null or empty
      */
     public static <E> E forEachButLast(final Iterable<E> iterable, final Closure<? super E> closure) {
         return IteratorUtils.forEachButLast(emptyIteratorIfNull(iterable), closure);
@@ -536,7 +536,7 @@ public class IterableUtils {
      * @param <T> The element type of the object to find
      * @param iterable  the {@link Iterable} to search
      * @param obj  the object to find the cardinality of
-     * @return the number of occurrences of obj in iterable
+     * @return The number of occurrences of obj in iterable
      */
     @SuppressWarnings("deprecation") // Bag is supported until removed
     public static <E, T extends E> int frequency(final Iterable<E> iterable, final T obj) {
@@ -562,7 +562,7 @@ public class IterableUtils {
      * @param <T> The type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
      * @param index  the index to get
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public static <T> T get(final Iterable<T> iterable, final int index) {
@@ -583,7 +583,7 @@ public class IterableUtils {
      * @param <E> The element type
      * @param iterable  the iterable to search, may be null
      * @param predicate  the predicate to use, must not be null
-     * @return the index of the first element which matches the predicate or -1 if none matches
+     * @return The index of the first element which matches the predicate or -1 if none matches
      * @throws NullPointerException if predicate is null
      */
     public static <E> int indexOf(final Iterable<E> iterable, final Predicate<? super E> predicate) {
@@ -888,7 +888,7 @@ public class IterableUtils {
      * </p>
      *
      * @param iterable  the iterable to check, may be null
-     * @return the number of elements contained in the iterable
+     * @return The number of elements contained in the iterable
      */
     public static int size(final Iterable<?> iterable) {
         if (iterable == null) {
@@ -936,7 +936,7 @@ public class IterableUtils {
      *
      * @param <E>  The element type of the collections in the iterable.
      * @param iterable the iterable of collections to sum the sizes of, must not be null.
-     * @return the sum of the sizes of the collections in the iterable, capped at {@link Integer#MAX_VALUE}.
+     * @return The sum of the sizes of the collections in the iterable, capped at {@link Integer#MAX_VALUE}.
      * @since 4.6.0
      */
     public static <E> int sumSizesToInt(final Iterable<? extends Collection<E>> iterable) {
@@ -952,7 +952,7 @@ public class IterableUtils {
      * @param <C>           The type of the elements in the iterable.
      * @param iterable      The iterable of elements to sum the integer values of, must not be null.
      * @param toIntFunction The function to apply to each element to produce an integer value, must not be null.
-     * @return the sum of the integer values produced by applying the function to each element in the iterable, capped at {@link Integer#MAX_VALUE}.
+     * @return The sum of the integer values produced by applying the function to each element in the iterable, capped at {@link Integer#MAX_VALUE}.
      */
     private static <C extends Collection<?>> int sumToInt(final Iterable<C> iterable, final ToIntFunction<C> toIntFunction) {
         int size = 0;

@@ -131,7 +131,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Gets the iterator this iterator is using.
      *
-     * @return the iterator.
+     * @return The iterator.
      */
     public ListIterator<? extends E> getListIterator() {
         return iterator;
@@ -140,7 +140,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     /**
      * Gets the predicate this iterator is using.
      *
-     * @return the predicate.
+     * @return The predicate.
      */
     public Predicate<? super E> getPredicate() {
         return predicate;

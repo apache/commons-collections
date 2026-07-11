@@ -77,7 +77,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Gets the maximum allowable value for a cell count in this Counting filter.
      *
-     * @return the maximum allowable value for a cell count in this Counting filter.
+     * @return The maximum allowable value for a cell count in this Counting filter.
      */
     int getMaxCell();
 
@@ -85,7 +85,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * Determines the maximum number of times the BitMapExtractor could have been merged into this counting filter.
      *
      * @param bitMapExtractor the BitMapExtractor to provide the indices.
-     * @return the maximum number of times the BitMapExtractor could have been inserted.
+     * @return The maximum number of times the BitMapExtractor could have been inserted.
      */
     default int getMaxInsert(final BitMapExtractor bitMapExtractor) {
         if (!contains(bitMapExtractor)) {
@@ -106,7 +106,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * Determines the maximum number of times the Bloom filter could have been merged into this counting filter.
      *
      * @param bloomFilter the Bloom filter the check for.
-     * @return the maximum number of times the Bloom filter could have been inserted.
+     * @return The maximum number of times the Bloom filter could have been inserted.
      */
     default int getMaxInsert(final BloomFilter<?> bloomFilter) {
         return getMaxInsert((BitMapExtractor) bloomFilter);
@@ -116,7 +116,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * Determines the maximum number of times the Cell Extractor could have been added.
      *
      * @param cellExtractor the extractor of cells.
-     * @return the maximum number of times the CellExtractor could have been inserted.
+     * @return The maximum number of times the CellExtractor could have been inserted.
      */
     int getMaxInsert(CellExtractor cellExtractor);
 
@@ -124,7 +124,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * Determines the maximum number of times the Hasher could have been merged into this counting filter.
      *
      * @param hasher the Hasher to provide the indices.
-     * @return the maximum number of times the hasher could have been inserted.
+     * @return The maximum number of times the hasher could have been inserted.
      */
     default int getMaxInsert(final Hasher hasher) {
         return getMaxInsert(hasher.indices(getShape()));
@@ -137,7 +137,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
      * </p>
      *
      * @param indexExtractor the extractor to drive the count check.
-     * @return the maximum number of times the IndexExtractor could have been inserted.
+     * @return The maximum number of times the IndexExtractor could have been inserted.
      * @see #getMaxInsert(CellExtractor)
      */
     default int getMaxInsert(final IndexExtractor indexExtractor) {

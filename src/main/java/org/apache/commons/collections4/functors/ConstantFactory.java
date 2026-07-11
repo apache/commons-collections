@@ -45,7 +45,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      *
      * @param <T>  the type of the constant
      * @param constantToReturn  the constant object to return each time in the factory
-     * @return the {@code constant} factory.
+     * @return The {@code constant} factory.
      */
     public static <T> Factory<T> constantFactory(final T constantToReturn) {
         if (constantToReturn == null) {
@@ -70,7 +70,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     /**
      * Always return constant.
      *
-     * @return the stored constant value
+     * @return The stored constant value
      */
     @Override
     public T create() {
@@ -80,7 +80,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     /**
      * Gets the constant.
      *
-     * @return the constant
+     * @return The constant
      * @since 3.1
      */
     public T getConstant() {

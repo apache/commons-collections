@@ -362,7 +362,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * looking up its count in the underlying map.
      *
      * @param object the object to search for
-     * @return the number of occurrences of the object, zero if not found
+     * @return The number of occurrences of the object, zero if not found
      */
     @Override
     public int getCount(final Object object) {
@@ -377,7 +377,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Utility method for implementations to access the map that backs this bag.
      * Not intended for interactive use outside of subclasses.
      *
-     * @return the map being used by the Bag
+     * @return The map being used by the Bag
      */
     protected Map<E, MutableInteger> getMap() {
         return map;
@@ -390,7 +390,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}. This hash code
      * is compatible with the Set interface.
      *
-     * @return the hash code of the Bag
+     * @return The hash code of the Bag
      */
     @Override
     public int hashCode() {
@@ -417,7 +417,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Gets an iterator over the bag elements. Elements present in the Bag more
      * than once will be returned repeatedly.
      *
-     * @return the iterator
+     * @return The iterator
      */
     @Override
     public Iterator<E> iterator() {
@@ -623,7 +623,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Returns an unmodifiable view of the underlying map's key set.
      *
-     * @return the set of unique elements in this bag
+     * @return The set of unique elements in this bag
      */
     @Override
     public Set<E> uniqueSet() {

@@ -115,7 +115,7 @@ public class TransformedSortedMultiSet<E> extends TransformedMultiSet<E> impleme
     /**
      * Gets the decorated sorted multiset.
      *
-     * @return the decorated sorted multiset.
+     * @return The decorated sorted multiset.
      */
     protected SortedMultiSet<E> getSortedMultiSet() {
         return (SortedMultiSet<E>) decorated();

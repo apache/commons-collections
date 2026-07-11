@@ -59,7 +59,7 @@ public abstract class AbstractNavigableSetDecorator<E>
     /**
      * Gets the set being decorated.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     @Override
     protected NavigableSet<E> decorated() {

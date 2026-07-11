@@ -35,7 +35,7 @@ public interface PredicateDecorator<T> extends Predicate<T> {
      * The array may be the internal data structure of the predicate and thus
      * should not be altered.
      *
-     * @return the predicates being decorated
+     * @return The predicates being decorated
      */
     Predicate<? super T>[] getPredicates();
 

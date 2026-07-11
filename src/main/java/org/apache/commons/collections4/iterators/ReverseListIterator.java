@@ -103,7 +103,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * Gets the next element.
      * The next element is the previous in the list.
      *
-     * @return the next element in the iterator
+     * @return The next element in the iterator
      */
     @Override
     public E next() {
@@ -115,7 +115,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     /**
      * Gets the index of the next element.
      *
-     * @return the index of the next element in the iterator
+     * @return The index of the next element in the iterator
      */
     @Override
     public int nextIndex() {
@@ -126,7 +126,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * Gets the previous element.
      * The next element is the previous in the list.
      *
-     * @return the previous element in the iterator
+     * @return The previous element in the iterator
      */
     @Override
     public E previous() {
@@ -138,7 +138,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
     /**
      * Gets the index of the previous element.
      *
-     * @return the index of the previous element in the iterator
+     * @return The index of the previous element in the iterator
      */
     @Override
     public int previousIndex() {

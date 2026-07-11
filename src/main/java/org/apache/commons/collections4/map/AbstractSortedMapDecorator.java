@@ -119,7 +119,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     @Override
     protected SortedMap<K, V> decorated() {

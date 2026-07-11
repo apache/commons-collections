@@ -494,7 +494,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the entry set.
      *
-     * @return the entry set
+     * @return The entry set
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -523,7 +523,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Gets the value associated with the key.
      *
      * @param key  the key to retrieve
-     * @return the associated value
+     * @return The associated value
      */
     @Override
     public V get(final Object key) {
@@ -574,7 +574,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the hash code, as per the Map specification.
      *
-     * @return the hash code
+     * @return The hash code
      */
     @Override
     public int hashCode() {
@@ -606,7 +606,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the key set.
      *
-     * @return the key set
+     * @return The key set
      */
     @Override
     public Set<K> keySet() {
@@ -618,7 +618,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *
      * @param key  the key to use
      * @param value  the value to use
-     * @return the previous mapping for the key
+     * @return The previous mapping for the key
      */
     @Override
     public V put(final K key, final V value) {
@@ -677,7 +677,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Removes the specified key from the map.
      *
      * @param key  the key to remove
-     * @return the previous value at this key
+     * @return The previous value at this key
      */
     @Override
     public V remove(final Object key) {
@@ -712,7 +712,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * Gets the current size of the map.
      * The value is computed fresh each time the method is called.
      *
-     * @return the current size
+     * @return The current size
      */
     @Override
     public int size() {
@@ -729,7 +729,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /**
      * Gets the values.
      *
-     * @return the values
+     * @return The values
      */
     @Override
     public Collection<V> values() {

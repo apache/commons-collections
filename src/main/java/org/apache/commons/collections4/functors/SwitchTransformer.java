@@ -52,7 +52,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map  a map of predicates to transformers
-     * @return the {@code switch} transformer
+     * @return The {@code switch} transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
@@ -93,7 +93,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
-     * @return the {@code chained} transformer
+     * @return The {@code chained} transformer
      * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
@@ -157,7 +157,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
     /**
      * Gets the default transformer.
      *
-     * @return the default transformer
+     * @return The default transformer
      * @since 3.1
      */
     public Transformer<? super T, ? extends R> getDefaultTransformer() {
@@ -189,7 +189,7 @@ public class SwitchTransformer<T, R> implements Transformer<T, R>, Serializable 
      * predicate returns true.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public R transform(final T input) {

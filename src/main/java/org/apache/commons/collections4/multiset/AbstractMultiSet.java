@@ -306,7 +306,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * Creates an entry set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @return the entrySet iterator
+     * @return The entrySet iterator
      */
     protected abstract Iterator<Entry<E>> createEntrySetIterator();
 
@@ -323,7 +323,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * Creates a unique set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @return the uniqueSet iterator
+     * @return The uniqueSet iterator
      */
     protected Iterator<E> createUniqueSetIterator() {
         final Transformer<Entry<E>, E> transformer = Entry::getElement;
@@ -366,7 +366,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Returns an unmodifiable view of the entries of this multiset.
      *
-     * @return the set of entries in this multiset
+     * @return The set of entries in this multiset
      */
     @Override
     public Set<Entry<E>> entrySet() {
@@ -401,7 +401,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * iterating over its entrySet.
      *
      * @param object the object to search for
-     * @return the number of occurrences of the object, zero if not found
+     * @return The number of occurrences of the object, zero if not found
      */
     @Override
     public int getCount(final Object object) {
@@ -423,7 +423,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * Gets an iterator over the multiset elements. Elements present in the
      * MultiSet more than once will be returned repeatedly.
      *
-     * @return the iterator
+     * @return The iterator
      */
     @Override
     public Iterator<E> iterator() {
@@ -504,14 +504,14 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     /**
      * Returns the number of unique elements in this multiset.
      *
-     * @return the number of unique elements
+     * @return The number of unique elements
      */
     protected abstract int uniqueElements();
 
     /**
      * Returns a view of the unique elements of this multiset.
      *
-     * @return the set of unique elements in this multiset
+     * @return The set of unique elements in this multiset
      */
     @Override
     public Set<E> uniqueSet() {

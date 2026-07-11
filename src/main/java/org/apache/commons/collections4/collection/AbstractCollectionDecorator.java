@@ -112,7 +112,7 @@ public abstract class AbstractCollectionDecorator<E>
      * Gets the collection being decorated.
      * All access to the decorated collection goes via this method.
      *
-     * @return the decorated collection.
+     * @return The decorated collection.
      */
     protected Collection<E> decorated() {
         return collection;

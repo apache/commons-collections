@@ -253,7 +253,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * return an empty list in case the mapping is not present
      *
      * @param key  the key to retrieve
-     * @return the {@code List} of values, will return an empty {@link List} for no mapping
+     * @return The {@code List} of values, will return an empty {@link List} for no mapping
      */
     @Override
     public List<V> get(final K key) {
@@ -273,7 +273,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * </p>
      *
      * @param key  the key to remove values from
-     * @return the {@code List} of values removed, will return an empty,
+     * @return The {@code List} of values removed, will return an empty,
      *   unmodifiable list for no mapping found.
      */
     @Override

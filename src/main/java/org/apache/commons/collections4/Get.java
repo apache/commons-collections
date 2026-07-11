@@ -60,7 +60,7 @@ public interface Get<K, V> {
      * Gets a value at a given key.
      *
      * @param key the key whose associated value is to be returned
-     * @return the value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key
+     * @return The value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key
      * @see Map#get(Object)
      */
     V get(Object key);
@@ -85,7 +85,7 @@ public interface Get<K, V> {
      * Remove a key-value mappings.
      *
      * @param key key whose mapping is to be removed from the map
-     * @return the previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}.
+     * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}.
      * @see Map#remove(Object)
      */
     V remove(Object key);
@@ -93,7 +93,7 @@ public interface Get<K, V> {
     /**
      * Gets the number of key-value mappings in this map.
      *
-     * @return the number of key-value mappings in this map.
+     * @return The number of key-value mappings in this map.
      * @see Map#size()
      */
     int size();

@@ -81,7 +81,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     /**
      * Gets the key of this entry
      *
-     * @return the key
+     * @return The key
      */
     @Override
     public K getKey() {
@@ -91,7 +91,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     /**
      * Gets the value of this entry direct from the map.
      *
-     * @return the value
+     * @return The value
      */
     @Override
     public V getValue() {
@@ -116,7 +116,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * Sets the value associated with the key direct onto the map.
      *
      * @param value  the new value
-     * @return the old value
+     * @return The old value
      * @throws IllegalArgumentException if the value is set to this map entry
      */
     @Override

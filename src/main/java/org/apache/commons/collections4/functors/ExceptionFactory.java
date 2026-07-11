@@ -40,7 +40,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
      * Factory returning the singleton instance.
      *
      * @param <T>  the type the factory creates
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Factory<T> exceptionFactory() {
@@ -67,7 +67,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

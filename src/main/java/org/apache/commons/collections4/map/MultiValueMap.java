@@ -318,7 +318,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * </p>
      *
      * @param size  the collection size that is about to be added
-     * @return the new collection
+     * @return The new collection
      */
     protected Collection<V> createCollection(final int size) {
         return collectionFactory.get();
@@ -344,7 +344,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * This method is a convenience method to typecast the result of {@code get(key)}.
      *
      * @param key  the key to retrieve
-     * @return the collection mapped to the key, null if no mapping
+     * @return The collection mapped to the key, null if no mapping
      */
     @SuppressWarnings("unchecked")
     public Collection<V> getCollection(final Object key) {
@@ -362,7 +362,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * elements will result in a {@link UnsupportedOperationException}.
      * </p>
      *
-     * @return the iterator of all mappings in this map
+     * @return The iterator of all mappings in this map
      * @since 4.0
      */
     public Iterator<Entry<K, V>> iterator() {
@@ -401,7 +401,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Gets an iterator for the collection mapped to the specified key.
      *
      * @param key  the key to get an iterator for
-     * @return the iterator of the collection at the key, empty iterator if key not in map
+     * @return The iterator of the collection at the key, empty iterator if key not in map
      */
     public Iterator<V> iterator(final Object key) {
         if (!containsKey(key)) {
@@ -419,7 +419,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param key  the key to store against
      * @param value  the value to add to the collection at the key
-     * @return the value added if the map changed and null if the map did not change
+     * @return The value added if the map changed and null if the map did not change
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -543,7 +543,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Gets the size of the collection mapped to the specified key.
      *
      * @param key  the key to get size for
-     * @return the size of the collection at the key, zero if key not in map
+     * @return The size of the collection at the key, zero if key not in map
      */
     public int size(final Object key) {
         final Collection<V> coll = getCollection(key);
@@ -556,7 +556,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Gets the total size of the map by counting all the values.
      *
-     * @return the total size of the map counting all values
+     * @return The total size of the map counting all values
      */
     public int totalSize() {
         int total = 0;

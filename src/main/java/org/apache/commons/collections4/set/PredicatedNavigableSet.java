@@ -88,7 +88,7 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
     /**
      * Gets the navigable set being decorated.
      *
-     * @return the decorated navigable set
+     * @return The decorated navigable set
      */
     @Override
     protected NavigableSet<E> decorated() {

@@ -44,7 +44,7 @@ public interface Hasher {
      * </p>
      *
      * @param shape the shape of the desired Bloom filter.
-     * @return the iterator of integers
+     * @return The iterator of integers
      */
     IndexExtractor indices(Shape shape);
 }

@@ -40,7 +40,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
      * @param <T> The type that the predicate queries
      * @param transformer  the transformer to call
      * @param predicate  the predicate to call with the result of the transform
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if the transformer or the predicate is null
      */
     public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer,
@@ -71,7 +71,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Gets the predicate being decorated.
      *
-     * @return the predicate as the only element in an array
+     * @return The predicate as the only element in an array
      * @since 3.1
      */
     @Override
@@ -83,7 +83,7 @@ public final class TransformedPredicate<T> extends AbstractPredicate<T> implemen
     /**
      * Gets the transformer in use.
      *
-     * @return the transformer
+     * @return The transformer
      */
     public Transformer<? super T, ? extends T> getTransformer() {
         return iTransformer;

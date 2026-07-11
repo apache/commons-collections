@@ -63,14 +63,14 @@ public interface MultiSet<E> extends Collection<E> {
         /**
          * Gets the number of occurrences for the element of this entry.
          *
-         * @return the number of occurrences of the element.
+         * @return The number of occurrences of the element.
          */
         int getCount();
 
         /**
          * Gets the element corresponding to this entry.
          *
-         * @return the element corresponding to this entry.
+         * @return The element corresponding to this entry.
          */
         E getElement();
 
@@ -84,7 +84,7 @@ public interface MultiSet<E> extends Collection<E> {
          *      (e==null ? 0 : e.hashCode()) ^ noOccurrences)
          * </pre>
          *
-         * @return the hash code value for this multiset entry.
+         * @return The hash code value for this multiset entry.
          */
         @Override
         int hashCode();
@@ -112,7 +112,7 @@ public interface MultiSet<E> extends Collection<E> {
      *
      * @param object      the object to add.
      * @param occurrences the number of occurrences to add, may be zero, in which case no change is made to the multiset.
-     * @return the number of occurrences of the object in the multiset before this operation; possibly zero.
+     * @return The number of occurrences of the object in the multiset before this operation; possibly zero.
      * @throws IllegalArgumentException if occurrences is negative.
      */
     int add(E object, int occurrences);
@@ -132,7 +132,7 @@ public interface MultiSet<E> extends Collection<E> {
      * The returned set is backed by this multiset, so any change to either is immediately reflected in the other.
      * </p>
      *
-     * @return the Set of MultiSet entries.
+     * @return The Set of MultiSet entries.
      */
     Set<Entry<E>> entrySet();
 
@@ -152,7 +152,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Gets the number of occurrences of the given object currently in the MultiSet. If the object does not exist in the multiset, return 0.
      *
      * @param object the object to search for.
-     * @return the number of occurrences of the object, zero if not found.
+     * @return The number of occurrences of the object, zero if not found.
      */
     int getCount(Object object);
 
@@ -160,7 +160,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Gets a hash code for the MultiSet compatible with the definition of equals. The hash code is defined as the sum total of a hash code for each element.
      * The per element hash code is defined as {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}.
      *
-     * @return the hash code of the MultiSet.
+     * @return The hash code of the MultiSet.
      */
     @Override
     int hashCode();
@@ -194,7 +194,7 @@ public interface MultiSet<E> extends Collection<E> {
      *
      * @param object      the object to remove.
      * @param occurrences the number of occurrences to remove, may be zero, in which case no change is made to the multiset.
-     * @return the number of occurrences of the object in the multiset before the operation; possibly zero.
+     * @return The number of occurrences of the object in the multiset before the operation; possibly zero.
      * @throws IllegalArgumentException if occurrences is negative.
      */
     int remove(Object object, int occurrences);
@@ -225,7 +225,7 @@ public interface MultiSet<E> extends Collection<E> {
      *
      * @param object the object to update.
      * @param count  the number of occurrences of the object.
-     * @return the number of occurrences of the object before this operation, zero if the object was not contained in the multiset.
+     * @return The number of occurrences of the object before this operation, zero if the object was not contained in the multiset.
      * @throws IllegalArgumentException if count is negative.
      */
     int setCount(E object, int count);
@@ -233,7 +233,7 @@ public interface MultiSet<E> extends Collection<E> {
     /**
      * Returns the total number of items in the MultiSet.
      *
-     * @return the total size of the multiset.
+     * @return The total size of the multiset.
      */
     @Override
     int size();
@@ -248,7 +248,7 @@ public interface MultiSet<E> extends Collection<E> {
      * which case all occurrences of the element are removed from the backing multiset.
      * </p>
      *
-     * @return the Set of unique MultiSet elements.
+     * @return The Set of unique MultiSet elements.
      */
     Set<E> uniqueSet();
 }

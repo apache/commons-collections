@@ -83,7 +83,7 @@ public class MultiMapUtils {
      * @param <V> The value type.
      * @param map the {@link MultiValuedMap} to use.
      * @param key the key to look up.
-     * @return the Collection in the {@link MultiValuedMap}, or null if input map is null.
+     * @return The Collection in the {@link MultiValuedMap}, or null if input map is null.
      */
     public static <K, V> Collection<V> getCollection(final MultiValuedMap<K, V> map, final K key) {
         return map != null ? map.get(key) : null;

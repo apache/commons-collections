@@ -174,7 +174,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param index  the index to set
      * @param element  the object to set at the specified index
-     * @return the object previously at that index
+     * @return The object previously at that index
      * @throws UnsupportedOperationException if the underlying list doesn't implement set
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element

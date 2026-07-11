@@ -83,7 +83,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * </p>
      *
      * @param key  the key to retrieve
-     * @return the {@code Collection} of values, implementations should
+     * @return The {@code Collection} of values, implementations should
      *  return {@code null} for no mapping, but may return an empty collection
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
@@ -119,7 +119,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * </p>
      *
      * @param key  the key to remove values from
-     * @return the {@code Collection} of values removed, implementations should
+     * @return The {@code Collection} of values removed, implementations should
      *  return {@code null} for no mapping found, but may return an empty collection
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key is of an invalid type
@@ -157,7 +157,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * This cannot be mandated due to backwards compatibility of this interface.
      * </p>
      *
-     * @return the number of key-collection mappings in this map
+     * @return The number of key-collection mappings in this map
      */
     @Override
     int size();

@@ -66,7 +66,7 @@ public class PrototypeFactory {
         /**
          * Creates an object by calling the clone method.
          *
-         * @return the new object
+         * @return The new object
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -117,7 +117,7 @@ public class PrototypeFactory {
         /**
          * Creates an object using serialization.
          *
-         * @return the new object
+         * @return The new object
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -167,7 +167,7 @@ public class PrototypeFactory {
      *
      * @param <T>  the type the factory creates
      * @param prototype  the object to clone each time in the factory
-     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * @return The {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */

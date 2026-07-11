@@ -108,7 +108,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     /**
      * Gets the decorated navigable set.
      *
-     * @return the decorated navigable set
+     * @return The decorated navigable set
      */
     @Override
     protected NavigableSet<E> decorated() {

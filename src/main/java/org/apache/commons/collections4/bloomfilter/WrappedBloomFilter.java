@@ -108,7 +108,7 @@ public abstract class WrappedBloomFilter<T extends WrappedBloomFilter<T, W>, W e
     /**
      * Gets the wrapped BloomFilter.
      *
-     * @return the wrapped BloomFilter.
+     * @return The wrapped BloomFilter.
      */
     protected W getWrapped() {
         return wrapped;

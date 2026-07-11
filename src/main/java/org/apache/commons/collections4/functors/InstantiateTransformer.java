@@ -105,7 +105,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * Transforms the input Class object to a result by instantiation.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public T transform(final Class<? extends T> input) {

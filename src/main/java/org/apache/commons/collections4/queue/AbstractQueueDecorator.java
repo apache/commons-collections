@@ -61,7 +61,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     /**
      * Gets the queue being decorated.
      *
-     * @return the decorated queue
+     * @return The decorated queue
      */
     @Override
     protected Queue<E> decorated() {

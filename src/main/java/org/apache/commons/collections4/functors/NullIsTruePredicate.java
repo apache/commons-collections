@@ -37,7 +37,7 @@ public final class NullIsTruePredicate<T> extends AbstractPredicate<T> implement
      *
      * @param <T> The type that the predicate queries
      * @param predicate  the predicate to decorate, not null
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate) {
@@ -60,7 +60,7 @@ public final class NullIsTruePredicate<T> extends AbstractPredicate<T> implement
     /**
      * Gets the predicate being decorated.
      *
-     * @return the predicate as the only element in an array
+     * @return The predicate as the only element in an array
      * @since 3.1
      */
     @Override

@@ -47,7 +47,7 @@ class DefaultBitMapExtractorTest extends AbstractBitMapExtractorTest {
     /**
      * Generates an array of random long values.
      * @param size the number of values to generate
-     * @return the array of random values.
+     * @return The array of random values.
      */
     static long[] generateLongArray(final int size) {
         return ThreadLocalRandom.current().longs(size).toArray();

@@ -126,7 +126,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Gets the collection being decorated.
      *
-     * @return the decorated collection
+     * @return The decorated collection
      */
     protected Collection<E> decorated() {
         return collection;

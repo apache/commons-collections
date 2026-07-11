@@ -56,7 +56,7 @@ public class EnumerationUtils {
      * @param e  the enumeration to get a value from
      * @param index  the index to get
      * @param <T> The type of object in the {@link Enumeration}
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      * @since 4.1

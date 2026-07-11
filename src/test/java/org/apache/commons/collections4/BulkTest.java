@@ -79,7 +79,7 @@ public class BulkTest {
     /**
      * Gets the name of the simple test method of this {@code BulkTest}.
      *
-     * @return the name of the simple test method of this {@code BulkTest}.
+     * @return The name of the simple test method of this {@code BulkTest}.
      */
     public String getName() {
         return name;
@@ -88,7 +88,7 @@ public class BulkTest {
     /**
      * Gets the display name of this {@code BulkTest}.
      *
-     * @return the display name of this {@code BulkTest}.
+     * @return The display name of this {@code BulkTest}.
      */
     @Override
     public String toString() {

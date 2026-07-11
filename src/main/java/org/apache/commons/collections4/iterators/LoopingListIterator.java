@@ -124,7 +124,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * If at the end of the list, returns the first element.
      * </p>
      *
-     * @return the object after the last element returned
+     * @return The object after the last element returned
      * @throws NoSuchElementException if there are no elements in the list
      */
     @Override
@@ -148,7 +148,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * the list.
      * </p>
      *
-     * @return the index of the element that would be returned if next() were called
+     * @return The index of the element that would be returned if next() were called
      * @throws NoSuchElementException if there are no elements in the list
      */
     @Override
@@ -170,7 +170,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * that in this case, traversal to find that element takes linear time.
      * </p>
      *
-     * @return the object before the last element returned
+     * @return The object before the last element returned
      * @throws NoSuchElementException if there are no elements in the list
      */
     @Override
@@ -199,7 +199,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * returned, signifying the end of the list.
      * </p>
      *
-     * @return the index of the element that would be returned if previous() were called
+     * @return The index of the element that would be returned if previous() were called
      * @throws NoSuchElementException if there are no elements in the list
      */
     @Override
@@ -268,7 +268,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
     /**
      * Gets the size of the list underlying the iterator.
      *
-     * @return the current list size
+     * @return The current list size
      */
     public int size() {
         return list.size();

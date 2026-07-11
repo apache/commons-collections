@@ -78,7 +78,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
     /**
      * Gets the iterator this iterator is using.
      *
-     * @return the underlying iterator.
+     * @return The underlying iterator.
      */
     public Iterator<? extends E> getIterator() {
         return iterator;
@@ -87,7 +87,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
     /**
      * Gets the predicate this iterator is using.
      *
-     * @return the filtering predicate.
+     * @return The filtering predicate.
      */
     public Predicate<? super E> getPredicate() {
         return predicate;
@@ -108,7 +108,7 @@ public class FilterIterator<E> implements IteratorOperations<E> {
     /**
      * Returns the next object that matches the predicate.
      *
-     * @return the next object which matches the given predicate
+     * @return The next object which matches the given predicate
      * @throws NullPointerException if either the iterator or predicate are null
      * @throws NoSuchElementException if there are no more elements that
      *  match the predicate

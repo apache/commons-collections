@@ -179,7 +179,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Creates a Bloom filter from a BitMapExtractor.
      *
      * @param bitMapExtractor the BitMapExtractor to create the filter from.
-     * @return the BloomFilter.
+     * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final BitMapExtractor bitMapExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
@@ -191,7 +191,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Creates a Bloom filter from a Hasher.
      *
      * @param hasher the hasher to create the filter from.
-     * @return the BloomFilter.
+     * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final Hasher hasher) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
@@ -203,7 +203,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Creates a Bloom filter from an IndexExtractor.
      *
      * @param indexExtractor the IndexExtractor to create the filter from.
-     * @return the BloomFilter.
+     * @return The BloomFilter.
      */
     private SimpleBloomFilter createFilter(final IndexExtractor indexExtractor) {
         final SimpleBloomFilter bf = new SimpleBloomFilter(shape);
@@ -275,7 +275,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Create a standard (non-layered) Bloom filter by merging all of the layers. If the filter is empty this method will return an empty Bloom filter.
      *
-     * @return the merged bloom filter.
+     * @return The merged bloom filter.
      */
     @Override
     public SimpleBloomFilter flatten() {
@@ -288,7 +288,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
      * Gets the Bloom filter at the specified depth
      *
      * @param depth the depth of the filter to return.
-     * @return the Bloom filter at the specified depth.
+     * @return The Bloom filter at the specified depth.
      * @throws NoSuchElementException if depth is not in the range [0,getDepth())
      */
     public T get(final int depth) {
@@ -298,7 +298,7 @@ public class LayeredBloomFilter<T extends BloomFilter<T>> implements BloomFilter
     /**
      * Gets the depth of the deepest layer. The minimum value returned by this method is 1.
      *
-     * @return the depth of the deepest layer.
+     * @return The depth of the deepest layer.
      */
     public final int getDepth() {
         return layerManager.getDepth();

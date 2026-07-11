@@ -226,7 +226,7 @@ public class SequencesComparator<T> {
      * @param diag  the value of the diagonal of the snake
      * @param end1  the value of the end of the first sequence to be compared
      * @param end2  the value of the end of the second sequence to be compared
-     * @return the snake built
+     * @return The snake built
      */
     private Snake buildSnake(final int start, final int diag, final int end1, final int end2) {
         int end = start;
@@ -252,7 +252,7 @@ public class SequencesComparator<T> {
      * @param end1  the end of the first sequence to be compared
      * @param start2  the start of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
-     * @return the middle snake
+     * @return The middle snake
      */
     private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2) {
         // Myers Algorithm
@@ -331,7 +331,7 @@ public class SequencesComparator<T> {
      * be important if subclassing is used for some elements in the first
      * sequence and the {@code equals} method is specialized.
      *
-     * @return the edit script resulting from the comparison of the two
+     * @return The edit script resulting from the comparison of the two
      *         sequences
      */
     public EditScript<T> getScript() {

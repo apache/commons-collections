@@ -1435,7 +1435,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * This is implemented by going always to the left until we encounter a valid uplink. That uplink is the first key.
      * </p>
      *
-     * @return the first entry the {@link Trie} is storing.
+     * @return The first entry the {@link Trie} is storing.
      * @since 4.6.0
      */
     public TrieEntry<K, V> firstEntry() {
@@ -1722,7 +1722,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * This is implemented by going always to the right until we encounter a valid uplink. That uplink is the last key.
      * </p>
      *
-     * @return the last entry the {@link Trie} is storing.
+     * @return The last entry the {@link Trie} is storing.
      * @since 4.6.0
      */
     public TrieEntry<K, V> lastEntry() {
@@ -2279,7 +2279,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
+     * @return The {@link Entry} whose key is closest in a bitwise XOR metric
      *   to the provided key
      */
     public Map.Entry<K, V> select(final K key) {
@@ -2308,7 +2308,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the key that is closest in a bitwise XOR metric to the provided key
+     * @return The key that is closest in a bitwise XOR metric to the provided key
      */
     public K selectKey(final K key) {
         final Map.Entry<K, V> entry = select(key);
@@ -2360,7 +2360,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the value whose key is closest in a bitwise XOR metric
+     * @return The value whose key is closest in a bitwise XOR metric
      * to the provided key
      */
     public V selectValue(final K key) {

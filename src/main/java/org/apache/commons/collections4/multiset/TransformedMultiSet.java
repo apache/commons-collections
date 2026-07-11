@@ -126,7 +126,7 @@ public class TransformedMultiSet<E> extends TransformedCollection<E> implements 
     /**
      * Gets the decorated multiset.
      *
-     * @return the decorated multiset.
+     * @return The decorated multiset.
      */
     protected MultiSet<E> getMultiSet() {
         return (MultiSet<E>) decorated();

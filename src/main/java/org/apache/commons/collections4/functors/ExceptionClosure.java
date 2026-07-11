@@ -40,7 +40,7 @@ public final class ExceptionClosure<T> implements Closure<T>, Serializable {
      * Factory returning the singleton instance.
      *
      * @param <T> The type of the input to the operation.
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Closure<T> exceptionClosure() {
@@ -67,7 +67,7 @@ public final class ExceptionClosure<T> implements Closure<T>, Serializable {
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

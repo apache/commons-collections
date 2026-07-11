@@ -61,7 +61,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     protected Map.Entry<K, V> getMapEntry() {
         return entry;

@@ -39,7 +39,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * Factory returning the singleton instance.
      *
      * @param <T>  the input type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     @SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;
@@ -66,7 +66,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * Transforms the input to result by calling {@code String.valueOf}.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public String transform(final T input) {

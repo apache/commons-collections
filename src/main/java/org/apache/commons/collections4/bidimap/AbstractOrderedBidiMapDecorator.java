@@ -54,7 +54,7 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
     /**
      * Gets the map being decorated.
      *
-     * @return the decorated map
+     * @return The decorated map
      */
     @Override
     protected OrderedBidiMap<K, V> decorated() {

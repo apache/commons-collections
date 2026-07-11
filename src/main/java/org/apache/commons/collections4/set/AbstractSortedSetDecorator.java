@@ -62,7 +62,7 @@ public abstract class AbstractSortedSetDecorator<E>
     /**
      * Gets the set being decorated.
      *
-     * @return the decorated set
+     * @return The decorated set
      */
     @Override
     protected SortedSet<E> decorated() {

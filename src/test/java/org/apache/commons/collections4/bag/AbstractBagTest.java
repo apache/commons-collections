@@ -158,7 +158,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     /**
      * Returns the {@link #collection} field cast to a {@link Bag}.
      *
-     * @return the collection field as a Bag
+     * @return The collection field as a Bag
      */
     @Override
     public Bag<T> getCollection() {
@@ -196,7 +196,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     /**
      * Return a new, empty bag to used for testing.
      *
-     * @return the bag to be tested
+     * @return The bag to be tested
      */
     @Override
     public abstract Bag<T> makeObject();

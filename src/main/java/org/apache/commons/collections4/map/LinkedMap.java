@@ -287,7 +287,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Gets the key at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the key at the specified index
+     * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public K get(final int index) {
@@ -298,7 +298,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Gets the value at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the value at the specified index
+     * @return The value at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public V getValue(final int index) {
@@ -309,7 +309,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Gets the index of the specified key.
      *
      * @param key  the key to find the index of
-     * @return the index, or -1 if not found
+     * @return The index, or -1 if not found
      */
     public int indexOf(Object key) {
         key = convertKey(key);
@@ -338,7 +338,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Removes the element at the specified index.
      *
      * @param index  the index of the object to remove
-     * @return the previous value corresponding the {@code key},
+     * @return The previous value corresponding the {@code key},
      *  or {@code null} if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */

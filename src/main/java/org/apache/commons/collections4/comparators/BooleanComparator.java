@@ -71,7 +71,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * virtual machine.
      * </p>
      *
-     * @return the false first singleton BooleanComparator
+     * @return The false first singleton BooleanComparator
      */
     public static BooleanComparator getFalseFirstComparator() {
         return FALSE_FIRST;
@@ -88,7 +88,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * virtual machine.
      * </p>
      *
-     * @return the true first singleton BooleanComparator
+     * @return The true first singleton BooleanComparator
      */
     public static BooleanComparator getTrueFirstComparator() {
         return TRUE_FIRST;
@@ -179,7 +179,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE, Boolean.TRUE)}
      * returns a positive value.
      *
-     * @return the trueFirst flag
+     * @return The trueFirst flag
      */
     public boolean sortsTrueFirst() {
         return trueFirst;

@@ -410,7 +410,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      * This is used to change the assertions used by specific tests.
      * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see #UNORDERED
      */
     protected int getIterationBehaviour() {

@@ -101,7 +101,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     /**
      * Gets the multiset being decorated.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected MultiSet<E> decorated() {

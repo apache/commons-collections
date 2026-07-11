@@ -150,7 +150,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * transformer object when requested.
      *
      * @param index  the index to retrieve
-     * @return the element at the given index
+     * @return The element at the given index
      */
     @Override
     public E get(final int index) {

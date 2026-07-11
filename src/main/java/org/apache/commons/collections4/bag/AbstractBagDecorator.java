@@ -65,7 +65,7 @@ public abstract class AbstractBagDecorator<E>
     /**
      * Gets the bag being decorated.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected Bag<E> decorated() {

@@ -42,7 +42,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
      * A method to get the number of items in a hasher. Mostly applies to
      * Collections of hashers.
      * @param hasher the hasher to check.
-     * @return the number of hashers in the hasher
+     * @return The number of hashers in the hasher
      */
     protected abstract int getHasherSize(Hasher hasher);
 
@@ -52,7 +52,7 @@ public abstract class AbstractHasherTest extends AbstractIndexExtractorTest {
      *  <li>Hash functions (k) = 17
      *  <li>Number of bits (m) = 72
      * </ul>
-     * @return the testing shape.
+     * @return The testing shape.
      */
     protected final Shape getTestShape() {
         return Shape.fromKM(17, 72);

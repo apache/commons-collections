@@ -53,7 +53,7 @@ final class FunctorUtils {
      *
      * @param <T> The type of object the returned predicate should "accept"
      * @param predicate the predicate to coerce.
-     * @return the coerced predicate.
+     * @return The coerced predicate.
      */
     @SuppressWarnings("unchecked")
     static <R extends java.util.function.Predicate<T>, P extends java.util.function.Predicate<? super T>, T> R coerce(final P predicate) {
@@ -71,7 +71,7 @@ final class FunctorUtils {
      * @param <I> The type of object the returned transformer should "accept"
      * @param <O> The type of object the returned transformer should "produce"
      * @param transformer the transformer to coerce.
-     * @return the coerced transformer.
+     * @return The coerced transformer.
      */
     @SuppressWarnings("unchecked")
     static <R extends Function<I, O>, P extends Function<? super I, ? extends O>, I, O> R coerce(final P transformer) {
@@ -82,7 +82,7 @@ final class FunctorUtils {
      * Clones the consumers to ensure that the internal references can't be updated.
      *
      * @param consumers  the consumers to copy.
-     * @return the cloned consumers.
+     * @return The cloned consumers.
      */
     @SuppressWarnings("unchecked")
     static <T extends Consumer<?>> T[] copy(final T... consumers) {
@@ -95,7 +95,7 @@ final class FunctorUtils {
      * able to be coerced to Predicate<T> without casting issues.
      *
      * @param predicates  the predicates to copy
-     * @return the cloned predicates
+     * @return The cloned predicates
      */
     @SuppressWarnings("unchecked")
     static <T extends java.util.function.Predicate<?>> T[] copy(final T... predicates) {

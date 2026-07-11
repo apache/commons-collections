@@ -88,7 +88,7 @@ public class CollectionUtils {
          * Gets the frequency of this object in collection A.
          *
          * @param key the key whose associated frequency is to be returned.
-         * @return the frequency of the object in collection A
+         * @return The frequency of the object in collection A
          */
         public int freqA(final Object key) {
             return getFreq(key, cardinalityA);
@@ -98,7 +98,7 @@ public class CollectionUtils {
          * Gets the frequency of this object in collection B.
          *
          * @param key the key whose associated frequency is to be returned.
-         * @return the frequency of the object in collection B
+         * @return The frequency of the object in collection B
          */
         public int freqB(final Object key) {
             return getFreq(key, cardinalityB);
@@ -112,7 +112,7 @@ public class CollectionUtils {
          * Gets the maximum frequency of an object.
          *
          * @param obj  the object
-         * @return the maximum frequency of the object
+         * @return The maximum frequency of the object
          */
         public final int max(final Object obj) {
             return Math.max(freqA(obj), freqB(obj));
@@ -122,7 +122,7 @@ public class CollectionUtils {
          * Gets the minimum frequency of an object.
          *
          * @param obj  the object
-         * @return the minimum frequency of the object
+         * @return The minimum frequency of the object
          */
         public final int min(final Object obj) {
             return Math.min(freqA(obj), freqB(obj));
@@ -204,7 +204,7 @@ public class CollectionUtils {
         /**
          * Returns the resulting collection.
          *
-         * @return the result
+         * @return The result
          */
         public Collection<O> list() {
             return newList;
@@ -366,7 +366,7 @@ public class CollectionUtils {
      * @param obj the object to find the cardinality of
      * @param collection the {@link Iterable} to search
      * @param <O> The type of object that the {@link Iterable} may contain.
-     * @return the number of occurrences of obj in coll
+     * @return The number of occurrences of obj in coll
      * @throws NullPointerException if collection is null
      * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.
@@ -507,7 +507,7 @@ public class CollectionUtils {
      * @param transformer  the transformer to use, may be null
      * @param outputCollection  the collection to output into, may not be null if inputCollection
      *   and transformer are not null
-     * @return the output collection with the transformed input added
+     * @return The output collection with the transformed input added
      * @throws NullPointerException if the outputCollection is null and both, inputCollection and
      *   transformer are not null
      */
@@ -530,7 +530,7 @@ public class CollectionUtils {
      * @param <O>  the type of object in the output collection
      * @param inputCollection  the collection to get the input from, may not be null
      * @param transformer  the transformer to use, may be null
-     * @return the transformed result (new list)
+     * @return The transformed result (new list)
      * @throws NullPointerException if the outputCollection is null and both, inputCollection and
      *   transformer are not null
      */
@@ -559,7 +559,7 @@ public class CollectionUtils {
      * @param transformer  the transformer to use, may be null
      * @param outputCollection  the collection to output into, may not be null if inputIterator
      *   and transformer are not null
-     * @return the outputCollection with the transformed input added
+     * @return The outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null and both, inputIterator and
      *   transformer are not null
      */
@@ -586,7 +586,7 @@ public class CollectionUtils {
      * @param <O>  the type of object in the output collection
      * @param inputIterator  the iterator to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @return the transformed result (new list)
+     * @return The transformed result (new list)
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
                                                final Transformer<? super I, ? extends O> transformer) {
@@ -723,7 +723,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Iterable} contains
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
-     * @return the number of matches for the predicate in the collection
+     * @return The number of matches for the predicate in the collection
      * @deprecated Since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
      */
     @Deprecated
@@ -751,7 +751,7 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
-     * @return the symmetric difference of the two collections
+     * @return The symmetric difference of the two collections
      * @throws NullPointerException if either collection is null
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
@@ -880,7 +880,7 @@ public class CollectionUtils {
      * @param <T>  the type of object the {@link Iterable} contains
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
-     * @return the first element of the collection which matches the predicate or null if none could be found
+     * @return The first element of the collection which matches the predicate or null if none could be found
      * @deprecated Since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
      */
     @Deprecated
@@ -898,7 +898,7 @@ public class CollectionUtils {
      * @param <C>  the closure type
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
-     * @return the last element in the collection, or null if either collection or closure is null
+     * @return The last element in the collection, or null if either collection or closure is null
      * @since 4.0
      * @deprecated Since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
      */
@@ -918,7 +918,7 @@ public class CollectionUtils {
      * @param <C>  the closure type
      * @param iterator  the iterator to get the input from, may be null
      * @param closure  the closure to perform, may be null
-     * @return the last element in the collection, or null if either iterator or closure is null
+     * @return The last element in the collection, or null if either iterator or closure is null
      * @since 4.0
      * @deprecated Since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
      */
@@ -980,7 +980,7 @@ public class CollectionUtils {
      * @param iterable  the {@link Iterable} to get a value from
      * @param index  the index to get
      * @param <T> The type of object in the {@link Iterable}.
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
      */
@@ -1001,7 +1001,7 @@ public class CollectionUtils {
      * @param iterator  the iterator to get a value from
      * @param index  the index to get
      * @param <T> The type of object in the {@link Iterator}
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      * @throws NullPointerException if iterator is null
@@ -1021,7 +1021,7 @@ public class CollectionUtils {
      * @param <V>  the value type in the {@link Map}
      * @param map  the object to get a value from
      * @param index  the index to get
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
@@ -1057,7 +1057,7 @@ public class CollectionUtils {
      *
      * @param object  the object to get a value from
      * @param index  the index to get
-     * @return the object at the specified index
+     * @return The object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
      */
@@ -1107,7 +1107,7 @@ public class CollectionUtils {
      *
      * @param <O>  the type of object in the returned {@link Map}. This is a super type of &lt;I&gt;.
      * @param coll  the collection to get the cardinality map for, must not be null
-     * @return the populated cardinality map
+     * @return The populated cardinality map
      * @throws NullPointerException if coll is null
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
@@ -1134,7 +1134,7 @@ public class CollectionUtils {
      * @param <E>  the element type
      * @param collection  the input collection
      * @param equator  the equator used for generate hashCode
-     * @return the hash code of the input collection using the hash method of an equator
+     * @return The hash code of the input collection using the hash method of an equator
      * @throws NullPointerException if the equator is {@code null}
      * @since 4.5.0-M1
      */
@@ -1164,7 +1164,7 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
-     * @return the intersection of the two collections
+     * @return The intersection of the two collections
      * @throws NullPointerException if either collection is null
      * @see Collection#retainAll
      * @see #containsAny
@@ -1388,7 +1388,7 @@ public class CollectionUtils {
      * </p>
      *
      * @param collection  the collection to check
-     * @return the maximum size of the BoundedCollection, -1 if no maximum size
+     * @return The maximum size of the BoundedCollection, -1 if no maximum size
      * @throws NullPointerException if the collection is null
      */
     public static int maxSize(final Collection<? extends Object> collection) {
@@ -1700,7 +1700,7 @@ public class CollectionUtils {
      * @param <O>  the type of object the {@link Iterable} contains
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
-     * @return the elements matching the predicate (new list)
+     * @return The elements matching the predicate (new list)
      */
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
                                            final Predicate<? super O> predicate) {
@@ -1726,7 +1726,7 @@ public class CollectionUtils {
      * @param predicate  the predicate to use, may be null
      * @param outputCollection  the collection to output into, may not be null if the inputCollection
      *   and predicate or not null
-     * @return the outputCollection
+     * @return The outputCollection
      */
     public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate, final R outputCollection) {
@@ -1768,7 +1768,7 @@ public class CollectionUtils {
      *   inputCollection and predicate are not null
      * @param rejectedCollection  the collection to output rejected elements into, may not be null if the
      *   inputCollection or predicate are not null
-     * @return the outputCollection
+     * @return The outputCollection
      * @since 4.1
      */
     public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
@@ -1797,7 +1797,7 @@ public class CollectionUtils {
      * @param <O>  the type of object the {@link Iterable} contains
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
-     * @return the elements <strong>not</strong> matching the predicate (new list)
+     * @return The elements <strong>not</strong> matching the predicate (new list)
      */
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
                                                    final Predicate<? super O> predicate) {
@@ -1852,7 +1852,7 @@ public class CollectionUtils {
      * </ul>
      *
      * @param object  the object to get the size of, may be null
-     * @return the size of the specified collection or 0 if the object was null
+     * @return The size of the specified collection or 0 if the object was null
      * @throws IllegalArgumentException thrown if object is not recognized
      * @since 3.1
      */
@@ -2109,7 +2109,7 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> The generic type that is able to represent the types contained
      *        in both input collections.
-     * @return the union of the two collections
+     * @return The union of the two collections
      * @throws NullPointerException if either collection is null
      * @see Collection#addAll
      */

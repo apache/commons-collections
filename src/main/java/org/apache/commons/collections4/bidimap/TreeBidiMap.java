@@ -642,7 +642,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Gets the key.
          *
-         * @return the key corresponding to this entry.
+         * @return The key corresponding to this entry.
          */
         @Override
         public K getKey() {
@@ -658,7 +658,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          *
          * @param dataElement  either the {@link DataElement#KEY key}
          *                     or the {@link DataElement#VALUE value}.
-         * @return the parent node, may be null
+         * @return The parent node, may be null
          */
         private Node<K, V> getParent(final DataElement dataElement) {
             return parentNode[dataElement.ordinal()];
@@ -671,7 +671,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /**
          * Gets the value.
          *
-         * @return the value corresponding to this entry.
+         * @return The value corresponding to this entry.
          */
         @Override
         public V getValue() {
@@ -679,7 +679,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         /**
-         * @return the hash code value for this map entry.
+         * @return The hash code value for this map entry.
          */
         @Override
         public int hashCode() {
@@ -1148,7 +1148,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the hash code value for this map
+     * @return The hash code value for this map
      */
     private int doHashCode(final DataElement dataElement) {
         int total = 0;
@@ -1450,7 +1450,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the string form of this map
+     * @return The string form of this map
      */
     private String doToString(final DataElement dataElement) {
         if (nodeCount == 0) {
@@ -1513,7 +1513,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the first (lowest) key currently in this map.
      *
-     * @return the first (lowest) key currently in this sorted map
+     * @return The first (lowest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
     @Override
@@ -1531,7 +1531,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The key must implement {@code Comparable}.
      *
      * @param key  key whose associated value is to be returned
-     * @return the value to which this map maps the specified key,
+     * @return The value to which this map maps the specified key,
      *  or null if the map contains no mapping for this key
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
@@ -1562,7 +1562,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The value must implement {@code Comparable}.
      *
      * @param value  value whose associated key is to be returned.
-     * @return the key to which this map maps the specified value,
+     * @return The key to which this map maps the specified value,
      *  or null if the map contains no mapping for this value.
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
@@ -1627,7 +1627,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param node  the node from which we will start searching
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the greatest node, from the specified node
+     * @return The greatest node, from the specified node
      */
     private Node<K, V> greatestNode(final Node<K, V> node, final DataElement dataElement) {
         Node<K, V> rval = node;
@@ -1650,7 +1650,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the hash code value for this map as per the API.
      *
-     * @return the hash code value for this map
+     * @return The hash code value for this map
      */
     @Override
     public int hashCode() {
@@ -1699,7 +1699,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the inverse map for comparison.
      *
-     * @return the inverse map
+     * @return The inverse map
      */
     @Override
     public OrderedBidiMap<V, K> inverseBidiMap() {
@@ -1742,7 +1742,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the last (highest) key currently in this map.
      *
-     * @return the last (highest) key currently in this sorted map
+     * @return The last (highest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
     @Override
@@ -1759,7 +1759,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param node  the node from which we will start searching
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the smallest node, from the specified node, in the
+     * @return The smallest node, from the specified node, in the
      *         specified mapping
      */
     private Node<K, V> leastNode(final Node<K, V> node, final DataElement dataElement) {
@@ -1778,7 +1778,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param data the key or value to be looked up
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the desired Node, or null if there is no mapping of the
+     * @return The desired Node, or null if there is no mapping of the
      *         specified data
      */
     @SuppressWarnings("unchecked")
@@ -1829,7 +1829,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param node the node to be searched from
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the specified node
+     * @return The specified node
      */
     private Node<K, V> nextGreater(final Node<K, V> node, final DataElement dataElement) {
         final Node<K, V> rval;
@@ -1864,7 +1864,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The key must implement {@code Comparable}.
      *
      * @param key the key to search for next from
-     * @return the next key, null if no match or at end
+     * @return The next key, null if no match or at end
      */
     @Override
     public K nextKey(final K key) {
@@ -1879,7 +1879,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param node the node to be searched from
      * @param dataElement  either the {@link DataElement#KEY key}
      *                     or the {@link DataElement#VALUE value}.
-     * @return the specified node
+     * @return The specified node
      */
     private Node<K, V> nextSmaller(final Node<K, V> node, final DataElement dataElement) {
         final Node<K, V> rval;
@@ -1914,7 +1914,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * The key must implement {@code Comparable}.
      *
      * @param key the key to search for previous from
-     * @return the previous key, null if no match or at start
+     * @return The previous key, null if no match or at start
      */
     @Override
     public K previousKey(final K key) {
@@ -1943,7 +1943,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param key  key with which the specified value is to be  associated
      * @param value  value to be associated with the specified key
-     * @return the previous value for the key
+     * @return The previous value for the key
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
@@ -2087,7 +2087,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Returns the number of key-value mappings in this map.
      *
-     * @return the number of key-value mappings in this map
+     * @return The number of key-value mappings in this map
      */
     @Override
     public int size() {

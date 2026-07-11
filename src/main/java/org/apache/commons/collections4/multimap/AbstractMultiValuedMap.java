@@ -694,7 +694,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * would return an empty collection in case the mapping is not present
      *
      * @param key the key to retrieve
-     * @return the {@code Collection} of values, will return an empty {@code Collection} for no mapping
+     * @return The {@code Collection} of values, will return an empty {@code Collection} for no mapping
      */
     @Override
     public Collection<V> get(final K key) {
@@ -704,7 +704,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Gets the map being wrapped.
      *
-     * @return the wrapped map
+     * @return The wrapped map
      */
     protected Map<K, ? extends Collection<V>> getMap() {
         return map;
@@ -759,7 +759,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      *
      * @param key the key to store against
      * @param value the value to add to the collection at the key
-     * @return the value added if the map changed and null if the map did not change
+     * @return The value added if the map changed and null if the map did not change
      */
     @Override
     public boolean put(final K key, final V value) {
@@ -845,7 +845,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * A subsequent {@code get(Object)} would return an empty collection.
      *
      * @param key  the key to remove values from
-     * @return the {@code Collection} of values removed, will return an
+     * @return The {@code Collection} of values removed, will return an
      *   empty, unmodifiable collection for no mapping found
      */
     @Override

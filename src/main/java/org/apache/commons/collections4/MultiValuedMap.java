@@ -134,7 +134,7 @@ public interface MultiValuedMap<K, V> {
      * </p>
      *
      * @param key  the key to retrieve
-     * @return the {@code Collection} of values, implementations should
+     * @return The {@code Collection} of values, implementations should
      *   return an empty collection for no mapping
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
@@ -301,7 +301,7 @@ public interface MultiValuedMap<K, V> {
      * </p>
      *
      * @param key  the key to remove values from
-     * @return the values that were removed
+     * @return The values that were removed
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
@@ -333,7 +333,7 @@ public interface MultiValuedMap<K, V> {
      * of the values from all keys.
      * </p>
      *
-     * @return the total size of the map
+     * @return The total size of the map
      */
     int size();
 

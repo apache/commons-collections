@@ -186,7 +186,7 @@ public class TreeList<E> extends AbstractList<E> {
          *            the root of the AVL tree to merge with this one
          * @param currentSize
          *            the number of elements in this AVL tree
-         * @return the root of the new, merged AVL tree
+         * @return The root of the new, merged AVL tree
          */
         private AVLNode<E> addAll(AVLNode<E> otherTree, final int currentSize) {
             final AVLNode<E> maxNode = max();
@@ -359,7 +359,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the value.
          *
-         * @return the value of this node
+         * @return The value of this node
          */
         E getValue() {
             return value;
@@ -439,7 +439,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the rightmost child of this node.
          *
-         * @return the rightmost child (greatest index)
+         * @return The rightmost child (greatest index)
          */
         private AVLNode<E> max() {
             return getRightSubTree() == null ? this : right.max();
@@ -448,7 +448,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the leftmost child of this node.
          *
-         * @return the leftmost child (smallest index)
+         * @return The leftmost child (smallest index)
          */
         private AVLNode<E> min() {
             return getLeftSubTree() == null ? this : left.min();
@@ -457,7 +457,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the next node in the list after this one.
          *
-         * @return the next node
+         * @return The next node
          */
         AVLNode<E> next() {
             if (rightIsNext || right == null) {
@@ -469,7 +469,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the node in the list before this one.
          *
-         * @return the previous node
+         * @return The previous node
          */
         AVLNode<E> previous() {
             if (leftIsPrevious || left == null) {
@@ -541,7 +541,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Removes this node from the tree.
          *
-         * @return the node that replaces this one in the parent
+         * @return The node that replaces this one in the parent
          */
         private AVLNode<E> removeSelf() {
             if (getRightSubTree() == null && getLeftSubTree() == null) {
@@ -1039,7 +1039,7 @@ public class TreeList<E> extends AbstractList<E> {
      * Gets the element at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the element at the specified index
+     * @return The element at the specified index
      */
     @Override
     public E get(final int index) {
@@ -1051,7 +1051,7 @@ public class TreeList<E> extends AbstractList<E> {
      * Searches for the index of an object in the list.
      *
      * @param object  the object to search
-     * @return the index of the object, -1 if not found
+     * @return The index of the object, -1 if not found
      */
     @Override
     public int indexOf(final Object object) {
@@ -1076,7 +1076,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets a ListIterator over the list.
      *
-     * @return the new iterator
+     * @return The new iterator
      */
     @Override
     public ListIterator<E> listIterator() {
@@ -1088,7 +1088,7 @@ public class TreeList<E> extends AbstractList<E> {
      * Gets a ListIterator over the list.
      *
      * @param fromIndex  the index to start from.
-     * @return the new iterator.
+     * @return The new iterator.
      */
     @Override
     public ListIterator<E> listIterator(final int fromIndex) {
@@ -1101,7 +1101,7 @@ public class TreeList<E> extends AbstractList<E> {
      * Removes the element at the specified index.
      *
      * @param index  the index to remove
-     * @return the previous object at that index
+     * @return The previous object at that index
      */
     @Override
     public E remove(final int index) {
@@ -1118,7 +1118,7 @@ public class TreeList<E> extends AbstractList<E> {
      *
      * @param index  the index to set
      * @param obj  the object to store at the specified index
-     * @return the previous object at that index
+     * @return The previous object at that index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     @Override
@@ -1133,7 +1133,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Gets the current size of the list.
      *
-     * @return the current size
+     * @return The current size
      */
     @Override
     public int size() {
@@ -1143,7 +1143,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Converts the list into an array.
      *
-     * @return the list as an array
+     * @return The list as an array
      */
     @Override
     public Object[] toArray() {

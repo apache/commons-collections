@@ -44,7 +44,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * @param <E> The type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
-     * @return the {@code if} closure
+     * @return The {@code if} closure
      * @throws NullPointerException if either argument is null
      * @since 3.2
      */
@@ -59,7 +59,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false
-     * @return the {@code if} closure
+     * @return The {@code if} closure
      * @throws NullPointerException if any argument is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
@@ -127,7 +127,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closure called when false.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getFalseClosure() {
@@ -137,7 +137,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the predicate.
      *
-     * @return the predicate
+     * @return The predicate
      * @since 3.1
      */
     public Predicate<? super T> getPredicate() {
@@ -147,7 +147,7 @@ public class IfClosure<T> implements Closure<T>, Serializable {
     /**
      * Gets the closure called when true.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getTrueClosure() {

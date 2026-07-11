@@ -130,7 +130,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     /**
      * Gets the list being decorated.
      *
-     * @return the decorated list
+     * @return The decorated list
      */
     @Override
     protected List<E> decorated() {

@@ -39,7 +39,7 @@ public final class NotNullPredicate<T> extends AbstractPredicate<T> implements S
      * Factory returning the singleton instance.
      *
      * @param <T> The type that the predicate queries
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Predicate<T> notNullPredicate() {
@@ -55,7 +55,7 @@ public final class NotNullPredicate<T> extends AbstractPredicate<T> implements S
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

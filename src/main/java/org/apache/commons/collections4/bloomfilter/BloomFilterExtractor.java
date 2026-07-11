@@ -96,7 +96,7 @@ public interface BloomFilterExtractor {
     /**
      * Create a standard (non-layered) Bloom filter by merging all of the layers. If the filter is empty this method will return an empty Bloom filter.
      *
-     * @return the merged bloom filter, never null.
+     * @return The merged bloom filter, never null.
      * @throws NullPointerException if this call did not process any filters.
      */
     default BloomFilter flatten() {

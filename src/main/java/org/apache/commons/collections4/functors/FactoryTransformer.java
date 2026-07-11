@@ -40,7 +40,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
      * @param <I>  the input type
      * @param <O>  the output type
      * @param factory  the factory to call, not null
-     * @return the {@code factory} transformer
+     * @return The {@code factory} transformer
      * @throws NullPointerException if the factory is null
      */
     public static <I, O> Transformer<I, O> factoryTransformer(final Factory<? extends O> factory) {
@@ -63,7 +63,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
     /**
      * Gets the factory.
      *
-     * @return the factory
+     * @return The factory
      * @since 3.1
      */
     public Factory<? extends R> getFactory() {
@@ -75,7 +75,7 @@ public class FactoryTransformer<T, R> implements Transformer<T, R>, Serializable
      * calling the decorated factory.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public R transform(final T input) {

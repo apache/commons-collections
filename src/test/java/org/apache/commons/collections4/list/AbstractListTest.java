@@ -303,7 +303,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #collection} field cast to a {@link List}.
      *
-     * @return the collection field as a List
+     * @return The collection field as a List
      */
     @Override
     public List<E> getCollection() {
@@ -313,7 +313,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #confirmed} field cast to a {@link List}.
      *
-     * @return the confirmed field as a List
+     * @return The confirmed field as a List
      */
     @Override
     public List<E> getConfirmed() {

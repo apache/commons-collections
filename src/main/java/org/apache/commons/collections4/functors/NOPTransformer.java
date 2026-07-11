@@ -39,7 +39,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
      * Factory returning the singleton instance.
      *
      * @param <T>  the input/output type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Transformer<T, T> nopTransformer() {
@@ -55,7 +55,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;
@@ -65,7 +65,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
      * Transforms the input to result by doing nothing.
      *
      * @param input  the input object to transform
-     * @return the transformed result which is the input
+     * @return The transformed result which is the input
      */
     @Override
     public T transform(final T input) {

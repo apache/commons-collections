@@ -324,7 +324,7 @@ public class LRUMap<K, V>
      * most recently used position (last).
      *
      * @param key  the key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     @Override
     public V get(final Object key) {
@@ -342,7 +342,7 @@ public class LRUMap<K, V>
      * @param key  the key
      * @param updateToMRU  whether the key shall be updated to the
      *   most recently used position
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      * @since 4.1
      */
     public V get(final Object key, final boolean updateToMRU) {
@@ -380,7 +380,7 @@ public class LRUMap<K, V>
     /**
      * Gets the maximum size of the map (the bound).
      *
-     * @return the maximum number of elements the map can hold
+     * @return The maximum number of elements the map can hold
      */
     @Override
     public int maxSize() {

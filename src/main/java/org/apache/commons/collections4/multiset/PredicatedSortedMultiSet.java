@@ -89,7 +89,7 @@ public class PredicatedSortedMultiSet<E> extends PredicatedMultiSet<E> implement
     /**
      * Gets the decorated sorted multiset.
      *
-     * @return the decorated multiset
+     * @return The decorated multiset
      */
     @Override
     protected SortedMultiSet<E> decorated() {

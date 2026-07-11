@@ -42,7 +42,7 @@ public class ForClosure<T> implements Closure<T> {
      * @param <E> The type that the closure acts on
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
-     * @return the {@code for} closure
+     * @return The {@code for} closure
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> forClosure(final int count, final Closure<? super E> closure) {
@@ -88,7 +88,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Gets the closure.
      *
-     * @return the closure
+     * @return The closure
      * @since 3.1
      */
     public Closure<? super T> getClosure() {
@@ -98,7 +98,7 @@ public class ForClosure<T> implements Closure<T> {
     /**
      * Gets the count.
      *
-     * @return the count
+     * @return The count
      * @since 3.1
      */
     public int getCount() {

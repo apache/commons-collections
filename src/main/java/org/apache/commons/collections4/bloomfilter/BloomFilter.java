@@ -52,7 +52,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      *
      * <p>This is also known as the Hamming value or Hamming number.</p>
      *
-     * @return the cardinality of this filter
+     * @return The cardinality of this filter
      */
     int cardinality();
 
@@ -64,7 +64,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
      * Characteristics are defined as bits within the characteristics integer.
      * </p>
      *
-     * @return the characteristics for this bloom filter.
+     * @return The characteristics for this bloom filter.
      */
     int characteristics();
 

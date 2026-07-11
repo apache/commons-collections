@@ -327,7 +327,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * it returns {@code null}.  (There can be at most one such mapping.)
      *
      * @param key key whose associated value is to be returned.
-     * @return the value to which this map maps the specified key, or
+     * @return The value to which this map maps the specified key, or
      *         {@code null} if the map contains no mapping for this key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
@@ -532,7 +532,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * map contains more than {@code Integer.MAX_VALUE} elements, returns
      * {@code Integer.MAX_VALUE}.
      *
-     * @return the number of key-value mappings in this map.
+     * @return The number of key-value mappings in this map.
      */
     @Override
     public int size() {

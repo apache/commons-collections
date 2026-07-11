@@ -32,7 +32,7 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
     /**
      * Returns the {@link #collection} field cast to a {@link SortedBag}.
      *
-     * @return the collection field as a SortedBag
+     * @return The collection field as a SortedBag
      */
     @Override
     public SortedBag<T> getCollection() {

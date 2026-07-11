@@ -198,7 +198,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /**
      * Gets the next element of the iteration.
      *
-     * @return the next element from the iteration
+     * @return The next element from the iteration
      * @throws NoSuchElementException if all the Iterators are exhausted
      */
     @Override

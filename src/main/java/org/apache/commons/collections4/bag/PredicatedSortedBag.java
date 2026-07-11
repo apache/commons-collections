@@ -90,7 +90,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
     /**
      * Gets the decorated sorted bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected SortedBag<E> decorated() {

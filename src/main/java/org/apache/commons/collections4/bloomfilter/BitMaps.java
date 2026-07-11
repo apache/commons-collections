@@ -55,7 +55,7 @@ public class BitMaps {
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
      * @param bitIndex the bit index (assumed to be positive)
-     * @return the filter bit
+     * @return The filter bit
      */
     public static long getLongBit(final int bitIndex) {
         // Bit shifts only use the first 6 bits. Thus it is not necessary to mask this
@@ -76,7 +76,7 @@ public class BitMaps {
      * is not defined.</em></p>
      *
      * @param bitIndex the bit index (assumed to be positive)
-     * @return the index of the bit map in an array of bit maps.
+     * @return The index of the bit map in an array of bit maps.
      */
     public static int getLongIndex(final int bitIndex) {
         // An integer divide by 64 is equivalent to a shift of 6 bits if the integer is
@@ -99,7 +99,7 @@ public class BitMaps {
      *
      * @param dividend an unsigned long value to calculate the modulus of.
      * @param divisor the divisor for the modulus calculation, must be strictly positive.
-     * @return the remainder or modulus value.
+     * @return The remainder or modulus value.
      * @throws ArithmeticException if the divisor is zero
      * @see Long#remainderUnsigned(long, long)
      */
@@ -141,7 +141,7 @@ public class BitMaps {
      * <p><em>If the input is negative the behavior is not defined.</em></p>
      *
      * @param numberOfBits the number of bits to store in the array of bit maps.
-     * @return the number of bit maps necessary.
+     * @return The number of bit maps necessary.
      */
     public static int numberOfBitMaps(final int numberOfBits) {
         return (numberOfBits - 1 >> DIVIDE_BY_64) + 1;
@@ -151,7 +151,7 @@ public class BitMaps {
      * Calculates the number of bit maps (longs) required for the shape parameter.
      *
      * @param shape the shape.
-     * @return the number of bit maps necessary.
+     * @return The number of bit maps necessary.
      */
     static int numberOfBitMaps(final Shape shape) {
         return numberOfBitMaps(shape.getNumberOfBits());

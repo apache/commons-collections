@@ -63,7 +63,7 @@ public abstract class AbstractBloomFilterExtractorTest {
      *  <li>Hash functions (k) = 17
      *  <li>Number of bits (m) = 72
      * </ul>
-     * @return the testing shape.
+     * @return The testing shape.
      */
     protected Shape getTestShape() {
         return shape;

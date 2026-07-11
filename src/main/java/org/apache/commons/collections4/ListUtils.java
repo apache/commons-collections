@@ -183,7 +183,7 @@ public class ListUtils {
      *
      * @param <T> The list type.
      * @param list The list.
-     * @return the first element of a list.
+     * @return The first element of a list.
      * @see List#get(int)
      * @since 4.5.0-M1
      */
@@ -199,7 +199,7 @@ public class ListUtils {
      *
      * @param <T> The list type.
      * @param list The list.
-     * @return the last element of a list.
+     * @return The last element of a list.
      * @see List#get(int)
      * @since 4.5.0-M1
      */
@@ -218,7 +218,7 @@ public class ListUtils {
      *
      * @see java.util.List#hashCode()
      * @param list  the list to generate the hashCode for, may be null
-     * @return the hash code
+     * @return The hash code
      */
     public static int hashCodeForList(final Collection<?> list) {
         if (list == null) {
@@ -242,7 +242,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param list the List to search, may be null
      * @param predicate  the predicate to use, may be null
-     * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
+     * @return The first index of an Object in the List which matches the predicate or -1 if none could be found
      */
     public static <E> int indexOf(final List<E> list, final Predicate<E> predicate) {
         if (list != null && predicate != null) {
@@ -420,7 +420,7 @@ public class ListUtils {
      *
      * @param charSequenceA  the first sequence
      * @param charSequenceB  the second sequence
-     * @return the longest common subsequence as {@link String}
+     * @return The longest common subsequence as {@link String}
      * @throws NullPointerException if either sequence is {@code null}
      * @since 4.0
      */
@@ -442,7 +442,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
-     * @return the longest common subsequence
+     * @return The longest common subsequence
      * @throws NullPointerException if either list is {@code null}
      * @since 4.0
      */
@@ -457,7 +457,7 @@ public class ListUtils {
      * @param listA  the first list
      * @param listB  the second list
      * @param equator  the equator used to test object equality
-     * @return the longest common subsequence
+     * @return The longest common subsequence
      * @throws NullPointerException if either list or the equator is {@code null}
      * @since 4.0
      */
@@ -605,7 +605,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
-     * @return the elements matching the predicate (new list)
+     * @return The elements matching the predicate (new list)
      * @throws NullPointerException if the input list is null
      * @since 4.0
      * @see CollectionUtils#select(Iterable, Predicate)
@@ -625,7 +625,7 @@ public class ListUtils {
      * @param <E> The element type
      * @param inputCollection the collection to get the input from, may not be null
      * @param predicate the predicate to use, may be null
-     * @return the elements <strong>not</strong> matching the predicate (new list)
+     * @return The elements <strong>not</strong> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
      * @since 4.0
      * @see CollectionUtils#selectRejected(Iterable, Predicate)

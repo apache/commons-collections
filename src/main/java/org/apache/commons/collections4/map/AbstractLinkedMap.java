@@ -194,7 +194,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         /**
          * Gets the current entry.
          *
-         * @return the current entry.
+         * @return The current entry.
          */
         protected LinkEntry<K, V> currentEntry() {
             return last;
@@ -221,7 +221,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         /**
          * Gets the next entry.
          *
-         * @return the next entry.
+         * @return The next entry.
          */
         protected LinkEntry<K, V> nextEntry() {
             if (parent.modCount != expectedModCount) {
@@ -238,7 +238,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         /**
          * Gets the previous entry.
          *
-         * @return the previous entry.
+         * @return The previous entry.
          */
         protected LinkEntry<K, V> previousEntry() {
             if (parent.modCount != expectedModCount) {
@@ -489,7 +489,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param hashCode  the hash code to use
      * @param key  the key to store
      * @param value  the value to store
-     * @return the newly created entry
+     * @return The newly created entry
      */
     @Override
     protected LinkEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
@@ -500,7 +500,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Creates an entry set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @return the entrySet iterator
+     * @return The entrySet iterator
      */
     @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
@@ -514,7 +514,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Creates a key set iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @return the keySet iterator
+     * @return The keySet iterator
      */
     @Override
     protected Iterator<K> createKeySetIterator() {
@@ -528,7 +528,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Creates a values iterator.
      * Subclasses can override this to return iterators with different properties.
      *
-     * @return the values iterator
+     * @return The values iterator
      */
     @Override
     protected Iterator<V> createValuesIterator() {
@@ -543,7 +543,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the {@code after} field of the entry
+     * @return The {@code after} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -556,7 +556,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Used in subclasses that have no visibility of the field.
      *
      * @param entry  the entry to query, must not be null
-     * @return the {@code before} field of the entry
+     * @return The {@code before} field of the entry
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
@@ -567,7 +567,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Gets the first key in the map, which is the first inserted.
      *
-     * @return the eldest key
+     * @return The eldest key
      */
     @Override
     public K firstKey() {
@@ -581,7 +581,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Gets the key at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the key at the specified index
+     * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     protected LinkEntry<K, V> getEntry(final int index) {
@@ -630,7 +630,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * Gets the last key in the map, which is the most recently inserted.
      *
-     * @return the most recently inserted key
+     * @return The most recently inserted key
      */
     @Override
     public K lastKey() {
@@ -655,7 +655,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Gets the next key in sequence.
      *
      * @param key  the key to get after
-     * @return the next key
+     * @return The next key
      */
     @Override
     public K nextKey(final Object key) {
@@ -667,7 +667,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Gets the previous key in sequence.
      *
      * @param key  the key to get before
-     * @return the previous key
+     * @return The previous key
      */
     @Override
     public K previousKey(final Object key) {

@@ -47,7 +47,7 @@ public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator
     /**
      * Gets the iterator being decorated.
      *
-     * @return the decorated iterator
+     * @return The decorated iterator
      */
     protected Iterator<I> getIterator() {
         return iterator;

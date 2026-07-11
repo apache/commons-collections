@@ -137,7 +137,7 @@ public interface Bag<E> extends Collection<E> {
      * bag, return 0.
      *
      * @param object  the object to search for
-     * @return the number of occurrences of the object, zero if not found
+     * @return The number of occurrences of the object, zero if not found
      */
     int getCount(Object object);
 
@@ -230,7 +230,7 @@ public interface Bag<E> extends Collection<E> {
     /**
      * Returns the total number of items in the bag across all types.
      *
-     * @return the total size of the Bag
+     * @return The total size of the Bag
      */
     @Override
     int size();
@@ -241,7 +241,7 @@ public interface Bag<E> extends Collection<E> {
      * Uniqueness constraints are the same as those in {@link Set}.
      * </p>
      *
-     * @return the Set of unique Bag elements
+     * @return The Set of unique Bag elements
      */
     Set<E> uniqueSet();
 
@@ -265,7 +265,7 @@ public interface Bag<E> extends Collection<E> {
 //     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurrences)}.
 //     * This hash code definition is compatible with the Set interface.
 //     *
-//     * @return the hash code of the Bag
+//     * @return The hash code of the Bag
 //     */
 //    int hashCode();
 

@@ -141,7 +141,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /**
          * Gets the last node returned.
          *
-         * @return the last node returned
+         * @return The last node returned
          * @throws IllegalStateException If {@link #next()} or {@link #previous()} haven't been called,
          * or if the node has been removed with {@link #remove()} or a new node added with {@link #add(Object)}.
          */
@@ -481,7 +481,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /**
          * Gets the next node.
          *
-         * @return the next node
+         * @return The next node
          * @since 3.1
          */
         protected Node<E> getNextNode() {
@@ -491,7 +491,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /**
          * Gets the previous node.
          *
-         * @return the previous node
+         * @return The previous node
          * @since 3.1
          */
         protected Node<E> getPreviousNode() {
@@ -501,7 +501,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
         /**
          * Gets the value of the node.
          *
-         * @return the value
+         * @return The value
          * @since 3.1
          */
         protected E getValue() {
@@ -822,7 +822,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      * @param index  the index, starting from 0
      * @param endMarkerAllowed  whether or not the end marker can be returned if
      * startIndex is set to the list's size
-     * @return the node at the given index
+     * @return The node at the given index
      * @throws IndexOutOfBoundsException if the index is less than 0; equal to
      * the size of the list and endMakerAllowed is false; or greater than the
      * size of the list
@@ -1069,7 +1069,7 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
      *
      * @param fromIndexInclusive  the index to start from
      * @param toIndexExclusive  the index to end at
-     * @return the new sublist
+     * @return The new sublist
      */
     @Override
     public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {

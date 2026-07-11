@@ -40,7 +40,7 @@ public interface BoundedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the maximum size of the map (the bound).
      *
-     * @return the maximum number of elements the map can hold
+     * @return The maximum number of elements the map can hold
      */
     int maxSize();
 

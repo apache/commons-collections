@@ -40,7 +40,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
      * Factory returning the singleton instance.
      *
      * @param <T>  the object type
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Predicate<T> exceptionPredicate() {
@@ -56,7 +56,7 @@ public final class ExceptionPredicate<T> extends AbstractPredicate<T> implements
     /**
      * Returns the singleton instance.
      *
-     * @return the singleton instance.
+     * @return The singleton instance.
      */
     private Object readResolve() {
         return INSTANCE;

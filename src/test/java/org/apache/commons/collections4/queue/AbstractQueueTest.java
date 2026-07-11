@@ -50,7 +50,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     /**
      * Returns the {@link #collection} field cast to a {@link Queue}.
      *
-     * @return the collection field as a Queue
+     * @return The collection field as a Queue
      */
     @Override
     public Queue<E> getCollection() {

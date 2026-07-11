@@ -255,7 +255,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * Gets the key from the entry.
          * This method dereferences weak and soft keys and thus may return null.
          *
-         * @return the key, which may be null if it was garbage collected
+         * @return The key, which may be null if it was garbage collected
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -267,7 +267,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * Gets the value from the entry.
          * This method dereferences weak and soft value and thus may return null.
          *
-         * @return the value, which may be null if it was garbage collected
+         * @return The value, which may be null if it was garbage collected
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -280,7 +280,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * <p>
          * This implementation uses {@code hashEntry} on the main map.
          *
-         * @return the hash code of the entry
+         * @return The hash code of the entry
          */
         @Override
         public int hashCode() {
@@ -290,7 +290,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Gets the next entry in the bucket.
          *
-         * @return the next entry in the bucket
+         * @return The next entry in the bucket
          */
         protected ReferenceEntry<K, V> next() {
             return (ReferenceEntry<K, V>) next;
@@ -336,7 +336,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * Sets the value of the entry.
          *
          * @param value  the object to store
-         * @return the previous value
+         * @return The previous value
          */
         @Override
         @SuppressWarnings("unchecked")
@@ -359,7 +359,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param hash  the hash code of the <em>key</em> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
-         * @return the reference to the object
+         * @return The reference to the object
          */
         protected <T> Object toReference(final ReferenceStrength type, final T referent, final int hash) {
             switch (type) {
@@ -757,7 +757,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param hashCode  the hash code to use
      * @param key  the key to store
      * @param value  the value to store
-     * @return the newly created entry
+     * @return The newly created entry
      */
     @Override
     protected ReferenceEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
@@ -768,7 +768,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Creates an entry set iterator.
      *
-     * @return the entrySet iterator
+     * @return The entrySet iterator
      */
     @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
@@ -778,7 +778,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Creates a key set iterator.
      *
-     * @return the keySet iterator
+     * @return The keySet iterator
      */
     @Override
     protected Iterator<K> createKeySetIterator() {
@@ -788,7 +788,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Creates a values iterator.
      *
-     * @return the values iterator
+     * @return The values iterator
      */
     @Override
     protected Iterator<V> createValuesIterator() {
@@ -906,7 +906,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Gets the value mapped to the key specified.
      *
      * @param key  the key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     @Override
     public V get(final Object key) {
@@ -922,7 +922,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Gets the entry mapped to the key specified.
      *
      * @param key  the key
-     * @return the entry, null if no match
+     * @return The entry, null if no match
      */
     @Override
     protected HashEntry<K, V> getEntry(final Object key) {
@@ -938,7 +938,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @param key  the key to get a hash code for, may be null
      * @param value  the value to get a hash code for, may be null
-     * @return the hash code, as per the MapEntry specification
+     * @return The hash code, as per the MapEntry specification
      */
     protected int hashEntry(final Object key, final Object value) {
         return (key == null ? 0 : key.hashCode()) ^
@@ -1103,7 +1103,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @param key  the key to add, must not be null
      * @param value  the value to add, must not be null
-     * @return the value previously mapped to this key, null if none
+     * @return The value previously mapped to this key, null if none
      * @throws NullPointerException if either the key or value is null
      */
     @Override
@@ -1118,7 +1118,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * Removes the specified mapping from this map.
      *
      * @param key  the mapping to remove
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      */
     @Override
     public V remove(final Object key) {
@@ -1132,7 +1132,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Gets the size of the map.
      *
-     * @return the size
+     * @return The size
      */
     @Override
     public int size() {

@@ -134,7 +134,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the next element from the iterator.
      *
-     * @return the next element from the iterator
+     * @return The next element from the iterator
      * @throws NoSuchElementException if there are no more elements
      */
     @Override
@@ -159,7 +159,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the index of the next element.
      *
-     * @return the index of the next element
+     * @return The index of the next element
      */
     @Override
     public int nextIndex() {
@@ -173,7 +173,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /**
      * Returns the previous element.
      *
-     * @return the previous element
+     * @return The previous element
      * @throws NoSuchElementException  if there are no previous elements
      */
     @Override

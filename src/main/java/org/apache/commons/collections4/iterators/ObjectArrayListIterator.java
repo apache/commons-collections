@@ -112,7 +112,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Gets the next element from the array.
      *
-     * @return the next element
+     * @return The next element
      * @throws NoSuchElementException if there is no next element
      */
     @Override
@@ -127,7 +127,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Gets the next index to be retrieved.
      *
-     * @return the index of the item to be retrieved next
+     * @return The index of the item to be retrieved next
      */
     @Override
     public int nextIndex() {
@@ -137,7 +137,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Gets the previous element from the array.
      *
-     * @return the previous element
+     * @return The previous element
      * @throws NoSuchElementException if there is no previous element
      */
     @Override
@@ -152,7 +152,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Gets the index of the item to be retrieved if {@link #previous()} is called.
      *
-     * @return the index of the item to be retrieved next
+     * @return The index of the item to be retrieved next
      */
     @Override
     public int previousIndex() {

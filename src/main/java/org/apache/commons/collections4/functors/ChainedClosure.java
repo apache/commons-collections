@@ -38,7 +38,7 @@ public class ChainedClosure<T> implements Closure<T>, Serializable {
      *
      * @param <E> The type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
-     * @return the {@code chained} closure
+     * @return The {@code chained} closure
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
@@ -57,7 +57,7 @@ public class ChainedClosure<T> implements Closure<T>, Serializable {
      *
      * @param <E> The type that the closure acts on
      * @param closures  a collection of closures to chain
-     * @return the {@code chained} closure
+     * @return The {@code chained} closure
      * @throws NullPointerException if the closures collection is null
      * @throws NullPointerException if any closure in the collection is null
      */

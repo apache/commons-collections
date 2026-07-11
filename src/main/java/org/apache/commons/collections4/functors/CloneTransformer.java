@@ -43,7 +43,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
      * Factory returning the singleton instance.
      *
      * @param <T>  the type of the objects to be cloned
-     * @return the singleton instance
+     * @return The singleton instance
      * @since 3.1
      */
     public static <T> Transformer<T, T> cloneTransformer() {
@@ -60,7 +60,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
      * Transforms the input to result by cloning it.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public T transform(final T input) {

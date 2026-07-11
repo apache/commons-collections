@@ -736,7 +736,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * creation and simply iterate through the entries, use {@link #mapIterator()}.
      * </p>
      *
-     * @return the entrySet view
+     * @return The entrySet view
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -803,7 +803,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Gets the value mapped to the key specified.
      *
      * @param key  the key
-     * @return the mapped value, null if no match
+     * @return The mapped value, null if no match
      */
     @Override
     public V get(final Object key) {
@@ -850,7 +850,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Gets the standard Map hashCode.
      *
-     * @return the hash code defined in the Map interface
+     * @return The hash code defined in the Map interface
      */
     @Override
     public int hashCode() {
@@ -888,7 +888,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Changes made to the view affect this map.
      * To simply iterate through the keys, use {@link #mapIterator()}.
      *
-     * @return the keySet view
+     * @return The keySet view
      */
     @Override
     public Set<K> keySet() {
@@ -908,7 +908,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * It also avoids creating the Map Entry object.
      * </p>
      *
-     * @return the map iterator
+     * @return The map iterator
      */
     @Override
     public MapIterator<K, V> mapIterator() {
@@ -926,7 +926,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @param key  the key to add
      * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
+     * @return The value previously mapped to this key, null if none
      */
     @Override
     public V put(final K key, final V value) {
@@ -1054,7 +1054,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Removes the specified mapping from this map.
      *
      * @param key  the mapping to remove
-     * @return the value mapped to the removed key, null if key not in map
+     * @return The value mapped to the removed key, null if key not in map
      */
     @Override
     public V remove(final Object key) {
@@ -1202,7 +1202,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Gets the size of the map.
      *
-     * @return the size
+     * @return The size
      */
     @Override
     public int size() {
@@ -1256,7 +1256,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Changes made to the view affect this map.
      * To simply iterate through the values, use {@link #mapIterator()}.
      *
-     * @return the values view
+     * @return The values view
      */
     @Override
     public Collection<V> values() {

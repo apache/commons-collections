@@ -434,7 +434,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * looking up its count in the underlying map.
      *
      * @param object the object to search for.
-     * @return the number of occurrences of the object, zero if not found.
+     * @return The number of occurrences of the object, zero if not found.
      */
     @Override
     public int getCount(final Object object) {
@@ -449,7 +449,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * Gets the map that backs this multiset.
      * Not intended for interactive use outside of subclasses.
      *
-     * @return the map being used by the MultiSet.
+     * @return The map being used by the MultiSet.
      */
     protected Map<E, MutableInteger> getMap() {
         return map;
@@ -480,7 +480,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      * Gets an iterator over the multiset elements. Elements present in the
      * MultiSet more than once will be returned repeatedly.
      *
-     * @return the iterator.
+     * @return The iterator.
      */
     @Override
     public Iterator<E> iterator() {

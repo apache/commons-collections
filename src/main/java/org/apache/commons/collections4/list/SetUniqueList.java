@@ -405,7 +405,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param index  the index to insert at
      * @param object  the object to set
-     * @return the previous object
+     * @return The previous object
      */
     @Override
     public E set(final int index, final E object) {

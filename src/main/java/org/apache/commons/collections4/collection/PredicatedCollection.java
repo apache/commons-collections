@@ -119,7 +119,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param item  the element to add.
-         * @return the PredicatedCollectionBuilder.
+         * @return The PredicatedCollectionBuilder.
          */
         public Builder<E> add(final E item) {
             if (predicate.test(item)) {
@@ -138,7 +138,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param items  the elements to add to the builder.
-         * @return the PredicatedCollectionBuilder.
+         * @return The PredicatedCollectionBuilder.
          */
         public Builder<E> addAll(final Collection<? extends E> items) {
             if (items != null) {
@@ -171,7 +171,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param bag  the bag to decorate, must not be null.
-         * @return the decorated bag.
+         * @return The decorated bag.
          * @throws NullPointerException if bag is null.
          * @throws IllegalArgumentException if bag contains invalid elements.
          * @deprecated Since 4.6.0, use {@link #createPredicatedMultiSet(MultiSet)} instead.
@@ -206,7 +206,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param list  the List to decorate, must not be null.
-         * @return the decorated list.
+         * @return The decorated list.
          * @throws NullPointerException if list is null.
          * @throws IllegalArgumentException if list contains invalid elements.
          */
@@ -239,7 +239,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param multiset  the multiset to decorate, must not be null.
-         * @return the decorated multiset.
+         * @return The decorated multiset.
          * @throws NullPointerException if multiset is null.
          * @throws IllegalArgumentException if multiset contains invalid elements.
          */
@@ -272,7 +272,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param queue  the queue to decorate, must not be null.
-         * @return the decorated queue.
+         * @return The decorated queue.
          * @throws NullPointerException if queue is null.
          * @throws IllegalArgumentException if queue contains invalid elements.
          */
@@ -305,7 +305,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * </p>
          *
          * @param set  the set to decorate, must not be null.
-         * @return the decorated set.
+         * @return The decorated set.
          * @throws NullPointerException if set is null.
          * @throws IllegalArgumentException if set contains invalid elements.
          */
@@ -399,7 +399,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * the predicate.
      *
      * @param object  the object being added.
-     * @return the result of adding to the underlying collection.
+     * @return The result of adding to the underlying collection.
      * @throws IllegalArgumentException if the add is invalid.
      */
     @Override
@@ -414,7 +414,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * collection.
      *
      * @param coll  the collection being added.
-     * @return the result of adding to the underlying collection.
+     * @return The result of adding to the underlying collection.
      * @throws IllegalArgumentException if the add is invalid.
      */
     @Override

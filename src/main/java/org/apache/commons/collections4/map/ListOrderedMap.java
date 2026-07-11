@@ -455,7 +455,7 @@ public class ListOrderedMap<K, V>
      * The Set will be ordered by object insertion into the map.
      * </p>
      *
-     * @return the fully modifiable set view over the entries
+     * @return The fully modifiable set view over the entries
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
@@ -465,7 +465,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the first key in this map by insert order.
      *
-     * @return the first key currently in this map
+     * @return The first key currently in this map
      * @throws NoSuchElementException if this map is empty
      */
     @Override
@@ -480,7 +480,7 @@ public class ListOrderedMap<K, V>
      * Gets the key at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the key at the specified index
+     * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public K get(final int index) {
@@ -491,7 +491,7 @@ public class ListOrderedMap<K, V>
      * Gets the value at the specified index.
      *
      * @param index  the index to retrieve
-     * @return the key at the specified index
+     * @return The key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public V getValue(final int index) {
@@ -502,7 +502,7 @@ public class ListOrderedMap<K, V>
      * Gets the index of the specified key.
      *
      * @param key  the key to find the index of
-     * @return the index, or -1 if not found
+     * @return The index, or -1 if not found
      */
     public int indexOf(final Object key) {
         return insertOrder.indexOf(key);
@@ -516,7 +516,7 @@ public class ListOrderedMap<K, V>
      * </p>
      *
      * @see #keySet()
-     * @return the unmodifiable list view over the keys
+     * @return The unmodifiable list view over the keys
      * @since 3.2
      */
     public List<K> keyList() {
@@ -530,7 +530,7 @@ public class ListOrderedMap<K, V>
      * </p>
      *
      * @see #keyList()
-     * @return the fully modifiable collection view over the keys
+     * @return The fully modifiable collection view over the keys
      */
     @Override
     public Set<K> keySet() {
@@ -540,7 +540,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the last key in this map by insert order.
      *
-     * @return the last key currently in this map
+     * @return The last key currently in this map
      * @throws NoSuchElementException if this map is empty
      */
     @Override
@@ -561,7 +561,7 @@ public class ListOrderedMap<K, V>
      * This method performs a list search to find the key and is O(n).
      *
      * @param key  the key to find previous for
-     * @return the next key, null if no match or at start
+     * @return The next key, null if no match or at start
      */
     @Override
     public K nextKey(final Object key) {
@@ -577,7 +577,7 @@ public class ListOrderedMap<K, V>
      * This method performs a list search to find the key and is O(n).
      *
      * @param key  the key to find previous for
-     * @return the previous key, null if no match or at start
+     * @return The previous key, null if no match or at start
      */
     @Override
     public K previousKey(final Object key) {
@@ -605,7 +605,7 @@ public class ListOrderedMap<K, V>
      * @param index  the index at which the mapping should be inserted
      * @param key  the key
      * @param value  the value
-     * @return the value previously mapped to the key
+     * @return The value previously mapped to the key
      * @throws IndexOutOfBoundsException if the index is out of range [0, size]
      * @since 3.2
      */
@@ -699,7 +699,7 @@ public class ListOrderedMap<K, V>
      * Removes the element at the specified index.
      *
      * @param index  the index of the object to remove
-     * @return the removed value, or {@code null} if none existed
+     * @return The removed value, or {@code null} if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public V remove(final int index) {
@@ -721,7 +721,7 @@ public class ListOrderedMap<K, V>
      *
      * @param index  the index of the value to set
      * @param value  the new value to set
-     * @return the previous value at that index
+     * @return The previous value at that index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.2
      */
@@ -733,7 +733,7 @@ public class ListOrderedMap<K, V>
     /**
      * Returns the Map as a string.
      *
-     * @return the Map as a String
+     * @return The Map as a String
      */
     @Override
     public String toString() {
@@ -767,7 +767,7 @@ public class ListOrderedMap<K, V>
      * </p>
      *
      * @see #values()
-     * @return the partially modifiable list view over the values
+     * @return The partially modifiable list view over the values
      * @since 3.2
      */
     public List<V> valueList() {
@@ -785,7 +785,7 @@ public class ListOrderedMap<K, V>
      * </p>
      *
      * @see #valueList()
-     * @return the fully modifiable collection view over the values
+     * @return The fully modifiable collection view over the values
      */
     @Override
     public Collection<V> values() {

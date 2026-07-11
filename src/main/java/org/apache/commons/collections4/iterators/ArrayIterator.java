@@ -123,7 +123,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the array that this iterator is iterating over.
      *
-     * @return the array this iterator iterates over.
+     * @return The array this iterator iterates over.
      */
     public Object getArray() {
         return array;
@@ -132,7 +132,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the end index to loop to.
      *
-     * @return the end index
+     * @return The end index
      * @since 4.0
      */
     public int getEndIndex() {
@@ -142,7 +142,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the start index to loop from.
      *
-     * @return the start index
+     * @return The start index
      * @since 4.0
      */
     public int getStartIndex() {
@@ -162,7 +162,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Returns the next element in the array.
      *
-     * @return the next element in the array
+     * @return The next element in the array
      * @throws NoSuchElementException if all the elements in the array
      *  have already been returned
      */

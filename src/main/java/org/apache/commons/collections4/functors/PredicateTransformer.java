@@ -38,7 +38,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      *
      * @param <T>  the input type
      * @param predicate  the predicate to call, not null
-     * @return the {@code predicate} transformer
+     * @return The {@code predicate} transformer
      * @throws IllegalArgumentException if the predicate is null
      */
     public static <T> Transformer<T, Boolean> predicateTransformer(final Predicate<? super T> predicate) {
@@ -64,7 +64,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
     /**
      * Gets the predicate.
      *
-     * @return the predicate
+     * @return The predicate
      * @since 3.1
      */
     public Predicate<? super T> getPredicate() {
@@ -75,7 +75,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * Transforms the input to result by calling a predicate.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public Boolean transform(final T input) {

@@ -137,7 +137,7 @@ public class TransformedMap<K, V>
      * Override to transform the value when using {@code setValue}.
      *
      * @param value  the value to transform
-     * @return the transformed value
+     * @return The transformed value
      * @since 3.1
      */
     @Override
@@ -189,7 +189,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      *
      * @param object  the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected K transformKey(final K object) {
         if (keyTransformer == null) {
@@ -205,7 +205,7 @@ public class TransformedMap<K, V>
      * </p>
      *
      * @param map  the map to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     @SuppressWarnings("unchecked")
     protected Map<K, V> transformMap(final Map<? extends K, ? extends V> map) {
@@ -227,7 +227,7 @@ public class TransformedMap<K, V>
      * </p>
      *
      * @param object  the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected V transformValue(final V object) {
         if (valueTransformer == null) {

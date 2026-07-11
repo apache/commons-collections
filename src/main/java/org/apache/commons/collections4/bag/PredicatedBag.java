@@ -93,7 +93,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     /**
      * Gets the decorated bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     @Override
     protected Bag<E> decorated() {

@@ -29,7 +29,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the first key currently in this map.
      *
-     * @return the first key currently in this map
+     * @return The first key currently in this map
      * @throws java.util.NoSuchElementException if this map is empty
      */
     K firstKey();
@@ -37,7 +37,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the last key currently in this map.
      *
-     * @return the last key currently in this map
+     * @return The last key currently in this map
      * @throws java.util.NoSuchElementException if this map is empty
      */
     K lastKey();
@@ -58,7 +58,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      * Gets the next key after the one specified.
      *
      * @param key  the key to search for next from
-     * @return the next key, null if no match or at end
+     * @return The next key, null if no match or at end
      */
     K nextKey(K key);
 
@@ -66,7 +66,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      * Gets the previous key before the one specified.
      *
      * @param key  the key to search for previous from
-     * @return the previous key, null if no match or at start
+     * @return The previous key, null if no match or at start
      */
     K previousKey(K key);
 

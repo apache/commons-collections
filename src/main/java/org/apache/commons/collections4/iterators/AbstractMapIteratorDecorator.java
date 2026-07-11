@@ -54,7 +54,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     /**
      * Gets the iterator being decorated.
      *
-     * @return the decorated iterator
+     * @return The decorated iterator
      */
     protected MapIterator<K, V> getMapIterator() {
         return iterator;

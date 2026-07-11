@@ -216,7 +216,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Gets the {@link Comparator} by which collation occurs.
      *
-     * @return the {@link Comparator}
+     * @return The {@link Comparator}
      */
     public Comparator<? super E> getComparator() {
         return comparator;
@@ -225,7 +225,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Gets the index of the iterator that returned the last element.
      *
-     * @return the index of the iterator that returned the last element
+     * @return The index of the iterator that returned the last element
      * @throws IllegalStateException if there is no last returned element
      */
     public int getIteratorIndex() {
@@ -239,7 +239,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Gets the list of Iterators (unmodifiable).
      *
-     * @return the unmodifiable list of iterators added
+     * @return The unmodifiable list of iterators added
      */
     public List<Iterator<? extends E>> getIterators() {
         return UnmodifiableList.unmodifiableList(iterators);
@@ -289,7 +289,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Returns the next ordered element from a child iterator.
      *
-     * @return the next ordered element
+     * @return The next ordered element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
     @Override

@@ -317,7 +317,7 @@ public class PassiveExpiringMap<K, V>
          *
          * @param key the key for the entry.
          * @param value the value for the entry.
-         * @return the expiration time value measured in milliseconds. A
+         * @return The expiration time value measured in milliseconds. A
          *         negative return value indicates the entry never expires.
          */
         long expirationTime(K key, V value);

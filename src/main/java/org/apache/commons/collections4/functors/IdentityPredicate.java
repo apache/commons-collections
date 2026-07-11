@@ -37,7 +37,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
      *
      * @param <T> The type that the predicate queries
      * @param object  the object to compare to
-     * @return the predicate
+     * @return The predicate
      */
     public static <T> Predicate<T> identityPredicate(final T object) {
         if (object == null) {
@@ -62,7 +62,7 @@ public final class IdentityPredicate<T> extends AbstractPredicate<T> implements 
     /**
      * Gets the value.
      *
-     * @return the value
+     * @return The value
      * @since 3.1
      */
     public T getValue() {

@@ -165,7 +165,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * </p>
      *
      * @param object  the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected K transformKey(final K object) {
         if (keyTransformer == null) {
@@ -181,7 +181,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * </p>
      *
      * @param object  the object to transform
-     * @return the transformed object
+     * @return The transformed object
      */
     protected V transformValue(final V object) {
         if (valueTransformer == null) {

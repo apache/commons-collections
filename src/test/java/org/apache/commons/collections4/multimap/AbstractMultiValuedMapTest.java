@@ -506,7 +506,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * This is used to change the assertions used by specific tests.
      * The default implementation returns 0 which indicates ordered iteration behavior.
      *
-     * @return the iteration behavior
+     * @return The iteration behavior
      * @see AbstractCollectionTest#UNORDERED
      */
     protected int getIterationBehaviour() {

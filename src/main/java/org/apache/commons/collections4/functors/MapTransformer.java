@@ -43,7 +43,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map the map, not cloned
-     * @return the transformer
+     * @return The transformer
      */
     public static <I, O> Transformer<I, O> mapTransformer(final Map<? super I, ? extends O> map) {
         if (map == null) {
@@ -68,7 +68,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
     /**
      * Gets the map to lookup in.
      *
-     * @return the map
+     * @return The map
      * @since 3.1
      */
     public Map<? super T, ? extends R> getMap() {
@@ -79,7 +79,7 @@ public final class MapTransformer<T, R> implements Transformer<T, R>, Serializab
      * Transforms the input to result by looking it up in a {@code Map}.
      *
      * @param input  the input object to transform
-     * @return the transformed result
+     * @return The transformed result
      */
     @Override
     public R transform(final T input) {

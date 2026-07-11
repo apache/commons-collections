@@ -118,7 +118,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     /**
      * Gets the decorated bag.
      *
-     * @return the decorated bag
+     * @return The decorated bag
      */
     protected Bag<E> getBag() {
         return (Bag<E>) decorated();

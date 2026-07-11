@@ -118,7 +118,7 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      * @param <T> The type that the predicate queries
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if comparator is null
      */
     public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator) {
@@ -132,7 +132,7 @@ public class ComparatorPredicate<T> extends AbstractPredicate<T> implements Seri
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison
      * @param criterion  the criterion to use to evaluate comparison
-     * @return the predicate
+     * @return The predicate
      * @throws NullPointerException if comparator or criterion is null
      */
     public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator,
