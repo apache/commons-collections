@@ -30,6 +30,17 @@ import org.junit.jupiter.api.Test;
  */
 public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<ConcurrentHashMap<K, V>, K, V> {
 
+    @Nested
+    public class MapEntrySetTest extends AbstractMapTest.MapEntrySetTest {
+        @Test
+        @Override
+        public void testUnsupportedAdd() {
+            resetEmpty();
+            // ConcurrentHashMap.entrySet() supports add.
+            getCollection().add(getFullNonNullElements()[0]);
+        }
+    }
+
     @Override
     public boolean isAllowNullKey() {
         return false;
@@ -51,17 +62,6 @@ public class ConcurrentHashMapSanityTest<K, V> extends AbstractMapTest<Concurren
     @Override
     public boolean isTestSerialization() {
         return false;
-    }
-
-    @Nested
-    public class MapEntrySetTest extends AbstractMapTest.MapEntrySetTest {
-        @Test
-        @Override
-        public void testUnsupportedAdd() {
-            resetEmpty();
-            // ConcurrentHashMap.entrySet() supports add.
-            getCollection().add(getFullNonNullElements()[0]);
-        }
     }
 
     @Override

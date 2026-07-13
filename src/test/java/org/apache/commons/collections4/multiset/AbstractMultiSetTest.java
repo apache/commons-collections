@@ -131,6 +131,21 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
     }
 
+    private static MultiSet.Entry<String> maxCountEntry(final String element) {
+        return new AbstractMultiSet.AbstractEntry<String>() {
+
+            @Override
+            public int getCount() {
+                return Integer.MAX_VALUE;
+            }
+
+            @Override
+            public String getElement() {
+                return element;
+            }
+        };
+    }
+
     /**
      * Bulk test {@link MultiSet#uniqueSet()}.  This method runs through all of
      * the tests in {@link AbstractSetTest}.
@@ -570,34 +585,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
     @Test
     @SuppressWarnings("unchecked")
-    void testMultiSetViewIteratorRemoveKeepsSizeConsistent() {
-        if (!isRemoveSupported()) {
-            return;
-        }
-        // removing through uniqueSet()/entrySet() drops the whole entry, so
-        // size() must fall by that entry's count and the views stay consistent
-        final MultiSet<T> multiset = makeObject();
-        multiset.add((T) "A", 3);
-        multiset.add((T) "B", 2);
-        final Iterator<T> unique = multiset.uniqueSet().iterator();
-        final T removed = unique.next();
-        final int removedCount = multiset.getCount(removed);
-        unique.remove();
-        assertThrows(IllegalStateException.class, unique::remove);
-        assertEquals(5 - removedCount, multiset.size());
-        assertFalse(multiset.contains(removed));
-        assertEquals(multiset.size(), multiset.toArray().length);
-        final Iterator<MultiSet.Entry<T>> entries = multiset.entrySet().iterator();
-        entries.next();
-        entries.remove();
-        assertThrows(IllegalStateException.class, unique::remove);
-        assertEquals(0, multiset.size());
-        assertTrue(multiset.isEmpty());
-        assertEquals(0, multiset.toArray().length);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     void testMultiSetRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -709,21 +696,6 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(Integer.MAX_VALUE, multiset.size());
     }
 
-    private static MultiSet.Entry<String> maxCountEntry(final String element) {
-        return new AbstractMultiSet.AbstractEntry<String>() {
-
-            @Override
-            public int getCount() {
-                return Integer.MAX_VALUE;
-            }
-
-            @Override
-            public String getElement() {
-                return element;
-            }
-        };
-    }
-
     @Test
     @SuppressWarnings("unchecked")
     void testMultiSetToArray() {
@@ -776,6 +748,34 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         assertEquals(2, a);
         assertEquals(2, b);
         assertEquals(1, c);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testMultiSetViewIteratorRemoveKeepsSizeConsistent() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+        // removing through uniqueSet()/entrySet() drops the whole entry, so
+        // size() must fall by that entry's count and the views stay consistent
+        final MultiSet<T> multiset = makeObject();
+        multiset.add((T) "A", 3);
+        multiset.add((T) "B", 2);
+        final Iterator<T> unique = multiset.uniqueSet().iterator();
+        final T removed = unique.next();
+        final int removedCount = multiset.getCount(removed);
+        unique.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
+        assertEquals(5 - removedCount, multiset.size());
+        assertFalse(multiset.contains(removed));
+        assertEquals(multiset.size(), multiset.toArray().length);
+        final Iterator<MultiSet.Entry<T>> entries = multiset.entrySet().iterator();
+        entries.next();
+        entries.remove();
+        assertThrows(IllegalStateException.class, unique::remove);
+        assertEquals(0, multiset.size());
+        assertTrue(multiset.isEmpty());
+        assertEquals(0, multiset.toArray().length);
     }
 
 }

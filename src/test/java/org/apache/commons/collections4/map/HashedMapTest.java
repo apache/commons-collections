@@ -55,12 +55,15 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     /**
-     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
      */
-    @Test
-    void testInitialCapacityZero() {
-        final HashedMap<String, String> map = new HashedMap<>(0);
-        assertEquals(1, map.data.length);
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final HashedMap<K, V> map = new HashedMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
 //    void testCreate() throws Exception {
@@ -69,6 +72,15 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/HashedMap.fullCollection.version4.obj");
 //    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    @Test
+    void testInitialCapacityZero() {
+        final HashedMap<String, String> map = new HashedMap<>(0);
+        assertEquals(1, map.data.length);
+    }
 
     @Test
     void testInternalState() {
@@ -89,17 +101,5 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.putAll(tmpMap);
         // the threshold has changed due to calling ensureCapacity
         assertEquals(96, map.threshold);
-    }
-
-    /**
-     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
-     * must reapply that contract on read.
-     */
-    @ParameterizedTest
-    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
-    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
-        final HashedMap<K, V> map = new HashedMap<>();
-        map.loadFactor = badLoadFactor;
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 }

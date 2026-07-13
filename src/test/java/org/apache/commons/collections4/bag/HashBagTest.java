@@ -46,19 +46,6 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     }
 
     @Test
-    void testDeserializeRejectsNonPositiveCount() throws Exception {
-        final int marker = 0x11223344;
-        final HashBag<String> bag = new HashBag<>();
-        bag.add("X", marker);
-        final byte[] byteArray = serialize(bag);
-        for (final int count : new int[] { 0, -7 }) {
-            final byte[] bytes = byteArray.clone();
-            replaceInt(bytes, marker, count);
-            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
-        }
-    }
-
-    @Test
     void testAddClampsCountAndSizeToIntegerMaxValue() {
         final HashBag<String> bag = new HashBag<>();
         bag.add("X", Integer.MAX_VALUE - 1);
@@ -75,6 +62,19 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
         // size() only drops below Integer.MAX_VALUE once the true size does
         bag.remove("Y");
         assertEquals(Integer.MAX_VALUE - 10, bag.size());
+    }
+
+    @Test
+    void testDeserializeRejectsNonPositiveCount() throws Exception {
+        final int marker = 0x11223344;
+        final HashBag<String> bag = new HashBag<>();
+        bag.add("X", marker);
+        final byte[] byteArray = serialize(bag);
+        for (final int count : new int[] { 0, -7 }) {
+            final byte[] bytes = byteArray.clone();
+            replaceInt(bytes, marker, count);
+            assertThrows(InvalidObjectException.class, () -> deserialize(bytes));
+        }
     }
 
 //    void testCreate() throws Exception {

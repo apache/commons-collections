@@ -103,17 +103,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
-    void testDeserializeRejectsDuplicateInBackingList() throws Exception {
-        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
-        list.add("alpha");
-        list.add("beta");
-        // push a duplicate straight onto the decorated list, bypassing the uniqueness set
-        list.decorated().add("alpha");
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(list));
-
-    }
-
-    @Test
     @SuppressWarnings("unchecked")
     void testAdd() {
         final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
@@ -180,6 +169,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             extraVerify = true;
         }
     }
+
     @Test
     void testCollections304() {
         final List<String> list = new LinkedList<>();
@@ -203,7 +193,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         decoratedList.add(1, s2);
         assertEquals(4, decoratedList.size());
     }
-
     @Test
     @SuppressWarnings("unchecked")
     void testCollections307() {
@@ -298,6 +287,17 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // provide null values as Parameter
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(null, list));
         assertThrows(NullPointerException.class, () -> setUniqueList.createSetBasedOnList(new HashSet<>(), null));
+    }
+
+    @Test
+    void testDeserializeRejectsDuplicateInBackingList() throws Exception {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
+        list.add("alpha");
+        list.add("beta");
+        // push a duplicate straight onto the decorated list, bypassing the uniqueness set
+        list.decorated().add("alpha");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(list));
+
     }
 
     @Test

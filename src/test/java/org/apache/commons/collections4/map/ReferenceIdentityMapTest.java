@@ -238,18 +238,6 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         return new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
-    /**
-     * A crafted stream can carry a load factor the constructor rejects. AbstractReferenceMap.doReadObject
-     * (its own override) must reapply that contract on read.
-     */
-    @ParameterizedTest
-    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
-    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
-        final ReferenceIdentityMap<K, V> map = new ReferenceIdentityMap<>();
-        map.loadFactor = badLoadFactor;
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
-    }
-
     @Test
     @SuppressWarnings("unchecked")
     void testBasics() {
@@ -282,6 +270,18 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         assertTrue(map.containsKey(I1B));
         assertFalse(map.containsValue(I2A));
         assertTrue(map.containsValue(I2B));
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractReferenceMap.doReadObject
+     * (its own override) must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final ReferenceIdentityMap<K, V> map = new ReferenceIdentityMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

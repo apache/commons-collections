@@ -168,16 +168,6 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     @Test
-    void testDeserializeRejectsKeyOrderMismatch() throws Exception {
-        final ListOrderedMap<String, String> map = new ListOrderedMap<>();
-        map.put("one", "1");
-        map.put("two", "2");
-        // drop a key straight from the backing map; the insert-order list still names it
-        map.decorated().remove("one");
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
-    }
-
-    @Test
     void testCOLLECTIONS_474_nonNullValues() {
         final Object key1 = new Object();
         final Object key2 = new Object();
@@ -205,6 +195,16 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         listMap.put(key2, null);
         assertEquals(2, listMap.size(), "Should have two elements");
         listMap.putAll(2, hmap);
+    }
+
+    @Test
+    void testDeserializeRejectsKeyOrderMismatch() throws Exception {
+        final ListOrderedMap<String, String> map = new ListOrderedMap<>();
+        map.put("one", "1");
+        map.put("two", "2");
+        // drop a key straight from the backing map; the insert-order list still names it
+        map.decorated().remove("one");
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     @Test

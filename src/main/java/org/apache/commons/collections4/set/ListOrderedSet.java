@@ -323,6 +323,21 @@ public class ListOrderedSet<E>
     }
 
     /**
+     * Deserializes the set and re-checks that the iteration order matches the
+     * decorated set, as the constructors guarantee.
+     *
+     * @param in  The input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (setOrder.size() != size() || !new HashSet<>(setOrder).equals(decorated())) {
+            throw new InvalidObjectException("Inconsistent ListOrderedSet deserialized: iteration order does not match the set");
+        }
+    }
+
+    /**
      * Removes the element at the specified position from the ordered set.
      * Shifts any subsequent elements to the left.
      *
@@ -414,21 +429,6 @@ public class ListOrderedSet<E>
     @Override
     public String toString() {
         return setOrder.toString();
-    }
-
-    /**
-     * Deserializes the set and re-checks that the iteration order matches the
-     * decorated set, as the constructors guarantee.
-     *
-     * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        if (setOrder.size() != size() || !new HashSet<>(setOrder).equals(decorated())) {
-            throw new InvalidObjectException("Inconsistent ListOrderedSet deserialized: iteration order does not match the set");
-        }
     }
 
 }

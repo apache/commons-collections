@@ -38,6 +38,22 @@ import org.junit.jupiter.api.Test;
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
+    /** An empty-iterating set that reports {@code Integer.MAX_VALUE} elements. */
+    private static Set<String> maxSizeSet() {
+        return new AbstractSet<String>() {
+
+            @Override
+            public Iterator<String> iterator() {
+                return Collections.emptyIterator();
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
+    }
+
     @SuppressWarnings("unchecked")
     public Set<E> buildOne() {
         final HashSet<E> set = new HashSet<>();
@@ -184,29 +200,6 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
     }
 
     @Test
-    void testSizeClampsToIntegerMaxValue() {
-        final CompositeSet<String> set = new CompositeSet<>(maxSizeSet());
-        set.addComposited(maxSizeSet());
-        assertEquals(Integer.MAX_VALUE, set.size());
-    }
-
-    /** An empty-iterating set that reports {@code Integer.MAX_VALUE} elements. */
-    private static Set<String> maxSizeSet() {
-        return new AbstractSet<String>() {
-
-            @Override
-            public Iterator<String> iterator() {
-                return Collections.emptyIterator();
-            }
-
-            @Override
-            public int size() {
-                return Integer.MAX_VALUE;
-            }
-        };
-    }
-
-    @Test
     @SuppressWarnings("unchecked")
     void testRemoveUnderlying() {
         final Set<E> one = buildOne();
@@ -217,6 +210,13 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
 
         two.remove("3");
         assertFalse(set.contains("3"));
+    }
+
+    @Test
+    void testSizeClampsToIntegerMaxValue() {
+        final CompositeSet<String> set = new CompositeSet<>(maxSizeSet());
+        set.addComposited(maxSizeSet());
+        assertEquals(Integer.MAX_VALUE, set.size());
     }
 
 //    void testCreate() throws Exception {

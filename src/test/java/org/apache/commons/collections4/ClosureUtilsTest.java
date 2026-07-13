@@ -274,6 +274,33 @@ class ClosureUtilsTest {
     }
 
     @Test
+    void testSwitchClosureDoesNotMutateInputMap() {
+        final MockClosure<String> def = new MockClosure<>();
+        final MockClosure<String> match = new MockClosure<>();
+        final Map<Predicate<String>, Closure<String>> predicateMap = new HashMap<>();
+        predicateMap.put(null, def);
+        predicateMap.put(EqualPredicate.equalPredicate("HELLO"), match);
+        final Closure<String> closure = ClosureUtils.switchClosure(predicateMap);
+        assertTrue(predicateMap.containsKey(null));
+        closure.execute("HELLO");
+        closure.execute("WORLD");
+        assertEquals(1, match.count);
+        assertEquals(1, def.count);
+
+        final MockClosure<String> mapDef = new MockClosure<>();
+        final MockClosure<String> mapMatch = new MockClosure<>();
+        final Map<String, Closure<String>> objectMap = new HashMap<>();
+        objectMap.put(null, mapDef);
+        objectMap.put("HELLO", mapMatch);
+        final Closure<String> mapClosure = ClosureUtils.switchMapClosure(objectMap);
+        assertTrue(objectMap.containsKey(null));
+        mapClosure.execute("HELLO");
+        mapClosure.execute("WORLD");
+        assertEquals(1, mapMatch.count);
+        assertEquals(1, mapDef.count);
+    }
+
+    @Test
     void testSwitchMapClosure() {
         final MockClosure<String> a = new MockClosure<>();
         final MockClosure<String> b = new MockClosure<>();
@@ -308,33 +335,6 @@ class ClosureUtilsTest {
         assertEquals(NOPClosure.INSTANCE, ClosureUtils.switchMapClosure(new HashMap<>()));
 
         assertThrows(NullPointerException.class, () -> ClosureUtils.switchMapClosure(null));
-    }
-
-    @Test
-    void testSwitchClosureDoesNotMutateInputMap() {
-        final MockClosure<String> def = new MockClosure<>();
-        final MockClosure<String> match = new MockClosure<>();
-        final Map<Predicate<String>, Closure<String>> predicateMap = new HashMap<>();
-        predicateMap.put(null, def);
-        predicateMap.put(EqualPredicate.equalPredicate("HELLO"), match);
-        final Closure<String> closure = ClosureUtils.switchClosure(predicateMap);
-        assertTrue(predicateMap.containsKey(null));
-        closure.execute("HELLO");
-        closure.execute("WORLD");
-        assertEquals(1, match.count);
-        assertEquals(1, def.count);
-
-        final MockClosure<String> mapDef = new MockClosure<>();
-        final MockClosure<String> mapMatch = new MockClosure<>();
-        final Map<String, Closure<String>> objectMap = new HashMap<>();
-        objectMap.put(null, mapDef);
-        objectMap.put("HELLO", mapMatch);
-        final Closure<String> mapClosure = ClosureUtils.switchMapClosure(objectMap);
-        assertTrue(objectMap.containsKey(null));
-        mapClosure.execute("HELLO");
-        mapClosure.execute("WORLD");
-        assertEquals(1, mapMatch.count);
-        assertEquals(1, mapDef.count);
     }
 
     @Test

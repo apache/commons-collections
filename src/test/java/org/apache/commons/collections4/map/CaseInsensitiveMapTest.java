@@ -50,18 +50,6 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         return new CaseInsensitiveMap<>();
     }
 
-    /**
-     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
-     * must reapply that contract on read.
-     */
-    @ParameterizedTest
-    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
-    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
-        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>();
-        map.loadFactor = badLoadFactor;
-        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
-    }
-
     @Test
     @SuppressWarnings("unchecked")
     void testCaseInsensitive() {
@@ -82,6 +70,18 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         final CaseInsensitiveMap<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
+    }
+
+    /**
+     * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
+     * must reapply that contract on read.
+     */
+    @ParameterizedTest
+    @ValueSource(floats = {0.0f, -1.0f, Float.NaN})
+    void testDeserializeRejectsInvalidLoadFactor(final float badLoadFactor) {
+        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<>();
+        map.loadFactor = badLoadFactor;
+        assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
     /**

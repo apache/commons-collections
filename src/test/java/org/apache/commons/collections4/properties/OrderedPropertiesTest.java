@@ -120,20 +120,6 @@ class OrderedPropertiesTest {
     }
 
     @Test
-    void testComputeToNullRemovesKey() {
-        final OrderedProperties orderedProperties = new OrderedProperties();
-        orderedProperties.put("a", "1");
-        orderedProperties.put("b", "2");
-        // A remapping to null removes the mapping; the ordered key view must follow.
-        orderedProperties.compute("a", (k, v) -> null);
-        assertFalse(orderedProperties.containsKey("a"));
-        assertFalse(orderedProperties.keySet().contains("a"));
-        assertEquals(1, orderedProperties.size());
-        assertEquals("[b]", orderedProperties.keySet().toString());
-        assertEquals("{b=2}", orderedProperties.toString());
-    }
-
-    @Test
     void testComputeIfAbsent() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         int first = 1;
@@ -151,6 +137,20 @@ class OrderedPropertiesTest {
             orderedProperties.computeIfAbsent("key" + i, k -> "value" + aInt.get());
         }
         assertDescendingOrder(orderedProperties);
+    }
+
+    @Test
+    void testComputeToNullRemovesKey() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        orderedProperties.put("a", "1");
+        orderedProperties.put("b", "2");
+        // A remapping to null removes the mapping; the ordered key view must follow.
+        orderedProperties.compute("a", (k, v) -> null);
+        assertFalse(orderedProperties.containsKey("a"));
+        assertFalse(orderedProperties.keySet().contains("a"));
+        assertEquals(1, orderedProperties.size());
+        assertEquals("[b]", orderedProperties.keySet().toString());
+        assertEquals("{b=2}", orderedProperties.toString());
     }
 
     @Test
