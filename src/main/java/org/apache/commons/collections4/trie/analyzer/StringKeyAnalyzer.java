@@ -33,8 +33,8 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
     /** A singleton instance of {@link StringKeyAnalyzer}. */
     public static final StringKeyAnalyzer INSTANCE = new StringKeyAnalyzer();
 
-    /** The number of bits per {@link Character}. */
-    public static final int LENGTH = Character.SIZE;
+    /** The number of bits per {@link Character} plus a presence bit. */
+    public static final int LENGTH = Character.SIZE + 1;
 
     /** A bit mask where the first bit is 1 and the others are zero. */
     private static final int MSB = 0x8000;
@@ -58,8 +58,6 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
     public int bitIndex(final String key, final int offsetInBits, final int lengthInBits,
                         final String other, final int otherOffsetInBits, final int otherLengthInBits) {
 
-        boolean allNull = true;
-
         if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
                 || lengthInBits % LENGTH != 0 || otherLengthInBits % LENGTH != 0) {
             throw new IllegalArgumentException("The offsets and lengths must be at Character boundaries");
@@ -69,43 +67,29 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         final int beginIndex2 = otherOffsetInBits / LENGTH;
 
         final int endIndex1 = beginIndex1 + lengthInBits / LENGTH;
-        final int endIndex2 = beginIndex2 + otherLengthInBits / LENGTH;
+        final int endIndex2 = other == null ? beginIndex2 : beginIndex2 + otherLengthInBits / LENGTH;
 
         final int length = Math.max(endIndex1, endIndex2);
 
-        // Look at each character, and if they're different
-        // then figure out which bit makes the difference
-        // and return it.
-        char k = 0;
-        char f = 0;
         for (int i = 0; i < length; i++) {
             final int index1 = beginIndex1 + i;
             final int index2 = beginIndex2 + i;
 
-            if (index1 >= endIndex1) {
-                k = 0;
+            if (index1 < endIndex1 && (other != null && index2 < endIndex2)) {
+                final char k = key.charAt(index1);
+                final char f = other.charAt(index2);
+
+                if (k != f) {
+                    final int x = k ^ f;
+                    return i * LENGTH + 1 + Integer.numberOfLeadingZeros(x) - (LENGTH - 1);
+                }
             } else {
-                k = key.charAt(index1);
-            }
-
-            if (other == null || index2 >= endIndex2) {
-                f = 0;
-            } else {
-                f = other.charAt(index2);
-            }
-
-            if (k != f) {
-                final int x = k ^ f;
-                return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
-            }
-
-            if (k != 0) {
-                allNull = false;
+                // One has ended, the other has not. They differ at the presence bit of this block.
+                return i * LENGTH;
             }
         }
 
-        // All bits are 0
-        if (allNull) {
+        if (lengthInBits == 0 && (other == null || otherLengthInBits == 0)) {
             return NULL_BIT_KEY;
         }
 
@@ -127,7 +111,11 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         final int index = bitIndex / LENGTH;
         final int bit = bitIndex % LENGTH;
 
-        return (key.charAt(index) & mask(bit)) != 0;
+        if (bit == 0) {
+            return true;
+        }
+
+        return (key.charAt(index) & mask(bit - 1)) != 0;
     }
 
     @Override

@@ -667,6 +667,30 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals("ge", tailMap.get("ge"));
     }
 
+    @Test
+    void testNullTerminatedKey1() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("x", 0);
+        trie.put("x\u0000", 1);
+        assertTrue(trie.containsKey("x"));
+        assertTrue(trie.containsKey("x\u0000"));
+        assertEquals(2, trie.size());
+        assertEquals(0, trie.get("x"));
+        assertEquals(1, trie.get("x\u0000"));
+    }
+
+    @Test
+    void testNullTerminatedKey2() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("x\u0000", 1);
+        trie.put("x", 0);
+        assertTrue(trie.containsKey("x"));
+        assertTrue(trie.containsKey("x\u0000"));
+        assertEquals(2, trie.size());
+        assertEquals(0, trie.get("x"));
+        assertEquals(1, trie.get("x\u0000"));
+    }
+
 //    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
@@ -677,5 +701,4 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/PatriciaTrie.fullCollection.version4.obj");
 //    }
-
 }
