@@ -80,6 +80,7 @@
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-896">Add TransformedMultiSet plus fill minor gaps for MultiSet vs. Bags (#708).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-895">Deprecate the Bag family in favor of the MultiSet family (#709).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Clamp size() int overflow in composite and multi-valued classes (#710).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractDualBidiMap.MapEntry.setValue returning new value (#711).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
