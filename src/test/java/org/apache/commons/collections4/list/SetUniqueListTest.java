@@ -340,6 +340,27 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
+    void testIntCollectionAddAllOutOfBoundsIndex() {
+        final SetUniqueList<Integer> list = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
+        list.add(Integer.valueOf(1));
+        final Integer newElement = Integer.valueOf(2);
+
+        // an out-of-range index must be rejected before the uniqueness set is mutated
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(5, newElement));
+        assertFalse(list.contains(newElement), "rejected element leaked into the uniqueness set");
+        assertEquals(list.size(), list.asSet().size(), "list and uniqueness set diverged");
+        // otherwise the element is silently dropped on the next add
+        assertTrue(list.add(newElement));
+        assertEquals(newElement, list.get(1));
+
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> list.addAll(9, Arrays.asList(Integer.valueOf(3), Integer.valueOf(4))));
+        assertFalse(list.contains(Integer.valueOf(3)));
+        assertFalse(list.contains(Integer.valueOf(4)));
+        assertEquals(list.size(), list.asSet().size(), "list and uniqueness set diverged");
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testListIterator() {
         final SetUniqueList<E> lset = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());

@@ -219,6 +219,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public void add(final int index, final E object) {
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+        }
         // adds element if it is not contained already
         if (!set.contains(object)) {
             set.add(object);
@@ -261,6 +264,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public boolean addAll(final int index, final Collection<? extends E> coll) {
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+        }
         final List<E> temp = new ArrayList<>();
         for (final E e : coll) {
             if (set.add(e)) {

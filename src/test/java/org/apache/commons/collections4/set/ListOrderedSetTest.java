@@ -17,12 +17,14 @@
 package org.apache.commons.collections4.set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -169,6 +171,28 @@ public class ListOrderedSetTest<E>
         assertSame(THREE, set.get(1));
         assertSame(TWO, set.get(2));
         assertSame(ONE, set.get(3));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testListAddIndexedOutOfBounds() {
+        final ListOrderedSet<E> set = makeObject();
+        set.add((E) ZERO);
+
+        // an out-of-range index is rejected before the backing set is touched
+        assertThrows(IndexOutOfBoundsException.class, () -> set.add(5, (E) ONE));
+        assertFalse(set.contains(ONE), "rejected element leaked into the backing set");
+        assertEquals(set.size(), set.asList().size(), "backing set and order list diverged");
+        // the element is still insertable afterwards
+        assertTrue(set.add((E) ONE));
+        assertSame(ONE, set.get(1));
+
+        final ListOrderedSet<E> other = makeObject();
+        other.add((E) ZERO);
+        assertThrows(IndexOutOfBoundsException.class, () -> other.addAll(9, Arrays.asList((E) ONE, (E) TWO)));
+        assertFalse(other.contains(ONE));
+        assertFalse(other.contains(TWO));
+        assertEquals(other.size(), other.asList().size(), "backing set and order list diverged");
     }
 
     @Test

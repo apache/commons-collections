@@ -232,6 +232,9 @@ public class ListOrderedSet<E>
      * @see List#add(int, Object)
      */
     public void add(final int index, final E object) {
+        if (index < 0 || index > setOrder.size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + setOrder.size());
+        }
         if (!contains(object)) {
             decorated().add(object);
             setOrder.add(index, object);
@@ -259,6 +262,9 @@ public class ListOrderedSet<E>
      * @see List#addAll(int, Collection)
      */
     public boolean addAll(final int index, final Collection<? extends E> coll) {
+        if (index < 0 || index > setOrder.size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + setOrder.size());
+        }
         boolean changed = false;
         // collect all elements to be added for performance reasons
         final List<E> toAdd = new ArrayList<>();
