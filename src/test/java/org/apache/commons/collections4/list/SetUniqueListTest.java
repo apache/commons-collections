@@ -356,6 +356,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertThrows(IndexOutOfBoundsException.class,
                 () -> list.addAll(9, Arrays.asList(Integer.valueOf(3), Integer.valueOf(4))));
         assertFalse(list.contains(Integer.valueOf(3)));
+        assertFalse(list.contains(Integer.valueOf(4)));
         assertEquals(list.size(), list.asSet().size(), "list and uniqueness set diverged");
     }
 
