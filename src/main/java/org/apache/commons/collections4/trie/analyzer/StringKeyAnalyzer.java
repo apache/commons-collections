@@ -75,7 +75,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
             final int index1 = beginIndex1 + i;
             final int index2 = beginIndex2 + i;
 
-            if (index1 < endIndex1 && (other != null && index2 < endIndex2)) {
+            if (index1 < endIndex1 && other != null && index2 < endIndex2) {
                 final char k = key.charAt(index1);
                 final char f = other.charAt(index2);
 
