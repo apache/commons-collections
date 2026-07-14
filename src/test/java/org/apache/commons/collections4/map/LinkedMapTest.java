@@ -119,6 +119,16 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return new LinkedMap<>();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void testClone() {
+        final LinkedMap<K, V> map = new LinkedMap<>(10);
+        map.put((K) "1", (V) "1");
+        final Map<K, V> cloned = map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+
     /**
      * A crafted stream can carry a load factor the constructor rejects. AbstractHashedMap.doReadObject
      * must reapply that contract on read.
@@ -129,16 +139,6 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final LinkedMap<K, V> map = new LinkedMap<>();
         map.loadFactor = badLoadFactor;
         assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void testClone() {
-        final LinkedMap<K, V> map = new LinkedMap<>(10);
-        map.put((K) "1", (V) "1");
-        final Map<K, V> cloned = map.clone();
-        assertEquals(map.size(), cloned.size());
-        assertSame(map.get("1"), cloned.get("1"));
     }
 
     @Test

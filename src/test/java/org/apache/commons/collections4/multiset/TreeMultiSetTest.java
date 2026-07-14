@@ -53,16 +53,6 @@ public class TreeMultiSetTest<T> extends AbstractSortedMultiSetTest<T> {
     }
 
     @Test
-    void testConstructorFromIterable() {
-        final Iterable<String> iterable = () -> Arrays.asList("b", "a", "b").iterator();
-        final SortedMultiSet<String> multiset = new TreeMultiSet<>(iterable);
-        assertEquals(3, multiset.size());
-        assertEquals(2, multiset.getCount("b"));
-        assertEquals("a", multiset.first());
-        assertEquals("b", multiset.last());
-    }
-
-    @Test
     void testAddNonComparable() {
         final MultiSet<Object> multiset = new TreeMultiSet<>();
 
@@ -90,6 +80,16 @@ public class TreeMultiSetTest<T> extends AbstractSortedMultiSetTest<T> {
 
         final SortedMultiSet<String> multiset2 = new TreeMultiSet<>(String.CASE_INSENSITIVE_ORDER);
         assertEquals(String.CASE_INSENSITIVE_ORDER, multiset2.comparator());
+    }
+
+    @Test
+    void testConstructorFromIterable() {
+        final Iterable<String> iterable = () -> Arrays.asList("b", "a", "b").iterator();
+        final SortedMultiSet<String> multiset = new TreeMultiSet<>(iterable);
+        assertEquals(3, multiset.size());
+        assertEquals(2, multiset.getCount("b"));
+        assertEquals("a", multiset.first());
+        assertEquals("b", multiset.last());
     }
 
     @Test

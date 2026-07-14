@@ -343,6 +343,21 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return new SetListListIterator<>(super.listIterator(index), set);
     }
 
+    /**
+     * Deserializes the list and re-checks the no-duplicate invariant the
+     * constructors guarantee.
+     *
+     * @param in  The input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        if (set.size() != size() || !new HashSet<>(decorated()).equals(set)) {
+            throw new InvalidObjectException("Inconsistent SetUniqueList deserialized: backing list does not match the uniqueness set");
+        }
+    }
+
     @Override
     public E remove(final int index) {
         final E result = super.remove(index);
@@ -441,21 +456,6 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         final List<E> superSubList = super.subList(fromIndex, toIndex);
         final Set<E> subSet = createSetBasedOnList(set, superSubList);
         return ListUtils.unmodifiableList(new SetUniqueList<>(superSubList, subSet));
-    }
-
-    /**
-     * Deserializes the list and re-checks the no-duplicate invariant the
-     * constructors guarantee.
-     *
-     * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
-     * @throws ClassNotFoundException if a class read from the stream cannot be loaded
-     */
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        if (set.size() != size() || !new HashSet<>(decorated()).equals(set)) {
-            throw new InvalidObjectException("Inconsistent SetUniqueList deserialized: backing list does not match the uniqueness set");
-        }
     }
 
 }

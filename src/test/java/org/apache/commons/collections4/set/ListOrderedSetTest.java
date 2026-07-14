@@ -96,6 +96,15 @@ public class ListOrderedSetTest<E>
     }
 
     @Test
+    void testDecorator() {
+        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null));
+        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null));
+        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null));
+        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<>(), null));
+        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<>()));
+    }
+
+    @Test
     void testDeserializeRejectsOrderMismatch() throws Exception {
         final ListOrderedSet<String> set = ListOrderedSet.listOrderedSet(new HashSet<>());
         set.add("red");
@@ -103,15 +112,6 @@ public class ListOrderedSetTest<E>
         // remove an element from the decorated set only; the order list keeps naming it
         set.decorated().remove("red");
         assertThrows(InvalidObjectException.class, () -> serializeDeserialize(set));
-    }
-
-    @Test
-    void testDecorator() {
-        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((List<E>) null));
-        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet((Set<E>) null));
-        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, null));
-        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(new HashSet<>(), null));
-        assertThrows(NullPointerException.class, () -> ListOrderedSet.listOrderedSet(null, new ArrayList<>()));
     }
 
     @Test

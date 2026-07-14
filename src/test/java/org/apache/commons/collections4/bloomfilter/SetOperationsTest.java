@@ -180,6 +180,32 @@ class SetOperationsTest {
         assertSymmetricOperation(0.0, SetOperations::cosineSimilarity, filter1, filter3);
     }
 
+    @Test
+    final void testCosineSimilarityLargeCardinalityNoOverflow() {
+        // Create two identical BitMapExtractors with cardinality > 46341 each.
+        // Each long has 64 bits. We want cardinality = 50000.
+        // 781 * 64 = 49984, plus 16 more bits = 50000.
+        final long[] bitMaps = new long[782];
+        for (int i = 0; i < 781; i++) {
+            bitMaps[i] = -1L; // all 64 bits set
+        }
+        // Last word: 16 bits set = 0xFFFF
+        bitMaps[781] = 0xFFFFL;
+
+        final BitMapExtractor extractor = BitMapExtractor.fromBitMapArray(bitMaps);
+        // Verify cardinality is 50000
+        assertEquals(50000, SetOperations.cardinality(extractor));
+
+        // Cosine similarity of two identical non-empty extractors should be 1.0.
+        // With integer overflow: 50000 * 50000 = 2,500,000,000 > Integer.MAX_VALUE, overflows to negative,
+        // Math.sqrt(negative) = NaN, so the result would be NaN instead of 1.0.
+        final double similarity = SetOperations.cosineSimilarity(extractor, extractor);
+        assertEquals(1.0, similarity, 1e-9, "cosineSimilarity of identical large-cardinality extractors should be 1.0, not NaN");
+
+        final double distance = SetOperations.cosineDistance(extractor, extractor);
+        assertEquals(0.0, distance, 1e-9, "cosineDistance of identical large-cardinality extractors should be 0.0, not NaN");
+    }
+
     /**
      * Tests that the Hamming distance is correctly calculated.
      */
@@ -323,31 +349,5 @@ class SetOperationsTest {
         filter1 = createFilter(shape, IndexExtractor.fromIndexArray(5, 63));
         filter2 = createFilter(shape2, IndexExtractor.fromIndexArray(5, 64, 169));
         assertSymmetricOperation(3, SetOperations::xorCardinality, filter1, filter2);
-    }
-
-    @Test
-    final void testCosineSimilarityLargeCardinalityNoOverflow() {
-        // Create two identical BitMapExtractors with cardinality > 46341 each.
-        // Each long has 64 bits. We want cardinality = 50000.
-        // 781 * 64 = 49984, plus 16 more bits = 50000.
-        final long[] bitMaps = new long[782];
-        for (int i = 0; i < 781; i++) {
-            bitMaps[i] = -1L; // all 64 bits set
-        }
-        // Last word: 16 bits set = 0xFFFF
-        bitMaps[781] = 0xFFFFL;
-
-        final BitMapExtractor extractor = BitMapExtractor.fromBitMapArray(bitMaps);
-        // Verify cardinality is 50000
-        assertEquals(50000, SetOperations.cardinality(extractor));
-
-        // Cosine similarity of two identical non-empty extractors should be 1.0.
-        // With integer overflow: 50000 * 50000 = 2,500,000,000 > Integer.MAX_VALUE, overflows to negative,
-        // Math.sqrt(negative) = NaN, so the result would be NaN instead of 1.0.
-        final double similarity = SetOperations.cosineSimilarity(extractor, extractor);
-        assertEquals(1.0, similarity, 1e-9, "cosineSimilarity of identical large-cardinality extractors should be 1.0, not NaN");
-
-        final double distance = SetOperations.cosineDistance(extractor, extractor);
-        assertEquals(0.0, distance, 1e-9, "cosineDistance of identical large-cardinality extractors should be 0.0, not NaN");
     }
 }

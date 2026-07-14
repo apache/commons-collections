@@ -51,6 +51,22 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         }
     }
 
+    /** An empty-iterating map that reports {@code Integer.MAX_VALUE} mappings. */
+    private static Map<String, String> maxSizeMap() {
+        return new AbstractMap<String, String>() {
+
+            @Override
+            public Set<Map.Entry<String, String>> entrySet() {
+                return Collections.emptySet();
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
+    }
+
     /** Used as a flag in MapMutator tests */
     private boolean pass;
 
@@ -242,22 +258,6 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     void testSizeClampsToIntegerMaxValue() {
         final CompositeMap<String, String> map = new CompositeMap<>(maxSizeMap(), maxSizeMap());
         assertEquals(Integer.MAX_VALUE, map.size());
-    }
-
-    /** An empty-iterating map that reports {@code Integer.MAX_VALUE} mappings. */
-    private static Map<String, String> maxSizeMap() {
-        return new AbstractMap<String, String>() {
-
-            @Override
-            public Set<Map.Entry<String, String>> entrySet() {
-                return Collections.emptySet();
-            }
-
-            @Override
-            public int size() {
-                return Integer.MAX_VALUE;
-            }
-        };
     }
 
 //    void testCreate() throws Exception {

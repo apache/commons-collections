@@ -25,6 +25,7 @@
   <release version="4.6.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
     <action type="fix" dev="ggregory" due-to="Naveed Khan">SetUniqueList and ListOrderedSet leave the backing collection inconsistent when add(int, Object) or addAll(int, Collection) is called with an out-of-range index.</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">DualHashBidiMap, DualLinkedHashBidiMap, and DualTreeBidiMap entrySet() Map.Entry.setValue(Object) returns the new value instead of the previous value.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">AbstractMapBag and AbstractMapMultiSet.add(Object, int) overflow the size and element count past Integer.MAX_VALUE.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan">CompositeCollection, CompositeSet, CompositeMap, AbstractMultiValuedMap and AbstractMultiSet size() overflow int when the total exceeds Integer.MAX_VALUE.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-776">Wrapping PassiveExpiringMap in Collections.synchronizedMap breaks expiration.</action>
@@ -80,6 +81,7 @@
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-896">Add TransformedMultiSet plus fill minor gaps for MultiSet vs. Bags (#708).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-895">Deprecate the Bag family in favor of the MultiSet family (#709).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Clamp size() int overflow in composite and multi-valued classes (#710).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractDualBidiMap.MapEntry.setValue returning new value (#711).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>

@@ -108,6 +108,19 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             }
         }
 
+        @Test
+        void testMapEntrySetValueReturnsOldValue() {
+            if (!isSetValueSupported()) {
+                return;
+            }
+            final V newValue = getNewSampleValues()[0];
+            resetFull();
+            final Map.Entry<K, V> entry = BidiMapEntrySetTest.this.getCollection().iterator().next();
+            final V oldValue = entry.getValue();
+            assertEquals(oldValue, entry.setValue(newValue));
+            assertEquals(newValue, entry.getValue());
+        }
+
     }
 
     @Nested
