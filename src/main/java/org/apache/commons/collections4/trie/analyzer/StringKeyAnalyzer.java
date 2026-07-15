@@ -114,7 +114,6 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         if (bit == 0) {
             return true;
         }
-
         return (key.charAt(index) & mask(bit - 1)) != 0;
     }
 
