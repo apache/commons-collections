@@ -343,11 +343,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             it.remove();
         }
 
-        /**
-         * {@inheritDoc}
-         *
-         * @throws UnsupportedOperationException always, as this method is not supported by the iterator.
-         */
         @Override
         public V setValue(final V value) {
             if (current == null) {
