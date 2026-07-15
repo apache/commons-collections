@@ -114,6 +114,13 @@ public final class UnmodifiableMultiValuedMap<K, V>
         return UnmodifiableSet.unmodifiableSet(decorated().keySet());
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The returned map iterator's {@link MapIterator#setValue(Object)} method is not supported
+     * and will throw an {@link UnsupportedOperationException}.
+     * </p>
+     */
     @Override
     public MapIterator<K, V> mapIterator() {
         return UnmodifiableMapIterator.unmodifiableMapIterator(decorated().mapIterator());
