@@ -199,10 +199,6 @@ public interface MultiValuedMap<K, V> {
      * A map iterator is an efficient way of iterating over maps. There is no
      * need to access the entries collection or use {@code Map.Entry} objects.
      * </p>
-     * <p>
-     * The returned map iterator's {@link MapIterator#setValue(Object)} method is not supported
-     * and will throw an {@link UnsupportedOperationException}.
-     * </p>
      *
      * @return a map iterator
      */
