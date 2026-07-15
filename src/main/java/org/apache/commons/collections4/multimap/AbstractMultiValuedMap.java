@@ -742,13 +742,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         return getMap().keySet();
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * The returned map iterator's {@link MapIterator#setValue(Object)} method is not supported
-     * and will throw an {@link UnsupportedOperationException}.
-     * </p>
-     */
     @Override
     public MapIterator<K, V> mapIterator() {
         if (isEmpty()) {
