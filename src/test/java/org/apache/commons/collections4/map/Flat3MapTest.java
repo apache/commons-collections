@@ -279,21 +279,6 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     @Test
-    void testEntrySetRemoveChecksValue() {
-        final Flat3Map<Integer, String> m = new Flat3Map<>();
-        m.put(ONE, TEN);
-        m.put(TWO, TWENTY);
-        // key present but value differs: entrySet().remove must not remove
-        assertFalse(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TWENTY)));
-        assertEquals(2, m.size());
-        assertEquals(TEN, m.get(ONE));
-        // matching key and value: removes
-        assertTrue(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TEN)));
-        assertFalse(m.containsKey(ONE));
-        assertEquals(1, m.size());
-    }
-
-    @Test
     @SuppressWarnings("unchecked")
     void testEntryIteratorSetValue1() throws Exception {
         final Flat3Map<K, V> map = makeObject();
@@ -362,6 +347,21 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         putAndRemove(new LinkedHashMap<>());
         // Actual test
         putAndRemove(new Flat3Map<>());
+    }
+
+    @Test
+    void testEntrySetRemoveChecksValue() {
+        final Flat3Map<Integer, String> m = new Flat3Map<>();
+        m.put(ONE, TEN);
+        m.put(TWO, TWENTY);
+        // key present but value differs: entrySet().remove must not remove
+        assertFalse(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TWENTY)));
+        assertEquals(2, m.size());
+        assertEquals(TEN, m.get(ONE));
+        // matching key and value: removes
+        assertTrue(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TEN)));
+        assertFalse(m.containsKey(ONE));
+        assertEquals(1, m.size());
     }
 
     @Test

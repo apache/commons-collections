@@ -137,6 +137,102 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Test
+    public void testControlCharactersRegression() {
+        final String[] keys = {
+            "",
+            "\u0000",
+            "\u0001",
+            "\u0002",
+            "\u001F",
+            "\u007F",
+            "x",
+            "x\u0000",
+            "x\u0001",
+            "x\u0002",
+            "x\u001F",
+            "x\u007F",
+            "x\u0000y",
+            "x\u0001y"
+        };
+
+        // 1. Insertion, Retrieval, containsKey, size compared with HashMap
+        final java.util.Map<String, String> hashMap = new java.util.HashMap<>();
+        final PatriciaTrie<String> trie = new PatriciaTrie<>();
+
+        for (int i = 0; i < keys.length; i++) {
+            final String key = keys[i];
+            final String value = "val_" + i;
+
+            assertFalse(trie.containsKey(key));
+            assertNull(trie.get(key));
+
+            trie.put(key, value);
+            hashMap.put(key, value);
+
+            assertEquals(hashMap.size(), trie.size());
+            assertTrue(trie.containsKey(key));
+            assertEquals(value, trie.get(key));
+        }
+
+        // Verify all elements present and distinct
+        for (int i = 0; i < keys.length; i++) {
+            final String key = keys[i];
+            assertTrue(trie.containsKey(key));
+            assertEquals("val_" + i, trie.get(key));
+        }
+
+        // 2. Iteration order (compared with TreeMap)
+        final java.util.TreeMap<String, String> treeMap = new java.util.TreeMap<>(hashMap);
+        final java.util.List<String> trieKeys = new java.util.ArrayList<>(trie.keySet());
+        final java.util.List<String> expectedKeys = new java.util.ArrayList<>(treeMap.keySet());
+        assertEquals(expectedKeys, trieKeys);
+
+        // 3. prefixMap
+        final String[] prefixes = {"", "x", "x\u0000", "x\u0001", "x\u0002", "x\u001F", "x\u007F", "y"};
+        for (final String prefix : prefixes) {
+            final java.util.SortedMap<String, String> prefixMap = trie.prefixMap(prefix);
+            final java.util.TreeMap<String, String> expectedPrefixMap = new java.util.TreeMap<>();
+            for (final java.util.Map.Entry<String, String> entry : treeMap.entrySet()) {
+                if (entry.getKey().startsWith(prefix)) {
+                    expectedPrefixMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+            assertEquals(expectedPrefixMap.size(), prefixMap.size());
+            assertEquals(expectedPrefixMap, new java.util.TreeMap<>(prefixMap));
+        }
+
+        // 4. headMap, tailMap, subMap (compared with TreeMap)
+        for (final String k1 : keys) {
+            assertEquals(new java.util.TreeMap<>(treeMap.headMap(k1)), new java.util.TreeMap<>(trie.headMap(k1)));
+            assertEquals(new java.util.TreeMap<>(treeMap.tailMap(k1)), new java.util.TreeMap<>(trie.tailMap(k1)));
+            for (final String k2 : keys) {
+                if (k1.compareTo(k2) <= 0) {
+                    assertEquals(new java.util.TreeMap<>(treeMap.subMap(k1, k2)), new java.util.TreeMap<>(trie.subMap(k1, k2)));
+                } else {
+                    assertThrows(IllegalArgumentException.class, () -> trie.subMap(k1, k2));
+                }
+            }
+        }
+
+        // 5. Remove (compared with HashMap)
+        for (int i = 0; i < keys.length; i++) {
+            final String key = keys[i];
+            final String value = "val_" + i;
+
+            assertTrue(trie.containsKey(key));
+            assertEquals(value, trie.remove(key));
+            assertFalse(trie.containsKey(key));
+            assertNull(trie.get(key));
+
+            hashMap.remove(key);
+            assertEquals(hashMap.size(), trie.size());
+        }
+
+        assertTrue(trie.isEmpty());
+        assertEquals(0, trie.size());
+    }
+
+    @Test
     void testHeadMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
         trie.put("ga", "ga");
@@ -185,6 +281,30 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertNull(headMap.get("gc"));
         assertNull(headMap.get("gd"));
         assertNull(headMap.get("ge"));
+    }
+
+    @Test
+    void testNullTerminatedKey1() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("x", 0);
+        trie.put("x\u0000", 1);
+        assertTrue(trie.containsKey("x"));
+        assertTrue(trie.containsKey("x\u0000"));
+        assertEquals(2, trie.size());
+        assertEquals(0, trie.get("x"));
+        assertEquals(1, trie.get("x\u0000"));
+    }
+
+    @Test
+    void testNullTerminatedKey2() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("x\u0000", 1);
+        trie.put("x", 0);
+        assertTrue(trie.containsKey("x"));
+        assertTrue(trie.containsKey("x\u0000"));
+        assertEquals(2, trie.size());
+        assertEquals(0, trie.get("x"));
+        assertEquals(1, trie.get("x\u0000"));
     }
 
     @Test
@@ -521,6 +641,7 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertFalse(iter.hasNext());
     }
 
+
     @Test
     void testPrefixMapSizes() {
         // COLLECTIONS-525
@@ -624,7 +745,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertNull(subMap.get("ge"));
     }
 
-
     @Test
     void testTailMap() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
@@ -665,126 +785,6 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertNull(tailMap.get("gc"));
         assertNull(tailMap.get("gd"));
         assertEquals("ge", tailMap.get("ge"));
-    }
-
-    @Test
-    void testNullTerminatedKey1() {
-        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
-        trie.put("x", 0);
-        trie.put("x\u0000", 1);
-        assertTrue(trie.containsKey("x"));
-        assertTrue(trie.containsKey("x\u0000"));
-        assertEquals(2, trie.size());
-        assertEquals(0, trie.get("x"));
-        assertEquals(1, trie.get("x\u0000"));
-    }
-
-    @Test
-    void testNullTerminatedKey2() {
-        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
-        trie.put("x\u0000", 1);
-        trie.put("x", 0);
-        assertTrue(trie.containsKey("x"));
-        assertTrue(trie.containsKey("x\u0000"));
-        assertEquals(2, trie.size());
-        assertEquals(0, trie.get("x"));
-        assertEquals(1, trie.get("x\u0000"));
-    }
-
-    @Test
-    public void testControlCharactersRegression() {
-        final String[] keys = {
-            "",
-            "\u0000",
-            "\u0001",
-            "\u0002",
-            "\u001F",
-            "\u007F",
-            "x",
-            "x\u0000",
-            "x\u0001",
-            "x\u0002",
-            "x\u001F",
-            "x\u007F",
-            "x\u0000y",
-            "x\u0001y"
-        };
-
-        // 1. Insertion, Retrieval, containsKey, size compared with HashMap
-        final java.util.Map<String, String> hashMap = new java.util.HashMap<>();
-        final PatriciaTrie<String> trie = new PatriciaTrie<>();
-
-        for (int i = 0; i < keys.length; i++) {
-            final String key = keys[i];
-            final String value = "val_" + i;
-
-            assertFalse(trie.containsKey(key));
-            assertNull(trie.get(key));
-
-            trie.put(key, value);
-            hashMap.put(key, value);
-
-            assertEquals(hashMap.size(), trie.size());
-            assertTrue(trie.containsKey(key));
-            assertEquals(value, trie.get(key));
-        }
-
-        // Verify all elements present and distinct
-        for (int i = 0; i < keys.length; i++) {
-            final String key = keys[i];
-            assertTrue(trie.containsKey(key));
-            assertEquals("val_" + i, trie.get(key));
-        }
-
-        // 2. Iteration order (compared with TreeMap)
-        final java.util.TreeMap<String, String> treeMap = new java.util.TreeMap<>(hashMap);
-        final java.util.List<String> trieKeys = new java.util.ArrayList<>(trie.keySet());
-        final java.util.List<String> expectedKeys = new java.util.ArrayList<>(treeMap.keySet());
-        assertEquals(expectedKeys, trieKeys);
-
-        // 3. prefixMap
-        final String[] prefixes = {"", "x", "x\u0000", "x\u0001", "x\u0002", "x\u001F", "x\u007F", "y"};
-        for (final String prefix : prefixes) {
-            final java.util.SortedMap<String, String> prefixMap = trie.prefixMap(prefix);
-            final java.util.TreeMap<String, String> expectedPrefixMap = new java.util.TreeMap<>();
-            for (final java.util.Map.Entry<String, String> entry : treeMap.entrySet()) {
-                if (entry.getKey().startsWith(prefix)) {
-                    expectedPrefixMap.put(entry.getKey(), entry.getValue());
-                }
-            }
-            assertEquals(expectedPrefixMap.size(), prefixMap.size());
-            assertEquals(expectedPrefixMap, new java.util.TreeMap<>(prefixMap));
-        }
-
-        // 4. headMap, tailMap, subMap (compared with TreeMap)
-        for (final String k1 : keys) {
-            assertEquals(new java.util.TreeMap<>(treeMap.headMap(k1)), new java.util.TreeMap<>(trie.headMap(k1)));
-            assertEquals(new java.util.TreeMap<>(treeMap.tailMap(k1)), new java.util.TreeMap<>(trie.tailMap(k1)));
-            for (final String k2 : keys) {
-                if (k1.compareTo(k2) <= 0) {
-                    assertEquals(new java.util.TreeMap<>(treeMap.subMap(k1, k2)), new java.util.TreeMap<>(trie.subMap(k1, k2)));
-                } else {
-                    assertThrows(IllegalArgumentException.class, () -> trie.subMap(k1, k2));
-                }
-            }
-        }
-
-        // 5. Remove (compared with HashMap)
-        for (int i = 0; i < keys.length; i++) {
-            final String key = keys[i];
-            final String value = "val_" + i;
-
-            assertTrue(trie.containsKey(key));
-            assertEquals(value, trie.remove(key));
-            assertFalse(trie.containsKey(key));
-            assertNull(trie.get(key));
-
-            hashMap.remove(key);
-            assertEquals(hashMap.size(), trie.size());
-        }
-
-        assertTrue(trie.isEmpty());
-        assertEquals(0, trie.size());
     }
 
 //    void testCreate() throws Exception {
