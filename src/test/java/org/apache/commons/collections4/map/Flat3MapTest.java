@@ -283,12 +283,10 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<Integer, String> m = new Flat3Map<>();
         m.put(ONE, TEN);
         m.put(TWO, TWENTY);
-
         // key present but value differs: entrySet().remove must not remove
         assertFalse(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TWENTY)));
         assertEquals(2, m.size());
         assertEquals(TEN, m.get(ONE));
-
         // matching key and value: removes
         assertTrue(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TEN)));
         assertFalse(m.containsKey(ONE));
