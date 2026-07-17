@@ -82,7 +82,7 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Clamp size() int overflow in composite and multi-valued classes (#710).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractDualBidiMap.MapEntry.setValue returning new value (#711).</action>
     <action type="fix" dev="ggregory" due-to="sankalp suman, Gary Gregory" issue="COLLECTIONS-714">PatriciaTrie ignores trailing null characters in keys (#712).</action>
-    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Flat3Map entrySet().remove(Object) removes a mapping when only the key matches, ignoring the entry value.</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Flat3Map entrySet().remove(Object) removes a mapping when only the key matches, ignoring the entry value (#714).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">SetUniqueList and ListOrderedSet leave the backing collection inconsistent when add(int, Object) or addAll(int, Collection) is called with an out-of-range index.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
