@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -275,6 +276,21 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         m.put(ONE, null);
         final boolean contains = m.containsValue(null);
         assertTrue(contains);
+    }
+
+    @Test
+    void testEntrySetRemoveChecksValue() {
+        final Flat3Map<Integer, String> m = new Flat3Map<>();
+        m.put(ONE, TEN);
+        m.put(TWO, TWENTY);
+        // key present but value differs: entrySet().remove must not remove
+        assertFalse(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TWENTY)));
+        assertEquals(2, m.size());
+        assertEquals(TEN, m.get(ONE));
+        // matching key and value: removes
+        assertTrue(m.entrySet().remove(new AbstractMap.SimpleEntry<>(ONE, TEN)));
+        assertFalse(m.containsKey(ONE));
+        assertEquals(1, m.size());
     }
 
     @Test

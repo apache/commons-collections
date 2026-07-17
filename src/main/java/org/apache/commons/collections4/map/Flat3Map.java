@@ -149,11 +149,12 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             if (!(obj instanceof Map.Entry)) {
                 return false;
             }
+            if (!contains(obj)) {
+                return false;
+            }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            final Object key = entry.getKey();
-            final boolean result = parent.containsKey(key);
-            parent.remove(key);
-            return result;
+            parent.remove(entry.getKey());
+            return true;
         }
 
         @Override
