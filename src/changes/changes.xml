@@ -24,7 +24,6 @@
   <body>
   <release version="4.6.0" date="YYYY-MM-DD" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
-    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">AbstractMapBag and AbstractMapMultiSet.add(Object, int) overflow the size and element count past Integer.MAX_VALUE.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan">CompositeCollection, CompositeSet, CompositeMap, AbstractMultiValuedMap and AbstractMultiSet size() overflow int when the total exceeds Integer.MAX_VALUE.</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory" issue="COLLECTIONS-776">Wrapping PassiveExpiringMap in Collections.synchronizedMap breaks expiration.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">[javadoc] Document that BloomFilter merge operations are non-atomic and a filter that throws during a merge should be considered invalid.</action>
@@ -75,6 +74,7 @@
     <action type="fix" dev="ggregory" due-to="sankalp suman, Gary Gregory" issue="COLLECTIONS-776">Fix expiration bypass in PassiveExpiringMap when wrapped in SynchronizedMap (#694).</action>
     <action type="fix" dev="ggregory" due-to="Dexter.k, Gary Gregory">Fix MapUtils.getIntValue(Map, K, Function) returning a byte (#704).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-893">Bring (Collection compliant) MultiSet family to (non-compliant) Bag parity (#703).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">AbstractMapBag and AbstractMapMultiSet.add(Object, int) overflow the size and element count past Integer.MAX_VALUE (#705).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Sol Thiessen, Gary Gregory" issue="COLLECTIONS-894">TreeBag documentation should explicitly warn about infinite loop as a result of concurrent writes (#707).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-896">Add TransformedMultiSet plus fill minor gaps for MultiSet vs. Bags (#708).</action>
     <action type="fix" dev="ggregory" due-to="Paul King, Gary Gregory" issue="COLLECTIONS-895">Deprecate the Bag family in favor of the MultiSet family (#709).</action>
