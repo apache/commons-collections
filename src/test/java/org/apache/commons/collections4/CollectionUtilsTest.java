@@ -648,6 +648,17 @@ class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    void testCollateIgnoreDuplicatesWithNullElements() {
+        final Comparator<String> nullsFirst = Comparator.nullsFirst(Comparator.<String>naturalOrder());
+        final List<String> left = Arrays.asList(null, "a");
+        final List<String> right = Arrays.asList(null, "a");
+        // a null element is a legal, sorted value here, so consecutive nulls must
+        // collapse just like any other duplicate when includeDuplicates is false
+        assertEquals(Arrays.asList(null, "a"), CollectionUtils.collate(left, right, nullsFirst, false));
+        assertEquals(Arrays.asList(null, null, "a", "a"), CollectionUtils.collate(left, right, nullsFirst, true));
+    }
+
+    @Test
     void testCollect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);
         Collection<Number> collection = CollectionUtils.<Integer, Number>collect(iterableA, transformer);

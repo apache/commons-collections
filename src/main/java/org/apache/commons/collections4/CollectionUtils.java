@@ -481,12 +481,14 @@ public class CollectionUtils {
         }
         final ArrayList<O> mergedList = new ArrayList<>(totalSize);
         O lastItem = null;
+        boolean first = true;
         while (iterator.hasNext()) {
             final O item = iterator.next();
-            if (lastItem == null || !lastItem.equals(item)) {
+            if (first || !Objects.equals(lastItem, item)) {
                 mergedList.add(item);
             }
             lastItem = item;
+            first = false;
         }
         mergedList.trimToSize();
         return mergedList;
