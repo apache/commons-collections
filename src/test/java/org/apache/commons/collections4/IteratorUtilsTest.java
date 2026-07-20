@@ -56,6 +56,7 @@ import org.apache.commons.collections4.iterators.EnumerationIterator;
 import org.apache.commons.collections4.iterators.IteratorChainTest;
 import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
+import org.apache.commons.collections4.iterators.PairedIterator;
 import org.apache.commons.collections4.iterators.ZippingIterator;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 import org.junit.jupiter.api.BeforeEach;
@@ -1134,4 +1135,11 @@ class IteratorUtilsTest {
         assertTrue(IteratorUtils.zippingIterator(iterator, iterator) instanceof ZippingIterator, "create instance fail");
     }
 
+    @Test
+    public void testPairedIterator() {
+        final ArrayList<String> stringList = new ArrayList<>();
+        final ArrayList<Integer> integerList = new ArrayList<>();
+
+        assertTrue(IteratorUtils.pairedIterator(stringList.iterator(), integerList.iterator()) instanceof PairedIterator, "create instance failed");
+    }
 }
