@@ -966,8 +966,8 @@ public class TreeList<E> extends AbstractList<E> {
      */
     @Override
     public void add(final int index, final E obj) {
-        modCount++;
         checkInterval(index, 0, size());
+        modCount++;
         if (root == null) {
             root = new AVLNode<>(index, obj, null, null);
         } else {
@@ -1105,8 +1105,8 @@ public class TreeList<E> extends AbstractList<E> {
      */
     @Override
     public E remove(final int index) {
-        modCount++;
         checkInterval(index, 0, size() - 1);
+        modCount++;
         final E result = get(index);
         root = root.remove(index);
         size--;

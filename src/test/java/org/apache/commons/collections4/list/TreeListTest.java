@@ -172,6 +172,25 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     }
 
     @Test
+    void testFailedIndexedChangeKeepsIteratorValid() {
+        final List<String> list = new TreeList<>();
+        list.add("a");
+        list.add("b");
+
+        // a rejected add(index) is a no-op and must not invalidate a live iterator
+        final ListIterator<String> addIt = list.listIterator();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(5, "x"));
+        assertEquals(2, list.size());
+        assertEquals("a", addIt.next());
+
+        // same for a rejected remove(index)
+        final ListIterator<String> removeIt = list.listIterator();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(10));
+        assertEquals(2, list.size());
+        assertEquals("a", removeIt.next());
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     void testIndexOf() {
         final List<E> l = makeObject();
