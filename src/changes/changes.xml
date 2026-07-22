@@ -82,6 +82,7 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Flat3Map entrySet().remove(Object) removes a mapping when only the key matches, ignoring the entry value (#714).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">SetUniqueList and ListOrderedSet leave the backing collection inconsistent when add(int, Object) or addAll(int, Collection) is called with an out-of-range index.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">CollectionUtils.collate(Iterable, Iterable, Comparator, boolean) does not remove duplicate null elements when includeDuplicates is false (#715).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Do not register a value collection until an add succeeds (#717).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
