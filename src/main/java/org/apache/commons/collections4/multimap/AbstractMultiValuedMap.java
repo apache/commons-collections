@@ -441,10 +441,14 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public boolean addAll(final Collection<? extends V> other) {
-            Collection<V> coll = getMapping();
+            final Collection<V> coll = getMapping();
             if (coll == null) {
-                coll = createCollection();
-                AbstractMultiValuedMap.this.map.put(key, coll);
+                final Collection<V> newColl = createCollection();
+                if (newColl.addAll(other)) {
+                    AbstractMultiValuedMap.this.map.put(key, newColl);
+                    return true;
+                }
+                return false;
             }
             return coll.addAll(other);
         }

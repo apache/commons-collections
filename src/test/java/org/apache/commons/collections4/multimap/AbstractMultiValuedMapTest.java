@@ -705,6 +705,19 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertTrue(col2.contains("v1_1"));
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void testAddAllThroughGetEmptyLeavesKeyAbsent() {
+        assumeTrue(isAddSupported());
+        resetEmpty();
+        final MultiValuedMap<K, V> map = getMap();
+        final Collection<V> col = map.get((K) "k0");
+        assertFalse(col.addAll(new ArrayList<>()));
+        assertFalse(map.containsKey("k0"));
+        assertFalse(map.keySet().contains("k0"));
+        assertEquals(0, map.size());
+    }
+
     /*void testRemoveViaGetCollectionRemove() {
         if (!isRemoveSupported()) {
             return;
