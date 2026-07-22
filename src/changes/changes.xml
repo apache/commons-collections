@@ -84,6 +84,7 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">CollectionUtils.collate(Iterable, Iterable, Comparator, boolean) does not remove duplicate null elements when includeDuplicates is false (#715).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Do not register a value collection until an add succeeds (#717).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Increment modCount after the bounds check in TreeList add and remove (#716).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Add messages when throwing NullPointerException.</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>

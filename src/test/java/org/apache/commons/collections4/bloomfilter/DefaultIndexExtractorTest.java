@@ -66,7 +66,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     @Override
     protected IndexExtractor createEmptyExtractor() {
         return predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             return true;
         };
     }
@@ -74,7 +74,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     @Override
     protected IndexExtractor createExtractor() {
         return predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             for (final int i : values) {
                 if (!predicate.test(i)) {
                     return false;
@@ -105,7 +105,7 @@ class DefaultIndexExtractorTest extends AbstractIndexExtractorTest {
     void testEntries(final int size) {
         final int[] values = IntStream.range(0, size).toArray();
         final IndexExtractor indexExtractor = predicate -> {
-            Objects.requireNonNull(predicate);
+            Objects.requireNonNull(predicate, "predicate");
             for (final int i : values) {
                 if (!predicate.test(i)) {
                     return false;

@@ -113,7 +113,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      */
     protected LazyList(final List<E> list, final Factory<? extends E> factory) {
         super(list);
-        this.factory = Objects.requireNonNull(factory);
+        this.factory = Objects.requireNonNull(factory, "factory");
         this.transformer = null;
     }
 
@@ -127,7 +127,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     protected LazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
         super(list);
         this.factory = null;
-        this.transformer = Objects.requireNonNull(transformer);
+        this.transformer = Objects.requireNonNull(transformer, "transformer");
     }
 
     private E element(final int index) {

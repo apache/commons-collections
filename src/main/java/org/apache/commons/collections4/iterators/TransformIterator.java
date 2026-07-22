@@ -60,7 +60,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param transformer The transformer to use, may be null to pass elements through unchanged
      */
     public TransformIterator(final Iterator<? extends I> iterator, final Transformer<? super I, ? extends O> transformer) {
-        this.iterator = Objects.requireNonNull(iterator);
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
         this.transformer = transformer;
     }
 

@@ -213,7 +213,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             if (size() > coll.size()) {
                 for (final Object obj : coll) {
@@ -233,7 +233,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeIf(final Predicate<? super Entry<K, V>> filter) {
-            Objects.requireNonNull(filter);
+            Objects.requireNonNull(filter, "filter");
             boolean changed = false;
             final Iterator<Entry<K, V>> it = iterator();
             while (it.hasNext()) {
@@ -247,7 +247,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -371,7 +371,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             if (size() > coll.size()) {
                 for (final Object obj : coll) {
@@ -391,7 +391,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeIf(final Predicate<? super K> filter) {
-            Objects.requireNonNull(filter);
+            Objects.requireNonNull(filter, "filter");
             boolean changed = false;
             final Iterator<K> it = iterator();
             while (it.hasNext()) {
@@ -405,7 +405,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -510,7 +510,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {
@@ -524,7 +524,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean removeIf(final Predicate<? super V> filter) {
-            Objects.requireNonNull(filter);
+            Objects.requireNonNull(filter, "filter");
             boolean changed = false;
             final Iterator<V> it = iterator();
             while (it.hasNext()) {
@@ -538,7 +538,7 @@ public class PassiveExpiringMap<K, V>
 
         @Override
         public boolean retainAll(final Collection<?> coll) {
-            Objects.requireNonNull(coll);
+            Objects.requireNonNull(coll, "coll");
             boolean changed = false;
             final Iterator<?> it = iterator();
             while (it.hasNext()) {

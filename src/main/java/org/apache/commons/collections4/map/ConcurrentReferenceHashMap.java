@@ -1495,9 +1495,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 
     @Override
     public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-        Objects.requireNonNull(key);
-        Objects.requireNonNull(remappingFunction);
-
+        Objects.requireNonNull(key, "key");
+        Objects.requireNonNull(remappingFunction, "remappingFunction");
         final int hash = hashOf(key);
         final Segment<K, V> segment = segmentFor(hash);
         return segment.apply(key, hash, remappingFunction);
@@ -1523,9 +1522,8 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
      */
     @Override
     public V computeIfAbsent(final K key, final Function<? super K, ? extends V> mappingFunction) {
-        Objects.requireNonNull(key);
-        Objects.requireNonNull(mappingFunction);
-
+        Objects.requireNonNull(key, "key");
+        Objects.requireNonNull(mappingFunction, "mappingFunction");
         final int hash = hashOf(key);
         final Segment<K, V> segment = segmentFor(hash);
         final V v = segment.get(key, hash);
@@ -1534,16 +1532,14 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
 
     @Override
     public V computeIfPresent(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-        Objects.requireNonNull(key);
-        Objects.requireNonNull(remappingFunction);
-
+        Objects.requireNonNull(key, "key");
+        Objects.requireNonNull(remappingFunction, "remappingFunction");
         final int hash = hashOf(key);
         final Segment<K, V> segment = segmentFor(hash);
         final V v = segment.get(key, hash);
         if (v == null) {
             return null;
         }
-
         return segmentFor(hash).applyIfPresent(key, hash, remappingFunction);
     }
 

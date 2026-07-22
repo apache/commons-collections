@@ -186,7 +186,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
          * @param parent The parent AbstractLinkedMap.
          */
         protected LinkIterator(final AbstractLinkedMap<K, V> parent) {
-            this.parent = Objects.requireNonNull(parent);
+            this.parent = Objects.requireNonNull(parent, "parent");
             this.next = parent.header.after;
             this.expectedModCount = parent.modCount;
         }
