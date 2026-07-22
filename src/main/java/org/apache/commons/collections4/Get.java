@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Collection;
@@ -33,8 +34,8 @@ public interface Get<K, V> {
     /**
      * Tests for presence of a given key.
      *
-     * @param key key whose presence in this map is to be tested
-     * @return {@code true} if this map contains a mapping for the specified key
+     * @param key key whose presence in this map is to be tested.
+     * @return {@code true} if this map contains a mapping for the specified key.
      * @see Map#containsKey(Object)
      */
     boolean containsKey(Object key);
@@ -42,8 +43,8 @@ public interface Get<K, V> {
     /**
      * Tests for presence of a given value.
      *
-     * @param value value whose presence in this map is to be tested
-     * @return {@code true} if this map maps one or more keys to the specified value
+     * @param value value whose presence in this map is to be tested.
+     * @return {@code true} if this map maps one or more keys to the specified value.
      * @see Map#containsValue(Object)
      */
     boolean containsValue(Object value);
@@ -59,8 +60,8 @@ public interface Get<K, V> {
     /**
      * Gets a value at a given key.
      *
-     * @param key The key whose associated value is to be returned
-     * @return The value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key
+     * @param key The key whose associated value is to be returned.
+     * @return The value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key.
      * @see Map#get(Object)
      */
     V get(Object key);
@@ -68,7 +69,7 @@ public interface Get<K, V> {
     /**
      * Tests whether this instance contains any key-value mappings.
      *
-     * @return {@code true} if this map contains no key-value mappings
+     * @return {@code true} if this map contains no key-value mappings.
      * @see Map#isEmpty()
      */
     boolean isEmpty();
@@ -76,7 +77,7 @@ public interface Get<K, V> {
     /**
      * Gets a view of the keys contained in this map.
      *
-     * @return A set view of the keys contained in this map
+     * @return A set view of the keys contained in this map.
      * @see Map#keySet()
      */
     Set<K> keySet();
@@ -84,7 +85,7 @@ public interface Get<K, V> {
     /**
      * Remove a key-value mappings.
      *
-     * @param key key whose mapping is to be removed from the map
+     * @param key key whose mapping is to be removed from the map.
      * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}.
      * @see Map#remove(Object)
      */
@@ -105,5 +106,4 @@ public interface Get<K, V> {
      * @see Map#values()
      */
     Collection<V> values();
-
 }

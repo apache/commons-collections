@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.List;
@@ -24,8 +25,8 @@ import java.util.List;
  * A {@code ListValuedMap} is a Map with slightly different semantics:
  * </p>
  * <ul>
- *   <li>Putting a value into the map will add the value to a {@link List} at that key.</li>
- *   <li>Getting a value will return a {@link List}, holding all the values put to that key.</li>
+ * <li>Putting a value into the map will add the value to a {@link List} at that key.</li>
+ * <li>Getting a value will return a {@link List}, holding all the values put to that key.</li>
  * </ul>
  *
  * @param <K> The type of the keys in this map
@@ -37,16 +38,13 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the list of values associated with the specified key.
      * <p>
-     * This method will return an <strong>empty</strong> list if
-     * {@link #containsKey(Object)} returns {@code false}. Changes to the
-     * returned list will update the underlying {@code ListValuedMap} and
-     * vice-versa.
+     * This method will return an <strong>empty</strong> list if {@link #containsKey(Object)} returns {@code false}. Changes to the returned list will update
+     * the underlying {@code ListValuedMap} and vice-versa.
      * </p>
      *
-     * @param key  The key to retrieve
-     * @return The {@code List} of values, implementations should return an
-     *   empty {@code List} for no mapping
-     * @throws NullPointerException if the key is null and null keys are invalid
+     * @param key The key to retrieve.
+     * @return The {@code List} of values, implementations should return an empty {@code List} for no mapping.
+     * @throws NullPointerException if the key is null and null keys are invalid.
      */
     @Override
     List<V> get(K key);
@@ -54,18 +52,15 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned list <em>may</em> be modifiable, but updates will not be
-     * propagated to this list-valued map. In case no mapping was stored for the
-     * specified key, an empty, unmodifiable list will be returned.
+     * The returned list <em>may</em> be modifiable, but updates will not be propagated to this list-valued map. In case no mapping was stored for the specified
+     * key, an empty, unmodifiable list will be returned.
      * </p>
      *
-     * @param key  The key to remove values from
-     * @return The {@code List} of values removed, implementations
-     *   typically return an empty, unmodifiable {@code List} for no mapping found
-     * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws NullPointerException if the key is null and null keys are invalid
+     * @param key The key to remove values from.
+     * @return The {@code List} of values removed, implementations typically return an empty, unmodifiable {@code List} for no mapping found.
+     * @throws UnsupportedOperationException if the map is unmodifiable.
+     * @throws NullPointerException          if the key is null and null keys are invalid.
      */
     @Override
     List<V> remove(Object key);
-
 }

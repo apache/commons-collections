@@ -89,8 +89,8 @@ public interface Bag<E> extends Collection<E> {
      * {@code false}, this method violates the contract.
      * </p>
      *
-     * @param object  The object to add
-     * @return {@code true} if the object was not already in the {@code uniqueSet}
+     * @param object  The object to add.
+     * @return {@code true} if the object was not already in the {@code uniqueSet}.
      */
     @Override
     boolean add(E object);
@@ -103,10 +103,10 @@ public interface Bag<E> extends Collection<E> {
      * {@link #uniqueSet()} and report its count as {@code nCopies}.
      * </p>
      *
-     * @param object  The object to add
-     * @param nCopies  The number of copies to add
-     * @return {@code true} if the object was not already in the {@code uniqueSet}
-     * @throws ClassCastException if the class of the specified element prevents it from being added to this collection
+     * @param object  The object to add.
+     * @param nCopies  The number of copies to add.
+     * @return {@code true} if the object was not already in the {@code uniqueSet}.
+     * @throws ClassCastException if the class of the specified element prevents it from being added to this collection.
      */
     boolean add(E object, int nCopies);
 
@@ -125,8 +125,8 @@ public interface Bag<E> extends Collection<E> {
      * in the given collection.
      * </p>
      *
-     * @param coll  The collection to check against
-     * @return {@code true} if the Bag contains all the collection
+     * @param coll  The collection to check against.
+     * @return {@code true} if the Bag contains all the collection.
      */
     @Override
     boolean containsAll(Collection<?> coll);
@@ -136,8 +136,8 @@ public interface Bag<E> extends Collection<E> {
      * object currently in the bag. If the object does not exist in the
      * bag, return 0.
      *
-     * @param object  The object to search for
-     * @return The number of occurrences of the object, zero if not found
+     * @param object  The object to search for.
+     * @return The number of occurrences of the object, zero if not found.
      */
     int getCount(Object object);
 
@@ -146,7 +146,7 @@ public interface Bag<E> extends Collection<E> {
      * including copies due to cardinality. This iterator is fail-fast
      * and will not tolerate concurrent modifications.
      *
-     * @return iterator over all elements in the Bag
+     * @return iterator over all elements in the Bag.
      */
     @Override
     Iterator<E> iterator();
@@ -163,8 +163,8 @@ public interface Bag<E> extends Collection<E> {
      * given object, not <em>all</em> occurrences.
      * </p>
      *
-     * @param object  The object to remove
-     * @return {@code true} if this call changed the collection
+     * @param object  The object to remove.
+     * @return {@code true} if this call changed the collection.
      */
     @Override
     boolean remove(Object object);
@@ -176,9 +176,9 @@ public interface Bag<E> extends Collection<E> {
      * copies in the Bag, no error is thrown.
      * </p>
      *
-     * @param object  The object to remove
-     * @param nCopies  The number of copies to remove
-     * @return {@code true} if this call changed the collection
+     * @param object  The object to remove.
+     * @param nCopies  The number of copies to remove.
+     * @return {@code true} if this call changed the collection.
      */
     boolean remove(Object object, int nCopies);
 
@@ -197,8 +197,8 @@ public interface Bag<E> extends Collection<E> {
      * given collection.
      * </p>
      *
-     * @param coll  The collection to remove
-     * @return {@code true} if this call changed the collection
+     * @param coll  The collection to remove.
+     * @return {@code true} if this call changed the collection.
      */
     @Override
     boolean removeAll(Collection<?> coll);
@@ -221,8 +221,8 @@ public interface Bag<E> extends Collection<E> {
      * given collection.
      * </p>
      *
-     * @param coll  The collection to retain
-     * @return {@code true} if this call changed the collection
+     * @param coll  The collection to retain.
+     * @return {@code true} if this call changed the collection.
      */
     @Override
     boolean retainAll(Collection<?> coll);
@@ -230,7 +230,7 @@ public interface Bag<E> extends Collection<E> {
     /**
      * Returns the total number of items in the bag across all types.
      *
-     * @return The total size of the Bag
+     * @return The total size of the Bag.
      */
     @Override
     int size();
@@ -241,7 +241,7 @@ public interface Bag<E> extends Collection<E> {
      * Uniqueness constraints are the same as those in {@link Set}.
      * </p>
      *
-     * @return The Set of unique Bag elements
+     * @return The Set of unique Bag elements.
      */
     Set<E> uniqueSet();
 

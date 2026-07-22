@@ -14,18 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
- * Defines a map that allows bidirectional lookup between key and values
- * and retains and provides access to an ordering.
+ * Defines a map that allows bidirectional lookup between key and values and retains and provides access to an ordering.
  * <p>
- * Implementations should allow a value to be looked up from a key and
- * a key to be looked up from a value with equal performance.
+ * Implementations should allow a value to be looked up from a key and a key to be looked up from a value with equal performance.
  * </p>
  *
- * @param <K> The type of the keys in the map
- * @param <V> The type of the values in the map
+ * @param <K> The type of the keys in the map.
+ * @param <V> The type of the values in the map.
  * @since 3.0
  */
 public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
@@ -33,22 +32,18 @@ public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
     /**
      * Gets a view of this map where the keys and values are reversed.
      * <p>
-     * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed equally.
+     * Changes to one map will be visible in the other and vice versa. This enables both directions of the map to be accessed equally.
      * </p>
      * <p>
-     * Implementations should seek to avoid creating a new object every time this
-     * method is called. See {@code AbstractMap.values()} etc. Calling this
-     * method on the inverse map should return the original.
+     * Implementations should seek to avoid creating a new object every time this method is called. See {@code AbstractMap.values()} etc. Calling this method on
+     * the inverse map should return the original.
      * </p>
      * <p>
-     * Implementations must return an {@code OrderedBidiMap} instance,
-     * usually by forwarding to {@code inverseOrderedBidiMap()}.
+     * Implementations must return an {@code OrderedBidiMap} instance, usually by forwarding to {@code inverseOrderedBidiMap()}.
      * </p>
      *
-     * @return An inverted bidirectional map
+     * @return An inverted bidirectional map.
      */
     @Override
     OrderedBidiMap<V, K> inverseBidiMap();
-
 }

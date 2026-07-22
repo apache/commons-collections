@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.function.Supplier;
@@ -21,18 +22,15 @@ import java.util.function.Supplier;
 /**
  * Defines a functor interface implemented by classes that create objects.
  * <p>
- * A {@code Factory} creates an object without using an input parameter.
- * If an input parameter is required, then {@link Transformer} is more appropriate.
+ * A {@code Factory} creates an object without using an input parameter. If an input parameter is required, then {@link Transformer} is more appropriate.
  * </p>
  * <p>
- * Standard implementations of common factories are provided by
- * {@link FactoryUtils}. These include factories that return a constant,
- * a copy of a prototype or a new instance.
+ * Standard implementations of common factories are provided by {@link FactoryUtils}. These include factories that return a constant, a copy of a prototype or a
+ * new instance.
  * </p>
  *
  * @param <T> The type of results supplied by this supplier.
- * @since 2.1
- * This will be deprecated in 5.0 in favor of {@link Supplier}.
+ * @since 2.1 This will be deprecated in 5.0 in favor of {@link Supplier}.
  */
 //@Deprecated
 public interface Factory<T> extends Supplier<T> {
@@ -41,7 +39,7 @@ public interface Factory<T> extends Supplier<T> {
      * Create a new object.
      *
      * @return A new object
-     * @throws FunctorException (runtime) if the factory cannot create an object
+     * @throws FunctorException (runtime) if the factory cannot create an object.
      */
     T create();
 
@@ -49,5 +47,4 @@ public interface Factory<T> extends Supplier<T> {
     default T get() {
         return create();
     }
-
 }

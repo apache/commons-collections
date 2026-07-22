@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
  * Defines a map that is bounded in size.
  * <p>
- * The size of the map can vary, but it can never exceed a preset
- * maximum number of elements. This interface allows the querying of details
- * associated with the maximum number of elements.
+ * The size of the map can vary, but it can never exceed a preset maximum number of elements. This interface allows the querying of details associated with the
+ * maximum number of elements.
  * </p>
  *
- * @param <K> The type of the keys in this map
- * @param <V> The type of the values in this map
+ * @param <K> The type of the keys in this map.
+ * @param <V> The type of the values in this map.
  * @since 3.0
  */
 public interface BoundedMap<K, V> extends IterableMap<K, V> {
@@ -33,15 +33,14 @@ public interface BoundedMap<K, V> extends IterableMap<K, V> {
     /**
      * Returns true if this map is full and no new elements can be added.
      *
-     * @return {@code true} if the map is full
+     * @return {@code true} if the map is full.
      */
     boolean isFull();
 
     /**
      * Gets the maximum size of the map (the bound).
      *
-     * @return The maximum number of elements the map can hold
+     * @return The maximum number of elements the map can hold.
      */
     int maxSize();
-
 }

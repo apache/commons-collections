@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
- * Defines a map that maintains order and allows both forward and backward
- * iteration through that order.
+ * Defines a map that maintains order and allows both forward and backward iteration through that order.
  *
- * @param <K> The type of the keys in the map
- * @param <V> The type of the values in the map
+ * @param <K> The type of the keys in the map.
+ * @param <V> The type of the values in the map.
  * @since 3.0
  */
 public interface OrderedMap<K, V> extends IterableMap<K, V> {
@@ -29,27 +29,26 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the first key currently in this map.
      *
-     * @return The first key currently in this map
-     * @throws java.util.NoSuchElementException if this map is empty
+     * @return The first key currently in this map.
+     * @throws java.util.NoSuchElementException if this map is empty.
      */
     K firstKey();
 
     /**
      * Gets the last key currently in this map.
      *
-     * @return The last key currently in this map
-     * @throws java.util.NoSuchElementException if this map is empty
+     * @return The last key currently in this map.
+     * @throws java.util.NoSuchElementException if this map is empty.
      */
     K lastKey();
 
     /**
      * Obtains an {@code OrderedMapIterator} over the map.
      * <p>
-     * An ordered map iterator is an efficient way of iterating over maps
-     * in both directions.
+     * An ordered map iterator is an efficient way of iterating over maps in both directions.
      * </p>
      *
-     * @return A map iterator
+     * @return A map iterator.
      */
     @Override
     OrderedMapIterator<K, V> mapIterator();
@@ -57,17 +56,16 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the next key after the one specified.
      *
-     * @param key  The key to search for next from
-     * @return The next key, null if no match or at end
+     * @param key The key to search for next from.
+     * @return The next key, null if no match or at end.
      */
     K nextKey(K key);
 
     /**
      * Gets the previous key before the one specified.
      *
-     * @param key  The key to search for previous from
-     * @return The previous key, null if no match or at start
+     * @param key The key to search for previous from.
+     * @return The previous key, null if no match or at start.
      */
     K previousKey(K key);
-
 }

@@ -43,7 +43,7 @@ public interface IterableGet<K, V> extends Get<K, V> {
      * }
      * </pre>
      *
-     * @return A map iterator
+     * @return A map iterator.
      */
     MapIterator<K, V> mapIterator();
 

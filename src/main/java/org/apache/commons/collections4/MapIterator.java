@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Iterator;
@@ -21,49 +22,45 @@ import java.util.Iterator;
 /**
  * Defines an iterator that operates over a {@code Map}.
  * <p>
- * This iterator is a special version designed for maps. It can be more
- * efficient to use this rather than an entry set iterator where the option
- * is available, and it is certainly more convenient.
+ * This iterator is a special version designed for maps. It can be more efficient to use this rather than an entry set iterator where the option is available,
+ * and it is certainly more convenient.
  * </p>
  * <p>
- * A map that provides this interface may not hold the data internally using
- * Map Entry objects, thus this interface can avoid lots of object creation.
+ * A map that provides this interface may not hold the data internally using Map Entry objects, thus this interface can avoid lots of object creation.
  * </p>
  * <p>
- * In use, this iterator iterates through the keys in the map. After each call
- * to {@code next()}, the {@code getValue()} method provides direct
- * access to the value. The value can also be set using {@code setValue()}.
+ * In use, this iterator iterates through the keys in the map. After each call to {@code next()}, the {@code getValue()} method provides direct access to the
+ * value. The value can also be set using {@code setValue()}.
  * </p>
+ *
  * <pre>{@code
- * MapIterator<String,Integer> it = map.mapIterator();
+ * MapIterator<String, Integer> it = map.mapIterator();
  * while (it.hasNext()) {
- *   String key = it.next();
- *   Integer value = it.getValue();
- *   it.setValue(value + 1);
+ *     String key = it.next();
+ *     Integer value = it.getValue();
+ *     it.setValue(value + 1);
  * }
  * }</pre>
  *
- * @param <K> The type of the keys in the map
- * @param <V> The type of the values in the map
+ * @param <K> The type of the keys in the map.
+ * @param <V> The type of the values in the map.
  * @since 3.0
  */
 public interface MapIterator<K, V> extends Iterator<K> {
 
     /**
-     * Gets the current key, which is the key returned by the last call
-     * to {@code next()}.
+     * Gets the current key, which is the key returned by the last call to {@code next()}.
      *
-     * @return The current key
-     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @return The current key.
+     * @throws IllegalStateException if {@code next()} has not yet been called.
      */
     K getKey();
 
     /**
-     * Gets the current value, which is the value associated with the last key
-     * returned by {@code next()}.
+     * Gets the current value, which is the value associated with the last key returned by {@code next()}.
      *
-     * @return The current value
-     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @return The current value.
+     * @throws IllegalStateException if {@code next()} has not yet been called.
      */
     V getValue();
 
@@ -78,8 +75,8 @@ public interface MapIterator<K, V> extends Iterator<K> {
     /**
      * Gets the next <em>key</em> from the {@code Map}.
      *
-     * @return The next key in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
+     * @return The next key in the iteration.
+     * @throws java.util.NoSuchElementException if the iteration is finished.
      */
     @Override
     K next();
@@ -90,10 +87,9 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * This method can be called once per call to {@code next()}.
      * </p>
      *
-     * @throws UnsupportedOperationException if remove is not supported by the map
-     * @throws IllegalStateException if {@code next()} has not yet been called
-     * @throws IllegalStateException if {@code remove()} has already been called
-     *  since the last call to {@code next()}
+     * @throws UnsupportedOperationException if remove is not supported by the map.
+     * @throws IllegalStateException         if {@code next()} has not yet been called.
+     * @throws IllegalStateException         if {@code remove()} has already been called since the last call to {@code next()}.
      */
     @Override
     void remove();
@@ -101,13 +97,11 @@ public interface MapIterator<K, V> extends Iterator<K> {
     /**
      * Sets the value associated with the current key (optional operation).
      *
-     * @param value  The new value
-     * @return The previous value
-     * @throws UnsupportedOperationException if setValue is not supported by the map
-     * @throws IllegalStateException if {@code next()} has not yet been called
-     * @throws IllegalStateException if {@code remove()} has been called since the
-     *  last call to {@code next()}
+     * @param value The new value.
+     * @return The previous value.
+     * @throws UnsupportedOperationException if setValue is not supported by the map.
+     * @throws IllegalStateException         if {@code next()} has not yet been called.
+     * @throws IllegalStateException         if {@code remove()} has been called since the last call to {@code next()}.
      */
     V setValue(V value);
-
 }

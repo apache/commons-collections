@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Set;
@@ -21,21 +22,16 @@ import java.util.Set;
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
- * This extended {@code Map} represents a mapping where a key may
- * lookup a value and a value may lookup a key with equal ease.
- * This interface extends {@code Map} and so may be used anywhere a map
- * is required. The interface provides an inverse map view, enabling
- * full access to both directions of the {@code BidiMap}.
+ * This extended {@code Map} represents a mapping where a key may lookup a value and a value may lookup a key with equal ease. This interface extends
+ * {@code Map} and so may be used anywhere a map is required. The interface provides an inverse map view, enabling full access to both directions of the
+ * {@code BidiMap}.
  * </p>
  * <p>
- * Implementations should allow a value to be looked up from a key and
- * a key to be looked up from a value with equal performance.
+ * Implementations should allow a value to be looked up from a key and a key to be looked up from a value with equal performance.
  * </p>
  * <p>
- * This map enforces the restriction that there is a 1:1 relation between
- * keys and values, meaning that multiple keys cannot map to the same value.
- * This is required so that "inverting" the map results in a map without
- * duplicate keys. See the {@link #put} method description for more information.
+ * This map enforces the restriction that there is a 1:1 relation between keys and values, meaning that multiple keys cannot map to the same value. This is
+ * required so that "inverting" the map results in a map without duplicate keys. See the {@link #put} method description for more information.
  * </p>
  *
  * @param <K> The type of the keys in the map
@@ -50,29 +46,24 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * If the value is not contained in the map, {@code null} is returned.
      * </p>
      * <p>
-     * Implementations should seek to make this method perform equally as well
-     * as {@code get(Object)}.
+     * Implementations should seek to make this method perform equally as well as {@code get(Object)}.
      * </p>
      *
-     * @param value  The value to find the key for
-     * @return The mapped key, or {@code null} if not found
-     * @throws ClassCastException (optional) if the map limits the type of the
-     *  value and the specified value is inappropriate
-     * @throws NullPointerException (optional) if the map limits the values to
-     *  non-null and null was specified
+     * @param value The value to find the key for.
+     * @return The mapped key, or {@code null} if not found.
+     * @throws ClassCastException   (optional) if the map limits the type of the value and the specified value is inappropriate.
+     * @throws NullPointerException (optional) if the map limits the values to non-null and null was specified.
      */
     K getKey(Object value);
 
     /**
      * Gets a view of this map where the keys and values are reversed.
      * <p>
-     * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed as a {@code Map}.
+     * Changes to one map will be visible in the other and vice versa. This enables both directions of the map to be accessed as a {@code Map}.
      * </p>
      * <p>
-     * Implementations should seek to avoid creating a new object every time this
-     * method is called. See {@code AbstractMap.values()} etc. Calling this
-     * method on the inverse map should return the original.
+     * Implementations should seek to avoid creating a new object every time this method is called. See {@code AbstractMap.values()} etc. Calling this method on
+     * the inverse map should return the original.
      * </p>
      *
      * @return An inverted bidirectional map
@@ -82,69 +73,55 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
     /**
      * Puts the key-value pair into the map, replacing any previous pair.
      * <p>
-     * When adding a key-value pair, the value may already exist in the map
-     * against a different key. That mapping is removed, to ensure that the
-     * value only occurs once in the inverse map.
+     * When adding a key-value pair, the value may already exist in the map against a different key. That mapping is removed, to ensure that the value only
+     * occurs once in the inverse map.
      * </p>
-     * <pre>
-     *  BidiMap map1 = new DualHashBidiMap();
-     *  map.put("A","B");  // contains A mapped to B, as per Map
-     *  map.put("A","C");  // contains A mapped to C, as per Map
      *
-     *  BidiMap map2 = new DualHashBidiMap();
-     *  map.put("A","B");  // contains A mapped to B, as per Map
-     *  map.put("C","B");  // contains C mapped to B, key A is removed
+     * <pre>
+     * BidiMap map1 = new DualHashBidiMap();
+     * map.put("A", "B"); // contains A mapped to B, as per Map
+     * map.put("A", "C"); // contains A mapped to C, as per Map
+     * BidiMap map2 = new DualHashBidiMap();
+     * map.put("A", "B"); // contains A mapped to B, as per Map
+     * map.put("C", "B"); // contains C mapped to B, key A is removed
      * </pre>
      *
-     * @param key  The key to store
-     * @param value  The value to store
-     * @return The previous value mapped to this key
-     * @throws UnsupportedOperationException if the {@code put} method is not supported
-     * @throws ClassCastException (optional) if the map limits the type of the
-     *  value and the specified value is inappropriate
-     * @throws IllegalArgumentException (optional) if the map limits the values
-     *  in some way and the value was invalid
-     * @throws NullPointerException (optional) if the map limits the values to
-     *  non-null and null was specified
+     * @param key   The key to store.
+     * @param value The value to store.
+     * @return The previous value mapped to this key.
+     * @throws UnsupportedOperationException if the {@code put} method is not supported.
+     * @throws ClassCastException            (optional) if the map limits the type of the value and the specified value is inappropriate.
+     * @throws IllegalArgumentException      (optional) if the map limits the values in some way and the value was invalid.
+     * @throws NullPointerException          (optional) if the map limits the values to non-null and null was specified.
      */
     @Override
     V put(K key, V value);
 
     /**
-     * Removes the key-value pair that is currently mapped to the specified
-     * value (optional operation).
+     * Removes the key-value pair that is currently mapped to the specified value (optional operation).
      * <p>
      * If the value is not contained in the map, {@code null} is returned.
      * </p>
      * <p>
-     * Implementations should seek to make this method perform equally as well
-     * as {@code remove(Object)}.
+     * Implementations should seek to make this method perform equally as well as {@code remove(Object)}.
      * </p>
      *
-     * @param value  The value to find the key-value pair for
-     * @return The key that was removed, {@code null} if nothing removed
-     * @throws ClassCastException (optional) if the map limits the type of the
-     *  value and the specified value is inappropriate
-     * @throws NullPointerException (optional) if the map limits the values to
-     *  non-null and null was specified
-     * @throws UnsupportedOperationException if this method is not supported
-     *  by the implementation
+     * @param value The value to find the key-value pair for.
+     * @return The key that was removed, {@code null} if nothing removed.
+     * @throws ClassCastException            (optional) if the map limits the type of the value and the specified value is inappropriate.
+     * @throws NullPointerException          (optional) if the map limits the values to non-null and null was specified.
+     * @throws UnsupportedOperationException if this method is not supported by the implementation.
      */
     K removeValue(Object value);
 
     /**
-     * Returns a {@link Set} view of the values contained in this map.
-     * The set is backed by the map, so changes to the map are reflected
-     * in the set, and vice-versa.  If the map is modified while an iteration
-     * over the set is in progress (except through the iterator's own
-     * {@code remove} operation), the results of the iteration are undefined.
-     * The set supports element removal, which removes the corresponding
-     * mapping from the map, via the {@code Iterator.remove},
-     * {@code Collection.remove}, {@code removeAll},
-     * {@code retainAll} and {@code clear} operations.  It does not
-     * support the {@code add} or {@code addAll} operations.
+     * Returns a {@link Set} view of the values contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and
+     * vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own {@code remove} operation), the
+     * results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the
+     * {@code Iterator.remove}, {@code Collection.remove}, {@code removeAll}, {@code retainAll} and {@code clear} operations. It does not support the
+     * {@code add} or {@code addAll} operations.
      *
-     * @return A set view of the values contained in this map
+     * @return A set view of the values contained in this map.
      */
     @Override
     Set<V> values();

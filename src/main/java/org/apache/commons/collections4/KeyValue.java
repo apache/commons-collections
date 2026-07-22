@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
  * Defines a simple key value pair.
  * <p>
- * A Map Entry has considerable additional semantics over and above a simple
- * key-value pair. This interface defines the minimum key value, with just the
- * two get methods.
+ * A Map Entry has considerable additional semantics over and above a simple key-value pair. This interface defines the minimum key value, with just the two get
+ * methods.
  * </p>
  *
- * @param <K> The type of the key
- * @param <V> The type of the value
+ * @param <K> The type of the key.
+ * @param <V> The type of the value.
  * @since 3.0
  */
 public interface KeyValue<K, V> {
@@ -33,15 +33,14 @@ public interface KeyValue<K, V> {
     /**
      * Gets the key from the pair.
      *
-     * @return The key
+     * @return The key.
      */
     K getKey();
 
     /**
      * Gets the value from the pair.
      *
-     * @return The value
+     * @return The value.
      */
     V getValue();
-
 }

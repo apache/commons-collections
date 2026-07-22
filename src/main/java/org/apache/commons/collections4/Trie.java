@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.SortedMap;
@@ -21,8 +22,8 @@ import java.util.SortedMap;
 /**
  * Defines the interface for a prefix tree, an ordered tree data structure. For more information, see <a href="https://en.wikipedia.org/wiki/Trie">Tries</a>.
  *
- * @param <K> The type of the keys in this map
- * @param <V> The type of the values in this map
+ * @param <K> The type of the keys in this map.
+ * @param <V> The type of the values in this map.
  * @since 4.0
  */
 public interface Trie<K, V> extends IterableSortedMap<K, V> {
@@ -37,9 +38,8 @@ public interface Trie<K, V> extends IterableSortedMap<K, V> {
      * 'Andreas', 'Andrea', and 'Andres'.
      * </p>
      *
-     * @param key The key used in the search
-     * @return A {@link SortedMap} view of this {@link Trie} with all elements whose key is prefixed by the search key
+     * @param key The key used in the search.
+     * @return A {@link SortedMap} view of this {@link Trie} with all elements whose key is prefixed by the search key.
      */
     SortedMap<K, V> prefixMap(K key);
-
 }

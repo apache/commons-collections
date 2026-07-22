@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.function.Consumer;
@@ -22,17 +23,14 @@ import java.util.function.Supplier;
 /**
  * Defines a functor interface implemented by classes that do something.
  * <p>
- * A {@code Closure} represents a block of code which is executed from
- * inside some block, function or iteration. It operates an input object.
+ * A {@code Closure} represents a block of code which is executed from inside some block, function or iteration. It operates an input object.
  * </p>
  * <p>
- * Standard implementations of common closures are provided by
- * {@link ClosureUtils}. These include method invocation and for/while loops.
+ * Standard implementations of common closures are provided by {@link ClosureUtils}. These include method invocation and for/while loops.
  * </p>
  *
  * @param <T> The type of the input to the operation.
- * @since 1.0
- * This will be deprecated in 5.0 in favor of {@link Supplier}.
+ * @since 1.0 This will be deprecated in 5.0 in favor of {@link Supplier}.
  */
 //@Deprecated
 public interface Closure<T> extends Consumer<T> {
@@ -45,11 +43,10 @@ public interface Closure<T> extends Consumer<T> {
     /**
      * Performs an action on the specified input object.
      *
-     * @param input  The input to execute on
-     * @throws ClassCastException (runtime) if the input is the wrong class
-     * @throws IllegalArgumentException (runtime) if the input is invalid
-     * @throws FunctorException (runtime) if any other error occurs
+     * @param input The input to execute on.
+     * @throws ClassCastException       (runtime) if the input is the wrong class.
+     * @throws IllegalArgumentException (runtime) if the input is invalid.
+     * @throws FunctorException         (runtime) if any other error occurs.
      */
     void execute(T input);
-
 }

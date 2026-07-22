@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Set;
@@ -24,12 +25,12 @@ import java.util.Set;
  * A {@code SetValuedMap} is a Map with slightly different semantics:
  * </p>
  * <ul>
- *   <li>Putting a value into the map will add the value to a {@link Set} at that key.</li>
- *   <li>Getting a value will return a {@link Set}, holding all the values put to that key.</li>
+ * <li>Putting a value into the map will add the value to a {@link Set} at that key.</li>
+ * <li>Getting a value will return a {@link Set}, holding all the values put to that key.</li>
  * </ul>
  *
- * @param <K> The type of the keys in this map
- * @param <V> The type of the values in this map
+ * @param <K> The type of the keys in this map.
+ * @param <V> The type of the values in this map.
  * @since 4.1
  */
 public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
@@ -37,14 +38,12 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the set of values associated with the specified key.
      * <p>
-     * Implementations typically return an empty {@code Set} if no values
-     * have been mapped to the key.
+     * Implementations typically return an empty {@code Set} if no values have been mapped to the key.
      * </p>
      *
-     * @param key  The key to retrieve
-     * @return The {@code Set} of values, implementations should return an
-     *   empty {@code Set} for no mapping
-     * @throws NullPointerException if the key is null and null keys are invalid
+     * @param key The key to retrieve.
+     * @return The {@code Set} of values, implementations should return an empty {@code Set} for no mapping.
+     * @throws NullPointerException if the key is null and null keys are invalid.
      */
     @Override
     Set<V> get(K key);
@@ -52,16 +51,14 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned set <em>may</em> be modifiable, but updates will not be
-     * propagated to this set-valued map. In case no mapping was stored for the
-     * specified key, an empty, unmodifiable set will be returned.
+     * The returned set <em>may</em> be modifiable, but updates will not be propagated to this set-valued map. In case no mapping was stored for the specified
+     * key, an empty, unmodifiable set will be returned.
      * </p>
      *
-     * @param key  The key to remove values from
-     * @return The {@code Set} of values removed, implementations should
-     *   return null for no mapping found, but may return an empty collection
-     * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws NullPointerException if the key is null and null keys are invalid
+     * @param key The key to remove values from.
+     * @return The {@code Set} of values removed, implementations should return null for no mapping found, but may return an empty collection.
+     * @throws UnsupportedOperationException if the map is unmodifiable.
+     * @throws NullPointerException          if the key is null and null keys are invalid.
      */
     @Override
     Set<V> remove(Object key);

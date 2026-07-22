@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Collection;
@@ -27,12 +28,13 @@ import java.util.Set;
  * A {@code MultiValuedMap} is a Map with slightly different semantics:
  * </p>
  * <ul>
- *   <li>Putting a value into the map will add the value to a {@link Collection} at that key.</li>
- *   <li>Getting a value will return a {@link Collection}, holding all the values put to that key.</li>
+ * <li>Putting a value into the map will add the value to a {@link Collection} at that key.</li>
+ * <li>Getting a value will return a {@link Collection}, holding all the values put to that key.</li>
  * </ul>
  * <p>
  * For example:
  * </p>
+ *
  * <pre>{@code
  * MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
  * map.put(1, "A");
@@ -52,21 +54,17 @@ public interface MultiValuedMap<K, V> {
     // Query operations
 
     /**
-     * Returns a view of this multivalued map as a {@code Map} from each distinct
-     * key to the non-empty collection of that key's associated values.
+     * Returns a view of this multivalued map as a {@code Map} from each distinct key to the non-empty collection of that key's associated values.
      * <p>
-     * Note that {@code this.asMap().get(k)} is equivalent to {@code this.get(k)}
-     * only when {@code k} is a key contained in the multivalued map; otherwise it
+     * Note that {@code this.asMap().get(k)} is equivalent to {@code this.get(k)} only when {@code k} is a key contained in the multivalued map; otherwise it
      * returns {@code null} as opposed to an empty collection.
      * </p>
      * <p>
-     * Changes to the returned map or the collections that serve as its values
-     * will update the underlying multivalued map, and vice versa. The map does
-     * not support {@code put} or {@code putAll}, nor do its entries support
-     * {@link java.util.Map.Entry#setValue(Object) setValue}.
+     * Changes to the returned map or the collections that serve as its values will update the underlying multivalued map, and vice versa. The map does not
+     * support {@code put} or {@code putAll}, nor do its entries support {@link java.util.Map.Entry#setValue(Object) setValue}.
      * </p>
      *
-     * @return A map view of the mappings in this multivalued map
+     * @return A map view of the mappings in this multivalued map.
      */
     Map<K, Collection<V>> asMap();
 
@@ -76,67 +74,59 @@ public interface MultiValuedMap<K, V> {
      * The map will be empty after this call returns.
      * </p>
      *
-     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @throws UnsupportedOperationException if the map is unmodifiable.
      */
     void clear();
 
     /**
-     * Returns {@code true} if this map contains a mapping for the specified
-     * key. More formally, returns {@code true} if and only if this map contains
-     * a mapping for a key {@code k} such that {@code (key==null ? k==null : key.equals(k))}.
-     * (There can be at most one such mapping.)
+     * Returns {@code true} if this map contains a mapping for the specified key. More formally, returns {@code true} if and only if this map contains a mapping
+     * for a key {@code k} such that {@code (key==null ? k==null : key.equals(k))}. (There can be at most one such mapping.)
      *
-     * @param key  key whose presence in this map is to be tested
-     * @return true if this map contains a mapping for the specified key
-     * @throws NullPointerException if the specified key is null and this map
-     *   does not permit null keys (optional)
+     * @param key key whose presence in this map is to be tested.
+     * @return true if this map contains a mapping for the specified key.
+     * @throws NullPointerException if the specified key is null and this map does not permit null keys (optional).
      */
     boolean containsKey(Object key);
 
     /**
      * Checks whether the map contains a mapping for the specified key and value.
      *
-     * @param key  The key to search for
-     * @param value  The value to search for
-     * @return true if the map contains the value
+     * @param key   The key to search for.
+     * @param value The value to search for.
+     * @return true if the map contains the value.
      */
     boolean containsMapping(Object key, Object value);
 
     /**
      * Checks whether the map contains at least one mapping for the specified value.
      *
-     * @param value  The value to search for
-     * @return true if the map contains the value
-     * @throws NullPointerException if the value is null and null values are not supported
-     *   by the used collection types (optional)
+     * @param value The value to search for.
+     * @return true if the map contains the value.
+     * @throws NullPointerException if the value is null and null values are not supported by the used collection types (optional).
      */
     boolean containsValue(Object value);
 
     /**
      * Returns a {@link Collection} view of the mappings contained in this multivalued map.
      * <p>
-     * The collection is backed by the map, so changes to the map are reflected
-     * in the collection, and vice-versa.
+     * The collection is backed by the map, so changes to the map are reflected in the collection, and vice-versa.
      * </p>
      *
-     * @return A set view of the mappings contained in this map
+     * @return A set view of the mappings contained in this map.
      */
     Collection<Entry<K, V>> entries();
-
     // Modification operations
 
     /**
      * Gets a view collection of the values associated with the specified key.
      * <p>
-     * This method will return an <strong>empty</strong> collection if {@link #containsKey(Object)}
-     * returns {@code false}. Changes to the returned collection will update the underlying
-     * {@code MultiValuedMap} and vice-versa.
+     * This method will return an <strong>empty</strong> collection if {@link #containsKey(Object)} returns {@code false}. Changes to the returned collection
+     * will update the underlying {@code MultiValuedMap} and vice-versa.
      * </p>
      *
-     * @param key  The key to retrieve
-     * @return The {@code Collection} of values, implementations should
-     *   return an empty collection for no mapping
-     * @throws NullPointerException if the key is null and null keys are invalid (optional)
+     * @param key The key to retrieve.
+     * @return The {@code Collection} of values, implementations should return an empty collection for no mapping.
+     * @throws NullPointerException if the key is null and null keys are invalid (optional).
      */
     Collection<V> get(K key);
 
@@ -154,198 +144,165 @@ public interface MultiValuedMap<K, V> {
     /**
      * Returns {@code true} if this map contains no key-value mappings.
      *
-     * @return {@code true} if this map contains no key-value mappings
+     * @return {@code true} if this map contains no key-value mappings.
      */
     boolean isEmpty();
 
     /**
      * Returns a {@link MultiSet} view of the keys contained in this multivalued map.
      * <p>
-     * The {@link MultiSet#getCount(Object)} method of the returned multiset will give
-     * the same result a calling {@code get(Object).size()} for the same key.
+     * The {@link MultiSet#getCount(Object)} method of the returned multiset will give the same result a calling {@code get(Object).size()} for the same key.
      * </p>
      * <p>
-     * This multiset is backed by the map, so any changes in the map are reflected in
-     * the multiset.
+     * This multiset is backed by the map, so any changes in the map are reflected in the multiset.
      * </p>
      *
-     * @return A multiset view of the keys contained in this map
+     * @return A multiset view of the keys contained in this map.
      */
     MultiSet<K> keys();
 
     /**
      * Returns a {@link Set} view of the keys contained in this multivalued map.
      * <p>
-     * The set is backed by the map, so changes to the map are reflected
-     * in the set, and vice-versa.
+     * The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
      * </p>
      * <p>
-     * If the map is modified while an iteration over the set is in
-     * progress (except through the iterator's own {@code remove} operation),
-     * the result of the iteration is undefined. The set supports element
-     * removal, which removes the corresponding mapping from the map, via the
-     * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
-     * {@code retainAll}, and {@code clear} operations. It does not support
-     * the {@code add} or {@code addAll} operations.
+     * If the map is modified while an iteration over the set is in progress (except through the iterator's own {@code remove} operation), the result of the
+     * iteration is undefined. The set supports element removal, which removes the corresponding mapping from the map, via the {@code Iterator.remove},
+     * {@code Set.remove}, {@code removeAll}, {@code retainAll}, and {@code clear} operations. It does not support the {@code add} or {@code addAll} operations.
      * </p>
      *
-     * @return A set view of the keys contained in this map
+     * @return A set view of the keys contained in this map.
      */
     Set<K> keySet();
 
     /**
      * Obtains a {@code MapIterator} over this multivalued map.
      * <p>
-     * A map iterator is an efficient way of iterating over maps. There is no
-     * need to access the entries collection or use {@code Map.Entry} objects.
+     * A map iterator is an efficient way of iterating over maps. There is no need to access the entries collection or use {@code Map.Entry} objects.
      * </p>
      *
-     * @return A map iterator
+     * @return A map iterator.
      */
     MapIterator<K, V> mapIterator();
 
     /**
      * Adds a key-value mapping to this multivalued map.
      * <p>
-     * Unlike a normal {@code Map} the previous value is not replaced.
-     * Instead, the new value is added to the collection stored against the key.
-     * Depending on the collection type used, duplicate key-value mappings may
-     * be allowed.
+     * Unlike a normal {@code Map} the previous value is not replaced. Instead, the new value is added to the collection stored against the key. Depending on
+     * the collection type used, duplicate key-value mappings may be allowed.
      * </p>
      * <p>
-     * The method will return {@code true} if the size of the multivalued map
-     * has been increased because of this operation.
+     * The method will return {@code true} if the size of the multivalued map has been increased because of this operation.
      * </p>
      *
-     * @param key  The key to store against
-     * @param value  The value to add to the collection at the key
-     * @return true if the map changed as a result of this put operation, or false
-     *   if the map already contained the key-value mapping and the collection
-     *   type does not allow duplicate values, for example when using a Set
-     * @throws UnsupportedOperationException if the put operation is not supported by
-     *   this multivalued map, for example if it is unmodifiable
-     * @throws NullPointerException if the key or value is null and null is invalid (optional)
-     * @throws IllegalArgumentException if some aspect of the specified key or value prevents
-     *   it from being stored in this multivalued map
+     * @param key   The key to store against.
+     * @param value The value to add to the collection at the key.
+     * @return true if the map changed as a result of this put operation, or false if the map already contained the key-value mapping and the collection type
+     *         does not allow duplicate values, for example when using a Set.
+     * @throws UnsupportedOperationException if the put operation is not supported by this multivalued map, for example if it is unmodifiable.
+     * @throws NullPointerException          if the key or value is null and null is invalid (optional).
+     * @throws IllegalArgumentException      if some aspect of the specified key or value prevents it from being stored in this multivalued map.
      */
     boolean put(K key, V value);
 
     /**
      * Adds a mapping to the specified key for all values contained in the given Iterable.
      *
-     * @param key  The key to store against
-     * @param values  The values to add to the collection at the key, may not be null
-     * @return true if the map changed as a result of this operation
-     * @throws NullPointerException if the specified iterable is null, or if this map
-     *   does not permit null keys or values, and the specified key or values contain
-     *   null (optional)
+     * @param key    The key to store against.
+     * @param values The values to add to the collection at the key, may not be null.
+     * @return true if the map changed as a result of this operation.
+     * @throws NullPointerException if the specified iterable is null, or if this map does not permit null keys or values, and the specified key or values
+     *                              contain null (optional).
      */
     boolean putAll(K key, Iterable<? extends V> values);
 
     /**
-     * Copies all mappings from the specified map to this multivalued map
-     * (optional operation).
+     * Copies all mappings from the specified map to this multivalued map (optional operation).
      * <p>
-     * The effect of this call is equivalent to that of calling
-     * {@link #put(Object,Object) put(k, v)} on this map once for each mapping
-     * from key {@code k} to value {@code v} in the specified map.
+     * The effect of this call is equivalent to that of calling {@link #put(Object,Object) put(k, v)} on this map once for each mapping from key {@code k} to
+     * value {@code v} in the specified map.
      * </p>
      * <p>
-     * The behavior of this operation is undefined if the specified map is modified
-     * while the operation is in progress.
+     * The behavior of this operation is undefined if the specified map is modified while the operation is in progress.
      * </p>
      *
-     * @param map  mappings to be stored in this map, may not be null
-     * @return true if the map changed as a result of this operation
-     * @throws UnsupportedOperationException if the {@code putAll} operation is
-     *   not supported by this map
-     * @throws NullPointerException if the specified map is null, or if this map
-     *   does not permit null keys or values, and the specified map
-     *   contains null keys or values (optional)
-     * @throws IllegalArgumentException if some property of a key or value in
-     *   the specified map prevents it from being stored in this map
+     * @param map mappings to be stored in this map, may not be null.
+     * @return true if the map changed as a result of this operation.
+     * @throws UnsupportedOperationException if the {@code putAll} operation is not supported by this map.
+     * @throws NullPointerException          if the specified map is null, or if this map does not permit null keys or values, and the specified map contains
+     *                                       null keys or values (optional).
+     * @throws IllegalArgumentException      if some property of a key or value in the specified map prevents it from being stored in this map.
      */
     boolean putAll(Map<? extends K, ? extends V> map);
 
     /**
-     * Copies all mappings from the specified map to this multivalued map
-     * (optional operation).
+     * Copies all mappings from the specified map to this multivalued map (optional operation).
      * <p>
-     * The effect of this call is equivalent to that of calling
-     * {@link #put(Object,Object) put(k, v)} on this map once for each
-     * mapping from key {@code k} to value {@code v} in the specified map.
+     * The effect of this call is equivalent to that of calling {@link #put(Object,Object) put(k, v)} on this map once for each mapping from key {@code k} to
+     * value {@code v} in the specified map.
      * </p>
      * <p>
-     * The behavior of this operation is undefined if the specified map is modified
-     * while the operation is in progress.
+     * The behavior of this operation is undefined if the specified map is modified while the operation is in progress.
      * </p>
      *
-     * @param map  mappings to be stored in this map, may not be null
-     * @return true if the map changed as a result of this operation
-     * @throws UnsupportedOperationException if the {@code putAll} operation is
-     *   not supported by this map
-     * @throws NullPointerException if the specified map is null, or if this map
-     *   does not permit null keys or values, and the specified map
-     *   contains null keys or values (optional)
-     * @throws IllegalArgumentException if some property of a key or value in
-     *   the specified map prevents it from being stored in this map
+     * @param map mappings to be stored in this map, may not be null.
+     * @return true if the map changed as a result of this operation.
+     * @throws UnsupportedOperationException if the {@code putAll} operation is not supported by this map.
+     * @throws NullPointerException          if the specified map is null, or if this map does not permit null keys or values, and the specified map contains
+     *                                       null keys or values (optional).
+     * @throws IllegalArgumentException      if some property of a key or value in the specified map prevents it from being stored in this map.
      */
     boolean putAll(MultiValuedMap<? extends K, ? extends V> map);
 
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * The returned collection <em>may</em> be modifiable, but updates will not be propagated
-     * to this multivalued map. In case no mapping was stored for the specified
-     * key, an empty, unmodifiable collection will be returned.
+     * The returned collection <em>may</em> be modifiable, but updates will not be propagated to this multivalued map. In case no mapping was stored for the
+     * specified key, an empty, unmodifiable collection will be returned.
      * </p>
      *
-     * @param key  The key to remove values from
-     * @return The values that were removed
-     * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws NullPointerException if the key is null and null keys are invalid (optional)
+     * @param key The key to remove values from.
+     * @return The values that were removed.
+     * @throws UnsupportedOperationException if the map is unmodifiable.
+     * @throws NullPointerException          if the key is null and null keys are invalid (optional).
      */
     Collection<V> remove(Object key);
 
     /**
      * Removes a key-value mapping from the map.
      * <p>
-     * The item is removed from the collection mapped to the specified key.
-     * Other values attached to that key are unaffected.
+     * The item is removed from the collection mapped to the specified key. Other values attached to that key are unaffected.
      * </p>
      * <p>
-     * If the last value for a key is removed, implementations typically return
-     * an empty collection from a subsequent {@code get(Object)}.
+     * If the last value for a key is removed, implementations typically return an empty collection from a subsequent {@code get(Object)}.
      * </p>
      *
-     * @param key  The key to remove from
-     * @param item  The item to remove
-     * @return true if the mapping was removed, false otherwise
-     * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws NullPointerException if the key or value is null and null is invalid (optional)
+     * @param key  The key to remove from.
+     * @param item The item to remove.
+     * @return true if the mapping was removed, false otherwise.
+     * @throws UnsupportedOperationException if the map is unmodifiable.
+     * @throws NullPointerException          if the key or value is null and null is invalid (optional).
      */
     boolean removeMapping(Object key, Object item);
 
     /**
      * Gets the total size of the map.
      * <p>
-     * Implementations would return the total size of the map which is the count
-     * of the values from all keys.
+     * Implementations would return the total size of the map which is the count of the values from all keys.
      * </p>
      *
-     * @return The total size of the map
+     * @return The total size of the map.
      */
     int size();
 
     /**
      * Gets a {@link Collection} view of all values contained in this multivalued map.
      * <p>
-     * Implementations typically return a collection containing the combination
-     * of values from all keys.
+     * Implementations typically return a collection containing the combination of values from all keys.
      * </p>
      *
-     * @return A collection view of the values contained in this multivalued map
+     * @return A collection view of the values contained in this multivalued map.
      */
     Collection<V> values();
-
 }

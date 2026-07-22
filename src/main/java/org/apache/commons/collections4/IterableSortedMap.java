@@ -21,8 +21,8 @@ import java.util.SortedMap;
 /**
  * {@link SortedMap} + {@link OrderedMap}.
  *
- * @param <K> The type of the keys in the map
- * @param <V> The type of the values in the map
+ * @param <K> The type of the keys in the map.
+ * @param <V> The type of the values in the map.
  * @since 4.0
  */
 public interface IterableSortedMap<K, V> extends SortedMap<K, V>, OrderedMap<K, V> {

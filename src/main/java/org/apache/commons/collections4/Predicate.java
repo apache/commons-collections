@@ -14,25 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
- * Defines a functor interface implemented by classes that perform a predicate
- * test on an object.
+ * Defines a functor interface implemented by classes that perform a predicate test on an object.
  * <p>
- * A {@code Predicate} is the object equivalent of an {@code if} statement.
- * It uses the input object to return a true or false value, and is often used in
+ * A {@code Predicate} is the object equivalent of an {@code if} statement. It uses the input object to return a true or false value, and is often used in
  * validation or filtering.
  * </p>
  * <p>
- * Standard implementations of common predicates are provided by
- * {@link PredicateUtils}. These include true, false, instanceof, equals, and,
- * or, not, method invocation and null testing.
+ * Standard implementations of common predicates are provided by {@link PredicateUtils}. These include true, false, instanceof, equals, and, or, not, method
+ * invocation and null testing.
  * </p>
  *
  * @param <T> The type of the input to the predicate.
- * @since 1.0
- * This will be deprecated in 5.0 in favor of {@link Predicate}.
+ * @since 1.0 This will be deprecated in 5.0 in favor of {@link Predicate}.
  */
 //@Deprecated
 public interface Predicate<T> extends java.util.function.Predicate<T> {
@@ -40,11 +37,11 @@ public interface Predicate<T> extends java.util.function.Predicate<T> {
     /**
      * Use the specified parameter to perform a test that returns true or false.
      *
-     * @param object  The object to evaluate, should not be changed
-     * @return true or false
-     * @throws ClassCastException (runtime) if the input is the wrong class
-     * @throws IllegalArgumentException (runtime) if the input is invalid
-     * @throws FunctorException (runtime) if the predicate encounters a problem
+     * @param object The object to evaluate, should not be changed.
+     * @return true or false.
+     * @throws ClassCastException       (runtime) if the input is the wrong class.
+     * @throws IllegalArgumentException (runtime) if the input is invalid.
+     * @throws FunctorException         (runtime) if the predicate encounters a problem.
      */
     boolean evaluate(T object);
 
@@ -52,5 +49,4 @@ public interface Predicate<T> extends java.util.function.Predicate<T> {
     default boolean test(final T t) {
         return evaluate(t);
     }
-
 }

@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Iterator;
@@ -30,9 +31,7 @@ import java.util.Iterator;
 public interface ResettableIterator<E> extends Iterator<E> {
 
     /**
-     * Resets the iterator back to the position at which the iterator
-     * was created.
+     * Resets the iterator back to the position at which the iterator was created.
      */
     void reset();
-
 }

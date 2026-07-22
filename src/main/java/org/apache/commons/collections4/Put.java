@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.Map;
@@ -21,15 +22,13 @@ import java.util.Map;
 /**
  * The "write" subset of the {@link Map} interface.
  * <p>
- * NOTE: in the original {@link Map} interface, {@link Map#put(Object, Object)} is known
- * to have the same return type as {@link Map#get(Object)}, namely {@code V}. {@link Put}
- * makes no assumptions in this regard (there is no association with, nor even knowledge
- * of, a "reading" interface) and thus defines {@link #put(Object, Object)} as returning
- * {@link Object}.
+ * NOTE: in the original {@link Map} interface, {@link Map#put(Object, Object)} is known to have the same return type as {@link Map#get(Object)}, namely
+ * {@code V}. {@link Put} makes no assumptions in this regard (there is no association with, nor even knowledge of, a "reading" interface) and thus defines
+ * {@link #put(Object, Object)} as returning {@link Object}.
  * </p>
  *
- * @param <K> The type of the keys in this map
- * @param <V> The type of the values in this map
+ * @param <K> The type of the keys in this map.
+ * @param <V> The type of the values in this map.
  * @since 4.0
  * @see Get
  */
@@ -45,17 +44,13 @@ public interface Put<K, V> {
     /**
      * Associates the specified value with the specified key in this map.
      * <p>
-     * Note that the return type is Object, rather than V as in the Map interface.
-     * See the class Javadoc for further info.
+     * Note that the return type is Object, rather than V as in the Map interface. See the class Javadoc for further info.
      * </p>
      *
-     * @param key key with which the specified value is to be associated
-     * @param value value to be associated with the specified key
-     * @return The previous value associated with {@code key}, or
-     *         {@code null} if there was no mapping for {@code key}.
-     *         (A {@code null} return can also indicate that the map
-     *         previously associated {@code null} with {@code key},
-     *         if the implementation supports {@code null} values.)
+     * @param key   key with which the specified value is to be associated.
+     * @param value value to be associated with the specified key.
+     * @return The previous value associated with {@code key}, or {@code null} if there was no mapping for {@code key}. (A {@code null} return can also indicate
+     *         that the map previously associated {@code null} with {@code key}, if the implementation supports {@code null} values.)
      * @see Map#put(Object, Object)
      */
     Object put(K key, V value);
@@ -63,9 +58,8 @@ public interface Put<K, V> {
     /**
      * Copies all of the mappings from the specified map to this map.
      *
-     * @param t mappings to be stored in this map
+     * @param t mappings to be stored in this map.
      * @see Map#putAll(Map)
      */
     void putAll(Map<? extends K, ? extends V> t);
-
 }

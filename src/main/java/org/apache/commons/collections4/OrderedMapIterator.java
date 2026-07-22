@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 /**
@@ -31,7 +32,7 @@ public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIter
     /**
      * Checks to see if there is a previous entry that can be iterated to.
      *
-     * @return {@code true} if the iterator has a previous element
+     * @return {@code true} if the iterator has a previous element.
      */
     @Override
     boolean hasPrevious();
@@ -39,10 +40,9 @@ public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIter
     /**
      * Gets the previous <em>key</em> from the {@code Map}.
      *
-     * @return The previous key in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
+     * @return The previous key in the iteration.
+     * @throws java.util.NoSuchElementException if the iteration is finished.
      */
     @Override
     K previous();
-
 }
