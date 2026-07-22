@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -115,6 +116,17 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         list.add((V) "a1");
         assertEquals(1, listMap.size());
         assertTrue(listMap.containsKey("A"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testListValuedMapAddByIndexInvalidIndexLeavesKeyAbsent() {
+        final ListValuedMap<K, V> listMap = makeObject();
+        final List<V> list = listMap.get((K) "A");
+        assertThrows(IndexOutOfBoundsException.class, () -> list.add(1, (V) "a1"));
+        assertFalse(listMap.containsKey("A"));
+        assertTrue(listMap.get((K) "A").isEmpty());
+        assertEquals(0, listMap.size());
     }
 
     @Test

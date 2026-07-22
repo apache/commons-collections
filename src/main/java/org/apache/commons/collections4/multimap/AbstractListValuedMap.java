@@ -126,10 +126,12 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
 
         @Override
         public void add(final int index, final V value) {
-            List<V> list = getMapping();
+            final List<V> list = getMapping();
             if (list == null) {
-                list = createCollection();
-                getMap().put(key, list);
+                final List<V> newList = createCollection();
+                newList.add(index, value);
+                getMap().put(key, newList);
+                return;
             }
             list.add(index, value);
         }
