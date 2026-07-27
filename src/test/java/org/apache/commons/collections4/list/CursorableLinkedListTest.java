@@ -18,6 +18,7 @@ package org.apache.commons.collections4.list;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -469,12 +470,12 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertEquals(list.hashCode(), list.hashCode());
 
         final CursorableLinkedList<E> list2 = new CursorableLinkedList<>();
-        assertFalse(list.equals(list2));
-        assertFalse(list2.equals(list));
+        assertNotEquals(list, list2);
+        assertNotEquals(list2, list);
 
         final java.util.List<E> list3 = new java.util.LinkedList<>();
-        assertFalse(list.equals(list3));
-        assertFalse(list3.equals(list));
+        assertNotEquals(list, list3);
+        assertNotEquals(list3, list);
         assertEquals(list2, list3);
         assertEquals(list3, list2);
         assertEquals(list2.hashCode(), list3.hashCode());
@@ -482,8 +483,8 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list2.add((E) "A");
         assertEquals(list, list2);
         assertEquals(list2, list);
-        assertFalse(list2.equals(list3));
-        assertFalse(list3.equals(list2));
+        assertNotEquals(list2, list3);
+        assertNotEquals(list3, list2);
 
         list3.add((E) "A");
         assertEquals(list2, list3);
@@ -492,10 +493,10 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
         list.add((E) "B");
         assertEquals(list, list);
-        assertFalse(list.equals(list2));
-        assertFalse(list2.equals(list));
-        assertFalse(list.equals(list3));
-        assertFalse(list3.equals(list));
+        assertNotEquals(list, list2);
+        assertNotEquals(list2, list);
+        assertNotEquals(list, list3);
+        assertNotEquals(list3, list);
 
         list2.add((E) "B");
         list3.add((E) "B");
@@ -520,8 +521,8 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "D");
         list2.addFirst((E) "D");
         assertEquals(list, list);
-        assertFalse(list.equals(list2));
-        assertFalse(list2.equals(list));
+        assertNotEquals(list, list2);
+        assertNotEquals(list2, list);
     }
 
     @Test

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -373,7 +374,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "b", (V) "testA");
-        assertFalse(map1.equals(map2));
+        assertNotEquals(map1, map2);
     }
 
 //    void testCreate() throws Exception {
@@ -396,7 +397,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "c", (V) "testA");
-        assertFalse(map1.equals(map2));
+        assertNotEquals(map1, map2);
     }
 
     @Test

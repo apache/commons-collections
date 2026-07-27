@@ -18,6 +18,7 @@ package org.apache.commons.collections4.multiset;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -373,7 +374,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset2 = makeObject();
         assertTrue(multiset.equals(multiset2));
         multiset.add((T) "A");
-        assertFalse(multiset.equals(multiset2));
+        assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
         assertTrue(multiset.equals(multiset2));
         multiset.add((T) "A");
@@ -398,7 +399,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         final MultiSet<T> multiset2 = new HashMultiSet<>();
         assertTrue(multiset.equals(multiset2));
         multiset.add((T) "A");
-        assertFalse(multiset.equals(multiset2));
+        assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
         assertTrue(multiset.equals(multiset2));
         multiset.add((T) "A");

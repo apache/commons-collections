@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -299,7 +300,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
         assertTrue(entry1.equals(entry2));
         assertTrue(entry2.equals(entry1));
-        assertFalse(entry1.equals(entry3));
+        assertNotEquals(entry1, entry3);
     }
 
     @Test
