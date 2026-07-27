@@ -372,11 +372,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         final MultiSet<T> multiset2 = makeObject();
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         multiset.add((T) "B");
         multiset.add((T) "B");
@@ -385,7 +385,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset2.add((T) "B");
         multiset2.add((T) "B");
         multiset2.add((T) "C");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
     }
 
     @Test
@@ -397,11 +397,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
 
         final MultiSet<T> multiset = makeObject();
         final MultiSet<T> multiset2 = new HashMultiSet<>();
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         assertNotEquals(multiset, multiset2);
         multiset2.add((T) "A");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
         multiset.add((T) "A");
         multiset.add((T) "B");
         multiset.add((T) "B");
@@ -410,7 +410,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset2.add((T) "B");
         multiset2.add((T) "B");
         multiset2.add((T) "C");
-        assertTrue(multiset.equals(multiset2));
+        assertEquals(multiset, multiset2);
     }
 
     @Test

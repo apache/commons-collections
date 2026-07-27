@@ -89,20 +89,20 @@ class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>(1, 2, 3);
             comparator1.compare(1, 2);
             comparator2.compare(1, 2);
-            assertTrue(comparator1.equals(comparator2));
+            assertEquals(comparator1, comparator2);
         }
 
         @Test
         void expectTrueWhenBothComparatorsWithoutAnyItems() {
             final FixedOrderComparator<Integer> comparator1 = new FixedOrderComparator<>();
             final FixedOrderComparator<Integer> comparator2 = new FixedOrderComparator<>();
-            assertTrue(comparator1.equals(comparator2));
+            assertEquals(comparator1, comparator2);
         }
 
         @Test
         void expectTrueWhenBothObjectsAreSame() {
             final FixedOrderComparator<Integer> comparator = new FixedOrderComparator<>();
-            assertTrue(comparator.equals(comparator));
+            assertEquals(comparator, comparator);
         }
     }
 

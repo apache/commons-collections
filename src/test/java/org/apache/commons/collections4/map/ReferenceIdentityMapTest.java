@@ -298,8 +298,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         final Map.Entry<K, V> entry2 = it.next();
         final Map.Entry<K, V> entry3 = it.next();
 
-        assertTrue(entry1.equals(entry2));
-        assertTrue(entry2.equals(entry1));
+        assertEquals(entry1, entry2);
+        assertEquals(entry2, entry1);
         assertNotEquals(entry1, entry3);
     }
 
