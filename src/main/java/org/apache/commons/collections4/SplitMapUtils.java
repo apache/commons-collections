@@ -131,9 +131,15 @@ public class SplitMapUtils {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Always throws {@link UnsupportedOperationException}.
+         *
+         * @param key The key whose mapping would be removed.
+         * @throws UnsupportedOperationException Always thrown.
+         */
         @Override
         public V remove(final Object key) {
-            return get.remove(key);
+            throw new UnsupportedOperationException();
         }
 
         @Override
