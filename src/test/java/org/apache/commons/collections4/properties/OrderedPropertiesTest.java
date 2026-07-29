@@ -18,7 +18,9 @@ package org.apache.commons.collections4.properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -30,13 +32,36 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link OrderedProperties}.
  */
 class OrderedPropertiesTest {
+
+    /**
+     * Every way of dropping the middle mapping through the key and value views.
+     */
+    static Stream<Arguments> getViewRemovals() {
+        return Stream.of(
+                arguments("keySet().remove", (Consumer<OrderedProperties>) props -> props.keySet().remove("key2")),
+                arguments("keySet().removeAll", (Consumer<OrderedProperties>) props -> props.keySet().removeAll(Collections.singleton("key2"))),
+                arguments("keySet().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.keySet().iterator())),
+                arguments("values().remove", (Consumer<OrderedProperties>) props -> props.values().remove("value2")),
+                arguments("values().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.values().iterator())));
+    }
+
+    private static void removeSecond(final Iterator<Object> iterator) {
+        iterator.next();
+        iterator.next();
+        iterator.remove();
+    }
 
     private void assertAscendingOrder(final OrderedProperties orderedProperties) {
         final int first = 1;
@@ -97,6 +122,14 @@ class OrderedPropertiesTest {
             orderedProperties.load(reader);
         }
         return assertDescendingOrder(orderedProperties);
+    }
+
+    private OrderedProperties newThreeKeyProperties() {
+        final OrderedProperties orderedProperties = new OrderedProperties();
+        orderedProperties.put("key1", "value1");
+        orderedProperties.put("key2", "value2");
+        orderedProperties.put("key3", "value3");
+        return orderedProperties;
     }
 
     @Test
@@ -183,6 +216,15 @@ class OrderedPropertiesTest {
             assertEquals(String.valueOf(ch), k);
             assertEquals("Value" + ch, v);
         });
+    }
+
+    @Test
+    void testKeySetRejectsAdd() {
+        final OrderedProperties orderedProperties = newThreeKeyProperties();
+        final Set<Object> keySet = orderedProperties.keySet();
+        assertThrows(UnsupportedOperationException.class, () -> keySet.add("key4"));
+        assertEquals("[key1, key2, key3]", orderedProperties.keySet().toString());
+        assertEquals("{key1=value1, key2=value2, key3=value3}", orderedProperties.toString());
     }
 
     @Test
@@ -339,5 +381,17 @@ class OrderedPropertiesTest {
         assertEquals(
                 "{Z=ValueZ, Y=ValueY, X=ValueX, W=ValueW, V=ValueV, U=ValueU, T=ValueT, S=ValueS, R=ValueR, Q=ValueQ, P=ValueP, O=ValueO, N=ValueN, M=ValueM, L=ValueL, K=ValueK, J=ValueJ, I=ValueI, H=ValueH, G=ValueG, F=ValueF, E=ValueE, D=ValueD, C=ValueC, B=ValueB, A=ValueA}",
                 orderedProperties.toString());
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("getViewRemovals")
+    void testViewRemovalRemovesMapping(final String description, final Consumer<OrderedProperties> removal) {
+        final OrderedProperties orderedProperties = newThreeKeyProperties();
+        removal.accept(orderedProperties);
+        assertFalse(orderedProperties.containsKey("key2"));
+        assertEquals(2, orderedProperties.size());
+        assertEquals("[key1, key3]", orderedProperties.keySet().toString());
+        assertEquals("[value1, value3]", orderedProperties.values().toString());
+        assertEquals("{key1=value1, key3=value3}", orderedProperties.toString());
     }
 }
