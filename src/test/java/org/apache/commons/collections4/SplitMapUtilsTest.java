@@ -120,7 +120,8 @@ class SplitMapUtilsTest {
         attemptPutOperation(() -> map.remove("0"));
         attemptPutOperation(() -> map.remove("1", 1));
         attemptPutOperation(() -> map.computeIfPresent("2", (k, v) -> null));
-        attemptPutOperation(() -> map.merge("3", 3, (a, b) -> null));
+        attemptPutOperation(() -> map.compute("3", (k, v) -> null));
+        attemptPutOperation(() -> map.merge("4", 4, (a, b) -> null));
 
         assertEquals(sz, map.size());
         assertEquals(sz, backingMap.size());

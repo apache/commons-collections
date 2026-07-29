@@ -134,7 +134,7 @@ public class SplitMapUtils {
         /**
          * Always throws {@link UnsupportedOperationException}.
          *
-         * @param key Ignored.
+         * @param key The key whose mapping would be removed.
          * @throws UnsupportedOperationException Always thrown.
          */
         @Override
