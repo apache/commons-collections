@@ -100,7 +100,7 @@
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.easymock:easymock from 5.5.0 to 5.6.0 #617.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #625.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump commons-io:commons-io from 2.19.0 to 2.22.0.</action>
-    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.18.0 to 1.22.0.</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump commons-codec:commons-codec from 1.18.0 to 1.22.1.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump doxia.module.markdown.version from 2.0.0 to 2.1.0.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory, Dependabot">Bump com.google.guava:guava-testlib from 33.5.0-jre to 33.6.0-jre (#680).</action>
   </release>
