@@ -85,7 +85,8 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Do not register a value collection until an add succeeds (#717).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Increment modCount after the bounds check in TreeList add and remove (#716).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Add messages when throwing NullPointerException.</action>
-    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reject remove on the Unmodifiable map from SplitMapUtils.readableMap (#718)</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reject remove on the Unmodifiable map from SplitMapUtils.readableMap (#718).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Keep OrderedProperties keySet and values in sync with the map (#719).</action>
     <!-- ADD -->
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add generics to UnmodifiableIterator for the wrapped type.</action>
     <action type="add" dev="ggregory" due-to="Gary Gregory">Add a Maven benchmark profile for JMH.</action>
