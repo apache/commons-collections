@@ -219,15 +219,6 @@ class OrderedPropertiesTest {
     }
 
     @Test
-    void testKeySetRejectsAdd() {
-        final OrderedProperties orderedProperties = newThreeKeyProperties();
-        final Set<Object> keySet = orderedProperties.keySet();
-        assertThrows(UnsupportedOperationException.class, () -> keySet.add("key4"));
-        assertEquals("[key1, key2, key3]", orderedProperties.keySet().toString());
-        assertEquals("{key1=value1, key2=value2, key3=value3}", orderedProperties.toString());
-    }
-
-    @Test
     void testKeys() {
         final OrderedProperties orderedProperties = new OrderedProperties();
         final char first = 'Z';
@@ -239,6 +230,15 @@ class OrderedPropertiesTest {
         for (char ch = first; ch <= last; ch++) {
             assertEquals(String.valueOf(ch), keys.nextElement());
         }
+    }
+
+    @Test
+    void testKeySetRejectsAdd() {
+        final OrderedProperties orderedProperties = newThreeKeyProperties();
+        final Set<Object> keySet = orderedProperties.keySet();
+        assertThrows(UnsupportedOperationException.class, () -> keySet.add("key4"));
+        assertEquals("[key1, key2, key3]", orderedProperties.keySet().toString());
+        assertEquals("{key1=value1, key2=value2, key3=value3}", orderedProperties.toString());
     }
 
     @Test

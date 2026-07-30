@@ -685,6 +685,19 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     @Test
     @SuppressWarnings("unchecked")
+    void testAddAllThroughGetEmptyLeavesKeyAbsent() {
+        assumeTrue(isAddSupported());
+        resetEmpty();
+        final MultiValuedMap<K, V> map = getMap();
+        final Collection<V> col = map.get((K) "k0");
+        assertFalse(col.addAll(new ArrayList<>()));
+        assertFalse(map.containsKey("k0"));
+        assertFalse(map.keySet().contains("k0"));
+        assertEquals(0, map.size());
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     void testAddMappingThroughGet() {
         assumeTrue(isAddSupported());
         resetEmpty();
@@ -703,19 +716,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertTrue(map.containsValue("v0_1"));
         assertTrue(col1.contains("v0_1"));
         assertTrue(col2.contains("v1_1"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    void testAddAllThroughGetEmptyLeavesKeyAbsent() {
-        assumeTrue(isAddSupported());
-        resetEmpty();
-        final MultiValuedMap<K, V> map = getMap();
-        final Collection<V> col = map.get((K) "k0");
-        assertFalse(col.addAll(new ArrayList<>()));
-        assertFalse(map.containsKey("k0"));
-        assertFalse(map.keySet().contains("k0"));
-        assertEquals(0, map.size());
     }
 
     /*void testRemoveViaGetCollectionRemove() {
