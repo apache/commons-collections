@@ -235,9 +235,12 @@ public class OrderedProperties extends Properties {
 
             @Override
             public void remove() {
-                // Not remove(Object), which would edit orderedKeys while this iterator walks it.
-                iterator.remove();
-                OrderedProperties.super.remove(last);
+                // All orderedKeys writes happen under the OrderedProperties monitor.
+                synchronized (OrderedProperties.this) {
+                    // Not remove(Object), which would edit orderedKeys while this iterator walks it.
+                    iterator.remove();
+                    OrderedProperties.super.remove(last);
+                }
             }
         };
     }
