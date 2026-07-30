@@ -25,6 +25,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -237,6 +238,15 @@ class OrderedPropertiesTest {
         final OrderedProperties orderedProperties = newThreeKeyProperties();
         final Set<Object> keySet = orderedProperties.keySet();
         assertThrows(UnsupportedOperationException.class, () -> keySet.add("key4"));
+        assertEquals("[key1, key2, key3]", orderedProperties.keySet().toString());
+        assertEquals("{key1=value1, key2=value2, key3=value3}", orderedProperties.toString());
+    }
+
+    @Test
+    void testKeySetRejectsAddAll() {
+        final OrderedProperties orderedProperties = newThreeKeyProperties();
+        final Set<Object> keySet = orderedProperties.keySet();
+        assertThrows(UnsupportedOperationException.class, () -> keySet.addAll(Arrays.asList("key4")));
         assertEquals("[key1, key2, key3]", orderedProperties.keySet().toString());
         assertEquals("{key1=value1, key2=value2, key3=value3}", orderedProperties.toString());
     }
