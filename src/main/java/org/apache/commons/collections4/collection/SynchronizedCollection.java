@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.collection;
 
 import java.io.Serializable;
@@ -23,22 +24,22 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
- * Decorates another {@link Collection} to synchronize its behavior
- * for a multithreaded environment.
+ * Decorates another {@link Collection} to synchronize its behavior for a multithreaded environment.
  * <p>
  * Iterators must be manually synchronized:
  * </p>
+ *
  * <pre>
  * synchronized (coll) {
- *   Iterator it = coll.iterator();
- *   // do stuff with iterator
+ *     Iterator it = coll.iterator();
+ *     // do stuff with iterator
  * }
  * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>
  *
- * @param <E> The type of the elements in the collection
+ * @param <E> The type of the elements in the collection.
  * @since 3.0
  */
 public class SynchronizedCollection<E> implements Collection<E>, Serializable {
@@ -49,10 +50,10 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Creates a synchronized collection.
      *
-     * @param <T> The type of the elements in the collection
-     * @param coll  The collection to decorate, must not be null
-     * @return A new synchronized collection
-     * @throws NullPointerException if collection is null
+     * @param <T>  The type of the elements in the collection.
+     * @param coll The collection to decorate, must not be null.
+     * @return A new synchronized collection.
+     * @throws NullPointerException if collection is null.
      * @since 4.0
      */
     public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
@@ -68,8 +69,8 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Constructs and wraps (not copies).
      *
-     * @param collection  The collection to decorate, must not be null
-     * @throws NullPointerException if the collection is null
+     * @param collection The collection to decorate, must not be null.
+     * @throws NullPointerException if the collection is null.
      */
     protected SynchronizedCollection(final Collection<E> collection) {
         this.collection = Objects.requireNonNull(collection, "collection");
@@ -79,9 +80,9 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Constructs and wraps (not copies).
      *
-     * @param collection  The collection to decorate, must not be null
-     * @param lock  The lock object to use, must not be null
-     * @throws NullPointerException if the collection or lock is null
+     * @param collection The collection to decorate, must not be null.
+     * @param lock       The lock object to use, must not be null.
+     * @throws NullPointerException if the collection or lock is null.
      */
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
         this.collection = Objects.requireNonNull(collection, "collection");
@@ -126,7 +127,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     /**
      * Gets the collection being decorated.
      *
-     * @return The decorated collection
+     * @return The decorated collection.
      */
     protected Collection<E> decorated() {
         return collection;
@@ -158,14 +159,15 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Iterators must be manually synchronized.
+     *
      * <pre>
      * synchronized (coll) {
-     *   Iterator it = coll.iterator();
-     *   // do stuff with iterator
+     *     Iterator it = coll.iterator();
+     *     // do stuff with iterator
      * }
      * </pre>
      *
-     * @return An iterator that must be manually synchronized on the collection
+     * @return An iterator that must be manually synchronized on the collection.
      */
     @Override
     public Iterator<E> iterator() {
@@ -230,5 +232,4 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
             return decorated().toString();
         }
     }
-
 }
