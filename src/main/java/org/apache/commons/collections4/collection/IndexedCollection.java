@@ -178,8 +178,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * with a key, use {@link #values(Object)}.
      * </p>
      *
-     * @param key  key to look up
-     * @return element found
+     * @param key  key to look up.
+     * @return element found.
      * @see #values(Object)
      */
     public C get(final K key) {
@@ -218,7 +218,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     /**
      * Removes an object from the index.
      *
-     * @param object The object to remove
+     * @param object The object to remove.
      */
     private void removeFromIndex(final C object) {
         index.removeMapping(keyTransformer.apply(object), object);
@@ -269,7 +269,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param key  key to look up.
      * @return A collection of elements found, or null if {@code contains(key) == false}.
      */
-    @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection
+    @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection.
     public Collection<C> values(final K key) {
         return (Collection<C>) index.get(key);
     }
