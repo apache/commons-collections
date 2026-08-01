@@ -46,7 +46,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    /** The elements every decorator under test is populated with. */
+    /** The elements used to populate each decorator under test. */
     private static final List<String> ELEMENTS = Arrays.asList("a", "b");
 
     /**
