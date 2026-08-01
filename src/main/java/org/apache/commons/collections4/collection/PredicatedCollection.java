@@ -70,8 +70,10 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * Create a Builder with a predicate to validate elements against, then add any elements
      * to the builder. Elements that fail the predicate will be added to a rejected list.
      * Finally, create or decorate a collection using the createPredicated[List,Set,Bag,Queue] methods.
+     * </p>
      * <p>
-     * An example:
+     * For example:
+     * </p>
      * <pre>
      *   Predicate&lt;String&gt; predicate = NotNullPredicate.notNullPredicate();
      *   PredicatedCollectionBuilder&lt;String&gt; builder = PredicatedCollection.builder(predicate);
@@ -83,9 +85,11 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * At the end of the code fragment above predicatedList is protected by the predicate supplied
      * to the builder, and it contains item1 and item2.
+     * </p>
      * <p>
      * More elements can be added to the builder once a predicated collection has been created,
      * but these elements will not be reflected in already created collections.
+     * </p>
      *
      * @param <E>  the element type.
      * @since 4.1
