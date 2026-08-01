@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -140,6 +141,16 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
                 return true;
             }
             return object == this || decorated().equals(object);
+        }
+    }
+
+    /**
+     * @since 4.6.0
+     */
+    @Override
+    public void forEach(final Consumer<? super E> action) {
+        synchronized (lock) {
+            decorated().forEach(action);
         }
     }
 
