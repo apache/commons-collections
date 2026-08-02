@@ -131,7 +131,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Reads the collection in using a custom routine.
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
      */
@@ -219,7 +219,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Writes the collection out using a custom routine.
      *
      * @param out  The output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @throws IOException Thrown if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();

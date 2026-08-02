@@ -353,7 +353,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * Deserializes the queue in using a custom routine.
      *
      * @param in  The input stream
-     * @throws IOException if an I/O error occurs while writing to the output stream
+     * @throws IOException Thrown if an I/O error occurs while writing to the output stream
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
     @SuppressWarnings("unchecked")

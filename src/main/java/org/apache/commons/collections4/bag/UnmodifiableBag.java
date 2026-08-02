@@ -134,7 +134,7 @@ public final class UnmodifiableBag<E>
      * Deserializes the collection in using a custom routine.
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      * @throws ClassCastException if deserialized object has wrong type
      */

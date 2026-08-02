@@ -182,7 +182,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * Deserializes the map in using a custom routine.
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked")

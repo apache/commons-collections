@@ -1972,7 +1972,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Deserializes the content of the stream.
      *
      * @param stream The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect

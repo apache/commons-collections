@@ -348,7 +348,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * constructors guarantee.
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if a class read from the stream cannot be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

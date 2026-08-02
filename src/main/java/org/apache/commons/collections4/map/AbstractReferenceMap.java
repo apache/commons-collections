@@ -814,7 +814,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * </p>
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @Override
@@ -870,7 +870,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * </p>
      *
      * @param out  The output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @throws IOException Thrown if an error occurs while writing to the stream
      */
     @Override
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {

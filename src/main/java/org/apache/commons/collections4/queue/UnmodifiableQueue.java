@@ -135,7 +135,7 @@ public final class UnmodifiableQueue<E>
      * Deserializes the collection in using a custom routine.
      *
      * @param in  The input stream
-     * @throws IOException if an I/O error occurs while reading from the input stream
+     * @throws IOException Thrown if an I/O error occurs while reading from the input stream
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
     @SuppressWarnings("unchecked")

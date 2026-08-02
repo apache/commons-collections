@@ -155,7 +155,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * Deserializes the map in using a custom routine.
      *
      * @param in The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

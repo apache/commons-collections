@@ -938,7 +938,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * </p>
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @SuppressWarnings("unchecked")
@@ -980,7 +980,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * </p>
      *
      * @param out  The output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @throws IOException Thrown if an error occurs while writing to the stream
      */
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeFloat(loadFactor);

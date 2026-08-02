@@ -293,7 +293,7 @@ public class LRUMap<K, V>
      * Reads the data necessary for {@code put()} to work in the superclass.
      *
      * @param in  The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     @Override
@@ -309,7 +309,7 @@ public class LRUMap<K, V>
      * Writes the data necessary for {@code put()} to work in deserialization.
      *
      * @param out  The output stream
-     * @throws IOException if an error occurs while writing to the stream
+     * @throws IOException Thrown if an error occurs while writing to the stream
      */
     @Override
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
@@ -420,7 +420,7 @@ public class LRUMap<K, V>
      * Deserializes the map in using a custom routine.
      *
      * @param in The input stream
-     * @throws IOException if an error occurs while reading from the stream
+     * @throws IOException Thrown if an error occurs while reading from the stream
      * @throws ClassNotFoundException if an object read from the stream cannot be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
