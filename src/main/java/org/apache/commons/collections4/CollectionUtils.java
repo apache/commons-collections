@@ -933,6 +933,7 @@ public class CollectionUtils {
      * @param <T>      The type of object in the {@link Iterable}.
      * @return The object at the specified index.
      * @throws IndexOutOfBoundsException if the index is invalid.
+     * @throws NullPointerException      if iterable is null.
      * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead.
      */
     @Deprecated
@@ -972,6 +973,7 @@ public class CollectionUtils {
      * @param index The index to get.
      * @return The object at the specified index.
      * @throws IndexOutOfBoundsException if the index is invalid.
+     * @throws NullPointerException      if map is null.
      */
     public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
         Objects.requireNonNull(map, "map");
@@ -1420,7 +1422,8 @@ public class CollectionUtils {
      * @param startIndex The start index (inclusive) to remove element, can't be less than 0.
      * @param count      The specified number to remove, can't be less than 1.
      * @return collection of elements that removed from the input collection.
-     * @throws NullPointerException if input is null
+     * @throws NullPointerException      if input is null
+     * @throws IndexOutOfBoundsException if startIndex is less than 0, count is less than 0, or the sum of startIndex and count is greater than the collection size.
      * @since 4.5.0-M1
      */
     public static <E> Collection<E> removeCount(final Collection<E> input, int startIndex, int count) {
@@ -1458,7 +1461,9 @@ public class CollectionUtils {
      * @param startIndex The start index (inclusive) to remove element, must not be less than 0.
      * @param endIndex   The end index (exclusive) to remove, must not be less than startIndex.
      * @return collection of elements that removed from the input collection.
-     * @throws NullPointerException if input is null.
+     * @throws NullPointerException      if input is null.
+     * @throws IllegalArgumentException  if endIndex is less than startIndex.
+     * @throws IndexOutOfBoundsException if endIndex is greater than the size of the collection, or startIndex is less than 0.
      * @since 4.5.0-M1
      */
     public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
@@ -1532,6 +1537,7 @@ public class CollectionUtils {
      * Reverses the order of the given array.
      *
      * @param array The array to reverse.
+     * @throws NullPointerException if array is null.
      */
     public static void reverseArray(final Object[] array) {
         Objects.requireNonNull(array, "array");
@@ -1784,6 +1790,7 @@ public class CollectionUtils {
      * @param b   The collection to subtract, must not be null.
      * @param <O> The generic type that is able to represent the types contained in both input collections.
      * @return A new collection with the results.
+     * @throws NullPointerException if either collection is null.
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b) {
