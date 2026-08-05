@@ -44,9 +44,8 @@ import org.apache.commons.collections4.multiset.HashMultiSet;
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
  * <p>
- * Various utility methods might put the input objects into a Set/Map/MultiSet. In case
- * the input objects override {@link Object#equals(Object)}, it is mandatory that
- * the general contract of the {@link Object#hashCode()} method is maintained.
+ * Various utility methods might put the input objects into a Set/Map/MultiSet. In case the input objects override {@link Object#equals(Object)}, it is
+ * mandatory that the general contract of the {@link Object#hashCode()} method is maintained.
  * </p>
  * <p>
  * NOTE: From 4.0, method parameters will take {@link Iterable} objects when possible.
@@ -59,7 +58,7 @@ public class CollectionUtils {
     /**
      * Helper class to easily access cardinality properties of two collections.
      *
-     * @param <O>  the element type
+     * @param <O> the element type.
      */
     private static class CardinalityHelper<O> {
 
@@ -76,8 +75,8 @@ public class CollectionUtils {
         /**
          * Creates a new CardinalityHelper for two collections.
          *
-         * @param a  The first collection
-         * @param b  The second collection
+         * @param a The first collection.
+         * @param b The second collection.
          */
         CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             cardinalityA = new HashMultiSet<>(a);
@@ -88,7 +87,7 @@ public class CollectionUtils {
          * Gets the frequency of this object in collection A.
          *
          * @param key The key whose associated frequency is to be returned.
-         * @return The frequency of the object in collection A
+         * @return The frequency of the object in collection A.
          */
         public int freqA(final Object key) {
             return getFreq(key, cardinalityA);
@@ -98,7 +97,7 @@ public class CollectionUtils {
          * Gets the frequency of this object in collection B.
          *
          * @param key The key whose associated frequency is to be returned.
-         * @return The frequency of the object in collection B
+         * @return The frequency of the object in collection B.
          */
         public int freqB(final Object key) {
             return getFreq(key, cardinalityB);
@@ -111,8 +110,8 @@ public class CollectionUtils {
         /**
          * Gets the maximum frequency of an object.
          *
-         * @param obj  The object
-         * @return The maximum frequency of the object
+         * @param obj The object.
+         * @return The maximum frequency of the object.
          */
         public final int max(final Object obj) {
             return Math.max(freqA(obj), freqB(obj));
@@ -121,8 +120,8 @@ public class CollectionUtils {
         /**
          * Gets the minimum frequency of an object.
          *
-         * @param obj  The object
-         * @return The minimum frequency of the object
+         * @param obj The object.
+         * @return The minimum frequency of the object.
          */
         public final int min(final Object obj) {
             return Math.min(freqA(obj), freqB(obj));
@@ -130,17 +129,18 @@ public class CollectionUtils {
     }
 
     /**
-     * Wraps another object and uses the provided Equator to implement
-     * {@link #equals(Object)} and {@link #hashCode()}.
+     * Wraps another object and uses the provided Equator to implement {@link #equals(Object)} and {@link #hashCode()}.
      * <p>
      * This class can be used to store objects into a Map.
      * </p>
      *
-     * @param <O>  the element type
+     * @param <O> the element type.
      * @since 4.0
      */
     private static final class EquatorWrapper<O> {
+
         private final Equator<? super O> equator;
+
         private final O object;
 
         EquatorWrapper(final Equator<? super O> equator, final O object) {
@@ -171,7 +171,7 @@ public class CollectionUtils {
     /**
      * Helper class for set-related operations, for example union, subtract, intersection.
      *
-     * @param <O>  the element type
+     * @param <O> the element type.
      */
     private static final class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
 
@@ -184,8 +184,8 @@ public class CollectionUtils {
         /**
          * Create a new set operation helper from the two collections.
          *
-         * @param a  The first collection
-         * @param b  The second collection
+         * @param a The first collection.
+         * @param b The second collection.
          */
         SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             super(a, b);
@@ -204,7 +204,7 @@ public class CollectionUtils {
         /**
          * Returns the resulting collection.
          *
-         * @return The result
+         * @return The result.
          */
         public Collection<O> list() {
             return newList;
@@ -213,15 +213,14 @@ public class CollectionUtils {
         /**
          * Add the object {@code count} times to the result collection.
          *
-         * @param obj  The object to add
-         * @param count  The count
+         * @param obj   The object to add.
+         * @param count The count.
          */
         public void setCardinality(final O obj, final int count) {
             for (int i = 0; i < count; i++) {
                 newList.add(obj);
             }
         }
-
     }
 
     /**
@@ -260,10 +259,8 @@ public class CollectionUtils {
     public static final String COMMA = ",";
 
     /**
-     * An empty unmodifiable collection.
-     * The JDK provides empty Set and List implementations which could be used for
-     * this purpose. However they could be cast to Set or List which might be
-     * undesirable. This implementation only implements Collection.
+     * An empty unmodifiable collection. The JDK provides empty Set and List implementations which could be used for this purpose. However they could be cast to
+     * Set or List which might be undesirable. This implementation only implements Collection.
      */
     @SuppressWarnings("rawtypes") // we deliberately use the raw type here
     public static final Collection EMPTY_COLLECTION = Collections.emptyList();
@@ -271,11 +268,11 @@ public class CollectionUtils {
     /**
      * Adds all elements in the array to the given collection.
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to add to, must not be null
-     * @param elements  The array of elements to add, must not be null
-     * @return {@code true} if the collection was changed, {@code false} otherwise
-     * @throws NullPointerException if the collection or elements is null
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection to add to, must not be null.
+     * @param elements   The array of elements to add, must not be null.
+     * @return {@code true} if the collection was changed, {@code false} otherwise.
+     * @throws NullPointerException if the collection or elements is null.
      */
     public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
         Objects.requireNonNull(collection, "collection");
@@ -290,11 +287,11 @@ public class CollectionUtils {
     /**
      * Adds all elements in the enumeration to the given collection.
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to add to, must not be null
-     * @param enumeration  The enumeration of elements to add, must not be null
-     * @return {@code true} if the collections was changed, {@code false} otherwise
-     * @throws NullPointerException if the collection or enumeration is null
+     * @param <C>         the type of object the {@link Collection} contains.
+     * @param collection  The collection to add to, must not be null.
+     * @param enumeration The enumeration of elements to add, must not be null.
+     * @return {@code true} if the collections was changed, {@code false} otherwise.
+     * @throws NullPointerException if the collection or enumeration is null.
      */
     public static <C> boolean addAll(final Collection<C> collection, final Enumeration<? extends C> enumeration) {
         Objects.requireNonNull(collection, "collection");
@@ -307,15 +304,14 @@ public class CollectionUtils {
     }
 
     /**
-     * Adds all elements in the {@link Iterable} to the given collection. If the
-     * {@link Iterable} is a {@link Collection} then it is cast and will be
-     * added using {@link Collection#addAll(Collection)} instead of iterating.
+     * Adds all elements in the {@link Iterable} to the given collection. If the {@link Iterable} is a {@link Collection} then it is cast and will be added
+     * using {@link Collection#addAll(Collection)} instead of iterating.
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to add to, must not be null
-     * @param iterable  The iterable of elements to add, must not be null
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection to add to, must not be null.
+     * @param iterable   The iterable of elements to add, must not be null.
      * @return A boolean indicating whether the collection has changed or not.
-     * @throws NullPointerException if the collection or iterable is null
+     * @throws NullPointerException if the collection or iterable is null.
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
         Objects.requireNonNull(collection, "collection");
@@ -329,11 +325,11 @@ public class CollectionUtils {
     /**
      * Adds all elements in the iteration to the given collection.
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to add to, must not be null
-     * @param iterator  The iterator of elements to add, must not be null
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection to add to, must not be null.
+     * @param iterator   The iterator of elements to add, must not be null.
      * @return A boolean indicating whether the collection has changed or not.
-     * @throws NullPointerException if the collection or iterator is null
+     * @throws NullPointerException if the collection or iterator is null.
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterator<? extends C> iterator) {
         Objects.requireNonNull(collection, "collection");
@@ -348,11 +344,11 @@ public class CollectionUtils {
     /**
      * Adds an element to the collection unless the element is null.
      *
-     * @param <T>  the type of object the {@link Collection} contains
-     * @param collection  The collection to add to, must not be null
-     * @param object  The object to add, if null it will not be added
-     * @return true if the collection changed
-     * @throws NullPointerException if the collection is null
+     * @param <T>        the type of object the {@link Collection} contains.
+     * @param collection The collection to add to, must not be null.
+     * @param object     The object to add, if null it will not be added.
+     * @return true if the collection changed.
+     * @throws NullPointerException if the collection is null.
      * @since 3.2
      */
     public static <T> boolean addIgnoreNull(final Collection<T> collection, final T object) {
@@ -363,13 +359,12 @@ public class CollectionUtils {
     /**
      * Returns the number of occurrences of <em>obj</em> in <em>coll</em>.
      *
-     * @param obj The object to find the cardinality of
-     * @param collection The {@link Iterable} to search
-     * @param <O> The type of object that the {@link Iterable} may contain.
-     * @return The number of occurrences of obj in coll
-     * @throws NullPointerException if collection is null
-     * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
-     *   Be aware that the order of parameters has changed.
+     * @param obj        The object to find the cardinality of.
+     * @param collection The {@link Iterable} to search.
+     * @param <O>        The type of object that the {@link Iterable} may contain.
+     * @return The number of occurrences of obj in coll.
+     * @throws NullPointerException if collection is null.
+     * @deprecated Since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead. Be aware that the order of parameters has changed.
      */
     @Deprecated
     public static <O> int cardinality(final O obj, final Iterable<? super O> collection) {
@@ -389,92 +384,83 @@ public class CollectionUtils {
     }
 
     /**
-     * Merges two sorted Collections, a and b, into a single, sorted List
-     * such that the natural ordering of the elements is retained.
+     * Merges two sorted Collections, a and b, into a single, sorted List such that the natural ordering of the elements is retained.
      * <p>
      * Uses the standard O(n) merge algorithm for combining two sorted lists.
      * </p>
      *
-     * @param <O>  the element type
-     * @param a  The first collection, must not be null
-     * @param b  The second collection, must not be null
-     * @return A new sorted List, containing the elements of Collection a and b
-     * @throws NullPointerException if either collection is null
+     * @param <O> the element type.
+     * @param a   The first collection, must not be null.
+     * @param b   The second collection, must not be null.
+     * @return A new sorted List, containing the elements of Collection a and b.
+     * @throws NullPointerException if either collection is null.
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
-                                                                    final Iterable<? extends O> b) {
+    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b) {
         return collate(a, b, ComparatorUtils.<O>naturalComparator(), true);
     }
 
     /**
-     * Merges two sorted Collections, a and b, into a single, sorted List
-     * such that the natural ordering of the elements is retained.
+     * Merges two sorted Collections, a and b, into a single, sorted List such that the natural ordering of the elements is retained.
      * <p>
      * Uses the standard O(n) merge algorithm for combining two sorted lists.
      * </p>
      *
-     * @param <O>  the element type
-     * @param a  The first collection, must not be null
-     * @param b  The second collection, must not be null
-     * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
-     *   they will be removed in the output collection
-     * @return A new sorted List, containing the elements of Collection a and b
-     * @throws NullPointerException if either collection is null
+     * @param <O>               the element type.
+     * @param a                 The first collection, must not be null.
+     * @param b                 The second collection, must not be null.
+     * @param includeDuplicates if {@code true} duplicate elements will be retained, otherwise they will be removed in the output collection.
+     * @return A new sorted List, containing the elements of Collection a and b.
+     * @throws NullPointerException if either collection is null.
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
-                                                                    final Iterable<? extends O> b,
-                                                                    final boolean includeDuplicates) {
+    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
+            final boolean includeDuplicates) {
         return collate(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
     }
 
     /**
-     * Merges two sorted Collections, a and b, into a single, sorted List
-     * such that the ordering of the elements according to Comparator c is retained.
+     * Merges two sorted Collections, a and b, into a single, sorted List such that the ordering of the elements according to Comparator c is retained.
      * <p>
      * Uses the standard O(n) merge algorithm for combining two sorted lists.
      * </p>
      *
-     * @param <O>  the element type
-     * @param a  The first collection, must not be null
-     * @param b  The second collection, must not be null
-     * @param c  The comparator to use for the merge.
-     * @return A new sorted List, containing the elements of Collection a and b
-     * @throws NullPointerException if either collection or the comparator is null
+     * @param <O> the element type.
+     * @param a   The first collection, must not be null.
+     * @param b   The second collection, must not be null.
+     * @param c   The comparator to use for the merge.
+     * @return A new sorted List, containing the elements of Collection a and b.
+     * @throws NullPointerException if either collection or the comparator is null.
      * @since 4.0
      */
-    public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
-                                      final Comparator<? super O> c) {
+    public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b, final Comparator<? super O> c) {
         return collate(a, b, c, true);
     }
 
     /**
-     * Merges two sorted Collections, a and b, into a single, sorted List
-     * such that the ordering of the elements according to Comparator c is retained.
+     * Merges two sorted Collections, a and b, into a single, sorted List such that the ordering of the elements according to Comparator c is retained.
      * <p>
      * Uses the standard O(n) merge algorithm for combining two sorted lists.
      * </p>
      *
-     * @param <O>  the element type
-     * @param iterableA  The first collection, must not be null
-     * @param iterableB  The second collection, must not be null
-     * @param comparator  The comparator to use for the merge.
-     * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
-     *   they will be removed in the output collection
-     * @return A new sorted List, containing the elements of Collection a and b
-     * @throws NullPointerException if either collection or the comparator is null
+     * @param <O>               the element type.
+     * @param iterableA         The first collection, must not be null.
+     * @param iterableB         The second collection, must not be null.
+     * @param comparator        The comparator to use for the merge.
+     * @param includeDuplicates if {@code true} duplicate elements will be retained, otherwise they will be removed in the output collection.
+     * @return A new sorted List, containing the elements of Collection a and b.
+     * @throws NullPointerException if either collection or the comparator is null.
      * @since 4.0
      */
-    public static <O> List<O> collate(final Iterable<? extends O> iterableA, final Iterable<? extends O> iterableB,
-                                      final Comparator<? super O> comparator, final boolean includeDuplicates) {
+    public static <O> List<O> collate(final Iterable<? extends O> iterableA, final Iterable<? extends O> iterableB, final Comparator<? super O> comparator,
+            final boolean includeDuplicates) {
         Objects.requireNonNull(iterableA, "iterableA");
         Objects.requireNonNull(iterableB, "iterableB");
         Objects.requireNonNull(comparator, "comparator");
         // if both Iterables are a Collection, we can estimate the size
-        final int totalSize = iterableA instanceof Collection<?> && iterableB instanceof Collection<?> ?
-                Math.max(1, ((Collection<?>) iterableA).size() + ((Collection<?>) iterableB).size()) : 10;
-
+        final int totalSize = iterableA instanceof Collection<?> && iterableB instanceof Collection<?>
+                ? Math.max(1, ((Collection<?>) iterableA).size() + ((Collection<?>) iterableB).size())
+                : 10;
         final Iterator<O> iterator = new CollatingIterator<>(comparator, iterableA.iterator(), iterableB.iterator());
         if (includeDuplicates) {
             return IteratorUtils.toList(iterator, totalSize);
@@ -495,23 +481,19 @@ public class CollectionUtils {
     }
 
     /**
-     * Transforms all elements from input collection with the given transformer
-     * and adds them to the output collection.
+     * Transforms all elements from input collection with the given transformer and adds them to the output collection.
      * <p>
-     * If the input collection or transformer is null, there is no change to the
-     * output collection.
+     * If the input collection or transformer is null, there is no change to the output collection.
      * </p>
      *
-     * @param <I>  the type of object in the input collection
-     * @param <O>  the type of object in the output collection
-     * @param <R>  the type of the output collection
-     * @param inputCollection  The collection to get the input from, may be null
-     * @param transformer  The transformer to use, may be null
-     * @param outputCollection  The collection to output into, may not be null if inputCollection
-     *   and transformer are not null
-     * @return The output collection with the transformed input added
-     * @throws NullPointerException if the outputCollection is null and both, inputCollection and
-     *   transformer are not null
+     * @param <I>              the type of object in the input collection.
+     * @param <O>              the type of object in the output collection.
+     * @param <R>              the type of the output collection.
+     * @param inputCollection  The collection to get the input from, may be null.
+     * @param transformer      The transformer to use, may be null.
+     * @param outputCollection The collection to output into, may not be null if inputCollection and transformer are not null.
+     * @return The output collection with the transformed input added.
+     * @throws NullPointerException if the outputCollection is null and both, inputCollection and transformer are not null.
      */
     public static <I, O, R extends Collection<? super O>> R collect(final Iterable<? extends I> inputCollection,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
@@ -522,22 +504,19 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new Collection containing all elements of the input collection
-     * transformed by the given transformer.
+     * Returns a new Collection containing all elements of the input collection transformed by the given transformer.
      * <p>
      * If the input collection or transformer is null, the result is an empty list.
      * </p>
      *
-     * @param <I>  the type of object in the input collection
-     * @param <O>  the type of object in the output collection
-     * @param inputCollection  The collection to get the input from, may not be null
-     * @param transformer  The transformer to use, may be null
-     * @return The transformed result (new list)
-     * @throws NullPointerException if the outputCollection is null and both, inputCollection and
-     *   transformer are not null
+     * @param <I>             the type of object in the input collection.
+     * @param <O>             the type of object in the output collection.
+     * @param inputCollection The collection to get the input from, may not be null.
+     * @param transformer     The transformer to use, may be null.
+     * @return The transformed result (new list).
+     * @throws NullPointerException if the outputCollection is null and both, inputCollection and transformer are not null.
      */
-    public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
-                                               final Transformer<? super I, ? extends O> transformer) {
+    public static <I, O> Collection<O> collect(final Iterable<I> inputCollection, final Transformer<? super I, ? extends O> transformer) {
         int size = 0;
         if (inputCollection != null) {
             size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
@@ -547,23 +526,19 @@ public class CollectionUtils {
     }
 
     /**
-     * Transforms all elements from the input iterator with the given transformer
-     * and adds them to the output collection.
+     * Transforms all elements from the input iterator with the given transformer and adds them to the output collection.
      * <p>
-     * If the input iterator or transformer is null, there is no change to the
-     * output collection.
+     * If the input iterator or transformer is null, there is no change to the output collection.
      * </p>
      *
-     * @param <I>  the type of object in the input collection
-     * @param <O>  the type of object in the output collection
-     * @param <R>  the type of the output collection
-     * @param inputIterator  The iterator to get the input from, may be null
-     * @param transformer  The transformer to use, may be null
-     * @param outputCollection  The collection to output into, may not be null if inputIterator
-     *   and transformer are not null
-     * @return The outputCollection with the transformed input added
-     * @throws NullPointerException if the output collection is null and both, inputIterator and
-     *   transformer are not null
+     * @param <I>              the type of object in the input collection.
+     * @param <O>              the type of object in the output collection.
+     * @param <R>              the type of the output collection.
+     * @param inputIterator    The iterator to get the input from, may be null.
+     * @param transformer      The transformer to use, may be null.
+     * @param outputCollection The collection to output into, may not be null if inputIterator and transformer are not null.
+     * @return The outputCollection with the transformed input added.
+     * @throws NullPointerException if the output collection is null and both, inputIterator and transformer are not null.
      */
     public static <I, O, R extends Collection<? super O>> R collect(final Iterator<? extends I> inputIterator,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
@@ -578,46 +553,38 @@ public class CollectionUtils {
     }
 
     /**
-     * Transforms all elements from the input iterator with the given transformer
-     * and adds them to the output collection.
+     * Transforms all elements from the input iterator with the given transformer and adds them to the output collection.
      * <p>
      * If the input iterator or transformer is null, the result is an empty list.
      * </p>
      *
-     * @param <I>  the type of object in the input collection
-     * @param <O>  the type of object in the output collection
-     * @param inputIterator  The iterator to get the input from, may be null
-     * @param transformer  The transformer to use, may be null
-     * @return The transformed result (new list)
+     * @param <I>           the type of object in the input collection.
+     * @param <O>           the type of object in the output collection.
+     * @param inputIterator The iterator to get the input from, may be null.
+     * @param transformer   The transformer to use, may be null.
+     * @return The transformed result (new list).
      */
-    public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
-                                               final Transformer<? super I, ? extends O> transformer) {
+    public static <I, O> Collection<O> collect(final Iterator<I> inputIterator, final Transformer<? super I, ? extends O> transformer) {
         return collect(inputIterator, transformer, new ArrayList<>());
     }
 
     /**
-     * Returns {@code true} iff all elements of {@code coll2} are also contained
-     * in {@code coll1}. The cardinality of values in {@code coll2} is not taken into account,
-     * which is the same behavior as {@link Collection#containsAll(Collection)}.
+     * Returns {@code true} iff all elements of {@code coll2} are also contained in {@code coll1}. The cardinality of values in {@code coll2} is not taken into
+     * account, which is the same behavior as {@link Collection#containsAll(Collection)}.
      * <p>
-     * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> has the same cardinality as
-     * the set of unique values from {@code coll2}. In case {@code coll2} is empty, {@code true}
-     * will be returned.
+     * In other words, this method returns {@code true} iff the {@link #intersection} of <em>coll1</em> and <em>coll2</em> has the same cardinality as the set
+     * of unique values from {@code coll2}. In case {@code coll2} is empty, {@code true} will be returned.
      * </p>
      * <p>
-     * This method is intended as a replacement for {@link Collection#containsAll(Collection)}
-     * with a guaranteed runtime complexity of {@code O(n + m)}. Depending on the type of
-     * {@link Collection} provided, this method will be much faster than calling
-     * {@link Collection#containsAll(Collection)} instead, though this will come at the
-     * cost of an additional space complexity O(n).
+     * This method is intended as a replacement for {@link Collection#containsAll(Collection)} with a guaranteed runtime complexity of {@code O(n + m)}.
+     * Depending on the type of {@link Collection} provided, this method will be much faster than calling {@link Collection#containsAll(Collection)} instead,
+     * though this will come at the cost of an additional space complexity O(n).
      * </p>
      *
-     * @param coll1  The first collection, must not be null
-     * @param coll2  The second collection, must not be null
-     * @return {@code true} iff the intersection of the collections has the same cardinality
-     *   as the set of unique elements from the second collection
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @param coll1 The first collection, must not be null.
+     * @param coll2 The second collection, must not be null.
+     * @return {@code true} iff the intersection of the collections has the same cardinality as the set of unique elements from the second collection.
+     * @throws NullPointerException if coll1 or coll2 is null.
      * @since 4.0
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
@@ -631,7 +598,6 @@ public class CollectionUtils {
             if (elementsAlreadySeen.contains(nextElement)) {
                 continue;
             }
-
             boolean foundCurrentElement = false;
             for (final Object p : coll1) {
                 elementsAlreadySeen.add(p);
@@ -640,7 +606,6 @@ public class CollectionUtils {
                     break;
                 }
             }
-
             if (!foundCurrentElement) {
                 return false;
             }
@@ -651,14 +616,13 @@ public class CollectionUtils {
     /**
      * Returns {@code true} iff at least one element is in both collections.
      * <p>
-     * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
+     * In other words, this method returns {@code true} iff the {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
-     * @param coll1  The first collection, must not be null
-     * @param coll2  The second collection, must not be null
-     * @return {@code true} iff the intersection of the collections is non-empty
-     * @throws NullPointerException if coll1 or coll2 is null
+     * @param coll1 The first collection, must not be null.
+     * @param coll2 The second collection, must not be null.
+     * @return {@code true} iff the intersection of the collections is non-empty.
+     * @throws NullPointerException if coll1 or coll2 is null.
      * @since 2.1
      * @see #intersection
      */
@@ -684,13 +648,12 @@ public class CollectionUtils {
     /**
      * Returns {@code true} iff at least one element is in both collections.
      * <p>
-     * In other words, this method returns {@code true} iff the
-     * {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
+     * In other words, this method returns {@code true} iff the {@link #intersection} of <em>coll1</em> and <em>coll2</em> is not empty.
      * </p>
      *
-     * @param <T> The type of object to lookup in {@code coll1}.
-     * @param coll1  The first collection, must not be {@code null}.
-     * @param coll2  The second collection, must not be {@code null}.
+     * @param <T>   The type of object to lookup in {@code coll1}.
+     * @param coll1 The first collection, must not be {@code null}.
+     * @param coll2 The second collection, must not be {@code null}.
      * @return {@code true} iff the intersection of the collections is non-empty.
      * @throws NullPointerException if coll1 or coll2 is {@code null}.
      * @since 4.2
@@ -716,17 +679,16 @@ public class CollectionUtils {
     }
 
     /**
-     * Counts the number of elements in the input collection that match the
-     * predicate.
+     * Counts the number of elements in the input collection that match the predicate.
      * <p>
      * A {@code null} collection or predicate matches no elements.
      * </p>
      *
-     * @param <C>  the type of object the {@link Iterable} contains
-     * @param input  The {@link Iterable} to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @return The number of matches for the predicate in the collection
-     * @deprecated Since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
+     * @param <C>       the type of object the {@link Iterable} contains.
+     * @param input     The {@link Iterable} to get the input from, may be null.
+     * @param predicate The predicate to use, may be null.
+     * @return The number of matches for the predicate in the collection.
+     * @deprecated Since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead.
      */
     @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -734,27 +696,22 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a {@link Collection} containing the exclusive disjunction
-     * (symmetric difference) of the given {@link Iterable}s.
+     * Returns a {@link Collection} containing the exclusive disjunction (symmetric difference) of the given {@link Iterable}s.
      * <p>
-     * The cardinality of each element <em>e</em> in the returned
-     * {@link Collection} will be equal to
+     * The cardinality of each element <em>e</em> in the returned {@link Collection} will be equal to
      * <code>max(cardinality(<em>e</em>,<em>a</em>),cardinality(<em>e</em>,<em>b</em>)) - min(cardinality(<em>e</em>,<em>a</em>),
      * cardinality(<em>e</em>,<em>b</em>))</code>.
      * </p>
      * <p>
-     * This is equivalent to
-     * {@code {@link #subtract subtract}({@link #union union(a, b)},{@link #intersection intersection(a, b)})}
-     * or
+     * This is equivalent to {@code {@link #subtract subtract}({@link #union union(a, b)},{@link #intersection intersection(a, b)})} or
      * {@code {@link #union union}({@link #subtract subtract(a, b)},{@link #subtract subtract(b, a)})}.
      * </p>
      *
-     * @param a The first collection, must not be null
-     * @param b The second collection, must not be null
-     * @param <O> The generic type that is able to represent the types contained
-     *        in both input collections.
-     * @return The symmetric difference of the two collections
-     * @throws NullPointerException if either collection is null
+     * @param a   The first collection, must not be null.
+     * @param b   The second collection, must not be null.
+     * @param <O> The generic type that is able to represent the types contained in both input collections.
+     * @return The symmetric difference of the two collections.
+     * @throws NullPointerException if either collection is null.
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
         Objects.requireNonNull(a, "a");
@@ -769,9 +726,9 @@ public class CollectionUtils {
     /**
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
      *
+     * @param <T> The element type.
+     * @return immutable empty collection.
      * @see #EMPTY_COLLECTION
-     * @param <T> The element type
-     * @return immutable empty collection
      * @since 4.0
      */
     @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
@@ -780,29 +737,27 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns an immutable empty collection if the argument is {@code null},
-     * or the argument itself otherwise.
+     * Returns an immutable empty collection if the argument is {@code null}, or the argument itself otherwise.
      *
-     * @param <T> The element type
-     * @param collection The collection, possibly {@code null}
-     * @return An empty collection if the argument is {@code null}
+     * @param <T>        The element type.
+     * @param collection The collection, possibly {@code null}.
+     * @return An empty collection if the argument is {@code null}.
      */
     public static <T> Collection<T> emptyIfNull(final Collection<T> collection) {
         return collection == null ? emptyCollection() : collection;
     }
 
     /**
-     * Answers true if a predicate is true for at least one element of a
-     * collection.
+     * Answers true if a predicate is true for at least one element of a collection.
      * <p>
      * A {@code null} collection or predicate returns false.
      * </p>
      *
-     * @param <C>  the type of object the {@link Iterable} contains
-     * @param input  The {@link Iterable} to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @return true if at least one element of the collection matches the predicate
-     * @deprecated Since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
+     * @param <C>       the type of object the {@link Iterable} contains.
+     * @param input     The {@link Iterable} to get the input from, may be null.
+     * @param predicate The predicate to use, may be null.
+     * @return true if at least one element of the collection matches the predicate.
+     * @deprecated Since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead.
      */
     @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
@@ -811,12 +766,12 @@ public class CollectionUtils {
 
     /**
      * Extract the lone element of the specified Collection.
-     *
-     * @param <E> collection type
-     * @param collection to read
-     * @return sole member of collection
-     * @throws NullPointerException if collection is null
-     * @throws IllegalArgumentException if collection is empty or contains more than one element
+     *.
+     * @param <E>        collection type
+     * @param collection to read.
+     * @return sole member of collection.
+     * @throws NullPointerException     if collection is null.
+     * @throws IllegalArgumentException if collection is empty or contains more than one element.
      * @since 4.0
      */
     public static <E> E extractSingleton(final Collection<E> collection) {
@@ -828,15 +783,14 @@ public class CollectionUtils {
     }
 
     /**
-     * Filter the collection by applying a Predicate to each element. If the
-     * predicate returns false, remove the element.
+     * Filter the collection by applying a Predicate to each element. If the predicate returns false, remove the element.
      * <p>
      * If the input collection or predicate is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterable} contains
-     * @param collection  The collection to get the input from, may be null
-     * @param predicate  The predicate to use as a filter, may be null
+     * @param <T>        the type of object the {@link Iterable} contains.
+     * @param collection The collection to get the input from, may be null.
+     * @param predicate  The predicate to use as a filter, may be null.
      * @return true if the collection is modified by this call, false otherwise.
      */
     public static <T> boolean filter(final Iterable<T> collection, final Predicate<? super T> predicate) {
@@ -853,19 +807,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Filter the collection by applying a Predicate to each element. If the
-     * predicate returns true, remove the element.
+     * Filter the collection by applying a Predicate to each element. If the predicate returns true, remove the element.
      * <p>
-     * This is equivalent to {@code filter(collection, PredicateUtils.notPredicate(predicate))}
-     * if predicate is != null.
+     * This is equivalent to {@code filter(collection, PredicateUtils.notPredicate(predicate))} if predicate is != null.
      * </p>
      * <p>
      * If the input collection or predicate is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterable} contains
-     * @param collection  The collection to get the input from, may be null
-     * @param predicate  The predicate to use as a filter, may be null
+     * @param <T>        the type of object the {@link Iterable} contains.
+     * @param collection The collection to get the input from, may be null.
+     * @param predicate  The predicate to use as a filter, may be null.
      * @return true if the collection is modified by this call, false otherwise.
      */
     public static <T> boolean filterInverse(final Iterable<T> collection, final Predicate<? super T> predicate) {
@@ -875,15 +827,14 @@ public class CollectionUtils {
     /**
      * Finds the first element in the given collection which matches the given predicate.
      * <p>
-     * If the input collection or predicate is null, or no element of the collection
-     * matches the predicate, null is returned.
+     * If the input collection or predicate is null, or no element of the collection matches the predicate, null is returned.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterable} contains
-     * @param collection  The collection to search, may be null
-     * @param predicate  The predicate to use, may be null
-     * @return The first element of the collection which matches the predicate or null if none could be found
-     * @deprecated Since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
+     * @param <T>        the type of object the {@link Iterable} contains.
+     * @param collection The collection to search, may be null.
+     * @param predicate  The predicate to use, may be null.
+     * @return The first element of the collection which matches the predicate or null if none could be found.
+     * @deprecated Since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead.
      */
     @Deprecated
     public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
@@ -896,17 +847,16 @@ public class CollectionUtils {
      * If the input collection or closure is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterable} contains
-     * @param <C>  the closure type
-     * @param collection  The collection to get the input from, may be null
-     * @param closure  The closure to perform, may be null
-     * @return The last element in the collection, or null if either collection or closure is null
+     * @param <T>        the type of object the {@link Iterable} contains.
+     * @param <C>        the closure type.
+     * @param collection The collection to get the input from, may be null.
+     * @param closure    The closure to perform, may be null.
+     * @return The last element in the collection, or null if either collection or closure is null.
      * @since 4.0
-     * @deprecated Since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead.
      */
     @Deprecated
-    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
-                                                                      final C closure) {
+    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection, final C closure) {
         return closure != null ? IterableUtils.forEachButLast(collection, closure) : null;
     }
 
@@ -916,13 +866,13 @@ public class CollectionUtils {
      * If the input collection or closure is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Collection} contains
-     * @param <C>  the closure type
-     * @param iterator  The iterator to get the input from, may be null
-     * @param closure  The closure to perform, may be null
-     * @return The last element in the collection, or null if either iterator or closure is null
+     * @param <T>      the type of object the {@link Collection} contains.
+     * @param <C>      the closure type.
+     * @param iterator The iterator to get the input from, may be null.
+     * @param closure  The closure to perform, may be null.
+     * @return The last element in the collection, or null if either iterator or closure is null.
      * @since 4.0
-     * @deprecated Since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead.
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
@@ -935,12 +885,12 @@ public class CollectionUtils {
      * If the input collection or closure is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterable} contains
-     * @param <C>  the closure type
-     * @param collection  The collection to get the input from, may be null
-     * @param closure  The closure to perform, may be null
+     * @param <T>        the type of object the {@link Iterable} contains.
+     * @param <C>        the closure type.
+     * @param collection The collection to get the input from, may be null.
+     * @param closure    The closure to perform, may be null.
      * @return closure
-     * @deprecated Since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
+     * @deprecated Since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead.
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
@@ -956,13 +906,13 @@ public class CollectionUtils {
      * If the input collection or closure is null, there is no change made.
      * </p>
      *
-     * @param <T>  the type of object the {@link Iterator} contains
-     * @param <C>  the closure type
-     * @param iterator  The iterator to get the input from, may be null
-     * @param closure  The closure to perform, may be null
+     * @param <T>      the type of object the {@link Iterator} contains.
+     * @param <C>      the closure type.
+     * @param iterator The iterator to get the input from, may be null.
+     * @param closure  The closure to perform, may be null.
      * @return closure
      * @since 4.0
-     * @deprecated Since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
+     * @deprecated Since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead.
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
@@ -973,18 +923,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
-     * {@code IndexOutOfBoundsException} if there is no such element.
+     * Gets the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
      * </p>
      *
-     * @param iterable  The {@link Iterable} to get a value from
-     * @param index  The index to get
-     * @param <T> The type of object in the {@link Iterable}.
-     * @return The object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
+     * @param iterable The {@link Iterable} to get a value from.
+     * @param index    The index to get.
+     * @param <T>      The type of object in the {@link Iterable}.
+     * @return The object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     * @deprecated Since 4.1, use {@code IterableUtils.get(Iterable, int)} instead.
      */
     @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
@@ -993,21 +942,19 @@ public class CollectionUtils {
     }
 
     /**
-     * Gets the {@code index}-th value in {@link Iterator}, throwing
-     * {@code IndexOutOfBoundsException} if there is no such element.
+     * Gets the {@code index}-th value in {@link Iterator}, throwing {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Iterator is advanced to {@code index} (or to the end, if
-     * {@code index} exceeds the number of entries) as a side effect of this method.
+     * The Iterator is advanced to {@code index} (or to the end, if {@code index} exceeds the number of entries) as a side effect of this method.
      * </p>
      *
-     * @param iterator  The iterator to get a value from
-     * @param index  The index to get
-     * @param <T> The type of object in the {@link Iterator}
-     * @return The object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @throws IllegalArgumentException if the object type is invalid
-     * @throws NullPointerException if iterator is null
-     * @deprecated Since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
+     * @param iterator The iterator to get a value from.
+     * @param index    The index to get.
+     * @param <T>      The type of object in the {@link Iterator}.
+     * @return The object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     * @throws IllegalArgumentException  if the object type is invalid.
+     * @throws NullPointerException      if iterator is null.
+     * @deprecated Since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead.
      */
     @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
@@ -1016,15 +963,15 @@ public class CollectionUtils {
     }
 
     /**
-     * Gets the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet},
-     * throwing {@code IndexOutOfBoundsException} if there is no such element.
+     * Gets the {@code index}-th {@code Map.Entry} in the {@code map}'s {@code entrySet}, throwing {@code IndexOutOfBoundsException} if there is no such
+     * element.
      *
-     * @param <K>  the key type in the {@link Map}
-     * @param <V>  the value type in the {@link Map}
-     * @param map  The object to get a value from
-     * @param index  The index to get
-     * @return The object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
+     * @param <K>   the key type in the {@link Map}.
+     * @param <V>   the value type in the {@link Map}.
+     * @param map   The object to get a value from.
+     * @param index The index to get.
+     * @return The object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
      */
     public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
         Objects.requireNonNull(map, "map");
@@ -1033,35 +980,25 @@ public class CollectionUtils {
     }
 
     /**
-     * Gets the {@code index}-th value in {@code object}, throwing
-     * {@code IndexOutOfBoundsException} if there is no such element or
-     * {@code IllegalArgumentException} if {@code object} is not an
-     * instance of one of the supported types.
+     * Gets the {@code index}-th value in {@code object}, throwing {@code IndexOutOfBoundsException} if there is no such element or
+     * {@code IllegalArgumentException} if {@code object} is not an instance of one of the supported types.
      * <p>
      * The supported types, and associated semantics are:
      * </p>
      * <ul>
-     * <li> Map -- the value returned is the {@code Map.Entry} in position
-     *      {@code index} in the map's {@code entrySet} iterator,
-     *      if there is such an entry.</li>
-     * <li> List -- this method is equivalent to the list's get method.</li>
-     * <li> Array -- the {@code index}-th array entry is returned,
-     *      if there is such an entry; otherwise an {@code IndexOutOfBoundsException}
-     *      is thrown.</li>
-     * <li> Collection -- the value returned is the {@code index}-th object
-     *      returned by the collection's default iterator, if there is such an element.</li>
-     * <li> Iterator or Enumeration -- the value returned is the
-     *      {@code index}-th object in the Iterator/Enumeration, if there
-     *      is such an element.  The Iterator/Enumeration is advanced to
-     *      {@code index} (or to the end, if {@code index} exceeds the
-     *      number of entries) as a side effect of this method.</li>
+     * <li>Map -- the value returned is the {@code Map.Entry} in position {@code index} in the map's {@code entrySet} iterator, if there is such an entry.</li>
+     * <li>List -- this method is equivalent to the list's get method.</li>
+     * <li>Array -- the {@code index}-th array entry is returned, if there is such an entry; otherwise an {@code IndexOutOfBoundsException} is thrown.</li>
+     * <li>Collection -- the value returned is the {@code index}-th object returned by the collection's default iterator, if there is such an element.</li>
+     * <li>Iterator or Enumeration -- the value returned is the {@code index}-th object in the Iterator/Enumeration, if there is such an element. The
+     * Iterator/Enumeration is advanced to {@code index} (or to the end, if {@code index} exceeds the number of entries) as a side effect of this method.</li>
      * </ul>
      *
-     * @param object  The object to get a value from
-     * @param index  The index to get
-     * @return The object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @throws IllegalArgumentException if the object type is invalid
+     * @param object The object to get a value from.
+     * @param index  The index to get.
+     * @return The object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     * @throws IllegalArgumentException  if the object type is invalid.
      */
     public static Object get(final Object object, final int index) {
         final int i = index;
@@ -1099,18 +1036,16 @@ public class CollectionUtils {
     }
 
     /**
-     * Gets a {@link Map} mapping each unique element in the given
-     * {@link Collection} to an {@link Integer} representing the number
-     * of occurrences of that element in the {@link Collection}.
+     * Gets a {@link Map} mapping each unique element in the given {@link Collection} to an {@link Integer} representing the number of occurrences of that
+     * element in the {@link Collection}.
      * <p>
-     * Only those elements present in the collection will appear as
-     * keys in the map.
+     * Only those elements present in the collection will appear as keys in the map.
      * </p>
      *
      * @param <O>  the type of object in the returned {@link Map}. This is a super type of &lt;I&gt;.
-     * @param coll  The collection to get the cardinality map for, must not be null
-     * @return The populated cardinality map
-     * @throws NullPointerException if coll is null
+     * @param coll The collection to get the cardinality map for, must not be null.
+     * @return The populated cardinality map.
+     * @throws NullPointerException if coll is null.
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
         Objects.requireNonNull(coll, "coll");
@@ -1128,20 +1063,18 @@ public class CollectionUtils {
 
     /**
      * Returns the hash code of the input collection using the hash method of an equator.
-     *
      * <p>
      * Returns 0 if the input collection is {@code null}.
      * </p>
      *
-     * @param <E>  the element type
-     * @param collection  The input collection
-     * @param equator  The equator used for generate hashCode
-     * @return The hash code of the input collection using the hash method of an equator
-     * @throws NullPointerException if the equator is {@code null}
+     * @param <E>        the element type.
+     * @param collection The input collection.
+     * @param equator    The equator used for generate hashCode.
+     * @return The hash code of the input collection using the hash method of an equator.
+     * @throws NullPointerException if the equator is {@code null}.
      * @since 4.5.0-M1
      */
-    public static <E> int hashCode(final Collection<? extends E> collection,
-            final Equator<? super E> equator) {
+    public static <E> int hashCode(final Collection<? extends E> collection, final Equator<? super E> equator) {
         Objects.requireNonNull(equator, "equator");
         if (collection == null) {
             return 0;
@@ -1154,20 +1087,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a {@link Collection} containing the intersection of the given
-     * {@link Iterable}s.
+     * Returns a {@link Collection} containing the intersection of the given {@link Iterable}s.
      * <p>
-     * The cardinality of each element in the returned {@link Collection} will
-     * be equal to the minimum of the cardinality of that element in the two
-     * given {@link Iterable}s.
+     * The cardinality of each element in the returned {@link Collection} will be equal to the minimum of the cardinality of that element in the two given
+     * {@link Iterable}s.
      * </p>
      *
-     * @param a The first collection, must not be null
-     * @param b The second collection, must not be null
-     * @param <O> The generic type that is able to represent the types contained
-     *        in both input collections.
-     * @return The intersection of the two collections
-     * @throws NullPointerException if either collection is null
+     * @param a   The first collection, must not be null.
+     * @param b   The second collection, must not be null.
+     * @param <O> The generic type that is able to represent the types contained in both input collections.
+     * @return The intersection of the two collections.
+     * @throws NullPointerException if either collection is null.
      * @see Collection#retainAll
      * @see #containsAny
      */
@@ -1187,7 +1117,7 @@ public class CollectionUtils {
      * Null returns true.
      * </p>
      *
-     * @param coll  The collection to check, may be null
+     * @param coll The collection to check, may be null.
      * @return true if empty or null
      * @since 3.2
      */
@@ -1196,79 +1126,66 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff the given {@link Collection}s contain
-     * exactly the same elements with exactly the same cardinalities.
+     * Returns {@code true} iff the given {@link Collection}s contain exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
-     * equal to the cardinality of <em>e</em> in <em>b</em>,
-     * for each element <em>e</em> in <em>a</em> or <em>b</em>.
+     * That is, iff the cardinality of <em>e</em> in <em>a</em> is equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em> in
+     * <em>a</em> or <em>b</em>.
      * </p>
      *
-     * @param a  The first collection, must not be null
-     * @param b  The second collection, must not be null
+     * @param a The first collection, must not be null.
+     * @param b The second collection, must not be null.
      * @return {@code true} iff the collections contain the same elements with the same cardinalities.
-     * @throws NullPointerException if either collection is null
+     * @throws NullPointerException if either collection is null.
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
         return CardinalityHelper.equals(a, b);
     }
 
     /**
-     * Returns {@code true} iff the given {@link Collection}s contain
-     * exactly the same elements with exactly the same cardinalities.
+     * Returns {@code true} iff the given {@link Collection}s contain exactly the same elements with exactly the same cardinalities.
      * <p>
-     * That is, iff the cardinality of <em>e</em> in <em>a</em> is
-     * equal to the cardinality of <em>e</em> in <em>b</em>,
-     * for each element <em>e</em> in <em>a</em> or <em>b</em>.
+     * That is, iff the cardinality of <em>e</em> in <em>a</em> is equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em> in
+     * <em>a</em> or <em>b</em>.
      * </p>
      * <p>
-     * <strong>Note:</strong> from version 4.1 onwards this method requires the input
-     * collections and equator to be of compatible type (using bounded wildcards).
-     * Providing incompatible arguments (for example by casting to their rawtypes)
-     * will result in a {@code ClassCastException} thrown at runtime.
+     * <strong>Note:</strong> from version 4.1 onwards this method requires the input collections and equator to be of compatible type (using bounded
+     * wildcards). Providing incompatible arguments (for example by casting to their rawtypes) will result in a {@code ClassCastException} thrown at runtime.
      * </p>
      *
-     * @param <E>  the element type
-     * @param a  The first collection, must not be null
-     * @param b  The second collection, must not be null
-     * @param equator  The Equator used for testing equality
+     * @param <E>     the element type.
+     * @param a       The first collection, must not be null.
+     * @param b       The second collection, must not be null.
+     * @param equator The Equator used for testing equality.
      * @return {@code true} iff the collections contain the same elements with the same cardinalities.
-     * @throws NullPointerException if either collection or equator is null
+     * @throws NullPointerException if either collection or equator is null.
      * @since 4.0
      */
-    public static <E> boolean isEqualCollection(final Collection<? extends E> a,
-                                                final Collection<? extends E> b,
-                                                final Equator<? super E> equator) {
+    public static <E> boolean isEqualCollection(final Collection<? extends E> a, final Collection<? extends E> b, final Equator<? super E> equator) {
         Objects.requireNonNull(a, "a");
         Objects.requireNonNull(b, "b");
         Objects.requireNonNull(equator, "equator");
-
         if (a.size() != b.size()) {
             return false;
         }
-
         @SuppressWarnings({ "unchecked", "rawtypes" })
         final Transformer<E, ?> transformer = input -> new EquatorWrapper(equator, input);
-
         return isEqualCollection(collect(a, transformer), collect(b, transformer));
     }
 
     /**
      * Returns true if no more elements can be added to the Collection.
      * <p>
-     * This method uses the {@link BoundedCollection} interface to determine the
-     * full status. If the collection does not implement this interface then
-     * false is returned.
+     * This method uses the {@link BoundedCollection} interface to determine the full status. If the collection does not implement this interface then false is
+     * returned.
      * </p>
      * <p>
-     * The collection does not have to implement this interface directly.
-     * If the collection has been decorated using the decorators subpackage
-     * then these will be removed to access the BoundedCollection.
+     * The collection does not have to implement this interface directly. If the collection has been decorated using the decorators subpackage then these will
+     * be removed to access the BoundedCollection.
      * </p>
      *
-     * @param collection  The collection to check
-     * @return true if the BoundedCollection is full
-     * @throws NullPointerException if the collection is null
+     * @param collection The collection to check.
+     * @return true if the BoundedCollection is full.
+     * @throws NullPointerException if the collection is null.
      */
     public static boolean isFull(final Collection<? extends Object> collection) {
         Objects.requireNonNull(collection, "collection");
@@ -1276,8 +1193,7 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) collection).isFull();
         }
         try {
-            final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
+            final BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
             return bcoll.isFull();
         } catch (final IllegalArgumentException ex) {
             return false;
@@ -1290,8 +1206,8 @@ public class CollectionUtils {
      * Null returns false.
      * </p>
      *
-     * @param coll  The collection to check, may be null
-     * @return true if non-null and non-empty
+     * @param coll The collection to check, may be null.
+     * @return true if non-null and non-empty.
      * @since 3.2
      */
     public static boolean isNotEmpty(final Collection<?> coll) {
@@ -1299,25 +1215,21 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>,
-     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less
-     * than or equal to the cardinality of <em>e</em> in <em>b</em>,
-     * for each element <em>e</em> in <em>a</em>, and there is at least one
-     * element <em>f</em> such that the cardinality of <em>f</em> in <em>b</em>
-     * is strictly greater than the cardinality of <em>f</em> in <em>a</em>.
+     * Returns {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>, that is, iff the cardinality of <em>e</em> in <em>a</em> is less
+     * than or equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em> in <em>a</em>, and there is at least one element <em>f</em>
+     * such that the cardinality of <em>f</em> in <em>b</em> is strictly greater than the cardinality of <em>f</em> in <em>a</em>.
      * <p>
      * The implementation assumes
      * </p>
      * <ul>
-     *    <li>{@code a.size()} and {@code b.size()} represent the
-     *    total cardinality of <em>a</em> and <em>b</em>, resp. </li>
-     *    <li>{@code a.size() &lt; Integer.MAXVALUE}</li>
+     * <li>{@code a.size()} and {@code b.size()} represent the total cardinality of <em>a</em> and <em>b</em>, resp.</li>
+     * <li>{@code a.size() &lt; Integer.MAXVALUE}</li>
      * </ul>
      *
-     * @param a  The first (sub?) collection, must not be null
-     * @param b  The second (super?) collection, must not be null
-     * @return {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>
-     * @throws NullPointerException if either collection is null
+     * @param a The first (sub?) collection, must not be null.
+     * @param b The second (super?) collection, must not be null.
+     * @return {@code true} iff <em>a</em> is a <em>proper</em> sub-collection of <em>b</em>.
+     * @throws NullPointerException if either collection is null.
      * @see #isSubCollection
      * @see Collection#containsAll
      */
@@ -1328,15 +1240,13 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns {@code true} iff <em>a</em> is a sub-collection of <em>b</em>,
-     * that is, iff the cardinality of <em>e</em> in <em>a</em> is less than or
-     * equal to the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em>
-     * in <em>a</em>.
+     * Returns {@code true} iff <em>a</em> is a sub-collection of <em>b</em>, that is, iff the cardinality of <em>e</em> in <em>a</em> is less than or equal to
+     * the cardinality of <em>e</em> in <em>b</em>, for each element <em>e</em> in <em>a</em>.
      *
-     * @param a The first (sub?) collection, must not be null
-     * @param b The second (super?) collection, must not be null
-     * @return {@code true} iff <em>a</em> is a sub-collection of <em>b</em>
-     * @throws NullPointerException if either collection is null
+     * @param a The first (sub?) collection, must not be null.
+     * @param b The second (super?) collection, must not be null.
+     * @return {@code true} iff <em>a</em> is a sub-collection of <em>b</em>.
+     * @throws NullPointerException if either collection is null.
      * @see #isProperSubCollection
      * @see Collection#containsAll
      */
@@ -1353,9 +1263,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Answers true if a predicate is true for every element of a
-     * collection.
-     *
+     * Answers true if a predicate is true for every element of a collection.
      * <p>
      * A {@code null} predicate returns false.
      * </p>
@@ -1363,11 +1271,10 @@ public class CollectionUtils {
      * A {@code null} or empty collection returns true.
      * </p>
      *
-     * @param <C>  the type of object the {@link Iterable} contains
-     * @param input  The {@link Iterable} to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @return true if every element of the collection matches the predicate or if the
-     * collection is empty, false otherwise
+     * @param <C>       the type of object the {@link Iterable} contains.
+     * @param input     The {@link Iterable} to get the input from, may be null.
+     * @param predicate The predicate to use, may be null.
+     * @return true if every element of the collection matches the predicate or if the collection is empty, false otherwise.
      * @since 4.0
      * @deprecated Since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
      */
@@ -1379,19 +1286,17 @@ public class CollectionUtils {
     /**
      * Gets the maximum number of elements that the Collection can contain.
      * <p>
-     * This method uses the {@link BoundedCollection} interface to determine the
-     * maximum size. If the collection does not implement this interface then
-     * -1 is returned.
+     * This method uses the {@link BoundedCollection} interface to determine the maximum size. If the collection does not implement this interface then -1 is
+     * returned.
      * </p>
      * <p>
-     * The collection does not have to implement this interface directly.
-     * If the collection has been decorated using the decorators subpackage
-     * then these will be removed to access the BoundedCollection.
+     * The collection does not have to implement this interface directly. If the collection has been decorated using the decorators subpackage then these will
+     * be removed to access the BoundedCollection.
      * </p>
      *
-     * @param collection  The collection to check
-     * @return The maximum size of the BoundedCollection, -1 if no maximum size
-     * @throws NullPointerException if the collection is null
+     * @param collection The collection to check.
+     * @return The maximum size of the BoundedCollection, -1 if no maximum size.
+     * @throws NullPointerException if the collection is null.
      */
     public static int maxSize(final Collection<? extends Object> collection) {
         Objects.requireNonNull(collection, "collection");
@@ -1399,8 +1304,7 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) collection).maxSize();
         }
         try {
-            final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
+            final BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
             return bcoll.maxSize();
         } catch (final IllegalArgumentException ex) {
             return -1;
@@ -1410,20 +1314,18 @@ public class CollectionUtils {
     /**
      * Returns a {@link Collection} of all the permutations of the input collection.
      * <p>
-     * NOTE: the number of permutations of a given collection is equal to n!, where
-     * n is the size of the collection. Thus, the resulting collection will become
+     * NOTE: the number of permutations of a given collection is equal to n!, where n is the size of the collection. Thus, the resulting collection will become
      * <strong>very</strong> large for collections &gt; 10 (for example 10! = 3628800, 15! = 1307674368000).
      * </p>
      * <p>
-     * For larger collections it is advised to use a {@link PermutationIterator} to
-     * iterate over all permutations.
+     * For larger collections it is advised to use a {@link PermutationIterator} to iterate over all permutations.
      * </p>
      *
+     * @param <E>        the element type.
+     * @param collection The collection to create permutations for, must not be null.
+     * @return An unordered collection of all permutations of the input collection.
+     * @throws NullPointerException if collection is null.
      * @see PermutationIterator
-     * @param <E>  the element type
-     * @param collection  The collection to create permutations for, must not be null
-     * @return An unordered collection of all permutations of the input collection
-     * @throws NullPointerException if collection is null
      * @since 4.0
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
@@ -1439,91 +1341,68 @@ public class CollectionUtils {
     /**
      * Returns a predicated (validating) collection backed by the given collection.
      * <p>
-     * Only objects that pass the test in the given predicate can be added to the collection.
-     * Trying to add an invalid object results in an IllegalArgumentException.
-     * It is important not to use the original collection after invoking this method,
-     * as it is a backdoor for adding invalid objects.
+     * Only objects that pass the test in the given predicate can be added to the collection. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original collection after invoking this method, as it is a backdoor for adding invalid objects.
      * </p>
      *
-     * @param <C> The type of objects in the Collection.
-     * @param collection  The collection to predicate, must not be null
-     * @param predicate  The predicate for the collection, must not be null
-     * @return A predicated collection backed by the given collection
-     * @throws NullPointerException if the collection or predicate is null
+     * @param <C>        The type of objects in the Collection.
+     * @param collection The collection to predicate, must not be null.
+     * @param predicate  The predicate for the collection, must not be null.
+     * @return A predicated collection backed by the given collection.
+     * @throws NullPointerException if the collection or predicate is null.
      */
-    public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
-                                                         final Predicate<? super C> predicate) {
+    public static <C> Collection<C> predicatedCollection(final Collection<C> collection, final Predicate<? super C> predicate) {
         Objects.requireNonNull(collection, "collection");
         Objects.requireNonNull(predicate, "predicate");
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
     /**
-     * Removes the elements in {@code remove} from {@code collection}. That is, this
-     * method returns a collection containing all the elements in {@code c}
-     * that are not in {@code remove}. The cardinality of an element {@code e}
-     * in the returned collection is the same as the cardinality of {@code e}
-     * in {@code collection} unless {@code remove} contains {@code e}, in which
-     * case the cardinality is zero. This method is useful if you do not wish to modify
+     * Removes the elements in {@code remove} from {@code collection}. That is, this method returns a collection containing all the elements in {@code c} that
+     * are not in {@code remove}. The cardinality of an element {@code e} in the returned collection is the same as the cardinality of {@code e} in
+     * {@code collection} unless {@code remove} contains {@code e}, in which case the cardinality is zero. This method is useful if you do not wish to modify
      * the collection {@code c} and thus cannot call {@code collection.removeAll(remove);}.
      * <p>
-     * This implementation iterates over {@code collection}, checking each element in
-     * turn to see if it's contained in {@code remove}. If it's not contained, it's added
-     * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code remove} that provides a fast (for example O(1)) implementation of
-     * {@link Collection#contains(Object)}.
+     * This implementation iterates over {@code collection}, checking each element in turn to see if it's contained in {@code remove}. If it's not contained,
+     * it's added to the returned list. As a consequence, it is advised to use a collection type for {@code remove} that provides a fast (for example O(1))
+     * implementation of {@link Collection#contains(Object)}.
      * </p>
      *
-     * @param <E>  the type of object the {@link Collection} contains
-     * @param collection  The collection from which items are removed (in the returned collection)
-     * @param remove  The items to be removed from the returned {@code collection}
-     * @return A {@code Collection} containing all the elements of {@code collection} except
-     * any elements that also occur in {@code remove}.
-     * @throws NullPointerException if either parameter is null
-     * @since 4.0 (method existed in 3.2 but was completely broken)
+     * @param <E>        the type of object the {@link Collection} contains.
+     * @param collection The collection from which items are removed (in the returned collection).
+     * @param remove     The items to be removed from the returned {@code collection}.
+     * @return A {@code Collection} containing all the elements of {@code collection} except any elements that also occur in {@code remove}.
+     * @throws NullPointerException if either parameter is null.
+     * @since 4.0 (method existed in 3.2 but was completely broken).
      */
     public static <E> Collection<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
     }
 
     /**
-     * Removes all elements in {@code remove} from {@code collection}.
-     * That is, this method returns a collection containing all the elements in
-     * {@code collection} that are not in {@code remove}. The
-     * cardinality of an element {@code e} in the returned collection is
-     * the same as the cardinality of {@code e} in {@code collection}
-     * unless {@code remove} contains {@code e}, in which case the
-     * cardinality is zero. This method is useful if you do not wish to modify
-     * the collection {@code c} and thus cannot call
-     * {@code collection.removeAll(remove)}.
+     * Removes all elements in {@code remove} from {@code collection}. That is, this method returns a collection containing all the elements in
+     * {@code collection} that are not in {@code remove}. The cardinality of an element {@code e} in the returned collection is the same as the cardinality of
+     * {@code e} in {@code collection} unless {@code remove} contains {@code e}, in which case the cardinality is zero. This method is useful if you do not wish
+     * to modify the collection {@code c} and thus cannot call {@code collection.removeAll(remove)}.
      * <p>
-     * Moreover this method uses an {@link Equator} instead of
-     * {@link Object#equals(Object)} to determine the equality of the elements
-     * in {@code collection} and {@code remove}. Hence this method is
-     * useful in cases where the equals behavior of an object needs to be
-     * modified without changing the object itself.
+     * Moreover this method uses an {@link Equator} instead of {@link Object#equals(Object)} to determine the equality of the elements in {@code collection} and
+     * {@code remove}. Hence this method is useful in cases where the equals behavior of an object needs to be modified without changing the object itself.
      * </p>
      *
-     * @param <E> The type of object the {@link Collection} contains
-     * @param collection The collection from which items are removed (in the returned collection)
-     * @param remove The items to be removed from the returned collection
-     * @param equator The Equator used for testing equality
-     * @return A {@code Collection} containing all the elements of {@code collection}
-     * except any element that if equal according to the {@code equator}
-     * @throws NullPointerException if any of the parameters is null
+     * @param <E>        The type of object the {@link Collection} contains.
+     * @param collection The collection from which items are removed (in the returned collection).
+     * @param remove     The items to be removed from the returned collection.
+     * @param equator    The Equator used for testing equality.
+     * @return A {@code Collection} containing all the elements of {@code collection} except any element that if equal according to the {@code equator}
+     * @throws NullPointerException if any of the parameters is null.
      * @since 4.1
      */
-    public static <E> Collection<E> removeAll(final Iterable<E> collection,
-                                              final Iterable<? extends E> remove,
-                                              final Equator<? super E> equator) {
+    public static <E> Collection<E> removeAll(final Iterable<E> collection, final Iterable<? extends E> remove, final Equator<? super E> equator) {
         Objects.requireNonNull(collection, "collection");
         Objects.requireNonNull(remove, "remove");
         Objects.requireNonNull(equator, "equator");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
-
-        final Set<EquatorWrapper<E>> removeSet =
-                collect(remove, transformer, new HashSet<>());
-
+        final Set<EquatorWrapper<E>> removeSet = collect(remove, transformer, new HashSet<>());
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
             if (!removeSet.contains(new EquatorWrapper<>(equator, element))) {
@@ -1534,14 +1413,13 @@ public class CollectionUtils {
     }
 
     /**
-     * Removes the specified number of elements from the start index in the collection and returns them.
-     * This method modifies the input collections.
+     * Removes the specified number of elements from the start index in the collection and returns them. This method modifies the input collections.
      *
-     * @param <E>  the type of object the {@link Collection} contains
-     * @param input  The collection will be operated, can't be null
-     * @param startIndex  The start index (inclusive) to remove element, can't be less than 0
-     * @param count  The specified number to remove, can't be less than 1
-     * @return collection of elements that removed from the input collection
+     * @param <E>        the type of object the {@link Collection} contains.
+     * @param input      The collection will be operated, can't be null.
+     * @param startIndex The start index (inclusive) to remove element, can't be less than 0.
+     * @param count      The specified number to remove, can't be less than 1.
+     * @return collection of elements that removed from the input collection.
      * @throws NullPointerException if input is null
      * @since 4.5.0-M1
      */
@@ -1554,10 +1432,8 @@ public class CollectionUtils {
             throw new IndexOutOfBoundsException("The count can't be less than 0.");
         }
         if (input.size() < startIndex + count) {
-            throw new IndexOutOfBoundsException(
-                    "The sum of start index and count can't be greater than the size of collection.");
+            throw new IndexOutOfBoundsException("The sum of start index and count can't be greater than the size of collection.");
         }
-
         final Collection<E> result = new ArrayList<>(count);
         final Iterator<E> iterator = input.iterator();
         while (count > 0) {
@@ -1574,16 +1450,15 @@ public class CollectionUtils {
     }
 
     /**
-     * Removes elements whose index are between startIndex, inclusive and endIndex,
-     * exclusive in the collection and returns them.
-     * This method modifies the input collections.
+     * Removes elements whose index are between startIndex, inclusive and endIndex, exclusive in the collection and returns them. This method modifies the input
+     * collections.
      *
-     * @param <E>  the type of object the {@link Collection} contains
-     * @param input  The collection will be operated, must not be null
-     * @param startIndex  The start index (inclusive) to remove element, must not be less than 0
-     * @param endIndex  The end index (exclusive) to remove, must not be less than startIndex
-     * @return collection of elements that removed from the input collection
-     * @throws NullPointerException if input is null
+     * @param <E>        the type of object the {@link Collection} contains.
+     * @param input      The collection will be operated, must not be null.
+     * @param startIndex The start index (inclusive) to remove element, must not be less than 0.
+     * @param endIndex   The end index (exclusive) to remove, must not be less than startIndex.
+     * @return collection of elements that removed from the input collection.
+     * @throws NullPointerException if input is null.
      * @since 4.5.0-M1
      */
     public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
@@ -1598,26 +1473,20 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a collection containing all the elements in {@code collection}
-     * that are also in {@code retain}. The cardinality of an element {@code e}
-     * in the returned collection is the same as the cardinality of {@code e}
-     * in {@code collection} unless {@code retain} does not contain {@code e}, in which
-     * case the cardinality is zero. This method is useful if you do not wish to modify
-     * the collection {@code c} and thus cannot call {@code c.retainAll(retain);}.
+     * Returns a collection containing all the elements in {@code collection} that are also in {@code retain}. The cardinality of an element {@code e} in the
+     * returned collection is the same as the cardinality of {@code e} in {@code collection} unless {@code retain} does not contain {@code e}, in which case the
+     * cardinality is zero. This method is useful if you do not wish to modify the collection {@code c} and thus cannot call {@code c.retainAll(retain);}.
      * <p>
-     * This implementation iterates over {@code collection}, checking each element in
-     * turn to see if it's contained in {@code retain}. If it's contained, it's added
-     * to the returned list. As a consequence, it is advised to use a collection type for
-     * {@code retain} that provides a fast (for example O(1)) implementation of
-     * {@link Collection#contains(Object)}.
+     * This implementation iterates over {@code collection}, checking each element in turn to see if it's contained in {@code retain}. If it's contained, it's
+     * added to the returned list. As a consequence, it is advised to use a collection type for {@code retain} that provides a fast (for example O(1))
+     * implementation of {@link Collection#contains(Object)}.
      * </p>
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection whose contents are the target of the #retailAll operation
-     * @param retain  The collection containing the elements to be retained in the returned collection
-     * @return A {@code Collection} containing all the elements of {@code collection}
-     * that occur at least once in {@code retain}.
-     * @throws NullPointerException if either parameter is null
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection whose contents are the target of the #retailAll operation.
+     * @param retain     The collection containing the elements to be retained in the returned collection.
+     * @return A {@code Collection} containing all the elements of {@code collection} that occur at least once in {@code retain}.
+     * @throws NullPointerException if either parameter is null.
      * @since 3.2
      */
     public static <C> Collection<C> retainAll(final Collection<C> collection, final Collection<?> retain) {
@@ -1627,42 +1496,29 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a collection containing all the elements in
-     * {@code collection} that are also in {@code retain}. The
-     * cardinality of an element {@code e} in the returned collection is
-     * the same as the cardinality of {@code e} in {@code collection}
-     * unless {@code retain} does not contain {@code e}, in which case
-     * the cardinality is zero. This method is useful if you do not wish to
-     * modify the collection {@code c} and thus cannot call
-     * {@code c.retainAll(retain);}.
+     * Returns a collection containing all the elements in {@code collection} that are also in {@code retain}. The cardinality of an element {@code e} in the
+     * returned collection is the same as the cardinality of {@code e} in {@code collection} unless {@code retain} does not contain {@code e}, in which case the
+     * cardinality is zero. This method is useful if you do not wish to modify the collection {@code c} and thus cannot call {@code c.retainAll(retain);}.
      * <p>
-     * Moreover this method uses an {@link Equator} instead of
-     * {@link Object#equals(Object)} to determine the equality of the elements
-     * in {@code collection} and {@code retain}. Hence this method is
-     * useful in cases where the equals behavior of an object needs to be
-     * modified without changing the object itself.
+     * Moreover this method uses an {@link Equator} instead of {@link Object#equals(Object)} to determine the equality of the elements in {@code collection} and
+     * {@code retain}. Hence this method is useful in cases where the equals behavior of an object needs to be modified without changing the object itself.
      * </p>
      *
-     * @param <E> The type of object the {@link Collection} contains
-     * @param collection The collection whose contents are the target of the {@code retainAll} operation
-     * @param retain The collection containing the elements to be retained in the returned collection
-     * @param equator The Equator used for testing equality
-     * @return A {@code Collection} containing all the elements of {@code collection}
-     * that occur at least once in {@code retain} according to the {@code equator}
-     * @throws NullPointerException if any of the parameters is null
+     * @param <E>        The type of object the {@link Collection} contains.
+     * @param collection The collection whose contents are the target of the {@code retainAll} operation.
+     * @param retain     The collection containing the elements to be retained in the returned collection.
+     * @param equator    The Equator used for testing equality.
+     * @return A {@code Collection} containing all the elements of {@code collection} that occur at least once in {@code retain} according to the
+     *         {@code equator}.
+     * @throws NullPointerException if any of the parameters is null.
      * @since 4.1
      */
-    public static <E> Collection<E> retainAll(final Iterable<E> collection,
-                                              final Iterable<? extends E> retain,
-                                              final Equator<? super E> equator) {
+    public static <E> Collection<E> retainAll(final Iterable<E> collection, final Iterable<? extends E> retain, final Equator<? super E> equator) {
         Objects.requireNonNull(collection, "collection");
         Objects.requireNonNull(retain, "retain");
         Objects.requireNonNull(equator, "equator");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
-
-        final Set<EquatorWrapper<E>> retainSet =
-                collect(retain, transformer, new HashSet<>());
-
+        final Set<EquatorWrapper<E>> retainSet = collect(retain, transformer, new HashSet<>());
         final List<E> list = new ArrayList<>();
         for (final E element : collection) {
             if (retainSet.contains(new EquatorWrapper<>(equator, element))) {
@@ -1675,14 +1531,13 @@ public class CollectionUtils {
     /**
      * Reverses the order of the given array.
      *
-     * @param array  The array to reverse
+     * @param array The array to reverse.
      */
     public static void reverseArray(final Object[] array) {
         Objects.requireNonNull(array, "array");
         int i = 0;
         int j = array.length - 1;
         Object tmp;
-
         while (j > i) {
             tmp = array[j];
             array[j] = array[i];
@@ -1693,19 +1548,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Selects all elements from input collection which match the given
-     * predicate into an output collection.
+     * Selects all elements from input collection which match the given predicate into an output collection.
      * <p>
      * A {@code null} predicate matches no elements.
      * </p>
      *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  The collection to get the input from, may not be null
-     * @param predicate  The predicate to use, may be null
-     * @return The elements matching the predicate (new list)
+     * @param <O>             the type of object the {@link Iterable} contains.
+     * @param inputCollection The collection to get the input from, may not be null.
+     * @param predicate       The predicate to use, may be null.
+     * @return The elements matching the predicate (new list).
      */
-    public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
-                                           final Predicate<? super O> predicate) {
+    public static <O> Collection<O> select(final Iterable<? extends O> inputCollection, final Predicate<? super O> predicate) {
         int size = 0;
         if (inputCollection != null) {
             size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
@@ -1715,24 +1568,20 @@ public class CollectionUtils {
     }
 
     /**
-     * Selects all elements from input collection which match the given
-     * predicate and adds them to outputCollection.
+     * Selects all elements from input collection which match the given predicate and adds them to outputCollection.
      * <p>
-     * If the input collection or predicate is null, there is no change to the
-     * output collection.
+     * If the input collection or predicate is null, there is no change to the output collection.
      * </p>
      *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  The collection to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @param outputCollection  The collection to output into, may not be null if the inputCollection
-     *   and predicate or not null
+     * @param <O>              the type of object the {@link Iterable} contains.
+     * @param <R>              the type of the output {@link Collection}.
+     * @param inputCollection  The collection to get the input from, may be null.
+     * @param predicate        The predicate to use, may be null.
+     * @param outputCollection The collection to output into, may not be null if the inputCollection and predicate or not null.
      * @return The outputCollection
      */
-    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, final R outputCollection) {
-
+    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection, final Predicate<? super O> predicate,
+            final R outputCollection) {
         if (inputCollection != null && predicate != null) {
             for (final O item : inputCollection) {
                 if (predicate.test(item)) {
@@ -1744,38 +1593,33 @@ public class CollectionUtils {
     }
 
     /**
-     * Selects all elements from inputCollection into an output and rejected collection,
-     * based on the evaluation of the given predicate.
+     * Selects all elements from inputCollection into an output and rejected collection, based on the evaluation of the given predicate.
      * <p>
-     * Elements matching the predicate are added to the {@code outputCollection},
-     * all other elements are added to the {@code rejectedCollection}.
+     * Elements matching the predicate are added to the {@code outputCollection}, all other elements are added to the {@code rejectedCollection}.
      * </p>
      * <p>
-     * If the input predicate is {@code null}, no elements are added to
-     * {@code outputCollection} or {@code rejectedCollection}.
+     * If the input predicate is {@code null}, no elements are added to {@code outputCollection} or {@code rejectedCollection}.
      * </p>
      * <p>
      * Note: calling the method is equivalent to the following code snippet:
      * </p>
+     *
      * <pre>
-     *   select(inputCollection, predicate, outputCollection);
-     *   selectRejected(inputCollection, predicate, rejectedCollection);
+     * select(inputCollection, predicate, outputCollection);
+     * selectRejected(inputCollection, predicate, rejectedCollection);
      * </pre>
      *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  The collection to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @param outputCollection  The collection to output selected elements into, may not be null if the
-     *   inputCollection and predicate are not null
-     * @param rejectedCollection  The collection to output rejected elements into, may not be null if the
-     *   inputCollection or predicate are not null
+     * @param <O>                the type of object the {@link Iterable} contains.
+     * @param <R>                the type of the output {@link Collection}.
+     * @param inputCollection    The collection to get the input from, may be null.
+     * @param predicate          The predicate to use, may be null.
+     * @param outputCollection   The collection to output selected elements into, may not be null if the inputCollection and predicate are not null.
+     * @param rejectedCollection The collection to output rejected elements into, may not be null if the inputCollection or predicate are not null.
      * @return The outputCollection
      * @since 4.1
      */
-    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, final R outputCollection, final R rejectedCollection) {
-
+    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection, final Predicate<? super O> predicate,
+            final R outputCollection, final R rejectedCollection) {
         if (inputCollection != null && predicate != null) {
             for (final O element : inputCollection) {
                 if (predicate.test(element)) {
@@ -1789,20 +1633,17 @@ public class CollectionUtils {
     }
 
     /**
-     * Selects all elements from inputCollection which don't match the given
-     * predicate into an output collection.
+     * Selects all elements from inputCollection which don't match the given predicate into an output collection.
      * <p>
-     * If the input predicate is {@code null}, the result is an empty
-     * list.
+     * If the input predicate is {@code null}, the result is an empty list.
      * </p>
      *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  The collection to get the input from, may not be null
-     * @param predicate  The predicate to use, may be null
-     * @return The elements <strong>not</strong> matching the predicate (new list)
+     * @param <O>             the type of object the {@link Iterable} contains.
+     * @param inputCollection The collection to get the input from, may not be null.
+     * @param predicate       The predicate to use, may be null.
+     * @return The elements <strong>not</strong> matching the predicate (new list).
      */
-    public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
-                                                   final Predicate<? super O> predicate) {
+    public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection, final Predicate<? super O> predicate) {
         int size = 0;
         if (inputCollection != null) {
             size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
@@ -1812,24 +1653,20 @@ public class CollectionUtils {
     }
 
     /**
-     * Selects all elements from inputCollection which don't match the given
-     * predicate and adds them to outputCollection.
+     * Selects all elements from inputCollection which don't match the given predicate and adds them to outputCollection.
      * <p>
-     * If the input predicate is {@code null}, no elements are added to
-     * {@code outputCollection}.
+     * If the input predicate is {@code null}, no elements are added to {@code outputCollection}.
      * </p>
      *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  The collection to get the input from, may be null
-     * @param predicate  The predicate to use, may be null
-     * @param outputCollection  The collection to output into, may not be null if the inputCollection
-     *   and predicate or not null
+     * @param <O>              the type of object the {@link Iterable} contains.
+     * @param <R>              the type of the output {@link Collection}.
+     * @param inputCollection  The collection to get the input from, may be null.
+     * @param predicate        The predicate to use, may be null.
+     * @param outputCollection The collection to output into, may not be null if the inputCollection and predicate or not null.
      * @return outputCollection
      */
-    public static <O, R extends Collection<? super O>> R selectRejected(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, final R outputCollection) {
-
+    public static <O, R extends Collection<? super O>> R selectRejected(final Iterable<? extends O> inputCollection, final Predicate<? super O> predicate,
+            final R outputCollection) {
         if (inputCollection != null && predicate != null) {
             for (final O item : inputCollection) {
                 if (!predicate.test(item)) {
@@ -1853,9 +1690,9 @@ public class CollectionUtils {
      * <li>Enumeration - the number of elements remaining in the enumeration</li>
      * </ul>
      *
-     * @param object  The object to get the size of, may be null
-     * @return The size of the specified collection or 0 if the object was null
-     * @throws IllegalArgumentException thrown if object is not recognized
+     * @param object The object to get the size of, may be null.
+     * @return The size of the specified collection or 0 if the object was null.
+     * @throws IllegalArgumentException thrown if object is not recognized.
      * @since 3.1
      */
     public static int size(final Object object) {
@@ -1902,13 +1739,12 @@ public class CollectionUtils {
      * <li>Enumeration - via hasMoreElements</li>
      * </ul>
      * <p>
-     * Note: This method is named to avoid clashing with
-     * {@link #isEmpty(Collection)}.
+     * Note: This method is named to avoid clashing with {@link #isEmpty(Collection)}.
      * </p>
      *
-     * @param object  The object to get the size of, may be null
-     * @return true if empty or null
-     * @throws IllegalArgumentException thrown if object is not recognized
+     * @param object The object to get the size of, may be null.
+     * @return true if empty or null.
+     * @throws IllegalArgumentException thrown if object is not recognized.
      * @since 3.2
      */
     public static boolean sizeIsEmpty(final Object object) {
@@ -1941,16 +1777,13 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new {@link Collection} containing {@code <em>a</em> - <em>b</em>}.
-     * The cardinality of each element <em>e</em> in the returned {@link Collection}
-     * will be the cardinality of <em>e</em> in <em>a</em> minus the cardinality
-     * of <em>e</em> in <em>b</em>, or zero, whichever is greater.
+     * Returns a new {@link Collection} containing {@code <em>a</em> - <em>b</em>}. The cardinality of each element <em>e</em> in the returned
+     * {@link Collection} will be the cardinality of <em>e</em> in <em>a</em> minus the cardinality of <em>e</em> in <em>b</em>, or zero, whichever is greater.
      *
-     * @param a  The collection to subtract from, must not be null
-     * @param b  The collection to subtract, must not be null
-     * @param <O> The generic type that is able to represent the types contained
-     *        in both input collections.
-     * @return A new collection with the results
+     * @param a   The collection to subtract from, must not be null.
+     * @param b   The collection to subtract, must not be null.
+     * @param <O> The generic type that is able to represent the types contained in both input collections.
+     * @return A new collection with the results.
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b) {
@@ -1959,34 +1792,27 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new {@link Collection} containing <em>a</em> minus a subset of
-     * <em>b</em>.  Only the elements of <em>b</em> that satisfy the predicate
+     * Returns a new {@link Collection} containing <em>a</em> minus a subset of <em>b</em>. Only the elements of <em>b</em> that satisfy the predicate
      * condition, <em>p</em> are subtracted from <em>a</em>.
-     *
      * <p>
-     * The cardinality of each element <em>e</em> in the returned {@link Collection}
-     * that satisfies the predicate condition will be the cardinality of <em>e</em> in <em>a</em>
-     * minus the cardinality of <em>e</em> in <em>b</em>, or zero, whichever is greater.
+     * The cardinality of each element <em>e</em> in the returned {@link Collection} that satisfies the predicate condition will be the cardinality of
+     * <em>e</em> in <em>a</em> minus the cardinality of <em>e</em> in <em>b</em>, or zero, whichever is greater.
      * </p>
      * <p>
-     * The cardinality of each element <em>e</em> in the returned {@link Collection} that does <strong>not</strong>
-     * satisfy the predicate condition will be equal to the cardinality of <em>e</em> in <em>a</em>.
+     * The cardinality of each element <em>e</em> in the returned {@link Collection} that does <strong>not</strong> satisfy the predicate condition will be
+     * equal to the cardinality of <em>e</em> in <em>a</em>.
      * </p>
      *
-     * @param a  The collection to subtract from, must not be null
-     * @param b  The collection to subtract, must not be null
-     * @param p  The condition used to determine which elements of <em>b</em> are
-     *        subtracted.
-     * @param <O> The generic type that is able to represent the types contained
-     *        in both input collections.
-     * @return A new collection with the results
-     * @throws NullPointerException if either collection or p is null
+     * @param a   The collection to subtract from, must not be null.
+     * @param b   The collection to subtract, must not be null.
+     * @param p   The condition used to determine which elements of <em>b</em> are subtracted.
+     * @param <O> The generic type that is able to represent the types contained in both input collections.
+     * @return A new collection with the results.
+     * @throws NullPointerException if either collection or p is null.
      * @since 4.0
      * @see Collection#removeAll
      */
-    public static <O> Collection<O> subtract(final Iterable<? extends O> a,
-                                             final Iterable<? extends O> b,
-                                             final Predicate<O> p) {
+    public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b, final Predicate<O> p) {
         Objects.requireNonNull(a, "a");
         Objects.requireNonNull(b, "b");
         Objects.requireNonNull(p, "p");
@@ -2008,15 +1834,15 @@ public class CollectionUtils {
     /**
      * Returns a synchronized collection backed by the given collection.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to
-     * avoid non-deterministic behavior:
+     * You must manually synchronize on the returned buffer's iterator to avoid non-deterministic behavior:
      * </p>
+     *
      * <pre>
      * Collection c = CollectionUtils.synchronizedCollection(myCollection);
      * synchronized (c) {
      *     Iterator i = c.iterator();
      *     while (i.hasNext()) {
-     *         process (i.next());
+     *         process(i.next());
      *     }
      * }
      * </pre>
@@ -2024,11 +1850,11 @@ public class CollectionUtils {
      * This method uses the implementation in the decorators subpackage.
      * </p>
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to synchronize, must not be null
-     * @return A synchronized collection backed by the given collection
-     * @throws NullPointerException if the collection is null
-     * @deprecated Since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection to synchronize, must not be null.
+     * @return A synchronized collection backed by the given collection.
+     * @throws NullPointerException if the collection is null.
+     * @deprecated Since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead.
      */
     @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
@@ -2042,23 +1868,19 @@ public class CollectionUtils {
      * If the input collection or transformer is null, there is no change made.
      * </p>
      * <p>
-     * This routine is best for Lists, for which set() is used to do the
-     * transformations "in place." For other Collections, clear() and addAll()
-     * are used to replace elements.
+     * This routine is best for Lists, for which set() is used to do the transformations "in place." For other Collections, clear() and addAll() are used to
+     * replace elements.
      * </p>
      * <p>
-     * If the input collection controls its input, such as a Set, and the
-     * Transformer creates duplicates (or are otherwise invalid), the collection
-     * may reduce in size due to calling this method.
+     * If the input collection controls its input, such as a Set, and the Transformer creates duplicates (or are otherwise invalid), the collection may reduce
+     * in size due to calling this method.
      * </p>
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The {@link Collection} to get the input from, may be null
-     * @param transformer  The transformer to perform, may be null
+     * @param <C>         the type of object the {@link Collection} contains.
+     * @param collection  The {@link Collection} to get the input from, may be null.
+     * @param transformer The transformer to perform, may be null.
      */
-    public static <C> void transform(final Collection<C> collection,
-                                     final Transformer<? super C, ? extends C> transformer) {
-
+    public static <C> void transform(final Collection<C> collection, final Transformer<? super C, ? extends C> transformer) {
         if (collection != null && transformer != null) {
             if (collection instanceof List<?>) {
                 final List<C> list = (List<C>) collection;
@@ -2076,43 +1898,37 @@ public class CollectionUtils {
     /**
      * Returns a transformed bag backed by the given collection.
      * <p>
-     * Each object is passed through the transformer as it is added to the
-     * Collection. It is important not to use the original collection after invoking this
+     * Each object is passed through the transformer as it is added to the Collection. It is important not to use the original collection after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * </p>
      * <p>
-     * Existing entries in the specified collection will not be transformed.
-     * If you want that behavior, see {@link TransformedCollection#transformedCollection}.
+     * Existing entries in the specified collection will not be transformed. If you want that behavior, see {@link TransformedCollection#transformedCollection}.
      * </p>
      *
-     * @param <E> The type of object the {@link Collection} contains
-     * @param collection  The collection to predicate, must not be null
-     * @param transformer  The transformer for the collection, must not be null
-     * @return A transformed collection backed by the given collection
-     * @throws NullPointerException if the collection or transformer is null
+     * @param <E>         The type of object the {@link Collection} contains.
+     * @param collection  The collection to predicate, must not be null.
+     * @param transformer The transformer for the collection, must not be null.
+     * @return A transformed collection backed by the given collection.
+     * @throws NullPointerException if the collection or transformer is null.
      */
-    public static <E> Collection<E> transformingCollection(final Collection<E> collection,
-            final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Collection<E> transformingCollection(final Collection<E> collection, final Transformer<? super E, ? extends E> transformer) {
         Objects.requireNonNull(collection, "collection");
         Objects.requireNonNull(transformer, "transformer");
         return TransformedCollection.transformingCollection(collection, transformer);
     }
 
     /**
-     * Returns a {@link Collection} containing the union of the given
-     * {@link Iterable}s.
+     * Returns a {@link Collection} containing the union of the given {@link Iterable}s.
      * <p>
-     * The cardinality of each element in the returned {@link Collection} will
-     * be equal to the maximum of the cardinality of that element in the two
-     * given {@link Iterable}s.
+     * The cardinality of each element in the returned {@link Collection} will be equal to the maximum of the cardinality of that element in the two given
+     * {@link Iterable}s.
      * </p>
      *
-     * @param a The first collection, must not be null
-     * @param b The second collection, must not be null
-     * @param <O> The generic type that is able to represent the types contained
-     *        in both input collections.
-     * @return The union of the two collections
-     * @throws NullPointerException if either collection is null
+     * @param a   The first collection, must not be null.
+     * @param b   The second collection, must not be null.
+     * @param <O> The generic type that is able to represent the types contained in both input collections.
+     * @return The union of the two collections.
+     * @throws NullPointerException if either collection is null.
      * @see Collection#addAll
      */
     public static <O> Collection<O> union(final Iterable<? extends O> a, final Iterable<? extends O> b) {
@@ -2131,11 +1947,11 @@ public class CollectionUtils {
      * This method uses the implementation in the decorators subpackage.
      * </p>
      *
-     * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  The collection to make unmodifiable, must not be null
-     * @return An unmodifiable collection backed by the given collection
-     * @throws NullPointerException if the collection is null
-     * @deprecated Since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
+     * @param <C>        the type of object the {@link Collection} contains.
+     * @param collection The collection to make unmodifiable, must not be null.
+     * @return An unmodifiable collection backed by the given collection.
+     * @throws NullPointerException if the collection is null.
+     * @deprecated Since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead.
      */
     @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
