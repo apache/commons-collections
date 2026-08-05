@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.ArrayList;
@@ -33,12 +34,12 @@ import org.apache.commons.collections4.iterators.IteratorIterable;
 public class EnumerationUtils {
 
     /**
-     * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
-     * single iteration.
+     * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a single iteration.
      *
-     * @param <T> The element type
-     * @param enumeration The enumeration to use, may not be null
-     * @return A new, single use {@link Iterable}
+     * @param <T>         The element type.
+     * @param enumeration The enumeration to use, may not be null.
+     * @return A new, single use {@link Iterable}.
+     * @throws NullPointerException if enumeration is null.
      * @since 4.5.0-M1
      */
     public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
@@ -46,43 +47,42 @@ public class EnumerationUtils {
     }
 
     /**
-     * Gets the {@code index}-th value in the {@link Enumeration}, throwing
-     * {@code IndexOutOfBoundsException} if there is no such element.
+     * Gets the {@code index}-th value in the {@link Enumeration}, throwing {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Enumeration is advanced to {@code index} (or to the end, if
-     * {@code index} exceeds the number of entries) as a side effect of this method.
+     * The Enumeration is advanced to {@code index} (or to the end, if {@code index} exceeds the number of entries) as a side effect of this method.
      * </p>
      *
-     * @param e  The enumeration to get a value from
-     * @param index  The index to get
-     * @param <T> The type of object in the {@link Enumeration}
-     * @return The object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @throws IllegalArgumentException if the object type is invalid
+     * @param enumeration     The enumeration to get a value from.
+     * @param index The index to get.
+     * @param <T>   The type of object in the {@link Enumeration}.
+     * @return The object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     * @throws IllegalArgumentException  if the object type is invalid.
+     * @throws NullPointerException      if enumeration is null.
      * @since 4.1
      */
-    public static <T> T get(final Enumeration<T> e, final int index) {
+    public static <T> T get(final Enumeration<T> enumeration, final int index) {
         CollectionUtils.checkIndexBounds(index);
         int i = index;
-        while (e.hasMoreElements()) {
+        while (enumeration.hasMoreElements()) {
             i--;
             if (i == -1) {
-                return e.nextElement();
+                return enumeration.nextElement();
             }
-            e.nextElement();
+            enumeration.nextElement();
         }
         throw new IndexOutOfBoundsException("Entry does not exist: " + i);
     }
 
     /**
      * Creates a list based on an enumeration.
+     * <p>
+     * As the enumeration is traversed, an ArrayList of its values is created. The new list is returned.
+     * </p>
      *
-     * <p>As the enumeration is traversed, an ArrayList of its values is
-     * created. The new list is returned.</p>
-     *
-     * @param <E> The element type
-     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
-     * @return A list containing all elements of the given enumeration
+     * @param <E>         The element type.
+     * @param enumeration The enumeration to traverse, which should not be {@code null}.
+     * @return A list containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
@@ -90,11 +90,10 @@ public class EnumerationUtils {
     }
 
     /**
-     * Override toList(Enumeration) for StringTokenizer as it implements Enumeration&lt;Object&gt;
-     * for the sake of backward compatibility.
+     * Override toList(Enumeration) for StringTokenizer as it implements Enumeration&lt;Object&gt; for the sake of backward compatibility.
      *
-     * @param stringTokenizer  The tokenizer to convert to a {@link List}&lt;{@link String}&gt;
-     * @return A list containing all tokens of the given StringTokenizer
+     * @param stringTokenizer The tokenizer to convert to a {@link List}&lt;{@link String}&gt;
+     * @return A list containing all tokens of the given StringTokenizer.
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
         final List<String> result = new ArrayList<>(stringTokenizer.countTokens());
@@ -106,12 +105,12 @@ public class EnumerationUtils {
 
     /**
      * Creates a set based on an enumeration.
+     * <p>
+     * As the enumeration is traversed, an HashSet of its values is created. The new set is returned.
+     * </p>
      *
-     * <p>As the enumeration is traversed, an HashSet of its values is
-     * created. The new set is returned.</p>
-     *
-     * @param <E> The element type
-     * @param enumeration  The enumeration to traverse, which should not be {@code null}.
+     * @param <E>         The element type.
+     * @param enumeration The enumeration to traverse, which should not be {@code null}.
      * @return A set containing all elements of the given enumeration.
      * @throws NullPointerException if the enumeration parameter is {@code null}.
      * @since 4.5.0-M4
@@ -126,5 +125,4 @@ public class EnumerationUtils {
     private EnumerationUtils() {
         // no instances.
     }
-
 }
