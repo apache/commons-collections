@@ -1,3 +1,117 @@
+Apache Commons Collections 4.6.0 Release Notes
+----------------------------------------------
+
+The Apache Commons Collections team is pleased to announce the release of Apache Commons Collections 4.6.0.
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+This is a feature and maintenance release. Java 8 or later is required.
+
+Changes in this version
+-----------------------
+
+New features
+------------
+
+* Add generics to UnmodifiableIterator for the wrapped type. Thanks to Gary Gregory. 
+* Add a Maven benchmark profile for JMH. Thanks to Gary Gregory. 
+* Add a Maven benchmark profile for JMH. Thanks to Gary Gregory. 
+* COLLECTIONS-893:  Add SortedMultiSet interface, TreeMultiSet implementation, sorted multiset decorators, and MultiSetUtils factory methods, giving MultiSet feature parity with SortedBag/TreeBag. Thanks to Paul King. 
+* COLLECTIONS-893:  Add MultiSetUtils.containsOccurrences/removeOccurrences/retainOccurrences providing Bag's cardinality-respecting semantics under explicit names, and Bag-to-MultiSet migration notes in the Bag javadoc. Thanks to Paul King. 
+* Add IterableUtils.sumSizes(Iterable<? extends Collection<E>>). Thanks to Gary Gregory. 
+
+Fixed Bugs
+----------
+
+* COLLECTIONS-776:  Wrapping PassiveExpiringMap in Collections.synchronizedMap breaks expiration. Thanks to Gary Gregory. 
+* org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry.toReference(ReferenceStrength, T, int) now throws IllegalArgumentException instead of Error. Thanks to Gary Gregory. 
+* Remove deprecation annotation of org.apache.commons.collections4.Factory; this will be deprecated in 5.0 in favor of java.util.function.Supplier. Thanks to Eric Hubert, Gary Gregory. 
+* Remove deprecation annotation of org.apache.commons.collections4.Predicate; this will be deprecated in 5.0 in favor of java.util.function.Predicate. Thanks to Eric Hubert, Gary Gregory. 
+* Remove deprecation annotation of org.apache.commons.collections4.Transformer; this will be deprecated in 5.0 in favor of java.util.function.Function. Thanks to Eric Hubert, Gary Gregory. 
+* Remove deprecation annotation of org.apache.commons.collections4.Closure; this will be deprecated in 5.0 in favor of java.util.function.Consumer. Thanks to Eric Hubert, Gary Gregory. 
+* COLLECTIONS-874:  MapUtils.getLongValue(Map, K, Function) returns a byte instead of a long. Thanks to Sebastian Götz, Gary Gregory. 
+* MapUtils.getIntValue(Map, K, Function) returns a byte instead of an int. Thanks to Naveed Khan, Gary Gregory. 
+* Fix exception message in org.apache.commons.collections4.functors.FunctorUtils.validate(Consumer...) Thanks to Gary Gregory. 
+* Fix exception message in org.apache.commons.collections4.iterators.UnmodifiableIterator.remove() to match java.util.Iterator.remove(). Thanks to Gary Gregory. 
+* COLLECTIONS-838:  Calling SetUtils.union on multiple instances of SetView causes JVM to hang Thanks to Piotr P. Karwasz, Joerg Budischewski. 
+* COLLECTIONS-722:  Improve IteratorUtils.chainedIterator() performance. Thanks to Piotr P. Karwasz, Joerg Budischewski. 
+* Fix UselessOverridingMethod in org.apache.commons.collections4.properties.PropertiesFactory. Thanks to Gary Gregory, PMD. 
+* COLLECTIONS-693:  OrderedProperties.stringPropertyNames() returns an unordered Set. Thanks to Adam Rauch, Gary Gregory. 
+* Fix SortedProperties.keySet() returned an unsorted Set. Thanks to Gary Gregory. 
+* Fix SortedProperties.propertyNames() returned an unsorted Enumeration. Thanks to Gary Gregory. 
+* Fix SortedProperties.stringPropertyNames() returned an unsorted Set. Thanks to Gary Gregory. 
+* Fix SortedProperties.forEach() called its consumer out of order. Thanks to Gary Gregory. 
+* Fix Apache RAT plugin console warnings. Thanks to Gary Gregory. 
+* Add MultiValuedMap.inverted() #665. Thanks to Paul King, Gary Gregory, Sebb. 
+* COLLECTIONS-885:  PatriciaTrie submap and range view operations silently mutate trie structure resulting in ConcurrentModificationException for any iterating threads #672. Thanks to John Griffin, Gary Gregory. 
+* COLLECTIONS-886:  [javadoc] CompositeSet.addComposited(Set) does not throw NullPointerException when null is passed #675. Thanks to Partha Protim Paul. 
+* COLLECTIONS-887:  ConcurrentReferenceHashMap.remove(key), remove(key, value), replace(key, value), and replace(key, oldValue, newValue) throw NullPointerException inconsistently. Thanks to Partha Paul, Gary Gregory. 
+* COLLECTIONS-888:  PatriciaTrie incompatible with Java 21 (JEP 431 Sequenced Collections). Thanks to Marc Carter, Gary Gregory. 
+* Reject non-positive entry count in bag/multiset doReadObject (#679). Thanks to Dexter.k, Gary Gregory. 
+* Fix most Junit 5 nested tests (#681). Thanks to Dexter.k, Gary Gregory. 
+* COLLECTIONS-881:  MultiMapUtils.getXXX ensure safe copy (#669). Thanks to Suhyeon Park, Gary Gregory. 
+* Re-validate entries in PredicatedMap/PredicatedCollection readObject (#682). Thanks to Dexter.k, Gary Gregory. 
+* COLLECTIONS-889:  IndexedCollection.remove(Object) removes all values for a non-unique index key. Thanks to Ruiqi Dong, Gary Gregory. 
+* COLLECTIONS-890:  TransformIterator throws NullPointerException when its transformer is null. Thanks to Ruiqi Dong, Gary Gregory. 
+* COLLECTIONS-892:  IndexedCollection.add(Object) mutates unique indexed collections before rejecting duplicate keys. Thanks to Ruiqi Dong, Gary Gregory. 
+* COLLECTIONS-878:  MapUtils.invertMap() improves HashMap construction (#652). Thanks to Maxim Safronov, Gary Gregory. 
+* Validate order and uniqueness invariants in decorator readObject() (#684). Thanks to Dexter.k, Gary Gregory. 
+* TransformIterator now fail-fast on a null Iterator (#686). Thanks to Gary Gregory. 
+* COLLECTIONS-884:  [COLLECTIONS-884] Fix JUnit 5 test discovery for Map EntrySet and Values views (#689). Thanks to sankalp suman, Ben Manes. 
+* Reject non-positive maxSize in LRUMap.doReadObject() (#690). Thanks to Dexter.k, Gary Gregory. 
+* [javadoc] Document that BloomFilter merge operations are non-atomic and a filter that throws during a merge should be considered invalid (#695). Thanks to Naveed Khan, Alex Herbert, Gary Gregory. 
+* Fix AbstractMapBag.retainAll removing all copies when the other bag has more (#692). Thanks to Vasiliy Mikhailov, Gary Gregory. 
+* Fix integer overflow in SetOperations.cosineSimilarity (#693). Thanks to Vasiliy Mikhailov, Gary Gregory. 
+* Validate deserialized size in CircularFifoQueue.readObject (#678). Thanks to Vasiliy Mikhailov, Gary Gregory. 
+* Do not mutate the input map in SwitchTransformer.switchTransformer (#696). Thanks to Vasiliy Mikhailov, Gary Gregory. 
+* Do not mutate the input map in SwitchClosure.switchClosure, ClosureUtils.switchMapClosure and TransformerUtils.switchMapTransformer (#700). Thanks to Naveed Khan, Gary Gregory. 
+* Fix stale size in AbstractMapMultiSet view iterator remove (#701). Thanks to Dexter.k, Gary Gregory. 
+* Stop ExtendedMessageFormat seekNonWs reading past the pattern end (#1740). Thanks to Javid Khan, Gary Gregory. 
+* Remove stale keys in OrderedProperties compute and merge (#702). Thanks to Dexter.k, Gary Gregory. 
+* COLLECTIONS-776:  Fix expiration bypass in PassiveExpiringMap when wrapped in SynchronizedMap (#694). Thanks to sankalp suman, Gary Gregory. 
+* Fix MapUtils.getIntValue(Map, K, Function) returning a byte (#704). Thanks to Dexter.k, Gary Gregory. 
+* COLLECTIONS-893:  Bring (Collection compliant) MultiSet family to (non-compliant) Bag parity (#703). Thanks to Paul King, Gary Gregory. 
+* AbstractMapBag and AbstractMapMultiSet.add(Object, int) overflow the size and element count past Integer.MAX_VALUE (#705). Thanks to Naveed Khan, Gary Gregory. 
+* COLLECTIONS-894:  TreeBag documentation should explicitly warn about infinite loop as a result of concurrent writes (#707). Thanks to Paul King, Sol Thiessen, Gary Gregory. 
+* COLLECTIONS-896:  Add TransformedMultiSet plus fill minor gaps for MultiSet vs. Bags (#708). Thanks to Paul King, Gary Gregory. 
+* COLLECTIONS-895:  Deprecate the Bag family in favor of the MultiSet family (#709). Thanks to Paul King, Gary Gregory. 
+* CompositeCollection, CompositeSet, CompositeMap, AbstractMultiValuedMap and AbstractMultiSet size() overflow int when the total exceeds Integer.MAX_VALUE (#710). Thanks to Naveed Khan, Gary Gregory. 
+* DualHashBidiMap, DualLinkedHashBidiMap, and DualTreeBidiMap entrySet() Map.Entry.setValue(Object) returns the new value instead of the previous value (#711). Thanks to Naveed Khan, Gary Gregory. 
+* COLLECTIONS-714:  PatriciaTrie ignores trailing null characters in keys (#712). Thanks to sankalp suman, Gary Gregory. 
+* Flat3Map entrySet().remove(Object) removes a mapping when only the key matches, ignoring the entry value (#714). Thanks to Naveed Khan, Gary Gregory. 
+* SetUniqueList and ListOrderedSet leave the backing collection inconsistent when add(int, Object) or addAll(int, Collection) is called with an out-of-range index. Thanks to Naveed Khan, Gary Gregory. 
+* CollectionUtils.collate(Iterable, Iterable, Comparator, boolean) does not remove duplicate null elements when includeDuplicates is false (#715). Thanks to Naveed Khan, Gary Gregory. 
+* Do not register a value collection until an add succeeds (#717). Thanks to Naveed Khan, Gary Gregory. 
+* Increment modCount after the bounds check in TreeList add and remove (#716). Thanks to Naveed Khan, Gary Gregory. 
+* Add messages when throwing NullPointerException. Thanks to Gary Gregory. 
+* Reject remove on the Unmodifiable map from SplitMapUtils.readableMap (#718). Thanks to Naveed Khan, Gary Gregory. 
+* Keep OrderedProperties keySet and values in sync with the map (#719). Thanks to Naveed Khan, Gary Gregory. 
+* COLLECTIONS-859:  Clarify ambiguous @return Javadoc in PredicateUtils. Thanks to Daniele, THE_ZAID, Gary Gregory. 
+* Synchronize forEach() in SynchronizedCollection (#720). Thanks to Naveed Khan, Gary Gregory. 
+
+Changes
+-------
+
+* Bump org.apache.commons:commons-parent from 81 to 103 #612, #645, #662, #663. Thanks to Gary Gregory, Dependabot. 
+* Bump com.google.guava:guava-testlib from 33.3.1-jre to 33.5.0-jre #644. Thanks to Gary Gregory. 
+* Bump PMD from 7.8.0 to 7.13.0 (now inherited from parent POM). Thanks to Gary Gregory. 
+* Bump org.easymock:easymock from 5.5.0 to 5.6.0 #617. Thanks to Gary Gregory. 
+* [test] Bump org.apache.commons:commons-lang3 from 3.17.0 to 3.20.0 #625. Thanks to Gary Gregory. 
+* [test] Bump commons-io:commons-io from 2.19.0 to 2.22.0. Thanks to Gary Gregory. 
+* Bump commons-codec:commons-codec from 1.18.0 to 1.22.1. Thanks to Gary Gregory. 
+* Bump doxia.module.markdown.version from 2.0.0 to 2.1.0. Thanks to Gary Gregory. 
+* Bump com.google.guava:guava-testlib from 33.5.0-jre to 33.6.0-jre (#680). Thanks to Gary Gregory, Dependabot. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+https://commons.apache.org/proper/commons-collections/
+
+Download page: https://commons.apache.org/proper/commons-collections/download_collections.cgi
+
+-----------------------------------------------------------------------------
+
 Apache Commons Collections 4.5.0 Release Notes
 ----------------------------------------------
 

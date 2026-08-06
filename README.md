@@ -45,7 +45,7 @@ Apache Commons Collections
 
 [![Java CI](https://github.com/apache/commons-collections/actions/workflows/maven.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/org.apache.commons/commons-collections4?label=Maven%20Central)](https://search.maven.org/artifact/org.apache.commons/commons-collections4)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.5.0.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.5.0)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.6.0.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.6.0)
 [![CodeQL](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/apache/commons-collections/actions/workflows/codeql-analysis.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections/badge)](https://api.securityscorecards.dev/projects/github.com/apache/commons-collections)
 
@@ -68,7 +68,7 @@ Alternatively, you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.5.0</version>
+  <version>4.6.0</version>
 </dependency>
 ```
 
@@ -89,8 +89,8 @@ There are some guidelines which will make applying PRs easier for us:
 + Respect the existing code style for each file.
 + Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.
 + Provide JUnit tests for your changes and make sure your changes don't break any existing tests by running `mvn`.
-+ Before you pushing a PR, run `mvn` (by itself), this runs the default goal, which contains all build checks.
-+ To see the code coverage report, regardless of coverage failures, run `mvn clean site -Dcommons.jacoco.haltOnFailure=false`
++ Before you push a PR, run `mvn` (without arguments). This runs the default goal which contains all build checks.
++ To see the code coverage report, regardless of coverage failures, run `mvn clean site -Dcommons.jacoco.haltOnFailure=false -Pjacoco`
 
 If you plan to contribute on a regular basis, please consider filing a [contributor license agreement](https://www.apache.org/licenses/#clas).
 You can learn more about contributing via GitHub in our [contribution guidelines](CONTRIBUTING.md).
@@ -111,9 +111,9 @@ Additional Resources
 + [Apache Commons Homepage](https://commons.apache.org/)
 + [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/COLLECTIONS)
 + [Apache Commons Slack Channel](https://the-asf.slack.com/archives/C60NVB8AD)
-+ [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
 
 Apache Commons Components
 -------------------------
 
-Please see the [list of components](https://commons.apache.org/components.html)
++ [List of Apache Commons components](https://commons.apache.org/components.html): homepages and documentation for all components.
++ [`REPOSITORIES.md`](https://github.com/apache/commons-parent/blob/master/REPOSITORIES.md): overview of the code repositories and their build status.
