@@ -16,8 +16,15 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}
@@ -31,6 +38,27 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @Override
     public String getCompatibilityVersion() {
         return "4";
+    }
+
+    @Test
+    void testPutAllAllowsUpdatesRejectsNewKeys() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("a", "1");
+        final SortedMap<String, String> fixed = FixedSizeSortedMap.fixedSizeSortedMap(base);
+
+        // updating the value of an existing key is allowed
+        fixed.putAll(Collections.singletonMap("a", "2"));
+        assertEquals("2", fixed.get("a"));
+
+        // an empty map is a no-op, not a rejection
+        fixed.putAll(Collections.emptyMap());
+        assertEquals(1, fixed.size());
+
+        // a new key must be rejected and must not grow the map
+        assertThrows(IllegalArgumentException.class,
+                () -> fixed.putAll(Collections.singletonMap("b", "9")));
+        assertEquals(1, fixed.size());
+        assertFalse(fixed.containsKey("b"));
     }
 
     @Override
