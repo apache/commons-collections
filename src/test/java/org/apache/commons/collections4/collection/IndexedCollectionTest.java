@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -114,6 +115,22 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("2", indexed.get(2));
         assertEquals("3", indexed.get(3));
         assertEquals("4", indexed.get(4));
+    }
+
+    @Test
+    void testContainsUsesObjectEqualityNotOnlyTransformedKey() {
+        final Collection<String> coll = makeUniqueTestCollection();
+        coll.add("01");
+
+        assertFalse(coll.contains("1"));
+    }
+
+    @Test
+    void testContainsUsesObjectEqualityWithNonUniqueIndex() {
+        final Collection<String> coll = makeTestCollection();
+        coll.add("01");
+
+        assertFalse(coll.contains("1"));
     }
 
     @Test
