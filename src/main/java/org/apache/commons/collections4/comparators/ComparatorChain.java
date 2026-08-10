@@ -294,7 +294,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      *                   if index &lt; 0 or index &gt;= size()
      */
     public void setComparator(final int index, final Comparator<E> comparator) throws IndexOutOfBoundsException {
-        setComparator(index, comparator, false);
+        setComparator(index, comparator, orderingBits.get(index));
     }
 
     /**
