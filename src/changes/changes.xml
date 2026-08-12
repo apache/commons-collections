@@ -26,6 +26,7 @@
     <!-- FIX -->
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix inverted fixed-size guard in FixedSizeSortedMap.putAll (#722).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Keep existing sort order in ComparatorChain.setComparator (#723).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Update the index on remove via IndexedCollection.iterator() (#724).</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>
