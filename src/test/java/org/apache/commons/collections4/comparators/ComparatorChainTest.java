@@ -187,4 +187,18 @@ class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.Pse
         assertEquals(chain.compare(i1, i2), correctValue, "Comparison returns the right order");
     }
 
+    @Test
+    void testSetComparatorKeepsExistingSortOrder() {
+        // a reverse column must stay reverse after the two-arg setComparator,
+        // which is documented to maintain the existing sort order
+        final ComparatorChain<Integer> reverse = new ComparatorChain<>(new ComparableComparator<Integer>(), true);
+        reverse.setComparator(0, new ComparableComparator<Integer>());
+        assertTrue(reverse.compare(1, 2) > 0, "reverse column must stay descending");
+
+        // a forward column must stay forward
+        final ComparatorChain<Integer> forward = new ComparatorChain<>(new ComparableComparator<Integer>(), false);
+        forward.setComparator(0, new ComparableComparator<Integer>());
+        assertTrue(forward.compare(1, 2) < 0, "forward column must stay ascending");
+    }
+
 }
