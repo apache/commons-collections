@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.collections4.Transformer;
 import org.junit.jupiter.api.Test;
@@ -164,6 +166,27 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         assertEquals("1", indexed.get(1));
         assertEquals("2", indexed.get(2));
         assertEquals("3", indexed.get(3));
+    }
+
+    @Test
+    void testIteratorRemoveUpdatesIndex() {
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(new ArrayList<>());
+        indexed.add("1");
+        indexed.add("2");
+
+        final Iterator<String> it = indexed.iterator();
+        while (it.hasNext()) {
+            if ("1".equals(it.next())) {
+                it.remove();
+            }
+        }
+
+        assertFalse(indexed.contains("1"));
+        assertNull(indexed.get(1));
+        assertEquals(1, indexed.size());
+        // the unique index must no longer report the removed key
+        indexed.add("1");
+        assertEquals("1", indexed.get(1));
     }
 
     @Test
