@@ -24,6 +24,7 @@ import java.util.function.Predicate;
 
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.map.MultiValueMap;
 
 /**
@@ -188,6 +189,11 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
         return coll == null ? null : coll.iterator().next();
     }
 
+    @Override
+    public Iterator<C> iterator() {
+        return new IndexedCollectionIterator(decorated().iterator());
+    }
+
     /**
      * Clears the index and re-indexes the entire decorated {@link Collection}.
      */
@@ -272,6 +278,31 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection.
     public Collection<C> values(final K key) {
         return (Collection<C>) index.get(key);
+    }
+
+    /**
+     * Iterator that keeps the index in sync when {@code remove()} is used.
+     */
+    private final class IndexedCollectionIterator extends AbstractIteratorDecorator<C> {
+
+        private C lastReturned;
+
+        private IndexedCollectionIterator(final Iterator<C> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public C next() {
+            lastReturned = super.next();
+            return lastReturned;
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            removeFromIndex(lastReturned);
+            lastReturned = null;
+        }
     }
 
 }
