@@ -29,15 +29,38 @@ import java.util.Objects;
  * This iterator creates permutations of an input collection, using the
  * lexicographical order.
  * <p>
+ * Iteration starts at the arrangement in which the elements are given, and each
+ * call to {@code next()} advances to the smallest arrangement greater than the
+ * current one. Iteration therefore ends at the largest arrangement, and the ones
+ * preceding the given arrangement are never returned: only a collection already
+ * sorted according to the ordering in use yields the complete set of
+ * permutations. Callers wanting the complete set must sort the collection
+ * beforehand, just as callers of
+ * {@link java.util.Collections#binarySearch(java.util.List, Object) binarySearch}
+ * must. Callers wanting to enumerate one part of the set, to resume from a
+ * previously reached arrangement or to split the work, may start anywhere.
+ * </p>
+ * <p>
+ * The starting arrangement is the iteration order of the given collection, so
+ * collections whose iteration order is unspecified, such as {@link java.util.HashSet},
+ * make poor input: which permutations are returned is then unspecified too.
+ * </p>
+ * <p>
  * The iterator might return fewer than n! permutations of the input collection,
- * because duplicated permutations are skipped: equal elements are not
- * distinguished from one another.
+ * either because the collection was not sorted according to the ordering in use,
+ * as described above, or because duplicated permutations are skipped: equal
+ * elements are not distinguished from one another.
  * The {@code remove()} operation is not supported, and will throw an
  * {@code UnsupportedOperationException}.
  * </p>
  * <p>
  * NOTE: in case an empty collection is provided, the iterator will
  * return exactly one empty list as result, as 0! = 1.
+ * </p>
+ * <p>
+ * NOTE: {@link PermutationIterator} differs on both counts. It returns exactly n!
+ * permutations whatever the order of the input collection. The two iterators are
+ * therefore not interchangeable.
  * </p>
  *
  * @param <E>  the type of the objects being permuted
@@ -60,6 +83,10 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Standard constructor for this class, using the natural ordering of the elements.
+     * <p>
+     * Iteration starts at the arrangement in which the collection iterates its
+     * elements; sort the collection first to obtain the complete set of permutations.
+     * </p>
      *
      * @param collection  The collection to generate permutations for
      * @throws NullPointerException if collection is null
@@ -70,6 +97,11 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Constructs an instance using the given comparator to order the elements.
+     * <p>
+     * Iteration starts at the arrangement in which the collection iterates its
+     * elements; sort the collection with the same comparator first to obtain the
+     * complete set of permutations.
+     * </p>
      *
      * @param collection  The collection to generate permutations for
      * @param comparator  The comparator used to define the order of generation,
@@ -97,6 +129,8 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
      *
      * @return A list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
+     * @throws ClassCastException if no comparator was supplied and the elements are
+     *         not mutually {@link Comparable}
      */
     @Override
     public List<E> next() {

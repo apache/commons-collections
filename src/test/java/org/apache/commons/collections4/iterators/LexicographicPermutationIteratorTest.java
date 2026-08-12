@@ -340,4 +340,55 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
                 Arrays.asList('C', 'B', 'A')), allPermutations);
     }
 
+    /**
+     * test checking that iteration starts at the given arrangement rather than at the
+     * smallest one, so that a collection which is not sorted yields only the
+     * permutations that follow it. Sorting the input is the caller's responsibility,
+     * as it is for binarySearch.
+     */
+    @Test
+    void testUnsortedCollectionStartsAtGivenArrangement() {
+        final Iterator<List<Character>> permutationIterator = new LexicographicPermutationIterator<>(Arrays.asList('B', 'A', 'C'));
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('B', 'A', 'C'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('B', 'C', 'A'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('C', 'A', 'B'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('C', 'B', 'A'), permutationIterator.next());
+
+        // the two permutations starting with 'A' precede the given arrangement
+        // and are therefore never returned
+        assertFalse(permutationIterator.hasNext());
+    }
+
+    /**
+     * test checking that the starting arrangement is honoured for a supplied comparator
+     * too, the permutations preceding it under that comparator being left out.
+     */
+    @Test
+    void testUnsortedCollectionStartsAtGivenArrangementWithComparator() {
+        final Iterator<List<Character>> permutationIterator = new LexicographicPermutationIterator<>(Arrays.asList('B', 'C', 'A'),
+                Comparator.reverseOrder());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('B', 'C', 'A'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('B', 'A', 'C'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('A', 'C', 'B'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('A', 'B', 'C'), permutationIterator.next());
+
+        assertFalse(permutationIterator.hasNext());
+    }
+
 }
