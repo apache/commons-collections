@@ -149,26 +149,6 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
-    void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
-        final Collection<String> original = new ArrayList<>();
-        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
-
-        original.add("1");
-        original.add("2");
-        original.add("3");
-
-        assertNull(indexed.get(1));
-        assertNull(indexed.get(2));
-        assertNull(indexed.get(3));
-
-        indexed.reindex();
-
-        assertEquals("1", indexed.get(1));
-        assertEquals("2", indexed.get(2));
-        assertEquals("3", indexed.get(3));
-    }
-
-    @Test
     void testIteratorRemoveUpdatesIndex() {
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(new ArrayList<>());
         indexed.add("1");
@@ -187,6 +167,26 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
         // the unique index must no longer report the removed key
         indexed.add("1");
         assertEquals("1", indexed.get(1));
+    }
+
+    @Test
+    void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
+        final Collection<String> original = new ArrayList<>();
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
+
+        original.add("1");
+        original.add("2");
+        original.add("3");
+
+        assertNull(indexed.get(1));
+        assertNull(indexed.get(2));
+        assertNull(indexed.get(3));
+
+        indexed.reindex();
+
+        assertEquals("1", indexed.get(1));
+        assertEquals("2", indexed.get(2));
+        assertEquals("3", indexed.get(3));
     }
 
     @Test
