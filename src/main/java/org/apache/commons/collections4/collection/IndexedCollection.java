@@ -49,6 +49,31 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     // TODO: replace with MultiValuedMap
 
+    /**
+     * Iterator that keeps the index in sync when {@code remove()} is used.
+     */
+    private final class IteratorDecorator extends AbstractIteratorDecorator<C> {
+
+        private C lastReturned;
+
+        private IteratorDecorator(final Iterator<C> iterator) {
+            super(iterator);
+        }
+
+        @Override
+        public C next() {
+            lastReturned = super.next();
+            return lastReturned;
+        }
+
+        @Override
+        public void remove() {
+            super.remove();
+            removeFromIndex(lastReturned);
+            lastReturned = null;
+        }
+    }
+
     /** Serialization version */
     private static final long serialVersionUID = -5512610452568370038L;
 
@@ -191,7 +216,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     @Override
     public Iterator<C> iterator() {
-        return new IndexedCollectionIterator(decorated().iterator());
+        return new IteratorDecorator(decorated().iterator());
     }
 
     /**
@@ -278,31 +303,6 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     @SuppressWarnings("unchecked") // index is a MultiMap which returns a Collection.
     public Collection<C> values(final K key) {
         return (Collection<C>) index.get(key);
-    }
-
-    /**
-     * Iterator that keeps the index in sync when {@code remove()} is used.
-     */
-    private final class IndexedCollectionIterator extends AbstractIteratorDecorator<C> {
-
-        private C lastReturned;
-
-        private IndexedCollectionIterator(final Iterator<C> iterator) {
-            super(iterator);
-        }
-
-        @Override
-        public C next() {
-            lastReturned = super.next();
-            return lastReturned;
-        }
-
-        @Override
-        public void remove() {
-            super.remove();
-            removeFromIndex(lastReturned);
-            lastReturned = null;
-        }
     }
 
 }
