@@ -65,7 +65,7 @@ import java.util.Objects;
  *
  * @param <E>  the type of the objects being permuted
  * @see PermutationIterator
- * @since 4.6.0
+ * @since 4.7.0
  */
 public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
 
