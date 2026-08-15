@@ -25,8 +25,8 @@ import java.util.Stack;
  * An implementation of the {@link Stack} API that is based on an
  * {@code ArrayList} instead of a {@code Vector}, so it is not
  * synchronized to protect against multithreaded access.  The implementation
- * is therefore operates faster in environments where you do not need to
- * worry about multiple thread contention.
+ * therefore operates faster in environments where you do not need to worry
+ * about multiple thread contention.
  * <p>
  * The removal order of an {@code ArrayStack} is based on insertion
  * order: The most recently added element is removed first.  The iteration
