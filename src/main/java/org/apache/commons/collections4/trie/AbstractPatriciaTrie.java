@@ -351,10 +351,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
 
         @Override
         public boolean remove(final Object obj) {
-            if (!(obj instanceof Map.Entry)) {
-                return false;
-            }
-            if (!contains(obj)) {
+            if (!(obj instanceof Map.Entry) || !contains(obj)) {
                 return false;
             }
             final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
@@ -1336,15 +1333,14 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                     prev = previousEntry(prev);
                 }
                 return ceiling;
-            } else {
-                // search key > found.key
-                // walk forward to find the first entry.key > key
-                TrieEntry<K, V> next = nextEntry(found);
-                while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
-                    next = nextEntry(next);
-                }
-                return next;
             }
+            // search key > found.key
+            // walk forward to find the first entry.key > key
+            TrieEntry<K, V> next = nextEntry(found);
+            while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
+                next = nextEntry(next);
+            }
+            return next;
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1457,16 +1453,15 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                     next = nextEntry(next);
                 }
                 return floor;
-            } else {
-                TrieEntry<K, V> prev = previousEntry(found);
-                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
-                    prev = previousEntry(prev);
-                }
-                if (prev == null || prev.isEmpty()) {
-                    return null;
-                }
-                return prev;
             }
+            TrieEntry<K, V> prev = previousEntry(found);
+            while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
+                prev = previousEntry(prev);
+            }
+            if (prev == null || prev.isEmpty()) {
+                return null;
+            }
+            return prev;
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1628,13 +1623,12 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                     prev = previousEntry(prev);
                 }
                 return ceiling;
-            } else {
-                TrieEntry<K, V> next = nextEntry(found);
-                while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
-                    next = nextEntry(next);
-                }
-                return next;
             }
+            TrieEntry<K, V> next = nextEntry(found);
+            while (next != null && getKeyAnalyzer().compare(key, next.key) > 0) {
+                next = nextEntry(next);
+            }
+            return next;
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
@@ -1719,16 +1713,15 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                     next = nextEntry(next);
                 }
                 return floor;
-            } else {
-                TrieEntry<K, V> prev = previousEntry(found);
-                while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
-                    prev = previousEntry(prev);
-                }
-                if (prev == null || prev.isEmpty()) {
-                    return null;
-                }
-                return prev;
             }
+            TrieEntry<K, V> prev = previousEntry(found);
+            while (prev != null && !prev.isEmpty() && getKeyAnalyzer().compare(key, prev.key) < 0) {
+                prev = previousEntry(prev);
+            }
+            if (prev == null || prev.isEmpty()) {
+                return null;
+            }
+            return prev;
         }
         if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             return null;
@@ -1809,9 +1802,6 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             }
         }
         // If there's no data at all, exit.
-        if (current.isEmpty()) {
-            return null;
-        }
         // If we've already returned the left,
         // and the immediate right is null,
         // there's only one entry in the Trie
@@ -1821,7 +1811,7 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         // \_/ \
         // null <-- 'current'
         //
-        if (current.right == null) {
+        if (current.isEmpty() || current.right == null) {
             return null;
         }
         // If nothing valid on the left, try the right.
@@ -1843,11 +1833,8 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
             current = current.parent;
         }
         // If we're on the top of the subtree, we can't go any higher.
-        if (current == tree) {
-            return null;
-        }
         // If there's no right, the parent must be root, so we're done.
-        if (current.parent.right == null) {
+        if (current == tree || current.parent.right == null) {
             return null;
         }
         // If the parent's right points to itself, we've found one.
@@ -2314,12 +2301,9 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
         // there's nothing.
         // (this prevents returning the whole subtree if root has an empty
         // string and we want to lookup things with "\0")
-        if (entry == root && lengthInBits(entry.getKey()) < endIndexInBits) {
-            return null;
-        }
         // Found key's length-th bit differs from our key
         // which means it cannot be the prefix...
-        if (isBitSet(prefix, endIndexInBits - 1, endIndexInBits) != isBitSet(entry.key, lengthInBits - 1, lengthInBits(entry.key))) {
+        if (entry == root && lengthInBits(entry.getKey()) < endIndexInBits || isBitSet(prefix, endIndexInBits - 1, endIndexInBits) != isBitSet(entry.key, lengthInBits - 1, lengthInBits(entry.key))) {
             return null;
         }
         // ... or there are less than 'length' equal bits
