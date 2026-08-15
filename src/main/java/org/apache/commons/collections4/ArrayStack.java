@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4;
 
 import java.util.ArrayDeque;
@@ -22,28 +23,22 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
- * An implementation of the {@link Stack} API that is based on an
- * {@code ArrayList} instead of a {@code Vector}, so it is not
- * synchronized to protect against multithreaded access.  The implementation
- * therefore operates faster in environments where you do not need to worry
- * about multiple thread contention.
+ * An implementation of the {@link Stack} API that is based on an {@code ArrayList} instead of a {@code Vector}, so it is not synchronized to protect against
+ * multithreaded access. The implementation therefore operates faster in environments where you do not need to worry about multiple thread contention.
  * <p>
- * The removal order of an {@code ArrayStack} is based on insertion
- * order: The most recently added element is removed first.  The iteration
- * order is <em>not</em> the same as the removal order.  The iterator returns
- * elements from the bottom up.
+ * The removal order of an {@code ArrayStack} is based on insertion order: The most recently added element is removed first. The iteration order is <em>not</em>
+ * the same as the removal order. The iterator returns elements from the bottom up.
  * </p>
  * <p>
  * Unlike {@code Stack}, {@code ArrayStack} accepts null entries.
  * <p>
- * <strong>Note:</strong> From version 4.0 onwards, this class does not implement the
- * removed {@code Buffer} interface anymore.
+ * <strong>Note:</strong> From version 4.0 onwards, this class does not implement the removed {@code Buffer} interface anymore.
  * </p>
  *
  * @param <E> The type of elements in this list
  * @see java.util.Stack
  * @since 1.0
- * @deprecated Use {@link ArrayDeque} instead (available from Java 1.6)
+ * @deprecated Use {@link ArrayDeque} instead (available from Java 1.6).
  */
 @Deprecated
 public class ArrayStack<E> extends ArrayList<E> {
@@ -52,8 +47,7 @@ public class ArrayStack<E> extends ArrayList<E> {
     private static final long serialVersionUID = 2130079159931574599L;
 
     /**
-     * Constructs a new empty {@code ArrayStack}. The initial size
-     * is controlled by {@code ArrayList} and is currently 10.
+     * Constructs a new empty {@code ArrayStack}. The initial size is controlled by {@code ArrayList} and is currently 10.
      */
     public ArrayStack() {
     }
@@ -61,9 +55,8 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Constructs a new empty {@code ArrayStack} with an initial size.
      *
-     * @param initialSize  The initial size to use
-     * @throws IllegalArgumentException  if the specified initial size
-     *  is negative
+     * @param initialSize The initial size to use.
+     * @throws IllegalArgumentException if the specified initial size is negative.
      */
     public ArrayStack(final int initialSize) {
         super(initialSize);
@@ -72,11 +65,10 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Return {@code true} if this stack is currently empty.
      * <p>
-     * This method exists for compatibility with {@link Stack}.
-     * New users of this class should use {@code isEmpty} instead.
+     * This method exists for compatibility with {@link Stack}. New users of this class should use {@code isEmpty} instead.
      * </p>
      *
-     * @return true if the stack is currently empty
+     * @return true if the stack is currently empty.
      */
     public boolean empty() {
         return isEmpty();
@@ -85,8 +77,8 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Returns the top item off of this stack without removing it.
      *
-     * @return The top item on the stack
-     * @throws EmptyStackException  if the stack is empty
+     * @return The top item on the stack.
+     * @throws EmptyStackException if the stack is empty.
      */
     public E peek() throws EmptyStackException {
         final int n = size();
@@ -97,13 +89,11 @@ public class ArrayStack<E> extends ArrayList<E> {
     }
 
     /**
-     * Returns the n'th item down (zero-relative) from the top of this
-     * stack without removing it.
+     * Returns the n'th item down (zero-relative) from the top of this stack without removing it.
      *
-     * @param n  The number of items down to go
-     * @return The n'th item on the stack, zero relative
-     * @throws EmptyStackException  if there are not enough items on the
-     *  stack to satisfy this request
+     * @param n The number of items down to go.
+     * @return The n'th item on the stack, zero relative.
+     * @throws EmptyStackException if there are not enough items on the stack to satisfy this request.
      */
     public E peek(final int n) throws EmptyStackException {
         final int m = size() - n - 1;
@@ -116,8 +106,8 @@ public class ArrayStack<E> extends ArrayList<E> {
     /**
      * Pops the top item off of this stack and return it.
      *
-     * @return The top item on the stack
-     * @throws EmptyStackException  if the stack is empty
+     * @return The top item on the stack.
+     * @throws EmptyStackException if the stack is empty.
      */
     public E pop() throws EmptyStackException {
         final int n = size();
@@ -128,11 +118,10 @@ public class ArrayStack<E> extends ArrayList<E> {
     }
 
     /**
-     * Pushes a new item onto the top of this stack. The pushed item is also
-     * returned. This is equivalent to calling {@code add}.
+     * Pushes a new item onto the top of this stack. The pushed item is also returned. This is equivalent to calling {@code add}.
      *
-     * @param item  The item to be added
-     * @return The item just pushed
+     * @param item The item to be added.
+     * @return The item just pushed.
      */
     public E push(final E item) {
         add(item);
@@ -140,23 +129,19 @@ public class ArrayStack<E> extends ArrayList<E> {
     }
 
     /**
-     * Returns the one-based position of the distance from the top that the
-     * specified object exists on this stack, where the top-most element is
-     * considered to be at distance {@code 1}.  If the object is not
-     * present on the stack, return {@code -1} instead.  The
-     * {@code equals()} method is used to compare to the items
-     * in this stack.
+     * Returns the one-based position of the distance from the top that the specified object exists on this stack, where the top-most element is considered to
+     * be at distance {@code 1}. If the object is not present on the stack, return {@code -1} instead. The {@code equals()} method is used to compare to the
+     * items in this stack.
      *
-     * @param object  The object to be searched for
-     * @return The 1-based depth into the stack of the object, or -1 if not found
+     * @param object The object to be searched for.
+     * @return The 1-based depth into the stack of the object, or -1 if not found.
      */
     public int search(final Object object) {
-        int i = size() - 1;        // Current index
-        int n = 1;                 // Current distance
+        int i = size() - 1; // Current index
+        int n = 1; // Current distance
         while (i >= 0) {
             final Object current = get(i);
-            if (object == null && current == null ||
-                object != null && object.equals(current)) {
+            if (object == null && current == null || object != null && object.equals(current)) {
                 return n;
             }
             i--;
@@ -164,5 +149,4 @@ public class ArrayStack<E> extends ArrayList<E> {
         }
         return -1;
     }
-
 }
