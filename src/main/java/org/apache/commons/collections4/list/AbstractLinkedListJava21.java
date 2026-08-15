@@ -592,6 +592,9 @@ public abstract class AbstractLinkedListJava21<E> implements List<E> {
     @Override
     public boolean addAll(final int index, final Collection<? extends E> coll) {
         final Node<E> node = getNode(index, true);
+        if (coll.isEmpty()) {
+            return false;
+        }
         for (final E e : coll) {
             addNodeBefore(node, e);
         }
