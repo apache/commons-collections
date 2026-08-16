@@ -100,7 +100,7 @@ public interface Get<K, V> {
     int size();
 
     /**
-     * Gets a a collection view of the values contained in this map.
+     * Gets a Collection view of the values contained in this map.
      *
      * @return A collection view of the values contained in this map.
      * @see Map#values()

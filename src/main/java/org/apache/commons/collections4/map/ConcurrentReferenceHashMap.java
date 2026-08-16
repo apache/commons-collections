@@ -226,7 +226,7 @@ public class ConcurrentReferenceHashMap<K, V> extends AbstractMap<K, V> implemen
         }
 
         /**
-         * Sets the load factor factor, used to control resizing. Resizing may be performed when the average number of elements per bin exceeds this threshold.
+         * Sets the load factor, used to control resizing. Resizing may be performed when the average number of elements per bin exceeds this threshold.
          *
          * @param loadFactor The load factor factor, used to control resizing
          * @return {@code this} instance.
