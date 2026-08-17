@@ -29,6 +29,7 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Update the index on remove via IndexedCollection.iterator() (#724).</action>
     <action type="fix" dev="ggregory" due-to="thomaslantern, Gary Gregory">[Javadoc] Fix grammar in ArrayStack class Javadoc (#725).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">General Javadoc improvements.</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractLinkedList addAll returning true for an empty collection (#726).</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>
