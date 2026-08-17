@@ -467,6 +467,21 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
+     * Tests that {@link List#addAll(Collection)} and {@link List#addAll(int, Collection)}
+     * return false and leave the list unchanged when the collection to add is empty.
+     */
+    @Test
+    void testListAddAllEmptyReturnsFalse() {
+        if (!isAddSupported()) {
+            return;
+        }
+        final List<E> list = makeObject();
+        assertFalse(list.addAll(Collections.<E>emptyList()), "addAll of an empty collection must return false");
+        assertFalse(list.addAll(0, Collections.<E>emptyList()), "addAll(index) of an empty collection must return false");
+        assertTrue(list.isEmpty());
+    }
+
+    /**
      * Tests {@link List#add(int,Object)}.
      */
     @Test
