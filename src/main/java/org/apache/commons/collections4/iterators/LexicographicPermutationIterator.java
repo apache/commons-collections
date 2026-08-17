@@ -76,8 +76,8 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
     private final Comparator<? super E> comparator;
 
     /**
-     * Next permutation to return. When a permutation is requested
-     * this instance is provided and the next one is computed.
+     * Next permutation to return. When a permutation is requested a copy of this
+     * instance is provided and the next one is computed.
      */
     private List<E> nextPermutation;
 
@@ -115,7 +115,7 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
     }
 
     /**
-     * Indicates if there are more permutation available.
+     * Indicates if there are more permutations available.
      *
      * @return true if there are more permutations, otherwise false
      */
@@ -126,6 +126,11 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Returns the next permutation of the input collection.
+     * <p>
+     * The returned list is a mutable copy taken before the iterator advances, never the
+     * iterator's own state, and it belongs to the caller. It may therefore be modified in
+     * any way and at any time without affecting the remaining permutations.
+     * </p>
      *
      * @return A list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
@@ -138,34 +143,8 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
             throw new NoSuchElementException();
         }
 
-        final int size = nextPermutation.size();
-        List<E> nextP = null;
-
-        // find the pivot: the rightmost element that is smaller than its successor.
-        // if there is none the current permutation is the last one in lexicographical order
-        int i = size - 2;
-        while (i >= 0 && compareElements(nextPermutation.get(i), nextPermutation.get(i + 1)) >= 0) {
-            --i;
-        }
-
-        if (i >= 0) {
-            // find the rightmost element greater than the pivot; the tail is descending,
-            // so this is the pivot's successor in the remaining elements
-            int j = size - 1;
-            while (j >= i && compareElements(nextPermutation.get(i), nextPermutation.get(j)) >= 0) {
-                --j;
-            }
-
-            // swap the pivot with its successor, then reverse the descending tail
-            // into ascending order to obtain the smallest larger permutation
-            nextP = new ArrayList<>(nextPermutation);
-            Collections.swap(nextP, i, j);
-            final List<E> subList = nextP.subList(i + 1, nextP.size());
-            Collections.reverse(subList);
-        }
-
-        final List<E> result = nextPermutation;
-        nextPermutation = nextP;
+        final List<E> result = new ArrayList<>(nextPermutation);
+        nextPermutation = smallestGreaterThan(nextPermutation);
         return result;
     }
 
@@ -227,6 +206,46 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
         return comparator == null
                 ? ((Comparable<? super E>) e1).compareTo(e2)
                 : comparator.compare(e1, e2);
+    }
+
+    /**
+     * Returns the smallest arrangement of the given elements greater than the given one,
+     * as a new list. The permutation passed in is only read, never rearranged.
+     *
+     * @param permutation  The arrangement to advance from
+     * @return A new list holding the next arrangement in lexicographical order, or null
+     *         if the given one is already the largest
+     * @throws ClassCastException if no comparator was supplied and the elements are
+     *         not mutually {@link Comparable}
+     */
+    private List<E> smallestGreaterThan(final List<E> permutation) {
+        final int size = permutation.size();
+
+        // find the pivot: the rightmost element that is smaller than its successor.
+        // if there is none the given permutation is the last one in lexicographical order
+        int i = size - 2;
+        while (i >= 0 && compareElements(permutation.get(i), permutation.get(i + 1)) >= 0) {
+            --i;
+        }
+
+        if (i < 0) {
+            return null;
+        }
+
+        // find the rightmost element greater than the pivot; the tail is descending,
+        // so this is the pivot's successor in the remaining elements
+        int j = size - 1;
+        while (j >= i && compareElements(permutation.get(i), permutation.get(j)) >= 0) {
+            --j;
+        }
+
+        // swap the pivot with its successor, then reverse the descending tail
+        // into ascending order to obtain the smallest larger permutation
+        final List<E> nextP = new ArrayList<>(permutation);
+        Collections.swap(nextP, i, j);
+        final List<E> subList = nextP.subList(i + 1, nextP.size());
+        Collections.reverse(subList);
+        return nextP;
     }
 
 }
