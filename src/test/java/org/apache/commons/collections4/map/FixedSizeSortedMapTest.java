@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collections;
@@ -66,6 +67,23 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     @Override
     public SortedMap<K, V> makeObject() {
         return FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<>());
+    }
+
+    @Test
+    void testNextKey() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("a", "1");
+        base.put("c", "3");
+        base.put("e", "5");
+        final FixedSizeSortedMap<String, String> fixed = FixedSizeSortedMap.fixedSizeSortedMap(base);
+        // a present key returns its successor, or null once at the end
+        assertEquals("c", fixed.nextKey("a"));
+        assertEquals("e", fixed.nextKey("c"));
+        assertNull(fixed.nextKey("e"));
+        // a key that is not in the map has no next key, whether it is in range or past the end
+        assertNull(fixed.nextKey("b"));
+        assertNull(fixed.nextKey("z"));
+        assertNull(FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<String, String>()).nextKey("a"));
     }
 
     @Test
