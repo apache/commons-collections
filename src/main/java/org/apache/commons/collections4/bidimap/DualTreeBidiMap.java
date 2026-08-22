@@ -371,6 +371,9 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return ((OrderedMap<K, ?>) normalMap).nextKey(key);
         }
         final SortedMap<K, V> sm = (SortedMap<K, V>) normalMap;
+        if (!sm.containsKey(key)) {
+            return null;
+        }
         final Iterator<K> it = sm.tailMap(key).keySet().iterator();
         it.next();
         if (it.hasNext()) {

@@ -157,6 +157,8 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             confirmedLast = confirmedObject;
         }
         assertNull(bidi.nextKey(confirmedLast));
+        // a key that is not in the map has no next key
+        assertNull(bidi.nextKey(getOtherKeys()[0]));
 
         if (!isAllowNullKey()) {
             final OrderedBidiMap<K, V> finalBidi = bidi;
