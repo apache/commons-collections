@@ -119,6 +119,22 @@ class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
 
     @Test
+    void testContainsUsesObjectEqualityNotOnlyTransformedKey() {
+        final Collection<String> coll = makeUniqueTestCollection();
+        coll.add("01");
+
+        assertFalse(coll.contains("1"));
+    }
+
+    @Test
+    void testContainsUsesObjectEqualityWithNonUniqueIndex() {
+        final Collection<String> coll = makeTestCollection();
+        coll.add("01");
+
+        assertFalse(coll.contains("1"));
+    }
+
+    @Test
     void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
         final Collection<String> original = makeFullCollection();
         final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
