@@ -124,7 +124,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         verify();
 
         final Collection<E> set2 = makeConfirmedCollection();
-        set2.add((E) "foo");
+        set2.add(getFullElements()[0]);
         assertFalse(getCollection().equals(set2), "Empty set shouldn't equal nonempty set");
 
         resetFull();
