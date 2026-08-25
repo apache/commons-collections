@@ -159,38 +159,6 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
     }
 
     /**
-     * Compares this iterator to another for equality. Two iterators are equal when
-     * they use equal comparators and are positioned at an equal next permutation.
-     *
-     * @param o  The object to compare to this instance
-     * @return true if the given object is an equal iterator, otherwise false
-     */
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final LexicographicPermutationIterator<?> that = (LexicographicPermutationIterator<?>) o;
-        return Objects.equals(comparator, that.comparator) && Objects.equals(nextPermutation, that.nextPermutation);
-    }
-
-    /**
-     * Returns a hash code consistent with {@link #equals(Object)}. Note that the
-     * hash code changes as the iterator advances.
-     *
-     * @return A hash code for this instance
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(comparator, nextPermutation);
-    }
-
-    /**
      * Compares two elements using the comparator, or their natural ordering if no
      * comparator was supplied.
      *

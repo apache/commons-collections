@@ -16,10 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,45 +39,6 @@ import org.junit.jupiter.api.Test;
  * Test class for LexicographicPermutationIterator.
  */
 class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
-
-    /**
-     * A comparator that orders nothing, identified only by an id, used to check that
-     * equal comparators make equal iterators.
-     *
-     * @param <T> the type of the objects compared
-     */
-    private static final class CustomComparator<T> implements Comparator<T> {
-
-        private final int id;
-
-        CustomComparator(final int id) {
-            this.id = id;
-        }
-
-        @Override
-        public int compare(final T o1, final T o2) {
-            return 0;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) {
-                return true;
-            }
-
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-
-            final CustomComparator<?> cmp = (CustomComparator<?>) o;
-            return id == cmp.id;
-        }
-
-        @Override
-        public int hashCode() {
-            return id;
-        }
-    }
 
     /**
      * A value holder that deliberately does not implement {@link Comparable}, used to
@@ -123,17 +82,6 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
     protected Character[] testArray = { 'A', 'B', 'C' };
 
     protected List<Character> testList;
-
-    /**
-     * Advances the given iterator until it holds no further permutation.
-     *
-     * @param iterator  the iterator to exhaust
-     */
-    private static void exhaust(final Iterator<?> iterator) {
-        while (iterator.hasNext()) {
-            iterator.next();
-        }
-    }
 
     @Override
     public LexicographicPermutationIterator<Character> makeEmptyIterator() {
@@ -259,71 +207,6 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
         assertFalse(permutationIterator.hasNext());
     }
 
-    @Test
-    void testEqualsForDifferentComparators() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(7));
-        final Iterator<List<Short>> natural = new LexicographicPermutationIterator<>(emptyList());
-
-        assertNotEquals(one, another);
-        assertNotEquals(one, natural);
-    }
-
-    @Test
-    void testEqualsForDifferentPositions() {
-        final Iterator<List<Character>> one = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'));
-        final Iterator<List<Character>> another = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'));
-
-        assertEquals(one, another);
-
-        // advancing one of them leaves them at different permutations
-        one.next();
-        assertNotEquals(one, another);
-
-        // advancing the other brings them back to the same permutation
-        another.next();
-        assertEquals(one, another);
-
-        // an exhausted iterator differs from one still holding a permutation
-        one.next();
-        assertFalse(one.hasNext());
-        assertNotEquals(one, another);
-    }
-
-    @Test
-    void testEqualsForEqualCollections() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList());
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList());
-
-        assertEquals(one, another);
-    }
-
-    @Test
-    void testEqualsForEqualCollectionsAndComparators() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-
-        assertEquals(one, another);
-    }
-
-    /**
-     * test checking that the comparator keeps being compared once both iterators are
-     * exhausted, so that two iterators which will both emit nothing are still unequal.
-     * The position is spent, but it is not the only part of the equality contract.
-     */
-    @Test
-    void testEqualsForExhaustedIteratorsWithDifferentComparators() {
-        final Iterator<List<Character>> one = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'), new CustomComparator<>(42));
-        final Iterator<List<Character>> another = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'), new CustomComparator<>(7));
-
-        exhaust(one);
-        exhaust(another);
-
-        assertFalse(one.hasNext());
-        assertFalse(another.hasNext());
-        assertNotEquals(one, another);
-    }
-
     /**
      * test checking that forEachRemaining resumes at the current position rather than at
      * the first permutation, the already returned ones being no longer remaining, and
@@ -368,69 +251,6 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
                 Arrays.asList('C', 'B', 'A')), permutations);
 
         assertFalse(permutationIterator.hasNext());
-    }
-
-    /**
-     * test checking the documented behavior that the hash code changes as the iterator
-     * advances, and stays consistent with equals: iterators at the same position hash
-     * alike again.
-     */
-    @Test
-    void testHashCodeChangesAsIteratorAdvances() {
-        final Iterator<List<Character>> one = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'));
-        final Iterator<List<Character>> another = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'));
-
-        assertEquals(one.hashCode(), another.hashCode());
-
-        one.next();
-        assertNotEquals(one.hashCode(), another.hashCode());
-
-        another.next();
-        assertEquals(one.hashCode(), another.hashCode());
-    }
-
-    @Test
-    void testHashCodeForDifferentComparators() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(7));
-
-        assertNotEquals(one.hashCode(), another.hashCode());
-    }
-
-    @Test
-    void testHashCodeForEqualCollections() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList());
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList());
-
-        assertEquals(one.hashCode(), another.hashCode());
-    }
-
-    @Test
-    void testHashCodeForEqualCollectionsAndComparators() {
-        final Iterator<List<Short>> one = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-        final Iterator<List<Short>> another = new LexicographicPermutationIterator<>(emptyList(), new CustomComparator<>(42));
-
-        assertEquals(one.hashCode(), another.hashCode());
-    }
-
-    /**
-     * test checking that exhausted iterators hash alike whatever they were built from.
-     * Equality is defined on the comparator and the next permutation, as documented on
-     * {@link LexicographicPermutationIterator#equals(Object)}, and the input collection
-     * is not part of it; two exhausted iterators are therefore equal even when they were
-     * built from different collections, which makes the equal hash codes required rather
-     * than incidental.
-     */
-    @Test
-    void testEqualsAndHashCodeForExhaustedIterators() {
-        final Iterator<List<Character>> one = new LexicographicPermutationIterator<>(Arrays.asList('A', 'B'));
-        final Iterator<List<Character>> another = new LexicographicPermutationIterator<>(Arrays.asList('X', 'Y', 'Z'));
-
-        exhaust(one);
-        exhaust(another);
-
-        assertEquals(one, another);
-        assertEquals(one.hashCode(), another.hashCode());
     }
 
     /**
