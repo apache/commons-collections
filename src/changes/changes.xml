@@ -30,6 +30,7 @@
     <action type="fix" dev="ggregory" due-to="thomaslantern, Gary Gregory">[Javadoc] Fix grammar in ArrayStack class Javadoc (#725).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">General Javadoc improvements.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractLinkedList addAll returning true for an empty collection (#726).</action>
+    <action type="fix" dev="ggregory" due-to="Thomas Mortagne, Gary Gregory" issue="COLLECTIONS-898">AbstractSetTest cannot be used with an explicitly typed Set (unless it's based on String) (#727).</action>
     <!-- ADD -->
     <!-- UPDATE -->
   </release>
