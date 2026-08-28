@@ -120,6 +120,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
             throw new IllegalStateException("next() must have been called for remove() to function");
         }
         collection.remove(last);
+        last = null;
     }
 
     /**
