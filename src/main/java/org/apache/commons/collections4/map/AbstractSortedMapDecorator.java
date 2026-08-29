@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -153,6 +154,10 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     public K nextKey(final K key) {
         if (!containsKey(key)) {
             return null;
+        }
+        final SortedMap<K, V> map = decorated();
+        if (map instanceof NavigableMap) {
+            return ((NavigableMap<K, V>) map).higherKey(key);
         }
         final Iterator<K> it = tailMap(key).keySet().iterator();
         it.next();

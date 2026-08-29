@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -364,15 +365,15 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     @Override
     public K nextKey(final K key) {
-        if (isEmpty()) {
+        if (isEmpty() || !normalMap.containsKey(key)) {
             return null;
         }
         if (normalMap instanceof OrderedMap) {
             return ((OrderedMap<K, ?>) normalMap).nextKey(key);
         }
         final SortedMap<K, V> sm = (SortedMap<K, V>) normalMap;
-        if (!sm.containsKey(key)) {
-            return null;
+        if (sm instanceof NavigableMap) {
+            return ((NavigableMap<K, V>) sm).higherKey(key);
         }
         final Iterator<K> it = sm.tailMap(key).keySet().iterator();
         it.next();
