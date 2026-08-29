@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.Test;
+
 /**
  * JUnit tests.
  */
@@ -27,6 +32,20 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
     @Override
     public DualTreeBidiMap<K, V> makeObject() {
         return new DualTreeBidiMap<>();
+    }
+
+    @Test
+    void testNextKeyAbsentKey() {
+        final DualTreeBidiMap<String, Integer> map = new DualTreeBidiMap<>();
+        map.put("a", 1);
+        map.put("c", 3);
+        map.put("e", 5);
+        // an absent key inside the key range must not return the successor
+        assertNull(map.nextKey("b"));
+        // an absent key past the last key must not throw
+        assertNull(map.nextKey("z"));
+        assertEquals("c", map.nextKey("a"));
+        assertNull(map.nextKey("e"));
     }
 
 //    void testCreate() throws Exception {

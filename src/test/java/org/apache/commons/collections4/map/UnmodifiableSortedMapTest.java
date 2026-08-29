@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.Unmodifiable;
 import org.junit.jupiter.api.Test;
 
@@ -65,6 +68,19 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     @Override
     public SortedMap<K, V> makeObject() {
         return UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<>());
+    }
+
+    @Test
+    void testNextKey() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("a", "1");
+        base.put("c", "3");
+        final OrderedMap<String, String> map = (OrderedMap<String, String>) UnmodifiableSortedMap.unmodifiableSortedMap(base);
+        assertEquals("c", map.nextKey("a"));
+        // an absent key has no next key, whether inside the key range or past the end
+        assertNull(map.nextKey("b"));
+        assertNull(map.nextKey("c"));
+        assertNull(map.nextKey("z"));
     }
 
     @Test
