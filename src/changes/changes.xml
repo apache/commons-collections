@@ -31,7 +31,7 @@
     <action type="fix" dev="ggregory" due-to="Gary Gregory">General Javadoc improvements.</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractLinkedList addAll returning true for an empty collection (#726).</action>
     <action type="fix" dev="ggregory" due-to="Thomas Mortagne, Gary Gregory" issue="COLLECTIONS-898">AbstractSetTest cannot be used with an explicitly typed Set (unless it's based on String) (#727).</action>
-    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix nextKey skipping a key and throwing for keys not in the map (#728).</action>
+    <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix map and bidimap nextKey() skipping a key and throwing for keys not in the map (#728).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reset last element in EnumerationIterator.remove() (#729).</action>
     <!-- ADD -->
     <!-- UPDATE -->
