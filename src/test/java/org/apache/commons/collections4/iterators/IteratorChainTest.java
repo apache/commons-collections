@@ -126,6 +126,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         assertTrue(list3.isEmpty(), "List is empty");
     }
 
+    //COLLECTIONS-900
     @Test
     public void testChainingAfterHasNextCall() {
         IteratorChain<String> chain = new IteratorChain<>();
@@ -134,6 +135,14 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         chain = new IteratorChain<>(chain);
         chain.addIterator(list2.iterator());
         // test that the first element is still returned correctly after a hasNext() call
+        assertEquals(list1.get(0), chain.next());
+
+        //same test with unmodifiable IteratorChain
+        chain = new IteratorChain<>();
+        chain.addIterator(list1.iterator());
+        chain.hasNext();
+        chain = new IteratorChain<>(UnmodifiableIterator.unmodifiableIterator(chain));
+        chain.addIterator(list2.iterator());
         assertEquals(list1.get(0), chain.next());
     }
 
