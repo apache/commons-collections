@@ -127,6 +127,16 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
+    public void testChainingAfterHasNextCall() {
+        IteratorChain<String> chain = new IteratorChain<>();
+        chain.addIterator(list1.iterator());
+        chain.hasNext();
+        chain = new IteratorChain<>(chain);
+        chain.addIterator(list2.iterator());
+        assertEquals(list1.get(0), chain.next());
+    }
+
+    @Test
     public void testChainingPerformsWell() {
         Iterator<String> iter = makeObject();
         for (int i = 0; i < 150; i++) {
