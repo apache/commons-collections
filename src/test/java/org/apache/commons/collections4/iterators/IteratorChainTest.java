@@ -133,6 +133,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
         chain.hasNext();
         chain = new IteratorChain<>(chain);
         chain.addIterator(list2.iterator());
+        // test that the first element is still returned correctly after a hasNext() call
         assertEquals(list1.get(0), chain.next());
     }
 
