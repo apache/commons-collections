@@ -375,12 +375,6 @@
       <properties>
         <commons.jacoco.version>0.8.13</commons.jacoco.version>
       </properties>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>sonatype-snapshots</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </pluginRepository>
-      </pluginRepositories>
     </profile>
     <!-- Profile to build and run the benchmarks. Use 'mvn test -Pbenchmark', and add '-Dbenchmark=foo' to run only the foo benchmark -->
     <profile>

@@ -35,6 +35,8 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reset last element in EnumerationIterator.remove() (#729).</action>
     <!-- ADD -->
     <!-- UPDATE -->
+    <!-- REMOVE -->
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove reference to sonatype-snapshots in POM (2026-08-15 f009).</action>
   </release>
   <release version="4.6.0" date="2026-08-06" description="This is a feature and maintenance release. Java 8 or later is required.">
     <!-- FIX -->
