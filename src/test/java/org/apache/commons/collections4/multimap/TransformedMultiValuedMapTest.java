@@ -133,15 +133,6 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
-    void testPutAllIterableWithNullTransformers() {
-        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new ArrayListValuedHashMap<>(), null, null);
-        assertTrue(map.putAll((K) "k", Arrays.asList((V) "a", (V) "b")));
-        assertEquals(Arrays.asList("a", "b"), map.get((K) "k"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
     void testPutAllIterableAppliesTransformValueOverride() {
         final TransformedMultiValuedMap<K, V> map = new TransformedMultiValuedMap<K, V>(
                 new ArrayListValuedHashMap<>(), null, null) {
@@ -154,6 +145,15 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         };
         assertTrue(map.putAll((K) "k", Arrays.asList((V) Integer.valueOf(1), (V) Integer.valueOf(2))));
         assertEquals(Arrays.asList("1", "2"), map.get((K) "k"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testPutAllIterableWithNullTransformers() {
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+                new ArrayListValuedHashMap<>(), null, null);
+        assertTrue(map.putAll((K) "k", Arrays.asList((V) "a", (V) "b")));
+        assertEquals(Arrays.asList("a", "b"), map.get((K) "k"));
     }
 
     @Test

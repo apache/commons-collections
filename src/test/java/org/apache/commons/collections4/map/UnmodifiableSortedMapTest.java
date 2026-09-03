@@ -71,19 +71,6 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
-    void testNextKey() {
-        final SortedMap<String, String> base = new TreeMap<>();
-        base.put("a", "1");
-        base.put("c", "3");
-        final OrderedMap<String, String> map = (OrderedMap<String, String>) UnmodifiableSortedMap.unmodifiableSortedMap(base);
-        assertEquals("c", map.nextKey("a"));
-        // an absent key has no next key, whether inside the key range or past the end
-        assertNull(map.nextKey("b"));
-        assertNull(map.nextKey("c"));
-        assertNull(map.nextKey("z"));
-    }
-
-    @Test
     void testDecorateFactory() {
         final SortedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableSortedMap.unmodifiableSortedMap(map));
@@ -102,6 +89,19 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         assertSame(17, map.headMap((K) "you").size());
         // "we'll" is the before key of "you"
         assertSame(16, map.headMap((K) "we'll").size());
+    }
+
+    @Test
+    void testNextKey() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("a", "1");
+        base.put("c", "3");
+        final OrderedMap<String, String> map = (OrderedMap<String, String>) UnmodifiableSortedMap.unmodifiableSortedMap(base);
+        assertEquals("c", map.nextKey("a"));
+        // an absent key has no next key, whether inside the key range or past the end
+        assertNull(map.nextKey("b"));
+        assertNull(map.nextKey("c"));
+        assertNull(map.nextKey("z"));
     }
 
     @Test
