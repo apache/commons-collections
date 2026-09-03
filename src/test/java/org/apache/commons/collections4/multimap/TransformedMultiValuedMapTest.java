@@ -142,6 +142,22 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @Test
     @SuppressWarnings("unchecked")
+    void testPutAllIterableAppliesTransformValueOverride() {
+        final TransformedMultiValuedMap<K, V> map = new TransformedMultiValuedMap<K, V>(
+                new ArrayListValuedHashMap<>(), null, null) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected V transformValue(final V object) {
+                return (V) String.valueOf(object);
+            }
+        };
+        assertTrue(map.putAll((K) "k", Arrays.asList((V) Integer.valueOf(1), (V) Integer.valueOf(2))));
+        assertEquals(Arrays.asList("1", "2"), map.get((K) "k"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     void testValueTransformedMap() {
         final Object[] els = { "1", "3", "5", "7", "2", "4", "6" };
 

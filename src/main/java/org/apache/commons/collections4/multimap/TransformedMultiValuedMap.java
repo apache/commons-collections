@@ -133,8 +133,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
     public boolean putAll(final K key, final Iterable<? extends V> values) {
         Objects.requireNonNull(values, "values");
 
-        final Iterable<? extends V> transformedValues =
-                valueTransformer == null ? values : FluentIterable.of(values).transform(valueTransformer);
+        final Iterable<V> transformedValues = FluentIterable.of(values).transform(this::transformValue);
         final Iterator<? extends V> it = transformedValues.iterator();
         return it.hasNext() && CollectionUtils.addAll(decorated().get(transformKey(key)), it);
     }
