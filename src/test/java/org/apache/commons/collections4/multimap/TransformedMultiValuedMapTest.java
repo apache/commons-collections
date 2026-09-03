@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.MultiValuedMap;
@@ -128,6 +129,31 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertNotNull(coll);
         assertEquals(0, coll.size());
         assertTrue(map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testPutAllIterableWithNullTransformers() {
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+                new ArrayListValuedHashMap<>(), null, null);
+        assertTrue(map.putAll((K) "k", Arrays.asList((V) "a", (V) "b")));
+        assertEquals(Arrays.asList("a", "b"), map.get((K) "k"));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void testPutAllIterableAppliesTransformValueOverride() {
+        final TransformedMultiValuedMap<K, V> map = new TransformedMultiValuedMap<K, V>(
+                new ArrayListValuedHashMap<>(), null, null) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected V transformValue(final V object) {
+                return (V) String.valueOf(object);
+            }
+        };
+        assertTrue(map.putAll((K) "k", Arrays.asList((V) Integer.valueOf(1), (V) Integer.valueOf(2))));
+        assertEquals(Arrays.asList("1", "2"), map.get((K) "k"));
     }
 
     @Test
