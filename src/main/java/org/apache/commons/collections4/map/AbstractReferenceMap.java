@@ -335,12 +335,14 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         /**
          * Sets the value of the entry.
          *
-         * @param value  The object to store
-         * @return The previous value
+         * @param value  The object to store, must not be null.
+         * @return The previous value.
+         * @throws NullPointerException if the value is null.
          */
         @Override
         @SuppressWarnings("unchecked")
         public V setValue(final V value) {
+            Objects.requireNonNull(value, "value");
             final V old = getValue();
             if (parent.valueType != ReferenceStrength.HARD) {
                 ((Reference<V>) this.value).clear();

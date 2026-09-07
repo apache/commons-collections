@@ -34,8 +34,10 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix map and bidimap nextKey() skipping a key and throwing for keys not in the map (#728).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reset last element in EnumerationIterator.remove() (#729).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix TransformedMultiValuedMap.putAll(K, Iterable) NPE for null value transformer (#731).</action>
+    <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix AbstractReferenceMap.ReferenceEntry.setValue(V) to throw NullPointerException on null input (contract).</action>
     <!-- ADD -->
     <!-- UPDATE -->
+    <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 104 to 105.</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump com.google.guava:guava-testlib from 33.6.0-jre to 33.7.1-jre (#733).</action>
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.easymock:easymock from 5.6.0 to 5.7.0 (#732).</action>
     <!-- REMOVE -->

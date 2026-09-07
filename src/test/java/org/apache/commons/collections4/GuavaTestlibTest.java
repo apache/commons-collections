@@ -55,9 +55,9 @@ public final class GuavaTestlibTest extends TestCase {
     public static Test suite() {
         final TestSuite test = new TestSuite();
         // Map
-        test.addTest(suiteMap("HashedMap", HashedMap::new));
-        test.addTest(suiteMap("LinkedMap", LinkedMap::new));
-        test.addTest(suiteMap("LRUMap", LRUMap::new));
+        test.addTest(suiteMap("HashedMap", HashedMap::new, MapFeature.ALLOWS_NULL_KEYS, MapFeature.ALLOWS_NULL_VALUES));
+        test.addTest(suiteMap("LinkedMap", LinkedMap::new, MapFeature.ALLOWS_NULL_KEYS, MapFeature.ALLOWS_NULL_VALUES));
+        test.addTest(suiteMap("LRUMap", LRUMap::new, MapFeature.ALLOWS_NULL_KEYS, MapFeature.ALLOWS_NULL_VALUES));
         test.addTest(suiteMap("ReferenceMap", ReferenceMap::new));
         // List
         test.addTest(suiteList("TreeList", TreeList::new));
@@ -71,10 +71,10 @@ public final class GuavaTestlibTest extends TestCase {
 
     /**
      * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Lists.
-     * @param name name of the test
-     * @param factory factory to create new Lists
-     * @param features test features used in the tests
-     * @return A JUnit 3, 4 Test Suite
+     * @param name name of the test.
+     * @param factory factory to create new Lists.
+     * @param features test features used in the tests.
+     * @return A JUnit 3, 4 Test Suite.
      */
     private static Test suiteList(final String name, final Supplier<List<String>> factory, final Feature<?>... features) {
         final ListTestSuiteBuilder<String> suite = ListTestSuiteBuilder.using(new TestStringListGenerator() {
@@ -99,11 +99,12 @@ public final class GuavaTestlibTest extends TestCase {
 
     /**
      * Programmatically create a JUnit (3, 4) Test Suite for Guava testlib tests with Maps.
-     * @param name name of the test
-     * @param factory factory to create new Maps
-     * @return A JUnit 3, 4 Test Suite
+     * @param name name of the test.
+     * @param factory factory to create new Maps.
+     * @param features test features used in the tests.
+     * @return A JUnit 3, 4 Test Suite.
      */
-    private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory) {
+    private static Test suiteMap(final String name, final Supplier<Map<String, String>> factory, final Feature<?>... features) {
         return MapTestSuiteBuilder.using(new TestStringMapGenerator() {
             @Override
             protected Map<String, String> create(final Map.Entry<String, String>[] entries) {
@@ -118,6 +119,7 @@ public final class GuavaTestlibTest extends TestCase {
                 .withFeatures(
                         CollectionSize.ANY, MapFeature.GENERAL_PURPOSE,
                         MapFeature.ALLOWS_ANY_NULL_QUERIES, CollectionFeature.SUPPORTS_ITERATOR_REMOVE)
+                .withFeatures(features)
                 .createTestSuite();
     }
 }

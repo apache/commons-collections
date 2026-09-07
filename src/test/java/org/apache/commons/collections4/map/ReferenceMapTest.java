@@ -34,11 +34,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.AbstractHashedMap.HashEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceEntry;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /**
@@ -308,6 +310,18 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertThrows(InvalidObjectException.class, () -> serializeDeserialize(map));
     }
 
+    @ParameterizedTest
+    @EnumSource(ReferenceStrength.class)
+    void testEntrySetValueRejectsNull(final ReferenceStrength valueType) {
+        final ReferenceMap<String, String> map = new ReferenceMap<>(ReferenceStrength.HARD, valueType);
+        map.put("key", "value");
+        final Map.Entry<String, String> entry = map.entrySet().iterator().next();
+        assertThrows(NullPointerException.class, () -> entry.setValue(null));
+        assertEquals("value", entry.getValue());
+        assertEquals("value", map.get("key"));
+        assertEquals(1, map.size());
+    }
+
     /**
      * Test whether remove is not removing last entry after calling hasNext.
      * <p>
@@ -324,6 +338,19 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertFalse(iter.hasNext());
         iter.remove();
         assertTrue(map.isEmpty(), "Expect empty but have entry: " + map);
+    }
+
+    @ParameterizedTest
+    @EnumSource(ReferenceStrength.class)
+    void testMapIteratorSetValueRejectsNull(final ReferenceStrength valueType) {
+        final ReferenceMap<String, String> map = new ReferenceMap<>(ReferenceStrength.HARD, valueType);
+        map.put("key", "value");
+        final MapIterator<String, String> iterator = map.mapIterator();
+        iterator.next();
+        assertThrows(NullPointerException.class, () -> iterator.setValue(null));
+        assertEquals("value", iterator.getValue());
+        assertEquals("value", map.get("key"));
+        assertEquals(1, map.size());
     }
 
     @Test
