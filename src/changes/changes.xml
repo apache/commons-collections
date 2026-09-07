@@ -37,6 +37,7 @@
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump com.google.guava:guava-testlib from 33.6.0-jre to 33.7.1-jre (#733).</action>
+    <action type="update" dev="ggregory" due-to="Gary Gregory">[test] Bump org.easymock:easymock from 5.6.0 to 5.7.0 (#732).</action>
     <!-- REMOVE -->
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Remove reference to sonatype-snapshots in POM (2026-08-15 f009).</action>
   </release>
