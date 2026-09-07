@@ -87,6 +87,24 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Test
+    void testPreviousKey() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("a", "1");
+        base.put("c", "3");
+        base.put("e", "5");
+        final FixedSizeSortedMap<String, String> fixed = FixedSizeSortedMap.fixedSizeSortedMap(base);
+        // a present key returns its predecessor, or null once at the start
+        assertEquals("c", fixed.previousKey("e"));
+        assertEquals("a", fixed.previousKey("c"));
+        assertNull(fixed.previousKey("a"));
+        // a key that is not in the map has no previous key, whether it is in range or past either end
+        assertNull(fixed.previousKey("b"));
+        assertNull(fixed.previousKey("z"));
+        assertNull(fixed.previousKey("A"));
+        assertNull(FixedSizeSortedMap.fixedSizeSortedMap(new TreeMap<String, String>()).previousKey("a"));
+    }
+
+    @Test
     void testPutAllAllowsUpdatesRejectsNewKeys() {
         final SortedMap<String, String> base = new TreeMap<>();
         base.put("a", "1");
