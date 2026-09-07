@@ -48,6 +48,21 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
         assertNull(map.nextKey("e"));
     }
 
+    @Test
+    void testPreviousKeyAbsentKey() {
+        final DualTreeBidiMap<String, Integer> map = new DualTreeBidiMap<>();
+        map.put("a", 1);
+        map.put("c", 3);
+        map.put("e", 5);
+        // an absent key inside the key range must not return the predecessor
+        assertNull(map.previousKey("b"));
+        // an absent key past either end must not return an entry either
+        assertNull(map.previousKey("z"));
+        assertNull(map.previousKey("A"));
+        assertEquals("c", map.previousKey("e"));
+        assertNull(map.previousKey("a"));
+    }
+
 //    void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualTreeBidiMap.emptyCollection.version4.obj");

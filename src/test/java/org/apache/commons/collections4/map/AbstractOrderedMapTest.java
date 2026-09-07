@@ -229,6 +229,8 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
             confirmedLast = confirmedObject;
         }
         assertNull(ordered.previousKey(confirmedLast));
+        // a key that is not in the map has no previous key
+        assertNull(ordered.previousKey(getOtherKeys()[0]));
 
         if (!isAllowNullKey()) {
             final OrderedMap<K, V> finalOrdered = ordered;
