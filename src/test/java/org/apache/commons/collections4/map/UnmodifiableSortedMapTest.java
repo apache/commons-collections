@@ -105,6 +105,20 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     @Test
+    void testPreviousKey() {
+        final SortedMap<String, String> base = new TreeMap<>();
+        base.put("d", "4");
+        base.put("f", "6");
+        final OrderedMap<String, String> map = (OrderedMap<String, String>) UnmodifiableSortedMap.unmodifiableSortedMap(base);
+        assertEquals("d", map.previousKey("f"));
+        // an absent key has no previous key, whether inside the range, before the first key, or past the end
+        assertNull(map.previousKey("e"));
+        assertNull(map.previousKey("d"));
+        assertNull(map.previousKey("a"));
+        assertNull(map.previousKey("z"));
+    }
+
+    @Test
     void testSubMap() {
         final SortedMap<K, V> map = makeFullMap();
 
