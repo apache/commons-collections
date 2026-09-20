@@ -67,6 +67,26 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
+    /**
+     * Asserts the value collections reachable through {@code asMap()} reject changes and leave the map untouched.
+     *
+     * @param map The unmodifiable MultiValuedMap to check.
+     */
+    @SuppressWarnings("unchecked")
+    private void assertUnmodifiableAsMapValues(final MultiValuedMap<K, V> map) {
+        final Map<K, Collection<V>> mapCol = map.asMap();
+        final List<Entry<K, V>> expected = new ArrayList<>(map.entries());
+        final K key = makeKey(0);
+        final V value = (V) "four";
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.get(key).add(value));
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.get(key).clear());
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.getOrDefault(key, null).add(value));
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.values().iterator().next().add(value));
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.entrySet().iterator().next().getValue().add(value));
+        assertThrows(UnsupportedOperationException.class, () -> mapCol.forEach((k, v) -> v.clear()));
+        assertEquals(expected, new ArrayList<>(map.entries()));
+    }
+
     @Override
     protected int getIterationBehaviour() {
         return AbstractCollectionTest.UNORDERED;
@@ -178,6 +198,14 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         assertThrows(UnsupportedOperationException.class, () -> mapCol.clear());
 
         assertThrows(UnsupportedOperationException.class, () -> mapCol.clear());
+    }
+
+    @Test
+    void testUnmodifiableAsMapValues() {
+        assertUnmodifiableAsMapValues(makeFullMap());
+        final MultiValuedMap<K, V> setValuedMap = new HashSetValuedHashMap<>();
+        addSampleMappings(setValuedMap);
+        assertUnmodifiableAsMapValues(UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(setValuedMap));
     }
 
     @Test
