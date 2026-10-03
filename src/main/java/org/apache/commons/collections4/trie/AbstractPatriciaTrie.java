@@ -468,12 +468,18 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                 // If the subtree changed its bitIndex or we
                 // removed the old subtree, get a new one.
                 if (bitIdx != subtree.bitIndex || needsFixing) {
-                    subtree = subtree(prefix, offset, lengthInBits);
+                    final TrieEntry<K, V> newSubtree = subtree(prefix, offset, lengthInBits);
+                    if (newSubtree == null) {
+                        // No entry with the prefix is left, the iteration is done.
+                        next = null;
+                        return;
+                    }
+                    subtree = newSubtree;
                 }
                 // If the subtree's bitIndex is less than the
                 // length of our prefix, it's the last item
                 // in the prefix tree.
-                if (lengthInBits >= subtree.bitIndex) {
+                if (lengthInBits > subtree.bitIndex) {
                     lastOne = true;
                 }
             }
