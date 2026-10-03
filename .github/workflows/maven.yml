@@ -32,11 +32,9 @@ jobs:
     strategy:
       max-parallel: 20
       matrix:
-        java: [ 8, 11, 17, 21, 25, 26 ]
+        java: [ 8, 11, 17, 21, 25, 27 ]
         experimental: [false]
         include:
-            - java: 27-ea
-              experimental: true
             - java: 28-ea
               experimental: true
         
