@@ -166,6 +166,13 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
 
     @Override
     public K previousKey(final K key) {
+        if (!containsKey(key)) {
+            return null;
+        }
+        final SortedMap<K, V> map = decorated();
+        if (map instanceof NavigableMap) {
+            return ((NavigableMap<K, V>) map).lowerKey(key);
+        }
         final SortedMap<K, V> headMap = headMap(key);
         return headMap.isEmpty() ? null : headMap.lastKey();
     }
