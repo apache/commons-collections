@@ -62,8 +62,8 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> currentIterator;
 
     /**
-     * The "last used" Iterator is the Iterator upon which next() or hasNext()
-     * was most recently called used for the remove() operation only.
+     * The "last used" Iterator is the Iterator upon which next()
+     * was most recently called, used for the remove() operation only.
      */
     private Iterator<? extends E> lastUsedIterator;
 
@@ -82,7 +82,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     @Override
     public boolean hasNext() {
         updateCurrentIterator();
-        lastUsedIterator = currentIterator;
         return currentIterator.hasNext();
     }
 
@@ -125,10 +124,11 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      */
     @Override
     public void remove() {
-        if (currentIterator == null) {
-            updateCurrentIterator();
+        if (lastUsedIterator == null) {
+            throw new IllegalStateException("remove() cannot be called before calling next()");
         }
         lastUsedIterator.remove();
+        lastUsedIterator = null;
     }
 
     /**
@@ -142,9 +142,6 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
                 currentIterator = EmptyIterator.<E>emptyIterator();
                 chainExhausted = true;
             }
-            // set last used iterator here, in case the user calls remove
-            // before calling hasNext() or next() (although they shouldn't)
-            lastUsedIterator = currentIterator;
         }
         while (!currentIterator.hasNext() && !chainExhausted) {
             final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
