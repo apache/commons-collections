@@ -18,9 +18,12 @@ package org.apache.commons.collections4.bidimap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -30,16 +33,34 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Tests {@link SortedBidiMap}.
  */
 public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
+
+    /**
+     * Every way of removing all the mappings of a sub map through its collection views.
+     */
+    static Stream<Arguments> getViewClears() {
+        return Stream.of(
+                arguments("keySet().clear", (Consumer<Map<?, ?>>) map -> map.keySet().clear()),
+                arguments("keySet().retainAll", (Consumer<Map<?, ?>>) map -> map.keySet().retainAll(Collections.emptySet())),
+                arguments("values().clear", (Consumer<Map<?, ?>>) map -> map.values().clear()),
+                arguments("values().retainAll", (Consumer<Map<?, ?>>) map -> map.values().retainAll(Collections.emptySet())),
+                arguments("entrySet().clear", (Consumer<Map<?, ?>>) map -> map.entrySet().clear()),
+                arguments("entrySet().retainAll", (Consumer<Map<?, ?>>) map -> map.entrySet().retainAll(Collections.emptySet())));
+    }
 
     protected List<K> sortedKeys;
     protected List<V> sortedValues = new ArrayList<>();
@@ -85,6 +106,14 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     public BulkTest bulkTestTailMap() {
         return new AbstractSortedMapTest.TestTailMap<>((AbstractBidiMapTest) this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SortedBidiMap<K, V> getMap() {
+        return (SortedBidiMap<K, V>) super.getMap();
     }
 
     @Override
@@ -166,6 +195,20 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertTrue(sm.inverseBidiMap().containsValue(toKey));
         assertFalse(sub.containsKey(toKey));
         assertFalse(sub.containsValue(toKeyValue));
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("getViewClears")
+    void testBidiClearByHeadMapView(final String description, final Consumer<Map<?, ?>> clear) {
+        if (!isRemoveSupported()) {
+            return;
+        }
+        resetFull();
+        final K toKey = new ArrayList<>(getMap().keySet()).get(2);
+        // the mappings out of the range of the sub map must be kept in both directions
+        clear.accept(getMap().headMap(toKey));
+        clear.accept(((SortedMap<K, V>) getConfirmed()).headMap(toKey));
+        verify();
     }
 
     @Test
@@ -298,6 +341,47 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     }
 
     @Test
+    void testBidiPutByHeadMapKeyOutOfRange() {
+        if (!isPutAddSupported()) {
+            return;
+        }
+        resetFull();
+        final List<K> keys = new ArrayList<>(getMap().keySet());
+        final K toKey = keys.get(2);
+        final V firstValue = getMap().get(keys.get(0));
+        final SortedMap<K, V> sub = getMap().headMap(toKey);
+        // the rejected put must not remove the mapping of the sub map which holds the value
+        assertThrows(IllegalArgumentException.class, () -> sub.put(toKey, firstValue));
+        verify();
+    }
+
+    @Test
+    void testBidiPutByTailMapValueOutOfRange() {
+        if (!isPutChangeSupported()) {
+            return;
+        }
+        resetFull();
+        final List<K> keys = new ArrayList<>(getMap().keySet());
+        final K first = keys.get(0);
+        final K second = keys.get(1);
+        final K fromKey = keys.get(2);
+        final K nestedFromKey = keys.get(3);
+        final V firstValue = getMap().get(first);
+        final V secondValue = getMap().get(second);
+        // as with a put in the full map, the key out of the range of the sub map loses the value
+        final SortedMap<K, V> sub = getMap().tailMap(fromKey);
+        assertEquals(getConfirmed().get(fromKey), sub.put(fromKey, firstValue));
+        getConfirmed().remove(first);
+        getConfirmed().put(fromKey, firstValue);
+        verify();
+        // and so it does through a sub map of the sub map
+        assertEquals(getConfirmed().get(nestedFromKey), sub.tailMap(nestedFromKey).put(nestedFromKey, secondValue));
+        getConfirmed().remove(second);
+        getConfirmed().put(nestedFromKey, secondValue);
+        verify();
+    }
+
+    @Test
     void testBidiRemoveByHeadMap() {
         if (!isRemoveSupported()) {
             return;
@@ -393,6 +477,21 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertFalse(sub.containsKey(secondEntry.getKey()));
         assertFalse(sub.containsValue(secondEntry.getValue()));
         assertFalse(set.contains(secondEntry));
+    }
+
+    @Test
+    void testBidiRemoveByHeadMapValuesOutOfRange() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+        resetFull();
+        final K toKey = new ArrayList<>(getMap().keySet()).get(2);
+        final V toKeyValue = getMap().get(toKey);
+        final Collection<V> values = getMap().headMap(toKey).values();
+        // the value is mapped to a key out of the range of the sub map
+        assertFalse(values.contains(toKeyValue));
+        assertFalse(values.remove(toKeyValue));
+        verify();
     }
 
     @Test
