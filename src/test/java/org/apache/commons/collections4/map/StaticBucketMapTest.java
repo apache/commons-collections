@@ -21,7 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiConsumer;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Unit tests.
@@ -31,6 +39,45 @@ import org.junit.jupiter.api.Test;
  * @param <V> The value type.
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
+
+    /**
+     * Starts {@code access} on another thread and reports whether it blocks on a monitor instead of running to completion.
+     */
+    private static boolean blocksWhileRunning(final Runnable access) {
+        final Thread thread = new Thread(access);
+        thread.setDaemon(true);
+        thread.start();
+        Thread.State state = thread.getState();
+        while (state != Thread.State.BLOCKED && state != Thread.State.TERMINATED) {
+            Thread.yield();
+            state = thread.getState();
+        }
+        return state == Thread.State.BLOCKED;
+    }
+
+    private static Arguments compoundOperation(final String name, final BiConsumer<Map<String, String>, Runnable> operation) {
+        return Arguments.of(name, operation);
+    }
+
+    static Stream<Arguments> compoundOperations() {
+        return Stream.of(
+                compoundOperation("compute", (map, probe) -> map.compute("present", (k, v) -> {
+                    probe.run();
+                    return v;
+                })),
+                compoundOperation("computeIfAbsent", (map, probe) -> map.computeIfAbsent("absent", k -> {
+                    probe.run();
+                    return k;
+                })),
+                compoundOperation("computeIfPresent", (map, probe) -> map.computeIfPresent("present", (k, v) -> {
+                    probe.run();
+                    return v;
+                })),
+                compoundOperation("merge", (map, probe) -> map.merge("present", "value", (a, b) -> {
+                    probe.run();
+                    return a;
+                })));
+    }
 
     /**
      * {@inheritDoc}
@@ -69,6 +116,20 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             final String str = String.valueOf((char) i);
             assertFalse(map.containsValue(str), "String: " + str);
         }
+    }
+
+    /**
+     * A compound operation must hold the bucket lock while it runs its function, otherwise a concurrent update to the same key is lost. Since
+     * {@code size()} visits every bucket, another thread calling it in the meantime is expected to block on the monitor rather than complete.
+     */
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("compoundOperations")
+    void testCompoundOperationHoldsBucketLock(final String name, final BiConsumer<Map<String, String>, Runnable> operation) {
+        final StaticBucketMap<String, String> map = new StaticBucketMap<>();
+        map.put("present", "value");
+        final AtomicBoolean blocked = new AtomicBoolean();
+        operation.accept(map, () -> blocked.set(blocksWhileRunning(map::size)));
+        assertTrue(blocked.get(), () -> name + " ran its function without holding the bucket lock");
     }
 
     // Bugzilla 37567
