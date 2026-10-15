@@ -71,6 +71,15 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
     }
 
     /**
+     * Hands the pending insertions and deletions to the user handler as subsequences.
+     */
+    private void handlePendingReplacement() {
+        handler.handleReplacement(skipped, pendingDeletions, pendingInsertions);
+        pendingDeletions.clear();
+        pendingInsertions.clear();
+    }
+
+    /**
      * Add an object to the pending deletions set.
      *
      * @param object  object to delete
@@ -78,6 +87,18 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
     @Override
     public void visitDeleteCommand(final T object) {
         pendingDeletions.add(object);
+    }
+
+    /**
+     * Handle the trailing replacement, if the script ended on insertions or deletions rather than on a
+     * synchronization object.
+     */
+    @Override
+    public void visitEndOfScript() {
+        if (!pendingDeletions.isEmpty() || !pendingInsertions.isEmpty()) {
+            handlePendingReplacement();
+            skipped = 0;
+        }
     }
 
     /**
@@ -103,9 +124,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
         if (pendingDeletions.isEmpty() && pendingInsertions.isEmpty()) {
             ++skipped;
         } else {
-            handler.handleReplacement(skipped, pendingDeletions, pendingInsertions);
-            pendingDeletions.clear();
-            pendingInsertions.clear();
+            handlePendingReplacement();
             skipped = 1;
         }
     }
