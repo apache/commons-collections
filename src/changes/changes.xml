@@ -29,13 +29,13 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Update the index on remove via IndexedCollection.iterator() (#724).</action>
     <action type="fix" dev="ggregory" due-to="thomaslantern, Gary Gregory">[Javadoc] Fix grammar in ArrayStack class Javadoc (#725).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">General Javadoc improvements.</action>
-    <action type="fix" dev="ggregory" due-to="Chen, Sharang Gupta" issue="COLLECTIONS-732">[Javadoc] Document that the map iterators of MultiValuedMap implementations do not support MapIterator.setValue(Object).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix AbstractLinkedList addAll returning true for an empty collection (#726).</action>
     <action type="fix" dev="ggregory" due-to="Thomas Mortagne, Gary Gregory" issue="COLLECTIONS-898">AbstractSetTest cannot be used with an explicitly typed Set (unless it's based on String) (#727).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix map and bidimap nextKey() skipping a key and throwing for keys not in the map (#728).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reset last element in EnumerationIterator.remove() (#729).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix TransformedMultiValuedMap.putAll(K, Iterable) NPE for null value transformer (#731).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix AbstractReferenceMap.ReferenceEntry.setValue(V) to throw NullPointerException on null input (contract).</action>
+    <action type="fix" dev="ggregory" due-to="Chen, Sharang Gupta" issue="COLLECTIONS-732">[Javadoc] Document that the map iterators of MultiValuedMap implementations do not support MapIterator.setValue(Object) (#748).</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 104 to 106.</action>
