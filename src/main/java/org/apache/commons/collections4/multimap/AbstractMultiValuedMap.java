@@ -345,12 +345,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
 
         /**
-         * Always throws {@link UnsupportedOperationException}, as the entries of a multivalued map are read-only.
+         * Not supported, as the entries of a {@code MultiValuedMap} are read-only.
          *
          * @param value Ignored.
          * @return Never returns normally.
          * @throws IllegalStateException if {@link #next()} has not been called yet.
-         * @throws UnsupportedOperationException Always thrown otherwise.
+         * @throws UnsupportedOperationException if {@link #next()} has been called.
          */
         @Override
         public V setValue(final V value) {
