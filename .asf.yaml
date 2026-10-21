@@ -16,6 +16,8 @@
 github:
   description: Apache Commons Collections
   homepage: https://commons.apache.org/collections/
+  autolink_jira:
+    - COLLECTIONS
   
   pull_requests:
     # allow auto-merge
