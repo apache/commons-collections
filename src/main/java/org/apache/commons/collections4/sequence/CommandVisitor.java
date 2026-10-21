@@ -131,6 +131,19 @@ public interface CommandVisitor<T> {
     void visitDeleteCommand(T object);
 
     /**
+     * Method called once all commands of the script have been visited.
+     * <p>
+     * A visitor that groups consecutive commands must override this method to process the group that is still pending
+     * when the script ends. The default implementation does nothing.
+     * </p>
+     *
+     * @since 4.6.1
+     */
+    default void visitEndOfScript() {
+        // empty
+    }
+
+    /**
      * Method called when an insert command is encountered.
      *
      * @param object object to insert (this object comes from the second sequence)
