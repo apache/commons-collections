@@ -74,6 +74,9 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /** Recall whether the wrapped iterator's "cursor" is in such a state as to allow remove() to be called */
     private boolean removeState;
 
+    /** Recall whether the element last returned by the wrapped iterator can still be removed from it */
+    private boolean wrappedRemovable;
+
     /**
      * Constructs a new {@code ListIteratorWrapper} that will wrap
      * the given iterator.
@@ -145,6 +148,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
         if (currentIndex < wrappedIteratorIndex) {
             ++currentIndex;
+            removeState = wrappedRemovable && currentIndex == wrappedIteratorIndex;
             return list.get(currentIndex - 1);
         }
 
@@ -152,6 +156,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
         list.add(retval);
         ++currentIndex;
         ++wrappedIteratorIndex;
+        wrappedRemovable = true;
         removeState = true;
         return retval;
     }
@@ -187,7 +192,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
         if (currentIndex == 0) {
             throw new NoSuchElementException();
         }
-        removeState = wrappedIteratorIndex == currentIndex;
+        removeState = wrappedRemovable && wrappedIteratorIndex == currentIndex;
         return list.get(--currentIndex);
     }
 
@@ -228,6 +233,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
         list.remove(removeIndex);
         currentIndex = removeIndex;
         wrappedIteratorIndex--;
+        wrappedRemovable = false;
         removeState = false;
     }
 
@@ -247,6 +253,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
             return;
         }
         currentIndex = 0;
+        removeState = false;
     }
 
     /**
