@@ -68,6 +68,7 @@ class IterableUtilsTest {
      */
     private Iterable<Integer> emptyIterable;
 
+    @Test
     public void firstFromIterable() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
@@ -75,6 +76,7 @@ class IterableUtilsTest {
         assertEquals("element", IterableUtils.first(bag));
     }
 
+    @Test
     public void getFromIterable() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
