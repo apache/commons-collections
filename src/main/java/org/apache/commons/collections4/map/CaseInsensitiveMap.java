@@ -25,9 +25,12 @@ import java.util.Map;
 /**
  * A case-insensitive {@code Map}.
  * <p>
- * Before keys are added to the map or compared to other existing keys, they are converted
- * to all lowercase in a locale-independent fashion by using information from the Unicode
- * data file.
+ * Before keys are added to the map or compared to other existing keys, each of their
+ * characters (Unicode code points) is converted with
+ * {@code Character.toLowerCase(Character.toUpperCase(codePoint))}, that is with the simple,
+ * one-to-one case mappings of the Unicode data file, independently of the locale. This is not
+ * the same as {@link String#toLowerCase(java.util.Locale)}: for example, U+03D0 (GREEK BETA
+ * SYMBOL) and U+03B2 (GREEK SMALL LETTER BETA) give the same key.
  * </p>
  * <p>
  * Null keys are supported.
@@ -131,8 +134,8 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
-     * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to
-     * lower case.
+     * Overrides convertKey() from {@link AbstractHashedMap} to convert each code point of
+     * keys with {@code Character.toLowerCase(Character.toUpperCase(codePoint))}.
      * <p>
      * Returns {@link AbstractHashedMap#NULL} if key is null.
      *
@@ -142,11 +145,14 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     @Override
     protected Object convertKey(final Object key) {
         if (key != null) {
-            final char[] chars = key.toString().toCharArray();
-            for (int i = chars.length - 1; i >= 0; i--) {
-                chars[i] = Character.toLowerCase(Character.toUpperCase(chars[i]));
+            final String keyString = key.toString();
+            final StringBuilder converted = new StringBuilder(keyString.length());
+            for (int i = 0; i < keyString.length();) {
+                final int codePoint = keyString.codePointAt(i);
+                converted.appendCodePoint(Character.toLowerCase(Character.toUpperCase(codePoint)));
+                i += Character.charCount(codePoint);
             }
-            return new String(chars);
+            return converted.toString();
         }
         return NULL;
     }
