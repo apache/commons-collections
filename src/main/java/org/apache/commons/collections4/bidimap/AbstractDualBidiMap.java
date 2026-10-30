@@ -387,7 +387,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         @Override
         public boolean contains(final Object value) {
-            return parent.reverseMap.containsKey(value);
+            return parent.containsValue(value);
         }
 
         @Override
@@ -397,9 +397,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         @Override
         public boolean remove(final Object value) {
-            if (parent.reverseMap.containsKey(value)) {
-                final Object key = parent.reverseMap.remove(value);
-                parent.normalMap.remove(key);
+            if (parent.containsValue(value)) {
+                parent.removeValue(value);
                 return true;
             }
             return false;
