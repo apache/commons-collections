@@ -69,9 +69,10 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
      * the same value as the single predicate does.
      */
     @SuppressWarnings("boxing")
+    @Test
     public final void singleValues() {
-        assertTrue(getPredicateInstance(true).evaluate(null));
-        assertFalse(getPredicateInstance(false).evaluate(null));
+        assertTrue(getPredicateInstance(true).test(getTestValue()));
+        assertFalse(getPredicateInstance(false).test(getTestValue()));
     }
 
 }
