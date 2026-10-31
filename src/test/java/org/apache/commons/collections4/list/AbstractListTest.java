@@ -1118,6 +1118,26 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     }
 
     /**
+     * Tests that {@link List#subList(int, int)} on a sublist rejects indices outside the sublist
+     * instead of exposing elements of the backing list that lie outside its range.
+     */
+    @Test
+    void testListSubListOfSubListOutOfBounds() {
+        resetFull();
+        final int size = getCollection().size();
+        if (size < 2) {
+            return;
+        }
+        final List<E> sub = getCollection().subList(1, size - 1);
+        final int subSize = sub.size();
+        assertThrows(IndexOutOfBoundsException.class, () -> sub.subList(-1, subSize),
+                "subList should throw IndexOutOfBoundsException [fromIndex -1]");
+        assertThrows(IndexOutOfBoundsException.class, () -> sub.subList(0, subSize + 1),
+                "subList should throw IndexOutOfBoundsException [toIndex size + 1]");
+        assertEquals(sub, sub.subList(0, subSize));
+    }
+
+    /**
      * Tests that a sublist raises a {@link ConcurrentModificationException ConcurrentModificationException}
      * if elements are added to the original list.
      */
