@@ -105,7 +105,7 @@ public interface CountingBloomFilter extends BloomFilter<CountingBloomFilter>, C
     /**
      * Determines the maximum number of times the Bloom filter could have been merged into this counting filter.
      *
-     * @param bloomFilter The Bloom filter the check for.
+     * @param bloomFilter The Bloom filter to check for.
      * @return The maximum number of times the Bloom filter could have been inserted.
      */
     default int getMaxInsert(final BloomFilter<?> bloomFilter) {

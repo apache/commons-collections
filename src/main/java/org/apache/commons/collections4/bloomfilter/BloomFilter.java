@@ -139,7 +139,7 @@ public interface BloomFilter<T extends BloomFilter<T>> extends IndexExtractor, B
     /**
      * Estimates the number of items in the intersection of this Bloom filter with the other bloom filter.
      *
-     * <p>This method produces estimate is roughly equivalent to the number of unique Hashers that have been merged into both
+     * <p>This produces an estimate roughly equivalent to the number of unique Hashers that have been merged into both
      * of the filters by rounding the value from the calculation described in the {@link Shape} class Javadoc.</p>
      *
      * <p><em>{@code estimateIntersection} should only be called with Bloom filters of the same Shape.  If called on Bloom
