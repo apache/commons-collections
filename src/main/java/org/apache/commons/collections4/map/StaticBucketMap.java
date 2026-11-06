@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.apache.commons.collections4.KeyValue;
 
@@ -50,7 +52,11 @@ import org.apache.commons.collections4.KeyValue;
  * safely operate on the map at the same time, often without incurring any
  * monitor contention.  This means that you don't have to wrap instances
  * of this class with {@link java.util.Collections#synchronizedMap(Map)};
- * instances are already thread-safe.  Unfortunately, however, this means
+ * instances are already thread-safe.  Single-key operations, including
+ * compound ones such as {@link #putIfAbsent(Object, Object) putIfAbsent},
+ * {@link #compute(Object, BiFunction) compute} and
+ * {@link #merge(Object, Object, BiFunction) merge}, hold the bucket lock
+ * for their whole duration.  Unfortunately, however, this means
  * that this map implementation behaves in ways you may find disconcerting.
  * Bulk operations, such as {@link #putAll(Map) putAll} or the
  * {@link Collection#retainAll(Collection) retainAll} operation in collection
@@ -444,6 +450,36 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
+     * @since 4.6.1
+     */
+    @Override
+    public V compute(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+        synchronized (locks[getHash(key)]) {
+            return super.compute(key, remappingFunction);
+        }
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public V computeIfAbsent(final K key, final Function<? super K, ? extends V> mappingFunction) {
+        synchronized (locks[getHash(key)]) {
+            return super.computeIfAbsent(key, mappingFunction);
+        }
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public V computeIfPresent(final K key, final BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+        synchronized (locks[getHash(key)]) {
+            return super.computeIfPresent(key, remappingFunction);
+        }
+    }
+
+    /**
      * Checks if the map contains the specified key.
      *
      * @param key  The key to check
@@ -572,6 +608,16 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
+     * @since 4.6.1
+     */
+    @Override
+    public V getOrDefault(final Object key, final V defaultValue) {
+        synchronized (locks[getHash(key)]) {
+            return super.getOrDefault(key, defaultValue);
+        }
+    }
+
+    /**
      * Gets the hash code, as per the Map specification.
      *
      * @return The hash code
@@ -611,6 +657,16 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     @Override
     public Set<K> keySet() {
         return new KeySet();
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public V merge(final K key, final V value, final BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
+        synchronized (locks[getHash(key)]) {
+            return super.merge(key, value, remappingFunction);
+        }
     }
 
     /**
@@ -674,6 +730,16 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     }
 
     /**
+     * @since 4.6.1
+     */
+    @Override
+    public V putIfAbsent(final K key, final V value) {
+        synchronized (locks[getHash(key)]) {
+            return super.putIfAbsent(key, value);
+        }
+    }
+
+    /**
      * Removes the specified key from the map.
      *
      * @param key  The key to remove
@@ -706,6 +772,36 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             }
         }
         return null;
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public boolean remove(final Object key, final Object value) {
+        synchronized (locks[getHash(key)]) {
+            return super.remove(key, value);
+        }
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public V replace(final K key, final V value) {
+        synchronized (locks[getHash(key)]) {
+            return super.replace(key, value);
+        }
+    }
+
+    /**
+     * @since 4.6.1
+     */
+    @Override
+    public boolean replace(final K key, final V oldValue, final V newValue) {
+        synchronized (locks[getHash(key)]) {
+            return super.replace(key, oldValue, newValue);
+        }
     }
 
     /**
