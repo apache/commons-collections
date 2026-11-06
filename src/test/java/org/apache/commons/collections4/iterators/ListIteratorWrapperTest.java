@@ -181,6 +181,33 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     }
 
     @Test
+    void testRemoveAfterReset() {
+        final ResettableListIterator<E> iter = makeObject();
+        iter.next();
+        iter.reset();
+
+        assertThrows(IllegalStateException.class, iter::remove,
+                "ListIteratorWrapper#remove() should fail; must be repositioned after reset()");
+        assertEquals(testArray.length, list1.size());
+    }
+
+    @Test
+    void testRemoveAfterReturningToWrappedPosition() {
+        final ListIterator<E> iter = makeObject();
+        iter.next();
+        iter.next();
+        iter.previous();
+        iter.previous();
+        // read forwards out of the cache until back at the wrapped iterator's position
+        iter.next();
+        final E second = iter.next();
+
+        iter.remove();
+        assertEquals(testArray.length - 1, list1.size());
+        assertFalse(list1.contains(second), "remove() should drop the element last returned by next()");
+    }
+
+    @Test
     void testReset() {
         final ResettableListIterator<E> iter = makeObject();
         final E first = iter.next();
