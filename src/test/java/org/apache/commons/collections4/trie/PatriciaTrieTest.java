@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -595,6 +596,32 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    @Test
+    void testPrefixMapRemovalViaIterator() {
+        final PatriciaTrie<String> trie = new PatriciaTrie<>();
+        for (final String key : new String[] { "and", "andes", "android", "androids", "anna", "ant" }) {
+            trie.put(key, key);
+        }
+        // a removal must not cut the iteration short
+        final List<String> visited = new ArrayList<>();
+        Iterator<String> iter = trie.prefixMap("and").keySet().iterator();
+        visited.add(iter.next());
+        visited.add(iter.next());
+        iter.remove();
+        while (iter.hasNext()) {
+            visited.add(iter.next());
+        }
+        assertEquals(Arrays.asList("and", "andes", "android", "androids"), visited);
+
+        // emptying the view through its own iterator must leave the rest of the trie alone
+        iter = trie.prefixMap("and").keySet().iterator();
+        while (iter.hasNext()) {
+            iter.next();
+            iter.remove();
+        }
+        assertEquals(new HashSet<>(Arrays.asList("anna", "ant")), trie.keySet());
     }
 
     @Test
