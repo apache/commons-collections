@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.lang3.StringUtils;
@@ -691,6 +692,39 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // old object is added back in
         l.add(1, a);
         assertEquals(2, l.size());
+    }
+
+    @Test
+    void testRemoveIfEvaluatesEachElementOnce() {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>(Arrays.asList("a", "b", "c")));
+        final AtomicInteger calls = new AtomicInteger();
+        assertTrue(list.removeIf(value -> calls.getAndIncrement() == 0));
+        assertEquals(3, calls.get());
+        assertEquals(Arrays.asList("b", "c"), list);
+        assertEquals(new HashSet<>(list), list.asSet());
+        assertFalse(list.contains("a"));
+        assertTrue(list.add("a"));
+    }
+
+    @Test
+    void testRemoveIfKeepsSetConsistentWhenPredicateThrows() {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new LinkedList<>(Arrays.asList("a", "b", "c")));
+        final IllegalStateException failure = new IllegalStateException("test");
+        assertSame(failure, assertThrows(IllegalStateException.class, () -> list.removeIf(value -> {
+            if ("b".equals(value)) {
+                throw failure;
+            }
+            return true;
+        })));
+        assertEquals(new HashSet<>(list), list.asSet());
+        assertFalse(list.contains("a"));
+        assertTrue(list.add("a"));
+    }
+
+    @Test
+    void testRemoveIfRejectsNullOnEmptyList() {
+        final SetUniqueList<String> list = SetUniqueList.setUniqueList(new ArrayList<>());
+        assertThrows(NullPointerException.class, () -> list.removeIf(null));
     }
 
     @Override
