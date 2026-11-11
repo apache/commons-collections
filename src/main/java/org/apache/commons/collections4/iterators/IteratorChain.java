@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -56,6 +58,19 @@ import java.util.Queue;
  */
 public class IteratorChain<E> implements Iterator<E> {
 
+    /**
+     * Gets a nested chain that can be traversed without invoking overridden methods.
+     * Unmodifiable decorators forward hasNext() and next(), but must still be retained for remove().
+     */
+    private static <E> IteratorChain<? extends E> asIteratorChain(final Iterator<? extends E> iterator) {
+        Iterator<? extends E> unwrapped = iterator;
+        while (unwrapped instanceof UnmodifiableIterator) {
+            unwrapped = ((UnmodifiableIterator<? extends E, ?>) unwrapped).unwrap();
+        }
+        // Subclasses may override any iterator method or updateCurrentIterator().
+        return unwrapped.getClass() == IteratorChain.class ? (IteratorChain<? extends E>) unwrapped : null;
+    }
+
     /** The chain of iterators */
     private final Queue<Iterator<? extends E>> iteratorQueue = new LinkedList<>();
 
@@ -69,8 +84,7 @@ public class IteratorChain<E> implements Iterator<E> {
     private Iterator<? extends E> lastUsedIterator;
 
     /**
-     * ComparatorChain is "locked" after the first time compare(Object, Object)
-     * is called
+     * The chain is locked after the first call to an Iterator interface method.
      */
     private boolean isLocked;
 
@@ -160,37 +174,20 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Add an Iterator to the end of the chain
+     * Adds an Iterator to the end of the chain.
+     * <p>
+     * The iterator is retained, not copied. If it is another {@code IteratorChain}, iterators added to that child before it is locked are also visited.
+     * Subclasses retain their iterator behavior when used as children.
+     * </p>
      *
      * @param iterator Iterator to add
-     * @throws IllegalStateException if I've already started iterating
+     * @throws UnsupportedOperationException if this chain is already locked
      * @throws NullPointerException if the iterator is null
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        Objects.requireNonNull(iterator, "iterator");
-        if (iterator instanceof UnmodifiableIterator) {
-            final Iterator<? extends E> underlyingIterator = ((UnmodifiableIterator) iterator).unwrap();
-            if (underlyingIterator instanceof IteratorChain) {
-                // in case it is an IteratorChain, wrap every underlying iterators as unmodifiable
-                // multiple rechainings would otherwise lead to exponential growing number of function calls
-                // when the iteratorChain gets used.
-                for (final Iterator<? extends E> nestedIterator : ((IteratorChain<? extends E>) underlyingIterator).iteratorQueue) {
-                    iteratorQueue.add(UnmodifiableIterator.unmodifiableIterator(nestedIterator));
-                }
-            } else {
-                // we don't know anything about the underlying iterator, simply add it here
-                iteratorQueue.add(iterator);
-            }
-        } else if (iterator instanceof IteratorChain) {
-            // add the wrapped iterators directly instead of reusing the given instance
-            // multiple rechainings would otherwise lead to exponential growing number of function calls
-            // when the iteratorChain gets used.
-            iteratorQueue.addAll(((IteratorChain) iterator).iteratorQueue);
-        } else {
-            // arbitrary other iterator
-            iteratorQueue.add(iterator);
-        }
+        // Retain the iterator itself so subclass behavior and later additions to a child chain are preserved.
+        iteratorQueue.add(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**
@@ -214,6 +211,15 @@ public class IteratorChain<E> implements Iterator<E> {
             updateCurrentIterator();
         }
         return cachedHasNextValue;
+    }
+
+    /**
+     * Initializes the current iterator without inspecting its contents.
+     */
+    private void initializeCurrentIterator() {
+        if (currentIterator == null) {
+            pollCurrentIterator();
+        }
     }
 
     /**
@@ -246,13 +252,32 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     @Override
     public E next() {
+        Iterator<? extends E> iterator = nextIterator();
+        IteratorChain<? extends E> chain;
+        while ((chain = asIteratorChain(iterator)) != null) {
+            iterator = chain.nextIterator();
+        }
+        return iterator.next();
+    }
+
+    /**
+     * Prepares this chain for next() while retaining the actual child for remove().
+     */
+    private Iterator<? extends E> nextIterator() {
         lockChain();
         if (cachedHasNextValue == null) {
             updateCurrentIterator();
         }
         lastUsedIterator = currentIterator;
         cachedHasNextValue = null;
-        return currentIterator.next();
+        return currentIterator;
+    }
+
+    /**
+     * Advances to the next queued iterator, or an empty iterator if the queue is empty.
+     */
+    private void pollCurrentIterator() {
+        currentIterator = iteratorQueue.isEmpty() ? EmptyIterator.<E>emptyIterator() : iteratorQueue.remove();
     }
 
     /**
@@ -270,16 +295,33 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     @Override
     public void remove() {
-        lockChain();
-        if (lastUsedIterator == null)  {
-            throw new IllegalStateException("remove() has been invoked without next()");
+        final Deque<IteratorChain<?>> chains = new ArrayDeque<>();
+        IteratorChain<?> chain = this;
+        while (true) {
+            chain.lockChain();
+            if (chain.lastUsedIterator == null) {
+                throw new IllegalStateException("remove() has been invoked without next()");
+            }
+            chains.push(chain);
+            final Iterator<?> iterator = chain.lastUsedIterator;
+            // Do not unwrap unmodifiable decorators or bypass a subclass's remove() method.
+            if (iterator.getClass() != IteratorChain.class) {
+                iterator.remove();
+                break;
+            }
+            chain = (IteratorChain<?>) iterator;
         }
-        lastUsedIterator.remove();
-        lastUsedIterator = null;  // must never be used twice without next() being invoked
+        // Only clear removal state after the underlying remove() succeeds.
+        for (final IteratorChain<?> usedChain : chains) {
+            usedChain.lastUsedIterator = null;
+        }
     }
 
     /**
-     * Returns the remaining number of Iterators in the current IteratorChain.
+     * Gets the number of iterators remaining in this chain's queue.
+     * <p>
+     * The current iterator is excluded. A nested chain counts as one iterator, regardless of its contents.
+     * </p>
      *
      * @return Iterator count
      */
@@ -288,26 +330,34 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Updates the current iterator field to ensure that the current Iterator is
-     * not exhausted
+     * Updates the current iterator field to ensure that the current Iterator is not exhausted.
+     * Nested instances of this class are traversed iteratively; subclasses are invoked normally to preserve their overrides.
      */
     protected void updateCurrentIterator() {
-        if (currentIterator == null) {
-            if (iteratorQueue.isEmpty()) {
-                currentIterator = EmptyIterator.<E>emptyIterator();
-            } else {
-                currentIterator = iteratorQueue.remove();
-            }
-        }
+        final Deque<IteratorChain<? extends E>> parents = new ArrayDeque<>();
+        IteratorChain<? extends E> chain = this;
         while (true) {
-            cachedHasNextValue = currentIterator.hasNext();
-            if (cachedHasNextValue) {
-                break;
+            chain.initializeCurrentIterator();
+            final IteratorChain<? extends E> child = asIteratorChain(chain.currentIterator);
+            if (child == null) {
+                chain.cachedHasNextValue = chain.currentIterator.hasNext();
+            } else {
+                child.lockChain();
+                if (child.cachedHasNextValue == null) {
+                    parents.push(chain);
+                    chain = child;
+                    continue;
+                }
+                chain.cachedHasNextValue = child.cachedHasNextValue;
             }
-            if (iteratorQueue.isEmpty()) {
-                break;
+            if (!chain.cachedHasNextValue && !chain.iteratorQueue.isEmpty()) {
+                chain.pollCurrentIterator();
+                continue;
             }
-            currentIterator = iteratorQueue.remove();
+            if (parents.isEmpty()) {
+                return;
+            }
+            chain = parents.pop();
         }
     }
 }
