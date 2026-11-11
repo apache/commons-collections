@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ class IteratorChainCompatibilityTest {
         case UTILS_COLLECTION:
             return IteratorUtils.chainedIterator(Arrays.asList(child, tail));
         default:
-            throw new AssertionError(construction);
+            return fail("Unexpected construction: " + construction);
         }
     }
 
