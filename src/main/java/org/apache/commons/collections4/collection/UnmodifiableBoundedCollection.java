@@ -205,7 +205,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     /**
      * Always throws {@link UnsupportedOperationException}.
      *
-     * @param Ignored.
+     * @param coll Ignored.
      * @throws UnsupportedOperationException Always thrown.
      */
     @Override
