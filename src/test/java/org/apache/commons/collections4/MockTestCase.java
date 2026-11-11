@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.easymock.IExpectationSetters;
 
