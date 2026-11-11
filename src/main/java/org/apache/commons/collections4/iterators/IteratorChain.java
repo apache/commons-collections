@@ -18,11 +18,14 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * An IteratorChain is an Iterator that wraps a number of Iterators.
@@ -40,6 +43,11 @@ import java.util.Queue;
  * <p>
  * Calling a method that adds new Iterator <i>after a method in the Iterator
  * interface has been called</i> will result in an UnsupportedOperationException.
+ * </p>
+ * <p>
+ * Nested chains must not form cycles. If a cycle is detected during traversal or removal,
+ * an {@link IllegalStateException} is thrown. Subclasses and other iterator implementations
+ * are invoked normally and are responsible for their own cycle handling.
  * </p>
  * <p>
  * NOTE: As from version 3.0, the IteratorChain may contain no iterators. In
@@ -203,6 +211,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * Return true if any Iterator in the IteratorChain has a remaining element.
      *
      * @return true if elements remain
+     * @throws IllegalStateException if a cycle is detected in the nested chains
      */
     @Override
     public boolean hasNext() {
@@ -249,6 +258,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @return Object from the current Iterator
      * @throws java.util.NoSuchElementException if all the Iterators are
      * exhausted
+     * @throws IllegalStateException if a cycle is detected in the nested chains
      */
     @Override
     public E next() {
@@ -291,13 +301,27 @@ public class IteratorChain<E> implements Iterator<E> {
      * supported by the underlying Iterator
      * @throws IllegalStateException if the next method has not yet been called,
      * or the remove method has already been called after the last call to the
-     * next method.
+     * next method, or a cycle is detected in the nested chains.
      */
     @Override
     public void remove() {
+        lockChain();
+        if (lastUsedIterator == null) {
+            throw new IllegalStateException("remove() has been invoked without next()");
+        }
+        // Flat removal needs no traversal state, and must still delegate to subclasses and decorators.
+        if (lastUsedIterator.getClass() != IteratorChain.class) {
+            lastUsedIterator.remove();
+            lastUsedIterator = null;
+            return;
+        }
         final Deque<IteratorChain<?>> chains = new ArrayDeque<>();
+        final Set<IteratorChain<?>> active = Collections.newSetFromMap(new IdentityHashMap<>());
         IteratorChain<?> chain = this;
         while (true) {
+            if (!active.add(chain)) {
+                throw new IllegalStateException("Cyclic IteratorChain");
+            }
             chain.lockChain();
             if (chain.lastUsedIterator == null) {
                 throw new IllegalStateException("remove() has been invoked without next()");
@@ -332,9 +356,12 @@ public class IteratorChain<E> implements Iterator<E> {
     /**
      * Updates the current iterator field to ensure that the current Iterator is not exhausted.
      * Nested instances of this class are traversed iteratively; subclasses are invoked normally to preserve their overrides.
+     *
+     * @throws IllegalStateException if a cycle is detected in the nested chains
      */
     protected void updateCurrentIterator() {
-        final Deque<IteratorChain<? extends E>> parents = new ArrayDeque<>();
+        Deque<IteratorChain<? extends E>> parents = null;
+        Set<IteratorChain<? extends E>> active = null;
         IteratorChain<? extends E> chain = this;
         while (true) {
             chain.initializeCurrentIterator();
@@ -343,7 +370,24 @@ public class IteratorChain<E> implements Iterator<E> {
                 chain.cachedHasNextValue = chain.currentIterator.hasNext();
             } else {
                 child.lockChain();
+                // A cached result must not conceal a link back to an active ancestor.
+                if (child == chain || active != null && active.contains(child)) {
+                    // Discard intermediate results so a retry also detects the cycle.
+                    chain.cachedHasNextValue = null;
+                    if (parents != null) {
+                        for (final IteratorChain<?> parent : parents) {
+                            parent.cachedHasNextValue = null;
+                        }
+                    }
+                    throw new IllegalStateException("Cyclic IteratorChain");
+                }
                 if (child.cachedHasNextValue == null) {
+                    if (parents == null) {
+                        parents = new ArrayDeque<>();
+                        active = Collections.newSetFromMap(new IdentityHashMap<>());
+                        active.add(chain);
+                    }
+                    active.add(child);
                     parents.push(chain);
                     chain = child;
                     continue;
@@ -354,9 +398,10 @@ public class IteratorChain<E> implements Iterator<E> {
                 chain.pollCurrentIterator();
                 continue;
             }
-            if (parents.isEmpty()) {
+            if (parents == null || parents.isEmpty()) {
                 return;
             }
+            active.remove(chain);
             chain = parents.pop();
         }
     }
