@@ -385,13 +385,16 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     @Override
     public K previousKey(final K key) {
-        if (isEmpty()) {
+        if (isEmpty() || !normalMap.containsKey(key)) {
             return null;
         }
         if (normalMap instanceof OrderedMap) {
             return ((OrderedMap<K, V>) normalMap).previousKey(key);
         }
         final SortedMap<K, V> sm = (SortedMap<K, V>) normalMap;
+        if (sm instanceof NavigableMap) {
+            return ((NavigableMap<K, V>) sm).lowerKey(key);
+        }
         final SortedMap<K, V> hm = sm.headMap(key);
         if (hm.isEmpty()) {
             return null;
