@@ -35,6 +35,7 @@
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Reset last element in EnumerationIterator.remove() (#729).</action>
     <action type="fix" dev="ggregory" due-to="Naveed Khan, Gary Gregory">Fix TransformedMultiValuedMap.putAll(K, Iterable) NPE for null value transformer (#731).</action>
     <action type="fix" dev="ggregory" due-to="Gary Gregory">Fix AbstractReferenceMap.ReferenceEntry.setValue(V) to throw NullPointerException on null input (contract).</action>
+    <action type="fix" dev="ggregory" due-to="Manfred Baedke, Gary Gregory" issue="COLLECTIONS-900">Preserve iteration state, subclass behavior, and later child additions when chaining IteratorChain instances. Reject detected cycles during traversal and removal (#730, #755).</action>
     <!-- ADD -->
     <!-- UPDATE -->
     <action type="update" dev="ggregory" due-to="Gary Gregory">Bump org.apache.commons:commons-parent from 104 to 107.</action>
