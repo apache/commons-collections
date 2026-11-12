@@ -129,6 +129,7 @@ public class EditScript<T> {
         for (final EditCommand<T> command : commands) {
             command.accept(visitor);
         }
+        visitor.visitEndOfScript();
     }
 
 }
