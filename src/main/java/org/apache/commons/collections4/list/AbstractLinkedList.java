@@ -370,6 +370,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
         @Override
         public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {
+            rangeCheck(fromIndexInclusive, size + 1);
+            rangeCheck(toIndexExclusive, size + 1);
+            checkModCount();
             return new LinkedSubList<>(parent, fromIndexInclusive + offset, toIndexExclusive + offset);
         }
     }
