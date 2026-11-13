@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -338,6 +339,27 @@ class ListUtilsTest {
         assertEquals(1, partitionMax.size());
         assertEquals(strings.size(), partitionMax.get(0).size());
         assertEquals(strings, partitionMax.get(0));
+    }
+
+    @Test
+    void testPartitionLastPartitionDoesNotOverflow() {
+        final List<Integer> list = new AbstractList<Integer>() {
+            @Override
+            public Integer get(final int index) {
+                return index;
+            }
+
+            @Override
+            public int size() {
+                return Integer.MAX_VALUE;
+            }
+        };
+        final int size = (1 << 30) + 1;
+        final List<List<Integer>> partition = ListUtils.partition(list, size);
+
+        assertEquals(2, partition.size());
+        assertEquals(Integer.MAX_VALUE - size, partition.get(1).size());
+        assertEquals(size, partition.get(1).get(0));
     }
 
     @Test
