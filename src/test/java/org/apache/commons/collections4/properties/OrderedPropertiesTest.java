@@ -25,6 +25,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -55,10 +56,15 @@ class OrderedPropertiesTest {
                 arguments("keySet().removeAll", (Consumer<OrderedProperties>) props -> props.keySet().removeAll(Collections.singleton("key2"))),
                 arguments("keySet().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.keySet().iterator())),
                 arguments("values().remove", (Consumer<OrderedProperties>) props -> props.values().remove("value2")),
-                arguments("values().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.values().iterator())));
+                arguments("values().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.values().iterator())),
+                arguments("entrySet().remove", (Consumer<OrderedProperties>) props -> props.entrySet()
+                        .remove(new AbstractMap.SimpleEntry<>("key2", "value2"))),
+                arguments("entrySet().removeAll", (Consumer<OrderedProperties>) props -> props.entrySet()
+                        .removeAll(Collections.singleton(new AbstractMap.SimpleEntry<>("key2", "value2")))),
+                arguments("entrySet().iterator().remove", (Consumer<OrderedProperties>) props -> removeSecond(props.entrySet().iterator())));
     }
 
-    private static void removeSecond(final Iterator<Object> iterator) {
+    private static void removeSecond(final Iterator<?> iterator) {
         iterator.next();
         iterator.next();
         iterator.remove();
@@ -201,6 +207,18 @@ class OrderedPropertiesTest {
             assertEquals(String.valueOf(ch), entry.getKey());
             assertEquals("Value" + ch, entry.getValue());
         }
+    }
+
+    @Test
+    void testEntrySetIsBackedByMap() {
+        final OrderedProperties orderedProperties = newThreeKeyProperties();
+        final Iterator<Entry<Object, Object>> iterator = orderedProperties.entrySet().iterator();
+        final Entry<Object, Object> entry = iterator.next();
+        assertEquals("value1", entry.setValue("updated"));
+        assertEquals("updated", orderedProperties.getProperty("key1"));
+        iterator.remove();
+        assertFalse(orderedProperties.containsKey("key1"));
+        assertEquals(2, orderedProperties.size());
     }
 
     @Test

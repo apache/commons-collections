@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.properties;
 
 import java.util.AbstractCollection;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +30,8 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.keyvalue.TiedMapEntry;
 
 /**
  * A drop-in replacement for {@link Properties} for ordered keys.
@@ -118,6 +118,54 @@ public class OrderedProperties extends Properties {
         }
     }
 
+    /**
+     * An entry set view backed by the map, in key insertion order.
+     */
+    private final class EntrySet extends AbstractSet<Map.Entry<Object, Object>> {
+
+        @Override
+        public void clear() {
+            OrderedProperties.this.clear();
+        }
+
+        @Override
+        public boolean contains(final Object object) {
+            if (object instanceof Map.Entry) {
+                final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) object;
+                return entry.getKey() != null && entry.getValue() != null
+                        && entry.getValue().equals(get(entry.getKey()));
+            }
+            return false;
+        }
+
+        @Override
+        public Iterator<Map.Entry<Object, Object>> iterator() {
+            final Iterator<Object> keys = orderedKeysIterator();
+            return new Iterator<Map.Entry<Object, Object>>() {
+
+                @Override
+                public boolean hasNext() {
+                    return keys.hasNext();
+                }
+
+                @Override
+                public Map.Entry<Object, Object> next() {
+                    return new TiedMapEntry<>(OrderedProperties.this, keys.next());
+                }
+
+                @Override
+                public void remove() {
+                    keys.remove();
+                }
+            };
+        }
+
+        @Override
+        public int size() {
+            return OrderedProperties.this.size();
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -160,7 +208,7 @@ public class OrderedProperties extends Properties {
 
     @Override
     public Set<Map.Entry<Object, Object>> entrySet() {
-        return orderedKeys.stream().map(k -> new SimpleEntry<>(k, get(k))).collect(Collectors.toCollection(LinkedHashSet::new));
+        return new EntrySet();
     }
 
     /**
