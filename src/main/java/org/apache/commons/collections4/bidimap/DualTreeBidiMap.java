@@ -168,6 +168,57 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     /**
+     * The bidi map decorated by a {@link ViewMap}.
+     * <p>
+     * The normal map is restricted to the range of the view but the reverse map is the full map, so the operations
+     * which expect both maps to hold the same mappings are overridden.
+     * </p>
+     *
+     * @param <K> The type of the keys.
+     * @param <V> The type of the values.
+     */
+    private static final class ViewBidiMap<K, V> extends DualTreeBidiMap<K, V> {
+
+        private static final long serialVersionUID = 1L;
+
+        /** The normal map of the full bidi map. */
+        private final transient Map<K, V> fullMap;
+
+        ViewBidiMap(final DualTreeBidiMap<K, V> bidi, final SortedMap<K, V> sm) {
+            super(sm, bidi.reverseMap, bidi.inverseBidiMap);
+            fullMap = bidi instanceof ViewBidiMap ? ((ViewBidiMap<K, V>) bidi).fullMap : bidi.normalMap;
+        }
+
+        @Override
+        public void clear() {
+            normalMap.values().forEach(reverseMap::remove);
+            normalMap.clear();
+        }
+
+        @Override
+        public boolean containsValue(final Object value) {
+            return reverseMap.containsKey(value) && normalMap.containsKey(reverseMap.get(value));
+        }
+
+        @Override
+        public V put(final K key, final V value) {
+            if (normalMap.containsKey(key)) {
+                reverseMap.remove(normalMap.get(key));
+            }
+            // the value may be mapped to a key out of range, which only the full map can remove
+            final boolean containsValue = reverseMap.containsKey(value);
+            final K valueKey = reverseMap.get(value);
+            // put first as a key out of range must be rejected before that mapping is removed
+            final V obj = normalMap.put(key, value);
+            if (containsValue) {
+                fullMap.remove(valueKey);
+            }
+            reverseMap.put(value, key);
+            return obj;
+        }
+    }
+
+    /**
      * Internal sorted map view.
      *
      * @param <K> The type of the keys.
@@ -185,7 +236,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             // the implementation is not great here...
             // use the normalMap as the filtered map, but reverseMap as the full map
             // this forces containsValue and clear to be overridden
-            super(new DualTreeBidiMap<>(sm, bidi.reverseMap, bidi.inverseBidiMap));
+            super(new ViewBidiMap<>(bidi, sm));
         }
 
         @Override
