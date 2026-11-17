@@ -156,6 +156,34 @@ class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     @Test
+    void testRemoveAfterHasNext() {
+        // hasNext() peeks past the current sub-iterator once it is exhausted; it must not
+        // change which element a following remove() deletes.
+        final List<String> listA = new ArrayList<>();
+        listA.add("A");
+        final List<String> listB = new ArrayList<>();
+        listB.add("B");
+        final LazyIteratorChain<String> chain = new LazyIteratorChain<String>() {
+            @Override
+            protected Iterator<String> nextIterator(final int count) {
+                switch (count) {
+                case 1:
+                    return listA.iterator();
+                case 2:
+                    return listB.iterator();
+                }
+                return null;
+            }
+        };
+        assertEquals("A", chain.next());
+        assertTrue(chain.hasNext());
+        chain.remove();
+        assertTrue(listA.isEmpty(), "remove() should have deleted \"A\" from the first list");
+        assertEquals(1, listB.size(), "remove() must not touch the second list");
+        assertEquals("B", listB.get(0));
+    }
+
+    @Test
     void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
