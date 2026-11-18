@@ -22,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InvalidObjectException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -91,6 +93,57 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     void testInitialCapacityZero() {
         final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>(0);
         assertEquals(1, map.data.length);
+    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-899">COLLECTIONS-899</a>:
+     * characters outside the Basic Multilingual Plane are converted like the other characters.
+     */
+    @Test
+    void testSupplementaryCharacters() throws Exception {
+        final String capitalLongI = new String(Character.toChars(0x10400)); // DESERET CAPITAL LETTER LONG I
+        final String smallLongI = new String(Character.toChars(0x10428)); // DESERET SMALL LETTER LONG I
+        final String capitalLongE = new String(Character.toChars(0x10401)); // DESERET CAPITAL LETTER LONG E
+        final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
+        map.put(capitalLongI, "value");
+        map.put("a" + capitalLongI + "B", "mixed");
+        assertEquals("value", map.get(smallLongI));
+        assertEquals("mixed", map.get("A" + smallLongI + "b"));
+        assertEquals(new HashSet<>(Arrays.asList(smallLongI, "a" + smallLongI + "b")), map.keySet());
+
+        map.put(smallLongI, "other value");
+        assertEquals(2, map.size());
+        assertEquals("other value", map.get(capitalLongI));
+        assertEquals("other value", serializeDeserialize(map).get(capitalLongI));
+
+        map.put(capitalLongE, "other letter");
+        assertEquals(3, map.size());
+    }
+
+    /**
+     * Characters without case, and unpaired surrogates, are kept as they are.
+     */
+    @Test
+    void testUncasedSupplementaryCharactersAndUnpairedSurrogates() {
+        final String grinningFace = new String(Character.toChars(0x1F600));
+        final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
+        map.put(grinningFace, "emoji");
+        map.put("\uD801", "high surrogate");
+        map.put("x\uDC28", "low surrogate");
+        assertEquals(new HashSet<>(Arrays.asList(grinningFace, "\uD801", "x\uDC28")), map.keySet());
+    }
+
+    /**
+     * Keys are converted again when a map is deserialized, so a converted key must convert to itself.
+     */
+    @Test
+    void testConversionIsIdempotent() {
+        final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<>();
+        for (int codePoint = 0; codePoint <= Character.MAX_CODE_POINT; codePoint++) {
+            final int current = codePoint;
+            final Object converted = map.convertKey(new String(Character.toChars(current)));
+            assertEquals(converted, map.convertKey(converted), () -> "U+" + Integer.toHexString(current));
+        }
     }
 
     // COLLECTIONS-294
