@@ -22,6 +22,7 @@
  * The following classes are provided in the package:
  * <ul>
  *   <li>SortedProperties- A drop-in replacement for Properties for sorting keys.</li>
+ *   <li>FileProperties- A class that extend load functionality for getting Properties.<li/>
  * </ul>
  */
 package org.apache.commons.collections4.properties;
