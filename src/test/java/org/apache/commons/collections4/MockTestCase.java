@@ -16,11 +16,12 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.lang3.StringUtils;
 import org.easymock.EasyMock;
 import org.easymock.IExpectationSetters;
 
@@ -58,8 +59,7 @@ public abstract class MockTestCase {
             try {
                 EasyMock.verify(i.next());
             } catch (final AssertionError e) {
-                throw new AssertionError(i.previousIndex() + 1 + StringUtils.EMPTY
-                        + e.getMessage());
+                fail("Mock object " + (i.previousIndex() + 1) + " failed verification: " + e.getMessage(), e);
             }
         }
     }
