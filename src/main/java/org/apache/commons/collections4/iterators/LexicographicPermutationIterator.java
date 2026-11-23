@@ -58,14 +58,20 @@ import java.util.Objects;
  * return exactly one empty list as result, as 0! = 1.
  * </p>
  * <p>
- * NOTE: {@link PermutationIterator} differs on both counts. It returns exactly n!
- * permutations whatever the order of the input collection. The two iterators are
- * therefore not interchangeable.
+ * NOTE: the elements must be mutually comparable under the ordering in use, and a
+ * {@code null} element is permitted only with a comparator that permits it. The
+ * constructor rejects other input with a {@code ClassCastException} or a
+ * {@code NullPointerException}.
+ * </p>
+ * <p>
+ * NOTE: {@link PermutationIterator} always returns exactly n! permutations: the
+ * order of the input collection does not matter, and equal elements are treated
+ * as distinct. The two iterators are therefore not interchangeable.
  * </p>
  *
  * @param <E>  the type of the objects being permuted
- * @see PermutationIterator
  * @since 4.7.0
+ * @see PermutationIterator
  */
 public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
 
@@ -76,8 +82,9 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
     private final Comparator<? super E> comparator;
 
     /**
-     * Next permutation to return. When a permutation is requested a copy of this
-     * instance is provided and the next one is computed.
+     * Next permutation to return, or null when there is none left. When a permutation
+     * is requested a copy of this list is provided, and the list is then rearranged
+     * in place into the next one.
      */
     private List<E> nextPermutation;
 
@@ -89,7 +96,8 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
      * </p>
      *
      * @param collection  The collection to generate permutations for
-     * @throws NullPointerException if collection is null
+     * @throws ClassCastException if the elements are not mutually {@link Comparable}
+     * @throws NullPointerException if collection is null or contains a null element
      */
     public LexicographicPermutationIterator(final Collection<? extends E> collection) {
         this(collection, null);
@@ -102,16 +110,26 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
      * elements; sort the collection with the same comparator first to obtain the
      * complete set of permutations.
      * </p>
+     * <p>
+     * The elements are checked against the ordering in use, so that input it rejects is
+     * refused here and not after some permutations have been returned. Each element is
+     * compared with its successor and the last one with itself, so an ordering that
+     * rejects only some other pair of elements is detected later, by {@code next()}.
+     * </p>
      *
      * @param collection  The collection to generate permutations for
      * @param comparator  The comparator used to define the order of generation,
      *                    or null to use the natural ordering of the elements
-     * @throws NullPointerException if collection is null
+     * @throws ClassCastException if the elements are not mutually comparable under the
+     *         ordering in use
+     * @throws NullPointerException if collection is null, or if it contains a null element
+     *         that the ordering in use does not permit
      */
     public LexicographicPermutationIterator(final Collection<? extends E> collection, final Comparator<? super E> comparator) {
         Objects.requireNonNull(collection, "collection");
         nextPermutation = new ArrayList<>(collection);
         this.comparator = comparator;
+        checkElements(nextPermutation);
     }
 
     /**
@@ -131,11 +149,16 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
      * iterator's own state, and it belongs to the caller. It may therefore be modified in
      * any way and at any time without affecting the remaining permutations.
      * </p>
+     * <p>
+     * The constructor has already compared each element with its successor, so a comparison
+     * fails here only if the ordering in use rejects some other pair of elements.
+     * </p>
      *
      * @return A list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
-     * @throws ClassCastException if no comparator was supplied and the elements are
-     *         not mutually {@link Comparable}
+     * @throws ClassCastException if the ordering in use cannot compare two of the elements
+     * @throws NullPointerException if the ordering in use rejects a {@code null} element
+     *         that it accepted when the constructor checked the elements
      */
     @Override
     public List<E> next() {
@@ -143,8 +166,12 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
             throw new NoSuchElementException();
         }
 
+        // the copy is what keeps the caller's list apart from this iterator's own list,
+        // which is rearranged in place below
         final List<E> result = new ArrayList<>(nextPermutation);
-        nextPermutation = smallestGreaterThan(nextPermutation);
+        if (!advance(nextPermutation)) {
+            nextPermutation = null;
+        }
         return result;
     }
 
@@ -159,34 +186,19 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
     }
 
     /**
-     * Compares two elements using the comparator, or their natural ordering if no
-     * comparator was supplied.
+     * Rearranges the given permutation in place into the smallest arrangement greater
+     * than it. The elements are compared before any of them is moved, so the permutation
+     * is left as it was if a comparison fails, or if it is already the largest arrangement.
      *
-     * @param e1  The first element to compare
-     * @param e2  The second element to compare
-     * @return a negative integer, zero, or a positive integer as the first element
-     *         is less than, equal to, or greater than the second
+     * @param permutation  The arrangement to advance
+     * @return true if the permutation was advanced, false if it was already the largest
+     *         arrangement in lexicographical order
      * @throws ClassCastException if no comparator was supplied and the elements are
      *         not mutually {@link Comparable}
+     * @throws NullPointerException if the ordering in use rejects a {@code null} element
+     *         that it accepted when the constructor checked the elements
      */
-    @SuppressWarnings("unchecked")
-    private int compareElements(final E e1, final E e2) {
-        return comparator == null
-                ? ((Comparable<? super E>) e1).compareTo(e2)
-                : comparator.compare(e1, e2);
-    }
-
-    /**
-     * Returns the smallest arrangement of the given elements greater than the given one,
-     * as a new list. The permutation passed in is only read, never rearranged.
-     *
-     * @param permutation  The arrangement to advance from
-     * @return A new list holding the next arrangement in lexicographical order, or null
-     *         if the given one is already the largest
-     * @throws ClassCastException if no comparator was supplied and the elements are
-     *         not mutually {@link Comparable}
-     */
-    private List<E> smallestGreaterThan(final List<E> permutation) {
+    private boolean advance(final List<E> permutation) {
         final int size = permutation.size();
 
         // find the pivot: the rightmost element that is smaller than its successor.
@@ -197,23 +209,65 @@ public class LexicographicPermutationIterator<E> implements Iterator<List<E>> {
         }
 
         if (i < 0) {
-            return null;
+            return false;
         }
 
         // find the rightmost element greater than the pivot; the tail is descending,
-        // so this is the pivot's successor in the remaining elements
+        // so this is the pivot's successor in the remaining elements. the search needs
+        // no bound, as the element following the pivot is greater than it
         int j = size - 1;
-        while (j >= i && compareElements(permutation.get(i), permutation.get(j)) >= 0) {
+        while (compareElements(permutation.get(i), permutation.get(j)) >= 0) {
             --j;
         }
 
         // swap the pivot with its successor, then reverse the descending tail
         // into ascending order to obtain the smallest larger permutation
-        final List<E> nextP = new ArrayList<>(permutation);
-        Collections.swap(nextP, i, j);
-        final List<E> subList = nextP.subList(i + 1, nextP.size());
-        Collections.reverse(subList);
-        return nextP;
+        Collections.swap(permutation, i, j);
+        Collections.reverse(permutation.subList(i + 1, size));
+        return true;
+    }
+
+    /**
+     * Checks that the ordering in use accepts the given elements, by comparing each one
+     * with its successor and the last one with itself. Every element is thus the first
+     * operand of one comparison, which is enough for the natural ordering to reject a
+     * null or non-comparable element wherever it is.
+     *
+     * @param elements  The elements to check
+     * @throws ClassCastException if no comparator was supplied and the elements are
+     *         not mutually {@link Comparable}
+     * @throws NullPointerException if a compared element is {@code null} and no comparator
+     *         was supplied, or the supplied comparator does not permit {@code null} elements
+     */
+    private void checkElements(final List<E> elements) {
+        final int last = elements.size() - 1;
+        for (int i = 0; i < last; i++) {
+            compareElements(elements.get(i), elements.get(i + 1));
+        }
+
+        if (last >= 0) {
+            compareElements(elements.get(last), elements.get(last));
+        }
+    }
+
+    /**
+     * Compares two elements using the comparator, or their natural ordering if no
+     * comparator was supplied.
+     *
+     * @param e1  The first element to compare
+     * @param e2  The second element to compare
+     * @return a negative integer, zero, or a positive integer as the first element
+     *         is less than, equal to, or greater than the second
+     * @throws ClassCastException if no comparator was supplied and the elements are
+     *         not mutually {@link Comparable}
+     * @throws NullPointerException if a compared element is {@code null} and no comparator
+     *         was supplied, or the supplied comparator does not permit {@code null} elements
+     */
+    @SuppressWarnings("unchecked")
+    private int compareElements(final E e1, final E e2) {
+        return comparator == null
+                ? ((Comparable<? super E>) e1).compareTo(e2)
+                : comparator.compare(e1, e2);
     }
 
 }

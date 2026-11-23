@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -123,6 +124,28 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
 
         assertFalse(permutationIterator.hasNext());
         assertThrows(NoSuchElementException.class, permutationIterator::next);
+    }
+
+    /**
+     * test checking the limit of the check made by the constructor: it compares each
+     * element with its successor only, so an ordering that rejects some other pair of
+     * elements is reported by the call to next() that first compares that pair.
+     */
+    @Test
+    void testComparatorRejectingUncheckedPairThrowsFromNext() {
+        final Comparator<Character> comparator = (c1, c2) -> {
+            if (c1 == 'A' && c2 == 'C') {
+                throw new ClassCastException();
+            }
+            return c1.compareTo(c2);
+        };
+        final Iterator<List<Character>> permutationIterator = new LexicographicPermutationIterator<>(testList, comparator);
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('A', 'B', 'C'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertThrows(ClassCastException.class, permutationIterator::next);
     }
 
     @Test
@@ -254,8 +277,33 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
     }
 
     /**
-     * test checking that the lists handed out by next() belong to the caller: the next
-     * permutation is computed and copied before the current one is returned, so mutating
+     * test checking that iterating leaves the given collection as it was: the iterator
+     * rearranges a list of its own as it advances, never the collection it was built from.
+     */
+    @Test
+    void testIterationDoesNotRearrangeSourceCollection() {
+        final List<Character> source = new ArrayList<>(Arrays.asList('A', 'B', 'C'));
+        final Iterator<List<Character>> permutationIterator = new LexicographicPermutationIterator<>(source);
+
+        while (permutationIterator.hasNext()) {
+            permutationIterator.next();
+        }
+
+        assertEquals(Arrays.asList('A', 'B', 'C'), source);
+    }
+
+    /**
+     * test checking that elements which are each Comparable, but not with one another,
+     * are rejected under the natural ordering by the constructor.
+     */
+    @Test
+    void testMixedTypeElementsThrow() {
+        assertThrows(ClassCastException.class, () -> new LexicographicPermutationIterator<Object>(Arrays.asList(1, "A")));
+    }
+
+    /**
+     * test checking that the lists handed out by next() belong to the caller: the current
+     * permutation is copied before the iterator advances its own list, so mutating
      * a returned list, structurally or not, leaves the remaining iteration untouched.
      */
     @Test
@@ -281,11 +329,9 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
     }
 
     /**
-     * test checking the first permutation specifically, it being the one the constructor
-     * builds rather than next(): it must be a list of the iterator's own rather than the
-     * given collection, so that later changes to that collection never reach the
-     * iteration. The two copies live in different places, so losing one of them would
-     * corrupt only part of the sequence.
+     * test checking that the constructor copies the given collection: the iterator must
+     * work on a list of its own, so that later changes to that collection never reach
+     * the iteration.
      */
     @Test
     void testMutatingSourceCollectionDoesNotAffectIteration() {
@@ -303,21 +349,55 @@ class LexicographicPermutationIteratorTest extends AbstractIteratorTest<List<Cha
         assertEquals(Arrays.asList('A', 'C', 'B'), permutationIterator.next());
     }
 
+    /**
+     * test checking that elements which are not Comparable are rejected under the natural
+     * ordering by the constructor, even when there is a single one and nothing to compare
+     * it with.
+     */
     @Test
     void testNonComparableElementsThrow() {
-        final Iterator<List<NonComparableObject<Character>>> permutationIterator = new LexicographicPermutationIterator<>(
+        assertThrows(ClassCastException.class, () -> new LexicographicPermutationIterator<>(
                 Arrays.asList(
                         new NonComparableObject<>('A'),
-                        new NonComparableObject<>('B')));
-
-        assertTrue(permutationIterator.hasNext());
-        assertThrows(ClassCastException.class, permutationIterator::next);
+                        new NonComparableObject<>('B'))));
+        assertThrows(ClassCastException.class, () -> new LexicographicPermutationIterator<>(
+                Collections.singletonList(new NonComparableObject<>('A'))));
     }
 
     @Test
     void testNullCollectionThrows() {
         assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<>(null));
         assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<>(null, Comparator.<Character>reverseOrder()));
+    }
+
+    /**
+     * test checking that a null element is rejected under the natural ordering by the
+     * constructor, wherever it is in the collection and even when it is the only element.
+     */
+    @Test
+    void testNullElementThrows() {
+        assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<>(Arrays.asList(null, 'A', 'B')));
+        assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<>(Arrays.asList('A', null, 'B')));
+        assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<>(Arrays.asList('A', 'B', null)));
+        assertThrows(NullPointerException.class, () -> new LexicographicPermutationIterator<Character>(Collections.singletonList(null)));
+    }
+
+    /**
+     * test checking that a null element is permuted like any other one when the
+     * supplied comparator permits it.
+     */
+    @Test
+    void testNullElementWithNullTolerantComparator() {
+        final Iterator<List<Character>> permutationIterator = new LexicographicPermutationIterator<>(Arrays.asList(null, 'A'),
+                Comparator.nullsFirst(Comparator.naturalOrder()));
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList(null, 'A'), permutationIterator.next());
+
+        assertTrue(permutationIterator.hasNext());
+        assertEquals(Arrays.asList('A', null), permutationIterator.next());
+
+        assertFalse(permutationIterator.hasNext());
     }
 
     @Test
