@@ -344,6 +344,14 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             it.remove();
         }
 
+        /**
+         * Not supported, as the entries of a {@code MultiValuedMap} are read-only.
+         *
+         * @param value Ignored.
+         * @return Never returns normally.
+         * @throws IllegalStateException if {@link #next()} has not been called yet.
+         * @throws UnsupportedOperationException if {@link #next()} has been called.
+         */
         @Override
         public V setValue(final V value) {
             if (current == null) {
@@ -747,6 +755,13 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         return getMap().keySet();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The returned iterator does not support {@link MapIterator#setValue(Object)}: the entries it iterates are read-only, so {@code setValue}
+     * throws an {@link UnsupportedOperationException}.
+     * </p>
+     */
     @Override
     public MapIterator<K, V> mapIterator() {
         if (isEmpty()) {

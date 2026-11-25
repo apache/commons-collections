@@ -181,6 +181,11 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * A map iterator is an efficient way of iterating over maps. There is no need to access the entries collection or use {@code Map.Entry} objects.
      * </p>
+     * <p>
+     * The iterator visits one key-value mapping at a time, so a key with several values is returned once per value. Some operations of the map
+     * iterator are optional, such as {@link MapIterator#remove()} and {@link MapIterator#setValue(Object)}; see the documentation of the
+     * implementation for the operations it supports.
+     * </p>
      *
      * @return A map iterator.
      */
