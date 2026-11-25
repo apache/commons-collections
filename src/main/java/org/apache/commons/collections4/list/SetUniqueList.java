@@ -388,8 +388,15 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        final boolean result = super.removeIf(filter);
-        set.removeIf(filter);
+        Objects.requireNonNull(filter, "filter");
+        boolean result = false;
+        final Iterator<E> it = iterator();
+        while (it.hasNext()) {
+            if (filter.test(it.next())) {
+                it.remove();
+                result = true;
+            }
+        }
         return result;
     }
 
