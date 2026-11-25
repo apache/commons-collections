@@ -45,6 +45,8 @@ import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Tests {@link PatriciaTrie}.
@@ -52,6 +54,28 @@ import org.junit.jupiter.api.Test;
  * @param <V> The value type.
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
+
+    /**
+     * Counts traversal steps in both the backing trie and prefix subtrees.
+     */
+    private static final class CountingTrie extends PatriciaTrie<Integer> {
+
+        private static final long serialVersionUID = 1L;
+
+        private int traversalSteps;
+
+        @Override
+        TrieEntry<String, Integer> nextEntry(final TrieEntry<String, Integer> node) {
+            traversalSteps++;
+            return super.nextEntry(node);
+        }
+
+        @Override
+        TrieEntry<String, Integer> nextEntryInSubtree(final TrieEntry<String, Integer> node, final TrieEntry<String, Integer> parentOfSubtree) {
+            traversalSteps++;
+            return super.nextEntryInSubtree(node, parentOfSubtree);
+        }
+    }
 
     @Override
     public String getCompatibilityVersion() {
@@ -556,6 +580,54 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertTrue(prefixMap.isEmpty());
         assertEquals(new HashSet<>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"selected/", "\0"})
+    void testPrefixMapClearAllMatching(final String prefix) {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap(prefix);
+        for (final String suffix : Arrays.asList("", "a", "b", "ab", "\0", "\uffff")) {
+            trie.put(prefix + suffix, 1);
+        }
+        assertEquals(trie.size(), prefixMap.size());
+
+        prefixMap.clear();
+        assertTrue(trie.isEmpty());
+        assertTrue(prefixMap.isEmpty());
+        prefixMap.clear();
+
+        prefixMap.put(prefix + "new", 2);
+        assertEquals(1, trie.size());
+        assertEquals(1, prefixMap.size());
+        prefixMap.clear();
+        assertTrue(trie.isEmpty());
+    }
+
+    @Test
+    void relatedEntries() {
+        final int matchingEntries = 10;
+        final CountingTrie countingTrie = new CountingTrie();
+        for (int i = 0; i < 1000; i++) {
+            countingTrie.put("before/" + i, i);
+            countingTrie.put("unrelated/" + i, i);
+        }
+        for (int i = 0; i < matchingEntries; i++) {
+            countingTrie.put("selected/" + i, i);
+        }
+        final SortedMap<String, Integer> prefixMap = countingTrie.prefixMap("selected/");
+        assertEquals(matchingEntries, prefixMap.size());
+
+        countingTrie.traversalSteps = 0;
+        prefixMap.clear();
+        assertTrue(countingTrie.traversalSteps <= matchingEntries + 1,
+                () -> "Clearing a prefix traversed unrelated entries: " + countingTrie.traversalSteps);
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(2000, countingTrie.size());
+        for (int i = 0; i < 1000; i++) {
+            assertEquals(i, countingTrie.get("before/" + i));
+            assertEquals(i, countingTrie.get("unrelated/" + i));
+        }
     }
 
     @Test

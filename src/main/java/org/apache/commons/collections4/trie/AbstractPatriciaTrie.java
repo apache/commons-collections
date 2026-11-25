@@ -23,6 +23,7 @@ import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -582,12 +583,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
 
         @Override
         public void clear() {
-            final Iterator<Map.Entry<K, V>> it = AbstractPatriciaTrie.this.entrySet().iterator();
-            final Set<K> currentKeys = keySet();
-            while (it.hasNext()) {
-                if (currentKeys.contains(it.next().getKey())) {
-                    it.remove();
-                }
+            // Calling `trie.remove(key)` while iterating that view invalidates its iterator,
+            // so the next iteration can throw `ConcurrentModificationException`.
+            // `new ArrayList<>(keySet())` snapshots the matching keys, allowing safe removal afterward
+            for (final K key : new ArrayList<>(keySet())) {
+                AbstractPatriciaTrie.this.remove(key);
             }
         }
 
