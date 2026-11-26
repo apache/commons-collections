@@ -123,7 +123,7 @@ public class ListUtils {
                 throw new IndexOutOfBoundsException("Index " + index + " must be less than size " + listSize);
             }
             final int start = index * size;
-            final int end = Math.min(start + size, list.size());
+            final int end = start + Math.min(size, list.size() - start);
             return list.subList(start, end);
         }
 
