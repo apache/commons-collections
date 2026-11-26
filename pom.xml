@@ -405,7 +405,7 @@
             <version>${commons.compiler.version}</version>
             <configuration combine.self="override">
               <testIncludes>
-                <testInclude>**/*</testInclude>
+                <testInclude>**/*.java</testInclude>
               </testIncludes>
             </configuration>
           </plugin>

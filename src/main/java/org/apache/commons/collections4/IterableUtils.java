@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,10 +48,120 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
  * For other arguments which are null, a {@link Predicate} will result in a {@link NullPointerException}. Exception: passing a null {@link Comparator} is
  * equivalent to a Comparator with natural ordering.</li>
  * </ul>
+ * <p>
+ * The {@code chainedIterable} methods traverse directly nested chains without recursion. Their iterators throw
+ * {@link IllegalStateException} if they encounter a cycle of directly nested chains.
+ * </p>
  *
  * @since 4.1
  */
 public class IterableUtils {
+
+    /**
+     * A concatenation view that can visit nested views without opening an iterator for each view.
+     */
+    private static final class ChainedIterable<E> extends FluentIterable<E> {
+
+        private static final int MAX_LINEAR_PATH = 4;
+
+        /**
+         * The next iterable to visit when returning to a parent.
+         */
+        private static final class Position<E> {
+
+            private final ChainedIterable<? extends E> chain;
+            private final int index;
+            private final Position<E> parent;
+
+            private Position(final ChainedIterable<? extends E> chain, final int index, final Position<E> parent) {
+                this.chain = chain;
+                this.index = index;
+                this.parent = parent;
+            }
+        }
+
+        private final Iterable<? extends E>[] iterables;
+
+        private ChainedIterable(final Iterable<? extends E>[] iterables) {
+            this.iterables = iterables;
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return new LazyIteratorChain<E>() {
+
+                private ChainedIterable<? extends E> chain = ChainedIterable.this;
+                private int index;
+                private Position<E> parent;
+                private Set<ChainedIterable<?>> active;
+
+                /**
+                 * Checks shallow paths using the existing parent positions and indexes deeper paths by identity.
+                 */
+                private boolean addToActivePath(final ChainedIterable<?> nested) {
+                    if (active != null) {
+                        return active.add(nested);
+                    }
+                    if (chain == nested) {
+                        return false;
+                    }
+                    int depth = 1;
+                    for (Position<E> position = parent; position != null; position = position.parent) {
+                        if (position.chain == nested) {
+                            return false;
+                        }
+                        depth++;
+                    }
+                    if (depth >= MAX_LINEAR_PATH) {
+                        active = Collections.newSetFromMap(new IdentityHashMap<>());
+                        active.add(chain);
+                        for (Position<E> position = parent; position != null; position = position.parent) {
+                            active.add(position.chain);
+                        }
+                        active.add(nested);
+                    }
+                    return true;
+                }
+
+                /**
+                 * Saves the parent position before descending into a nested view.
+                 */
+                private void enter(final ChainedIterable<? extends E> nested) {
+                    if (!addToActivePath(nested)) {
+                        throw new IllegalStateException("Cyclic chained iterable");
+                    }
+                    parent = new Position<>(chain, index + 1, parent);
+                    chain = nested;
+                    index = 0;
+                }
+
+                @Override
+                protected Iterator<? extends E> nextIterator(final int count) {
+                    while (true) {
+                        if (index < chain.iterables.length) {
+                            final Iterable<? extends E> iterable = chain.iterables[index];
+                            if (!(iterable instanceof ChainedIterable<?>)) {
+                                final Iterator<? extends E> iterator = iterable.iterator();
+                                index++;
+                                return iterator;
+                            }
+                            enter((ChainedIterable<? extends E>) iterable);
+                        } else if (parent == null) {
+                            active = null;
+                            return null;
+                        } else {
+                            if (active != null) {
+                                active.remove(chain);
+                            }
+                            chain = parent.chain;
+                            index = parent.index;
+                            parent = parent.parent;
+                        }
+                    }
+                }
+            };
+        }
+    }
 
     /**
      * Inner class to distinguish unmodifiable instances.
@@ -125,22 +236,7 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E>... iterables) {
         checkNotNull(iterables);
-        return new FluentIterable<E>() {
-
-            @Override
-            public Iterator<E> iterator() {
-                return new LazyIteratorChain<E>() {
-
-                    @Override
-                    protected Iterator<? extends E> nextIterator(final int count) {
-                        if (count > iterables.length) {
-                            return null;
-                        }
-                        return iterables[count - 1].iterator();
-                    }
-                };
-            }
-        };
+        return new ChainedIterable<>(iterables);
     }
 
     /**
