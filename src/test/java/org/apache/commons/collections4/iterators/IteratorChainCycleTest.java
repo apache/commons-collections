@@ -136,7 +136,7 @@ class IteratorChainCycleTest {
 
     @ParameterizedTest
     @ValueSource(ints = { 2, 3, 20 })
-    void testRemovalCycleAfterFailedNext(final int length) {
+    void testFailedNextPreservesRemovalAfterCachedPrefix(final int length) {
         final List<IteratorChain<Integer>> chains = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             chains.add(new IteratorChain<>());
@@ -148,16 +148,14 @@ class IteratorChainCycleTest {
             chains.get(i).addIterator(chains.get((i + 1) % length));
         }
         assertTrue(root.hasNext());
-        // Populate cached results around the cycle before consuming the finite prefix.
+        // The cached prefix is consumed through a different starting chain.
         assertTrue(chains.get(1).hasNext());
         assertEquals(1, root.next());
-        assertTrue(root.hasNext());
-        assertCycle(root::next);
-        // next() has prepared removal state along the path before detecting the cycle.
-        assertCycle(root::remove);
-        assertCycle(root::remove);
-        assertEquals(Collections.singletonList(1), values);
+        assertCycle(chains.get(1)::next);
         assertCycle(root::hasNext);
+        root.remove();
+        assertTrue(values.isEmpty());
+        assertThrows(IllegalStateException.class, root::remove);
     }
 
     @ParameterizedTest

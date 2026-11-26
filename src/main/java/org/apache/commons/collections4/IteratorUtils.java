@@ -53,7 +53,6 @@ import org.apache.commons.collections4.iterators.FilterListIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 import org.apache.commons.collections4.iterators.IteratorIterable;
-import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.ListIteratorWrapper;
 import org.apache.commons.collections4.iterators.LoopingIterator;
 import org.apache.commons.collections4.iterators.LoopingListIterator;
@@ -456,22 +455,16 @@ public class IteratorUtils {
 
     /**
      * Gets an iterator that iterates through an {@link Iterator} of Iterators one after another.
+     * The returned iterator rejects a null source on first use.
      *
      * @param <E>       the element type.
      * @param iterators The iterators to use, not null or empty or contain nulls.
      * @return A combination iterator over the iterators.
-     * @throws NullPointerException if iterators collection is null or contains a null.
      * @throws ClassCastException   if the iterators collection contains the wrong object type.
      * @since 4.5.0-M3
      */
     public static <E> Iterator<E> chainedIterator(final Iterator<? extends Iterator<? extends E>> iterators) {
-        return new LazyIteratorChain<E>() {
-
-            @Override
-            protected Iterator<? extends E> nextIterator(final int count) {
-                return iterators.hasNext() ? iterators.next() : null;
-            }
-        };
+        return IteratorChain.fromIterators(iterators);
     }
 
     /**
