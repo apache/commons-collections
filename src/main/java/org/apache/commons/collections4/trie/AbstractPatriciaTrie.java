@@ -465,6 +465,11 @@ public abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, 
                     needsFixing = true;
                 }
                 super.remove();
+                // No subtree is needed once iteration is exhausted.
+                if (next == null) {
+                    // We can exit cause subtree is also (null, null)
+                    return;
+                }
                 // If the subtree changed its bitIndex or we
                 // removed the old subtree, get a new one.
                 if (bitIdx != subtree.bitIndex || needsFixing) {
