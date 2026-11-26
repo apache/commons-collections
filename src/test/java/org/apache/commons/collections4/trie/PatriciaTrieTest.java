@@ -597,6 +597,85 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<>(trie.values()));
     }
 
+
+    @Test
+    void testPrefixMapIteratorRemoveAll() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("a", 1);
+        trie.put("ab", 2);
+
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("a");
+        final Iterator<String> iterator = prefixMap.keySet().iterator();
+
+        assertThrows(IllegalStateException.class, iterator::remove);
+
+        for (final String key : Arrays.asList("a", "ab")) {
+            assertTrue(iterator.hasNext());
+            assertEquals(key, iterator.next());
+            iterator.remove();
+            assertFalse(trie.containsKey(key));
+            assertThrows(IllegalStateException.class, iterator::remove);
+        }
+
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, iterator::next);
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(0, trie.size());
+    }
+
+    @Test
+    void testPrefixMapIteratorRemoveAllExceptOne() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+        trie.put("a", 1);
+        trie.put("ab", 2);
+        trie.put("z", 3);
+
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("a");
+        final Iterator<String> iterator = prefixMap.keySet().iterator();
+        assertThrows(IllegalStateException.class, iterator::remove);
+        for (final String key : Arrays.asList("a", "ab")) {
+            assertTrue(iterator.hasNext());
+            assertEquals(key, iterator.next());
+            iterator.remove();
+            assertFalse(trie.containsKey(key));
+            assertThrows(IllegalStateException.class, iterator::remove);
+        }
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, iterator::next);
+        assertTrue(prefixMap.isEmpty());
+        assertEquals(1, trie.size());
+        assertEquals(3, trie.get("z"));
+    }
+
+    @Test
+    void testPrefixMapIteratorRemoveLast() {
+        final PatriciaTrie<Integer> trie = new PatriciaTrie<>();
+
+        trie.put("a", 1);
+        trie.put("ab", 2);
+
+        final SortedMap<String, Integer> prefixMap = trie.prefixMap("a");
+        final Iterator<Map.Entry<String, Integer>> iterator = prefixMap.entrySet().iterator();
+
+        // check that the order correct
+        assertEquals("a", iterator.next().getKey());
+        assertEquals("ab", iterator.next().getKey());
+        assertFalse(iterator.hasNext());
+
+        // remove last element
+        iterator.remove();
+
+        // check that repeated remove failed
+        assertThrows(IllegalStateException.class, iterator::remove);
+
+        assertFalse(iterator.hasNext());
+
+        assertThrows(NoSuchElementException.class, iterator::next);
+        assertEquals(1, prefixMap.size());
+        assertEquals(1, trie.size());
+        assertEquals(1, trie.get("a"));
+    }
+
     @Test
     void testPrefixMapRemoval() {
         final PatriciaTrie<String> trie = new PatriciaTrie<>();
