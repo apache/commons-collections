@@ -53,7 +53,6 @@ import org.apache.commons.collections4.iterators.FilterListIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.IteratorEnumeration;
 import org.apache.commons.collections4.iterators.IteratorIterable;
-import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.ListIteratorWrapper;
 import org.apache.commons.collections4.iterators.LoopingIterator;
 import org.apache.commons.collections4.iterators.LoopingListIterator;
@@ -465,13 +464,7 @@ public class IteratorUtils {
      * @since 4.5.0-M3
      */
     public static <E> Iterator<E> chainedIterator(final Iterator<? extends Iterator<? extends E>> iterators) {
-        return new LazyIteratorChain<E>() {
-
-            @Override
-            protected Iterator<? extends E> nextIterator(final int count) {
-                return iterators.hasNext() ? iterators.next() : null;
-            }
-        };
+        return IteratorChain.fromIterators(iterators);
     }
 
     /**

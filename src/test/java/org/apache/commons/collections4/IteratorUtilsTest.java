@@ -24,8 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -464,6 +466,42 @@ class IteratorUtilsTest {
         final List<Number> actual = new ArrayList<>();
         iter.forEachRemaining(actual::add);
         assertEquals(actual, expected);
+    }
+
+    @Test
+    void testChainedIteratorOfIteratorsDeepNesting() {
+        final List<Integer> values = new ArrayList<>(Collections.singletonList(1));
+        final Iterator<Iterator<Integer>> source = Arrays.asList(values.iterator(), Collections.singletonList(2).iterator()).iterator();
+        Iterator<Integer> chain = IteratorUtils.chainedIterator(source);
+        for (int i = 0; i < 100_000; i++) {
+            chain = IteratorUtils.chainedIterator(Collections.singletonList(chain).iterator());
+        }
+
+        assertEquals(1, chain.next());
+        assertTrue(source.hasNext());
+        assertTrue(chain.hasNext());
+        chain.remove();
+        assertTrue(values.isEmpty());
+        assertEquals(2, chain.next());
+        assertFalse(chain.hasNext());
+    }
+
+    @Test
+    void testChainedIteratorOfIteratorsReusesPath() {
+        final int size = 50_000;
+        Iterator<Integer> chain = Collections.nCopies(size, 1).iterator();
+        for (int i = 0; i < size; i++) {
+            chain = IteratorUtils.chainedIterator(Collections.singletonList(chain).iterator());
+        }
+        final Iterator<Integer> iterator = chain;
+        assertTimeoutPreemptively(Duration.ofSeconds(5), () -> {
+            int count = 0;
+            while (!Thread.currentThread().isInterrupted() && iterator.hasNext()) {
+                assertEquals(1, iterator.next());
+                count++;
+            }
+            assertEquals(size, count);
+        });
     }
 
     @Test

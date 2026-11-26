@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.IteratorUtils;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -167,6 +168,21 @@ class IteratorChainRechainingTest {
         final IteratorChain<Integer> destination = new IteratorChain<>(wrap(source, unmodifiable));
         assertThrows(IllegalStateException.class, destination::remove);
         exhaust(destination);
+    }
+
+    @Test
+    void testLookaheadAfterSharedChildIsExhausted() {
+        final IteratorChain<Integer> child = new IteratorChain<>(Collections.singletonList(1).iterator());
+        final IteratorChain<Integer> middle = new IteratorChain<>(child);
+        final IteratorChain<Integer> withTail = new IteratorChain<>(middle, Collections.singletonList(2).iterator());
+        final IteratorChain<Integer> withoutTail = new IteratorChain<>(middle);
+
+        assertTrue(withTail.hasNext());
+        assertTrue(withoutTail.hasNext());
+        assertEquals(1, child.next());
+
+        assertEquals(2, withTail.next());
+        exhaust(withoutTail);
     }
 
     @ParameterizedTest
