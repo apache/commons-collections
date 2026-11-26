@@ -16,16 +16,21 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * An IteratorChain is an Iterator that wraps a number of Iterators.
@@ -66,6 +71,103 @@ import java.util.Set;
  */
 public class IteratorChain<E> implements Iterator<E> {
 
+    private static final class BorrowedTraversal extends WeakReference<Traversal> implements Supplier<Traversal> {
+
+        private BorrowedTraversal(final Traversal traversal) {
+            super(traversal);
+        }
+    }
+
+    /**
+     * Exposes lazy chaining without exposing the mutable chain to callers.
+     */
+    private static final class SourceIterator<E> implements Iterator<E> {
+
+        private final IteratorChain<E> chain;
+
+        private SourceIterator(final IteratorChain<E> chain) {
+            this.chain = chain;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return chain.hasNext();
+        }
+
+        @Override
+        public E next() {
+            return chain.next();
+        }
+
+        @Override
+        public void remove() {
+            chain.remove();
+        }
+    }
+
+    /**
+     * The root owns this path. Children hold a weak link so they can invalidate the path without retaining the root.
+     */
+    private static final class Traversal implements Supplier<Traversal> {
+
+        private final List<IteratorChain<?>> path = new ArrayList<>();
+        private final BorrowedTraversal borrowed = new BorrowedTraversal(this);
+
+        /** Length of the path prefix already linked for remove(). */
+        private int linked;
+
+        /** Number of source-backed children on the active path. */
+        private int liveSources;
+
+        private Traversal(final IteratorChain<?> root) {
+            path.add(root);
+        }
+
+        @Override
+        public Traversal get() {
+            return this;
+        }
+
+        private void enter(final IteratorChain<?> chain) {
+            path.add(chain);
+            chain.traversal = borrowed;
+            liveSources += chain.sourceBacked ? 1 : 0;
+        }
+
+        private IteratorChain<?> leaf() {
+            return path.get(path.size() - 1);
+        }
+
+        private void leave() {
+            final IteratorChain<?> chain = path.remove(path.size() - 1);
+            chain.traversal = null;
+            liveSources -= chain.sourceBacked ? 1 : 0;
+            changedCurrentIterator();
+        }
+
+        private void changedCurrentIterator() {
+            linked = Math.min(linked, path.size() - 1);
+        }
+
+        /**
+         * Preserves the actual delegation links, including unmodifiable decorators.
+         */
+        private void linkForRemoval() {
+            while (linked < path.size()) {
+                path.get(linked++).rememberCurrentIterator();
+            }
+        }
+
+        private void release() {
+            if (path.size() > 1) {
+                path.get(0).cachedHasNextValue = null;
+            }
+            for (int i = 0; i < path.size(); i++) {
+                path.get(i).traversal = null;
+            }
+        }
+    }
+
     /**
      * Gets a nested chain that can be traversed without invoking overridden methods.
      * Unmodifiable decorators forward hasNext() and next(), but must still be retained for remove().
@@ -75,12 +177,41 @@ public class IteratorChain<E> implements Iterator<E> {
         while (unwrapped instanceof UnmodifiableIterator) {
             unwrapped = ((UnmodifiableIterator<? extends E, ?>) unwrapped).unwrap();
         }
-        // Subclasses may override any iterator method or updateCurrentIterator().
-        return unwrapped.getClass() == IteratorChain.class ? (IteratorChain<? extends E>) unwrapped : null;
+        return directChain(unwrapped);
     }
 
-    /** The chain of iterators */
-    private final Queue<Iterator<? extends E>> iteratorQueue = new LinkedList<>();
+    private static <E> IteratorChain<? extends E> directChain(final Iterator<? extends E> iterator) {
+        if (iterator instanceof SourceIterator<?>) {
+            return ((SourceIterator<? extends E>) iterator).chain;
+        }
+        // Subclasses may override any iterator method or updateCurrentIterator().
+        return iterator.getClass() == IteratorChain.class ? (IteratorChain<? extends E>) iterator : null;
+    }
+
+    /**
+     * Creates a chain that retrieves each iterator from the source on demand.
+     * The returned iterator rejects a null source on first use.
+     *
+     * @param <E> The element type.
+     * @param iterators The source of iterators, not null.
+     * @return An iterator over the elements of the source iterators in order.
+     * @since 4.6.1
+     */
+    public static <E> Iterator<E> fromIterators(final Iterator<? extends Iterator<? extends E>> iterators) {
+        final IteratorChain<E> chain = new IteratorChain<>();
+        chain.iteratorSource = iterators;
+        chain.sourceBacked = true;
+        return new SourceIterator<>(chain);
+    }
+
+    /** Iterators explicitly added to the chain. */
+    private Queue<Iterator<? extends E>> iteratorQueue;
+
+    /** A source of iterators to visit before the queue. */
+    private Iterator<? extends Iterator<? extends E>> iteratorSource;
+
+    /** Whether this chain was created from an iterator source. */
+    private boolean sourceBacked;
 
     /** The current iterator */
     private Iterator<? extends E> currentIterator;
@@ -100,6 +231,13 @@ public class IteratorChain<E> implements Iterator<E> {
      * Contains the result of the last hasNext() call until next() is invoked
      */
     private Boolean cachedHasNextValue;
+
+    /** The owned traversal or a weak link to the path using this child. */
+    private Supplier<Traversal> traversal;
+
+    private Traversal activeTraversal() {
+        return traversal == null ? null : traversal.get();
+    }
 
     /**
      * Constructs an IteratorChain with no Iterators.
@@ -195,7 +333,11 @@ public class IteratorChain<E> implements Iterator<E> {
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
         // Retain the iterator itself so subclass behavior and later additions to a child chain are preserved.
-        iteratorQueue.add(Objects.requireNonNull(iterator, "iterator"));
+        Objects.requireNonNull(iterator, "iterator");
+        if (iteratorQueue == null) {
+            iteratorQueue = new LinkedList<>();
+        }
+        iteratorQueue.add(iterator);
     }
 
     /**
@@ -215,11 +357,37 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     @Override
     public boolean hasNext() {
+        return prepareNext();
+    }
+
+    /**
+     * Checks for another element without invoking an override of hasNext() from next().
+     */
+    private boolean prepareNext() {
         lockChain();
-        if (cachedHasNextValue == null) {
+        if (traversal != null) {
+            prepareNestedTraversal();
+        } else if (cachedHasNextValue == null || sourceBacked) {
             updateCurrentIterator();
         }
         return cachedHasNextValue;
+    }
+
+    /**
+     * Releases a borrowed path before using this iterator independently.
+     */
+    private void prepareNestedTraversal() {
+        Traversal active = traversal.get();
+        if (traversal != active) {
+            if (active != null) {
+                active.release();
+            }
+            traversal = null;
+            active = null;
+        }
+        if (cachedHasNextValue == null || requiresLiveLookahead(active)) {
+            updateCurrentIterator();
+        }
     }
 
     /**
@@ -227,7 +395,12 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     private void initializeCurrentIterator() {
         if (currentIterator == null) {
-            pollCurrentIterator();
+            if (sourceBacked) {
+                Objects.requireNonNull(iteratorSource, "iterators");
+            }
+            if (!pollCurrentIterator()) {
+                currentIterator = EmptyIterator.emptyIterator();
+            }
         }
     }
 
@@ -262,32 +435,57 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     @Override
     public E next() {
-        Iterator<? extends E> iterator = nextIterator();
-        IteratorChain<? extends E> chain;
-        while ((chain = asIteratorChain(iterator)) != null) {
-            iterator = chain.nextIterator();
+        if (!prepareNext()) {
+            throw new NoSuchElementException();
         }
-        return iterator.next();
-    }
-
-    /**
-     * Prepares this chain for next() while retaining the actual child for remove().
-     */
-    private Iterator<? extends E> nextIterator() {
-        lockChain();
-        if (cachedHasNextValue == null) {
-            updateCurrentIterator();
-        }
-        lastUsedIterator = currentIterator;
         cachedHasNextValue = null;
-        return currentIterator;
+        final Traversal active = activeTraversal();
+        if (active == null) {
+            final E value = currentIterator.next();
+            rememberCurrentIterator();
+            return value;
+        }
+
+        final IteratorChain<?> leaf = active.leaf();
+        leaf.cachedHasNextValue = null;
+        // Every entry on this path is a child of this chain.
+        @SuppressWarnings("unchecked")
+        final E value = (E) leaf.currentIterator.next();
+        active.linkForRemoval();
+        return value;
     }
 
     /**
-     * Advances to the next queued iterator, or an empty iterator if the queue is empty.
+     * Advances to the next available iterator, leaving the current iterator in place if there is none.
      */
-    private void pollCurrentIterator() {
-        currentIterator = iteratorQueue.isEmpty() ? EmptyIterator.<E>emptyIterator() : iteratorQueue.remove();
+    private boolean pollCurrentIterator() {
+        if (iteratorSource != null) {
+            final Iterator<? extends E> next = iteratorSource.hasNext() ? iteratorSource.next() : null;
+            if (next != null) {
+                currentIterator = next;
+                return true;
+            }
+            iteratorSource = null;
+        }
+        if (iteratorQueue == null || iteratorQueue.isEmpty()) {
+            return false;
+        }
+        currentIterator = iteratorQueue.remove();
+        return true;
+    }
+
+    /**
+     * Keeps the iterator that supplied the last element available for remove().
+     */
+    private void rememberCurrentIterator() {
+        lastUsedIterator = currentIterator;
+    }
+
+    /**
+     * Source-backed chains expose live lookahead on their current iterator.
+     */
+    private boolean requiresLiveLookahead(final Traversal active) {
+        return sourceBacked || active != null && active.liveSources != 0;
     }
 
     /**
@@ -310,9 +508,9 @@ public class IteratorChain<E> implements Iterator<E> {
             throw new IllegalStateException("remove() has been invoked without next()");
         }
         // Flat removal needs no traversal state, and must still delegate to subclasses and decorators.
-        if (lastUsedIterator.getClass() != IteratorChain.class) {
+        if (directChain(lastUsedIterator) == null) {
             lastUsedIterator.remove();
-            lastUsedIterator = null;
+            clearRemoval();
             return;
         }
         final Deque<IteratorChain<?>> chains = new ArrayDeque<>();
@@ -329,15 +527,27 @@ public class IteratorChain<E> implements Iterator<E> {
             chains.push(chain);
             final Iterator<?> iterator = chain.lastUsedIterator;
             // Do not unwrap unmodifiable decorators or bypass a subclass's remove() method.
-            if (iterator.getClass() != IteratorChain.class) {
+            final IteratorChain<?> child = directChain(iterator);
+            if (child == null) {
                 iterator.remove();
                 break;
             }
-            chain = (IteratorChain<?>) iterator;
+            chain = child;
         }
         // Only clear removal state after the underlying remove() succeeds.
         for (final IteratorChain<?> usedChain : chains) {
-            usedChain.lastUsedIterator = null;
+            usedChain.clearRemoval();
+        }
+    }
+
+    /**
+     * Marks the removal links for renewal on the next successful next().
+     */
+    private void clearRemoval() {
+        lastUsedIterator = null;
+        final Traversal active = activeTraversal();
+        if (active != null) {
+            active.linked = 0;
         }
     }
 
@@ -350,7 +560,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @return Iterator count
      */
     public int size() {
-        return iteratorQueue.size();
+        return iteratorQueue == null ? 0 : iteratorQueue.size();
     }
 
     /**
@@ -360,49 +570,54 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws IllegalStateException if a cycle is detected in the nested chains
      */
     protected void updateCurrentIterator() {
-        Deque<IteratorChain<? extends E>> parents = null;
-        Set<IteratorChain<? extends E>> active = null;
-        IteratorChain<? extends E> chain = this;
+        Traversal active = activeTraversal();
+        IteratorChain<?> chain = active == null ? this : active.leaf();
         while (true) {
             chain.initializeCurrentIterator();
-            final IteratorChain<? extends E> child = asIteratorChain(chain.currentIterator);
+            final IteratorChain<?> child = asIteratorChain(chain.currentIterator);
             if (child == null) {
-                chain.cachedHasNextValue = chain.currentIterator.hasNext();
+                if (chain.cachedHasNextValue == Boolean.TRUE && !requiresLiveLookahead(active) || chain.currentIterator.hasNext()) {
+                    if (chain != this) {
+                        chain.cachedHasNextValue = Boolean.TRUE;
+                    }
+                    cachedHasNextValue = Boolean.TRUE;
+                    return;
+                }
             } else {
                 child.lockChain();
-                // A cached result must not conceal a link back to an active ancestor.
-                if (child == chain || active != null && active.contains(child)) {
-                    // Discard intermediate results so a retry also detects the cycle.
-                    chain.cachedHasNextValue = null;
-                    if (parents != null) {
-                        for (final IteratorChain<?> parent : parents) {
-                            parent.cachedHasNextValue = null;
-                        }
+                final Traversal childTraversal = child.activeTraversal();
+                if (child == this || active != null && childTraversal == active) {
+                    if (active != null) {
+                        active.release();
                     }
                     throw new IllegalStateException("Cyclic IteratorChain");
                 }
-                if (child.cachedHasNextValue == null) {
-                    if (parents == null) {
-                        parents = new ArrayDeque<>();
-                        active = Collections.newSetFromMap(new IdentityHashMap<>());
-                        active.add(chain);
+                if (child.cachedHasNextValue != Boolean.FALSE || child.sourceBacked) {
+                    if (childTraversal != null) {
+                        childTraversal.release();
                     }
-                    active.add(child);
-                    parents.push(chain);
+                    if (active == null) {
+                        active = new Traversal(this);
+                        traversal = active;
+                    }
+                    active.enter(child);
                     chain = child;
                     continue;
                 }
-                chain.cachedHasNextValue = child.cachedHasNextValue;
             }
-            if (!chain.cachedHasNextValue && !chain.iteratorQueue.isEmpty()) {
-                chain.pollCurrentIterator();
-                continue;
+            while (!chain.pollCurrentIterator()) {
+                chain.cachedHasNextValue = Boolean.FALSE;
+                if (chain == this) {
+                    traversal = null;
+                    return;
+                }
+                active.leave();
+                chain = active.leaf();
             }
-            if (parents == null || parents.isEmpty()) {
-                return;
+            chain.cachedHasNextValue = null;
+            if (active != null) {
+                active.changedCurrentIterator();
             }
-            active.remove(chain);
-            chain = parents.pop();
         }
     }
 }

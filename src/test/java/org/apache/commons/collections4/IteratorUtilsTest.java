@@ -24,8 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,6 +44,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Vector;
 
@@ -53,6 +57,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.IteratorChainTest;
 import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
@@ -461,9 +466,66 @@ class IteratorUtilsTest {
 
         final List<Number> expected = Arrays.asList(1, 3, 3.14f, Math.sqrt(2.0));
         final Iterator<Number> iter = IteratorUtils.chainedIterator(toBeUnwound);
+        assertFalse(iter instanceof IteratorChain);
         final List<Number> actual = new ArrayList<>();
         iter.forEachRemaining(actual::add);
         assertEquals(actual, expected);
+    }
+
+    @Test
+    void testChainedIteratorOfIteratorsDeepNesting() {
+        final int tailSize = 50_000;
+        final List<Integer> values = new ArrayList<>(Collections.singletonList(1));
+        final Iterator<Iterator<Integer>> source = Arrays.asList(values.iterator(), Collections.nCopies(tailSize, 2).iterator()).iterator();
+        Iterator<Integer> chain = IteratorUtils.chainedIterator(source);
+        for (int i = 0; i < 100_000; i++) {
+            chain = IteratorUtils.chainedIterator(Collections.singletonList(chain).iterator());
+        }
+        final Iterator<Integer> iterator = chain;
+        assertTimeoutPreemptively(Duration.ofSeconds(5), () -> {
+            assertEquals(1, iterator.next());
+            assertTrue(source.hasNext());
+            assertTrue(iterator.hasNext());
+            iterator.remove();
+            assertTrue(values.isEmpty());
+
+            int count = 0;
+            while (!Thread.currentThread().isInterrupted() && iterator.hasNext()) {
+                assertEquals(2, iterator.next());
+                count++;
+            }
+            assertEquals(tailSize, count);
+        });
+    }
+
+    @Test
+    void testChainedIteratorOfIteratorsPollsSharedSourceAgain() {
+        final Queue<Integer> values = new ArrayDeque<>(Collections.singletonList(1));
+        final Iterator<Integer> shared = new Iterator<Integer>() {
+            @Override
+            public boolean hasNext() {
+                return !values.isEmpty();
+            }
+
+            @Override
+            public Integer next() {
+                return values.remove();
+            }
+        };
+        final Iterator<Integer> child = IteratorUtils.chainedIterator(Collections.singletonList(shared).iterator());
+        final Iterator<Integer> chain = IteratorUtils.chainedIterator(Collections.singletonList(child).iterator());
+        assertTrue(chain.hasNext());
+        assertEquals(1, shared.next());
+        assertFalse(chain.hasNext());
+        values.add(2);
+        assertTrue(chain.hasNext());
+        assertEquals(2, chain.next());
+    }
+
+    @Test
+    void testChainedIteratorOfIteratorsRejectsNullOnUse() {
+        final Iterator<Integer> chain = IteratorUtils.chainedIterator((Iterator<Iterator<Integer>>) null);
+        assertThrows(NullPointerException.class, chain::hasNext);
     }
 
     @Test

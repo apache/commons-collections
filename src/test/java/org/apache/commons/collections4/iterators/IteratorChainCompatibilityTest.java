@@ -273,6 +273,25 @@ class IteratorChainCompatibilityTest {
         assertFalse(source.hasNext());
     }
 
+    @Test
+    void testRemovalThroughAnotherParentRenewsSharedLinks() {
+        final List<Integer> firstValues = new ArrayList<>(Collections.singletonList(1));
+        final List<Integer> lastValues = new ArrayList<>(Arrays.asList(2, 3));
+        final IteratorChain<Integer> source = new IteratorChain<>(firstValues.iterator(), lastValues.iterator());
+        final IteratorChain<Integer> first = new IteratorChain<>(source);
+        final IteratorChain<Integer> second = new IteratorChain<>(source);
+
+        assertEquals(1, first.next());
+        assertEquals(2, second.next());
+        first.remove();
+        assertEquals(Collections.singletonList(1), firstValues);
+        assertEquals(Collections.singletonList(3), lastValues);
+
+        assertEquals(3, second.next());
+        second.remove();
+        assertTrue(lastValues.isEmpty());
+    }
+
     @ParameterizedTest
     @ValueSource(booleans = { false, true })
     void testSourceAdvancesAfterWrapping(final boolean unmodifiable) {

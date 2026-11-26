@@ -19,10 +19,12 @@ package org.apache.commons.collections4.iterators;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
@@ -30,6 +32,8 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class ExtendedIteratorTest {
 
@@ -116,6 +120,21 @@ class ExtendedIteratorTest {
         final List<Integer> actual = new ArrayList<>();
         iter.forEachRemaining(actual::add);
         assertEquals(collectionA, actual);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { false, true })
+    void testFlattenAndThen(final boolean started) {
+        final ExtendedIterator<Integer> flattened = ExtendedIterator.flatten(
+                Collections.singletonList(Arrays.asList(1, 2).iterator()).iterator());
+        if (started) {
+            assertEquals(1, flattened.next());
+        }
+        final ExtendedIterator<Integer> appended = flattened.andThen(Collections.singletonList(3).iterator());
+        assertNotSame(flattened, appended);
+        final List<Integer> actual = new ArrayList<>();
+        appended.forEachRemaining(actual::add);
+        assertEquals(started ? Arrays.asList(2, 3) : Arrays.asList(1, 2, 3), actual);
     }
 
     @Test
