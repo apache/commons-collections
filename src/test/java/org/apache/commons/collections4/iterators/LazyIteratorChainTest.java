@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -119,6 +120,25 @@ class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         assertTrue(chain.hasNext(), "should have next");
         assertEquals("C", chain.next());
         assertFalse(chain.hasNext(), "should not have next");
+    }
+
+    @Test
+    void testRetryOpeningFirstIterator() {
+        final LazyIteratorChain<String> chain = new LazyIteratorChain<String>() {
+            private boolean firstAttempt = true;
+
+            @Override
+            protected Iterator<? extends String> nextIterator(final int count) {
+                if (firstAttempt) {
+                    firstAttempt = false;
+                    throw new IllegalStateException("Source unavailable");
+                }
+                return count == 1 ? Collections.singletonList("first").iterator() : null;
+            }
+        };
+        assertThrows(IllegalStateException.class, chain::hasNext);
+        assertEquals("first", chain.next());
+        assertFalse(chain.hasNext());
     }
 
     @Test

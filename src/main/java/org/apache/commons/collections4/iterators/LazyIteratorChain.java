@@ -52,7 +52,7 @@ import java.util.Iterator;
  */
 public abstract class LazyIteratorChain<E> implements Iterator<E> {
 
-    /** The number of times {@link #next()} was already called. */
+    /** The last iterator request number, or zero until the first request succeeds. */
     private int callCounter;
 
     /** Indicates that the Iterator chain has been exhausted. */
@@ -81,9 +81,9 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      */
     @Override
     public boolean hasNext() {
-        updateCurrentIterator();
+        final boolean hasNext = updateCurrentIterator();
         lastUsedIterator = currentIterator;
-        return currentIterator.hasNext();
+        return hasNext;
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * This method <strong>MUST</strong> return null when there are no more iterators.
      * </p>
      *
-     * @param count The number of time this method has been called (starts with 1)
+     * @param count The request number, starting at 1. A retry of the first request also uses 1.
      * @return The next iterator, or null if there are no more.
      */
     protected abstract Iterator<? extends E> nextIterator(int count);
@@ -134,10 +134,13 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
     /**
      * Updates the current iterator field to ensure that the current Iterator
      * is not exhausted.
+     *
+     * @return whether the current iterator has an element
      */
-    private void updateCurrentIterator() {
-        if (callCounter == 0) {
-            currentIterator = nextIterator(++callCounter);
+    private boolean updateCurrentIterator() {
+        if (currentIterator == null) {
+            currentIterator = nextIterator(1);
+            callCounter = 1;
             if (currentIterator == null) {
                 currentIterator = EmptyIterator.<E>emptyIterator();
                 chainExhausted = true;
@@ -146,14 +149,18 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
-        while (!currentIterator.hasNext() && !chainExhausted) {
-            final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
-            if (nextIterator != null) {
-                currentIterator = nextIterator;
-            } else {
-                chainExhausted = true;
+        while (!currentIterator.hasNext()) {
+            if (chainExhausted) {
+                return false;
             }
+            final Iterator<? extends E> nextIterator = nextIterator(++callCounter);
+            if (nextIterator == null) {
+                chainExhausted = true;
+                return false;
+            }
+            currentIterator = nextIterator;
         }
+        return true;
     }
 
 }
